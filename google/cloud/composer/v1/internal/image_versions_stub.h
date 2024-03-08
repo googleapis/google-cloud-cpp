@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_INTERNAL_IMAGE_VERSIONS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_INTERNAL_IMAGE_VERSIONS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,7 +37,7 @@ class ImageVersionsStub {
 
   virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
                        ListImageVersionsResponse>
-  ListImageVersions(grpc::ClientContext& context,
+  ListImageVersions(grpc::ClientContext& context, Options const& options,
                     google::cloud::orchestration::airflow::service::v1::
                         ListImageVersionsRequest const& request) = 0;
 };
@@ -50,7 +52,7 @@ class DefaultImageVersionsStub : public ImageVersionsStub {
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListImageVersionsResponse>
-  ListImageVersions(grpc::ClientContext& context,
+  ListImageVersions(grpc::ClientContext& context, Options const& options,
                     google::cloud::orchestration::airflow::service::v1::
                         ListImageVersionsRequest const& request) override;
 

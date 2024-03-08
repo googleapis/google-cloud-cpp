@@ -45,166 +45,176 @@ RepositoryManagerMetadata::RepositoryManagerMetadata(
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateConnection(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncCreateConnection(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 RepositoryManagerMetadata::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConnection(context, request);
+  return child_->GetConnection(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 RepositoryManagerMetadata::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConnections(context, request);
+  return child_->ListConnections(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("connection.name=",
                            internal::UrlEncode(request.connection().name())));
-  return child_->AsyncUpdateConnection(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncUpdateConnection(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteConnection(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncDeleteConnection(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRepository(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncCreateRepository(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncBatchCreateRepositories(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchCreateRepositories(cq, std::move(context), options,
-                                              request);
+  return child_->AsyncBatchCreateRepositories(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
 RepositoryManagerMetadata::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRepository(context, request);
+  return child_->GetRepository(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 RepositoryManagerMetadata::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRepositories(context, request);
+  return child_->ListRepositories(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRepository(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncDeleteRepository(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
 RepositoryManagerMetadata::FetchReadWriteToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("repository=", internal::UrlEncode(request.repository())));
-  return child_->FetchReadWriteToken(context, request);
+  return child_->FetchReadWriteToken(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 RepositoryManagerMetadata::FetchReadToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("repository=", internal::UrlEncode(request.repository())));
-  return child_->FetchReadToken(context, request);
+  return child_->FetchReadToken(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
 RepositoryManagerMetadata::FetchLinkableRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("connection=", internal::UrlEncode(request.connection())));
-  return child_->FetchLinkableRepositories(context, request);
+  return child_->FetchLinkableRepositories(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 RepositoryManagerMetadata::FetchGitRefs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("repository=", internal::UrlEncode(request.repository())));
-  return child_->FetchGitRefs(context, request);
+  return child_->FetchGitRefs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> RepositoryManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void RepositoryManagerMetadata::SetMetadata(grpc::ClientContext& context,

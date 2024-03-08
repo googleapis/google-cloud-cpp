@@ -46,7 +46,7 @@ StorageControlMetadata::StorageControlMetadata(
 
 StatusOr<google::storage::control::v2::Folder>
 StorageControlMetadata::CreateFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::CreateFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -57,16 +57,15 @@ StorageControlMetadata::CreateFolder(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->CreateFolder(context, request);
+  return child_->CreateFolder(context, options, request);
 }
 
 Status StorageControlMetadata::DeleteFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::DeleteFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -85,17 +84,16 @@ Status StorageControlMetadata::DeleteFolder(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->DeleteFolder(context, request);
+  return child_->DeleteFolder(context, options, request);
 }
 
 StatusOr<google::storage::control::v2::Folder>
 StorageControlMetadata::GetFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -114,17 +112,16 @@ StorageControlMetadata::GetFolder(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->GetFolder(context, request);
+  return child_->GetFolder(context, options, request);
 }
 
 StatusOr<google::storage::control::v2::ListFoldersResponse>
 StorageControlMetadata::ListFolders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::ListFoldersRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -135,18 +132,18 @@ StorageControlMetadata::ListFolders(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ListFolders(context, request);
+  return child_->ListFolders(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 StorageControlMetadata::AsyncRenameFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::control::v2::RenameFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -165,16 +162,17 @@ StorageControlMetadata::AsyncRenameFolder(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncRenameFolder(cq, std::move(context), options, request);
+  return child_->AsyncRenameFolder(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlMetadata::GetStorageLayout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -193,31 +191,34 @@ StorageControlMetadata::GetStorageLayout(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->GetStorageLayout(context, request);
+  return child_->GetStorageLayout(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 StorageControlMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> StorageControlMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void StorageControlMetadata::SetMetadata(grpc::ClientContext& context,

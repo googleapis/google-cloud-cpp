@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -72,35 +73,39 @@ ConversationDatasetsConnectionImpl::CreateConversationDataset(
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateConversationDataset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ConversationDataset>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
               request) {
-        return stub->AsyncCreateConversationDataset(cq, std::move(context),
-                                                    options, request);
+        return stub->AsyncCreateConversationDataset(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::ConversationDataset>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateConversationDataset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -112,12 +117,12 @@ ConversationDatasetsConnectionImpl::GetConversationDataset(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConversationDataset(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
                  request) {
-        return stub_->GetConversationDataset(context, request);
+        return stub_->GetConversationDataset(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
@@ -130,21 +135,22 @@ ConversationDatasetsConnectionImpl::ListConversationDatasets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::ConversationDataset>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_es::ConversationDatasetsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::v2::
                        ListConversationDatasetsRequest const& request) {
-              return stub->ListConversationDatasets(context, request);
+              return stub->ListConversationDatasets(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::v2::ListConversationDatasetsResponse r) {
         std::vector<google::cloud::dialogflow::v2::ConversationDataset> result(
@@ -161,37 +167,41 @@ ConversationDatasetsConnectionImpl::DeleteConversationDataset(
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteConversationDataset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::
           DeleteConversationDatasetOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
               request) {
-        return stub->AsyncDeleteConversationDataset(cq, std::move(context),
-                                                    options, request);
+        return stub->AsyncDeleteConversationDataset(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::dialogflow::v2::
               DeleteConversationDatasetOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteConversationDataset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -201,36 +211,40 @@ ConversationDatasetsConnectionImpl::ImportConversationData(
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportConversationData(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::dialogflow::v2::ImportConversationDataRequest const&
               request) {
         return stub->AsyncImportConversationData(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::
               ImportConversationDataOperationResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportConversationData(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

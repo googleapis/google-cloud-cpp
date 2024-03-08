@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/biglake/v1/metastore.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ MetastoreServiceStub::~MetastoreServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 DefaultMetastoreServiceStub::CreateCatalog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
   google::cloud::bigquery::biglake::v1::Catalog response;
   auto status = grpc_stub_->CreateCatalog(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultMetastoreServiceStub::CreateCatalog(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 DefaultMetastoreServiceStub::DeleteCatalog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
   google::cloud::bigquery::biglake::v1::Catalog response;
   auto status = grpc_stub_->DeleteCatalog(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultMetastoreServiceStub::DeleteCatalog(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 DefaultMetastoreServiceStub::GetCatalog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
   google::cloud::bigquery::biglake::v1::Catalog response;
   auto status = grpc_stub_->GetCatalog(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultMetastoreServiceStub::GetCatalog(
 
 StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse>
 DefaultMetastoreServiceStub::ListCatalogs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& request) {
   google::cloud::bigquery::biglake::v1::ListCatalogsResponse response;
   auto status = grpc_stub_->ListCatalogs(&context, request, &response);
@@ -79,7 +80,7 @@ DefaultMetastoreServiceStub::ListCatalogs(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 DefaultMetastoreServiceStub::CreateDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
         request) {
   google::cloud::bigquery::biglake::v1::Database response;
@@ -92,7 +93,7 @@ DefaultMetastoreServiceStub::CreateDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 DefaultMetastoreServiceStub::DeleteDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
         request) {
   google::cloud::bigquery::biglake::v1::Database response;
@@ -105,7 +106,7 @@ DefaultMetastoreServiceStub::DeleteDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 DefaultMetastoreServiceStub::UpdateDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
         request) {
   google::cloud::bigquery::biglake::v1::Database response;
@@ -118,7 +119,7 @@ DefaultMetastoreServiceStub::UpdateDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 DefaultMetastoreServiceStub::GetDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
   google::cloud::bigquery::biglake::v1::Database response;
   auto status = grpc_stub_->GetDatabase(&context, request, &response);
@@ -130,7 +131,7 @@ DefaultMetastoreServiceStub::GetDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse>
 DefaultMetastoreServiceStub::ListDatabases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& request) {
   google::cloud::bigquery::biglake::v1::ListDatabasesResponse response;
   auto status = grpc_stub_->ListDatabases(&context, request, &response);
@@ -142,7 +143,7 @@ DefaultMetastoreServiceStub::ListDatabases(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::CreateTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
   auto status = grpc_stub_->CreateTable(&context, request, &response);
@@ -154,7 +155,7 @@ DefaultMetastoreServiceStub::CreateTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::DeleteTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
   auto status = grpc_stub_->DeleteTable(&context, request, &response);
@@ -166,7 +167,7 @@ DefaultMetastoreServiceStub::DeleteTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::UpdateTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
   auto status = grpc_stub_->UpdateTable(&context, request, &response);
@@ -178,7 +179,7 @@ DefaultMetastoreServiceStub::UpdateTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::RenameTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
   auto status = grpc_stub_->RenameTable(&context, request, &response);
@@ -190,7 +191,7 @@ DefaultMetastoreServiceStub::RenameTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 DefaultMetastoreServiceStub::GetTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
   google::cloud::bigquery::biglake::v1::Table response;
   auto status = grpc_stub_->GetTable(&context, request, &response);
@@ -202,7 +203,7 @@ DefaultMetastoreServiceStub::GetTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::ListTablesResponse>
 DefaultMetastoreServiceStub::ListTables(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::biglake::v1::ListTablesRequest const& request) {
   google::cloud::bigquery::biglake::v1::ListTablesResponse response;
   auto status = grpc_stub_->ListTables(&context, request, &response);

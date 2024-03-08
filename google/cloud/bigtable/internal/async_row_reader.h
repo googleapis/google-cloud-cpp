@@ -28,11 +28,14 @@
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <chrono>
+#include <memory>
 #include <queue>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -60,12 +63,14 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                      bigtable::RowSet row_set, std::int64_t rows_limit,
                      bigtable::Filter filter, bool reverse,
                      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
-                     std::unique_ptr<BackoffPolicy> backoff_policy) {
+                     std::unique_ptr<BackoffPolicy> backoff_policy,
+                     bool enable_server_retries) {
     auto reader = std::shared_ptr<AsyncRowReader>(new AsyncRowReader(
         std::move(cq), std::move(stub), std::move(app_profile_id),
         std::move(table_name), std::move(on_row), std::move(on_finish),
         std::move(row_set), rows_limit, std::move(filter), reverse,
-        std::move(retry_policy), std::move(backoff_policy)));
+        std::move(retry_policy), std::move(backoff_policy),
+        enable_server_retries));
     reader->MakeRequest();
   }
 
@@ -76,7 +81,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                  bigtable::RowSet row_set, std::int64_t rows_limit,
                  bigtable::Filter filter, bool reverse,
                  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
-                 std::unique_ptr<BackoffPolicy> backoff_policy)
+                 std::unique_ptr<BackoffPolicy> backoff_policy,
+                 bool enable_server_retries)
       : cq_(std::move(cq)),
         stub_(std::move(stub)),
         app_profile_id_(std::move(app_profile_id)),
@@ -88,7 +94,10 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
         filter_(std::move(filter)),
         reverse_(std::move(reverse)),
         retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+        backoff_policy_(std::move(backoff_policy)),
+        enable_server_retries_(enable_server_retries),
+        options_(internal::SaveCurrentOptions()),
+        call_context_(options_) {}
 
   void MakeRequest();
 
@@ -134,6 +143,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   bool reverse_;
   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
+  bool enable_server_retries_;
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;
   /// Number of rows read so far, used to set row_limit in retries.
   std::int64_t rows_count_ = 0;
@@ -163,6 +173,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   Status status_;
   /// Tracks the level of recursion of TryGiveRowToUser
   int recursion_level_ = 0;
+  internal::ImmutableOptions options_;
   internal::CallContext call_context_;
   std::shared_ptr<grpc::ClientContext> context_;
   std::shared_ptr<RetryContext> retry_context_ =

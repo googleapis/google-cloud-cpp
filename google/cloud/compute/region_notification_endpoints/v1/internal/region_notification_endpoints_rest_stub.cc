@@ -25,6 +25,7 @@
 #include <google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.pb.h>
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -51,7 +52,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionNotificationEndpointsRestStub::AsyncDeleteNotificationEndpoint(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         DeleteNotificationEndpointRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -63,7 +64,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncDeleteNotificationEndpoint(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "notificationEndpoints", "/",
@@ -75,7 +76,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncDeleteNotificationEndpoint(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -102,7 +103,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionNotificationEndpointsRestStub::AsyncInsertNotificationEndpoint(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         InsertNotificationEndpointRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -115,7 +116,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncInsertNotificationEndpoint(
                 *service, *rest_context,
                 request.notification_endpoint_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "notificationEndpoints"),
@@ -126,7 +127,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncInsertNotificationEndpoint(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -159,7 +160,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionNotificationEndpointsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -172,7 +173,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncGetOperation(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/projects/", request.project(), "/regions/",
                              request.region(), "/operations/",
                              request.operation())));
@@ -181,7 +182,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -191,7 +192,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncGetOperation(
 future<Status> DefaultRegionNotificationEndpointsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
@@ -202,7 +203,7 @@ future<Status> DefaultRegionNotificationEndpointsRestStub::AsyncCancelOperation(
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", options),
+                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
                 "/projects/", request.project(), "/regions/", request.region(),
                 "/operations/", request.operation())));
       },
@@ -210,7 +211,7 @@ future<Status> DefaultRegionNotificationEndpointsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

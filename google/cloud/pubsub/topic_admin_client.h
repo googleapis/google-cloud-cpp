@@ -59,7 +59,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [pubsub-doc-link]: https://cloud.google.com/pubsub/docs
  */
-class TopicAdminClient {
+class GOOGLE_CLOUD_CPP_PUBSUB_ADMIN_API_DEPRECATED("TopicAdminClient")
+    TopicAdminClient {
  public:
   explicit TopicAdminClient(std::shared_ptr<TopicAdminConnection> connection,
                             Options opts = {});
@@ -169,9 +170,6 @@ class TopicAdminClient {
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
-   *
-   * @par Example
-   * @snippet samples.cc detach-subscription
    *
    * @param subscription the name of the subscription to detach.
    * @param opts Override the class-level options, such as retry and backoff

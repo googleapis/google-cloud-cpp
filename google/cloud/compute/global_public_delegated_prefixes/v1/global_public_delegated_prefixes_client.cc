@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

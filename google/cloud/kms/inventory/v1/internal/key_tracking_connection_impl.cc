@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -69,12 +70,12 @@ KeyTrackingServiceConnectionImpl::GetProtectedResourcesSummary(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetProtectedResourcesSummary(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::inventory::v1::
                  GetProtectedResourcesSummaryRequest const& request) {
-        return stub_->GetProtectedResourcesSummary(context, request);
+        return stub_->GetProtectedResourcesSummary(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
@@ -88,21 +89,22 @@ KeyTrackingServiceConnectionImpl::SearchProtectedResources(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::kms::inventory::v1::
               SearchProtectedResourcesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::kms::inventory::v1::
                        SearchProtectedResourcesRequest const& request) {
-              return stub->SearchProtectedResources(context, request);
+              return stub->SearchProtectedResources(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse
              r) {

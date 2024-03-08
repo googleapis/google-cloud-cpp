@@ -127,7 +127,7 @@ class StreamingSubscriptionBatchSource
   std::shared_ptr<SubscriberStub> const stub_;
   std::string const subscription_full_name_;
   std::string const client_id_;
-  Options options_;
+  google::cloud::internal::ImmutableOptions options_;
   std::int64_t const max_outstanding_messages_;
   std::int64_t const max_outstanding_bytes_;
   std::chrono::seconds const min_deadline_time_;

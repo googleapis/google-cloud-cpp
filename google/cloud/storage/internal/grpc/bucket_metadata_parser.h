@@ -78,6 +78,11 @@ google::storage::v2::Bucket::RetentionPolicy ToProto(
 storage::BucketRetentionPolicy FromProto(
     google::storage::v2::Bucket::RetentionPolicy const& rhs);
 
+google::storage::v2::Bucket::SoftDeletePolicy ToProto(
+    storage::BucketSoftDeletePolicy const& rhs);
+storage::BucketSoftDeletePolicy FromProto(
+    google::storage::v2::Bucket::SoftDeletePolicy const& rhs);
+
 google::storage::v2::Bucket::Versioning ToProto(
     storage::BucketVersioning const& rhs);
 storage::BucketVersioning FromProto(

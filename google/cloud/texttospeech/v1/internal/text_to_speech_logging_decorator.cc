@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,28 +37,28 @@ TextToSpeechLogging::TextToSpeechLogging(
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechLogging::ListVoices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-        return child_->ListVoices(context, request);
+        return child_->ListVoices(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechLogging::SynthesizeSpeech(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
                  request) {
-        return child_->SynthesizeSpeech(context, request);
+        return child_->SynthesizeSpeech(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

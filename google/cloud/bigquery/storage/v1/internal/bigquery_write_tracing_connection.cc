@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

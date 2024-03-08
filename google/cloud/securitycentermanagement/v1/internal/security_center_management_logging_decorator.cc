@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,300 +40,306 @@ StatusOr<google::cloud::securitycentermanagement::v1::
              ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterManagementLogging::
     ListEffectiveSecurityHealthAnalyticsCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
                 request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
                      request) {
         return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(
-            context, request);
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EffectiveSecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementLogging::
     GetEffectiveSecurityHealthAnalyticsCustomModule(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
                 request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
                      request) {
-        return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
-                                                                       request);
+        return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterManagementLogging::ListSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
-        return child_->ListSecurityHealthAnalyticsCustomModules(context,
-                                                                request);
+        return child_->ListSecurityHealthAnalyticsCustomModules(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterManagementLogging::
     ListDescendantSecurityHealthAnalyticsCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
                 request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
                   request) {
         return child_->ListDescendantSecurityHealthAnalyticsCustomModules(
-            context, request);
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementLogging::GetSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return child_->GetSecurityHealthAnalyticsCustomModule(context, request);
+        return child_->GetSecurityHealthAnalyticsCustomModule(context, options,
+                                                              request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementLogging::CreateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return child_->CreateSecurityHealthAnalyticsCustomModule(context,
-                                                                 request);
+        return child_->CreateSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementLogging::UpdateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return child_->UpdateSecurityHealthAnalyticsCustomModule(context,
-                                                                 request);
+        return child_->UpdateSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status
 SecurityCenterManagementLogging::DeleteSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return child_->DeleteSecurityHealthAnalyticsCustomModule(context,
-                                                                 request);
+        return child_->DeleteSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SimulateSecurityHealthAnalyticsCustomModuleResponse>
 SecurityCenterManagementLogging::SimulateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  SimulateSecurityHealthAnalyticsCustomModuleRequest const&
                      request) {
-        return child_->SimulateSecurityHealthAnalyticsCustomModule(context,
-                                                                   request);
+        return child_->SimulateSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListEffectiveEventThreatDetectionCustomModulesResponse>
 SecurityCenterManagementLogging::ListEffectiveEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListEffectiveEventThreatDetectionCustomModulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  ListEffectiveEventThreatDetectionCustomModulesRequest const&
                      request) {
-        return child_->ListEffectiveEventThreatDetectionCustomModules(context,
-                                                                      request);
+        return child_->ListEffectiveEventThreatDetectionCustomModules(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EffectiveEventThreatDetectionCustomModule>
 SecurityCenterManagementLogging::GetEffectiveEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  GetEffectiveEventThreatDetectionCustomModuleRequest const&
                      request) {
-        return child_->GetEffectiveEventThreatDetectionCustomModule(context,
-                                                                    request);
+        return child_->GetEffectiveEventThreatDetectionCustomModule(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListEventThreatDetectionCustomModulesResponse>
 SecurityCenterManagementLogging::ListEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListEventThreatDetectionCustomModulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  ListEventThreatDetectionCustomModulesRequest const& request) {
-        return child_->ListEventThreatDetectionCustomModules(context, request);
+        return child_->ListEventThreatDetectionCustomModules(context, options,
+                                                             request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListDescendantEventThreatDetectionCustomModulesResponse>
 SecurityCenterManagementLogging::
     ListDescendantEventThreatDetectionCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             ListDescendantEventThreatDetectionCustomModulesRequest const&
                 request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  ListDescendantEventThreatDetectionCustomModulesRequest const&
                      request) {
-        return child_->ListDescendantEventThreatDetectionCustomModules(context,
-                                                                       request);
+        return child_->ListDescendantEventThreatDetectionCustomModules(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 SecurityCenterManagementLogging::GetEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetEventThreatDetectionCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  GetEventThreatDetectionCustomModuleRequest const& request) {
-        return child_->GetEventThreatDetectionCustomModule(context, request);
+        return child_->GetEventThreatDetectionCustomModule(context, options,
+                                                           request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 SecurityCenterManagementLogging::CreateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         CreateEventThreatDetectionCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  CreateEventThreatDetectionCustomModuleRequest const& request) {
-        return child_->CreateEventThreatDetectionCustomModule(context, request);
+        return child_->CreateEventThreatDetectionCustomModule(context, options,
+                                                              request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 SecurityCenterManagementLogging::UpdateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         UpdateEventThreatDetectionCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  UpdateEventThreatDetectionCustomModuleRequest const& request) {
-        return child_->UpdateEventThreatDetectionCustomModule(context, request);
+        return child_->UpdateEventThreatDetectionCustomModule(context, options,
+                                                              request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status SecurityCenterManagementLogging::DeleteEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         DeleteEventThreatDetectionCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  DeleteEventThreatDetectionCustomModuleRequest const& request) {
-        return child_->DeleteEventThreatDetectionCustomModule(context, request);
+        return child_->DeleteEventThreatDetectionCustomModule(context, options,
+                                                              request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ValidateEventThreatDetectionCustomModuleResponse>
 SecurityCenterManagementLogging::ValidateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ValidateEventThreatDetectionCustomModuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               ValidateEventThreatDetectionCustomModuleRequest const& request) {
-        return child_->ValidateEventThreatDetectionCustomModule(context,
-                                                                request);
+        return child_->ValidateEventThreatDetectionCustomModule(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

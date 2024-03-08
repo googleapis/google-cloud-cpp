@@ -22,6 +22,7 @@
 #include <google/devtools/cloudbuild/v2/repositories.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ RepositoryManagerStub::~RepositoryManagerStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::CreateConnectionRequest,
@@ -50,7 +52,7 @@ DefaultRepositoryManagerStub::AsyncCreateConnection(
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 DefaultRepositoryManagerStub::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
   google::devtools::cloudbuild::v2::Connection response;
   auto status = grpc_stub_->GetConnection(&context, request, &response);
@@ -62,7 +64,7 @@ DefaultRepositoryManagerStub::GetConnection(
 
 StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 DefaultRepositoryManagerStub::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
   google::devtools::cloudbuild::v2::ListConnectionsResponse response;
   auto status = grpc_stub_->ListConnections(&context, request, &response);
@@ -75,7 +77,8 @@ DefaultRepositoryManagerStub::ListConnections(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::UpdateConnectionRequest,
@@ -93,7 +96,8 @@ DefaultRepositoryManagerStub::AsyncUpdateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::DeleteConnectionRequest,
@@ -111,7 +115,8 @@ DefaultRepositoryManagerStub::AsyncDeleteConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::CreateRepositoryRequest,
@@ -129,7 +134,8 @@ DefaultRepositoryManagerStub::AsyncCreateRepository(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncBatchCreateRepositories(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -147,7 +153,7 @@ DefaultRepositoryManagerStub::AsyncBatchCreateRepositories(
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
 DefaultRepositoryManagerStub::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
   google::devtools::cloudbuild::v2::Repository response;
   auto status = grpc_stub_->GetRepository(&context, request, &response);
@@ -159,7 +165,7 @@ DefaultRepositoryManagerStub::GetRepository(
 
 StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 DefaultRepositoryManagerStub::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
   google::devtools::cloudbuild::v2::ListRepositoriesResponse response;
   auto status = grpc_stub_->ListRepositories(&context, request, &response);
@@ -172,7 +178,8 @@ DefaultRepositoryManagerStub::ListRepositories(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest,
@@ -189,7 +196,7 @@ DefaultRepositoryManagerStub::AsyncDeleteRepository(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
 DefaultRepositoryManagerStub::FetchReadWriteToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
         request) {
   google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse response;
@@ -202,7 +209,7 @@ DefaultRepositoryManagerStub::FetchReadWriteToken(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 DefaultRepositoryManagerStub::FetchReadToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
   google::devtools::cloudbuild::v2::FetchReadTokenResponse response;
   auto status = grpc_stub_->FetchReadToken(&context, request, &response);
@@ -214,7 +221,7 @@ DefaultRepositoryManagerStub::FetchReadToken(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
 DefaultRepositoryManagerStub::FetchLinkableRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
         request) {
   google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse response;
@@ -228,7 +235,7 @@ DefaultRepositoryManagerStub::FetchLinkableRepositories(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 DefaultRepositoryManagerStub::FetchGitRefs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
   google::devtools::cloudbuild::v2::FetchGitRefsResponse response;
   auto status = grpc_stub_->FetchGitRefs(&context, request, &response);
@@ -241,7 +248,9 @@ DefaultRepositoryManagerStub::FetchGitRefs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -256,7 +265,9 @@ DefaultRepositoryManagerStub::AsyncGetOperation(
 
 future<Status> DefaultRepositoryManagerStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -41,32 +41,34 @@ std::size_t RequestSize(google::pubsub::v1::PublishRequest const& request) {
 
 DefaultBatchSink::DefaultBatchSink(std::shared_ptr<PublisherStub> stub,
                                    CompletionQueue cq, Options opts)
-    : stub_(std::move(stub)), cq_(std::move(cq)), options_(std::move(opts)) {}
+    : stub_(std::move(stub)),
+      cq_(std::move(cq)),
+      options_(google::cloud::internal::MakeImmutableOptions(std::move(opts))) {
+}
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
-  internal::OptionsSpan span(options_);
-
-  auto& stub = stub_;
   return internal::AsyncRetryLoop(
-      options_.get<pubsub::RetryPolicyOption>()->clone(),
-      options_.get<pubsub::BackoffPolicyOption>()->clone(),
+      options_->get<pubsub::RetryPolicyOption>()->clone(),
+      options_->get<pubsub::BackoffPolicyOption>()->clone(),
       Idempotency::kIdempotent, cq_,
-      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-             google::pubsub::v1::PublishRequest const& request) {
-        auto const& current = internal::CurrentOptions();
-        if (current.has<CompressionThresholdOption>() &&
-            current.has<CompressionAlgorithmOption>()) {
-          auto const threshold = current.get<CompressionThresholdOption>();
+      [stub = stub_](CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::pubsub::v1::PublishRequest const& request) {
+        if (options->has<CompressionThresholdOption>() &&
+            options->has<CompressionAlgorithmOption>()) {
+          auto const threshold = options->get<CompressionThresholdOption>();
           if (RequestSize(request) >= threshold) {
             context->set_compression_algorithm(
                 static_cast<grpc_compression_algorithm>(
-                    current.get<CompressionAlgorithmOption>()));
+                    options->get<CompressionAlgorithmOption>()));
           }
         }
-        return stub->AsyncPublish(cq, std::move(context), request);
+        return stub->AsyncPublish(cq, std::move(context), std::move(options),
+                                  request);
       },
-      std::move(request), __func__);
+      options_, std::move(request), __func__);
 }
 
 void DefaultBatchSink::ResumePublish(std::string const&) {}

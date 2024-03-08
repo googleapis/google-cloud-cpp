@@ -18,6 +18,7 @@
 
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ DataprocMetastoreFederationTracingStub::DataprocMetastoreFederationTracingStub(
 
 StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
 DataprocMetastoreFederationTracingStub::ListFederations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListFederationsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.metastore.v1.DataprocMetastoreFederation",
@@ -40,85 +41,94 @@ DataprocMetastoreFederationTracingStub::ListFederations(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListFederations(context, request));
+                           child_->ListFederations(context, options, request));
 }
 
 StatusOr<google::cloud::metastore::v1::Federation>
 DataprocMetastoreFederationTracingStub::GetFederation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetFederationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.metastore.v1.DataprocMetastoreFederation", "GetFederation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetFederation(context, request));
+                           child_->GetFederation(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationTracingStub::AsyncCreateFederation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::CreateFederationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.metastore.v1.DataprocMetastoreFederation",
       "CreateFederation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateFederation(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateFederation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationTracingStub::AsyncUpdateFederation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.metastore.v1.DataprocMetastoreFederation",
       "UpdateFederation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateFederation(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateFederation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationTracingStub::AsyncDeleteFederation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.metastore.v1.DataprocMetastoreFederation",
       "DeleteFederation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteFederation(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteFederation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> DataprocMetastoreFederationTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -41,7 +41,7 @@ class ConnectionServiceMetadata : public ConnectionServiceStub {
 
   StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
   ListConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request)
       override;
 

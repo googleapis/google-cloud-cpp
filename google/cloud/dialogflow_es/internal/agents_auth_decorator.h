@@ -40,58 +40,64 @@ class AgentsAuth : public AgentsStub {
       std::shared_ptr<AgentsStub> child);
 
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetAgentRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SetAgentRequest const& request) override;
 
-  Status DeleteAgent(grpc::ClientContext& context,
+  Status DeleteAgent(grpc::ClientContext& context, Options const& options,
                      google::cloud::dialogflow::v2::DeleteAgentRequest const&
                          request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse> SearchAgents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SearchAgentsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTrainAgent(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAgent(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::v2::ExportAgentRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportAgent(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::v2::ImportAgentRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreAgent(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ValidationResult> GetValidationResult(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetValidationResultRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

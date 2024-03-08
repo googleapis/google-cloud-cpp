@@ -27,6 +27,7 @@
 #include <google/cloud/domains/v1/domains.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,101 +40,111 @@ class DomainsStub {
 
   virtual StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
   SearchDomains(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::SearchDomainsRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::domains::v1::RetrieveRegisterParametersResponse>
   RetrieveRegisterParameters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRegisterDomain(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::RegisterDomainRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::domains::v1::RetrieveTransferParametersResponse>
   RetrieveTransferParameters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveTransferParametersRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncTransferDomain(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::TransferDomainRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
   ListRegistrations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::ListRegistrationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::domains::v1::Registration> GetRegistration(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::GetRegistrationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::UpdateRegistrationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureManagementSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureDnsSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureContactSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncExportRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ExportRegistrationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::DeleteRegistrationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::domains::v1::AuthorizationCode>
   RetrieveAuthorizationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::domains::v1::AuthorizationCode>
   ResetAuthorizationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::ResetAuthorizationCodeRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -147,101 +158,111 @@ class DefaultDomainsStub : public DomainsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::domains::v1::SearchDomainsResponse> SearchDomains(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::SearchDomainsRequest const& request) override;
 
   StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
   RetrieveRegisterParameters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRegisterDomain(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::RegisterDomainRequest const& request)
       override;
 
   StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
   RetrieveTransferParameters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveTransferParametersRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTransferDomain(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::TransferDomainRequest const& request)
       override;
 
   StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
-  ListRegistrations(grpc::ClientContext& context,
+  ListRegistrations(grpc::ClientContext& context, Options const& options,
                     google::cloud::domains::v1::ListRegistrationsRequest const&
                         request) override;
 
   StatusOr<google::cloud::domains::v1::Registration> GetRegistration(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::GetRegistrationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::UpdateRegistrationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureManagementSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncConfigureDnsSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureContactSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ExportRegistrationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::DeleteRegistrationRequest const& request)
       override;
 
   StatusOr<google::cloud::domains::v1::AuthorizationCode>
   RetrieveAuthorizationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
           request) override;
 
   StatusOr<google::cloud::domains::v1::AuthorizationCode>
   ResetAuthorizationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -64,11 +65,11 @@ StatusOr<google::pubsub::v1::Topic> TopicAdminConnectionImpl::CreateTopic(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTopic(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::Topic const& request) {
-        return stub_->CreateTopic(context, request);
+        return stub_->CreateTopic(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::pubsub::v1::Topic> TopicAdminConnectionImpl::UpdateTopic(
@@ -77,11 +78,11 @@ StatusOr<google::pubsub::v1::Topic> TopicAdminConnectionImpl::UpdateTopic(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTopic(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::UpdateTopicRequest const& request) {
-        return stub_->UpdateTopic(context, request);
+        return stub_->UpdateTopic(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::pubsub::v1::Topic> TopicAdminConnectionImpl::GetTopic(
@@ -90,11 +91,11 @@ StatusOr<google::pubsub::v1::Topic> TopicAdminConnectionImpl::GetTopic(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTopic(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::GetTopicRequest const& request) {
-        return stub_->GetTopic(context, request);
+        return stub_->GetTopic(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::pubsub::v1::Topic> TopicAdminConnectionImpl::ListTopics(
@@ -105,19 +106,20 @@ StreamRange<google::pubsub::v1::Topic> TopicAdminConnectionImpl::ListTopics(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::pubsub::v1::Topic>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<pubsub_admin::TopicAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::pubsub::v1::ListTopicsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::pubsub::v1::ListTopicsRequest const& request) {
-              return stub->ListTopics(context, request);
+              return stub->ListTopics(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::pubsub::v1::ListTopicsResponse r) {
         std::vector<google::pubsub::v1::Topic> result(r.topics().size());
@@ -135,20 +137,21 @@ StreamRange<std::string> TopicAdminConnectionImpl::ListTopicSubscriptions(
       idempotency_policy(*current)->ListTopicSubscriptions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<pubsub_admin::TopicAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::pubsub::v1::ListTopicSubscriptionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::pubsub::v1::ListTopicSubscriptionsRequest const&
                        request) {
-              return stub->ListTopicSubscriptions(context, request);
+              return stub->ListTopicSubscriptions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::pubsub::v1::ListTopicSubscriptionsResponse r) {
         std::vector<std::string> result(r.subscriptions().size());
@@ -165,20 +168,21 @@ StreamRange<std::string> TopicAdminConnectionImpl::ListTopicSnapshots(
   auto idempotency = idempotency_policy(*current)->ListTopicSnapshots(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<pubsub_admin::TopicAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::pubsub::v1::ListTopicSnapshotsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-              return stub->ListTopicSnapshots(context, request);
+              return stub->ListTopicSnapshots(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::pubsub::v1::ListTopicSnapshotsResponse r) {
         std::vector<std::string> result(r.snapshots().size());
@@ -194,11 +198,11 @@ Status TopicAdminConnectionImpl::DeleteTopic(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTopic(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::DeleteTopicRequest const& request) {
-        return stub_->DeleteTopic(context, request);
+        return stub_->DeleteTopic(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
@@ -208,11 +212,11 @@ TopicAdminConnectionImpl::DetachSubscription(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DetachSubscription(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::DetachSubscriptionRequest const& request) {
-        return stub_->DetachSubscription(context, request);
+        return stub_->DetachSubscription(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

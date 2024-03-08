@@ -146,6 +146,11 @@ class MockDataTransferServiceConnection
               (google::cloud::bigquery::datatransfer::v1::
                    EnrollDataSourcesRequest const& request),
               (override));
+
+  MOCK_METHOD(Status, UnenrollDataSources,
+              (google::cloud::bigquery::datatransfer::v1::
+                   UnenrollDataSourcesRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

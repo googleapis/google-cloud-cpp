@@ -22,6 +22,7 @@
 #include <google/cloud/config/v1/config.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ConfigStub::~ConfigStub() = default;
 
 StatusOr<google::cloud::config::v1::ListDeploymentsResponse>
 DefaultConfigStub::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ListDeploymentsRequest const& request) {
   google::cloud::config::v1::ListDeploymentsResponse response;
   auto status = grpc_stub_->ListDeployments(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultConfigStub::ListDeployments(
 
 StatusOr<google::cloud::config::v1::Deployment>
 DefaultConfigStub::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::GetDeploymentRequest const& request) {
   google::cloud::config::v1::Deployment response;
   auto status = grpc_stub_->GetDeployment(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultConfigStub::GetDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncCreateDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::config::v1::CreateDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::CreateDeploymentRequest,
@@ -74,7 +76,8 @@ DefaultConfigStub::AsyncCreateDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncUpdateDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::config::v1::UpdateDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::UpdateDeploymentRequest,
@@ -91,7 +94,8 @@ DefaultConfigStub::AsyncUpdateDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncDeleteDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::config::v1::DeleteDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::DeleteDeploymentRequest,
@@ -107,7 +111,7 @@ DefaultConfigStub::AsyncDeleteDeployment(
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
 DefaultConfigStub::ListRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ListRevisionsRequest const& request) {
   google::cloud::config::v1::ListRevisionsResponse response;
   auto status = grpc_stub_->ListRevisions(&context, request, &response);
@@ -118,7 +122,7 @@ DefaultConfigStub::ListRevisions(
 }
 
 StatusOr<google::cloud::config::v1::Revision> DefaultConfigStub::GetRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::GetRevisionRequest const& request) {
   google::cloud::config::v1::Revision response;
   auto status = grpc_stub_->GetRevision(&context, request, &response);
@@ -129,7 +133,7 @@ StatusOr<google::cloud::config::v1::Revision> DefaultConfigStub::GetRevision(
 }
 
 StatusOr<google::cloud::config::v1::Resource> DefaultConfigStub::GetResource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::GetResourceRequest const& request) {
   google::cloud::config::v1::Resource response;
   auto status = grpc_stub_->GetResource(&context, request, &response);
@@ -141,7 +145,7 @@ StatusOr<google::cloud::config::v1::Resource> DefaultConfigStub::GetResource(
 
 StatusOr<google::cloud::config::v1::ListResourcesResponse>
 DefaultConfigStub::ListResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ListResourcesRequest const& request) {
   google::cloud::config::v1::ListResourcesResponse response;
   auto status = grpc_stub_->ListResources(&context, request, &response);
@@ -153,7 +157,7 @@ DefaultConfigStub::ListResources(
 
 StatusOr<google::cloud::config::v1::Statefile>
 DefaultConfigStub::ExportDeploymentStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ExportDeploymentStatefileRequest const&
         request) {
   google::cloud::config::v1::Statefile response;
@@ -167,7 +171,7 @@ DefaultConfigStub::ExportDeploymentStatefile(
 
 StatusOr<google::cloud::config::v1::Statefile>
 DefaultConfigStub::ExportRevisionStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ExportRevisionStatefileRequest const& request) {
   google::cloud::config::v1::Statefile response;
   auto status =
@@ -180,7 +184,7 @@ DefaultConfigStub::ExportRevisionStatefile(
 
 StatusOr<google::cloud::config::v1::Statefile>
 DefaultConfigStub::ImportStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ImportStatefileRequest const& request) {
   google::cloud::config::v1::Statefile response;
   auto status = grpc_stub_->ImportStatefile(&context, request, &response);
@@ -191,7 +195,7 @@ DefaultConfigStub::ImportStatefile(
 }
 
 Status DefaultConfigStub::DeleteStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::DeleteStatefileRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteStatefile(&context, request, &response);
@@ -204,7 +208,8 @@ Status DefaultConfigStub::DeleteStatefile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncLockDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::config::v1::LockDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::LockDeploymentRequest,
@@ -221,7 +226,8 @@ DefaultConfigStub::AsyncLockDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncUnlockDeployment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::config::v1::UnlockDeploymentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::UnlockDeploymentRequest,
@@ -236,7 +242,7 @@ DefaultConfigStub::AsyncUnlockDeployment(
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> DefaultConfigStub::ExportLockInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ExportLockInfoRequest const& request) {
   google::cloud::config::v1::LockInfo response;
   auto status = grpc_stub_->ExportLockInfo(&context, request, &response);
@@ -249,7 +255,8 @@ StatusOr<google::cloud::config::v1::LockInfo> DefaultConfigStub::ExportLockInfo(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncCreatePreview(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::config::v1::CreatePreviewRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::CreatePreviewRequest,
@@ -264,7 +271,7 @@ DefaultConfigStub::AsyncCreatePreview(
 }
 
 StatusOr<google::cloud::config::v1::Preview> DefaultConfigStub::GetPreview(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::GetPreviewRequest const& request) {
   google::cloud::config::v1::Preview response;
   auto status = grpc_stub_->GetPreview(&context, request, &response);
@@ -276,7 +283,7 @@ StatusOr<google::cloud::config::v1::Preview> DefaultConfigStub::GetPreview(
 
 StatusOr<google::cloud::config::v1::ListPreviewsResponse>
 DefaultConfigStub::ListPreviews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ListPreviewsRequest const& request) {
   google::cloud::config::v1::ListPreviewsResponse response;
   auto status = grpc_stub_->ListPreviews(&context, request, &response);
@@ -289,7 +296,8 @@ DefaultConfigStub::ListPreviews(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncDeletePreview(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::config::v1::DeletePreviewRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::config::v1::DeletePreviewRequest,
@@ -305,7 +313,7 @@ DefaultConfigStub::AsyncDeletePreview(
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
 DefaultConfigStub::ExportPreviewResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ExportPreviewResultRequest const& request) {
   google::cloud::config::v1::ExportPreviewResultResponse response;
   auto status = grpc_stub_->ExportPreviewResult(&context, request, &response);
@@ -318,7 +326,9 @@ DefaultConfigStub::ExportPreviewResult(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -333,7 +343,9 @@ DefaultConfigStub::AsyncGetOperation(
 
 future<Status> DefaultConfigStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO(#12987): Remove this file after the deprecation period expires
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/pubsub/internal/defaults.h"
@@ -23,6 +25,7 @@
 #include "absl/strings/str_split.h"
 #include <initializer_list>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -58,11 +61,11 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     return RetryLoop(
         retry_policy(*current), backoff_policy(*current),
         Idempotency::kIdempotent,
-        [this](grpc::ClientContext& context,
+        [this](grpc::ClientContext& context, Options const& options,
                google::pubsub::v1::Topic const& request) {
-          return stub_->CreateTopic(context, request);
+          return stub_->CreateTopic(context, options, request);
         },
-        p.topic, __func__);
+        *current, p.topic, __func__);
   }
 
   StatusOr<google::pubsub::v1::Topic> GetTopic(GetTopicParams p) override {
@@ -72,11 +75,11 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     return RetryLoop(
         retry_policy(*current), backoff_policy(*current),
         Idempotency::kIdempotent,
-        [this](grpc::ClientContext& context,
+        [this](grpc::ClientContext& context, Options const& options,
                google::pubsub::v1::GetTopicRequest const& request) {
-          return stub_->GetTopic(context, request);
+          return stub_->GetTopic(context, options, request);
         },
-        request, __func__);
+        *current, request, __func__);
   }
 
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
@@ -85,15 +88,15 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     return RetryLoop(
         retry_policy(*current), backoff_policy(*current),
         Idempotency::kIdempotent,
-        [this](grpc::ClientContext& context,
+        [this](grpc::ClientContext& context, Options const& options,
                google::pubsub::v1::UpdateTopicRequest const& request) {
-          return stub_->UpdateTopic(context, request);
+          return stub_->UpdateTopic(context, options, request);
         },
-        p.request, __func__);
+        *current, p.request, __func__);
   }
 
   pubsub::ListTopicsRange ListTopics(ListTopicsParams p) override {
-    auto const current = google::cloud::internal::SaveCurrentOptions();
+    auto current = google::cloud::internal::SaveCurrentOptions();
     google::pubsub::v1::ListTopicsRequest request;
     request.set_project(std::move(p.project_id));
     // Because we do not have C++14 generalized lambda captures we cannot just
@@ -105,17 +108,18 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     char const* function_name = __func__;
     auto list_functor =
         [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
-         function_name](google::pubsub::v1::ListTopicsRequest const& request) {
+         function_name](Options const& options,
+                        google::pubsub::v1::ListTopicsRequest const& request) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
-              [stub](grpc::ClientContext& c,
+              [stub](grpc::ClientContext& c, Options const& o,
                      google::pubsub::v1::ListTopicsRequest const& r) {
-                return stub->ListTopics(c, r);
+                return stub->ListTopics(c, o, r);
               },
-              request, function_name);
+              options, request, function_name);
         };
     return internal::MakePaginationRange<pubsub::ListTopicsRange>(
-        std::move(request), std::move(list_functor),
+        std::move(current), std::move(request), std::move(list_functor),
         [](google::pubsub::v1::ListTopicsResponse response) {
           std::vector<google::pubsub::v1::Topic> items;
           items.reserve(response.topics_size());
@@ -133,11 +137,11 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     return RetryLoop(
         retry_policy(*current), backoff_policy(*current),
         Idempotency::kIdempotent,
-        [this](grpc::ClientContext& context,
+        [this](grpc::ClientContext& context, Options const& options,
                google::pubsub::v1::DeleteTopicRequest const& request) {
-          return stub_->DeleteTopic(context, request);
+          return stub_->DeleteTopic(context, options, request);
         },
-        request, __func__);
+        *current, request, __func__);
   }
 
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
@@ -149,16 +153,16 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     return RetryLoop(
         retry_policy(*current), backoff_policy(*current),
         Idempotency::kIdempotent,
-        [this](grpc::ClientContext& context,
+        [this](grpc::ClientContext& context, Options const& options,
                google::pubsub::v1::DetachSubscriptionRequest const& request) {
-          return stub_->DetachSubscription(context, request);
+          return stub_->DetachSubscription(context, options, request);
         },
-        request, __func__);
+        *current, request, __func__);
   }
 
   pubsub::ListTopicSubscriptionsRange ListTopicSubscriptions(
       ListTopicSubscriptionsParams p) override {
-    auto const current = google::cloud::internal::SaveCurrentOptions();
+    auto current = google::cloud::internal::SaveCurrentOptions();
     google::pubsub::v1::ListTopicSubscriptionsRequest request;
     request.set_topic(std::move(p.topic_full_name));
     // Because we do not have C++14 generalized lambda captures we cannot just
@@ -171,18 +175,19 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     auto list_functor =
         [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
          function_name](
+            Options const& options,
             google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](
-                  grpc::ClientContext& c,
+                  grpc::ClientContext& c, Options const& o,
                   google::pubsub::v1::ListTopicSubscriptionsRequest const& r) {
-                return stub->ListTopicSubscriptions(c, r);
+                return stub->ListTopicSubscriptions(c, o, r);
               },
-              request, function_name);
+              options, request, function_name);
         };
     return internal::MakePaginationRange<pubsub::ListTopicSubscriptionsRange>(
-        std::move(request), std::move(list_functor),
+        std::move(current), std::move(request), std::move(list_functor),
         [](google::pubsub::v1::ListTopicSubscriptionsResponse response) {
           std::vector<std::string> items;
           items.reserve(response.subscriptions_size());
@@ -195,7 +200,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
 
   pubsub::ListTopicSnapshotsRange ListTopicSnapshots(
       ListTopicSnapshotsParams p) override {
-    auto const current = google::cloud::internal::SaveCurrentOptions();
+    auto current = google::cloud::internal::SaveCurrentOptions();
     google::pubsub::v1::ListTopicSnapshotsRequest request;
     request.set_topic(std::move(p.topic_full_name));
     // The lambda must be copyable to use in MakePaginationRange<>(). We need
@@ -208,17 +213,18 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     auto list_functor =
         [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
          function_name](
+            Options const& options,
             google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
-              [stub](grpc::ClientContext& c,
+              [stub](grpc::ClientContext& c, Options const& o,
                      google::pubsub::v1::ListTopicSnapshotsRequest const& r) {
-                return stub->ListTopicSnapshots(c, r);
+                return stub->ListTopicSnapshots(c, o, r);
               },
-              request, function_name);
+              options, request, function_name);
         };
     return internal::MakePaginationRange<pubsub::ListTopicSnapshotsRange>(
-        std::move(request), std::move(list_functor),
+        std::move(current), std::move(request), std::move(list_functor),
         [](google::pubsub::v1::ListTopicSnapshotsResponse response) {
           std::vector<std::string> items;
           items.reserve(response.snapshots_size());

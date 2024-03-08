@@ -24,6 +24,7 @@
 #include <google/cloud/compute/autoscalers/v1/autoscalers.pb.h>
 #include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -74,7 +75,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultAutoscalersRestStub::AsyncDeleteAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -86,7 +87,7 @@ DefaultAutoscalersRestStub::AsyncDeleteAutoscaler(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "autoscalers",
                              "/", request.autoscaler()),
@@ -97,7 +98,7 @@ DefaultAutoscalersRestStub::AsyncDeleteAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -123,7 +124,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultAutoscalersRestStub::AsyncInsertAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -135,7 +136,7 @@ DefaultAutoscalersRestStub::AsyncInsertAutoscaler(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.autoscaler_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "autoscalers"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -145,7 +146,7 @@ DefaultAutoscalersRestStub::AsyncInsertAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -177,7 +178,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultAutoscalersRestStub::AsyncPatchAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -189,7 +190,7 @@ DefaultAutoscalersRestStub::AsyncPatchAutoscaler(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.autoscaler_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "autoscalers"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -200,7 +201,7 @@ DefaultAutoscalersRestStub::AsyncPatchAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -211,7 +212,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultAutoscalersRestStub::AsyncUpdateAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -223,7 +224,7 @@ DefaultAutoscalersRestStub::AsyncUpdateAutoscaler(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.autoscaler_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "autoscalers"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -234,7 +235,7 @@ DefaultAutoscalersRestStub::AsyncUpdateAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -245,7 +246,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultAutoscalersRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -258,7 +259,7 @@ DefaultAutoscalersRestStub::AsyncGetOperation(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/projects/", request.project(), "/zones/",
                              request.zone(), "/operations/",
                              request.operation())));
@@ -267,7 +268,7 @@ DefaultAutoscalersRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -277,7 +278,7 @@ DefaultAutoscalersRestStub::AsyncGetOperation(
 future<Status> DefaultAutoscalersRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::zone_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
@@ -288,7 +289,7 @@ future<Status> DefaultAutoscalersRestStub::AsyncCancelOperation(
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", options),
+                         rest_internal::DetermineApiVersion("v1", *options),
                          "/projects/", request.project(), "/zones/",
                          request.zone(), "/operations/", request.operation())));
       },
@@ -296,7 +297,7 @@ future<Status> DefaultAutoscalersRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

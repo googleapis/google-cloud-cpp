@@ -33,11 +33,11 @@ namespace internal {
 
 using AsyncPollLongRunningOperation =
     std::function<future<StatusOr<google::longrunning::Operation>>(
-        CompletionQueue&, std::shared_ptr<grpc::ClientContext>, Options const&,
-        google::longrunning::GetOperationRequest const&)>;
+        CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
+        ImmutableOptions, google::longrunning::GetOperationRequest const&)>;
 
 using AsyncCancelLongRunningOperation = std::function<future<Status>(
-    CompletionQueue&, std::shared_ptr<grpc::ClientContext>, Options const&,
+    CompletionQueue&, std::shared_ptr<grpc::ClientContext>, ImmutableOptions,
     google::longrunning::CancelOperationRequest const&)>;
 
 /**
@@ -81,12 +81,12 @@ using AsyncCancelLongRunningOperation = std::function<future<Status>(
  *   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
  *     google::cloud::CompletionQueue& cq,
  *     std::shared_ptr<grpc::ClientContext> context,
- *     Options const& options,
+ *     google::cloud::internal::ImmutableOptions options,
  *     google::longrunning::GetOperationRequest const& request) = 0;
  *   virtual future<Status> AsyncCancelOperation(
  *     google::cloud::CompletionQueue& cq,
  *     std::shared_ptr<grpc::ClientContext> context,
- *     Options const& options,
+ *     google::cloud::internal::ImmutableOptions options,
  *     google::longrunning::CancelOperationRequest const& request) = 0;
  * };
  * @endcode
@@ -101,17 +101,19 @@ using AsyncCancelLongRunningOperation = std::function<future<Status>(
  *     auto current = google::cloud::internal::SaveCurrentOptions();
  *     future<StatusOr<Operation>> op = AsyncStart();
  *
- *     return op.then([stub = stub_, cq = cq_, current, loc = __func__](auto f)
- * { StatusOr<Operation> op = f.get(); if (!op) return make_ready_future(op);
+ *     return op.then([stub = stub_, cq = cq_, current, loc = __func__](
+ *         auto f) {
+ *       StatusOr<Operation> op = f.get();
+ *       if (!op) return make_ready_future(op);
  *       return AsyncPollingLoop(
  *           std::move(cq), current, *std::move(op),
- *           [stub](auto cq, auto context, auto const& options, auto const& r) {
+ *           [stub](auto cq, auto context, auto options, auto const& r) {
  *             return stub->AsyncGetOperation(
- *                 cq, std::move(context), options, r);
+ *                 cq, std::move(context), std::move(options), r);
  *           },
- *           [stub](auto cq, auto context, auto const& options, auto const& r) {
+ *           [stub](auto cq, auto context, auto options, auto const& r) {
  *             return stub->AsyncCancelOperation(
- *                 cq, std::move(context), options, r);
+ *                 cq, std::move(context), std::move(options), r);
  *           },
  *           polling_policy_->clone(), loc);
  *        });
@@ -129,26 +131,6 @@ future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
     google::cloud::CompletionQueue cq, ImmutableOptions options,
     future<StatusOr<google::longrunning::Operation>> op,
     AsyncPollLongRunningOperation poll, AsyncCancelLongRunningOperation cancel,
-    std::unique_ptr<PollingPolicy> polling_policy, std::string location);
-
-// TODO(#12359) - remove this once it becomes unused
-using AsyncPollLongRunningOperationImplicitOptions =
-    std::function<future<StatusOr<google::longrunning::Operation>>(
-        CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
-        google::longrunning::GetOperationRequest const&)>;
-
-// TODO(#12359) - remove this once it becomes unused
-using AsyncCancelLongRunningOperationImplicitOptions =
-    std::function<future<Status>(
-        CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
-        google::longrunning::CancelOperationRequest const&)>;
-
-// TODO(#12359) - remove this once it becomes unused
-future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
-    google::cloud::CompletionQueue cq,
-    future<StatusOr<google::longrunning::Operation>> op,
-    AsyncPollLongRunningOperationImplicitOptions poll,
-    AsyncCancelLongRunningOperationImplicitOptions cancel,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);
 
 }  // namespace internal

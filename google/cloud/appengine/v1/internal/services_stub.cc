@@ -22,6 +22,7 @@
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ServicesStub::~ServicesStub() = default;
 
 StatusOr<google::appengine::v1::ListServicesResponse>
 DefaultServicesStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::ListServicesRequest const& request) {
   google::appengine::v1::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultServicesStub::ListServices(
 }
 
 StatusOr<google::appengine::v1::Service> DefaultServicesStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::GetServiceRequest const& request) {
   google::appengine::v1::Service response;
   auto status = grpc_stub_->GetService(&context, request, &response);
@@ -56,7 +57,8 @@ StatusOr<google::appengine::v1::Service> DefaultServicesStub::GetService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::appengine::v1::UpdateServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::appengine::v1::UpdateServiceRequest,
                                     google::longrunning::Operation>(
@@ -72,7 +74,8 @@ DefaultServicesStub::AsyncUpdateService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::appengine::v1::DeleteServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::appengine::v1::DeleteServiceRequest,
                                     google::longrunning::Operation>(
@@ -88,7 +91,9 @@ DefaultServicesStub::AsyncDeleteService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -103,7 +108,9 @@ DefaultServicesStub::AsyncGetOperation(
 
 future<Status> DefaultServicesStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_LLM_UTILITY_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_LLM_UTILITY_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/llm_utility_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,12 +37,12 @@ class LlmUtilityServiceStub {
 
   virtual StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
   CountTokens(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CountTokensRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
   ComputeTokens(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ComputeTokensRequest const& request) = 0;
 };
 
@@ -53,12 +55,12 @@ class DefaultLlmUtilityServiceStub : public LlmUtilityServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CountTokensRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ComputeTokensRequest const& request)
       override;
 

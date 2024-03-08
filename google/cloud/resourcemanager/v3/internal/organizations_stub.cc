@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/resourcemanager/v3/organizations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ OrganizationsStub::~OrganizationsStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Organization>
 DefaultOrganizationsStub::GetOrganization(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
   google::cloud::resourcemanager::v3::Organization response;
   auto status = grpc_stub_->GetOrganization(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultOrganizationsStub::GetOrganization(
 
 StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
 DefaultOrganizationsStub::SearchOrganizations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
         request) {
   google::cloud::resourcemanager::v3::SearchOrganizationsResponse response;
@@ -55,7 +56,7 @@ DefaultOrganizationsStub::SearchOrganizations(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultOrganizationsStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -66,7 +67,7 @@ StatusOr<google::iam::v1::Policy> DefaultOrganizationsStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultOrganizationsStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -78,7 +79,7 @@ StatusOr<google::iam::v1::Policy> DefaultOrganizationsStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultOrganizationsStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

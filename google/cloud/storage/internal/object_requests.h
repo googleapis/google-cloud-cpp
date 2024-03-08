@@ -18,12 +18,14 @@
 #include "google/cloud/storage/auto_finalize.h"
 #include "google/cloud/storage/download_options.h"
 #include "google/cloud/storage/hashing_options.h"
+#include "google/cloud/storage/include_folders_as_prefixes.h"
 #include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/soft_deleted.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
@@ -46,8 +48,9 @@ namespace internal {
  */
 class ListObjectsRequest
     : public GenericRequest<ListObjectsRequest, MaxResults, Prefix, Delimiter,
-                            IncludeTrailingDelimiter, StartOffset, EndOffset,
-                            MatchGlob, Projection, UserProject, Versions> {
+                            IncludeFoldersAsPrefixes, IncludeTrailingDelimiter,
+                            StartOffset, EndOffset, MatchGlob, Projection,
+                            SoftDeleted, UserProject, Versions> {
  public:
   ListObjectsRequest() = default;
   explicit ListObjectsRequest(std::string bucket_name)
@@ -87,7 +90,7 @@ class GetObjectMetadataRequest
     : public GenericObjectRequest<
           GetObjectMetadataRequest, Generation, IfGenerationMatch,
           IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          Projection, UserProject> {
+          Projection, SoftDeleted, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 };

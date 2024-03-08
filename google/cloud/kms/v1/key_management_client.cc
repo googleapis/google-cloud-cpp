@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/v1/key_management_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

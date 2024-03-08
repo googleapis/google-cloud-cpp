@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/migration/v2/migration_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,98 +37,98 @@ MigrationServiceLogging::MigrationServiceLogging(
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceLogging::CreateMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::
         CreateMigrationWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  CreateMigrationWorkflowRequest const& request) {
-        return child_->CreateMigrationWorkflow(context, request);
+        return child_->CreateMigrationWorkflow(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceLogging::GetMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  GetMigrationWorkflowRequest const& request) {
-        return child_->GetMigrationWorkflow(context, request);
+        return child_->GetMigrationWorkflow(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse>
 MigrationServiceLogging::ListMigrationWorkflows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  ListMigrationWorkflowsRequest const& request) {
-        return child_->ListMigrationWorkflows(context, request);
+        return child_->ListMigrationWorkflows(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status MigrationServiceLogging::DeleteMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::
         DeleteMigrationWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  DeleteMigrationWorkflowRequest const& request) {
-        return child_->DeleteMigrationWorkflow(context, request);
+        return child_->DeleteMigrationWorkflow(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status MigrationServiceLogging::StartMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  StartMigrationWorkflowRequest const& request) {
-        return child_->StartMigrationWorkflow(context, request);
+        return child_->StartMigrationWorkflow(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
 MigrationServiceLogging::GetMigrationSubtask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  GetMigrationSubtaskRequest const& request) {
-        return child_->GetMigrationSubtask(context, request);
+        return child_->GetMigrationSubtask(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse>
 MigrationServiceLogging::ListMigrationSubtasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  ListMigrationSubtasksRequest const& request) {
-        return child_->ListMigrationSubtasks(context, request);
+        return child_->ListMigrationSubtasks(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

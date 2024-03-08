@@ -311,6 +311,30 @@ class DlpServiceConnection {
   virtual Status DeleteStoredInfoType(
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request);
 
+  virtual StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
+  ListProjectDataProfiles(
+      google::privacy::dlp::v2::ListProjectDataProfilesRequest request);
+
+  virtual StreamRange<google::privacy::dlp::v2::TableDataProfile>
+  ListTableDataProfiles(
+      google::privacy::dlp::v2::ListTableDataProfilesRequest request);
+
+  virtual StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
+  ListColumnDataProfiles(
+      google::privacy::dlp::v2::ListColumnDataProfilesRequest request);
+
+  virtual StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+  GetProjectDataProfile(
+      google::privacy::dlp::v2::GetProjectDataProfileRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::TableDataProfile>
+  GetTableDataProfile(
+      google::privacy::dlp::v2::GetTableDataProfileRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+  GetColumnDataProfile(
+      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request);
+
   virtual StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectDlpJob(
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request);

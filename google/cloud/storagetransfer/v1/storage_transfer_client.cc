@@ -18,6 +18,7 @@
 
 #include "google/cloud/storagetransfer/v1/storage_transfer_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

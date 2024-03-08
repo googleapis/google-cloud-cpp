@@ -22,6 +22,7 @@
 #include <google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ VmwareEngineStub::~VmwareEngineStub() = default;
 
 StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
 DefaultVmwareEngineStub::ListPrivateClouds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const& request) {
   google::cloud::vmwareengine::v1::ListPrivateCloudsResponse response;
   auto status = grpc_stub_->ListPrivateClouds(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultVmwareEngineStub::ListPrivateClouds(
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>
 DefaultVmwareEngineStub::GetPrivateCloud(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request) {
   google::cloud::vmwareengine::v1::PrivateCloud response;
   auto status = grpc_stub_->GetPrivateCloud(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultVmwareEngineStub::GetPrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreatePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmwareengine::v1::CreatePrivateCloudRequest,
@@ -75,7 +77,8 @@ DefaultVmwareEngineStub::AsyncCreatePrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdatePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest,
@@ -93,7 +96,8 @@ DefaultVmwareEngineStub::AsyncUpdatePrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmwareengine::v1::DeletePrivateCloudRequest,
@@ -111,7 +115,8 @@ DefaultVmwareEngineStub::AsyncDeletePrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUndeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -129,7 +134,7 @@ DefaultVmwareEngineStub::AsyncUndeletePrivateCloud(
 
 StatusOr<google::cloud::vmwareengine::v1::ListClustersResponse>
 DefaultVmwareEngineStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListClustersRequest const& request) {
   google::cloud::vmwareengine::v1::ListClustersResponse response;
   auto status = grpc_stub_->ListClusters(&context, request, &response);
@@ -141,7 +146,7 @@ DefaultVmwareEngineStub::ListClusters(
 
 StatusOr<google::cloud::vmwareengine::v1::Cluster>
 DefaultVmwareEngineStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetClusterRequest const& request) {
   google::cloud::vmwareengine::v1::Cluster response;
   auto status = grpc_stub_->GetCluster(&context, request, &response);
@@ -154,7 +159,8 @@ DefaultVmwareEngineStub::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmwareengine::v1::CreateClusterRequest,
@@ -172,7 +178,8 @@ DefaultVmwareEngineStub::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmwareengine::v1::UpdateClusterRequest,
@@ -190,7 +197,8 @@ DefaultVmwareEngineStub::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmwareengine::v1::DeleteClusterRequest,
@@ -207,7 +215,7 @@ DefaultVmwareEngineStub::AsyncDeleteCluster(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodesResponse>
 DefaultVmwareEngineStub::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListNodesRequest const& request) {
   google::cloud::vmwareengine::v1::ListNodesResponse response;
   auto status = grpc_stub_->ListNodes(&context, request, &response);
@@ -219,7 +227,7 @@ DefaultVmwareEngineStub::ListNodes(
 
 StatusOr<google::cloud::vmwareengine::v1::Node>
 DefaultVmwareEngineStub::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetNodeRequest const& request) {
   google::cloud::vmwareengine::v1::Node response;
   auto status = grpc_stub_->GetNode(&context, request, &response);
@@ -231,7 +239,7 @@ DefaultVmwareEngineStub::GetNode(
 
 StatusOr<google::cloud::vmwareengine::v1::ListExternalAddressesResponse>
 DefaultVmwareEngineStub::ListExternalAddresses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListExternalAddressesRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListExternalAddressesResponse response;
@@ -245,7 +253,7 @@ DefaultVmwareEngineStub::ListExternalAddresses(
 StatusOr<google::cloud::vmwareengine::v1::
              FetchNetworkPolicyExternalAddressesResponse>
 DefaultVmwareEngineStub::FetchNetworkPolicyExternalAddresses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::
         FetchNetworkPolicyExternalAddressesRequest const& request) {
   google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesResponse
@@ -260,7 +268,7 @@ DefaultVmwareEngineStub::FetchNetworkPolicyExternalAddresses(
 
 StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
 DefaultVmwareEngineStub::GetExternalAddress(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request) {
   google::cloud::vmwareengine::v1::ExternalAddress response;
   auto status = grpc_stub_->GetExternalAddress(&context, request, &response);
@@ -273,7 +281,8 @@ DefaultVmwareEngineStub::GetExternalAddress(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreateExternalAddress(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -293,7 +302,8 @@ DefaultVmwareEngineStub::AsyncCreateExternalAddress(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateExternalAddress(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -313,7 +323,8 @@ DefaultVmwareEngineStub::AsyncUpdateExternalAddress(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteExternalAddress(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -332,7 +343,7 @@ DefaultVmwareEngineStub::AsyncDeleteExternalAddress(
 
 StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse>
 DefaultVmwareEngineStub::ListSubnets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListSubnetsRequest const& request) {
   google::cloud::vmwareengine::v1::ListSubnetsResponse response;
   auto status = grpc_stub_->ListSubnets(&context, request, &response);
@@ -344,7 +355,7 @@ DefaultVmwareEngineStub::ListSubnets(
 
 StatusOr<google::cloud::vmwareengine::v1::Subnet>
 DefaultVmwareEngineStub::GetSubnet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
   google::cloud::vmwareengine::v1::Subnet response;
   auto status = grpc_stub_->GetSubnet(&context, request, &response);
@@ -357,7 +368,8 @@ DefaultVmwareEngineStub::GetSubnet(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateSubnet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmwareengine::v1::UpdateSubnetRequest,
@@ -374,7 +386,7 @@ DefaultVmwareEngineStub::AsyncUpdateSubnet(
 
 StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse>
 DefaultVmwareEngineStub::ListExternalAccessRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse response;
@@ -388,7 +400,7 @@ DefaultVmwareEngineStub::ListExternalAccessRules(
 
 StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
 DefaultVmwareEngineStub::GetExternalAccessRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
         request) {
   google::cloud::vmwareengine::v1::ExternalAccessRule response;
@@ -402,7 +414,8 @@ DefaultVmwareEngineStub::GetExternalAccessRule(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreateExternalAccessRule(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -421,7 +434,8 @@ DefaultVmwareEngineStub::AsyncCreateExternalAccessRule(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateExternalAccessRule(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -440,7 +454,8 @@ DefaultVmwareEngineStub::AsyncUpdateExternalAccessRule(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteExternalAccessRule(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -458,7 +473,7 @@ DefaultVmwareEngineStub::AsyncDeleteExternalAccessRule(
 
 StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse>
 DefaultVmwareEngineStub::ListLoggingServers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListLoggingServersRequest const& request) {
   google::cloud::vmwareengine::v1::ListLoggingServersResponse response;
   auto status = grpc_stub_->ListLoggingServers(&context, request, &response);
@@ -470,7 +485,7 @@ DefaultVmwareEngineStub::ListLoggingServers(
 
 StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
 DefaultVmwareEngineStub::GetLoggingServer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request) {
   google::cloud::vmwareengine::v1::LoggingServer response;
   auto status = grpc_stub_->GetLoggingServer(&context, request, &response);
@@ -483,7 +498,8 @@ DefaultVmwareEngineStub::GetLoggingServer(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreateLoggingServer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -502,7 +518,8 @@ DefaultVmwareEngineStub::AsyncCreateLoggingServer(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateLoggingServer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -521,7 +538,8 @@ DefaultVmwareEngineStub::AsyncUpdateLoggingServer(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteLoggingServer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -539,7 +557,7 @@ DefaultVmwareEngineStub::AsyncDeleteLoggingServer(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
 DefaultVmwareEngineStub::ListNodeTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListNodeTypesRequest const& request) {
   google::cloud::vmwareengine::v1::ListNodeTypesResponse response;
   auto status = grpc_stub_->ListNodeTypes(&context, request, &response);
@@ -551,7 +569,7 @@ DefaultVmwareEngineStub::ListNodeTypes(
 
 StatusOr<google::cloud::vmwareengine::v1::NodeType>
 DefaultVmwareEngineStub::GetNodeType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request) {
   google::cloud::vmwareengine::v1::NodeType response;
   auto status = grpc_stub_->GetNodeType(&context, request, &response);
@@ -563,7 +581,7 @@ DefaultVmwareEngineStub::GetNodeType(
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
 DefaultVmwareEngineStub::ShowNsxCredentials(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request) {
   google::cloud::vmwareengine::v1::Credentials response;
   auto status = grpc_stub_->ShowNsxCredentials(&context, request, &response);
@@ -575,7 +593,7 @@ DefaultVmwareEngineStub::ShowNsxCredentials(
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
 DefaultVmwareEngineStub::ShowVcenterCredentials(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
         request) {
   google::cloud::vmwareengine::v1::Credentials response;
@@ -590,7 +608,8 @@ DefaultVmwareEngineStub::ShowVcenterCredentials(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncResetNsxCredentials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -609,7 +628,8 @@ DefaultVmwareEngineStub::AsyncResetNsxCredentials(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncResetVcenterCredentials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -628,7 +648,7 @@ DefaultVmwareEngineStub::AsyncResetVcenterCredentials(
 
 StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
 DefaultVmwareEngineStub::GetDnsForwarding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request) {
   google::cloud::vmwareengine::v1::DnsForwarding response;
   auto status = grpc_stub_->GetDnsForwarding(&context, request, &response);
@@ -641,7 +661,8 @@ DefaultVmwareEngineStub::GetDnsForwarding(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateDnsForwarding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -659,7 +680,7 @@ DefaultVmwareEngineStub::AsyncUpdateDnsForwarding(
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
 DefaultVmwareEngineStub::GetNetworkPeering(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request) {
   google::cloud::vmwareengine::v1::NetworkPeering response;
   auto status = grpc_stub_->GetNetworkPeering(&context, request, &response);
@@ -671,7 +692,7 @@ DefaultVmwareEngineStub::GetNetworkPeering(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse>
 DefaultVmwareEngineStub::ListNetworkPeerings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse response;
@@ -685,7 +706,8 @@ DefaultVmwareEngineStub::ListNetworkPeerings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreateNetworkPeering(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -704,7 +726,8 @@ DefaultVmwareEngineStub::AsyncCreateNetworkPeering(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteNetworkPeering(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -723,7 +746,8 @@ DefaultVmwareEngineStub::AsyncDeleteNetworkPeering(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateNetworkPeering(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -741,7 +765,7 @@ DefaultVmwareEngineStub::AsyncUpdateNetworkPeering(
 
 StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse>
 DefaultVmwareEngineStub::ListPeeringRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const& request) {
   google::cloud::vmwareengine::v1::ListPeeringRoutesResponse response;
   auto status = grpc_stub_->ListPeeringRoutes(&context, request, &response);
@@ -754,7 +778,8 @@ DefaultVmwareEngineStub::ListPeeringRoutes(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreateHcxActivationKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -773,7 +798,7 @@ DefaultVmwareEngineStub::AsyncCreateHcxActivationKey(
 
 StatusOr<google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse>
 DefaultVmwareEngineStub::ListHcxActivationKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse response;
@@ -786,7 +811,7 @@ DefaultVmwareEngineStub::ListHcxActivationKeys(
 
 StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
 DefaultVmwareEngineStub::GetHcxActivationKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const&
         request) {
   google::cloud::vmwareengine::v1::HcxActivationKey response;
@@ -799,7 +824,7 @@ DefaultVmwareEngineStub::GetHcxActivationKey(
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>
 DefaultVmwareEngineStub::GetNetworkPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request) {
   google::cloud::vmwareengine::v1::NetworkPolicy response;
   auto status = grpc_stub_->GetNetworkPolicy(&context, request, &response);
@@ -811,7 +836,7 @@ DefaultVmwareEngineStub::GetNetworkPolicy(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNetworkPoliciesResponse>
 DefaultVmwareEngineStub::ListNetworkPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListNetworkPoliciesResponse response;
@@ -825,7 +850,8 @@ DefaultVmwareEngineStub::ListNetworkPolicies(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -844,7 +870,8 @@ DefaultVmwareEngineStub::AsyncCreateNetworkPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -863,7 +890,8 @@ DefaultVmwareEngineStub::AsyncUpdateNetworkPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -881,7 +909,7 @@ DefaultVmwareEngineStub::AsyncDeleteNetworkPolicy(
 
 StatusOr<google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse>
 DefaultVmwareEngineStub::ListManagementDnsZoneBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse
@@ -896,7 +924,7 @@ DefaultVmwareEngineStub::ListManagementDnsZoneBindings(
 
 StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
 DefaultVmwareEngineStub::GetManagementDnsZoneBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
         request) {
   google::cloud::vmwareengine::v1::ManagementDnsZoneBinding response;
@@ -911,7 +939,8 @@ DefaultVmwareEngineStub::GetManagementDnsZoneBinding(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreateManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::
         CreateManagementDnsZoneBindingRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -931,7 +960,8 @@ DefaultVmwareEngineStub::AsyncCreateManagementDnsZoneBinding(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::
         UpdateManagementDnsZoneBindingRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -951,7 +981,8 @@ DefaultVmwareEngineStub::AsyncUpdateManagementDnsZoneBinding(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::
         DeleteManagementDnsZoneBindingRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -971,7 +1002,8 @@ DefaultVmwareEngineStub::AsyncDeleteManagementDnsZoneBinding(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncRepairManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::
         RepairManagementDnsZoneBindingRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -991,7 +1023,8 @@ DefaultVmwareEngineStub::AsyncRepairManagementDnsZoneBinding(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -1010,7 +1043,8 @@ DefaultVmwareEngineStub::AsyncCreateVmwareEngineNetwork(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -1029,7 +1063,8 @@ DefaultVmwareEngineStub::AsyncUpdateVmwareEngineNetwork(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -1047,7 +1082,7 @@ DefaultVmwareEngineStub::AsyncDeleteVmwareEngineNetwork(
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
 DefaultVmwareEngineStub::GetVmwareEngineNetwork(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
         request) {
   google::cloud::vmwareengine::v1::VmwareEngineNetwork response;
@@ -1061,7 +1096,7 @@ DefaultVmwareEngineStub::GetVmwareEngineNetwork(
 
 StatusOr<google::cloud::vmwareengine::v1::ListVmwareEngineNetworksResponse>
 DefaultVmwareEngineStub::ListVmwareEngineNetworks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListVmwareEngineNetworksResponse response;
@@ -1076,7 +1111,8 @@ DefaultVmwareEngineStub::ListVmwareEngineNetworks(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -1095,7 +1131,7 @@ DefaultVmwareEngineStub::AsyncCreatePrivateConnection(
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
 DefaultVmwareEngineStub::GetPrivateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
         request) {
   google::cloud::vmwareengine::v1::PrivateConnection response;
@@ -1108,7 +1144,7 @@ DefaultVmwareEngineStub::GetPrivateConnection(
 
 StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
 DefaultVmwareEngineStub::ListPrivateConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse response;
@@ -1123,7 +1159,8 @@ DefaultVmwareEngineStub::ListPrivateConnections(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -1143,7 +1180,8 @@ DefaultVmwareEngineStub::AsyncUpdatePrivateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -1163,7 +1201,7 @@ DefaultVmwareEngineStub::AsyncDeletePrivateConnection(
 StatusOr<
     google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesResponse>
 DefaultVmwareEngineStub::ListPrivateConnectionPeeringRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::
         ListPrivateConnectionPeeringRoutesRequest const& request) {
   google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesResponse
@@ -1179,7 +1217,8 @@ DefaultVmwareEngineStub::ListPrivateConnectionPeeringRoutes(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncGrantDnsBindPermission(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -1198,7 +1237,7 @@ DefaultVmwareEngineStub::AsyncGrantDnsBindPermission(
 
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
 DefaultVmwareEngineStub::GetDnsBindPermission(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
         request) {
   google::cloud::vmwareengine::v1::DnsBindPermission response;
@@ -1212,7 +1251,8 @@ DefaultVmwareEngineStub::GetDnsBindPermission(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncRevokeDnsBindPermission(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -1232,7 +1272,9 @@ DefaultVmwareEngineStub::AsyncRevokeDnsBindPermission(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -1247,7 +1289,9 @@ DefaultVmwareEngineStub::AsyncGetOperation(
 
 future<Status> DefaultVmwareEngineStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

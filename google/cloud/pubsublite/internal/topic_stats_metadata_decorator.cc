@@ -44,29 +44,29 @@ TopicStatsServiceMetadata::TopicStatsServiceMetadata(
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceMetadata::ComputeMessageStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("topic=", internal::UrlEncode(request.topic())));
-  return child_->ComputeMessageStats(context, request);
+  return child_->ComputeMessageStats(context, options, request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 TopicStatsServiceMetadata::ComputeHeadCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("topic=", internal::UrlEncode(request.topic())));
-  return child_->ComputeHeadCursor(context, request);
+  return child_->ComputeHeadCursor(context, options, request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 TopicStatsServiceMetadata::ComputeTimeCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("topic=", internal::UrlEncode(request.topic())));
-  return child_->ComputeTimeCursor(context, request);
+  return child_->ComputeTimeCursor(context, options, request);
 }
 
 void TopicStatsServiceMetadata::SetMetadata(grpc::ClientContext& context,

@@ -29,6 +29,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -118,8 +119,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CreateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L459}
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
+  /// [google.bigtable.admin.v2.CreateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L514}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
@@ -151,8 +152,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CreateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L459}
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
+  /// [google.bigtable.admin.v2.CreateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L514}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
@@ -187,8 +188,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListTablesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L561}
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
+  /// [google.bigtable.admin.v2.ListTablesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L616}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::Table> ListTables(
@@ -226,8 +227,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListTablesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L561}
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
+  /// [google.bigtable.admin.v2.ListTablesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L616}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::Table> ListTables(
@@ -254,8 +255,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.GetTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L604}
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
+  /// [google.bigtable.admin.v2.GetTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L659}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Table> GetTable(std::string const& name,
@@ -284,8 +285,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.GetTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L604}
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
+  /// [google.bigtable.admin.v2.GetTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L659}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Table> GetTable(
@@ -330,8 +331,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
-  /// [google.bigtable.admin.v2.UpdateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L622}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
+  /// [google.bigtable.admin.v2.UpdateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L677}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
@@ -368,8 +369,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
-  /// [google.bigtable.admin.v2.UpdateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L622}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
+  /// [google.bigtable.admin.v2.UpdateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L677}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
@@ -394,7 +395,7 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L658}
+  /// [google.bigtable.admin.v2.DeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L713}
   ///
   // clang-format on
   Status DeleteTable(std::string const& name, Options opts = {});
@@ -420,7 +421,7 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L658}
+  /// [google.bigtable.admin.v2.DeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L713}
   ///
   // clang-format on
   Status DeleteTable(
@@ -454,8 +455,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
-  /// [google.bigtable.admin.v2.UndeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L672}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
+  /// [google.bigtable.admin.v2.UndeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L727}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
@@ -491,12 +492,361 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
-  /// [google.bigtable.admin.v2.UndeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L672}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
+  /// [google.bigtable.admin.v2.UndeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L727}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
       google::bigtable::admin::v2::UndeleteTableRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AuthorizedView in a table.
+  ///
+  /// @param parent  Required. This is the name of the table the AuthorizedView belongs to.
+  ///  Values are of the form
+  ///  `projects/{project}/instances/{instance}/tables/{table}`.
+  /// @param authorized_view  Required. The AuthorizedView to create.
+  /// @param authorized_view_id  Required. The id of the AuthorizedView to create. This AuthorizedView must
+  ///  not already exist. The `authorized_view_id` appended to `parent` forms the
+  ///  full AuthorizedView name of the form
+  ///  `projects/{project}/instances/{instance}/tables/{table}/authorizedView/{authorized_view}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.AuthorizedView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AuthorizedView]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L193}
+  /// [google.bigtable.admin.v2.CreateAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1261}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+  CreateAuthorizedView(
+      std::string const& parent,
+      google::bigtable::admin::v2::AuthorizedView const& authorized_view,
+      std::string const& authorized_view_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AuthorizedView in a table.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.CreateAuthorizedViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.AuthorizedView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AuthorizedView]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L193}
+  /// [google.bigtable.admin.v2.CreateAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1261}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+  CreateAuthorizedView(
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all AuthorizedViews from a specific table.
+  ///
+  /// @param parent  Required. The unique name of the table for which AuthorizedViews should be
+  ///  listed. Values are of the form
+  ///  `projects/{project}/instances/{instance}/tables/{table}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.AuthorizedView], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AuthorizedView]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L193}
+  /// [google.bigtable.admin.v2.ListAuthorizedViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1296}
+  ///
+  // clang-format on
+  StreamRange<google::bigtable::admin::v2::AuthorizedView> ListAuthorizedViews(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all AuthorizedViews from a specific table.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.ListAuthorizedViewsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.AuthorizedView], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AuthorizedView]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L193}
+  /// [google.bigtable.admin.v2.ListAuthorizedViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1296}
+  ///
+  // clang-format on
+  StreamRange<google::bigtable::admin::v2::AuthorizedView> ListAuthorizedViews(
+      google::bigtable::admin::v2::ListAuthorizedViewsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets information from a specified AuthorizedView.
+  ///
+  /// @param name  Required. The unique name of the requested AuthorizedView.
+  ///  Values are of the form
+  ///  `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.AuthorizedView])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AuthorizedView]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L193}
+  /// [google.bigtable.admin.v2.GetAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1340}
+  ///
+  // clang-format on
+  StatusOr<google::bigtable::admin::v2::AuthorizedView> GetAuthorizedView(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets information from a specified AuthorizedView.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.GetAuthorizedViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.AuthorizedView])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AuthorizedView]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L193}
+  /// [google.bigtable.admin.v2.GetAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1340}
+  ///
+  // clang-format on
+  StatusOr<google::bigtable::admin::v2::AuthorizedView> GetAuthorizedView(
+      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an AuthorizedView in a table.
+  ///
+  /// @param authorized_view  Required. The AuthorizedView to update. The `name` in `authorized_view` is
+  ///  used to identify the AuthorizedView. AuthorizedView name must in this
+  ///  format
+  ///  `projects/<project>/instances/<instance>/tables/<table>/authorizedViews/<authorized_view>`
+  /// @param update_mask  Optional. The list of fields to update.
+  ///  A mask specifying which fields in the AuthorizedView resource should be
+  ///  updated. This mask is relative to the AuthorizedView resource, not to the
+  ///  request message. A field will be overwritten if it is in the mask. If
+  ///  empty, all fields set in the request will be overwritten. A special value
+  ///  `*` means to overwrite all fields (including fields not set in the
+  ///  request).
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.AuthorizedView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AuthorizedView]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L193}
+  /// [google.bigtable.admin.v2.UpdateAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1358}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+  UpdateAuthorizedView(
+      google::bigtable::admin::v2::AuthorizedView const& authorized_view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an AuthorizedView in a table.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.UpdateAuthorizedViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.AuthorizedView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AuthorizedView]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L193}
+  /// [google.bigtable.admin.v2.UpdateAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1358}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+  UpdateAuthorizedView(
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Permanently deletes a specified AuthorizedView.
+  ///
+  /// @param name  Required. The unique name of the AuthorizedView to be deleted.
+  ///  Values are of the form
+  ///  `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1396}
+  ///
+  // clang-format on
+  Status DeleteAuthorizedView(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Permanently deletes a specified AuthorizedView.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.DeleteAuthorizedViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1396}
+  ///
+  // clang-format on
+  Status DeleteAuthorizedView(
+      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -526,8 +876,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ModifyColumnFamiliesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L699}
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
+  /// [google.bigtable.admin.v2.ModifyColumnFamiliesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L754}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
@@ -562,8 +912,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ModifyColumnFamiliesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L699}
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
+  /// [google.bigtable.admin.v2.ModifyColumnFamiliesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L754}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
@@ -593,7 +943,7 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DropRowRangeRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L537}
+  /// [google.bigtable.admin.v2.DropRowRangeRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L592}
   ///
   // clang-format on
   Status DropRowRange(
@@ -623,8 +973,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.GenerateConsistencyTokenRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L744}
-  /// [google.bigtable.admin.v2.GenerateConsistencyTokenResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L758}
+  /// [google.bigtable.admin.v2.GenerateConsistencyTokenRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L805}
+  /// [google.bigtable.admin.v2.GenerateConsistencyTokenResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L819}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
@@ -656,8 +1006,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.GenerateConsistencyTokenRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L744}
-  /// [google.bigtable.admin.v2.GenerateConsistencyTokenResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L758}
+  /// [google.bigtable.admin.v2.GenerateConsistencyTokenRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L805}
+  /// [google.bigtable.admin.v2.GenerateConsistencyTokenResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L819}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
@@ -689,8 +1039,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L765}
-  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L782}
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L826}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L843}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
@@ -722,8 +1072,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L765}
-  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L782}
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L826}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L843}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
@@ -772,9 +1122,9 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.CreateBackupMetadata]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L977}
-  /// [google.bigtable.admin.v2.CreateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L952}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.CreateBackupMetadata]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1038}
+  /// [google.bigtable.admin.v2.CreateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1013}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
@@ -821,9 +1171,9 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.CreateBackupMetadata]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L977}
-  /// [google.bigtable.admin.v2.CreateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L952}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.CreateBackupMetadata]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1038}
+  /// [google.bigtable.admin.v2.CreateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1013}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
@@ -853,8 +1203,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.GetBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1012}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.GetBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1073}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
@@ -883,8 +1233,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.GetBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1012}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.GetBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1073}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
@@ -918,8 +1268,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.UpdateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L993}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.UpdateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1054}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
@@ -949,8 +1299,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.UpdateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L993}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.UpdateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1054}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
@@ -975,7 +1325,7 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1026}
+  /// [google.bigtable.admin.v2.DeleteBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1087}
   ///
   // clang-format on
   Status DeleteBackup(std::string const& name, Options opts = {});
@@ -1001,7 +1351,7 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1026}
+  /// [google.bigtable.admin.v2.DeleteBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1087}
   ///
   // clang-format on
   Status DeleteBackup(
@@ -1039,8 +1389,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.ListBackupsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1040}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.ListBackupsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1101}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::Backup> ListBackups(
@@ -1079,8 +1429,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.ListBackupsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1040}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.ListBackupsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1101}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::Backup> ListBackups(
@@ -1123,8 +1473,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.RestoreTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L386}
-  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L62}
+  /// [google.bigtable.admin.v2.RestoreTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L441}
+  /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
@@ -1180,8 +1530,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.CopyBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1137}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.CopyBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1198}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
@@ -1220,8 +1570,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L335}
-  /// [google.bigtable.admin.v2.CopyBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1137}
+  /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L421}
+  /// [google.bigtable.admin.v2.CopyBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1198}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
@@ -1462,8 +1812,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L765}
-  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L782}
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L826}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L843}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
@@ -1496,8 +1846,8 @@ class BigtableTableAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L765}
-  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L782}
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L826}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L843}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>

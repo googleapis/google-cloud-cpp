@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_TASKS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_TASKS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/run/v2/task.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,11 +36,11 @@ class TasksStub {
   virtual ~TasksStub() = 0;
 
   virtual StatusOr<google::cloud::run::v2::Task> GetTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetTaskRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::run::v2::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListTasksRequest const& request) = 0;
 };
 
@@ -49,11 +51,11 @@ class DefaultTasksStub : public TasksStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::run::v2::Task> GetTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListTasksRequest const& request) override;
 
  private:

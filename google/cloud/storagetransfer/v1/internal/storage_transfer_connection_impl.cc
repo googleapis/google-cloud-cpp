@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -80,12 +81,12 @@ StorageTransferServiceConnectionImpl::GetGoogleServiceAccount(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGoogleServiceAccount(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
                  request) {
-        return stub_->GetGoogleServiceAccount(context, request);
+        return stub_->GetGoogleServiceAccount(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
@@ -95,12 +96,12 @@ StorageTransferServiceConnectionImpl::CreateTransferJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTransferJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::CreateTransferJobRequest const&
                  request) {
-        return stub_->CreateTransferJob(context, request);
+        return stub_->CreateTransferJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
@@ -110,12 +111,12 @@ StorageTransferServiceConnectionImpl::UpdateTransferJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTransferJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::UpdateTransferJobRequest const&
                  request) {
-        return stub_->UpdateTransferJob(context, request);
+        return stub_->UpdateTransferJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
@@ -126,11 +127,11 @@ StorageTransferServiceConnectionImpl::GetTransferJob(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTransferJob(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::GetTransferJobRequest const& request) {
-        return stub_->GetTransferJob(context, request);
+        return stub_->GetTransferJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::storagetransfer::v1::TransferJob>
@@ -142,21 +143,22 @@ StorageTransferServiceConnectionImpl::ListTransferJobs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::storagetransfer::v1::TransferJob>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            storagetransfer_v1::StorageTransferServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::storagetransfer::v1::ListTransferJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::storagetransfer::v1::ListTransferJobsRequest const&
                        request) {
-              return stub->ListTransferJobs(context, request);
+              return stub->ListTransferJobs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::storagetransfer::v1::ListTransferJobsResponse r) {
         std::vector<google::storagetransfer::v1::TransferJob> result(
@@ -173,12 +175,12 @@ Status StorageTransferServiceConnectionImpl::PauseTransferOperation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PauseTransferOperation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::PauseTransferOperationRequest const&
                  request) {
-        return stub_->PauseTransferOperation(context, request);
+        return stub_->PauseTransferOperation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status StorageTransferServiceConnectionImpl::ResumeTransferOperation(
@@ -188,46 +190,50 @@ Status StorageTransferServiceConnectionImpl::ResumeTransferOperation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ResumeTransferOperation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::ResumeTransferOperationRequest const&
                  request) {
-        return stub_->ResumeTransferOperation(context, request);
+        return stub_->ResumeTransferOperation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceConnectionImpl::RunTransferJob(
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RunTransferJob(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::storagetransfer::v1::TransferOperation>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::storagetransfer::v1::RunTransferJobRequest const& request) {
-        return stub->AsyncRunTransferJob(cq, std::move(context), options,
-                                         request);
+        return stub->AsyncRunTransferJob(cq, std::move(context),
+                                         std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::storagetransfer::v1::TransferOperation>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RunTransferJob(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -237,12 +243,12 @@ Status StorageTransferServiceConnectionImpl::DeleteTransferJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTransferJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::DeleteTransferJobRequest const&
                  request) {
-        return stub_->DeleteTransferJob(context, request);
+        return stub_->DeleteTransferJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
@@ -253,11 +259,11 @@ StorageTransferServiceConnectionImpl::CreateAgentPool(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateAgentPool(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
-        return stub_->CreateAgentPool(context, request);
+        return stub_->CreateAgentPool(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
@@ -268,11 +274,11 @@ StorageTransferServiceConnectionImpl::UpdateAgentPool(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAgentPool(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
-        return stub_->UpdateAgentPool(context, request);
+        return stub_->UpdateAgentPool(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
@@ -282,11 +288,11 @@ StorageTransferServiceConnectionImpl::GetAgentPool(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAgentPool(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::GetAgentPoolRequest const& request) {
-        return stub_->GetAgentPool(context, request);
+        return stub_->GetAgentPool(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::storagetransfer::v1::AgentPool>
@@ -298,21 +304,22 @@ StorageTransferServiceConnectionImpl::ListAgentPools(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::storagetransfer::v1::AgentPool>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            storagetransfer_v1::StorageTransferServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::storagetransfer::v1::ListAgentPoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::storagetransfer::v1::ListAgentPoolsRequest const&
                        request) {
-              return stub->ListAgentPools(context, request);
+              return stub->ListAgentPools(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::storagetransfer::v1::ListAgentPoolsResponse r) {
         std::vector<google::storagetransfer::v1::AgentPool> result(
@@ -330,11 +337,11 @@ Status StorageTransferServiceConnectionImpl::DeleteAgentPool(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAgentPool(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
-        return stub_->DeleteAgentPool(context, request);
+        return stub_->DeleteAgentPool(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

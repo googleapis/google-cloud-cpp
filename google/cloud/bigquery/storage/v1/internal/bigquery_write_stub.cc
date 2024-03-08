@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ BigQueryWriteStub::~BigQueryWriteStub() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 DefaultBigQueryWriteStub::CreateWriteStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
         request) {
   google::cloud::bigquery::storage::v1::WriteStream response;
@@ -48,11 +49,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::bigquery::storage::v1::AppendRowsResponse>>
 DefaultBigQueryWriteStub::AsyncAppendRows(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncAppendRows(context, cq);
       });
@@ -60,7 +62,7 @@ DefaultBigQueryWriteStub::AsyncAppendRows(
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 DefaultBigQueryWriteStub::GetWriteStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
         request) {
   google::cloud::bigquery::storage::v1::WriteStream response;
@@ -73,7 +75,7 @@ DefaultBigQueryWriteStub::GetWriteStream(
 
 StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
 DefaultBigQueryWriteStub::FinalizeWriteStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
         request) {
   google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse response;
@@ -86,7 +88,7 @@ DefaultBigQueryWriteStub::FinalizeWriteStream(
 
 StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
 DefaultBigQueryWriteStub::BatchCommitWriteStreams(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
         request) {
   google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse
@@ -101,7 +103,7 @@ DefaultBigQueryWriteStub::BatchCommitWriteStreams(
 
 StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
 DefaultBigQueryWriteStub::FlushRows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
   google::cloud::bigquery::storage::v1::FlushRowsResponse response;
   auto status = grpc_stub_->FlushRows(&context, request, &response);

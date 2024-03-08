@@ -51,6 +51,21 @@ namespace. For status on this see [#8234].
 </details>
 
 <details>
+<summary>Pubsub: remove legacy admin APIs</summary>
+<br>
+
+We will remove the hand-written versions of the Pub/Sub admin APIs. These have
+been superseded by versions generated automatically from the service
+definitions. The new APIs can be found in the
+[`google/cloud/pubsub/admin`](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub/admin)
+tree and within the `google::cloud::pubsub_admin` namespace. Starting with the
+v2.23.0 release, and depending on your compiler settings, using the old
+classes/functions may elicit a deprecation warning. See [#12987] for more
+details.
+
+</details>
+
+<details>
 <summary>Spanner: remove legacy admin APIs</summary>
 <br>
 
@@ -109,6 +124,7 @@ info, see [#7463] and [#5976].
 
 </details>
 
+[#12987]: https://github.com/googleapis/google-cloud-cpp/issues/12987
 [#5976]: https://github.com/googleapis/google-cloud-cpp/issues/5976
 [#7356]: https://github.com/googleapis/google-cloud-cpp/issues/7356
 [#7463]: https://github.com/googleapis/google-cloud-cpp/issues/7463

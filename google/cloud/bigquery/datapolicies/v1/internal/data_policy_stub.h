@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATAPOLICIES_V1_INTERNAL_DATA_POLICY_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATAPOLICIES_V1_INTERNAL_DATA_POLICY_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/bigquery/datapolicies/v1/datapolicy.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,51 +37,51 @@ class DataPolicyServiceStub {
 
   virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   CreateDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   UpdateDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   RenameDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
           request) = 0;
 
   virtual Status DeleteDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   GetDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
   ListDataPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
           request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 
@@ -93,48 +95,48 @@ class DefaultDataPolicyServiceStub : public DataPolicyServiceStub {
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   CreateDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   UpdateDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   RenameDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
           request) override;
 
   Status DeleteDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
   ListDataPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:

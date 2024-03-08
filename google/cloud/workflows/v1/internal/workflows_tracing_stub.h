@@ -38,40 +38,45 @@ class WorkflowsTracingStub : public WorkflowsStub {
   explicit WorkflowsTracingStub(std::shared_ptr<WorkflowsStub> child);
 
   StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse> ListWorkflows(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::v1::ListWorkflowsRequest const& request)
       override;
 
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::v1::GetWorkflowRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkflow(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::workflows::v1::CreateWorkflowRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkflow(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkflow(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

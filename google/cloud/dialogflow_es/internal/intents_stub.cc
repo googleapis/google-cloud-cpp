@@ -22,6 +22,7 @@
 #include <google/cloud/dialogflow/v2/intent.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ IntentsStub::~IntentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse>
 DefaultIntentsStub::ListIntents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListIntentsRequest const& request) {
   google::cloud::dialogflow::v2::ListIntentsResponse response;
   auto status = grpc_stub_->ListIntents(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultIntentsStub::ListIntents(
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent> DefaultIntentsStub::GetIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetIntentRequest const& request) {
   google::cloud::dialogflow::v2::Intent response;
   auto status = grpc_stub_->GetIntent(&context, request, &response);
@@ -55,7 +56,7 @@ StatusOr<google::cloud::dialogflow::v2::Intent> DefaultIntentsStub::GetIntent(
 
 StatusOr<google::cloud::dialogflow::v2::Intent>
 DefaultIntentsStub::CreateIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateIntentRequest const& request) {
   google::cloud::dialogflow::v2::Intent response;
   auto status = grpc_stub_->CreateIntent(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultIntentsStub::CreateIntent(
 
 StatusOr<google::cloud::dialogflow::v2::Intent>
 DefaultIntentsStub::UpdateIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateIntentRequest const& request) {
   google::cloud::dialogflow::v2::Intent response;
   auto status = grpc_stub_->UpdateIntent(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultIntentsStub::UpdateIntent(
 }
 
 Status DefaultIntentsStub::DeleteIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteIntentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteIntent(&context, request, &response);
@@ -91,7 +92,8 @@ Status DefaultIntentsStub::DeleteIntent(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIntentsStub::AsyncBatchUpdateIntents(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest,
@@ -109,7 +111,8 @@ DefaultIntentsStub::AsyncBatchUpdateIntents(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIntentsStub::AsyncBatchDeleteIntents(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest,
@@ -127,7 +130,9 @@ DefaultIntentsStub::AsyncBatchDeleteIntents(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIntentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -142,7 +147,9 @@ DefaultIntentsStub::AsyncGetOperation(
 
 future<Status> DefaultIntentsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

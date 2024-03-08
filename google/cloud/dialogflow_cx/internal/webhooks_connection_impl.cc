@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -66,20 +67,21 @@ WebhooksConnectionImpl::ListWebhooks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Webhook>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::cx::v3::ListWebhooksRequest const&
                        request) {
-              return stub->ListWebhooks(context, request);
+              return stub->ListWebhooks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListWebhooksResponse r) {
         std::vector<google::cloud::dialogflow::cx::v3::Webhook> result(
@@ -98,11 +100,11 @@ WebhooksConnectionImpl::GetWebhook(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWebhook(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
-        return stub_->GetWebhook(context, request);
+        return stub_->GetWebhook(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
@@ -112,10 +114,12 @@ WebhooksConnectionImpl::CreateWebhook(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateWebhook(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::CreateWebhookRequest const&
-                 request) { return stub_->CreateWebhook(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateWebhook(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
@@ -125,10 +129,12 @@ WebhooksConnectionImpl::UpdateWebhook(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateWebhook(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const&
-                 request) { return stub_->UpdateWebhook(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateWebhook(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status WebhooksConnectionImpl::DeleteWebhook(
@@ -137,10 +143,12 @@ Status WebhooksConnectionImpl::DeleteWebhook(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteWebhook(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&
-                 request) { return stub_->DeleteWebhook(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteWebhook(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

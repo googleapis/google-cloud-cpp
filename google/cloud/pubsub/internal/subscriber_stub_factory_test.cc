@@ -90,7 +90,7 @@ TEST_F(SubscriberStubFactory, RoundRobin) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockSubscriberStub>();
         EXPECT_CALL(*mock, CreateSubscription)
-            .WillOnce([](grpc::ClientContext&,
+            .WillOnce([](grpc::ClientContext&, Options const&,
                          google::pubsub::v1::Subscription const&) {
               return StatusOr<google::pubsub::v1::Subscription>(
                   Status(StatusCode::kUnavailable, "nothing here"));
@@ -109,7 +109,7 @@ TEST_F(SubscriberStubFactory, RoundRobin) {
   google::pubsub::v1::Subscription req;
   req.set_name("projects/test-project/subscriptions/my-sub");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->CreateSubscription(context, req);
+  auto response = stub->CreateSubscription(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -120,7 +120,7 @@ TEST_F(SubscriberStubFactory, Auth) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockSubscriberStub>();
         EXPECT_CALL(*mock, CreateSubscription)
-            .WillOnce([](grpc::ClientContext& context,
+            .WillOnce([](grpc::ClientContext& context, Options const&,
                          google::pubsub::v1::Subscription const&) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context.credentials(), NotNull());
@@ -139,7 +139,7 @@ TEST_F(SubscriberStubFactory, Auth) {
   google::pubsub::v1::Subscription req;
   req.set_name("projects/test-project/subscriptions/my-sub");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->CreateSubscription(context, req);
+  auto response = stub->CreateSubscription(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -150,7 +150,7 @@ TEST_F(SubscriberStubFactory, Metadata) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockSubscriberStub>();
         EXPECT_CALL(*mock, CreateSubscription)
-            .WillOnce([this](grpc::ClientContext& context,
+            .WillOnce([this](grpc::ClientContext& context, Options const&,
                              google::pubsub::v1::Subscription const& request) {
               // Verify the Metadata decorator is present
               IsContextMDValid(context,
@@ -171,7 +171,7 @@ TEST_F(SubscriberStubFactory, Metadata) {
   google::pubsub::v1::Subscription req;
   req.set_name("projects/test-project/subscriptions/my-sub");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->CreateSubscription(context, req);
+  auto response = stub->CreateSubscription(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -182,7 +182,7 @@ TEST_F(SubscriberStubFactory, Logging) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockSubscriberStub>();
         EXPECT_CALL(*mock, CreateSubscription)
-            .WillOnce([](grpc::ClientContext&,
+            .WillOnce([](grpc::ClientContext&, Options const&,
                          google::pubsub::v1::Subscription const&) {
               return StatusOr<google::pubsub::v1::Subscription>(
                   Status(StatusCode::kUnavailable, "nothing here"));
@@ -200,7 +200,7 @@ TEST_F(SubscriberStubFactory, Logging) {
   google::pubsub::v1::Subscription req;
   req.set_name("projects/test-project/subscriptions/my-sub");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->CreateSubscription(context, req);
+  auto response = stub->CreateSubscription(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   // Verify the logging decorator is present.
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("CreateSubscription")));
@@ -223,7 +223,7 @@ TEST_F(SubscriberStubFactory, TracingEnabled) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockSubscriberStub>();
         EXPECT_CALL(*mock, CreateSubscription)
-            .WillOnce([](grpc::ClientContext& context,
+            .WillOnce([](grpc::ClientContext& context, Options const&,
                          google::pubsub::v1::Subscription const&) {
               ValidatePropagator(context);
               return StatusOr<google::pubsub::v1::Subscription>(
@@ -244,7 +244,7 @@ TEST_F(SubscriberStubFactory, TracingEnabled) {
               .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
       factory.AsStdFunction());
   req.set_name("projects/test-project/topics/my-subscription");
-  auto response = stub->CreateSubscription(context, req);
+  auto response = stub->CreateSubscription(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 
   EXPECT_THAT(
@@ -260,7 +260,7 @@ TEST_F(SubscriberStubFactory, TracingDisabled) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockSubscriberStub>();
         EXPECT_CALL(*mock, CreateSubscription)
-            .WillOnce([](grpc::ClientContext& context,
+            .WillOnce([](grpc::ClientContext& context, Options const&,
                          google::pubsub::v1::Subscription const&) {
               ValidateNoPropagator(context);
               return StatusOr<google::pubsub::v1::Subscription>(
@@ -281,7 +281,7 @@ TEST_F(SubscriberStubFactory, TracingDisabled) {
               .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
       factory.AsStdFunction());
   req.set_name("projects/test-project/topics/my-subscription");
-  auto response = stub->CreateSubscription(context, req);
+  auto response = stub->CreateSubscription(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());

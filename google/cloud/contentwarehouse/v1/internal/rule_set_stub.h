@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_INTERNAL_RULE_SET_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_INTERNAL_RULE_SET_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,27 +36,27 @@ class RuleSetServiceStub {
   virtual ~RuleSetServiceStub() = 0;
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::CreateRuleSetRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::GetRuleSetRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const&
           request) = 0;
 
   virtual Status DeleteRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
-  ListRuleSets(grpc::ClientContext& context,
+  ListRuleSets(grpc::ClientContext& context, Options const& options,
                google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
                    request) = 0;
 };
@@ -68,27 +70,27 @@ class DefaultRuleSetServiceStub : public RuleSetServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request)
       override;
 
   Status DeleteRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
-  ListRuleSets(grpc::ClientContext& context,
+  ListRuleSets(grpc::ClientContext& context, Options const& options,
                google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
                    request) override;
 

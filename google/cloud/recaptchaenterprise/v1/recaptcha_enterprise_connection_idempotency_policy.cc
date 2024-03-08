@@ -124,6 +124,13 @@ RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::DeleteFirewallPolicy(
 }
 
 Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ReorderFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListRelatedAccountGroups(
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupsRequest) {  // NOLINT

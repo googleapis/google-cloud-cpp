@@ -27,6 +27,7 @@
 #include <google/cloud/certificatemanager/v1/certificate_manager.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -40,174 +41,190 @@ class CertificateManagerStub {
   virtual StatusOr<
       google::cloud::certificatemanager::v1::ListCertificatesResponse>
   ListCertificates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::ListCertificatesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::certificatemanager::v1::Certificate>
   GetCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::GetCertificateRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateCertificate(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::CreateCertificateRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateCertificate(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCertificate(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::certificatemanager::v1::ListCertificateMapsResponse>
   ListCertificateMaps(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::ListCertificateMapsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
   GetCertificateMap(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateCertificateMap(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateCertificateMap(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCertificateMap(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse>
   ListCertificateMapEntries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::
           ListCertificateMapEntriesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
-  GetCertificateMapEntry(grpc::ClientContext& context,
+  GetCertificateMapEntry(grpc::ClientContext& context, Options const& options,
                          google::cloud::certificatemanager::v1::
                              GetCertificateMapEntryRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateCertificateMapEntry(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           CreateCertificateMapEntryRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateCertificateMapEntry(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           UpdateCertificateMapEntryRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCertificateMapEntry(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           DeleteCertificateMapEntryRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse>
   ListDnsAuthorizations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
   GetDnsAuthorization(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateDnsAuthorization(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           CreateDnsAuthorizationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateDnsAuthorization(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           UpdateDnsAuthorizationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteDnsAuthorization(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           DeleteDnsAuthorizationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::certificatemanager::v1::
                        ListCertificateIssuanceConfigsResponse>
   ListCertificateIssuanceConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::
           ListCertificateIssuanceConfigsRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
   GetCertificateIssuanceConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::
           GetCertificateIssuanceConfigRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateCertificateIssuanceConfig(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           CreateCertificateIssuanceConfigRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCertificateIssuanceConfig(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -223,162 +240,178 @@ class DefaultCertificateManagerStub : public CertificateManagerStub {
 
   StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
   ListCertificates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::ListCertificatesRequest const&
           request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::Certificate> GetCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::GetCertificateRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCertificate(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::CreateCertificateRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCertificate(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCertificate(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
           request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::ListCertificateMapsResponse>
   ListCertificateMaps(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::ListCertificateMapsRequest const&
           request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
   GetCertificateMap(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCertificateMap(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCertificateMap(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCertificateMap(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
           request) override;
 
   StatusOr<
       google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse>
   ListCertificateMapEntries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::
           ListCertificateMapEntriesRequest const& request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
   GetCertificateMapEntry(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::
           GetCertificateMapEntryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateCertificateMapEntry(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           CreateCertificateMapEntryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateCertificateMapEntry(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           UpdateCertificateMapEntryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCertificateMapEntry(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           DeleteCertificateMapEntryRequest const& request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse>
   ListDnsAuthorizations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest const&
           request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
   GetDnsAuthorization(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDnsAuthorization(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           CreateDnsAuthorizationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDnsAuthorization(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           UpdateDnsAuthorizationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDnsAuthorization(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           DeleteDnsAuthorizationRequest const& request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::
                ListCertificateIssuanceConfigsResponse>
   ListCertificateIssuanceConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::
           ListCertificateIssuanceConfigsRequest const& request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
   GetCertificateIssuanceConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::certificatemanager::v1::
           GetCertificateIssuanceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateCertificateIssuanceConfig(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           CreateCertificateIssuanceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCertificateIssuanceConfig(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

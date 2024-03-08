@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,307 +37,401 @@ BigtableTableAdminLogging::BigtableTableAdminLogging(
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminLogging::CreateTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::CreateTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::CreateTableRequest const& request) {
-        return child_->CreateTable(context, request);
+        return child_->CreateTable(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 BigtableTableAdminLogging::ListTables(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ListTablesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::ListTablesRequest const& request) {
-        return child_->ListTables(context, request);
+        return child_->ListTables(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminLogging::GetTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GetTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::GetTableRequest const& request) {
-        return child_->GetTable(context, request);
+        return child_->GetTable(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncUpdateTable(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::bigtable::admin::v2::UpdateTableRequest const& request) {
-        return child_->AsyncUpdateTable(cq, std::move(context), options,
-                                        request);
+        return child_->AsyncUpdateTable(cq, std::move(context),
+                                        std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 Status BigtableTableAdminLogging::DeleteTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::DeleteTableRequest const& request) {
-        return child_->DeleteTable(context, request);
+        return child_->DeleteTable(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncUndeleteTable(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::bigtable::admin::v2::UndeleteTableRequest const& request) {
-        return child_->AsyncUndeleteTable(cq, std::move(context), options,
-                                          request);
+        return child_->AsyncUndeleteTable(cq, std::move(context),
+                                          std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminLogging::AsyncCreateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::CreateAuthorizedViewRequest const&
+                 request) {
+        return child_->AsyncCreateAuthorizedView(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
+BigtableTableAdminLogging::ListAuthorizedViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::ListAuthorizedViewsRequest const&
+                 request) {
+        return child_->ListAuthorizedViews(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminLogging::GetAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::GetAuthorizedViewRequest const&
+                 request) {
+        return child_->GetAuthorizedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminLogging::AsyncUpdateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::UpdateAuthorizedViewRequest const&
+                 request) {
+        return child_->AsyncUpdateAuthorizedView(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+Status BigtableTableAdminLogging::DeleteAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::DeleteAuthorizedViewRequest const&
+                 request) {
+        return child_->DeleteAuthorizedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminLogging::ModifyColumnFamilies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&
                  request) {
-        return child_->ModifyColumnFamilies(context, request);
+        return child_->ModifyColumnFamilies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status BigtableTableAdminLogging::DropRowRange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DropRowRangeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::DropRowRangeRequest const& request) {
-        return child_->DropRowRange(context, request);
+        return child_->DropRowRange(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
 BigtableTableAdminLogging::GenerateConsistencyToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
                  request) {
-        return child_->GenerateConsistencyToken(context, request);
+        return child_->GenerateConsistencyToken(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminLogging::CheckConsistency(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-        return child_->CheckConsistency(context, request);
+        return child_->CheckConsistency(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::bigtable::admin::v2::CreateBackupRequest const& request) {
-        return child_->AsyncCreateBackup(cq, std::move(context), options,
-                                         request);
+        return child_->AsyncCreateBackup(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminLogging::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::GetBackupRequest const& request) {
-        return child_->GetBackup(context, request);
+        return child_->GetBackup(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminLogging::UpdateBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::UpdateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::UpdateBackupRequest const& request) {
-        return child_->UpdateBackup(context, request);
+        return child_->UpdateBackup(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status BigtableTableAdminLogging::DeleteBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::DeleteBackupRequest const& request) {
-        return child_->DeleteBackup(context, request);
+        return child_->DeleteBackup(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::ListBackupsResponse>
 BigtableTableAdminLogging::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ListBackupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::ListBackupsRequest const& request) {
-        return child_->ListBackups(context, request);
+        return child_->ListBackups(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncRestoreTable(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::bigtable::admin::v2::RestoreTableRequest const& request) {
-        return child_->AsyncRestoreTable(cq, std::move(context), options,
-                                         request);
+        return child_->AsyncRestoreTable(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::CopyBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::bigtable::admin::v2::CopyBackupRequest const& request) {
-        return child_->AsyncCopyBackup(cq, std::move(context), options,
-                                       request);
+        return child_->AsyncCopyBackup(cq, std::move(context),
+                                       std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminLogging::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicy(context, request);
+        return child_->GetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminLogging::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicy(context, request);
+        return child_->SetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableTableAdminLogging::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissions(context, request);
+        return child_->TestIamPermissions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminLogging::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-        return child_->AsyncCheckConsistency(cq, std::move(context), request);
+        return child_->AsyncCheckConsistency(cq, std::move(context),
+                                             std::move(options), request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), options,
-                                         request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status> BigtableTableAdminLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), options,
-                                            request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

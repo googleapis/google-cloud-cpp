@@ -41,7 +41,7 @@ class AuthorizedDomainsMetadata : public AuthorizedDomainsStub {
 
   StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
   ListAuthorizedDomains(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListAuthorizedDomainsRequest const& request)
       override;
 

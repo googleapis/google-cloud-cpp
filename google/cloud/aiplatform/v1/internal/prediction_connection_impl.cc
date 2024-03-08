@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -68,11 +69,11 @@ PredictionServiceConnectionImpl::Predict(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Predict(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::PredictRequest const& request) {
-        return stub_->Predict(context, request);
+        return stub_->Predict(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::api::HttpBody> PredictionServiceConnectionImpl::RawPredict(
@@ -81,11 +82,11 @@ StatusOr<google::api::HttpBody> PredictionServiceConnectionImpl::RawPredict(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RawPredict(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::RawPredictRequest const& request) {
-        return stub_->RawPredict(context, request);
+        return stub_->RawPredict(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::api::HttpBody>
@@ -116,11 +117,11 @@ PredictionServiceConnectionImpl::DirectPredict(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DirectPredict(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
-        return stub_->DirectPredict(context, request);
+        return stub_->DirectPredict(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
@@ -130,10 +131,12 @@ PredictionServiceConnectionImpl::DirectRawPredict(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DirectRawPredict(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::DirectRawPredictRequest const&
-                 request) { return stub_->DirectRawPredict(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DirectRawPredict(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
@@ -164,11 +167,11 @@ PredictionServiceConnectionImpl::Explain(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Explain(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ExplainRequest const& request) {
-        return stub_->Explain(context, request);
+        return stub_->Explain(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
@@ -178,10 +181,12 @@ PredictionServiceConnectionImpl::GenerateContent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateContent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GenerateContentRequest const&
-                 request) { return stub_->GenerateContent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GenerateContent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>

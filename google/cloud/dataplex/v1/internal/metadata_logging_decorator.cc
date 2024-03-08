@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataplex/v1/metadata.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,110 +37,110 @@ MetadataServiceLogging::MetadataServiceLogging(
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceLogging::CreateEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::CreateEntityRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::CreateEntityRequest const& request) {
-        return child_->CreateEntity(context, request);
+        return child_->CreateEntity(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceLogging::UpdateEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
-        return child_->UpdateEntity(context, request);
+        return child_->UpdateEntity(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status MetadataServiceLogging::DeleteEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
-        return child_->DeleteEntity(context, request);
+        return child_->DeleteEntity(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceLogging::GetEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetEntityRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::GetEntityRequest const& request) {
-        return child_->GetEntity(context, request);
+        return child_->GetEntity(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse>
 MetadataServiceLogging::ListEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
-        return child_->ListEntities(context, request);
+        return child_->ListEntities(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceLogging::CreatePartition(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
-        return child_->CreatePartition(context, request);
+        return child_->CreatePartition(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status MetadataServiceLogging::DeletePartition(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
-        return child_->DeletePartition(context, request);
+        return child_->DeletePartition(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceLogging::GetPartition(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetPartitionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::GetPartitionRequest const& request) {
-        return child_->GetPartition(context, request);
+        return child_->GetPartition(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse>
 MetadataServiceLogging::ListPartitions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
-        return child_->ListPartitions(context, request);
+        return child_->ListPartitions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

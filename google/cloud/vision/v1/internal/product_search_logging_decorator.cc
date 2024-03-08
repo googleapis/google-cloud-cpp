@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/vision/v1/product_search_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,275 +37,284 @@ ProductSearchLogging::ProductSearchLogging(
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 ProductSearchLogging::CreateProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::CreateProductSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vision::v1::CreateProductSetRequest const& request) {
-        return child_->CreateProductSet(context, request);
+        return child_->CreateProductSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::ListProductSetsResponse>
 ProductSearchLogging::ListProductSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::ListProductSetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::ListProductSetsRequest const& request) {
-        return child_->ListProductSets(context, request);
+        return child_->ListProductSets(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 ProductSearchLogging::GetProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::GetProductSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::GetProductSetRequest const& request) {
-        return child_->GetProductSet(context, request);
+        return child_->GetProductSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 ProductSearchLogging::UpdateProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::UpdateProductSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vision::v1::UpdateProductSetRequest const& request) {
-        return child_->UpdateProductSet(context, request);
+        return child_->UpdateProductSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ProductSearchLogging::DeleteProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::DeleteProductSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vision::v1::DeleteProductSetRequest const& request) {
-        return child_->DeleteProductSet(context, request);
+        return child_->DeleteProductSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::Product>
 ProductSearchLogging::CreateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::CreateProductRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::CreateProductRequest const& request) {
-        return child_->CreateProduct(context, request);
+        return child_->CreateProduct(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::ListProductsResponse>
 ProductSearchLogging::ListProducts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::ListProductsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::ListProductsRequest const& request) {
-        return child_->ListProducts(context, request);
+        return child_->ListProducts(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::Product> ProductSearchLogging::GetProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::GetProductRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::GetProductRequest const& request) {
-        return child_->GetProduct(context, request);
+        return child_->GetProduct(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::Product>
 ProductSearchLogging::UpdateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::UpdateProductRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::UpdateProductRequest const& request) {
-        return child_->UpdateProduct(context, request);
+        return child_->UpdateProduct(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ProductSearchLogging::DeleteProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::DeleteProductRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::DeleteProductRequest const& request) {
-        return child_->DeleteProduct(context, request);
+        return child_->DeleteProduct(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
 ProductSearchLogging::CreateReferenceImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::CreateReferenceImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::CreateReferenceImageRequest const&
                  request) {
-        return child_->CreateReferenceImage(context, request);
+        return child_->CreateReferenceImage(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ProductSearchLogging::DeleteReferenceImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::DeleteReferenceImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::DeleteReferenceImageRequest const&
                  request) {
-        return child_->DeleteReferenceImage(context, request);
+        return child_->DeleteReferenceImage(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse>
 ProductSearchLogging::ListReferenceImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::ListReferenceImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::ListReferenceImagesRequest const&
                  request) {
-        return child_->ListReferenceImages(context, request);
+        return child_->ListReferenceImages(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
 ProductSearchLogging::GetReferenceImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::GetReferenceImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vision::v1::GetReferenceImageRequest const& request) {
-        return child_->GetReferenceImage(context, request);
+        return child_->GetReferenceImage(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ProductSearchLogging::AddProductToProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::AddProductToProductSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::AddProductToProductSetRequest const&
                  request) {
-        return child_->AddProductToProductSet(context, request);
+        return child_->AddProductToProductSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ProductSearchLogging::RemoveProductFromProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
               request) {
-        return child_->RemoveProductFromProductSet(context, request);
+        return child_->RemoveProductFromProductSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse>
 ProductSearchLogging::ListProductsInProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::ListProductsInProductSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::ListProductsInProductSetRequest const&
                  request) {
-        return child_->ListProductsInProductSet(context, request);
+        return child_->ListProductsInProductSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchLogging::AsyncImportProductSets(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::vision::v1::ImportProductSetsRequest const& request) {
-        return child_->AsyncImportProductSets(cq, std::move(context), options,
-                                              request);
+        return child_->AsyncImportProductSets(cq, std::move(context),
+                                              std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchLogging::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::vision::v1::PurgeProductsRequest const& request) {
-        return child_->AsyncPurgeProducts(cq, std::move(context), options,
-                                          request);
+        return child_->AsyncPurgeProducts(cq, std::move(context),
+                                          std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), options,
-                                         request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status> ProductSearchLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), options,
-                                            request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

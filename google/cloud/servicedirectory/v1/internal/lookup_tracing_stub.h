@@ -39,7 +39,7 @@ class LookupServiceTracingStub : public LookupServiceStub {
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
       override;
 

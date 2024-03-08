@@ -21,10 +21,12 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,7 +41,8 @@ class PartitionAssignmentServiceStub {
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
       google::cloud::pubsublite::v1::PartitionAssignment>>
   AsyncAssignPartitions(google::cloud::CompletionQueue const& cq,
-                        std::shared_ptr<grpc::ClientContext> context) = 0;
+                        std::shared_ptr<grpc::ClientContext> context,
+                        google::cloud::internal::ImmutableOptions options) = 0;
 };
 
 class DefaultPartitionAssignmentServiceStub
@@ -54,8 +57,10 @@ class DefaultPartitionAssignmentServiceStub
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
       google::cloud::pubsublite::v1::PartitionAssignment>>
-  AsyncAssignPartitions(google::cloud::CompletionQueue const& cq,
-                        std::shared_ptr<grpc::ClientContext> context) override;
+  AsyncAssignPartitions(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::unique_ptr<

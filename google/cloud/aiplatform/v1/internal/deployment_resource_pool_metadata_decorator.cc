@@ -45,64 +45,70 @@ DeploymentResourcePoolServiceMetadata::DeploymentResourcePoolServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 DeploymentResourcePoolServiceMetadata::AsyncCreateDeploymentResourcePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateDeploymentResourcePool(cq, std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceMetadata::GetDeploymentResourcePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDeploymentResourcePool(context, request);
+  return child_->GetDeploymentResourcePool(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
 DeploymentResourcePoolServiceMetadata::ListDeploymentResourcePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDeploymentResourcePools(context, request);
+  return child_->ListDeploymentResourcePools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DeploymentResourcePoolServiceMetadata::AsyncDeleteDeploymentResourcePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDeploymentResourcePool(cq, std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DeploymentResourcePoolServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> DeploymentResourcePoolServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void DeploymentResourcePoolServiceMetadata::SetMetadata(

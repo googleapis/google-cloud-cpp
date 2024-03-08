@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,47 +34,47 @@ ParticipantsAuth::ParticipantsAuth(
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsAuth::CreateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateParticipant(context, request);
+  return child_->CreateParticipant(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsAuth::GetParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetParticipant(context, request);
+  return child_->GetParticipant(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
 ParticipantsAuth::ListParticipants(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListParticipantsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListParticipants(context, request);
+  return child_->ListParticipants(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsAuth::UpdateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateParticipant(context, request);
+  return child_->UpdateParticipant(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 ParticipantsAuth::AnalyzeContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AnalyzeContent(context, request);
+  return child_->AnalyzeContent(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -81,14 +82,15 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
 ParticipantsAuth::AsyncStreamingAnalyzeContent(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>;
 
-  auto& child = child_;
-  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncStreamingAnalyzeContent(cq, std::move(ctx));
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncStreamingAnalyzeContent(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
@@ -96,29 +98,29 @@ ParticipantsAuth::AsyncStreamingAnalyzeContent(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsAuth::SuggestArticles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SuggestArticles(context, request);
+  return child_->SuggestArticles(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 ParticipantsAuth::SuggestFaqAnswers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SuggestFaqAnswers(context, request);
+  return child_->SuggestFaqAnswers(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 ParticipantsAuth::SuggestSmartReplies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SuggestSmartReplies(context, request);
+  return child_->SuggestSmartReplies(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -42,7 +42,7 @@ class RegionNotificationEndpointsRestStub {
   AsyncDeleteNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           DeleteNotificationEndpointRequest const& request) = 0;
 
@@ -57,7 +57,7 @@ class RegionNotificationEndpointsRestStub {
   AsyncInsertNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           InsertNotificationEndpointRequest const& request) = 0;
 
@@ -72,14 +72,14 @@ class RegionNotificationEndpointsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -98,7 +98,7 @@ class DefaultRegionNotificationEndpointsRestStub
   AsyncDeleteNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           DeleteNotificationEndpointRequest const& request) override;
 
@@ -113,7 +113,7 @@ class DefaultRegionNotificationEndpointsRestStub
   AsyncInsertNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           InsertNotificationEndpointRequest const& request) override;
 
@@ -128,14 +128,14 @@ class DefaultRegionNotificationEndpointsRestStub
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

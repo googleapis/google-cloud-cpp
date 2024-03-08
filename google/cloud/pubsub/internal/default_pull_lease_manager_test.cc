@@ -100,18 +100,17 @@ TEST(DefaultPullLeaseManager, SimpleLeaseLoop) {
                subscription.FullName()));
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock,
-              AsyncModifyAckDeadline(_, context_matcher, request_matcher))
-      .WillOnce([&](auto, auto, auto) {
+              AsyncModifyAckDeadline(_, context_matcher, _, request_matcher))
+      .WillOnce([&] {
         return aseq.PushBack("AsyncModifyAckDeadline").then([](auto f) {
           return f.get() ? Status{} : PermanentError();
         });
       });
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _))
-      .WillOnce([&](auto, auto, auto) {
-        return aseq.PushBack("AsyncModifyAckDeadline").then([](auto f) {
-          return f.get() ? Status{} : PermanentError();
-        });
-      });
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline).WillOnce([&] {
+    return aseq.PushBack("AsyncModifyAckDeadline").then([](auto f) {
+      return f.get() ? Status{} : PermanentError();
+    });
+  });
   auto last_context_matcher = Pointee(Property(
       &grpc::ClientContext::deadline, Le(current_time + kLeaseDeadline)));
   auto last_request_matcher = AllOf(
@@ -121,9 +120,9 @@ TEST(DefaultPullLeaseManager, SimpleLeaseLoop) {
                kLastLeaseExtension.count()),
       Property(&ModifyAckDeadlineRequest::subscription,
                subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, last_context_matcher,
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, last_context_matcher, _,
                                             last_request_matcher))
-      .WillOnce([&](auto, auto, auto) {
+      .WillOnce([&] {
         return aseq.PushBack("AsyncModifyAckDeadline").then([](auto f) {
           return f.get() ? Status{} : PermanentError();
         });
@@ -172,7 +171,7 @@ TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyReleased) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline).Times(0);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock, MakeTestOptions(), subscription, "test-ack-id",
       std::move(clock));
@@ -192,7 +191,7 @@ TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyPastMaxExtension) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline).Times(0);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock, MakeTestOptions(), subscription, "test-ack-id", clock);
   EXPECT_THAT(manager->lease_deadline(),
@@ -212,7 +211,7 @@ TEST(DefaultPullLeaseManager, StartLeaseLoopTooCloseMaxExtension) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline).Times(0);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock, MakeTestOptions(), subscription, "test-ack-id", clock);
   EXPECT_THAT(manager->lease_deadline(),
@@ -233,7 +232,7 @@ TEST(DefaultPullLeaseManager, StartLeaseLoopAlreadyPastCurrentExtension) {
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
   auto mock = std::make_shared<MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).Times(0);
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline).Times(0);
   auto manager = std::make_shared<DefaultPullLeaseManager>(
       cq, mock, MakeTestOptions(), subscription, "test-ack-id", clock);
   EXPECT_GT(manager->current_lease(), current_time);
@@ -303,7 +302,7 @@ TEST(DefaultPullLeaseManager, ExtendLeaseDeadlineSimple) {
                kLeaseExtension.count()),
       Property(&ModifyAckDeadlineRequest::subscription,
                subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
@@ -352,7 +351,7 @@ TEST(DefaultPullLeaseManager, ExtendLeasePermanentError) {
                kLeaseExtension.count()),
       Property(&ModifyAckDeadlineRequest::subscription,
                subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(PermanentError()))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);

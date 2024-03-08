@@ -41,7 +41,7 @@ class InterconnectsRestStub {
   AsyncDeleteInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::interconnects::v1::
           DeleteInterconnectRequest const& request) = 0;
 
@@ -69,7 +69,7 @@ class InterconnectsRestStub {
   AsyncInsertInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::interconnects::v1::
           InsertInterconnectRequest const& request) = 0;
 
@@ -83,7 +83,7 @@ class InterconnectsRestStub {
   AsyncPatchInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::interconnects::v1::
           PatchInterconnectRequest const& request) = 0;
 
@@ -91,7 +91,7 @@ class InterconnectsRestStub {
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
           request) = 0;
 
@@ -99,14 +99,14 @@ class InterconnectsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -124,7 +124,7 @@ class DefaultInterconnectsRestStub : public InterconnectsRestStub {
   AsyncDeleteInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::interconnects::v1::
           DeleteInterconnectRequest const& request) override;
 
@@ -151,7 +151,7 @@ class DefaultInterconnectsRestStub : public InterconnectsRestStub {
   AsyncInsertInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::interconnects::v1::
           InsertInterconnectRequest const& request) override;
 
@@ -165,14 +165,14 @@ class DefaultInterconnectsRestStub : public InterconnectsRestStub {
   AsyncPatchInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::interconnects::v1::
           PatchInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
           request) override;
 
@@ -180,14 +180,14 @@ class DefaultInterconnectsRestStub : public InterconnectsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

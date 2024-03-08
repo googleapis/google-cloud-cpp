@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/pubsublite/v1/topic_stats.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,41 +37,41 @@ TopicStatsServiceLogging::TopicStatsServiceLogging(
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceLogging::ComputeMessageStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
                  request) {
-        return child_->ComputeMessageStats(context, request);
+        return child_->ComputeMessageStats(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 TopicStatsServiceLogging::ComputeHeadCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
                  request) {
-        return child_->ComputeHeadCursor(context, request);
+        return child_->ComputeHeadCursor(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 TopicStatsServiceLogging::ComputeTimeCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
                  request) {
-        return child_->ComputeTimeCursor(context, request);
+        return child_->ComputeTimeCursor(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

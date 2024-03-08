@@ -21,15 +21,7 @@ source module ci/gha/builds/lib/bazel.sh
 source module ci/gha/builds/lib/macos.sh
 source module ci/lib/io.sh
 
-# Usage: macos-bazel.sh [bazel query expression]
-#
-# The build compiles the targets found via `bazel query`. Recall that:
-#    bazel query //a/...
-# returns the targets matching the pattern `//a/...`.` Furthermore, the
-# expressions can be combined using `+` and `-`, so:
-#    bazel query //a/... +//b/... -//a/c/...
-# Returns the targets that match `//a/...` or `//b/...`, but not `//a/c/...`.
-#
+# Usage: macos-bazel.sh
 
 mapfile -t args < <(bazel::common_args)
 mapfile -t test_args < <(bazel::test_args)
@@ -37,13 +29,7 @@ mapfile -t test_args < <(bazel::test_args)
 test_args+=(--test_tag_filters=-integration-test)
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 
-io::log_h1 "Get target list for: " "$@"
-mapfile -t targets < <(bazelisk "${args[@]}" query -- "$@")
-
 io::log_h1 "Starting Build"
 time {
-  # Always run //google/cloud:status_test in case the list of targets has
-  # no unit tests.
-  io::run bazelisk "${args[@]}" test "${test_args[@]}" \
-    -- //google/cloud:status_test "${targets[@]}"
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" //...
 }

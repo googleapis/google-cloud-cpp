@@ -18,6 +18,7 @@
 
 #include "google/cloud/workflows/executions/v1/internal/executions_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ExecutionsTracingStub::ExecutionsTracingStub(
 
 StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
 ExecutionsTracingStub::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::ListExecutionsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -40,12 +41,12 @@ ExecutionsTracingStub::ListExecutions(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListExecutions(context, request));
+                           child_->ListExecutions(context, options, request));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsTracingStub::CreateExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::CreateExecutionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -53,12 +54,12 @@ ExecutionsTracingStub::CreateExecution(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateExecution(context, request));
+                           child_->CreateExecution(context, options, request));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsTracingStub::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::GetExecutionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -66,12 +67,12 @@ ExecutionsTracingStub::GetExecution(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetExecution(context, request));
+                           child_->GetExecution(context, options, request));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsTracingStub::CancelExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::CancelExecutionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -79,7 +80,7 @@ ExecutionsTracingStub::CancelExecution(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CancelExecution(context, request));
+                           child_->CancelExecution(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

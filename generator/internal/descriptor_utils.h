@@ -21,6 +21,7 @@
 #include "absl/types/variant.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
+#include <yaml-cpp/yaml.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -50,7 +51,7 @@ VarsDictionary CreateServiceVars(
  */
 std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service,
-    VarsDictionary const& service_vars);
+    YAML::Node const& service_config, VarsDictionary const& service_vars);
 
 /**
  * Determines which `MethodPattern` to use from patterns for the given method

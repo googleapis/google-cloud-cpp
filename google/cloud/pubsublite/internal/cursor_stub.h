@@ -21,10 +21,12 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -38,17 +40,19 @@ class CursorServiceStub {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
-  AsyncStreamingCommitCursor(google::cloud::CompletionQueue const& cq,
-                             std::shared_ptr<grpc::ClientContext> context) = 0;
+  AsyncStreamingCommitCursor(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
   CommitCursor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CommitCursorRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
   ListPartitionCursors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ListPartitionCursorsRequest const&
           request) = 0;
 };
@@ -66,16 +70,17 @@ class DefaultCursorServiceStub : public CursorServiceStub {
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
   AsyncStreamingCommitCursor(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CommitCursorRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
   ListPartitionCursors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request)
       override;
 

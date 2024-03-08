@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/options.h"
 #include <atomic>
 #include <memory>
 #include <string>
@@ -41,30 +42,32 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
   static future<StatusOr<std::vector<bigtable::RowKeySample>>> Create(
       CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
       std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
-      std::unique_ptr<BackoffPolicy> backoff_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
       std::string const& app_profile_id, std::string const& table_name);
 
  private:
   AsyncRowSampler(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
                   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                   std::unique_ptr<BackoffPolicy> backoff_policy,
-                  std::string const& app_profile_id,
+                  bool enable_server_retries, std::string const& app_profile_id,
                   std::string const& table_name);
 
   void StartIteration();
   future<bool> OnRead(google::bigtable::v2::SampleRowKeysResponse response);
-  void OnFinish(Status status);
+  void OnFinish(Status const& status);
 
   CompletionQueue cq_;
   std::shared_ptr<BigtableStub> stub_;
   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
+  bool enable_server_retries_;
   std::string app_profile_id_;
   std::string table_name_;
 
   std::atomic<bool> keep_reading_{true};
   std::vector<bigtable::RowKeySample> samples_;
   promise<StatusOr<std::vector<bigtable::RowKeySample>>> promise_;
+  internal::ImmutableOptions options_;
   internal::CallContext call_context_;
   std::shared_ptr<grpc::ClientContext> context_;
   std::shared_ptr<RetryContext> retry_context_ =

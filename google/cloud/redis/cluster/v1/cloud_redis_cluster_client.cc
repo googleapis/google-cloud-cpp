@@ -18,6 +18,7 @@
 
 #include "google/cloud/redis/cluster/v1/cloud_redis_cluster_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/schedule_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -23,6 +23,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -64,11 +65,11 @@ SessionsConnectionImpl::DetectIntent(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DetectIntent(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
-        return stub_->DetectIntent(context, request);
+        return stub_->DetectIntent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -77,12 +78,12 @@ FeaturestoreOnlineServingServiceConnectionImpl::ReadFeatureValues(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReadFeatureValues(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&
                  request) {
-        return stub_->ReadFeatureValues(context, request);
+        return stub_->ReadFeatureValues(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
@@ -114,12 +115,12 @@ FeaturestoreOnlineServingServiceConnectionImpl::WriteFeatureValues(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteFeatureValues(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&
                  request) {
-        return stub_->WriteFeatureValues(context, request);
+        return stub_->WriteFeatureValues(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

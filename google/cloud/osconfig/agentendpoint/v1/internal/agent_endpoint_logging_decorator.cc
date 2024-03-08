@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -67,72 +68,72 @@ AgentEndpointServiceLogging::ReceiveTaskNotification(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 AgentEndpointServiceLogging::StartNextTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  StartNextTaskRequest const& request) {
-        return child_->StartNextTask(context, request);
+        return child_->StartNextTask(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 AgentEndpointServiceLogging::ReportTaskProgress(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  ReportTaskProgressRequest const& request) {
-        return child_->ReportTaskProgress(context, request);
+        return child_->ReportTaskProgress(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 AgentEndpointServiceLogging::ReportTaskComplete(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  ReportTaskCompleteRequest const& request) {
-        return child_->ReportTaskComplete(context, request);
+        return child_->ReportTaskComplete(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
 AgentEndpointServiceLogging::RegisterAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  RegisterAgentRequest const& request) {
-        return child_->RegisterAgent(context, request);
+        return child_->RegisterAgent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
 AgentEndpointServiceLogging::ReportInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  ReportInventoryRequest const& request) {
-        return child_->ReportInventory(context, request);
+        return child_->ReportInventory(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

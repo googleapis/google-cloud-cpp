@@ -22,6 +22,7 @@
 #include <google/cloud/workflows/v1/workflows.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ WorkflowsStub::~WorkflowsStub() = default;
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 DefaultWorkflowsStub::ListWorkflows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
   google::cloud::workflows::v1::ListWorkflowsResponse response;
   auto status = grpc_stub_->ListWorkflows(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultWorkflowsStub::ListWorkflows(
 
 StatusOr<google::cloud::workflows::v1::Workflow>
 DefaultWorkflowsStub::GetWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
   google::cloud::workflows::v1::Workflow response;
   auto status = grpc_stub_->GetWorkflow(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultWorkflowsStub::GetWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncCreateWorkflow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workflows::v1::CreateWorkflowRequest,
@@ -74,7 +76,8 @@ DefaultWorkflowsStub::AsyncCreateWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncDeleteWorkflow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workflows::v1::DeleteWorkflowRequest,
@@ -91,7 +94,8 @@ DefaultWorkflowsStub::AsyncDeleteWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncUpdateWorkflow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workflows::v1::UpdateWorkflowRequest,
@@ -108,7 +112,9 @@ DefaultWorkflowsStub::AsyncUpdateWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -123,7 +129,9 @@ DefaultWorkflowsStub::AsyncGetOperation(
 
 future<Status> DefaultWorkflowsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

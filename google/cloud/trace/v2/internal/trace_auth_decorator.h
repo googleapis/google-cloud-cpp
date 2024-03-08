@@ -39,12 +39,12 @@ class TraceServiceAuth : public TraceServiceStub {
       std::shared_ptr<TraceServiceStub> child);
 
   Status BatchWriteSpans(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:

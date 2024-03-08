@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/specialist_pool_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ SpecialistPoolServiceStub::~SpecialistPoolServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpecialistPoolServiceStub::AsyncCreateSpecialistPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest,
@@ -50,7 +52,7 @@ DefaultSpecialistPoolServiceStub::AsyncCreateSpecialistPool(
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 DefaultSpecialistPoolServiceStub::GetSpecialistPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
   google::cloud::aiplatform::v1::SpecialistPool response;
   auto status = grpc_stub_->GetSpecialistPool(&context, request, &response);
@@ -62,7 +64,7 @@ DefaultSpecialistPoolServiceStub::GetSpecialistPool(
 
 StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 DefaultSpecialistPoolServiceStub::ListSpecialistPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
   google::cloud::aiplatform::v1::ListSpecialistPoolsResponse response;
   auto status = grpc_stub_->ListSpecialistPools(&context, request, &response);
@@ -75,7 +77,8 @@ DefaultSpecialistPoolServiceStub::ListSpecialistPools(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpecialistPoolServiceStub::AsyncDeleteSpecialistPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest,
@@ -93,7 +96,8 @@ DefaultSpecialistPoolServiceStub::AsyncDeleteSpecialistPool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpecialistPoolServiceStub::AsyncUpdateSpecialistPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest,
@@ -111,7 +115,9 @@ DefaultSpecialistPoolServiceStub::AsyncUpdateSpecialistPool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpecialistPoolServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -126,7 +132,9 @@ DefaultSpecialistPoolServiceStub::AsyncGetOperation(
 
 future<Status> DefaultSpecialistPoolServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

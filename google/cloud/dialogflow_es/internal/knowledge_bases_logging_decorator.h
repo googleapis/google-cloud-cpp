@@ -40,27 +40,27 @@ class KnowledgeBasesLogging : public KnowledgeBasesStub {
 
   StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
   ListKnowledgeBases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> GetKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> CreateKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request)
       override;
 
   Status DeleteKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request)
       override;
 

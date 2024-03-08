@@ -29,6 +29,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -88,6 +89,14 @@ InstanceAdminConnection::ListInstances(
       StreamRange<google::spanner::admin::instance::v1::Instance>>();
 }
 
+StreamRange<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminConnection::ListInstancePartitions(
+    google::spanner::admin::instance::v1::
+        ListInstancePartitionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::spanner::admin::instance::v1::InstancePartition>>();
+}
+
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminConnection::GetInstance(
     google::spanner::admin::instance::v1::GetInstanceRequest const&) {
@@ -129,6 +138,44 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 InstanceAdminConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminConnection::GetInstancePartition(
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminConnection::CreateInstancePartition(
+    google::spanner::admin::instance::v1::
+        CreateInstancePartitionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+Status InstanceAdminConnection::DeleteInstancePartition(
+    google::spanner::admin::instance::v1::
+        DeleteInstancePartitionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminConnection::UpdateInstancePartition(
+    google::spanner::admin::instance::v1::
+        UpdateInstancePartitionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::longrunning::Operation>
+InstanceAdminConnection::ListInstancePartitionOperations(
+    google::spanner::admin::instance::v1::
+        ListInstancePartitionOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
 }
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(

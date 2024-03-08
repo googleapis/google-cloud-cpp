@@ -19,6 +19,7 @@
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_auth_decorator.h"
 #include <google/cloud/gkemulticloud/v1/azure_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,298 +34,308 @@ AzureClustersAuth::AzureClustersAuth(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncCreateAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAzureClient(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncCreateAzureClient(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersAuth::GetAzureClient(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAzureClient(context, request);
+  return child_->GetAzureClient(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
 AzureClustersAuth::ListAzureClients(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAzureClients(context, request);
+  return child_->ListAzureClients(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncDeleteAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAzureClient(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncDeleteAzureClient(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncCreateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAzureCluster(cq, *std::move(context), options,
-                                              request);
+        return child->AsyncCreateAzureCluster(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncUpdateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAzureCluster(cq, *std::move(context), options,
-                                              request);
+        return child->AsyncUpdateAzureCluster(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
 AzureClustersAuth::GetAzureCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAzureCluster(context, request);
+  return child_->GetAzureCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
 AzureClustersAuth::ListAzureClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAzureClusters(context, request);
+  return child_->ListAzureClusters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncDeleteAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAzureCluster(cq, *std::move(context), options,
-                                              request);
+        return child->AsyncDeleteAzureCluster(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<
     google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
 AzureClustersAuth::GenerateAzureClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::
         GenerateAzureClusterAgentTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateAzureClusterAgentToken(context, request);
+  return child_->GenerateAzureClusterAgentToken(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersAuth::GenerateAzureAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateAzureAccessToken(context, request);
+  return child_->GenerateAzureAccessToken(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncCreateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAzureNodePool(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncCreateAzureNodePool(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncUpdateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAzureNodePool(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncUpdateAzureNodePool(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
 AzureClustersAuth::GetAzureNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAzureNodePool(context, request);
+  return child_->GetAzureNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
 AzureClustersAuth::ListAzureNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAzureNodePools(context, request);
+  return child_->ListAzureNodePools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncDeleteAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAzureNodePool(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncDeleteAzureNodePool(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
 AzureClustersAuth::GetAzureOpenIdConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAzureOpenIdConfig(context, request);
+  return child_->GetAzureOpenIdConfig(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
 AzureClustersAuth::GetAzureJsonWebKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAzureJsonWebKeys(context, request);
+  return child_->GetAzureJsonWebKeys(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
 AzureClustersAuth::GetAzureServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAzureServerConfig(context, request);
+  return child_->GetAzureServerConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> AzureClustersAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

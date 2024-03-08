@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -71,11 +72,11 @@ ServiceMonitoringServiceConnectionImpl::CreateService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateServiceRequest const& request) {
-        return stub_->CreateService(context, request);
+        return stub_->CreateService(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::Service>
@@ -85,11 +86,11 @@ ServiceMonitoringServiceConnectionImpl::GetService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetServiceRequest const& request) {
-        return stub_->GetService(context, request);
+        return stub_->GetService(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::monitoring::v3::Service>
@@ -101,20 +102,21 @@ ServiceMonitoringServiceConnectionImpl::ListServices(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::Service>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<monitoring_v3::ServiceMonitoringServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListServicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::monitoring::v3::ListServicesRequest const& request) {
-              return stub->ListServices(context, request);
+              return stub->ListServices(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListServicesResponse r) {
         std::vector<google::monitoring::v3::Service> result(
@@ -132,11 +134,11 @@ ServiceMonitoringServiceConnectionImpl::UpdateService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateServiceRequest const& request) {
-        return stub_->UpdateService(context, request);
+        return stub_->UpdateService(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ServiceMonitoringServiceConnectionImpl::DeleteService(
@@ -145,11 +147,11 @@ Status ServiceMonitoringServiceConnectionImpl::DeleteService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteServiceRequest const& request) {
-        return stub_->DeleteService(context, request);
+        return stub_->DeleteService(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
@@ -159,12 +161,12 @@ ServiceMonitoringServiceConnectionImpl::CreateServiceLevelObjective(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateServiceLevelObjective(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateServiceLevelObjectiveRequest const&
                  request) {
-        return stub_->CreateServiceLevelObjective(context, request);
+        return stub_->CreateServiceLevelObjective(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
@@ -174,12 +176,12 @@ ServiceMonitoringServiceConnectionImpl::GetServiceLevelObjective(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServiceLevelObjective(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetServiceLevelObjectiveRequest const&
                  request) {
-        return stub_->GetServiceLevelObjective(context, request);
+        return stub_->GetServiceLevelObjective(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::monitoring::v3::ServiceLevelObjective>
@@ -192,22 +194,24 @@ ServiceMonitoringServiceConnectionImpl::ListServiceLevelObjectives(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::ServiceLevelObjective>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<monitoring_v3::ServiceMonitoringServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListServiceLevelObjectivesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::monitoring::v3::ListServiceLevelObjectivesRequest const&
                     request) {
-              return stub->ListServiceLevelObjectives(context, request);
+              return stub->ListServiceLevelObjectives(context, options,
+                                                      request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListServiceLevelObjectivesResponse r) {
         std::vector<google::monitoring::v3::ServiceLevelObjective> result(
@@ -225,12 +229,12 @@ ServiceMonitoringServiceConnectionImpl::UpdateServiceLevelObjective(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateServiceLevelObjective(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&
                  request) {
-        return stub_->UpdateServiceLevelObjective(context, request);
+        return stub_->UpdateServiceLevelObjective(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ServiceMonitoringServiceConnectionImpl::DeleteServiceLevelObjective(
@@ -239,12 +243,12 @@ Status ServiceMonitoringServiceConnectionImpl::DeleteServiceLevelObjective(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteServiceLevelObjective(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&
                  request) {
-        return stub_->DeleteServiceLevelObjective(context, request);
+        return stub_->DeleteServiceLevelObjective(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

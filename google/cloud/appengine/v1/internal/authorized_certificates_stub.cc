@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ AuthorizedCertificatesStub::~AuthorizedCertificatesStub() = default;
 
 StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
 DefaultAuthorizedCertificatesStub::ListAuthorizedCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
   google::appengine::v1::ListAuthorizedCertificatesResponse response;
   auto status =
@@ -44,7 +45,7 @@ DefaultAuthorizedCertificatesStub::ListAuthorizedCertificates(
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 DefaultAuthorizedCertificatesStub::GetAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
   google::appengine::v1::AuthorizedCertificate response;
   auto status =
@@ -57,7 +58,7 @@ DefaultAuthorizedCertificatesStub::GetAuthorizedCertificate(
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 DefaultAuthorizedCertificatesStub::CreateAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
   google::appengine::v1::AuthorizedCertificate response;
   auto status =
@@ -70,7 +71,7 @@ DefaultAuthorizedCertificatesStub::CreateAuthorizedCertificate(
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 DefaultAuthorizedCertificatesStub::UpdateAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
   google::appengine::v1::AuthorizedCertificate response;
   auto status =
@@ -82,7 +83,7 @@ DefaultAuthorizedCertificatesStub::UpdateAuthorizedCertificate(
 }
 
 Status DefaultAuthorizedCertificatesStub::DeleteAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
   google::protobuf::Empty response;
   auto status =

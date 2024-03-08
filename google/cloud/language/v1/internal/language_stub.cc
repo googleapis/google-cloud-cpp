@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/language/v1/language_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ LanguageServiceStub::~LanguageServiceStub() = default;
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 DefaultLanguageServiceStub::AnalyzeSentiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
   google::cloud::language::v1::AnalyzeSentimentResponse response;
   auto status = grpc_stub_->AnalyzeSentiment(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultLanguageServiceStub::AnalyzeSentiment(
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
 DefaultLanguageServiceStub::AnalyzeEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
   google::cloud::language::v1::AnalyzeEntitiesResponse response;
   auto status = grpc_stub_->AnalyzeEntities(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultLanguageServiceStub::AnalyzeEntities(
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
 DefaultLanguageServiceStub::AnalyzeEntitySentiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
   google::cloud::language::v1::AnalyzeEntitySentimentResponse response;
   auto status =
@@ -68,7 +69,7 @@ DefaultLanguageServiceStub::AnalyzeEntitySentiment(
 
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
 DefaultLanguageServiceStub::AnalyzeSyntax(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
   google::cloud::language::v1::AnalyzeSyntaxResponse response;
   auto status = grpc_stub_->AnalyzeSyntax(&context, request, &response);
@@ -80,7 +81,7 @@ DefaultLanguageServiceStub::AnalyzeSyntax(
 
 StatusOr<google::cloud::language::v1::ClassifyTextResponse>
 DefaultLanguageServiceStub::ClassifyText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::language::v1::ClassifyTextRequest const& request) {
   google::cloud::language::v1::ClassifyTextResponse response;
   auto status = grpc_stub_->ClassifyText(&context, request, &response);
@@ -92,7 +93,7 @@ DefaultLanguageServiceStub::ClassifyText(
 
 StatusOr<google::cloud::language::v1::ModerateTextResponse>
 DefaultLanguageServiceStub::ModerateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::language::v1::ModerateTextRequest const& request) {
   google::cloud::language::v1::ModerateTextResponse response;
   auto status = grpc_stub_->ModerateText(&context, request, &response);
@@ -104,7 +105,7 @@ DefaultLanguageServiceStub::ModerateText(
 
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 DefaultLanguageServiceStub::AnnotateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::language::v1::AnnotateTextRequest const& request) {
   google::cloud::language::v1::AnnotateTextResponse response;
   auto status = grpc_stub_->AnnotateText(&context, request, &response);

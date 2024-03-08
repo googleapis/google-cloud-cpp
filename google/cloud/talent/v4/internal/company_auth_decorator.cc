@@ -19,6 +19,7 @@
 #include "google/cloud/talent/v4/internal/company_auth_decorator.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,44 +32,44 @@ CompanyServiceAuth::CompanyServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceAuth::CreateCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCompany(context, request);
+  return child_->CreateCompany(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceAuth::GetCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCompany(context, request);
+  return child_->GetCompany(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceAuth::UpdateCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCompany(context, request);
+  return child_->UpdateCompany(context, options, request);
 }
 
 Status CompanyServiceAuth::DeleteCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteCompany(context, request);
+  return child_->DeleteCompany(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 CompanyServiceAuth::ListCompanies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCompanies(context, request);
+  return child_->ListCompanies(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -48,37 +48,6 @@ future<StatusOr<Operation>> AsyncRestPollingLoopAip151(
   return loop->Start(std::move(op));
 }
 
-// TODO(#12359) - remove once it is no longer used.
-future<StatusOr<Operation>> AsyncRestPollingLoopAip151(
-    google::cloud::CompletionQueue cq, future<StatusOr<Operation>> op,
-    AsyncRestPollLongRunningOperationImplicitOptions<
-        google::longrunning::Operation,
-        google::longrunning::GetOperationRequest>
-        poll,
-    AsyncRestCancelLongRunningOperationImplicitOptions<
-        google::longrunning::CancelOperationRequest>
-        cancel,
-    std::unique_ptr<PollingPolicy> polling_policy, std::string location) {
-  auto poll_wrapper =
-      [poll = std::move(poll)](
-          google::cloud::CompletionQueue& cq,
-          std::unique_ptr<RestContext> context, Options const&,
-          google::longrunning::GetOperationRequest const& request) {
-        return poll(cq, std::move(context), request);
-      };
-  auto cancel_wrapper =
-      [cancel = std::move(cancel)](
-          google::cloud::CompletionQueue& cq,
-          std::unique_ptr<RestContext> context, Options const&,
-          google::longrunning::CancelOperationRequest const& request) {
-        return cancel(cq, std::move(context), request);
-      };
-  return AsyncRestPollingLoopAip151(
-      std::move(cq), internal::SaveCurrentOptions(), std::move(op),
-      std::move(poll_wrapper), std::move(cancel_wrapper),
-      std::move(polling_policy), std::move(location));
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud

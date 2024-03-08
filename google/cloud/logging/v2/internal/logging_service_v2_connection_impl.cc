@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -66,11 +67,11 @@ Status LoggingServiceV2ConnectionImpl::DeleteLog(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteLog(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::DeleteLogRequest const& request) {
-        return stub_->DeleteLog(context, request);
+        return stub_->DeleteLog(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
@@ -80,11 +81,11 @@ LoggingServiceV2ConnectionImpl::WriteLogEntries(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteLogEntries(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::WriteLogEntriesRequest const& request) {
-        return stub_->WriteLogEntries(context, request);
+        return stub_->WriteLogEntries(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::logging::v2::LogEntry>
@@ -96,19 +97,20 @@ LoggingServiceV2ConnectionImpl::ListLogEntries(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::logging::v2::LogEntry>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<logging_v2::LoggingServiceV2RetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::logging::v2::ListLogEntriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::logging::v2::ListLogEntriesRequest const& request) {
-              return stub->ListLogEntries(context, request);
+              return stub->ListLogEntries(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::logging::v2::ListLogEntriesResponse r) {
         std::vector<google::logging::v2::LogEntry> result(r.entries().size());
@@ -128,21 +130,23 @@ LoggingServiceV2ConnectionImpl::ListMonitoredResourceDescriptors(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::MonitoredResourceDescriptor>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<logging_v2::LoggingServiceV2RetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::logging::v2::
                        ListMonitoredResourceDescriptorsRequest const& request) {
-              return stub->ListMonitoredResourceDescriptors(context, request);
+              return stub->ListMonitoredResourceDescriptors(context, options,
+                                                            request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::logging::v2::ListMonitoredResourceDescriptorsResponse r) {
         std::vector<google::api::MonitoredResourceDescriptor> result(
@@ -160,19 +164,20 @@ StreamRange<std::string> LoggingServiceV2ConnectionImpl::ListLogs(
   auto idempotency = idempotency_policy(*current)->ListLogs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<logging_v2::LoggingServiceV2RetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::logging::v2::ListLogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::logging::v2::ListLogsRequest const& request) {
-              return stub->ListLogs(context, request);
+              return stub->ListLogs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::logging::v2::ListLogsResponse r) {
         std::vector<std::string> result(r.log_names().size());
@@ -186,15 +191,21 @@ future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2ConnectionImpl::AsyncWriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->WriteLogEntries(request_copy);
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->WriteLogEntries(request), background_->cq(),
+      std::move(retry), std::move(backoff), idempotent, background_->cq(),
       [stub = stub_](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::logging::v2::WriteLogEntriesRequest const& request) {
-        return stub->AsyncWriteLogEntries(cq, std::move(context), request);
+        return stub->AsyncWriteLogEntries(cq, std::move(context),
+                                          std::move(options), request);
       },
-      request, __func__);
+      std::move(current), std::move(request_copy), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

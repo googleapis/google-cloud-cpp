@@ -22,6 +22,7 @@
 #include <google/cloud/dialogflow/v2/document.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ DocumentsStub::~DocumentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
 DefaultDocumentsStub::ListDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListDocumentsRequest const& request) {
   google::cloud::dialogflow::v2::ListDocumentsResponse response;
   auto status = grpc_stub_->ListDocuments(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultDocumentsStub::ListDocuments(
 
 StatusOr<google::cloud::dialogflow::v2::Document>
 DefaultDocumentsStub::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
   google::cloud::dialogflow::v2::Document response;
   auto status = grpc_stub_->GetDocument(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultDocumentsStub::GetDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncCreateDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::v2::CreateDocumentRequest,
@@ -75,7 +77,8 @@ DefaultDocumentsStub::AsyncCreateDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncImportDocuments(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::v2::ImportDocumentsRequest,
@@ -93,7 +96,8 @@ DefaultDocumentsStub::AsyncImportDocuments(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncDeleteDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::v2::DeleteDocumentRequest,
@@ -111,7 +115,8 @@ DefaultDocumentsStub::AsyncDeleteDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncUpdateDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::v2::UpdateDocumentRequest,
@@ -129,7 +134,8 @@ DefaultDocumentsStub::AsyncUpdateDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncReloadDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::v2::ReloadDocumentRequest,
@@ -147,7 +153,8 @@ DefaultDocumentsStub::AsyncReloadDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncExportDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::v2::ExportDocumentRequest,
@@ -165,7 +172,9 @@ DefaultDocumentsStub::AsyncExportDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -180,7 +189,9 @@ DefaultDocumentsStub::AsyncGetOperation(
 
 future<Status> DefaultDocumentsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

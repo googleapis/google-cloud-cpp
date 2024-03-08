@@ -19,6 +19,7 @@
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

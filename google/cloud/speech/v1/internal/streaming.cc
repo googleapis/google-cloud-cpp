@@ -25,7 +25,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeResponse>>
 SpeechConnectionImpl::AsyncStreamingRecognize() {
   return stub_->AsyncStreamingRecognize(
-      background_->cq(), std::make_shared<grpc::ClientContext>());
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::SaveCurrentOptions());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

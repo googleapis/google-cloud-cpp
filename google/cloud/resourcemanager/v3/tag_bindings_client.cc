@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/v3/tag_bindings_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

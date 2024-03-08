@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -75,20 +76,21 @@ CloudChannelServiceConnectionImpl::ListCustomers(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::Customer>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListCustomersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::ListCustomersRequest const&
                        request) {
-              return stub->ListCustomers(context, request);
+              return stub->ListCustomers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListCustomersResponse r) {
         std::vector<google::cloud::channel::v1::Customer> result(
@@ -106,11 +108,11 @@ CloudChannelServiceConnectionImpl::GetCustomer(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCustomer(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::GetCustomerRequest const& request) {
-        return stub_->GetCustomer(context, request);
+        return stub_->GetCustomer(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
@@ -121,12 +123,13 @@ CloudChannelServiceConnectionImpl::CheckCloudIdentityAccountsExist(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CheckCloudIdentityAccountsExist(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::
                  CheckCloudIdentityAccountsExistRequest const& request) {
-        return stub_->CheckCloudIdentityAccountsExist(context, request);
+        return stub_->CheckCloudIdentityAccountsExist(context, options,
+                                                      request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
@@ -136,11 +139,11 @@ CloudChannelServiceConnectionImpl::CreateCustomer(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCustomer(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::CreateCustomerRequest const& request) {
-        return stub_->CreateCustomer(context, request);
+        return stub_->CreateCustomer(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
@@ -150,11 +153,11 @@ CloudChannelServiceConnectionImpl::UpdateCustomer(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCustomer(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::UpdateCustomerRequest const& request) {
-        return stub_->UpdateCustomer(context, request);
+        return stub_->UpdateCustomer(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status CloudChannelServiceConnectionImpl::DeleteCustomer(
@@ -163,11 +166,11 @@ Status CloudChannelServiceConnectionImpl::DeleteCustomer(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCustomer(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::DeleteCustomerRequest const& request) {
-        return stub_->DeleteCustomer(context, request);
+        return stub_->DeleteCustomer(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
@@ -177,46 +180,50 @@ CloudChannelServiceConnectionImpl::ImportCustomer(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ImportCustomer(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::ImportCustomerRequest const& request) {
-        return stub_->ImportCustomer(context, request);
+        return stub_->ImportCustomer(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::channel::v1::Customer>>
 CloudChannelServiceConnectionImpl::ProvisionCloudIdentity(
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ProvisionCloudIdentity(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Customer>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::ProvisionCloudIdentityRequest const&
               request) {
         return stub->AsyncProvisionCloudIdentity(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Customer>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ProvisionCloudIdentity(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -229,20 +236,21 @@ CloudChannelServiceConnectionImpl::ListEntitlements(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::Entitlement>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListEntitlementsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::ListEntitlementsRequest const&
                        request) {
-              return stub->ListEntitlements(context, request);
+              return stub->ListEntitlements(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListEntitlementsResponse r) {
         std::vector<google::cloud::channel::v1::Entitlement> result(
@@ -263,21 +271,22 @@ CloudChannelServiceConnectionImpl::ListTransferableSkus(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::TransferableSku>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListTransferableSkusRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::channel::v1::ListTransferableSkusRequest const&
                     request) {
-              return stub->ListTransferableSkus(context, request);
+              return stub->ListTransferableSkus(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListTransferableSkusResponse r) {
         std::vector<google::cloud::channel::v1::TransferableSku> result(
@@ -298,21 +307,22 @@ CloudChannelServiceConnectionImpl::ListTransferableOffers(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::TransferableOffer>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListTransferableOffersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::channel::v1::ListTransferableOffersRequest const&
                     request) {
-              return stub->ListTransferableOffers(context, request);
+              return stub->ListTransferableOffers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListTransferableOffersResponse r) {
         std::vector<google::cloud::channel::v1::TransferableOffer> result(
@@ -330,45 +340,49 @@ CloudChannelServiceConnectionImpl::GetEntitlement(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEntitlement(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::GetEntitlementRequest const& request) {
-        return stub_->GetEntitlement(context, request);
+        return stub_->GetEntitlement(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::CreateEntitlement(
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateEntitlement(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::CreateEntitlementRequest const& request) {
-        return stub->AsyncCreateEntitlement(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncCreateEntitlement(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateEntitlement(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -376,34 +390,38 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeParameters(
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ChangeParameters(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::ChangeParametersRequest const& request) {
-        return stub->AsyncChangeParameters(cq, std::move(context), options,
-                                           request);
+        return stub->AsyncChangeParameters(cq, std::move(context),
+                                           std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ChangeParameters(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -411,35 +429,39 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ChangeRenewalSettings(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::ChangeRenewalSettingsRequest const&
               request) {
-        return stub->AsyncChangeRenewalSettings(cq, std::move(context), options,
-                                                request);
+        return stub->AsyncChangeRenewalSettings(cq, std::move(context),
+                                                std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ChangeRenewalSettings(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -447,33 +469,38 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeOffer(
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ChangeOffer(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::ChangeOfferRequest const& request) {
-        return stub->AsyncChangeOffer(cq, std::move(context), options, request);
+        return stub->AsyncChangeOffer(cq, std::move(context),
+                                      std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ChangeOffer(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -481,34 +508,38 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::StartPaidService(
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StartPaidService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::StartPaidServiceRequest const& request) {
-        return stub->AsyncStartPaidService(cq, std::move(context), options,
-                                           request);
+        return stub->AsyncStartPaidService(cq, std::move(context),
+                                           std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StartPaidService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -516,35 +547,39 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::SuspendEntitlement(
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SuspendEntitlement(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::SuspendEntitlementRequest const&
               request) {
-        return stub->AsyncSuspendEntitlement(cq, std::move(context), options,
-                                             request);
+        return stub->AsyncSuspendEntitlement(cq, std::move(context),
+                                             std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SuspendEntitlement(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -552,34 +587,38 @@ future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceConnectionImpl::CancelEntitlement(
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CancelEntitlement(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::CancelEntitlementRequest const& request) {
-        return stub->AsyncCancelEntitlement(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncCancelEntitlement(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::channel::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CancelEntitlement(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -587,35 +626,39 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ActivateEntitlement(
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ActivateEntitlement(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::ActivateEntitlementRequest const&
               request) {
-        return stub->AsyncActivateEntitlement(cq, std::move(context), options,
-                                              request);
+        return stub->AsyncActivateEntitlement(cq, std::move(context),
+                                              std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ActivateEntitlement(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -623,35 +666,39 @@ future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
 CloudChannelServiceConnectionImpl::TransferEntitlements(
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->TransferEntitlements(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::TransferEntitlementsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::TransferEntitlementsRequest const&
               request) {
-        return stub->AsyncTransferEntitlements(cq, std::move(context), options,
-                                               request);
+        return stub->AsyncTransferEntitlements(cq, std::move(context),
+                                               std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::TransferEntitlementsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->TransferEntitlements(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -660,35 +707,39 @@ CloudChannelServiceConnectionImpl::TransferEntitlementsToGoogle(
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->TransferEntitlementsToGoogle(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
               request) {
-        return stub->AsyncTransferEntitlementsToGoogle(cq, std::move(context),
-                                                       options, request);
+        return stub->AsyncTransferEntitlementsToGoogle(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::channel::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->TransferEntitlementsToGoogle(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -702,20 +753,21 @@ CloudChannelServiceConnectionImpl::ListChannelPartnerLinks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::ChannelPartnerLink>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListChannelPartnerLinksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::
                        ListChannelPartnerLinksRequest const& request) {
-              return stub->ListChannelPartnerLinks(context, request);
+              return stub->ListChannelPartnerLinks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListChannelPartnerLinksResponse r) {
         std::vector<google::cloud::channel::v1::ChannelPartnerLink> result(
@@ -733,12 +785,12 @@ CloudChannelServiceConnectionImpl::GetChannelPartnerLink(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetChannelPartnerLink(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::GetChannelPartnerLinkRequest const&
                  request) {
-        return stub_->GetChannelPartnerLink(context, request);
+        return stub_->GetChannelPartnerLink(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
@@ -749,12 +801,12 @@ CloudChannelServiceConnectionImpl::CreateChannelPartnerLink(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateChannelPartnerLink(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
                  request) {
-        return stub_->CreateChannelPartnerLink(context, request);
+        return stub_->CreateChannelPartnerLink(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
@@ -765,12 +817,12 @@ CloudChannelServiceConnectionImpl::UpdateChannelPartnerLink(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateChannelPartnerLink(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
                  request) {
-        return stub_->UpdateChannelPartnerLink(context, request);
+        return stub_->UpdateChannelPartnerLink(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
@@ -782,12 +834,12 @@ CloudChannelServiceConnectionImpl::GetCustomerRepricingConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCustomerRepricingConfig(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
               request) {
-        return stub_->GetCustomerRepricingConfig(context, request);
+        return stub_->GetCustomerRepricingConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
@@ -800,21 +852,23 @@ CloudChannelServiceConnectionImpl::ListCustomerRepricingConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::
                        ListCustomerRepricingConfigsRequest const& request) {
-              return stub->ListCustomerRepricingConfigs(context, request);
+              return stub->ListCustomerRepricingConfigs(context, options,
+                                                        request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListCustomerRepricingConfigsResponse r) {
         std::vector<google::cloud::channel::v1::CustomerRepricingConfig> result(
@@ -833,12 +887,12 @@ CloudChannelServiceConnectionImpl::CreateCustomerRepricingConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCustomerRepricingConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::
                  CreateCustomerRepricingConfigRequest const& request) {
-        return stub_->CreateCustomerRepricingConfig(context, request);
+        return stub_->CreateCustomerRepricingConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
@@ -849,12 +903,12 @@ CloudChannelServiceConnectionImpl::UpdateCustomerRepricingConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCustomerRepricingConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::
                  UpdateCustomerRepricingConfigRequest const& request) {
-        return stub_->UpdateCustomerRepricingConfig(context, request);
+        return stub_->UpdateCustomerRepricingConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status CloudChannelServiceConnectionImpl::DeleteCustomerRepricingConfig(
@@ -864,12 +918,12 @@ Status CloudChannelServiceConnectionImpl::DeleteCustomerRepricingConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCustomerRepricingConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::
                  DeleteCustomerRepricingConfigRequest const& request) {
-        return stub_->DeleteCustomerRepricingConfig(context, request);
+        return stub_->DeleteCustomerRepricingConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
@@ -880,12 +934,13 @@ CloudChannelServiceConnectionImpl::GetChannelPartnerRepricingConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetChannelPartnerRepricingConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::
                  GetChannelPartnerRepricingConfigRequest const& request) {
-        return stub_->GetChannelPartnerRepricingConfig(context, request);
+        return stub_->GetChannelPartnerRepricingConfig(context, options,
+                                                       request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
@@ -899,22 +954,24 @@ CloudChannelServiceConnectionImpl::ListChannelPartnerRepricingConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::
               ListChannelPartnerRepricingConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::channel::v1::
                     ListChannelPartnerRepricingConfigsRequest const& request) {
-              return stub->ListChannelPartnerRepricingConfigs(context, request);
+              return stub->ListChannelPartnerRepricingConfigs(context, options,
+                                                              request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse
              r) {
@@ -935,12 +992,13 @@ CloudChannelServiceConnectionImpl::CreateChannelPartnerRepricingConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateChannelPartnerRepricingConfig(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::
                  CreateChannelPartnerRepricingConfigRequest const& request) {
-        return stub_->CreateChannelPartnerRepricingConfig(context, request);
+        return stub_->CreateChannelPartnerRepricingConfig(context, options,
+                                                          request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
@@ -952,12 +1010,13 @@ CloudChannelServiceConnectionImpl::UpdateChannelPartnerRepricingConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateChannelPartnerRepricingConfig(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::
                  UpdateChannelPartnerRepricingConfigRequest const& request) {
-        return stub_->UpdateChannelPartnerRepricingConfig(context, request);
+        return stub_->UpdateChannelPartnerRepricingConfig(context, options,
+                                                          request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status CloudChannelServiceConnectionImpl::DeleteChannelPartnerRepricingConfig(
@@ -968,12 +1027,13 @@ Status CloudChannelServiceConnectionImpl::DeleteChannelPartnerRepricingConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteChannelPartnerRepricingConfig(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::
                  DeleteChannelPartnerRepricingConfigRequest const& request) {
-        return stub_->DeleteChannelPartnerRepricingConfig(context, request);
+        return stub_->DeleteChannelPartnerRepricingConfig(context, options,
+                                                          request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::channel::v1::SkuGroup>
@@ -985,20 +1045,21 @@ CloudChannelServiceConnectionImpl::ListSkuGroups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::SkuGroup>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListSkuGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::ListSkuGroupsRequest const&
                        request) {
-              return stub->ListSkuGroups(context, request);
+              return stub->ListSkuGroups(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListSkuGroupsResponse r) {
         std::vector<google::cloud::channel::v1::SkuGroup> result(
@@ -1019,21 +1080,22 @@ CloudChannelServiceConnectionImpl::ListSkuGroupBillableSkus(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::BillableSku>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::
                        ListSkuGroupBillableSkusRequest const& request) {
-              return stub->ListSkuGroupBillableSkus(context, request);
+              return stub->ListSkuGroupBillableSkus(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListSkuGroupBillableSkusResponse r) {
         std::vector<google::cloud::channel::v1::BillableSku> result(
@@ -1051,11 +1113,11 @@ CloudChannelServiceConnectionImpl::LookupOffer(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->LookupOffer(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::LookupOfferRequest const& request) {
-        return stub_->LookupOffer(context, request);
+        return stub_->LookupOffer(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::channel::v1::Product>
@@ -1067,20 +1129,21 @@ CloudChannelServiceConnectionImpl::ListProducts(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::Product>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListProductsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::ListProductsRequest const&
                        request) {
-              return stub->ListProducts(context, request);
+              return stub->ListProducts(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListProductsResponse r) {
         std::vector<google::cloud::channel::v1::Product> result(
@@ -1100,19 +1163,20 @@ CloudChannelServiceConnectionImpl::ListSkus(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::Sku>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListSkusRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::ListSkusRequest const& request) {
-              return stub->ListSkus(context, request);
+              return stub->ListSkus(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListSkusResponse r) {
         std::vector<google::cloud::channel::v1::Sku> result(r.skus().size());
@@ -1131,20 +1195,21 @@ CloudChannelServiceConnectionImpl::ListOffers(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::Offer>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListOffersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::channel::v1::ListOffersRequest const& request) {
-              return stub->ListOffers(context, request);
+              return stub->ListOffers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListOffersResponse r) {
         std::vector<google::cloud::channel::v1::Offer> result(
@@ -1164,20 +1229,21 @@ CloudChannelServiceConnectionImpl::ListPurchasableSkus(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::PurchasableSku>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListPurchasableSkusRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::ListPurchasableSkusRequest const&
                        request) {
-              return stub->ListPurchasableSkus(context, request);
+              return stub->ListPurchasableSkus(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListPurchasableSkusResponse r) {
         std::vector<google::cloud::channel::v1::PurchasableSku> result(
@@ -1198,21 +1264,22 @@ CloudChannelServiceConnectionImpl::ListPurchasableOffers(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::PurchasableOffer>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListPurchasableOffersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::channel::v1::ListPurchasableOffersRequest const&
                     request) {
-              return stub->ListPurchasableOffers(context, request);
+              return stub->ListPurchasableOffers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListPurchasableOffersResponse r) {
         std::vector<google::cloud::channel::v1::PurchasableOffer> result(
@@ -1232,12 +1299,12 @@ CloudChannelServiceConnectionImpl::QueryEligibleBillingAccounts(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->QueryEligibleBillingAccounts(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
               request) {
-        return stub_->QueryEligibleBillingAccounts(context, request);
+        return stub_->QueryEligibleBillingAccounts(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
@@ -1247,12 +1314,12 @@ CloudChannelServiceConnectionImpl::RegisterSubscriber(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RegisterSubscriber(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::RegisterSubscriberRequest const&
                  request) {
-        return stub_->RegisterSubscriber(context, request);
+        return stub_->RegisterSubscriber(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
@@ -1262,12 +1329,12 @@ CloudChannelServiceConnectionImpl::UnregisterSubscriber(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UnregisterSubscriber(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::channel::v1::UnregisterSubscriberRequest const&
                  request) {
-        return stub_->UnregisterSubscriber(context, request);
+        return stub_->UnregisterSubscriber(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<std::string> CloudChannelServiceConnectionImpl::ListSubscribers(
@@ -1277,20 +1344,21 @@ StreamRange<std::string> CloudChannelServiceConnectionImpl::ListSubscribers(
   auto idempotency = idempotency_policy(*current)->ListSubscribers(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListSubscribersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::ListSubscribersRequest const&
                        request) {
-              return stub->ListSubscribers(context, request);
+              return stub->ListSubscribers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListSubscribersResponse r) {
         std::vector<std::string> result(r.service_accounts().size());
@@ -1310,21 +1378,22 @@ CloudChannelServiceConnectionImpl::ListEntitlementChanges(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::EntitlementChange>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListEntitlementChangesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::channel::v1::ListEntitlementChangesRequest const&
                     request) {
-              return stub->ListEntitlementChanges(context, request);
+              return stub->ListEntitlementChanges(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListEntitlementChangesResponse r) {
         std::vector<google::cloud::channel::v1::EntitlementChange> result(

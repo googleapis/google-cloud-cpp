@@ -44,47 +44,47 @@ AlertPolicyServiceMetadata::AlertPolicyServiceMetadata(
 
 StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
 AlertPolicyServiceMetadata::ListAlertPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListAlertPoliciesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ListAlertPolicies(context, request);
+  return child_->ListAlertPolicies(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceMetadata::GetAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAlertPolicy(context, request);
+  return child_->GetAlertPolicy(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceMetadata::CreateAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CreateAlertPolicy(context, request);
+  return child_->CreateAlertPolicy(context, options, request);
 }
 
 Status AlertPolicyServiceMetadata::DeleteAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteAlertPolicy(context, request);
+  return child_->DeleteAlertPolicy(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceMetadata::UpdateAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("alert_policy.name=",
                            internal::UrlEncode(request.alert_policy().name())));
-  return child_->UpdateAlertPolicy(context, request);
+  return child_->UpdateAlertPolicy(context, options, request);
 }
 
 void AlertPolicyServiceMetadata::SetMetadata(

@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_CATALOG_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_CATALOG_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/billing/v1/cloud_catalog.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,11 +37,11 @@ class CloudCatalogStub {
 
   virtual StatusOr<google::cloud::billing::v1::ListServicesResponse>
   ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListServicesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::billing::v1::ListSkusResponse> ListSkus(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListSkusRequest const& request) = 0;
 };
 
@@ -51,11 +53,11 @@ class DefaultCloudCatalogStub : public CloudCatalogStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::cloud::billing::v1::ListSkusResponse> ListSkus(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListSkusRequest const& request) override;
 
  private:

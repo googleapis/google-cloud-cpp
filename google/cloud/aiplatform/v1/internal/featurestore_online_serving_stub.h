@@ -25,6 +25,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/featurestore_online_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,7 +38,7 @@ class FeaturestoreOnlineServingServiceStub {
 
   virtual StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
   ReadFeatureValues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&
           request) = 0;
 
@@ -50,7 +51,7 @@ class FeaturestoreOnlineServingServiceStub {
 
   virtual StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
   WriteFeatureValues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&
           request) = 0;
 };
@@ -66,7 +67,7 @@ class DefaultFeaturestoreOnlineServingServiceStub
 
   StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
   ReadFeatureValues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
       override;
 
@@ -79,7 +80,7 @@ class DefaultFeaturestoreOnlineServingServiceStub
 
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
   WriteFeatureValues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
       override;
 

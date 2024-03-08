@@ -22,6 +22,7 @@
 #include <google/cloud/telcoautomation/v1/telcoautomation.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ TelcoAutomationStub::~TelcoAutomationStub() = default;
 
 StatusOr<google::cloud::telcoautomation::v1::ListOrchestrationClustersResponse>
 DefaultTelcoAutomationStub::ListOrchestrationClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest const&
         request) {
   google::cloud::telcoautomation::v1::ListOrchestrationClustersResponse
@@ -47,7 +48,7 @@ DefaultTelcoAutomationStub::ListOrchestrationClusters(
 
 StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
 DefaultTelcoAutomationStub::GetOrchestrationCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
         request) {
   google::cloud::telcoautomation::v1::OrchestrationCluster response;
@@ -62,7 +63,8 @@ DefaultTelcoAutomationStub::GetOrchestrationCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncCreateOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -82,7 +84,8 @@ DefaultTelcoAutomationStub::AsyncCreateOrchestrationCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncDeleteOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -101,7 +104,7 @@ DefaultTelcoAutomationStub::AsyncDeleteOrchestrationCluster(
 
 StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
 DefaultTelcoAutomationStub::ListEdgeSlms(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& request) {
   google::cloud::telcoautomation::v1::ListEdgeSlmsResponse response;
   auto status = grpc_stub_->ListEdgeSlms(&context, request, &response);
@@ -113,7 +116,7 @@ DefaultTelcoAutomationStub::ListEdgeSlms(
 
 StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>
 DefaultTelcoAutomationStub::GetEdgeSlm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) {
   google::cloud::telcoautomation::v1::EdgeSlm response;
   auto status = grpc_stub_->GetEdgeSlm(&context, request, &response);
@@ -126,7 +129,8 @@ DefaultTelcoAutomationStub::GetEdgeSlm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncCreateEdgeSlm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest,
@@ -144,7 +148,8 @@ DefaultTelcoAutomationStub::AsyncCreateEdgeSlm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncDeleteEdgeSlm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest,
@@ -161,7 +166,7 @@ DefaultTelcoAutomationStub::AsyncDeleteEdgeSlm(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 DefaultTelcoAutomationStub::CreateBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) {
   google::cloud::telcoautomation::v1::Blueprint response;
   auto status = grpc_stub_->CreateBlueprint(&context, request, &response);
@@ -173,7 +178,7 @@ DefaultTelcoAutomationStub::CreateBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 DefaultTelcoAutomationStub::UpdateBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) {
   google::cloud::telcoautomation::v1::Blueprint response;
   auto status = grpc_stub_->UpdateBlueprint(&context, request, &response);
@@ -185,7 +190,7 @@ DefaultTelcoAutomationStub::UpdateBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 DefaultTelcoAutomationStub::GetBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) {
   google::cloud::telcoautomation::v1::Blueprint response;
   auto status = grpc_stub_->GetBlueprint(&context, request, &response);
@@ -196,7 +201,7 @@ DefaultTelcoAutomationStub::GetBlueprint(
 }
 
 Status DefaultTelcoAutomationStub::DeleteBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteBlueprint(&context, request, &response);
@@ -208,7 +213,7 @@ Status DefaultTelcoAutomationStub::DeleteBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::ListBlueprintsResponse>
 DefaultTelcoAutomationStub::ListBlueprints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ListBlueprintsRequest const& request) {
   google::cloud::telcoautomation::v1::ListBlueprintsResponse response;
   auto status = grpc_stub_->ListBlueprints(&context, request, &response);
@@ -220,7 +225,7 @@ DefaultTelcoAutomationStub::ListBlueprints(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 DefaultTelcoAutomationStub::ApproveBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
         request) {
   google::cloud::telcoautomation::v1::Blueprint response;
@@ -233,7 +238,7 @@ DefaultTelcoAutomationStub::ApproveBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 DefaultTelcoAutomationStub::ProposeBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
         request) {
   google::cloud::telcoautomation::v1::Blueprint response;
@@ -246,7 +251,7 @@ DefaultTelcoAutomationStub::ProposeBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 DefaultTelcoAutomationStub::RejectBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) {
   google::cloud::telcoautomation::v1::Blueprint response;
   auto status = grpc_stub_->RejectBlueprint(&context, request, &response);
@@ -258,7 +263,7 @@ DefaultTelcoAutomationStub::RejectBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::ListBlueprintRevisionsResponse>
 DefaultTelcoAutomationStub::ListBlueprintRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest const&
         request) {
   google::cloud::telcoautomation::v1::ListBlueprintRevisionsResponse response;
@@ -272,7 +277,7 @@ DefaultTelcoAutomationStub::ListBlueprintRevisions(
 
 StatusOr<google::cloud::telcoautomation::v1::SearchBlueprintRevisionsResponse>
 DefaultTelcoAutomationStub::SearchBlueprintRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest const&
         request) {
   google::cloud::telcoautomation::v1::SearchBlueprintRevisionsResponse response;
@@ -286,7 +291,7 @@ DefaultTelcoAutomationStub::SearchBlueprintRevisions(
 
 StatusOr<google::cloud::telcoautomation::v1::SearchDeploymentRevisionsResponse>
 DefaultTelcoAutomationStub::SearchDeploymentRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest const&
         request) {
   google::cloud::telcoautomation::v1::SearchDeploymentRevisionsResponse
@@ -301,7 +306,7 @@ DefaultTelcoAutomationStub::SearchDeploymentRevisions(
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
 DefaultTelcoAutomationStub::DiscardBlueprintChanges(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
         request) {
   google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse response;
@@ -315,7 +320,7 @@ DefaultTelcoAutomationStub::DiscardBlueprintChanges(
 
 StatusOr<google::cloud::telcoautomation::v1::ListPublicBlueprintsResponse>
 DefaultTelcoAutomationStub::ListPublicBlueprints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const&
         request) {
   google::cloud::telcoautomation::v1::ListPublicBlueprintsResponse response;
@@ -328,7 +333,7 @@ DefaultTelcoAutomationStub::ListPublicBlueprints(
 
 StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
 DefaultTelcoAutomationStub::GetPublicBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
         request) {
   google::cloud::telcoautomation::v1::PublicBlueprint response;
@@ -341,7 +346,7 @@ DefaultTelcoAutomationStub::GetPublicBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 DefaultTelcoAutomationStub::CreateDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
         request) {
   google::cloud::telcoautomation::v1::Deployment response;
@@ -354,7 +359,7 @@ DefaultTelcoAutomationStub::CreateDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 DefaultTelcoAutomationStub::UpdateDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
         request) {
   google::cloud::telcoautomation::v1::Deployment response;
@@ -367,7 +372,7 @@ DefaultTelcoAutomationStub::UpdateDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 DefaultTelcoAutomationStub::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) {
   google::cloud::telcoautomation::v1::Deployment response;
   auto status = grpc_stub_->GetDeployment(&context, request, &response);
@@ -378,7 +383,7 @@ DefaultTelcoAutomationStub::GetDeployment(
 }
 
 Status DefaultTelcoAutomationStub::RemoveDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
         request) {
   google::protobuf::Empty response;
@@ -391,7 +396,7 @@ Status DefaultTelcoAutomationStub::RemoveDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::ListDeploymentsResponse>
 DefaultTelcoAutomationStub::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ListDeploymentsRequest const& request) {
   google::cloud::telcoautomation::v1::ListDeploymentsResponse response;
   auto status = grpc_stub_->ListDeployments(&context, request, &response);
@@ -403,7 +408,7 @@ DefaultTelcoAutomationStub::ListDeployments(
 
 StatusOr<google::cloud::telcoautomation::v1::ListDeploymentRevisionsResponse>
 DefaultTelcoAutomationStub::ListDeploymentRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest const&
         request) {
   google::cloud::telcoautomation::v1::ListDeploymentRevisionsResponse response;
@@ -417,7 +422,7 @@ DefaultTelcoAutomationStub::ListDeploymentRevisions(
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
 DefaultTelcoAutomationStub::DiscardDeploymentChanges(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
         request) {
   google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse response;
@@ -431,7 +436,7 @@ DefaultTelcoAutomationStub::DiscardDeploymentChanges(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 DefaultTelcoAutomationStub::ApplyDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) {
   google::cloud::telcoautomation::v1::Deployment response;
   auto status = grpc_stub_->ApplyDeployment(&context, request, &response);
@@ -443,7 +448,7 @@ DefaultTelcoAutomationStub::ApplyDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
 DefaultTelcoAutomationStub::ComputeDeploymentStatus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
         request) {
   google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse response;
@@ -457,7 +462,7 @@ DefaultTelcoAutomationStub::ComputeDeploymentStatus(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 DefaultTelcoAutomationStub::RollbackDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
         request) {
   google::cloud::telcoautomation::v1::Deployment response;
@@ -470,7 +475,7 @@ DefaultTelcoAutomationStub::RollbackDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 DefaultTelcoAutomationStub::GetHydratedDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
         request) {
   google::cloud::telcoautomation::v1::HydratedDeployment response;
@@ -483,7 +488,7 @@ DefaultTelcoAutomationStub::GetHydratedDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::ListHydratedDeploymentsResponse>
 DefaultTelcoAutomationStub::ListHydratedDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest const&
         request) {
   google::cloud::telcoautomation::v1::ListHydratedDeploymentsResponse response;
@@ -497,7 +502,7 @@ DefaultTelcoAutomationStub::ListHydratedDeployments(
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 DefaultTelcoAutomationStub::UpdateHydratedDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
         request) {
   google::cloud::telcoautomation::v1::HydratedDeployment response;
@@ -511,7 +516,7 @@ DefaultTelcoAutomationStub::UpdateHydratedDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 DefaultTelcoAutomationStub::ApplyHydratedDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
         request) {
   google::cloud::telcoautomation::v1::HydratedDeployment response;
@@ -526,7 +531,9 @@ DefaultTelcoAutomationStub::ApplyHydratedDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -541,7 +548,9 @@ DefaultTelcoAutomationStub::AsyncGetOperation(
 
 future<Status> DefaultTelcoAutomationStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

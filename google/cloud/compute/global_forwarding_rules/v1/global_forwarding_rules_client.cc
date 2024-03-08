@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/answer_records_auth_decorator.h"
 #include <google/cloud/dialogflow/v2/answer_record.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,20 +33,20 @@ AnswerRecordsAuth::AnswerRecordsAuth(
 
 StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 AnswerRecordsAuth::ListAnswerRecords(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAnswerRecords(context, request);
+  return child_->ListAnswerRecords(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 AnswerRecordsAuth::UpdateAnswerRecord(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateAnswerRecord(context, request);
+  return child_->UpdateAnswerRecord(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

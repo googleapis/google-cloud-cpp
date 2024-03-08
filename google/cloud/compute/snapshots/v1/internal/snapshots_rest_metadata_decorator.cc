@@ -43,12 +43,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestMetadata::AsyncDeleteSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncDeleteSnapshot(cq, std::move(rest_context), options,
-                                     request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncDeleteSnapshot(cq, std::move(rest_context),
+                                     std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
@@ -73,12 +73,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestMetadata::AsyncInsertSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncInsertSnapshot(cq, std::move(rest_context), options,
-                                     request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncInsertSnapshot(cq, std::move(rest_context),
+                                     std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotList>
@@ -103,11 +103,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestMetadata::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncSetLabels(cq, std::move(rest_context), options, request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
+                                request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -123,23 +124,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
-                                   request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
 future<Status> SnapshotsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void SnapshotsRestMetadata::SetMetadata(

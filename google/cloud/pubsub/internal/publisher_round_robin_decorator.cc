@@ -28,68 +28,71 @@ PublisherRoundRobin::PublisherRoundRobin(
     : children_(std::move(children)) {}
 
 StatusOr<google::pubsub::v1::Topic> PublisherRoundRobin::CreateTopic(
-    grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
-  return Child()->CreateTopic(context, request);
+    grpc::ClientContext& context, Options const& options,
+    google::pubsub::v1::Topic const& request) {
+  return Child()->CreateTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Topic> PublisherRoundRobin::UpdateTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::UpdateTopicRequest const& request) {
-  return Child()->UpdateTopic(context, request);
+  return Child()->UpdateTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::PublishResponse> PublisherRoundRobin::Publish(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::PublishRequest const& request) {
-  return Child()->Publish(context, request);
+  return Child()->Publish(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Topic> PublisherRoundRobin::GetTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetTopicRequest const& request) {
-  return Child()->GetTopic(context, request);
+  return Child()->GetTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicsResponse>
 PublisherRoundRobin::ListTopics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicsRequest const& request) {
-  return Child()->ListTopics(context, request);
+  return Child()->ListTopics(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 PublisherRoundRobin::ListTopicSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
-  return Child()->ListTopicSubscriptions(context, request);
+  return Child()->ListTopicSubscriptions(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 PublisherRoundRobin::ListTopicSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-  return Child()->ListTopicSnapshots(context, request);
+  return Child()->ListTopicSnapshots(context, options, request);
 }
 
 Status PublisherRoundRobin::DeleteTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteTopicRequest const& request) {
-  return Child()->DeleteTopic(context, request);
+  return Child()->DeleteTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 PublisherRoundRobin::DetachSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  return Child()->DetachSubscription(context, request);
+  return Child()->DetachSubscription(context, options, request);
 }
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherRoundRobin::AsyncPublish(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::PublishRequest const& request) {
-  return Child()->AsyncPublish(cq, std::move(context), request);
+  return Child()->AsyncPublish(cq, std::move(context), std::move(options),
+                               request);
 }
 
 std::shared_ptr<PublisherStub> PublisherRoundRobin::Child() {

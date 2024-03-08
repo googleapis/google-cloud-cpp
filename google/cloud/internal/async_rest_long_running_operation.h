@@ -141,37 +141,6 @@ future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
       });
 }
 
-// TODO(#12359) - remove once it is no longer used
-template <typename ReturnType, typename RequestType, typename StartFunctor,
-          typename RetryPolicyType, typename CompletionQueue>
-future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
-    CompletionQueue cq, RequestType&& request, StartFunctor&& start,
-    AsyncRestPollLongRunningOperationImplicitOptions<
-        google::longrunning::Operation,
-        google::longrunning::GetOperationRequest>
-        poll,
-    AsyncRestCancelLongRunningOperationImplicitOptions<
-        google::longrunning::CancelOperationRequest>
-        cancel,
-    LongRunningOperationValueExtractor<ReturnType,
-                                       google::longrunning::Operation>
-        value_extractor,
-    std::unique_ptr<RetryPolicyType> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
-    std::unique_ptr<PollingPolicy> polling_policy, char const* location) {
-  auto operation =
-      AsyncRestRetryLoop(std::move(retry_policy), std::move(backoff_policy),
-                         idempotent, cq, std::forward<StartFunctor>(start),
-                         std::forward<RequestType>(request), location);
-  auto loc = std::string{location};
-  return AsyncRestPollingLoopAip151(
-             std::move(cq), std::move(operation), std::move(poll),
-             std::move(cancel), std::move(polling_policy), std::move(location))
-      .then([value_extractor, loc](auto g) {
-        return value_extractor(g.get(), loc);
-      });
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud

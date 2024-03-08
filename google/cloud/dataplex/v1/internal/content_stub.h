@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_CONTENT_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_CONTENT_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dataplex/v1/content.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,37 +36,37 @@ class ContentServiceStub {
   virtual ~ContentServiceStub() = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CreateContentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::UpdateContentRequest const& request) = 0;
 
   virtual Status DeleteContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::DeleteContentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetContentRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::ListContentResponse>
   ListContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListContentRequest const& request) = 0;
 };
 
@@ -77,37 +79,37 @@ class DefaultContentServiceStub : public ContentServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CreateContentRequest const& request)
       override;
 
   StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::UpdateContentRequest const& request)
       override;
 
-  Status DeleteContent(grpc::ClientContext& context,
+  Status DeleteContent(grpc::ClientContext& context, Options const& options,
                        google::cloud::dataplex::v1::DeleteContentRequest const&
                            request) override;
 
   StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetContentRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListContentResponse> ListContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListContentRequest const& request) override;
 
  private:

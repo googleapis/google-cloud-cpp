@@ -18,6 +18,7 @@
 
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ IamCheckerTracingStub::IamCheckerTracingStub(
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerTracingStub::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request) {
   auto span =
@@ -40,8 +41,8 @@ IamCheckerTracingStub::TroubleshootIamPolicy(
                              "TroubleshootIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TroubleshootIamPolicy(context, request));
+  return internal::EndSpan(
+      context, *span, child_->TroubleshootIamPolicy(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

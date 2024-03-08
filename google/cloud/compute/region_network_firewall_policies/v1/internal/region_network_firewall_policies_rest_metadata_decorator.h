@@ -46,7 +46,7 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncAddAssociation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           AddAssociationRequest const& request) override;
 
@@ -54,7 +54,7 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncAddRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           AddRuleRequest const& request) override;
 
@@ -62,7 +62,7 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncCloneRules(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           CloneRulesRequest const& request) override;
 
@@ -70,7 +70,7 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncDeleteFirewallPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           DeleteFirewallPolicyRequest const& request) override;
 
@@ -110,7 +110,7 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncInsertFirewallPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           InsertFirewallPolicyRequest const& request) override;
 
@@ -125,7 +125,7 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncPatchFirewallPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           PatchFirewallPolicyRequest const& request) override;
 
@@ -133,7 +133,7 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncPatchRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           PatchRuleRequest const& request) override;
 
@@ -141,7 +141,7 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncRemoveAssociation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           RemoveAssociationRequest const& request) override;
 
@@ -149,7 +149,7 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncRemoveRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           RemoveRuleRequest const& request) override;
 
@@ -170,14 +170,14 @@ class RegionNetworkFirewallPoliciesRestMetadata
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

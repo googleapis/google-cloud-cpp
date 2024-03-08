@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/answer_records_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

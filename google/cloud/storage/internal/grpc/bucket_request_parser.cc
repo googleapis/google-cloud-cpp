@@ -33,6 +33,16 @@ namespace {
 
 using ::google::storage::v2::Bucket;
 
+Status PatchSoftDeletePolicy(Bucket& b, nlohmann::json const& p) {
+  if (p.is_null()) {
+    b.clear_soft_delete_policy();
+    return Status{};
+  }
+  b.mutable_soft_delete_policy()->mutable_retention_duration()->set_seconds(
+      p.value("retentionDurationSeconds", std::int64_t{0}));
+  return Status{};
+}
+
 Status PatchStorageClass(Bucket& b, nlohmann::json const& p) {
   b.set_storage_class(p.is_null() ? std::string{} : p.get<std::string>());
   return Status{};
@@ -317,6 +327,14 @@ void UpdateAutoclass(Bucket& bucket, storage::BucketMetadata const& metadata) {
   bucket.mutable_autoclass()->set_enabled(metadata.autoclass().enabled);
 }
 
+void UpdateSoftDeletePolicy(Bucket& bucket,
+                            storage::BucketMetadata const& metadata) {
+  if (!metadata.has_soft_delete_policy()) return;
+  *bucket.mutable_soft_delete_policy()->mutable_retention_duration() =
+      google::cloud::internal::ToDurationProto(
+          metadata.soft_delete_policy().retention_duration);
+}
+
 }  // namespace
 
 google::storage::v2::DeleteBucketRequest ToProto(
@@ -525,6 +543,7 @@ StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
   } fields[] = {
       // To ease inspection, the fields appear in the same order as they are
       // declared in the proto
+      {"softDeletePolicy", "soft_delete_policy", PatchSoftDeletePolicy},
       {"storageClass", "storage_class", PatchStorageClass},
       {"rpo", "", PatchRpo},
       {"acl", "", PatchAcl},
@@ -616,6 +635,8 @@ google::storage::v2::UpdateBucketRequest ToProto(
   UpdateIamConfig(bucket, metadata);
   result.mutable_update_mask()->add_paths("autoclass");
   UpdateAutoclass(bucket, metadata);
+  result.mutable_update_mask()->add_paths("soft_delete_policy");
+  UpdateSoftDeletePolicy(bucket, metadata);
 
   if (request.HasOption<storage::IfMetagenerationMatch>()) {
     result.set_if_metageneration_match(

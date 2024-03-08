@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/job_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ JobServiceStub::~JobServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 DefaultJobServiceStub::CreateCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
   google::cloud::aiplatform::v1::CustomJob response;
   auto status = grpc_stub_->CreateCustomJob(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultJobServiceStub::CreateCustomJob(
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 DefaultJobServiceStub::GetCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
   google::cloud::aiplatform::v1::CustomJob response;
   auto status = grpc_stub_->GetCustomJob(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultJobServiceStub::GetCustomJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
 DefaultJobServiceStub::ListCustomJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListCustomJobsResponse response;
   auto status = grpc_stub_->ListCustomJobs(&context, request, &response);
@@ -69,7 +70,8 @@ DefaultJobServiceStub::ListCustomJobs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteCustomJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteCustomJobRequest,
@@ -85,7 +87,7 @@ DefaultJobServiceStub::AsyncDeleteCustomJob(
 }
 
 Status DefaultJobServiceStub::CancelCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->CancelCustomJob(&context, request, &response);
@@ -97,7 +99,7 @@ Status DefaultJobServiceStub::CancelCustomJob(
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 DefaultJobServiceStub::CreateDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
         request) {
   google::cloud::aiplatform::v1::DataLabelingJob response;
@@ -110,7 +112,7 @@ DefaultJobServiceStub::CreateDataLabelingJob(
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 DefaultJobServiceStub::GetDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
   google::cloud::aiplatform::v1::DataLabelingJob response;
   auto status = grpc_stub_->GetDataLabelingJob(&context, request, &response);
@@ -122,7 +124,7 @@ DefaultJobServiceStub::GetDataLabelingJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
 DefaultJobServiceStub::ListDataLabelingJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListDataLabelingJobsResponse response;
   auto status = grpc_stub_->ListDataLabelingJobs(&context, request, &response);
@@ -135,7 +137,8 @@ DefaultJobServiceStub::ListDataLabelingJobs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteDataLabelingJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -152,7 +155,7 @@ DefaultJobServiceStub::AsyncDeleteDataLabelingJob(
 }
 
 Status DefaultJobServiceStub::CancelDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
         request) {
   google::protobuf::Empty response;
@@ -165,7 +168,7 @@ Status DefaultJobServiceStub::CancelDataLabelingJob(
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 DefaultJobServiceStub::CreateHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
         request) {
   google::cloud::aiplatform::v1::HyperparameterTuningJob response;
@@ -179,7 +182,7 @@ DefaultJobServiceStub::CreateHyperparameterTuningJob(
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 DefaultJobServiceStub::GetHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
         request) {
   google::cloud::aiplatform::v1::HyperparameterTuningJob response;
@@ -193,7 +196,7 @@ DefaultJobServiceStub::GetHyperparameterTuningJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse>
 DefaultJobServiceStub::ListHyperparameterTuningJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
         request) {
   google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse response;
@@ -208,7 +211,8 @@ DefaultJobServiceStub::ListHyperparameterTuningJobs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteHyperparameterTuningJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -226,7 +230,7 @@ DefaultJobServiceStub::AsyncDeleteHyperparameterTuningJob(
 }
 
 Status DefaultJobServiceStub::CancelHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
         request) {
   google::protobuf::Empty response;
@@ -240,7 +244,7 @@ Status DefaultJobServiceStub::CancelHyperparameterTuningJob(
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
 DefaultJobServiceStub::CreateNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
   google::cloud::aiplatform::v1::NasJob response;
   auto status = grpc_stub_->CreateNasJob(&context, request, &response);
@@ -252,7 +256,7 @@ DefaultJobServiceStub::CreateNasJob(
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
 DefaultJobServiceStub::GetNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
   google::cloud::aiplatform::v1::NasJob response;
   auto status = grpc_stub_->GetNasJob(&context, request, &response);
@@ -264,7 +268,7 @@ DefaultJobServiceStub::GetNasJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse>
 DefaultJobServiceStub::ListNasJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListNasJobsResponse response;
   auto status = grpc_stub_->ListNasJobs(&context, request, &response);
@@ -277,7 +281,8 @@ DefaultJobServiceStub::ListNasJobs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteNasJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteNasJobRequest,
@@ -292,7 +297,7 @@ DefaultJobServiceStub::AsyncDeleteNasJob(
 }
 
 Status DefaultJobServiceStub::CancelNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->CancelNasJob(&context, request, &response);
@@ -304,7 +309,7 @@ Status DefaultJobServiceStub::CancelNasJob(
 
 StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
 DefaultJobServiceStub::GetNasTrialDetail(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
   google::cloud::aiplatform::v1::NasTrialDetail response;
   auto status = grpc_stub_->GetNasTrialDetail(&context, request, &response);
@@ -316,7 +321,7 @@ DefaultJobServiceStub::GetNasTrialDetail(
 
 StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
 DefaultJobServiceStub::ListNasTrialDetails(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) {
   google::cloud::aiplatform::v1::ListNasTrialDetailsResponse response;
   auto status = grpc_stub_->ListNasTrialDetails(&context, request, &response);
@@ -328,7 +333,7 @@ DefaultJobServiceStub::ListNasTrialDetails(
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 DefaultJobServiceStub::CreateBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
         request) {
   google::cloud::aiplatform::v1::BatchPredictionJob response;
@@ -342,7 +347,7 @@ DefaultJobServiceStub::CreateBatchPredictionJob(
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 DefaultJobServiceStub::GetBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
         request) {
   google::cloud::aiplatform::v1::BatchPredictionJob response;
@@ -355,7 +360,7 @@ DefaultJobServiceStub::GetBatchPredictionJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse>
 DefaultJobServiceStub::ListBatchPredictionJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
         request) {
   google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse response;
@@ -370,7 +375,8 @@ DefaultJobServiceStub::ListBatchPredictionJobs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteBatchPredictionJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -388,7 +394,7 @@ DefaultJobServiceStub::AsyncDeleteBatchPredictionJob(
 }
 
 Status DefaultJobServiceStub::CancelBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
         request) {
   google::protobuf::Empty response;
@@ -402,7 +408,7 @@ Status DefaultJobServiceStub::CancelBatchPredictionJob(
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 DefaultJobServiceStub::CreateModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         CreateModelDeploymentMonitoringJobRequest const& request) {
   google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob response;
@@ -417,7 +423,7 @@ DefaultJobServiceStub::CreateModelDeploymentMonitoringJob(
 StatusOr<google::cloud::aiplatform::v1::
              SearchModelDeploymentMonitoringStatsAnomaliesResponse>
 DefaultJobServiceStub::SearchModelDeploymentMonitoringStatsAnomalies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) {
   google::cloud::aiplatform::v1::
@@ -432,7 +438,7 @@ DefaultJobServiceStub::SearchModelDeploymentMonitoringStatsAnomalies(
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 DefaultJobServiceStub::GetModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
         request) {
   google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob response;
@@ -447,7 +453,7 @@ DefaultJobServiceStub::GetModelDeploymentMonitoringJob(
 StatusOr<
     google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
 DefaultJobServiceStub::ListModelDeploymentMonitoringJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         ListModelDeploymentMonitoringJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse
@@ -463,7 +469,8 @@ DefaultJobServiceStub::ListModelDeploymentMonitoringJobs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncUpdateModelDeploymentMonitoringJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::
         UpdateModelDeploymentMonitoringJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -483,7 +490,8 @@ DefaultJobServiceStub::AsyncUpdateModelDeploymentMonitoringJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteModelDeploymentMonitoringJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::
         DeleteModelDeploymentMonitoringJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -501,7 +509,7 @@ DefaultJobServiceStub::AsyncDeleteModelDeploymentMonitoringJob(
 }
 
 Status DefaultJobServiceStub::PauseModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         PauseModelDeploymentMonitoringJobRequest const& request) {
   google::protobuf::Empty response;
@@ -514,7 +522,7 @@ Status DefaultJobServiceStub::PauseModelDeploymentMonitoringJob(
 }
 
 Status DefaultJobServiceStub::ResumeModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         ResumeModelDeploymentMonitoringJobRequest const& request) {
   google::protobuf::Empty response;
@@ -529,7 +537,9 @@ Status DefaultJobServiceStub::ResumeModelDeploymentMonitoringJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -544,7 +554,9 @@ DefaultJobServiceStub::AsyncGetOperation(
 
 future<Status> DefaultJobServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

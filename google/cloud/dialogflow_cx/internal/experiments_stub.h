@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_EXPERIMENTS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_EXPERIMENTS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/experiment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,40 +37,40 @@ class ExperimentsStub {
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
   ListExperiments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListExperimentsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetExperimentRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
   CreateExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
   UpdateExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
           request) = 0;
 
   virtual Status DeleteExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
   StartExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::StartExperimentRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  StopExperiment(grpc::ClientContext& context,
+  StopExperiment(grpc::ClientContext& context, Options const& options,
                  google::cloud::dialogflow::cx::v3::StopExperimentRequest const&
                      request) = 0;
 };
@@ -83,37 +85,37 @@ class DefaultExperimentsStub : public ExperimentsStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
   ListExperiments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> CreateExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> UpdateExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request)
       override;
 
   Status DeleteExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StartExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StopExperiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request)
       override;
 

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/run/v2/task.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,25 +36,25 @@ TasksLogging::TasksLogging(std::shared_ptr<TasksStub> child,
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::run::v2::Task> TasksLogging::GetTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetTaskRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::GetTaskRequest const& request) {
-        return child_->GetTask(context, request);
+        return child_->GetTask(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::run::v2::ListTasksResponse> TasksLogging::ListTasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListTasksRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::ListTasksRequest const& request) {
-        return child_->ListTasks(context, request);
+        return child_->ListTasks(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

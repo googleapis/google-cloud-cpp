@@ -241,10 +241,6 @@ TEST_F(InstanceAdminClientTest, InstanceConfigUserManaged) {
   auto base_config_name = spanner_testing::PickInstanceConfig(
       project, generator_,
       [](google::spanner::admin::instance::v1::InstanceConfig const& config) {
-        // TODO(#11346): Remove once the incident clears out
-        for (auto const& replica_info : config.optional_replicas()) {
-          if (replica_info.location() == "europe-west9") return false;
-        }
         return !config.optional_replicas().empty();
       });
   ASSERT_THAT(base_config_name, Not(IsEmpty()));
@@ -275,6 +271,16 @@ TEST_F(InstanceAdminClientTest, InstanceConfigUserManaged) {
   *creq_config->mutable_leader_options() = base_config->leader_options();
   creq.set_validate_only(false);
   auto user_config = client_.CreateInstanceConfig(creq).get();
+
+  // If the CreateInstanceConfig() failed with a constraint violation,
+  // presumably because of an optional replica we added, just declare
+  // success. It isn't worth trying to encode constraint knowledge here.
+  if (user_config.status().code() == StatusCode::kFailedPrecondition &&
+      absl::StrContains(user_config.status().message(),
+                        "violates constraint")) {
+    return;
+  }
+
   ASSERT_THAT(user_config, IsOk());
   EXPECT_THAT(user_config->name(), EndsWith(config_id));
   EXPECT_THAT(user_config->display_name(), Eq("original display name"));

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -67,20 +68,21 @@ CommentServiceConnectionImpl::ListComments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::support::v2::Comment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<support_v2::CommentServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::support::v2::ListCommentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::support::v2::ListCommentsRequest const&
                        request) {
-              return stub->ListComments(context, request);
+              return stub->ListComments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::support::v2::ListCommentsResponse r) {
         std::vector<google::cloud::support::v2::Comment> result(
@@ -98,11 +100,11 @@ CommentServiceConnectionImpl::CreateComment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateComment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::support::v2::CreateCommentRequest const& request) {
-        return stub_->CreateComment(context, request);
+        return stub_->CreateComment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

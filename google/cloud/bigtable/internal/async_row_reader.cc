@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/async_row_reader.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -44,12 +45,12 @@ void AsyncRowReader::MakeRequest() {
 
   internal::ScopedCallContext scope(call_context_);
   context_ = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context_, internal::CurrentOptions());
+  internal::ConfigureContext(*context_, *call_context_.options);
   retry_context_->PreCall(*context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
-      stub_->AsyncReadRows(cq_, context_, request),
+      stub_->AsyncReadRows(cq_, context_, options_, request),
       [self](v2::ReadRowsResponse r) {
         return self->OnDataReceived(std::move(r));
       },
@@ -208,8 +209,12 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     return;
   }
 
-  if (!retry_policy_->OnFailure(status_)) {
+  auto delay = internal::Backoff(status_, "AsyncReadRows", *retry_policy_,
+                                 *backoff_policy_, Idempotency::kIdempotent,
+                                 enable_server_retries_);
+  if (!delay) {
     // Can't retry.
+    status_ = std::move(delay).status();
     whole_op_finished_ = true;
     TryGiveRowToUser();
     return;
@@ -217,8 +222,8 @@ void AsyncRowReader::OnStreamFinished(Status status) {
   retry_context_->PostCall(*context_);
   context_.reset();
   auto self = this->shared_from_this();
-  internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
-                               backoff_policy_->OnCompletion(), "Async Backoff")
+  internal::TracedAsyncBackoff(cq_, *call_context_.options, *delay,
+                               "Async Backoff")
       .then([self](auto result) {
         if (auto tp = result.get()) {
           self->MakeRequest();

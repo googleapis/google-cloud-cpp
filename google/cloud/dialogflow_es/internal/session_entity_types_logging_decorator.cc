@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/session_entity_type.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,73 +37,73 @@ SessionEntityTypesLogging::SessionEntityTypesLogging(
 
 StatusOr<google::cloud::dialogflow::v2::ListSessionEntityTypesResponse>
 SessionEntityTypesLogging::ListSessionEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
                  request) {
-        return child_->ListSessionEntityTypes(context, request);
+        return child_->ListSessionEntityTypes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesLogging::GetSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const&
                  request) {
-        return child_->GetSessionEntityType(context, request);
+        return child_->GetSessionEntityType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesLogging::CreateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
               request) {
-        return child_->CreateSessionEntityType(context, request);
+        return child_->CreateSessionEntityType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesLogging::UpdateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
               request) {
-        return child_->UpdateSessionEntityType(context, request);
+        return child_->UpdateSessionEntityType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status SessionEntityTypesLogging::DeleteSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
               request) {
-        return child_->DeleteSessionEntityType(context, request);
+        return child_->DeleteSessionEntityType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

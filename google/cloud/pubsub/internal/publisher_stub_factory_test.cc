@@ -90,11 +90,11 @@ TEST_F(PublisherStubFactory, RoundRobin) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce(
-                [](grpc::ClientContext&, google::pubsub::v1::Topic const&) {
-                  return StatusOr<google::pubsub::v1::Topic>(
-                      Status(StatusCode::kUnavailable, "nothing here"));
-                });
+            .WillOnce([](grpc::ClientContext&, Options const&,
+                         google::pubsub::v1::Topic const&) {
+              return StatusOr<google::pubsub::v1::Topic>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
         return mock;
       });
   // Verify the round robin decorator is present.
@@ -109,7 +109,7 @@ TEST_F(PublisherStubFactory, RoundRobin) {
   google::pubsub::v1::Topic req;
   req.set_name("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->CreateTopic(context, req);
+  auto response = stub->CreateTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -120,7 +120,7 @@ TEST_F(PublisherStubFactory, Auth) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([](grpc::ClientContext& context,
+            .WillOnce([](grpc::ClientContext& context, Options const&,
                          google::pubsub::v1::Topic const&) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context.credentials(), NotNull());
@@ -139,7 +139,7 @@ TEST_F(PublisherStubFactory, Auth) {
   google::pubsub::v1::Topic req;
   req.set_name("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->CreateTopic(context, req);
+  auto response = stub->CreateTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -150,7 +150,7 @@ TEST_F(PublisherStubFactory, Metadata) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([this](grpc::ClientContext& context,
+            .WillOnce([this](grpc::ClientContext& context, Options const&,
                              google::pubsub::v1::Topic const& request) {
               // Verify the Metadata decorator is present
               IsContextMDValid(
@@ -170,7 +170,7 @@ TEST_F(PublisherStubFactory, Metadata) {
   google::pubsub::v1::Topic req;
   req.set_name("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->CreateTopic(context, req);
+  auto response = stub->CreateTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -181,11 +181,11 @@ TEST_F(PublisherStubFactory, Logging) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce(
-                [](grpc::ClientContext&, google::pubsub::v1::Topic const&) {
-                  return StatusOr<google::pubsub::v1::Topic>(
-                      Status(StatusCode::kUnavailable, "nothing here"));
-                });
+            .WillOnce([](grpc::ClientContext&, Options const&,
+                         google::pubsub::v1::Topic const&) {
+              return StatusOr<google::pubsub::v1::Topic>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
         return mock;
       });
   EXPECT_CALL(factory, Call)
@@ -199,7 +199,7 @@ TEST_F(PublisherStubFactory, Logging) {
   google::pubsub::v1::Topic req;
   req.set_name("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->CreateTopic(context, req);
+  auto response = stub->CreateTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   // Verify the logging decorator is present.
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("CreateTopic")));
@@ -222,7 +222,7 @@ TEST_F(PublisherStubFactory, TracingEnabled) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([](grpc::ClientContext& context,
+            .WillOnce([](grpc::ClientContext& context, Options const&,
                          google::pubsub::v1::Topic const&) {
               ValidatePropagator(context);
               return StatusOr<google::pubsub::v1::Topic>(
@@ -243,7 +243,7 @@ TEST_F(PublisherStubFactory, TracingEnabled) {
               .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
       factory.AsStdFunction());
   req.set_name("projects/test-project/topics/my-topic");
-  auto response = stub->CreateTopic(context, req);
+  auto response = stub->CreateTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -258,7 +258,7 @@ TEST_F(PublisherStubFactory, TracingDisabled) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([](grpc::ClientContext& context,
+            .WillOnce([](grpc::ClientContext& context, Options const&,
                          google::pubsub::v1::Topic const&) {
               ValidateNoPropagator(context);
               return StatusOr<google::pubsub::v1::Topic>(
@@ -279,7 +279,7 @@ TEST_F(PublisherStubFactory, TracingDisabled) {
               .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
       factory.AsStdFunction());
   req.set_name("projects/test-project/topics/my-topic");
-  auto response = stub->CreateTopic(context, req);
+  auto response = stub->CreateTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
@@ -294,7 +294,7 @@ TEST_F(PublisherStubFactory, CreateTopic) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([this](grpc::ClientContext& context,
+            .WillOnce([this](grpc::ClientContext& context, Options const&,
                              google::pubsub::v1::Topic const& request) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context.credentials(), NotNull());
@@ -318,7 +318,7 @@ TEST_F(PublisherStubFactory, CreateTopic) {
   google::pubsub::v1::Topic req;
   req.set_name("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->CreateTopic(context, req);
+  auto response = stub->CreateTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("CreateTopic")));
 }
@@ -331,7 +331,7 @@ TEST_F(PublisherStubFactory, UpdateTopic) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, UpdateTopic)
             .WillOnce(
-                [this](grpc::ClientContext& context,
+                [this](grpc::ClientContext& context, Options const&,
                        google::pubsub::v1::UpdateTopicRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context.credentials(), NotNull());
@@ -356,7 +356,7 @@ TEST_F(PublisherStubFactory, UpdateTopic) {
   google::pubsub::v1::UpdateTopicRequest req;
   req.mutable_topic()->set_name("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->UpdateTopic(context, req);
+  auto response = stub->UpdateTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("UpdateTopic")));
 }
@@ -369,7 +369,7 @@ TEST_F(PublisherStubFactory, Publish) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, Publish)
             .WillOnce(
-                [this](grpc::ClientContext& context,
+                [this](grpc::ClientContext& context, Options const&,
                        google::pubsub::v1::PublishRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context.credentials(), NotNull());
@@ -393,7 +393,7 @@ TEST_F(PublisherStubFactory, Publish) {
   google::pubsub::v1::PublishRequest req;
   req.set_topic("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->Publish(context, req);
+  auto response = stub->Publish(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("Publish")));
 }
@@ -406,7 +406,7 @@ TEST_F(PublisherStubFactory, GetTopic) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, GetTopic)
             .WillOnce(
-                [this](grpc::ClientContext& context,
+                [this](grpc::ClientContext& context, Options const&,
                        google::pubsub::v1::GetTopicRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context.credentials(), NotNull());
@@ -430,7 +430,7 @@ TEST_F(PublisherStubFactory, GetTopic) {
   google::pubsub::v1::GetTopicRequest req;
   req.set_topic("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->GetTopic(context, req);
+  auto response = stub->GetTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("GetTopic")));
 }
@@ -443,7 +443,7 @@ TEST_F(PublisherStubFactory, ListTopics) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, ListTopics)
             .WillOnce(
-                [this](grpc::ClientContext& context,
+                [this](grpc::ClientContext& context, Options const&,
                        google::pubsub::v1::ListTopicsRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context.credentials(), NotNull());
@@ -468,7 +468,7 @@ TEST_F(PublisherStubFactory, ListTopics) {
   google::pubsub::v1::ListTopicsRequest req;
   req.set_project("projects/test-project");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->ListTopics(context, req);
+  auto response = stub->ListTopics(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("ListTopics")));
 }
@@ -481,7 +481,7 @@ TEST_F(PublisherStubFactory, ListTopicSubscriptions) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, ListTopicSubscriptions)
             .WillOnce(
-                [this](grpc::ClientContext& context,
+                [this](grpc::ClientContext& context, Options const&,
                        google::pubsub::v1::ListTopicSubscriptionsRequest const&
                            request) {
                   // Verify the Auth decorator is present
@@ -509,7 +509,7 @@ TEST_F(PublisherStubFactory, ListTopicSubscriptions) {
   google::pubsub::v1::ListTopicSubscriptionsRequest req;
   req.set_topic("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->ListTopicSubscriptions(context, req);
+  auto response = stub->ListTopicSubscriptions(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(),
               Contains(HasSubstr("ListTopicSubscriptions")));
@@ -523,7 +523,7 @@ TEST_F(PublisherStubFactory, ListTopicSnapshots) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, ListTopicSnapshots)
             .WillOnce([this](
-                          grpc::ClientContext& context,
+                          grpc::ClientContext& context, Options const&,
                           google::pubsub::v1::ListTopicSnapshotsRequest const&
                               request) {
               // Verify the Auth decorator is present
@@ -549,7 +549,7 @@ TEST_F(PublisherStubFactory, ListTopicSnapshots) {
   google::pubsub::v1::ListTopicSnapshotsRequest req;
   req.set_topic("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->ListTopicSnapshots(context, req);
+  auto response = stub->ListTopicSnapshots(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("ListTopicSnapshots")));
 }
@@ -562,7 +562,7 @@ TEST_F(PublisherStubFactory, DeleteTopic) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, DeleteTopic)
             .WillOnce(
-                [this](grpc::ClientContext& context,
+                [this](grpc::ClientContext& context, Options const&,
                        google::pubsub::v1::DeleteTopicRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context.credentials(), NotNull());
@@ -586,7 +586,7 @@ TEST_F(PublisherStubFactory, DeleteTopic) {
   google::pubsub::v1::DeleteTopicRequest req;
   req.set_topic("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->DeleteTopic(context, req);
+  auto response = stub->DeleteTopic(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("DeleteTopic")));
 }
@@ -599,7 +599,7 @@ TEST_F(PublisherStubFactory, DetachSubscription) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, DetachSubscription)
             .WillOnce([this](
-                          grpc::ClientContext& context,
+                          grpc::ClientContext& context, Options const&,
                           google::pubsub::v1::DetachSubscriptionRequest const&
                               request) {
               // Verify the Auth decorator is present
@@ -625,7 +625,7 @@ TEST_F(PublisherStubFactory, DetachSubscription) {
   google::pubsub::v1::DetachSubscriptionRequest req;
   req.set_subscription("projects/test-project/subscriptions/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response = stub->DetachSubscription(context, req);
+  auto response = stub->DetachSubscription(context, Options{}, req);
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("DetachSubscription")));
 }
@@ -639,12 +639,16 @@ TEST_F(PublisherStubFactory, AsyncPublish) {
         EXPECT_CALL(*mock, AsyncPublish)
             .WillOnce(
                 [this](google::cloud::CompletionQueue&, auto context,
+                       google::cloud::internal::ImmutableOptions const& options,
                        google::pubsub::v1::PublishRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context->credentials(), NotNull());
                   // Verify the Metadata decorator is present
                   IsContextMDValid(
                       *context, "google.pubsub.v1.Publisher.Publish", request);
+                  // Verify the options are carried forward
+                  EXPECT_EQ(options->get<UserProjectOption>(),
+                            "test-user-project");
                   return make_ready_future(
                       StatusOr<google::pubsub::v1::PublishResponse>(
                           Status(StatusCode::kUnavailable, "nothing here")));
@@ -662,8 +666,11 @@ TEST_F(PublisherStubFactory, AsyncPublish) {
   google::pubsub::v1::PublishRequest req;
   req.set_topic("projects/test-project/topics/my-topic");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto response =
-      stub->AsyncPublish(cq, std::make_shared<grpc::ClientContext>(), req);
+  auto response = stub->AsyncPublish(
+      cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions(
+          Options{}.set<UserProjectOption>("test-user-project")),
+      req);
   EXPECT_THAT(response.get(), StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("AsyncPublish")));
 }

@@ -19,6 +19,7 @@
 #include "google/cloud/monitoring/v3/internal/group_auth_decorator.h"
 #include <google/monitoring/v3/group_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,52 +33,52 @@ GroupServiceAuth::GroupServiceAuth(
 
 StatusOr<google::monitoring::v3::ListGroupsResponse>
 GroupServiceAuth::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListGroups(context, request);
+  return child_->ListGroups(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceAuth::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGroup(context, request);
+  return child_->GetGroup(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceAuth::CreateGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateGroup(context, request);
+  return child_->CreateGroup(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceAuth::UpdateGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateGroup(context, request);
+  return child_->UpdateGroup(context, options, request);
 }
 
 Status GroupServiceAuth::DeleteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteGroup(context, request);
+  return child_->DeleteGroup(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListGroupMembersResponse>
 GroupServiceAuth::ListGroupMembers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListGroupMembersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListGroupMembers(context, request);
+  return child_->ListGroupMembers(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

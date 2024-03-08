@@ -59,16 +59,17 @@ StreamRange<Project> ProjectRestConnectionImpl::ListProjects(
   auto idempotency = idempotency_policy(*current)->ListProjects(req);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<Project>>(
-      std::move(req),
+      std::move(current), std::move(req),
       [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
-       idempotency, function_name](ListProjectsRequest const& r) {
+       idempotency,
+       function_name](Options const& options, ListProjectsRequest const& r) {
         return rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& context,
+            [stub](rest_internal::RestContext& context, Options const&,
                    ListProjectsRequest const& request) {
               return stub->ListProjects(context, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](ListProjectsResponse r) {
         std::vector<Project> result(r.projects.size());

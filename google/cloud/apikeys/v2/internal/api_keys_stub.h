@@ -27,6 +27,7 @@
 #include <google/api/apikeys/v2/apikeys.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,48 +40,54 @@ class ApiKeysStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::CreateKeyRequest const& request) = 0;
 
   virtual StatusOr<google::api::apikeys::v2::ListKeysResponse> ListKeys(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::ListKeysRequest const& request) = 0;
 
   virtual StatusOr<google::api::apikeys::v2::Key> GetKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyRequest const& request) = 0;
 
   virtual StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyStringRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::UpdateKeyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::DeleteKeyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUndeleteKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) = 0;
 
   virtual StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::LookupKeyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -95,48 +102,54 @@ class DefaultApiKeysStub : public ApiKeysStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::ListKeysResponse> ListKeys(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::ListKeysRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::Key> GetKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyStringRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteKey(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/interconnects/v1/interconnects_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

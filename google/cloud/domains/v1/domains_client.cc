@@ -18,6 +18,7 @@
 
 #include "google/cloud/domains/v1/domains_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -44,124 +44,138 @@ ProjectsMetadata::ProjectsMetadata(
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 ProjectsMetadata::GetProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetProject(context, request);
+  return child_->GetProject(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
 ProjectsMetadata::ListProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListProjects(context, request);
+  SetMetadata(context, options);
+  return child_->ListProjects(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
 ProjectsMetadata::SearchProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->SearchProjects(context, request);
+  SetMetadata(context, options);
+  return child_->SearchProjects(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncCreateProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
-  SetMetadata(*context, options);
-  return child_->AsyncCreateProject(cq, std::move(context), options, request);
+  SetMetadata(*context, *options);
+  return child_->AsyncCreateProject(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncUpdateProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("project.name=",
                            internal::UrlEncode(request.project().name())));
-  return child_->AsyncUpdateProject(cq, std::move(context), options, request);
+  return child_->AsyncUpdateProject(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncMoveProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncMoveProject(cq, std::move(context), options, request);
+  return child_->AsyncMoveProject(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncDeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteProject(cq, std::move(context), options, request);
+  return child_->AsyncDeleteProject(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncUndeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUndeleteProject(cq, std::move(context), options, request);
+  return child_->AsyncUndeleteProject(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ProjectsMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ProjectsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ProjectsMetadata::SetMetadata(grpc::ClientContext& context,

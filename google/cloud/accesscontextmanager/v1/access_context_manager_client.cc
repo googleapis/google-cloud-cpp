@@ -18,6 +18,7 @@
 
 #include "google/cloud/accesscontextmanager/v1/access_context_manager_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

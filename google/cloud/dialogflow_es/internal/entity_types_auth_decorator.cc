@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/entity_types_auth_decorator.h"
 #include <google/cloud/dialogflow/v2/entity_type.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,57 +33,58 @@ EntityTypesAuth::EntityTypesAuth(
 
 StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
 EntityTypesAuth::ListEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListEntityTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEntityTypes(context, request);
+  return child_->ListEntityTypes(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesAuth::GetEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEntityType(context, request);
+  return child_->GetEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesAuth::CreateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEntityType(context, request);
+  return child_->CreateEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesAuth::UpdateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEntityType(context, request);
+  return child_->UpdateEntityType(context, options, request);
 }
 
 Status EntityTypesAuth::DeleteEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEntityType(context, request);
+  return child_->DeleteEntityType(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncBatchUpdateEntityTypes(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -90,19 +92,20 @@ EntityTypesAuth::AsyncBatchUpdateEntityTypes(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncBatchUpdateEntityTypes(cq, *std::move(context),
-                                                  options, request);
+                                                  std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncBatchDeleteEntityTypes(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -110,98 +113,103 @@ EntityTypesAuth::AsyncBatchDeleteEntityTypes(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncBatchDeleteEntityTypes(cq, *std::move(context),
-                                                  options, request);
+                                                  std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncBatchCreateEntities(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchCreateEntities(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncBatchCreateEntities(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncBatchUpdateEntities(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchUpdateEntities(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncBatchUpdateEntities(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncBatchDeleteEntities(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchDeleteEntities(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncBatchDeleteEntities(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> EntityTypesAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

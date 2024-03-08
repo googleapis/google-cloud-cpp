@@ -44,6 +44,9 @@ readonly SED_ARGS=(
   -e '/^experimental-/d'
   # TODO(#12120) - skip SQL because the vcpkg package is broken.
   -e '/^sql/d'
+  # The vcpkg maintainers introduced an `rpc` feature to just compile
+  # `grpc-common`.
+  -e '/^rpc$/d'
 )
 mapfile -t features < <(
   env -C "${vcpkg_dir}" ./vcpkg search google-cloud-cpp |

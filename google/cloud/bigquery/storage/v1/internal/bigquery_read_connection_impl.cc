@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -70,10 +71,12 @@ BigQueryReadConnectionImpl::CreateReadSession(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateReadSession(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-              request) { return stub_->CreateReadSession(context, request); },
-      request, __func__);
+              request) {
+        return stub_->CreateReadSession(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
@@ -105,10 +108,12 @@ BigQueryReadConnectionImpl::SplitReadStream(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SplitReadStream(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-                 request) { return stub_->SplitReadStream(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->SplitReadStream(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

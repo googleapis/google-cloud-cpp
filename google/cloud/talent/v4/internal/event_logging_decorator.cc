@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/event_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,15 +37,15 @@ EventServiceLogging::EventServiceLogging(
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceLogging::CreateClientEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::talent::v4::CreateClientEventRequest const& request) {
-        return child_->CreateClientEvent(context, request);
+        return child_->CreateClientEvent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

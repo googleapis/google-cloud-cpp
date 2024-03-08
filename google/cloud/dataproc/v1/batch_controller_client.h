@@ -28,6 +28,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

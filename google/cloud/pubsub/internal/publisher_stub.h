@@ -21,10 +21,12 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,47 +38,48 @@ class PublisherStub {
   virtual ~PublisherStub() = 0;
 
   virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::Topic const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::UpdateTopicRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::PublishResponse> Publish(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::PublishRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Topic> GetTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetTopicRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListTopicsRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListTopicSubscriptionsRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
   ListTopicSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListTopicSnapshotsRequest const& request) = 0;
 
   virtual Status DeleteTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteTopicRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
   DetachSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DetachSubscriptionRequest const& request) = 0;
 
   virtual future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::pubsub::v1::PublishRequest const& request) = 0;
 };
 
@@ -87,46 +90,47 @@ class DefaultPublisherStub : public PublisherStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::Topic const& request) override;
 
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::UpdateTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::PublishResponse> Publish(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::PublishRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Topic> GetTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListTopicsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
       override;
 
   StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListTopicSnapshotsRequest const& request) override;
 
   Status DeleteTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::pubsub::v1::PublishRequest const& request) override;
 
  private:

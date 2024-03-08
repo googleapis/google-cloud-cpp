@@ -22,10 +22,12 @@
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/logging/v2/logging.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,39 +39,41 @@ class LoggingServiceV2Stub {
   virtual ~LoggingServiceV2Stub() = 0;
 
   virtual Status DeleteLog(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::DeleteLogRequest const& request) = 0;
 
   virtual StatusOr<google::logging::v2::WriteLogEntriesResponse>
   WriteLogEntries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 
   virtual StatusOr<google::logging::v2::ListLogEntriesResponse> ListLogEntries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListLogEntriesRequest const& request) = 0;
 
   virtual StatusOr<
       google::logging::v2::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
           request) = 0;
 
   virtual StatusOr<google::logging::v2::ListLogsResponse> ListLogs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListLogsRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
-                      std::shared_ptr<grpc::ClientContext> context) = 0;
+                      std::shared_ptr<grpc::ClientContext> context,
+                      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 };
 
@@ -81,37 +85,40 @@ class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   Status DeleteLog(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::DeleteLogRequest const& request) override;
 
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLogEntriesResponse> ListLogEntries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListLogEntriesRequest const& request) override;
 
   StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
           request) override;
 
   StatusOr<google::logging::v2::ListLogsResponse> ListLogs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListLogsRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-  AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
-                      std::shared_ptr<grpc::ClientContext> context) override;
+  AsyncTailLogEntries(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:

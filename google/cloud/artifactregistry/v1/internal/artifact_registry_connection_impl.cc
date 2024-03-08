@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -79,22 +80,23 @@ ArtifactRegistryConnectionImpl::ListDockerImages(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::DockerImage>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::devtools::artifactregistry::v1::
                        ListDockerImagesRequest const& request) {
-              return stub->ListDockerImages(context, request);
+              return stub->ListDockerImages(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListDockerImagesResponse r) {
         std::vector<google::devtools::artifactregistry::v1::DockerImage> result(
@@ -114,10 +116,12 @@ ArtifactRegistryConnectionImpl::GetDockerImage(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDockerImage(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::devtools::artifactregistry::v1::GetDockerImageRequest const&
-              request) { return stub_->GetDockerImage(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetDockerImage(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
@@ -129,22 +133,22 @@ ArtifactRegistryConnectionImpl::ListMavenArtifacts(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::devtools::artifactregistry::v1::
-              ListMavenArtifactsRequest const& r) {
+          Options const& options, google::devtools::artifactregistry::v1::
+                                      ListMavenArtifactsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::devtools::artifactregistry::v1::
                        ListMavenArtifactsRequest const& request) {
-              return stub->ListMavenArtifacts(context, request);
+              return stub->ListMavenArtifacts(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListMavenArtifactsResponse r) {
         std::vector<google::devtools::artifactregistry::v1::MavenArtifact>
@@ -164,10 +168,12 @@ ArtifactRegistryConnectionImpl::GetMavenArtifact(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMavenArtifact(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
-              request) { return stub_->GetMavenArtifact(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetMavenArtifact(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
@@ -179,22 +185,23 @@ ArtifactRegistryConnectionImpl::ListNpmPackages(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::NpmPackage>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::devtools::artifactregistry::v1::
                        ListNpmPackagesRequest const& request) {
-              return stub->ListNpmPackages(context, request);
+              return stub->ListNpmPackages(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListNpmPackagesResponse r) {
         std::vector<google::devtools::artifactregistry::v1::NpmPackage> result(
@@ -213,10 +220,12 @@ ArtifactRegistryConnectionImpl::GetNpmPackage(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNpmPackage(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
-                 request) { return stub_->GetNpmPackage(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetNpmPackage(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
@@ -228,22 +237,22 @@ ArtifactRegistryConnectionImpl::ListPythonPackages(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::PythonPackage>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::devtools::artifactregistry::v1::
-              ListPythonPackagesRequest const& r) {
+          Options const& options, google::devtools::artifactregistry::v1::
+                                      ListPythonPackagesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::devtools::artifactregistry::v1::
                        ListPythonPackagesRequest const& request) {
-              return stub->ListPythonPackages(context, request);
+              return stub->ListPythonPackages(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListPythonPackagesResponse r) {
         std::vector<google::devtools::artifactregistry::v1::PythonPackage>
@@ -263,10 +272,12 @@ ArtifactRegistryConnectionImpl::GetPythonPackage(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPythonPackage(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
-              request) { return stub_->GetPythonPackage(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetPythonPackage(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<
@@ -275,35 +286,38 @@ ArtifactRegistryConnectionImpl::ImportAptArtifacts(
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportAptArtifacts(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::devtools::artifactregistry::v1::
                          ImportAptArtifactsRequest const& request) {
-        return stub->AsyncImportAptArtifacts(cq, std::move(context), options,
-                                             request);
+        return stub->AsyncImportAptArtifacts(cq, std::move(context),
+                                             std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportAptArtifacts(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -313,35 +327,38 @@ ArtifactRegistryConnectionImpl::ImportYumArtifacts(
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportYumArtifacts(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::devtools::artifactregistry::v1::
                          ImportYumArtifactsRequest const& request) {
-        return stub->AsyncImportYumArtifacts(cq, std::move(context), options,
-                                             request);
+        return stub->AsyncImportYumArtifacts(cq, std::move(context),
+                                             std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportYumArtifacts(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -354,22 +371,23 @@ ArtifactRegistryConnectionImpl::ListRepositories(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Repository>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::devtools::artifactregistry::v1::
                        ListRepositoriesRequest const& request) {
-              return stub->ListRepositories(context, request);
+              return stub->ListRepositories(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListRepositoriesResponse r) {
         std::vector<google::devtools::artifactregistry::v1::Repository> result(
@@ -388,10 +406,12 @@ ArtifactRegistryConnectionImpl::GetRepository(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRepository(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::GetRepositoryRequest const&
-                 request) { return stub_->GetRepository(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRepository(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
@@ -399,35 +419,39 @@ ArtifactRegistryConnectionImpl::CreateRepository(
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRepository(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::Repository>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
               request) {
-        return stub->AsyncCreateRepository(cq, std::move(context), options,
-                                           request);
+        return stub->AsyncCreateRepository(cq, std::move(context),
+                                           std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::artifactregistry::v1::Repository>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRepository(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -440,10 +464,12 @@ ArtifactRegistryConnectionImpl::UpdateRepository(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateRepository(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
-              request) { return stub_->UpdateRepository(context, request); },
-      request, __func__);
+              request) {
+        return stub_->UpdateRepository(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -451,35 +477,39 @@ ArtifactRegistryConnectionImpl::DeleteRepository(
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRepository(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
               request) {
-        return stub->AsyncDeleteRepository(cq, std::move(context), options,
-                                           request);
+        return stub->AsyncDeleteRepository(cq, std::move(context),
+                                           std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRepository(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -492,22 +522,23 @@ ArtifactRegistryConnectionImpl::ListPackages(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Package>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::artifactregistry::v1::ListPackagesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::devtools::artifactregistry::v1::
                        ListPackagesRequest const& request) {
-              return stub->ListPackages(context, request);
+              return stub->ListPackages(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListPackagesResponse r) {
         std::vector<google::devtools::artifactregistry::v1::Package> result(
@@ -525,10 +556,12 @@ ArtifactRegistryConnectionImpl::GetPackage(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPackage(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::GetPackageRequest const&
-                 request) { return stub_->GetPackage(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetPackage(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -536,35 +569,39 @@ ArtifactRegistryConnectionImpl::DeletePackage(
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeletePackage(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::devtools::artifactregistry::v1::DeletePackageRequest const&
               request) {
-        return stub->AsyncDeletePackage(cq, std::move(context), options,
-                                        request);
+        return stub->AsyncDeletePackage(cq, std::move(context),
+                                        std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeletePackage(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -577,22 +614,23 @@ ArtifactRegistryConnectionImpl::ListVersions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Version>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::artifactregistry::v1::ListVersionsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::devtools::artifactregistry::v1::
                        ListVersionsRequest const& request) {
-              return stub->ListVersions(context, request);
+              return stub->ListVersions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListVersionsResponse r) {
         std::vector<google::devtools::artifactregistry::v1::Version> result(
@@ -610,10 +648,12 @@ ArtifactRegistryConnectionImpl::GetVersion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVersion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::GetVersionRequest const&
-                 request) { return stub_->GetVersion(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetVersion(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -621,35 +661,39 @@ ArtifactRegistryConnectionImpl::DeleteVersion(
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::devtools::artifactregistry::v1::DeleteVersionRequest const&
               request) {
-        return stub->AsyncDeleteVersion(cq, std::move(context), options,
-                                        request);
+        return stub->AsyncDeleteVersion(cq, std::move(context),
+                                        std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -659,35 +703,38 @@ ArtifactRegistryConnectionImpl::BatchDeleteVersions(
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchDeleteVersions(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::devtools::artifactregistry::v1::
                          BatchDeleteVersionsRequest const& request) {
-        return stub->AsyncBatchDeleteVersions(cq, std::move(context), options,
-                                              request);
+        return stub->AsyncBatchDeleteVersions(cq, std::move(context),
+                                              std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchDeleteVersions(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -700,20 +747,23 @@ ArtifactRegistryConnectionImpl::ListFiles(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::File>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::artifactregistry::v1::ListFilesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::devtools::artifactregistry::v1::ListFilesRequest const&
-                    request) { return stub->ListFiles(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListFiles(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListFilesResponse r) {
         std::vector<google::devtools::artifactregistry::v1::File> result(
@@ -731,10 +781,10 @@ ArtifactRegistryConnectionImpl::GetFile(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFile(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::GetFileRequest const&
-                 request) { return stub_->GetFile(context, request); },
-      request, __func__);
+                 request) { return stub_->GetFile(context, options, request); },
+      *current, request, __func__);
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Tag>
@@ -746,20 +796,23 @@ ArtifactRegistryConnectionImpl::ListTags(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Tag>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::artifactregistry::v1::ListTagsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::devtools::artifactregistry::v1::ListTagsRequest const&
-                    request) { return stub->ListTags(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListTags(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListTagsResponse r) {
         std::vector<google::devtools::artifactregistry::v1::Tag> result(
@@ -777,10 +830,10 @@ ArtifactRegistryConnectionImpl::GetTag(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTag(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::GetTagRequest const&
-                 request) { return stub_->GetTag(context, request); },
-      request, __func__);
+                 request) { return stub_->GetTag(context, options, request); },
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
@@ -790,10 +843,12 @@ ArtifactRegistryConnectionImpl::CreateTag(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTag(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::CreateTagRequest const&
-                 request) { return stub_->CreateTag(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateTag(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
@@ -803,10 +858,12 @@ ArtifactRegistryConnectionImpl::UpdateTag(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTag(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::UpdateTagRequest const&
-                 request) { return stub_->UpdateTag(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateTag(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status ArtifactRegistryConnectionImpl::DeleteTag(
@@ -815,10 +872,12 @@ Status ArtifactRegistryConnectionImpl::DeleteTag(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTag(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::DeleteTagRequest const&
-                 request) { return stub_->DeleteTag(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteTag(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> ArtifactRegistryConnectionImpl::SetIamPolicy(
@@ -827,11 +886,11 @@ StatusOr<google::iam::v1::Policy> ArtifactRegistryConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> ArtifactRegistryConnectionImpl::GetIamPolicy(
@@ -840,11 +899,11 @@ StatusOr<google::iam::v1::Policy> ArtifactRegistryConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -854,11 +913,11 @@ ArtifactRegistryConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
@@ -869,12 +928,12 @@ ArtifactRegistryConnectionImpl::GetProjectSettings(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetProjectSettings(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::
                  GetProjectSettingsRequest const& request) {
-        return stub_->GetProjectSettings(context, request);
+        return stub_->GetProjectSettings(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
@@ -885,12 +944,12 @@ ArtifactRegistryConnectionImpl::UpdateProjectSettings(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateProjectSettings(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::
                  UpdateProjectSettingsRequest const& request) {
-        return stub_->UpdateProjectSettings(context, request);
+        return stub_->UpdateProjectSettings(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
@@ -902,10 +961,12 @@ ArtifactRegistryConnectionImpl::GetVPCSCConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVPCSCConfig(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
-              request) { return stub_->GetVPCSCConfig(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetVPCSCConfig(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
@@ -916,12 +977,12 @@ ArtifactRegistryConnectionImpl::UpdateVPCSCConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateVPCSCConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::
                  UpdateVPCSCConfigRequest const& request) {
-        return stub_->UpdateVPCSCConfig(context, request);
+        return stub_->UpdateVPCSCConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,101 +40,111 @@ class DomainsMetadata : public DomainsStub {
                   std::string api_client_header = "");
 
   StatusOr<google::cloud::domains::v1::SearchDomainsResponse> SearchDomains(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::SearchDomainsRequest const& request) override;
 
   StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
   RetrieveRegisterParameters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRegisterDomain(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::RegisterDomainRequest const& request)
       override;
 
   StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
   RetrieveTransferParameters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveTransferParametersRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTransferDomain(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::TransferDomainRequest const& request)
       override;
 
   StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
-  ListRegistrations(grpc::ClientContext& context,
+  ListRegistrations(grpc::ClientContext& context, Options const& options,
                     google::cloud::domains::v1::ListRegistrationsRequest const&
                         request) override;
 
   StatusOr<google::cloud::domains::v1::Registration> GetRegistration(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::GetRegistrationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::UpdateRegistrationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureManagementSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncConfigureDnsSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureContactSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::ExportRegistrationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRegistration(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::domains::v1::DeleteRegistrationRequest const& request)
       override;
 
   StatusOr<google::cloud::domains::v1::AuthorizationCode>
   RetrieveAuthorizationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
           request) override;
 
   StatusOr<google::cloud::domains::v1::AuthorizationCode>
   ResetAuthorizationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/target_pools/v1/target_pools_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

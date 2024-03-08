@@ -22,6 +22,7 @@
 #include <google/cloud/resourcemanager/v3/tag_bindings.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ TagBindingsStub::~TagBindingsStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
 DefaultTagBindingsStub::ListTagBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) {
   google::cloud::resourcemanager::v3::ListTagBindingsResponse response;
   auto status = grpc_stub_->ListTagBindings(&context, request, &response);
@@ -45,7 +46,8 @@ DefaultTagBindingsStub::ListTagBindings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagBindingsStub::AsyncCreateTagBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -64,7 +66,8 @@ DefaultTagBindingsStub::AsyncCreateTagBinding(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagBindingsStub::AsyncDeleteTagBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -82,7 +85,7 @@ DefaultTagBindingsStub::AsyncDeleteTagBinding(
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
 DefaultTagBindingsStub::ListEffectiveTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
         request) {
   google::cloud::resourcemanager::v3::ListEffectiveTagsResponse response;
@@ -96,7 +99,9 @@ DefaultTagBindingsStub::ListEffectiveTags(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagBindingsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -111,7 +116,9 @@ DefaultTagBindingsStub::AsyncGetOperation(
 
 future<Status> DefaultTagBindingsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

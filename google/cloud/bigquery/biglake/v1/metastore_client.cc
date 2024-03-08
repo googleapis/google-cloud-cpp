@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/biglake/v1/metastore_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

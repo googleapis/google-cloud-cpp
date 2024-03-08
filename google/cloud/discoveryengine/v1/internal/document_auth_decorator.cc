@@ -19,6 +19,7 @@
 #include "google/cloud/discoveryengine/v1/internal/document_auth_decorator.h"
 #include <google/cloud/discoveryengine/v1/document_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,117 +33,121 @@ DocumentServiceAuth::DocumentServiceAuth(
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceAuth::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDocument(context, request);
+  return child_->GetDocument(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
 DocumentServiceAuth::ListDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDocuments(context, request);
+  return child_->ListDocuments(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceAuth::CreateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateDocument(context, request);
+  return child_->CreateDocument(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceAuth::UpdateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateDocument(context, request);
+  return child_->UpdateDocument(context, options, request);
 }
 
 Status DocumentServiceAuth::DeleteDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteDocument(context, request);
+  return child_->DeleteDocument(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceAuth::AsyncImportDocuments(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportDocuments(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncImportDocuments(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceAuth::AsyncPurgeDocuments(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncPurgeDocuments(cq, *std::move(context), options,
-                                          request);
+        return child->AsyncPurgeDocuments(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> DocumentServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

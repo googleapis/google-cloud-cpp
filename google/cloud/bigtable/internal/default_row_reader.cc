@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/default_row_reader.h"
-#include "google/cloud/bigtable/internal/retry_info_helper.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 
 namespace google {
 namespace cloud {
@@ -128,9 +128,10 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
     // If we receive an error, but the retryable set is empty, stop.
     if (row_set_.IsEmpty()) return Status{};
 
-    auto delay = BackoffOrBreak(enable_server_retries_, status, *retry_policy_,
-                                *backoff_policy_);
-    if (!delay) return status;
+    auto delay = internal::Backoff(status, "AsyncReadRows", *retry_policy_,
+                                   *backoff_policy_, Idempotency::kIdempotent,
+                                   enable_server_retries_);
+    if (!delay) return std::move(delay).status();
     sleeper_(*delay);
 
     // If we reach this place, we failed and need to restart the call.

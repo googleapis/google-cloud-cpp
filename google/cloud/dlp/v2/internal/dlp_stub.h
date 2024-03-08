@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/privacy/dlp/v2/dlp.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,192 +37,226 @@ class DlpServiceStub {
 
   virtual StatusOr<google::privacy::dlp::v2::InspectContentResponse>
   InspectContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::InspectContentRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::RedactImageResponse> RedactImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::RedactImageRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
   DeidentifyContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeidentifyContentRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
   ReidentifyContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ReidentifyContentRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
   ListInfoTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListInfoTypesRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::InspectTemplate>
   CreateInspectTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateInspectTemplateRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::InspectTemplate>
   UpdateInspectTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateInspectTemplateRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::InspectTemplate>
   GetInspectTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetInspectTemplateRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>
   ListInspectTemplates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListInspectTemplatesRequest const& request) = 0;
 
   virtual Status DeleteInspectTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteInspectTemplateRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   CreateDeidentifyTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   UpdateDeidentifyTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   GetDeidentifyTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetDeidentifyTemplateRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>
   ListDeidentifyTemplates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const&
           request) = 0;
 
   virtual Status DeleteDeidentifyTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateJobTriggerRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::HybridInspectJobTriggerRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetJobTriggerRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>
   ListJobTriggers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListJobTriggersRequest const& request) = 0;
 
   virtual Status DeleteJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DlpJob> ActivateJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
   CreateDiscoveryConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateDiscoveryConfigRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
   UpdateDiscoveryConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
   GetDiscoveryConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
   ListDiscoveryConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) = 0;
 
   virtual Status DeleteDiscoveryConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&
           request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateDlpJobRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse> ListDlpJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListDlpJobsRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetDlpJobRequest const& request) = 0;
 
   virtual Status DeleteDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteDlpJobRequest const& request) = 0;
 
   virtual Status CancelDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CancelDlpJobRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::StoredInfoType>
   CreateStoredInfoType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::StoredInfoType>
   UpdateStoredInfoType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>
   ListStoredInfoTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) = 0;
 
   virtual Status DeleteStoredInfoType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
+  ListProjectDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListProjectDataProfilesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
+  ListTableDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListTableDataProfilesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
+  ListColumnDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListColumnDataProfilesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+  GetProjectDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetProjectDataProfileRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::TableDataProfile>
+  GetTableDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetTableDataProfileRequest const& request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+  GetColumnDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) = 0;
 
   virtual StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) = 0;
 
   virtual Status FinishDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::FinishDlpJobRequest const& request) = 0;
 };
 
@@ -232,194 +268,227 @@ class DefaultDlpServiceStub : public DlpServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::InspectContentRequest const& request) override;
 
   StatusOr<google::privacy::dlp::v2::RedactImageResponse> RedactImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::RedactImageRequest const& request) override;
 
   StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
-  DeidentifyContent(grpc::ClientContext& context,
+  DeidentifyContent(grpc::ClientContext& context, Options const& options,
                     google::privacy::dlp::v2::DeidentifyContentRequest const&
                         request) override;
 
   StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
-  ReidentifyContent(grpc::ClientContext& context,
+  ReidentifyContent(grpc::ClientContext& context, Options const& options,
                     google::privacy::dlp::v2::ReidentifyContentRequest const&
                         request) override;
 
   StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListInfoTypesRequest const& request) override;
 
   StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateInspectTemplateRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetInspectTemplateRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>
   ListInspectTemplates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListInspectTemplatesRequest const& request)
       override;
 
   Status DeleteInspectTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   CreateDeidentifyTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   UpdateDeidentifyTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>
   ListDeidentifyTemplates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& request)
       override;
 
   Status DeleteDeidentifyTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateJobTriggerRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateJobTriggerRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetJobTriggerRequest const& request) override;
 
   StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse> ListJobTriggers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListJobTriggersRequest const& request) override;
 
   Status DeleteJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteJobTriggerRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::DlpJob> ActivateJobTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
   ListDiscoveryConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request)
       override;
 
   Status DeleteDiscoveryConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateDlpJobRequest const& request) override;
 
   StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse> ListDlpJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListDlpJobsRequest const& request) override;
 
   StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetDlpJobRequest const& request) override;
 
   Status DeleteDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteDlpJobRequest const& request) override;
 
   Status CancelDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CancelDlpJobRequest const& request) override;
 
   StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>
   ListStoredInfoTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request)
       override;
 
   Status DeleteStoredInfoType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request)
       override;
 
+  StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
+  ListProjectDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
+  ListTableDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListTableDataProfilesRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
+  ListColumnDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ProjectDataProfile> GetProjectDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetProjectDataProfileRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetTableDataProfileRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ColumnDataProfile> GetColumnDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request)
+      override;
+
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request)
       override;
 
   Status FinishDlpJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::FinishDlpJobRequest const& request) override;
 
  private:

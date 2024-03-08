@@ -53,7 +53,7 @@ class ServiceAttachmentsRestLogging : public ServiceAttachmentsRestStub {
   AsyncDeleteServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::service_attachments::v1::
           DeleteServiceAttachmentRequest const& request) override;
 
@@ -73,7 +73,7 @@ class ServiceAttachmentsRestLogging : public ServiceAttachmentsRestStub {
   AsyncInsertServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::service_attachments::v1::
           InsertServiceAttachmentRequest const& request) override;
 
@@ -88,7 +88,7 @@ class ServiceAttachmentsRestLogging : public ServiceAttachmentsRestStub {
   AsyncPatchServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::service_attachments::v1::
           PatchServiceAttachmentRequest const& request) override;
 
@@ -108,14 +108,14 @@ class ServiceAttachmentsRestLogging : public ServiceAttachmentsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

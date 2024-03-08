@@ -39,7 +39,7 @@ class SystemPolicyV1Logging : public SystemPolicyV1Stub {
                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request) override;
 

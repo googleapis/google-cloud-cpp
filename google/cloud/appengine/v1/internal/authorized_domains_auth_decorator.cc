@@ -19,6 +19,7 @@
 #include "google/cloud/appengine/v1/internal/authorized_domains_auth_decorator.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,11 +33,11 @@ AuthorizedDomainsAuth::AuthorizedDomainsAuth(
 
 StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 AuthorizedDomainsAuth::ListAuthorizedDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAuthorizedDomains(context, request);
+  return child_->ListAuthorizedDomains(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,44 +40,44 @@ class DocumentServiceAuth : public DocumentServiceStub {
 
   StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
   CreateDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::Document> GetDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::GetDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
   UpdateDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request)
       override;
 
   Status DeleteDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse>
   SearchDocuments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
           request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::Document> LockDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::LockDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse> FetchAcl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::FetchAclRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::SetAclRequest const& request)
       override;
 

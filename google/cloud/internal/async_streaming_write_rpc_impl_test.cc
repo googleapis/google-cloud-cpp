@@ -117,9 +117,10 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
 
   google::cloud::CompletionQueue cq(mock_cq);
 
-  OptionsSpan span(user_project("create"));
+  OptionsSpan span(user_project("unused"));
   auto stream = MakeStreamingWriteRpc<FakeRequest, FakeResponse>(
       cq, std::make_shared<grpc::ClientContext>(),
+      MakeImmutableOptions(user_project("create")),
       [&mock](grpc::ClientContext* context, FakeResponse* response,
               grpc::CompletionQueue* cq) {
         return mock.FakeRpc(context, response, cq);
@@ -127,7 +128,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
 
   OptionsSpan start_span(user_project("start"));
   auto start = stream->Start().then([](future<bool> f) {
-    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "start");
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
     return f.get();
   });
   ASSERT_THAT(operations, SizeIs(1));
@@ -137,7 +138,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
 
   OptionsSpan write0_span(user_project("write0"));
   auto write0 = stream->Write(FakeRequest{}, grpc::WriteOptions())
-                    .then(check_write_span("write0"));
+                    .then(check_write_span("create"));
   ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan write0_clear(Options{});
   notify_next_op();
@@ -145,14 +146,14 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
 
   OptionsSpan write1_span(user_project("write1"));
   auto write1 = stream->Write(FakeRequest{}, grpc::WriteOptions())
-                    .then(check_write_span("write1"));
+                    .then(check_write_span("create"));
   ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan write1_clear(Options{});
   notify_next_op(false);
   EXPECT_FALSE(write1.get());
 
   OptionsSpan writes_done_span(user_project("writes_done"));
-  auto writes_done = stream->WritesDone().then(check_write_span("writes_done"));
+  auto writes_done = stream->WritesDone().then(check_write_span("create"));
   ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan writes_done_clear(Options{});
   notify_next_op(false);
@@ -160,7 +161,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
 
   OptionsSpan finish_span(user_project("finish"));
   auto finish = stream->Finish().then([](future<StatusOr<FakeResponse>> f) {
-    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "finish");
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
     return f.get();
   });
   ASSERT_THAT(operations, SizeIs(1));
@@ -228,7 +229,7 @@ TEST(AsyncStreamingWriteRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
     auto span = MakeSpan("create");
     OTelScope scope(span);
     return MakeStreamingWriteRpc<FakeRequest, FakeResponse>(
-        cq, std::make_shared<grpc::ClientContext>(),
+        cq, std::make_shared<grpc::ClientContext>(), MakeImmutableOptions({}),
         [&mock, span](grpc::ClientContext* context, FakeResponse* response,
                       grpc::CompletionQueue* cq) {
           EXPECT_THAT(span, IsActive());

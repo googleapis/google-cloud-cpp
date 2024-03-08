@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/translate/v3/internal/translation_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,31 +33,31 @@ TranslationServiceTracingStub::TranslationServiceTracingStub(
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 TranslationServiceTracingStub::TranslateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::TranslateTextRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "TranslateText");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->TranslateText(context, request));
+                           child_->TranslateText(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 TranslationServiceTracingStub::DetectLanguage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::DetectLanguageRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "DetectLanguage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DetectLanguage(context, request));
+                           child_->DetectLanguage(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::SupportedLanguages>
 TranslationServiceTracingStub::GetSupportedLanguages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::GetSupportedLanguagesRequest const&
         request) {
   auto span =
@@ -64,39 +65,42 @@ TranslationServiceTracingStub::GetSupportedLanguages(
                              "GetSupportedLanguages");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetSupportedLanguages(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetSupportedLanguages(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
 TranslationServiceTracingStub::TranslateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::TranslateDocumentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "TranslateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TranslateDocument(context, request));
+  return internal::EndSpan(
+      context, *span, child_->TranslateDocument(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncBatchTranslateText(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "BatchTranslateText");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchTranslateText(cq, context, options, request);
+  auto f =
+      child_->AsyncBatchTranslateText(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncBatchTranslateDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
   auto span =
@@ -104,63 +108,68 @@ TranslationServiceTracingStub::AsyncBatchTranslateDocument(
                              "BatchTranslateDocument");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchTranslateDocument(cq, context, options, request);
+  auto f = child_->AsyncBatchTranslateDocument(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "CreateGlossary");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateGlossary(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateGlossary(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
 TranslationServiceTracingStub::ListGlossaries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::ListGlossariesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "ListGlossaries");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListGlossaries(context, request));
+                           child_->ListGlossaries(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::Glossary>
 TranslationServiceTracingStub::GetGlossary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::GetGlossaryRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "GetGlossary");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetGlossary(context, request));
+                           child_->GetGlossary(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncDeleteGlossary(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "DeleteGlossary");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteGlossary(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteGlossary(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
 TranslationServiceTracingStub::CreateAdaptiveMtDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
         request) {
   auto span =
@@ -168,12 +177,13 @@ TranslationServiceTracingStub::CreateAdaptiveMtDataset(
                              "CreateAdaptiveMtDataset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateAdaptiveMtDataset(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateAdaptiveMtDataset(context, options, request));
 }
 
 Status TranslationServiceTracingStub::DeleteAdaptiveMtDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
         request) {
   auto span =
@@ -181,26 +191,27 @@ Status TranslationServiceTracingStub::DeleteAdaptiveMtDataset(
                              "DeleteAdaptiveMtDataset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteAdaptiveMtDataset(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteAdaptiveMtDataset(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
 TranslationServiceTracingStub::GetAdaptiveMtDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "GetAdaptiveMtDataset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAdaptiveMtDataset(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAdaptiveMtDataset(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse>
 TranslationServiceTracingStub::ListAdaptiveMtDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
         request) {
   auto span =
@@ -208,74 +219,75 @@ TranslationServiceTracingStub::ListAdaptiveMtDatasets(
                              "ListAdaptiveMtDatasets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAdaptiveMtDatasets(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListAdaptiveMtDatasets(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
 TranslationServiceTracingStub::AdaptiveMtTranslate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "AdaptiveMtTranslate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->AdaptiveMtTranslate(context, request));
+  return internal::EndSpan(
+      context, *span, child_->AdaptiveMtTranslate(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
 TranslationServiceTracingStub::GetAdaptiveMtFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "GetAdaptiveMtFile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAdaptiveMtFile(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAdaptiveMtFile(context, options, request));
 }
 
 Status TranslationServiceTracingStub::DeleteAdaptiveMtFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "DeleteAdaptiveMtFile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteAdaptiveMtFile(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteAdaptiveMtFile(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
 TranslationServiceTracingStub::ImportAdaptiveMtFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "ImportAdaptiveMtFile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ImportAdaptiveMtFile(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ImportAdaptiveMtFile(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::ListAdaptiveMtFilesResponse>
 TranslationServiceTracingStub::ListAdaptiveMtFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "ListAdaptiveMtFiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAdaptiveMtFiles(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAdaptiveMtFiles(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::ListAdaptiveMtSentencesResponse>
 TranslationServiceTracingStub::ListAdaptiveMtSentences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
         request) {
   auto span =
@@ -283,32 +295,36 @@ TranslationServiceTracingStub::ListAdaptiveMtSentences(
                              "ListAdaptiveMtSentences");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAdaptiveMtSentences(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListAdaptiveMtSentences(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> TranslationServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

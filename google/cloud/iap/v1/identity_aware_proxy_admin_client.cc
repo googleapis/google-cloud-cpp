@@ -18,6 +18,7 @@
 
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

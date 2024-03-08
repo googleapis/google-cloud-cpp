@@ -29,6 +29,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -139,6 +140,12 @@ DataTransferServiceConnection::CheckValidCreds(
 Status DataTransferServiceConnection::EnrollDataSources(
     google::cloud::bigquery::datatransfer::v1::
         EnrollDataSourcesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status DataTransferServiceConnection::UnenrollDataSources(
+    google::cloud::bigquery::datatransfer::v1::
+        UnenrollDataSourcesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/cloudbuild/v2/repository_manager_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

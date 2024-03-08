@@ -362,6 +362,18 @@ struct CommitReturnStatsOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to set the amount of latency this request
+ * is willing to incur in order to improve throughput. If this field is not set,
+ * Spanner assumes requests are relatively latency sensitive and automatically
+ * determines an appropriate delay time. Value must be between 0ms and 500ms.
+ *
+ * @ingroup spanner-options
+ */
+struct MaxCommitDelayOption {
+  using Type = std::chrono::milliseconds;
+};
+
+/**
  * List of Request options for `client::ExecuteBatchDml()`.
  */
 using RequestOptionList = OptionList<RequestPriorityOption, RequestTagOption>;

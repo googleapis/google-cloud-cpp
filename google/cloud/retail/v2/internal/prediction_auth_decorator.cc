@@ -19,6 +19,7 @@
 #include "google/cloud/retail/v2/internal/prediction_auth_decorator.h"
 #include <google/cloud/retail/v2/prediction_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,11 +33,11 @@ PredictionServiceAuth::PredictionServiceAuth(
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceAuth::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::PredictRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Predict(context, request);
+  return child_->Predict(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

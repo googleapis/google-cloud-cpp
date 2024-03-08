@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/fulfillments_auth_decorator.h"
 #include <google/cloud/dialogflow/v2/fulfillment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,20 +33,20 @@ FulfillmentsAuth::FulfillmentsAuth(
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsAuth::GetFulfillment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetFulfillment(context, request);
+  return child_->GetFulfillment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsAuth::UpdateFulfillment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateFulfillment(context, request);
+  return child_->UpdateFulfillment(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

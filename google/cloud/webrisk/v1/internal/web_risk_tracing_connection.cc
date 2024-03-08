@@ -19,6 +19,7 @@
 #include "google/cloud/webrisk/v1/internal/web_risk_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

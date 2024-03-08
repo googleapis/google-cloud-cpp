@@ -18,6 +18,7 @@
 
 #include "google/cloud/policysimulator/v1/simulator_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

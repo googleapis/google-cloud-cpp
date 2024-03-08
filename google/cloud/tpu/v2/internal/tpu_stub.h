@@ -27,6 +27,7 @@
 #include <google/cloud/tpu/v2/cloud_tpu.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -38,75 +39,82 @@ class TpuStub {
   virtual ~TpuStub() = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::ListNodesResponse> ListNodes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListNodesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::Node> GetNode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetNodeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::CreateNodeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::DeleteNodeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStopNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::StopNodeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStartNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::StartNodeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::UpdateNodeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GenerateServiceIdentityRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
   ListAcceleratorTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
   ListRuntimeVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListRuntimeVersionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
   GetGuestAttributes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetGuestAttributesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -119,77 +127,84 @@ class DefaultTpuStub : public TpuStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::tpu::v2::ListNodesResponse> ListNodes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListNodesRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v2::Node> GetNode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::CreateNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::DeleteNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::StopNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::StartNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::UpdateNodeRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
   ListAcceleratorTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
-  ListRuntimeVersions(grpc::ClientContext& context,
+  ListRuntimeVersions(grpc::ClientContext& context, Options const& options,
                       google::cloud::tpu::v2::ListRuntimeVersionsRequest const&
                           request) override;
 
   StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
-  GetGuestAttributes(grpc::ClientContext& context,
+  GetGuestAttributes(grpc::ClientContext& context, Options const& options,
                      google::cloud::tpu::v2::GetGuestAttributesRequest const&
                          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

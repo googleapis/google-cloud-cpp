@@ -44,48 +44,48 @@ OrganizationsMetadata::OrganizationsMetadata(
 
 StatusOr<google::cloud::resourcemanager::v3::Organization>
 OrganizationsMetadata::GetOrganization(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetOrganization(context, request);
+  return child_->GetOrganization(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
 OrganizationsMetadata::SearchOrganizations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->SearchOrganizations(context, request);
+  SetMetadata(context, options);
+  return child_->SearchOrganizations(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 OrganizationsMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 void OrganizationsMetadata::SetMetadata(grpc::ClientContext& context,

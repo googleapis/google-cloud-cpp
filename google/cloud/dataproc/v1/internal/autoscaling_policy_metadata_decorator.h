@@ -41,29 +41,29 @@ class AutoscalingPolicyServiceMetadata : public AutoscalingPolicyServiceStub {
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request)
       override;
 
   StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
   ListAutoscalingPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
           request) override;
 
   Status DeleteAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
           request) override;
 

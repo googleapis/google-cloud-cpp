@@ -22,6 +22,7 @@
 #include <google/cloud/dialogflow/cx/v3/environment.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ EnvironmentsStub::~EnvironmentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
 DefaultEnvironmentsStub::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse response;
   auto status = grpc_stub_->ListEnvironments(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultEnvironmentsStub::ListEnvironments(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
 DefaultEnvironmentsStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Environment response;
   auto status = grpc_stub_->GetEnvironment(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultEnvironmentsStub::GetEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -76,7 +78,8 @@ DefaultEnvironmentsStub::AsyncCreateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -93,7 +96,7 @@ DefaultEnvironmentsStub::AsyncUpdateEnvironment(
 }
 
 Status DefaultEnvironmentsStub::DeleteEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
         request) {
   google::protobuf::Empty response;
@@ -106,7 +109,7 @@ Status DefaultEnvironmentsStub::DeleteEnvironment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse>
 DefaultEnvironmentsStub::LookupEnvironmentHistory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse response;
@@ -121,7 +124,8 @@ DefaultEnvironmentsStub::LookupEnvironmentHistory(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncRunContinuousTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -139,7 +143,7 @@ DefaultEnvironmentsStub::AsyncRunContinuousTest(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
 DefaultEnvironmentsStub::ListContinuousTestResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse response;
@@ -154,7 +158,8 @@ DefaultEnvironmentsStub::ListContinuousTestResults(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncDeployFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::DeployFlowRequest,
@@ -172,7 +177,9 @@ DefaultEnvironmentsStub::AsyncDeployFlow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -187,7 +194,9 @@ DefaultEnvironmentsStub::AsyncGetOperation(
 
 future<Status> DefaultEnvironmentsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

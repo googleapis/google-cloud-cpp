@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/migration/v2/internal/migration_auth_decorator.h"
 #include <google/cloud/bigquery/migration/v2/migration_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,70 +33,70 @@ MigrationServiceAuth::MigrationServiceAuth(
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceAuth::CreateMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::
         CreateMigrationWorkflowRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateMigrationWorkflow(context, request);
+  return child_->CreateMigrationWorkflow(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceAuth::GetMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMigrationWorkflow(context, request);
+  return child_->GetMigrationWorkflow(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse>
 MigrationServiceAuth::ListMigrationWorkflows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMigrationWorkflows(context, request);
+  return child_->ListMigrationWorkflows(context, options, request);
 }
 
 Status MigrationServiceAuth::DeleteMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::
         DeleteMigrationWorkflowRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteMigrationWorkflow(context, request);
+  return child_->DeleteMigrationWorkflow(context, options, request);
 }
 
 Status MigrationServiceAuth::StartMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->StartMigrationWorkflow(context, request);
+  return child_->StartMigrationWorkflow(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
 MigrationServiceAuth::GetMigrationSubtask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMigrationSubtask(context, request);
+  return child_->GetMigrationSubtask(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse>
 MigrationServiceAuth::ListMigrationSubtasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMigrationSubtasks(context, request);
+  return child_->ListMigrationSubtasks(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,6 +19,7 @@
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_auth_decorator.h"
 #include <google/cloud/iap/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,91 +33,91 @@ IdentityAwareProxyAdminServiceAuth::IdentityAwareProxyAdminServiceAuth(
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IdentityAwareProxyAdminServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceAuth::GetIapSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::GetIapSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIapSettings(context, request);
+  return child_->GetIapSettings(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceAuth::UpdateIapSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateIapSettings(context, request);
+  return child_->UpdateIapSettings(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 IdentityAwareProxyAdminServiceAuth::ListTunnelDestGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTunnelDestGroups(context, request);
+  return child_->ListTunnelDestGroups(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceAuth::CreateTunnelDestGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTunnelDestGroup(context, request);
+  return child_->CreateTunnelDestGroup(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceAuth::GetTunnelDestGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTunnelDestGroup(context, request);
+  return child_->GetTunnelDestGroup(context, options, request);
 }
 
 Status IdentityAwareProxyAdminServiceAuth::DeleteTunnelDestGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTunnelDestGroup(context, request);
+  return child_->DeleteTunnelDestGroup(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceAuth::UpdateTunnelDestGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTunnelDestGroup(context, request);
+  return child_->UpdateTunnelDestGroup(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

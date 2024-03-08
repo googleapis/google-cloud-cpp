@@ -39,7 +39,7 @@ class SearchServiceMetadata : public SearchServiceStub {
                         std::string api_client_header = "");
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> Search(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::SearchRequest const& request)
       override;
 

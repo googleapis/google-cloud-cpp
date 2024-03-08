@@ -24,6 +24,7 @@
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -73,10 +74,12 @@ UserEventServiceConnectionImpl::WriteUserEvent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteUserEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::WriteUserEventRequest const&
-                 request) { return stub_->WriteUserEvent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->WriteUserEvent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::api::HttpBody>
@@ -87,10 +90,12 @@ UserEventServiceConnectionImpl::CollectUserEvent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CollectUserEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::CollectUserEventRequest const&
-                 request) { return stub_->CollectUserEvent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CollectUserEvent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
@@ -98,35 +103,39 @@ UserEventServiceConnectionImpl::ImportUserEvents(
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportUserEvents(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::discoveryengine::v1::ImportUserEventsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
               request) {
-        return stub->AsyncImportUserEvents(cq, std::move(context), options,
-                                           request);
+        return stub->AsyncImportUserEvents(cq, std::move(context),
+                                           std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::ImportUserEventsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportUserEvents(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

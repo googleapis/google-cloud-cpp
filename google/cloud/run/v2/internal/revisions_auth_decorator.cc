@@ -19,6 +19,7 @@
 #include "google/cloud/run/v2/internal/revisions_auth_decorator.h"
 #include <google/cloud/run/v2/revision.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,72 +32,75 @@ RevisionsAuth::RevisionsAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::run::v2::Revision> RevisionsAuth::GetRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRevision(context, request);
+  return child_->GetRevision(context, options, request);
 }
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 RevisionsAuth::ListRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRevisions(context, request);
+  return child_->ListRevisions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RevisionsAuth::AsyncDeleteRevision(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::run::v2::DeleteRevisionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteRevision(cq, *std::move(context), options,
-                                          request);
+        return child->AsyncDeleteRevision(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RevisionsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> RevisionsAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

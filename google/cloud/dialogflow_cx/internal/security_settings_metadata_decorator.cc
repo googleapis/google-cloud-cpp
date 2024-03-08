@@ -44,53 +44,53 @@ SecuritySettingsServiceMetadata::SecuritySettingsServiceMetadata(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceMetadata::CreateSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateSecuritySettings(context, request);
+  return child_->CreateSecuritySettings(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceMetadata::GetSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSecuritySettings(context, request);
+  return child_->GetSecuritySettings(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceMetadata::UpdateSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("security_settings.name=",
                    internal::UrlEncode(request.security_settings().name())));
-  return child_->UpdateSecuritySettings(context, request);
+  return child_->UpdateSecuritySettings(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse>
 SecuritySettingsServiceMetadata::ListSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSecuritySettings(context, request);
+  return child_->ListSecuritySettings(context, options, request);
 }
 
 Status SecuritySettingsServiceMetadata::DeleteSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteSecuritySettings(context, request);
+  return child_->DeleteSecuritySettings(context, options, request);
 }
 
 void SecuritySettingsServiceMetadata::SetMetadata(

@@ -162,37 +162,90 @@ target_compile_options(google_cloud_cpp_bigquery_rest
 add_library(google-cloud-cpp::experimental-bigquery_rest ALIAS
             google_cloud_cpp_bigquery_rest)
 
-# Create a header-only library for the mocks.
-add_library(google_cloud_cpp_bigquery_rest_mocks INTERFACE)
-target_sources(
-    google_cloud_cpp_bigquery_rest_mocks
-    INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_dataset_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_project_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_table_connection.h)
-target_link_libraries(
-    google_cloud_cpp_bigquery_rest_mocks
-    INTERFACE google-cloud-cpp::experimental-bigquery_rest GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_bigquery_rest_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-bigquery_rest_mocks)
-target_include_directories(
-    google_cloud_cpp_bigquery_rest_mocks
-    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-              $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_bigquery_rest_mocks
-                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-add_library(google-cloud-cpp::experimental-bigquery_rest_mocks ALIAS
-            google_cloud_cpp_bigquery_rest_mocks)
+# Get the destination directories based on the GNU recommendations.
+include(GNUInstallDirs)
+
+# Export the CMake targets to make it easy to create configuration files.
+install(
+    EXPORT google_cloud_cpp_bigquery_rest-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_rest"
+    COMPONENT google_cloud_cpp_development)
+
+# Install the libraries and headers in the locations determined by
+# GNUInstallDirs
+install(
+    TARGETS google_cloud_cpp_bigquery_rest
+    EXPORT google_cloud_cpp_bigquery_rest-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_runtime
+            NAMELINK_COMPONENT google_cloud_cpp_development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_install_headers("google_cloud_cpp_bigquery_rest"
+                                 "include/google/cloud/bigquery")
+
+google_cloud_cpp_add_pkgconfig(
+    bigquery_rest "Experimental BigQuery REST client library"
+    "An experimental BigQuery C++ client library using REST for transport."
+    "google_cloud_cpp_rest_internal")
+
+# Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
+configure_file("config-rest.cmake.in"
+               "google_cloud_cpp_bigquery_rest-config.cmake" @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_bigquery_rest-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery_rest-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery_rest-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_rest"
+    COMPONENT google_cloud_cpp_development)
+
+if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
+    # Create a header-only library for the mocks.
+    add_library(google_cloud_cpp_bigquery_rest_mocks INTERFACE)
+    target_sources(
+        google_cloud_cpp_bigquery_rest_mocks
+        INTERFACE
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_dataset_connection.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_connection.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_project_connection.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_table_connection.h
+    )
+    target_link_libraries(
+        google_cloud_cpp_bigquery_rest_mocks
+        INTERFACE google-cloud-cpp::experimental-bigquery_rest
+                  GTest::gmock_main GTest::gmock GTest::gtest)
+    set_target_properties(
+        google_cloud_cpp_bigquery_rest_mocks
+        PROPERTIES EXPORT_NAME
+                   google-cloud-cpp::experimental-bigquery_rest_mocks)
+    target_include_directories(
+        google_cloud_cpp_bigquery_rest_mocks
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                  $<INSTALL_INTERFACE:include>)
+    target_compile_options(google_cloud_cpp_bigquery_rest_mocks
+                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    add_library(google-cloud-cpp::experimental-bigquery_rest_mocks ALIAS
+                google_cloud_cpp_bigquery_rest_mocks)
+    create_bazel_config(google_cloud_cpp_bigquery_rest_mocks YEAR "2023")
+
+    google_cloud_cpp_install_headers("google_cloud_cpp_bigquery_rest_mocks"
+                                     "include/google/cloud/bigquery")
+endif ()
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_bigquery_rest YEAR "2023")
-create_bazel_config(google_cloud_cpp_bigquery_rest_mocks YEAR "2023")
 
 # Define the tests in a function so we have a new scope for variable names.
 function (bigquery_rest_define_tests)
@@ -315,54 +368,6 @@ function (bigquery_rest_define_tests)
         add_dependencies(bigquery_rest-tests ${target})
     endforeach ()
 endfunction ()
-
-# Get the destination directories based on the GNU recommendations.
-include(GNUInstallDirs)
-
-# Export the CMake targets to make it easy to create configuration files.
-install(
-    EXPORT google_cloud_cpp_bigquery_rest-targets
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_rest"
-    COMPONENT google_cloud_cpp_development)
-
-# Install the libraries and headers in the locations determined by
-# GNUInstallDirs
-install(
-    TARGETS google_cloud_cpp_bigquery_rest
-    EXPORT google_cloud_cpp_bigquery_rest-targets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_runtime
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_runtime
-            NAMELINK_COMPONENT google_cloud_cpp_development
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-
-google_cloud_cpp_install_headers("google_cloud_cpp_bigquery_rest"
-                                 "include/google/cloud/bigquery")
-google_cloud_cpp_install_headers("google_cloud_cpp_bigquery_rest_mocks"
-                                 "include/google/cloud/bigquery")
-
-google_cloud_cpp_add_pkgconfig(
-    bigquery_rest "Experimental BigQuery REST client library"
-    "An experimental BigQuery C++ client library using REST for transport."
-    "google_cloud_cpp_rest_internal")
-
-# Create and install the CMake configuration files.
-include(CMakePackageConfigHelpers)
-configure_file("config-rest.cmake.in"
-               "google_cloud_cpp_bigquery_rest-config.cmake" @ONLY)
-write_basic_package_version_file(
-    "google_cloud_cpp_bigquery_rest-config-version.cmake"
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY ExactVersion)
-
-install(
-    FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery_rest-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery_rest-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_rest"
-    COMPONENT google_cloud_cpp_development)
 
 if (BUILD_TESTING)
     bigquery_rest_define_tests()

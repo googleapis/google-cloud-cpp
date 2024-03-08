@@ -23,6 +23,7 @@
 #include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,152 +36,152 @@ StorageAuth::StorageAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 Status StorageAuth::DeleteBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::DeleteBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteBucket(context, request);
+  return child_->DeleteBucket(context, options, request);
 }
 
 StatusOr<google::storage::v2::Bucket> StorageAuth::GetBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::GetBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBucket(context, request);
+  return child_->GetBucket(context, options, request);
 }
 
 StatusOr<google::storage::v2::Bucket> StorageAuth::CreateBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::CreateBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateBucket(context, request);
+  return child_->CreateBucket(context, options, request);
 }
 
 StatusOr<google::storage::v2::ListBucketsResponse> StorageAuth::ListBuckets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::ListBucketsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBuckets(context, request);
+  return child_->ListBuckets(context, options, request);
 }
 
 StatusOr<google::storage::v2::Bucket> StorageAuth::LockBucketRetentionPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->LockBucketRetentionPolicy(context, request);
+  return child_->LockBucketRetentionPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> StorageAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> StorageAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 StorageAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::storage::v2::Bucket> StorageAuth::UpdateBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateBucket(context, request);
+  return child_->UpdateBucket(context, options, request);
 }
 
 Status StorageAuth::DeleteNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::DeleteNotificationConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteNotificationConfig(context, request);
+  return child_->DeleteNotificationConfig(context, options, request);
 }
 
 StatusOr<google::storage::v2::NotificationConfig>
 StorageAuth::GetNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::GetNotificationConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNotificationConfig(context, request);
+  return child_->GetNotificationConfig(context, options, request);
 }
 
 StatusOr<google::storage::v2::NotificationConfig>
 StorageAuth::CreateNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::CreateNotificationConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateNotificationConfig(context, request);
+  return child_->CreateNotificationConfig(context, options, request);
 }
 
 StatusOr<google::storage::v2::ListNotificationConfigsResponse>
 StorageAuth::ListNotificationConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::ListNotificationConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNotificationConfigs(context, request);
+  return child_->ListNotificationConfigs(context, options, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageAuth::ComposeObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::ComposeObjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ComposeObject(context, request);
+  return child_->ComposeObject(context, options, request);
 }
 
 Status StorageAuth::DeleteObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::DeleteObjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteObject(context, request);
+  return child_->DeleteObject(context, options, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageAuth::RestoreObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::RestoreObjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RestoreObject(context, request);
+  return child_->RestoreObject(context, options, request);
 }
 
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 StorageAuth::CancelResumableWrite(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::CancelResumableWriteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelResumableWrite(context, request);
+  return child_->CancelResumableWrite(context, options, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageAuth::GetObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::GetObjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetObject(context, request);
+  return child_->GetObject(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -196,11 +197,11 @@ StorageAuth::ReadObject(std::shared_ptr<grpc::ClientContext> context,
 }
 
 StatusOr<google::storage::v2::Object> StorageAuth::UpdateObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateObjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateObject(context, request);
+  return child_->UpdateObject(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
@@ -221,131 +222,134 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiWriteObjectResponse>>
 StorageAuth::AsyncBidiWriteObject(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::storage::v2::BidiWriteObjectRequest,
       google::storage::v2::BidiWriteObjectResponse>;
 
-  auto& child = child_;
-  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncBidiWriteObject(cq, std::move(ctx));
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncBidiWriteObject(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 StatusOr<google::storage::v2::ListObjectsResponse> StorageAuth::ListObjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::ListObjectsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListObjects(context, request);
+  return child_->ListObjects(context, options, request);
 }
 
 StatusOr<google::storage::v2::RewriteResponse> StorageAuth::RewriteObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::RewriteObjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RewriteObject(context, request);
+  return child_->RewriteObject(context, options, request);
 }
 
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageAuth::StartResumableWrite(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::StartResumableWriteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->StartResumableWrite(context, request);
+  return child_->StartResumableWrite(context, options, request);
 }
 
 StatusOr<google::storage::v2::QueryWriteStatusResponse>
 StorageAuth::QueryWriteStatus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->QueryWriteStatus(context, request);
+  return child_->QueryWriteStatus(context, options, request);
 }
 
 StatusOr<google::storage::v2::ServiceAccount> StorageAuth::GetServiceAccount(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::GetServiceAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetServiceAccount(context, request);
+  return child_->GetServiceAccount(context, options, request);
 }
 
 StatusOr<google::storage::v2::CreateHmacKeyResponse> StorageAuth::CreateHmacKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::CreateHmacKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateHmacKey(context, request);
+  return child_->CreateHmacKey(context, options, request);
 }
 
 Status StorageAuth::DeleteHmacKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::DeleteHmacKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteHmacKey(context, request);
+  return child_->DeleteHmacKey(context, options, request);
 }
 
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageAuth::GetHmacKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::GetHmacKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetHmacKey(context, request);
+  return child_->GetHmacKey(context, options, request);
 }
 
 StatusOr<google::storage::v2::ListHmacKeysResponse> StorageAuth::ListHmacKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::ListHmacKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListHmacKeys(context, request);
+  return child_->ListHmacKeys(context, options, request);
 }
 
 StatusOr<google::storage::v2::HmacKeyMetadata> StorageAuth::UpdateHmacKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateHmacKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateHmacKey(context, request);
+  return child_->UpdateHmacKey(context, options, request);
 }
 
 future<StatusOr<google::storage::v2::Object>> StorageAuth::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ComposeObjectRequest const& request) {
-  using ReturnType = StatusOr<google::storage::v2::Object>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(StatusOr<google::storage::v2::Object>(
+              std::move(context).status()));
         }
-        return child->AsyncComposeObject(cq, *std::move(context), request);
+        return child->AsyncComposeObject(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
 future<Status> StorageAuth::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::DeleteObjectRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncDeleteObject(cq, *std::move(context), request);
+        return child->AsyncDeleteObject(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -354,13 +358,15 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 StorageAuth::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ReadObjectRequest const& request) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
       google::storage::v2::ReadObjectResponse>;
 
   auto& child = child_;
-  auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncReadObject(cq, std::move(ctx), request);
+  auto call = [child, cq, opts = std::move(options),
+               request](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncReadObject(cq, std::move(ctx), opts, request);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
@@ -369,15 +375,17 @@ StorageAuth::AsyncReadObject(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageAuth::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
-                              std::shared_ptr<grpc::ClientContext> context) {
+StorageAuth::AsyncWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingWriteRpcAuth<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
 
-  auto& child = child_;
-  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncWriteObject(cq, std::move(ctx));
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncWriteObject(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
@@ -387,18 +395,20 @@ future<StatusOr<google::storage::v2::RewriteResponse>>
 StorageAuth::AsyncRewriteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::RewriteObjectRequest const& request) {
-  using ReturnType = StatusOr<google::storage::v2::RewriteResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::storage::v2::RewriteResponse>(
+                  std::move(context).status()));
         }
-        return child->AsyncRewriteObject(cq, *std::move(context), request);
+        return child->AsyncRewriteObject(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
@@ -406,19 +416,20 @@ future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageAuth::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::StartResumableWriteRequest const& request) {
-  using ReturnType = StatusOr<google::storage::v2::StartResumableWriteResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::storage::v2::StartResumableWriteResponse>(
+                  std::move(context).status()));
         }
         return child->AsyncStartResumableWrite(cq, *std::move(context),
-                                               request);
+                                               std::move(options), request);
       });
 }
 
@@ -426,18 +437,20 @@ future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 StorageAuth::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::QueryWriteStatusRequest const& request) {
-  using ReturnType = StatusOr<google::storage::v2::QueryWriteStatusResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::storage::v2::QueryWriteStatusResponse>(
+                  std::move(context).status()));
         }
-        return child->AsyncQueryWriteStatus(cq, *std::move(context), request);
+        return child->AsyncQueryWriteStatus(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 

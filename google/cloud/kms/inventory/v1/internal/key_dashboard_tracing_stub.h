@@ -39,7 +39,7 @@ class KeyDashboardServiceTracingStub : public KeyDashboardServiceStub {
       std::shared_ptr<KeyDashboardServiceStub> child);
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-  ListCryptoKeys(grpc::ClientContext& context,
+  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
                  google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
                      request) override;
 

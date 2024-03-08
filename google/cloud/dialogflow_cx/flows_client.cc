@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/flows_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

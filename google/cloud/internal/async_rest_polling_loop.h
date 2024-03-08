@@ -41,12 +41,12 @@ template <typename OperationType, typename GetOperationRequestType>
 using AsyncRestPollLongRunningOperation =
     std::function<future<StatusOr<OperationType>>(
         google::cloud::CompletionQueue&, std::unique_ptr<RestContext>,
-        Options const&, GetOperationRequestType const&)>;
+        internal::ImmutableOptions, GetOperationRequestType const&)>;
 
 template <typename CancelOperationRequestType>
 using AsyncRestCancelLongRunningOperation = std::function<future<Status>(
     google::cloud::CompletionQueue&, std::unique_ptr<RestContext>,
-    Options const&, CancelOperationRequestType const&)>;
+    internal::ImmutableOptions, CancelOperationRequestType const&)>;
 
 template <typename OperationType, typename GetOperationRequestType>
 using AsyncRestPollLongRunningOperationImplicitOptions =
@@ -149,19 +149,6 @@ future<StatusOr<google::longrunning::Operation>> AsyncRestPollingLoopAip151(
                                       google::longrunning::GetOperationRequest>
         poll,
     AsyncRestCancelLongRunningOperation<
-        google::longrunning::CancelOperationRequest>
-        cancel,
-    std::unique_ptr<PollingPolicy> polling_policy, std::string location);
-
-// TODO(#12359) - remove once this is no longer used.
-future<StatusOr<google::longrunning::Operation>> AsyncRestPollingLoopAip151(
-    google::cloud::CompletionQueue cq,
-    future<StatusOr<google::longrunning::Operation>> op,
-    AsyncRestPollLongRunningOperationImplicitOptions<
-        google::longrunning::Operation,
-        google::longrunning::GetOperationRequest>
-        poll,
-    AsyncRestCancelLongRunningOperationImplicitOptions<
         google::longrunning::CancelOperationRequest>
         cancel,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);

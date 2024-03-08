@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/index_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ IndexServiceStub::~IndexServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexServiceStub::AsyncCreateIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CreateIndexRequest,
@@ -49,7 +51,7 @@ DefaultIndexServiceStub::AsyncCreateIndex(
 
 StatusOr<google::cloud::aiplatform::v1::Index>
 DefaultIndexServiceStub::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
   google::cloud::aiplatform::v1::Index response;
   auto status = grpc_stub_->GetIndex(&context, request, &response);
@@ -61,7 +63,7 @@ DefaultIndexServiceStub::GetIndex(
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
 DefaultIndexServiceStub::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
   google::cloud::aiplatform::v1::ListIndexesResponse response;
   auto status = grpc_stub_->ListIndexes(&context, request, &response);
@@ -74,7 +76,8 @@ DefaultIndexServiceStub::ListIndexes(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexServiceStub::AsyncUpdateIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::UpdateIndexRequest,
@@ -91,7 +94,8 @@ DefaultIndexServiceStub::AsyncUpdateIndex(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexServiceStub::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteIndexRequest,
@@ -107,7 +111,7 @@ DefaultIndexServiceStub::AsyncDeleteIndex(
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
 DefaultIndexServiceStub::UpsertDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) {
   google::cloud::aiplatform::v1::UpsertDatapointsResponse response;
   auto status = grpc_stub_->UpsertDatapoints(&context, request, &response);
@@ -119,7 +123,7 @@ DefaultIndexServiceStub::UpsertDatapoints(
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
 DefaultIndexServiceStub::RemoveDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) {
   google::cloud::aiplatform::v1::RemoveDatapointsResponse response;
   auto status = grpc_stub_->RemoveDatapoints(&context, request, &response);
@@ -132,7 +136,9 @@ DefaultIndexServiceStub::RemoveDatapoints(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -147,7 +153,9 @@ DefaultIndexServiceStub::AsyncGetOperation(
 
 future<Status> DefaultIndexServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

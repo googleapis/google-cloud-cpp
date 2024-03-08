@@ -40,50 +40,54 @@ class DocumentServiceAuth : public DocumentServiceStub {
       std::shared_ptr<DocumentServiceStub> child);
 
   StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
-  ListDocuments(grpc::ClientContext& context,
+  ListDocuments(grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::ListDocumentsRequest const&
                     request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CreateDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request)
       override;
 
   Status DeleteDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportDocuments(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeDocuments(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

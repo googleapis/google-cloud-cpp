@@ -30,6 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::internal::ImmutableOptions;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -49,15 +50,16 @@ class MockStub {
  public:
   MOCK_METHOD(future<StatusOr<Operation>>, AsyncCreateResponse,
               (CompletionQueue & cq, std::shared_ptr<grpc::ClientContext>,
-               Options const&, Request const&),
+               ImmutableOptions, Request const&),
               ());
   MOCK_METHOD(future<StatusOr<Operation>>, AsyncGetOperation,
               (CompletionQueue & cq, std::shared_ptr<grpc::ClientContext>,
-               Options const&, google::longrunning::GetOperationRequest const&),
+               ImmutableOptions,
+               google::longrunning::GetOperationRequest const&),
               ());
   MOCK_METHOD(future<Status>, AsyncCancelOperation,
               (CompletionQueue & cq, std::shared_ptr<grpc::ClientContext>,
-               Options const&,
+               ImmutableOptions,
                google::longrunning::CancelOperationRequest const&),
               ());
 };
@@ -87,8 +89,8 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
 
 using StartOperation =
     std::function<future<StatusOr<google::longrunning::Operation>>(
-        CompletionQueue&, std::shared_ptr<grpc::ClientContext>, Options const&,
-        Request const&)>;
+        CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
+        ImmutableOptions, Request const&)>;
 
 using StartOperationImplicit =
     std::function<future<StatusOr<google::longrunning::Operation>>(
@@ -96,163 +98,36 @@ using StartOperationImplicit =
         Request const&)>;
 
 StartOperation MakeStart(std::shared_ptr<MockStub> const& m) {
-  return [m](CompletionQueue& cq, auto context, Options const& options,
-             Request const& request) {
-    return m->AsyncCreateResponse(cq, std::move(context), options, request);
-  };
-}
-
-AsyncPollLongRunningOperation MakePoll(std::shared_ptr<MockStub> const& m) {
-  return [m](CompletionQueue& cq, auto context, Options const& options,
-             google::longrunning::GetOperationRequest const& request) {
-    return m->AsyncGetOperation(cq, std::move(context), options, request);
-  };
-}
-
-AsyncCancelLongRunningOperation MakeCancel(std::shared_ptr<MockStub> const& m) {
-  return [m](CompletionQueue& cq, auto context, Options const& options,
-             google::longrunning::CancelOperationRequest const& request) {
-    return m->AsyncCancelOperation(cq, std::move(context), options, request);
-  };
-}
-
-StartOperationImplicit MakeStartImplicit(std::shared_ptr<MockStub> const& m) {
-  return [m](CompletionQueue& cq, auto context, Request const& request) {
-    return m->AsyncCreateResponse(cq, std::move(context), CurrentOptions(),
+  return [m](CompletionQueue& cq, auto context,
+             // NOLINTNEXTLINE(performance-unnecessary-value-param)
+             ImmutableOptions options, Request const& request) {
+    return m->AsyncCreateResponse(cq, std::move(context), std::move(options),
                                   request);
   };
 }
 
-AsyncPollLongRunningOperationImplicitOptions MakePollImplicit(
-    std::shared_ptr<MockStub> const& m) {
+AsyncPollLongRunningOperation MakePoll(std::shared_ptr<MockStub> const& m) {
   return [m](CompletionQueue& cq, auto context,
+             // NOLINTNEXTLINE(performance-unnecessary-value-param)
+             ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-    return m->AsyncGetOperation(cq, std::move(context), CurrentOptions(),
+    return m->AsyncGetOperation(cq, std::move(context), std::move(options),
                                 request);
   };
 }
 
-AsyncCancelLongRunningOperationImplicitOptions MakeCancelImplicit(
-    std::shared_ptr<MockStub> const& m) {
+AsyncCancelLongRunningOperation MakeCancel(std::shared_ptr<MockStub> const& m) {
   return [m](CompletionQueue& cq, auto context,
+             // NOLINTNEXTLINE(performance-unnecessary-value-param)
+             ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-    return m->AsyncCancelOperation(cq, std::move(context), CurrentOptions(),
+    return m->AsyncCancelOperation(cq, std::move(context), std::move(options),
                                    request);
   };
 }
 
 std::string CurrentTestName() {
   return testing::UnitTest::GetInstance()->current_test_info()->name();
-}
-
-TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadataImplicitOptions) {
-  Response expected;
-  expected.set_seconds(123456);
-  google::longrunning::Operation starting_op;
-  starting_op.set_name("test-op-name");
-  google::longrunning::Operation done_op = starting_op;
-  done_op.set_done(true);
-  done_op.mutable_metadata()->PackFrom(expected);
-
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .WillOnce([](std::chrono::nanoseconds) {
-        return make_ready_future(
-            make_status_or(std::chrono::system_clock::now()));
-      });
-  CompletionQueue cq(mock_cq);
-
-  auto mock = std::make_shared<MockStub>();
-  EXPECT_CALL(*mock, AsyncCreateResponse)
-      .WillOnce(
-          [&](CompletionQueue&, auto, Options const& options, Request const&) {
-            EXPECT_EQ(CurrentOptions().get<StringOption>(), CurrentTestName());
-            EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
-            return make_ready_future(make_status_or(starting_op));
-          });
-  EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([&](CompletionQueue&, auto, Options const& options,
-                    google::longrunning::GetOperationRequest const&) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), CurrentTestName());
-        EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
-        return make_ready_future(make_status_or(done_op));
-      });
-  auto policy = std::make_unique<MockPollingPolicy>();
-  EXPECT_CALL(*policy, clone()).Times(0);
-  EXPECT_CALL(*policy, OnFailure).Times(0);
-  EXPECT_CALL(*policy, WaitPeriod)
-      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  Request request;
-  request.set_seconds(123456);
-  request.set_nanos(456789);
-
-  OptionsSpan span(Options{}.set<StringOption>(CurrentTestName()));
-  auto actual =
-      AsyncLongRunningOperation<Response>(
-          cq, std::move(request), MakeStartImplicit(mock),
-          MakePollImplicit(mock), MakeCancelImplicit(mock),
-          &ExtractLongRunningResultMetadata<Response>, TestRetryPolicy(),
-          TestBackoffPolicy(), Idempotency::kIdempotent, std::move(policy),
-          "test-function")
-          .get();
-  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  ASSERT_THAT(actual, IsOk());
-  EXPECT_THAT(*actual, IsProtoEqual(expected));
-}
-
-TEST(AsyncLongRunningTest, RequestPollThenSuccessResponseImplicitOptions) {
-  Response expected;
-  expected.set_seconds(123456);
-  google::longrunning::Operation starting_op;
-  starting_op.set_name("test-op-name");
-  google::longrunning::Operation done_op = starting_op;
-  done_op.set_done(true);
-  done_op.mutable_response()->PackFrom(expected);
-
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .WillOnce([](std::chrono::nanoseconds) {
-        return make_ready_future(
-            make_status_or(std::chrono::system_clock::now()));
-      });
-  CompletionQueue cq(mock_cq);
-
-  auto mock = std::make_shared<MockStub>();
-  EXPECT_CALL(*mock, AsyncCreateResponse)
-      .WillOnce(
-          [&](CompletionQueue&, auto, Options const& options, Request const&) {
-            EXPECT_EQ(CurrentOptions().get<StringOption>(), CurrentTestName());
-            EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
-            return make_ready_future(make_status_or(starting_op));
-          });
-  EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([&](CompletionQueue&, auto, Options const& options,
-                    google::longrunning::GetOperationRequest const&) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), CurrentTestName());
-        EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
-        return make_ready_future(make_status_or(done_op));
-      });
-  auto policy = std::make_unique<MockPollingPolicy>();
-  EXPECT_CALL(*policy, clone()).Times(0);
-  EXPECT_CALL(*policy, OnFailure).Times(0);
-  EXPECT_CALL(*policy, WaitPeriod)
-      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  Request request;
-  request.set_seconds(123456);
-  request.set_nanos(456789);
-
-  OptionsSpan span(Options{}.set<StringOption>(CurrentTestName()));
-  auto actual =
-      AsyncLongRunningOperation<Response>(
-          cq, std::move(request), MakeStartImplicit(mock),
-          MakePollImplicit(mock), MakeCancelImplicit(mock),
-          &ExtractLongRunningResultResponse<Response>, TestRetryPolicy(),
-          TestBackoffPolicy(), Idempotency::kIdempotent, std::move(policy),
-          "test-function")
-          .get();
-  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  ASSERT_THAT(actual, IsOk());
-  EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
 TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
@@ -274,15 +149,15 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
 
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncCreateResponse)
-      .WillOnce(
-          [&](CompletionQueue&, auto, Options const& options, Request const&) {
-            EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
-            return make_ready_future(make_status_or(starting_op));
-          });
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
+                    Request const&) {
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
+        return make_ready_future(make_status_or(starting_op));
+      });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([&](CompletionQueue&, auto, Options const& options,
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
                     google::longrunning::GetOperationRequest const&) {
-        EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
         return make_ready_future(make_status_or(done_op));
       });
   auto policy = std::make_unique<MockPollingPolicy>();
@@ -327,15 +202,15 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
 
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncCreateResponse)
-      .WillOnce(
-          [&](CompletionQueue&, auto, Options const& options, Request const&) {
-            EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
-            return make_ready_future(make_status_or(starting_op));
-          });
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
+                    Request const&) {
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
+        return make_ready_future(make_status_or(starting_op));
+      });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([&](CompletionQueue&, auto, Options const& options,
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
                     google::longrunning::GetOperationRequest const&) {
-        EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
         return make_ready_future(make_status_or(done_op));
       });
   auto policy = std::make_unique<MockPollingPolicy>();
@@ -377,27 +252,27 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
 
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncCreateResponse)
-      .WillOnce(
-          [&](CompletionQueue&, auto, Options const& options, Request const&) {
-            EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
-            return make_ready_future(make_status_or(starting_op));
-          });
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
+                    Request const&) {
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
+        return make_ready_future(make_status_or(starting_op));
+      });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([&](CompletionQueue&, auto, Options const& options,
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
                     google::longrunning::GetOperationRequest const&) {
-        EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
         return make_ready_future(make_status_or(starting_op));
       })
-      .WillOnce([&](CompletionQueue&, auto, Options const& options,
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
                     google::longrunning::GetOperationRequest const&) {
-        EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status{StatusCode::kCancelled, "cancelled"}));
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
-      .WillOnce([&](CompletionQueue&, auto, Options const& options,
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
                     google::longrunning::CancelOperationRequest const&) {
-        EXPECT_EQ(options.get<StringOption>(), CurrentTestName());
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
         return make_ready_future(Status{});
       });
   auto policy = std::make_unique<MockPollingPolicy>();

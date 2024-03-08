@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/version.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ VersionsStub::~VersionsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse>
 DefaultVersionsStub::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListVersionsRequest const& request) {
   google::cloud::dialogflow::v2::ListVersionsResponse response;
   auto status = grpc_stub_->ListVersions(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultVersionsStub::ListVersions(
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 DefaultVersionsStub::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetVersionRequest const& request) {
   google::cloud::dialogflow::v2::Version response;
   auto status = grpc_stub_->GetVersion(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultVersionsStub::GetVersion(
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 DefaultVersionsStub::CreateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
   google::cloud::dialogflow::v2::Version response;
   auto status = grpc_stub_->CreateVersion(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultVersionsStub::CreateVersion(
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 DefaultVersionsStub::UpdateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
   google::cloud::dialogflow::v2::Version response;
   auto status = grpc_stub_->UpdateVersion(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultVersionsStub::UpdateVersion(
 }
 
 Status DefaultVersionsStub::DeleteVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteVersion(&context, request, &response);

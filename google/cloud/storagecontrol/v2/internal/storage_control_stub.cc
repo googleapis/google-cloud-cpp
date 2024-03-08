@@ -22,6 +22,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/storage/control/v2/storage_control.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ StorageControlStub::~StorageControlStub() = default;
 
 StatusOr<google::storage::control::v2::Folder>
 DefaultStorageControlStub::CreateFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::CreateFolderRequest const& request) {
   google::storage::control::v2::Folder response;
   auto status = grpc_stub_->CreateFolder(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultStorageControlStub::CreateFolder(
 }
 
 Status DefaultStorageControlStub::DeleteFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::DeleteFolderRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteFolder(&context, request, &response);
@@ -55,7 +56,7 @@ Status DefaultStorageControlStub::DeleteFolder(
 
 StatusOr<google::storage::control::v2::Folder>
 DefaultStorageControlStub::GetFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::GetFolderRequest const& request) {
   google::storage::control::v2::Folder response;
   auto status = grpc_stub_->GetFolder(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultStorageControlStub::GetFolder(
 
 StatusOr<google::storage::control::v2::ListFoldersResponse>
 DefaultStorageControlStub::ListFolders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::ListFoldersRequest const& request) {
   google::storage::control::v2::ListFoldersResponse response;
   auto status = grpc_stub_->ListFolders(&context, request, &response);
@@ -80,7 +81,8 @@ DefaultStorageControlStub::ListFolders(
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageControlStub::AsyncRenameFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::storage::control::v2::RenameFolderRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::storage::control::v2::RenameFolderRequest,
@@ -96,7 +98,7 @@ DefaultStorageControlStub::AsyncRenameFolder(
 
 StatusOr<google::storage::control::v2::StorageLayout>
 DefaultStorageControlStub::GetStorageLayout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   google::storage::control::v2::StorageLayout response;
   auto status = grpc_stub_->GetStorageLayout(&context, request, &response);
@@ -109,7 +111,9 @@ DefaultStorageControlStub::GetStorageLayout(
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageControlStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -124,7 +128,9 @@ DefaultStorageControlStub::AsyncGetOperation(
 
 future<Status> DefaultStorageControlStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

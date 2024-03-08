@@ -45,189 +45,211 @@ AutoMlMetadata::AutoMlMetadata(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncCreateDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDataset(cq, std::move(context), options, request);
+  return child_->AsyncCreateDataset(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlMetadata::GetDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDataset(context, request);
+  return child_->GetDataset(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ListDatasetsResponse>
 AutoMlMetadata::ListDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListDatasetsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDatasets(context, request);
+  return child_->ListDatasets(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlMetadata::UpdateDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateDatasetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("dataset.name=",
                            internal::UrlEncode(request.dataset().name())));
-  return child_->UpdateDataset(context, request);
+  return child_->UpdateDataset(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncDeleteDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDataset(cq, std::move(context), options, request);
+  return child_->AsyncDeleteDataset(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncImportData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::ImportDataRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncImportData(cq, std::move(context), options, request);
+  return child_->AsyncImportData(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncExportData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::ExportDataRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncExportData(cq, std::move(context), options, request);
+  return child_->AsyncExportData(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
 AutoMlMetadata::GetAnnotationSpec(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAnnotationSpec(context, request);
+  return child_->GetAnnotationSpec(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncCreateModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::CreateModelRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateModel(cq, std::move(context), options, request);
+  return child_->AsyncCreateModel(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlMetadata::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetModelRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetModel(context, request);
+  return child_->GetModel(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ListModelsResponse>
 AutoMlMetadata::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListModelsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListModels(context, request);
+  return child_->ListModels(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::DeleteModelRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteModel(cq, std::move(context), options, request);
+  return child_->AsyncDeleteModel(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlMetadata::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
-  return child_->UpdateModel(context, request);
+  return child_->UpdateModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncDeployModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::DeployModelRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeployModel(cq, std::move(context), options, request);
+  return child_->AsyncDeployModel(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::UndeployModelRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUndeployModel(cq, std::move(context), options, request);
+  return child_->AsyncUndeployModel(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::ExportModelRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncExportModel(cq, std::move(context), options, request);
+  return child_->AsyncExportModel(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
 AutoMlMetadata::GetModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetModelEvaluation(context, request);
+  return child_->GetModelEvaluation(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse>
 AutoMlMetadata::ListModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListModelEvaluationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListModelEvaluations(context, request);
+  return child_->ListModelEvaluations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> AutoMlMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void AutoMlMetadata::SetMetadata(grpc::ClientContext& context,

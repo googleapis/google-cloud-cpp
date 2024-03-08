@@ -29,6 +29,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -328,7 +329,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
-  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L62}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
@@ -361,7 +362,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v1.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
-  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L62}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
@@ -2041,7 +2042,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L62}
   /// [google.cloud.securitycenter.v1.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2001}
   ///
   // clang-format on
@@ -2073,7 +2074,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L62}
   /// [google.cloud.securitycenter.v1.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2001}
   ///
   // clang-format on
@@ -2105,7 +2106,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L62}
   /// [google.cloud.securitycenter.v1.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2024}
   ///
   // clang-format on
@@ -2136,7 +2137,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L62}
   /// [google.cloud.securitycenter.v1.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2024}
   ///
   // clang-format on
@@ -2450,7 +2451,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L62}
   /// [google.cloud.securitycenter.v1.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2123}
   ///
   // clang-format on
@@ -2482,7 +2483,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L62}
   /// [google.cloud.securitycenter.v1.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2123}
   ///
   // clang-format on

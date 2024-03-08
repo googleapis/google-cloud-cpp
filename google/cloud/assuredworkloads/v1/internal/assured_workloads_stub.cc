@@ -22,6 +22,7 @@
 #include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ AssuredWorkloadsServiceStub::~AssuredWorkloadsServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultAssuredWorkloadsServiceStub::AsyncCreateWorkload(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest,
@@ -50,7 +52,7 @@ DefaultAssuredWorkloadsServiceStub::AsyncCreateWorkload(
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 DefaultAssuredWorkloadsServiceStub::UpdateWorkload(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
   google::cloud::assuredworkloads::v1::Workload response;
   auto status = grpc_stub_->UpdateWorkload(&context, request, &response);
@@ -62,7 +64,7 @@ DefaultAssuredWorkloadsServiceStub::UpdateWorkload(
 
 StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
 DefaultAssuredWorkloadsServiceStub::RestrictAllowedResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
         request) {
   google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse
@@ -76,7 +78,7 @@ DefaultAssuredWorkloadsServiceStub::RestrictAllowedResources(
 }
 
 Status DefaultAssuredWorkloadsServiceStub::DeleteWorkload(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteWorkload(&context, request, &response);
@@ -88,7 +90,7 @@ Status DefaultAssuredWorkloadsServiceStub::DeleteWorkload(
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 DefaultAssuredWorkloadsServiceStub::GetWorkload(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
   google::cloud::assuredworkloads::v1::Workload response;
   auto status = grpc_stub_->GetWorkload(&context, request, &response);
@@ -100,7 +102,7 @@ DefaultAssuredWorkloadsServiceStub::GetWorkload(
 
 StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse>
 DefaultAssuredWorkloadsServiceStub::ListWorkloads(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
   google::cloud::assuredworkloads::v1::ListWorkloadsResponse response;
   auto status = grpc_stub_->ListWorkloads(&context, request, &response);
@@ -112,7 +114,7 @@ DefaultAssuredWorkloadsServiceStub::ListWorkloads(
 
 StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
 DefaultAssuredWorkloadsServiceStub::ListViolations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
   google::cloud::assuredworkloads::v1::ListViolationsResponse response;
   auto status = grpc_stub_->ListViolations(&context, request, &response);
@@ -124,7 +126,7 @@ DefaultAssuredWorkloadsServiceStub::ListViolations(
 
 StatusOr<google::cloud::assuredworkloads::v1::Violation>
 DefaultAssuredWorkloadsServiceStub::GetViolation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
   google::cloud::assuredworkloads::v1::Violation response;
   auto status = grpc_stub_->GetViolation(&context, request, &response);
@@ -136,7 +138,7 @@ DefaultAssuredWorkloadsServiceStub::GetViolation(
 
 StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
 DefaultAssuredWorkloadsServiceStub::AcknowledgeViolation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
         request) {
   google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse response;
@@ -150,7 +152,9 @@ DefaultAssuredWorkloadsServiceStub::AcknowledgeViolation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAssuredWorkloadsServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -165,7 +169,9 @@ DefaultAssuredWorkloadsServiceStub::AsyncGetOperation(
 
 future<Status> DefaultAssuredWorkloadsServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -128,6 +128,10 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
         nanos: 123456000
       }
     }
+    soft_delete_policy {
+      effective_time { seconds: 1708000496 nanos: 700000000 }
+      retention_duration { seconds: 864000 }
+    }
   )pb";
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
 
@@ -242,6 +246,10 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       "toggleTime": "2022-10-07T02:03:04.123456000Z",
       "terminalStorageClass": "NEARLINE",
       "terminalStorageClassUpdateTime": "2022-10-07T02:02:04.123456000Z"
+    },
+    "softDeletePolicy": {
+      "effectiveTime": "2024-02-15T12:34:56.700Z",
+      "retentionDurationSeconds": "864000"
     }
   })""");
   ASSERT_THAT(expected, IsOk());
@@ -496,6 +504,24 @@ TEST(GrpcBucketMetadataParser, BucketRetentionPolicyRoundtrip) {
                 std::chrono::seconds(1234) + std::chrono::nanoseconds(5678000));
   auto const expected =
       storage::BucketRetentionPolicy{std::chrono::seconds(3600), tp, true};
+  auto const middle = FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcBucketMetadataParser, BucketSoftDeletePolicyRoundtrip) {
+  auto constexpr kText = R"pb(
+    retention_duration { seconds: 864000 }
+    effective_time { seconds: 1234 nanos: 5678000 }
+  )pb";
+  google::storage::v2::Bucket::SoftDeletePolicy start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto tp = std::chrono::system_clock::time_point{} +
+            std::chrono::duration_cast<std::chrono::system_clock::duration>(
+                std::chrono::seconds(1234) + std::chrono::nanoseconds(5678000));
+  auto const expected =
+      storage::BucketSoftDeletePolicy{std::chrono::seconds(864000), tp};
   auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = ToProto(middle);

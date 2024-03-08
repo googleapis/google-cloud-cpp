@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -70,21 +71,22 @@ ExecutionsConnectionImpl::ListExecutions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::workflows::executions::v1::Execution>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<workflows_executions_v1::ExecutionsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::workflows::executions::v1::ListExecutionsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::workflows::executions::v1::
                        ListExecutionsRequest const& request) {
-              return stub->ListExecutions(context, request);
+              return stub->ListExecutions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::workflows::executions::v1::ListExecutionsResponse r) {
         std::vector<google::cloud::workflows::executions::v1::Execution> result(
@@ -103,12 +105,12 @@ ExecutionsConnectionImpl::CreateExecution(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateExecution(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::workflows::executions::v1::
                  CreateExecutionRequest const& request) {
-        return stub_->CreateExecution(context, request);
+        return stub_->CreateExecution(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
@@ -120,10 +122,12 @@ ExecutionsConnectionImpl::GetExecution(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetExecution(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::workflows::executions::v1::GetExecutionRequest const&
-              request) { return stub_->GetExecution(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetExecution(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
@@ -134,12 +138,12 @@ ExecutionsConnectionImpl::CancelExecution(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelExecution(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::workflows::executions::v1::
                  CancelExecutionRequest const& request) {
-        return stub_->CancelExecution(context, request);
+        return stub_->CancelExecution(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -22,6 +22,7 @@
 #include <google/cloud/shell/v1/cloudshell.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ CloudShellServiceStub::~CloudShellServiceStub() = default;
 
 StatusOr<google::cloud::shell::v1::Environment>
 DefaultCloudShellServiceStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
   google::cloud::shell::v1::Environment response;
   auto status = grpc_stub_->GetEnvironment(&context, request, &response);
@@ -45,7 +46,8 @@ DefaultCloudShellServiceStub::GetEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncStartEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::shell::v1::StartEnvironmentRequest,
@@ -62,7 +64,8 @@ DefaultCloudShellServiceStub::AsyncStartEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncAuthorizeEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::shell::v1::AuthorizeEnvironmentRequest,
@@ -80,7 +83,8 @@ DefaultCloudShellServiceStub::AsyncAuthorizeEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncAddPublicKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::shell::v1::AddPublicKeyRequest,
@@ -97,7 +101,8 @@ DefaultCloudShellServiceStub::AsyncAddPublicKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncRemovePublicKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::shell::v1::RemovePublicKeyRequest,
@@ -114,7 +119,9 @@ DefaultCloudShellServiceStub::AsyncRemovePublicKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -129,7 +136,9 @@ DefaultCloudShellServiceStub::AsyncGetOperation(
 
 future<Status> DefaultCloudShellServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

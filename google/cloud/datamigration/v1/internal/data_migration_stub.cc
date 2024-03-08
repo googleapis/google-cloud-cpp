@@ -22,6 +22,7 @@
 #include <google/cloud/clouddms/v1/clouddms.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ DataMigrationServiceStub::~DataMigrationServiceStub() = default;
 
 StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
 DefaultDataMigrationServiceStub::ListMigrationJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListMigrationJobsRequest const& request) {
   google::cloud::clouddms::v1::ListMigrationJobsResponse response;
   auto status = grpc_stub_->ListMigrationJobs(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultDataMigrationServiceStub::ListMigrationJobs(
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
 DefaultDataMigrationServiceStub::GetMigrationJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
   google::cloud::clouddms::v1::MigrationJob response;
   auto status = grpc_stub_->GetMigrationJob(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultDataMigrationServiceStub::GetMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncCreateMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::CreateMigrationJobRequest,
@@ -75,7 +77,8 @@ DefaultDataMigrationServiceStub::AsyncCreateMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncUpdateMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::UpdateMigrationJobRequest,
@@ -93,7 +96,8 @@ DefaultDataMigrationServiceStub::AsyncUpdateMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncDeleteMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::DeleteMigrationJobRequest,
@@ -111,7 +115,8 @@ DefaultDataMigrationServiceStub::AsyncDeleteMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncStartMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::StartMigrationJobRequest,
@@ -129,7 +134,8 @@ DefaultDataMigrationServiceStub::AsyncStartMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncStopMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::StopMigrationJobRequest,
@@ -147,7 +153,8 @@ DefaultDataMigrationServiceStub::AsyncStopMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncResumeMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::ResumeMigrationJobRequest,
@@ -165,7 +172,8 @@ DefaultDataMigrationServiceStub::AsyncResumeMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncPromoteMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::PromoteMigrationJobRequest,
@@ -183,7 +191,8 @@ DefaultDataMigrationServiceStub::AsyncPromoteMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncVerifyMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::VerifyMigrationJobRequest,
@@ -201,7 +210,8 @@ DefaultDataMigrationServiceStub::AsyncVerifyMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncRestartMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::RestartMigrationJobRequest,
@@ -218,7 +228,7 @@ DefaultDataMigrationServiceStub::AsyncRestartMigrationJob(
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
 DefaultDataMigrationServiceStub::GenerateSshScript(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
   google::cloud::clouddms::v1::SshScript response;
   auto status = grpc_stub_->GenerateSshScript(&context, request, &response);
@@ -230,7 +240,7 @@ DefaultDataMigrationServiceStub::GenerateSshScript(
 
 StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
 DefaultDataMigrationServiceStub::GenerateTcpProxyScript(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
   google::cloud::clouddms::v1::TcpProxyScript response;
   auto status =
@@ -243,7 +253,7 @@ DefaultDataMigrationServiceStub::GenerateTcpProxyScript(
 
 StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DefaultDataMigrationServiceStub::ListConnectionProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListConnectionProfilesRequest const& request) {
   google::cloud::clouddms::v1::ListConnectionProfilesResponse response;
   auto status =
@@ -256,7 +266,7 @@ DefaultDataMigrationServiceStub::ListConnectionProfiles(
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
 DefaultDataMigrationServiceStub::GetConnectionProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
   google::cloud::clouddms::v1::ConnectionProfile response;
   auto status = grpc_stub_->GetConnectionProfile(&context, request, &response);
@@ -269,7 +279,8 @@ DefaultDataMigrationServiceStub::GetConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncCreateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -288,7 +299,8 @@ DefaultDataMigrationServiceStub::AsyncCreateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -307,7 +319,8 @@ DefaultDataMigrationServiceStub::AsyncUpdateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -326,7 +339,8 @@ DefaultDataMigrationServiceStub::AsyncDeleteConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -344,7 +358,7 @@ DefaultDataMigrationServiceStub::AsyncCreatePrivateConnection(
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
 DefaultDataMigrationServiceStub::GetPrivateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
   google::cloud::clouddms::v1::PrivateConnection response;
   auto status = grpc_stub_->GetPrivateConnection(&context, request, &response);
@@ -356,7 +370,7 @@ DefaultDataMigrationServiceStub::GetPrivateConnection(
 
 StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse>
 DefaultDataMigrationServiceStub::ListPrivateConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& request) {
   google::cloud::clouddms::v1::ListPrivateConnectionsResponse response;
   auto status =
@@ -370,7 +384,8 @@ DefaultDataMigrationServiceStub::ListPrivateConnections(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -388,7 +403,7 @@ DefaultDataMigrationServiceStub::AsyncDeletePrivateConnection(
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
 DefaultDataMigrationServiceStub::GetConversionWorkspace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
   google::cloud::clouddms::v1::ConversionWorkspace response;
   auto status =
@@ -401,7 +416,7 @@ DefaultDataMigrationServiceStub::GetConversionWorkspace(
 
 StatusOr<google::cloud::clouddms::v1::ListConversionWorkspacesResponse>
 DefaultDataMigrationServiceStub::ListConversionWorkspaces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
         request) {
   google::cloud::clouddms::v1::ListConversionWorkspacesResponse response;
@@ -416,7 +431,8 @@ DefaultDataMigrationServiceStub::ListConversionWorkspaces(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncCreateConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -436,7 +452,8 @@ DefaultDataMigrationServiceStub::AsyncCreateConversionWorkspace(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncUpdateConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -456,7 +473,8 @@ DefaultDataMigrationServiceStub::AsyncUpdateConversionWorkspace(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncDeleteConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -475,7 +493,7 @@ DefaultDataMigrationServiceStub::AsyncDeleteConversionWorkspace(
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
 DefaultDataMigrationServiceStub::CreateMappingRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
   google::cloud::clouddms::v1::MappingRule response;
   auto status = grpc_stub_->CreateMappingRule(&context, request, &response);
@@ -486,7 +504,7 @@ DefaultDataMigrationServiceStub::CreateMappingRule(
 }
 
 Status DefaultDataMigrationServiceStub::DeleteMappingRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteMappingRule(&context, request, &response);
@@ -498,7 +516,7 @@ Status DefaultDataMigrationServiceStub::DeleteMappingRule(
 
 StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
 DefaultDataMigrationServiceStub::ListMappingRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
   google::cloud::clouddms::v1::ListMappingRulesResponse response;
   auto status = grpc_stub_->ListMappingRules(&context, request, &response);
@@ -510,7 +528,7 @@ DefaultDataMigrationServiceStub::ListMappingRules(
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
 DefaultDataMigrationServiceStub::GetMappingRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
   google::cloud::clouddms::v1::MappingRule response;
   auto status = grpc_stub_->GetMappingRule(&context, request, &response);
@@ -523,7 +541,8 @@ DefaultDataMigrationServiceStub::GetMappingRule(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncSeedConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -542,7 +561,8 @@ DefaultDataMigrationServiceStub::AsyncSeedConversionWorkspace(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncImportMappingRules(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::clouddms::v1::ImportMappingRulesRequest,
@@ -560,7 +580,8 @@ DefaultDataMigrationServiceStub::AsyncImportMappingRules(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncConvertConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -581,7 +602,8 @@ DefaultDataMigrationServiceStub::AsyncConvertConversionWorkspace(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncCommitConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -601,7 +623,8 @@ DefaultDataMigrationServiceStub::AsyncCommitConversionWorkspace(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncRollbackConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -622,7 +645,8 @@ DefaultDataMigrationServiceStub::AsyncRollbackConversionWorkspace(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncApplyConversionWorkspace(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -640,7 +664,7 @@ DefaultDataMigrationServiceStub::AsyncApplyConversionWorkspace(
 
 StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>
 DefaultDataMigrationServiceStub::DescribeDatabaseEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
         request) {
   google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse response;
@@ -654,7 +678,7 @@ DefaultDataMigrationServiceStub::DescribeDatabaseEntities(
 
 StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
 DefaultDataMigrationServiceStub::SearchBackgroundJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
   google::cloud::clouddms::v1::SearchBackgroundJobsResponse response;
   auto status = grpc_stub_->SearchBackgroundJobs(&context, request, &response);
@@ -667,7 +691,7 @@ DefaultDataMigrationServiceStub::SearchBackgroundJobs(
 StatusOr<
     google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
 DefaultDataMigrationServiceStub::DescribeConversionWorkspaceRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::
         DescribeConversionWorkspaceRevisionsRequest const& request) {
   google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse
@@ -682,7 +706,7 @@ DefaultDataMigrationServiceStub::DescribeConversionWorkspaceRevisions(
 
 StatusOr<google::cloud::clouddms::v1::FetchStaticIpsResponse>
 DefaultDataMigrationServiceStub::FetchStaticIps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::FetchStaticIpsRequest const& request) {
   google::cloud::clouddms::v1::FetchStaticIpsResponse response;
   auto status = grpc_stub_->FetchStaticIps(&context, request, &response);
@@ -695,7 +719,9 @@ DefaultDataMigrationServiceStub::FetchStaticIps(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataMigrationServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -710,7 +736,9 @@ DefaultDataMigrationServiceStub::AsyncGetOperation(
 
 future<Status> DefaultDataMigrationServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

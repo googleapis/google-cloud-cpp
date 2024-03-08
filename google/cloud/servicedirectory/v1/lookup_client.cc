@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicedirectory/v1/lookup_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

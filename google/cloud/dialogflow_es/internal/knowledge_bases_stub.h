@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_KNOWLEDGE_BASES_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_KNOWLEDGE_BASES_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/v2/knowledge_base.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,29 +37,29 @@ class KnowledgeBasesStub {
 
   virtual StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
   ListKnowledgeBases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-  GetKnowledgeBase(grpc::ClientContext& context,
+  GetKnowledgeBase(grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const&
                        request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
   CreateKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const&
           request) = 0;
 
   virtual Status DeleteKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
   UpdateKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const&
           request) = 0;
 };
@@ -72,27 +74,27 @@ class DefaultKnowledgeBasesStub : public KnowledgeBasesStub {
 
   StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
   ListKnowledgeBases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> GetKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> CreateKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request)
       override;
 
   Status DeleteKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request)
       override;
 

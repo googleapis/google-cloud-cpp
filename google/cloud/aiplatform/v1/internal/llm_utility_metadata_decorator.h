@@ -40,12 +40,12 @@ class LlmUtilityServiceMetadata : public LlmUtilityServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CountTokensRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ComputeTokensRequest const& request)
       override;
 

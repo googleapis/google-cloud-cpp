@@ -53,7 +53,7 @@ class TargetTcpProxiesRestLogging : public TargetTcpProxiesRestStub {
   AsyncDeleteTargetTcpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           DeleteTargetTcpProxyRequest const& request) override;
 
@@ -67,7 +67,7 @@ class TargetTcpProxiesRestLogging : public TargetTcpProxiesRestStub {
   AsyncInsertTargetTcpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           InsertTargetTcpProxyRequest const& request) override;
 
@@ -81,7 +81,7 @@ class TargetTcpProxiesRestLogging : public TargetTcpProxiesRestStub {
   AsyncSetBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetBackendServiceRequest const& request) override;
 
@@ -89,7 +89,7 @@ class TargetTcpProxiesRestLogging : public TargetTcpProxiesRestStub {
   AsyncSetProxyHeader(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetProxyHeaderRequest const& request) override;
 
@@ -97,14 +97,14 @@ class TargetTcpProxiesRestLogging : public TargetTcpProxiesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

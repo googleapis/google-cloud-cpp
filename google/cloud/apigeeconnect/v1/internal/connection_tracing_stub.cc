@@ -18,6 +18,7 @@
 
 #include "google/cloud/apigeeconnect/v1/internal/connection_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,14 +33,14 @@ ConnectionServiceTracingStub::ConnectionServiceTracingStub(
 
 StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
 ConnectionServiceTracingStub::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.apigeeconnect.v1.ConnectionService", "ListConnections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListConnections(context, request));
+                           child_->ListConnections(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

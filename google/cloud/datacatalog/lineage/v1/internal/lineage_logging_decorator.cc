@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/datacatalog/lineage/v1/lineage.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,254 +38,282 @@ LineageLogging::LineageLogging(std::shared_ptr<LineageStub> child,
 StatusOr<
     google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
 LineageLogging::ProcessOpenLineageRunEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::
         ProcessOpenLineageRunEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::
                  ProcessOpenLineageRunEventRequest const& request) {
-        return child_->ProcessOpenLineageRunEvent(context, request);
+        return child_->ProcessOpenLineageRunEvent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageLogging::CreateProcess(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
-              request) { return child_->CreateProcess(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->CreateProcess(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageLogging::UpdateProcess(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
-              request) { return child_->UpdateProcess(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->UpdateProcess(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageLogging::GetProcess(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::GetProcessRequest const&
-                 request) { return child_->GetProcess(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetProcess(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
 LineageLogging::ListProcesses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
-              request) { return child_->ListProcesses(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ListProcesses(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LineageLogging::AsyncDeleteProcess(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
               request) {
-        return child_->AsyncDeleteProcess(cq, std::move(context), options,
-                                          request);
+        return child_->AsyncDeleteProcess(cq, std::move(context),
+                                          std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageLogging::CreateRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::CreateRunRequest const&
-                 request) { return child_->CreateRun(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateRun(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageLogging::UpdateRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::UpdateRunRequest const&
-                 request) { return child_->UpdateRun(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateRun(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageLogging::GetRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::GetRunRequest const&
-                 request) { return child_->GetRun(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) { return child_->GetRun(context, options, request); },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse>
 LineageLogging::ListRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::ListRunsRequest const&
-                 request) { return child_->ListRuns(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListRuns(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>> LineageLogging::AsyncDeleteRun(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
                  request) {
-        return child_->AsyncDeleteRun(cq, std::move(context), options, request);
+        return child_->AsyncDeleteRun(cq, std::move(context),
+                                      std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 LineageLogging::CreateLineageEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::
                  CreateLineageEventRequest const& request) {
-        return child_->CreateLineageEvent(context, request);
+        return child_->CreateLineageEvent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 LineageLogging::GetLineageEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
-              request) { return child_->GetLineageEvent(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->GetLineageEvent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
 LineageLogging::ListLineageEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::
                  ListLineageEventsRequest const& request) {
-        return child_->ListLineageEvents(context, request);
+        return child_->ListLineageEvents(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status LineageLogging::DeleteLineageEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::
                  DeleteLineageEventRequest const& request) {
-        return child_->DeleteLineageEvent(context, request);
+        return child_->DeleteLineageEvent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
 LineageLogging::SearchLinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
-                 request) { return child_->SearchLinks(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->SearchLinks(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<
     google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
 LineageLogging::BatchSearchLinkProcesses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::
         BatchSearchLinkProcessesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::
                  BatchSearchLinkProcessesRequest const& request) {
-        return child_->BatchSearchLinkProcesses(context, request);
+        return child_->BatchSearchLinkProcesses(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LineageLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), options,
-                                         request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status> LineageLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), options,
-                                            request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

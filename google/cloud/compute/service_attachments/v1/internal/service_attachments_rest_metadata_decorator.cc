@@ -54,12 +54,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestMetadata::AsyncDeleteServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::service_attachments::v1::
         DeleteServiceAttachmentRequest const& request) {
-  SetMetadata(*rest_context, options);
+  SetMetadata(*rest_context, *options);
   return child_->AsyncDeleteServiceAttachment(cq, std::move(rest_context),
-                                              options, request);
+                                              std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -84,12 +84,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestMetadata::AsyncInsertServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::service_attachments::v1::
         InsertServiceAttachmentRequest const& request) {
-  SetMetadata(*rest_context, options);
+  SetMetadata(*rest_context, *options);
   return child_->AsyncInsertServiceAttachment(cq, std::move(rest_context),
-                                              options, request);
+                                              std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
@@ -105,12 +105,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestMetadata::AsyncPatchServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::service_attachments::v1::
         PatchServiceAttachmentRequest const& request) {
-  SetMetadata(*rest_context, options);
+  SetMetadata(*rest_context, *options);
   return child_->AsyncPatchServiceAttachment(cq, std::move(rest_context),
-                                             options, request);
+                                             std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -135,23 +135,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
-                                   request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
 future<Status> ServiceAttachmentsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void ServiceAttachmentsRestMetadata::SetMetadata(

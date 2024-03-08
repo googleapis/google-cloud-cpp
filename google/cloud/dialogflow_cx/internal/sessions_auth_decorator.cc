@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,11 +34,24 @@ SessionsAuth::SessionsAuth(
 
 StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsAuth::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DetectIntent(context, request);
+  return child_->DetectIntent(context, options, request);
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+SessionsAuth::ServerStreamingDetectIntent(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
+  return child_->ServerStreamingDetectIntent(std::move(context), options,
+                                             request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -45,14 +59,15 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
 SessionsAuth::AsyncStreamingDetectIntent(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>;
 
-  auto& child = child_;
-  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncStreamingDetectIntent(cq, std::move(ctx));
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncStreamingDetectIntent(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
@@ -60,30 +75,30 @@ SessionsAuth::AsyncStreamingDetectIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsAuth::MatchIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->MatchIntent(context, request);
+  return child_->MatchIntent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 SessionsAuth::FulfillIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FulfillIntent(context, request);
+  return child_->FulfillIntent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
 SessionsAuth::SubmitAnswerFeedback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SubmitAnswerFeedback(context, request);
+  return child_->SubmitAnswerFeedback(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -25,8 +25,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace btproto = ::google::bigtable::v2;
 
-using ::google::cloud::Idempotency;
-
 BulkMutatorState::BulkMutatorState(
     std::string const& app_profile_id, std::string const& table_name,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
@@ -98,6 +96,9 @@ void BulkMutatorState::OnRead(
     auto const index = static_cast<std::size_t>(entry.index());
     auto& annotation = annotations_[index];
     annotation.has_mutation_result = true;
+    // Note that we do not need to heed `RetryInfo` for the status of individual
+    // entries. The server only ever includes `RetryInfo` as the final status of
+    // the stream.
     auto status = MakeStatusFromRpcError(entry.status());
     // Successful responses are not even recorded, this class only reports
     // the failures.  The data for successful responses is discarded, because
@@ -123,8 +124,12 @@ void BulkMutatorState::OnRead(
   }
 }
 
-void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
+void BulkMutatorState::OnFinish(Status finish_status,
+                                bool enable_server_retries) {
   last_status_ = std::move(finish_status);
+  bool const retryable =
+      enable_server_retries &&
+      google::cloud::internal::GetRetryInfo(last_status_).has_value();
 
   int index = 0;
   for (auto& annotation : annotations_) {
@@ -134,15 +139,15 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
     }
     // If there are any mutations with unknown state, they need to be handled.
     auto& original = *mutations_.mutable_entries(index);
-    if (annotation.idempotency == Idempotency::kIdempotent) {
+    if (retryable || annotation.idempotency == Idempotency::kIdempotent) {
       // If the mutation was retryable, move it to the pending mutations to try
       // again, along with their index.
       pending_mutations_.add_entries()->Swap(&original);
       pending_annotations_.push_back(std::move(annotation));
     } else {
       if (last_status_.ok()) {
-        google::cloud::Status status(
-            google::cloud::StatusCode::kInternal,
+        Status status(
+            StatusCode::kInternal,
             "The server never sent a confirmation for this mutation but the "
             "stream didn't fail either. This is most likely a bug, please "
             "report it at "
@@ -168,8 +173,8 @@ std::vector<bigtable::FailedMutation> BulkMutatorState::OnRetryDone() && {
     } else if (!last_status_.ok()) {
       result.emplace_back(last_status_, annotation.original_index);
     } else {
-      google::cloud::Status status(
-          google::cloud::StatusCode::kInternal,
+      Status status(
+          StatusCode::kInternal,
           "The server never sent a confirmation for this mutation but the "
           "stream didn't fail either. This is most likely a bug, please "
           "report it at "
@@ -213,17 +218,20 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   auto context = std::make_shared<grpc::ClientContext>();
   google::cloud::internal::ConfigureContext(*context, options);
   retry_context_.PreCall(*context);
+  bool enable_server_retries = options.get<EnableServerRetriesOption>();
 
   struct UnpackVariant {
     BulkMutatorState& state;
     MutateRowsLimiter& limiter;
+    bool enable_server_retries;
+
     bool operator()(btproto::MutateRowsResponse r) {
       limiter.Update(r);
       state.OnRead(std::move(r));
       return true;
     }
     bool operator()(Status s) {
-      state.OnFinish(std::move(s));
+      state.OnFinish(std::move(s), enable_server_retries);
       return false;
     }
   };
@@ -233,7 +241,8 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
 
   // Read the stream of responses.
   auto stream = stub.MutateRows(context, options, mutations);
-  while (absl::visit(UnpackVariant{state_, limiter}, stream->Read())) {
+  while (absl::visit(UnpackVariant{state_, limiter, enable_server_retries},
+                     stream->Read())) {
   }
   retry_context_.PostCall(*context);
   return state_.last_status();

@@ -18,6 +18,7 @@
 
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,240 +33,263 @@ CloudFilestoreManagerTracingStub::CloudFilestoreManagerTracingStub(
 
 StatusOr<google::cloud::filestore::v1::ListInstancesResponse>
 CloudFilestoreManagerTracingStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::filestore::v1::ListInstancesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInstances(context, request));
+                           child_->ListInstances(context, options, request));
 }
 
 StatusOr<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerTracingStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::filestore::v1::GetInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetInstance(context, request));
+                           child_->GetInstance(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "CreateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateInstance(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "UpdateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateInstance(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncRestoreInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "RestoreInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRestoreInstance(cq, context, options, request);
+  auto f =
+      child_->AsyncRestoreInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncRevertInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::RevertInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "RevertInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRevertInstance(cq, context, options, request);
+  auto f =
+      child_->AsyncRevertInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "DeleteInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteInstance(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
 CloudFilestoreManagerTracingStub::ListSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "ListSnapshots");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListSnapshots(context, request));
+                           child_->ListSnapshots(context, options, request));
 }
 
 StatusOr<google::cloud::filestore::v1::Snapshot>
 CloudFilestoreManagerTracingStub::GetSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::filestore::v1::GetSnapshotRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "GetSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetSnapshot(context, request));
+                           child_->GetSnapshot(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncCreateSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "CreateSnapshot");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateSnapshot(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateSnapshot(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncDeleteSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "DeleteSnapshot");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteSnapshot(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteSnapshot(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncUpdateSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "UpdateSnapshot");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateSnapshot(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateSnapshot(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
 CloudFilestoreManagerTracingStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::filestore::v1::ListBackupsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "ListBackups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListBackups(context, request));
+                           child_->ListBackups(context, options, request));
 }
 
 StatusOr<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerTracingStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::filestore::v1::GetBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "GetBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetBackup(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetBackup(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "CreateBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateBackup(cq, context, options, request);
+  auto f = child_->AsyncCreateBackup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "DeleteBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteBackup(cq, context, options, request);
+  auto f = child_->AsyncDeleteBackup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::filestore::v1::UpdateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "UpdateBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateBackup(cq, context, options, request);
+  auto f = child_->AsyncUpdateBackup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> CloudFilestoreManagerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

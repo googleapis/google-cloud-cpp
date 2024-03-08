@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -69,20 +70,21 @@ AlertPolicyServiceConnectionImpl::ListAlertPolicies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::AlertPolicy>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::AlertPolicyServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListAlertPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::monitoring::v3::ListAlertPoliciesRequest const&
                        request) {
-              return stub->ListAlertPolicies(context, request);
+              return stub->ListAlertPolicies(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListAlertPoliciesResponse r) {
         std::vector<google::monitoring::v3::AlertPolicy> result(
@@ -100,11 +102,11 @@ AlertPolicyServiceConnectionImpl::GetAlertPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAlertPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetAlertPolicyRequest const& request) {
-        return stub_->GetAlertPolicy(context, request);
+        return stub_->GetAlertPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
@@ -114,11 +116,11 @@ AlertPolicyServiceConnectionImpl::CreateAlertPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateAlertPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateAlertPolicyRequest const& request) {
-        return stub_->CreateAlertPolicy(context, request);
+        return stub_->CreateAlertPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status AlertPolicyServiceConnectionImpl::DeleteAlertPolicy(
@@ -127,11 +129,11 @@ Status AlertPolicyServiceConnectionImpl::DeleteAlertPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAlertPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
-        return stub_->DeleteAlertPolicy(context, request);
+        return stub_->DeleteAlertPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
@@ -141,11 +143,11 @@ AlertPolicyServiceConnectionImpl::UpdateAlertPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAlertPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
-        return stub_->UpdateAlertPolicy(context, request);
+        return stub_->UpdateAlertPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

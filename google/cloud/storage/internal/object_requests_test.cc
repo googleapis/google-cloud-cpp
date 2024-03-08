@@ -62,7 +62,8 @@ TEST(ObjectRequestsTest, ParseAclListFailure) {
 TEST(ObjectRequestsTest, List) {
   ListObjectsRequest request("my-bucket");
   EXPECT_EQ("my-bucket", request.bucket_name());
-  request.set_multiple_options(UserProject("my-project"), Prefix("foo/"));
+  request.set_multiple_options(UserProject("my-project"), Prefix("foo/"),
+                               SoftDeleted(true));
 
   std::ostringstream os;
   os << request;
@@ -70,6 +71,7 @@ TEST(ObjectRequestsTest, List) {
   EXPECT_THAT(actual, HasSubstr("my-bucket"));
   EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
   EXPECT_THAT(actual, HasSubstr("prefix=foo/"));
+  EXPECT_THAT(actual, HasSubstr("softDeleted=true"));
 }
 
 TEST(ObjectRequestsTest, ParseListResponse) {
@@ -146,7 +148,8 @@ TEST(ObjectRequestsTest, ParseListResponseFailureInItems) {
 
 TEST(ObjectRequestsTest, Get) {
   GetObjectMetadataRequest request("my-bucket", "my-object");
-  request.set_multiple_options(Generation(1), IfMetagenerationMatch(3));
+  request.set_multiple_options(Generation(1), IfMetagenerationMatch(3),
+                               SoftDeleted(true));
   std::ostringstream os;
   os << request;
   auto str = os.str();
@@ -154,6 +157,7 @@ TEST(ObjectRequestsTest, Get) {
   EXPECT_THAT(str, HasSubstr("my-object"));
   EXPECT_THAT(str, HasSubstr("generation=1"));
   EXPECT_THAT(str, HasSubstr("ifMetagenerationMatch=3"));
+  EXPECT_THAT(str, HasSubstr("softDeleted=true"));
 }
 
 TEST(ObjectRequestsTest, InsertObjectMedia) {

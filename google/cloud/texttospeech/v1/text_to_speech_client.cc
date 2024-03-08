@@ -18,6 +18,7 @@
 
 #include "google/cloud/texttospeech/v1/text_to_speech_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

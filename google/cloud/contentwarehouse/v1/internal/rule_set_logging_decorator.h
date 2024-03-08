@@ -39,27 +39,27 @@ class RuleSetServiceLogging : public RuleSetServiceStub {
                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request)
       override;
 
   Status DeleteRuleSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request)
       override;
 
   StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
-  ListRuleSets(grpc::ClientContext& context,
+  ListRuleSets(grpc::ClientContext& context, Options const& options,
                google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
                    request) override;
 

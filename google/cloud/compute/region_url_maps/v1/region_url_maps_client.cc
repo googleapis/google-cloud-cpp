@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

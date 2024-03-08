@@ -27,6 +27,7 @@
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

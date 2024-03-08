@@ -18,6 +18,7 @@
 
 #include "google/cloud/recommender/v1/recommender_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -42,6 +42,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/appengine/logging/v1:logging_cc_grpc" \
       "@com_google_googleapis//google/appengine/legacy:legacy_cc_grpc"
   )"
+  ["apphub"]="@com_google_googleapis//google/cloud/apphub/v1:apphub_cc_grpc"
   ["artifactregistry"]="@com_google_googleapis//google/devtools/artifactregistry/v1:artifactregistry_cc_grpc"
   ["asset"]="@com_google_googleapis//google/cloud/asset/v1:asset_cc_grpc"
   ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_cc_grpc"
@@ -89,6 +90,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc" \
       "@com_google_googleapis//google/devtools/cloudbuild/v2:cloudbuild_cc_grpc"
   )"
+  ["cloudcontrolspartner"]="@com_google_googleapis//google/cloud/cloudcontrolspartner/v1:cloudcontrolspartner_cc_grpc"
   ["cloudquotas"]="@com_google_googleapis//google/api/cloudquotas/v1:cloudquotas_cc_grpc"
   ["commerce"]="@com_google_googleapis//google/cloud/commerce/consumer/procurement/v1:procurement_cc_grpc"
   ["common"]="@com_google_googleapis//google/cloud/common:common_cc_grpc"
@@ -238,7 +240,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/secretmanager/logging/v1:logging_cc_grpc"
   )"
   ["securesourcemanager"]="@com_google_googleapis//google/cloud/securesourcemanager/v1:securesourcemanager_cc_grpc"
-  ["securitycenter"]="@com_google_googleapis//google/cloud/securitycenter/v1:securitycenter_cc_grpc"
+  ["securitycenter"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/securitycenter/v1:securitycenter_cc_grpc" \
+      "@com_google_googleapis//google/cloud/securitycenter/v2:securitycenter_cc_grpc"
+  )"
   ["securitycentermanagement"]="@com_google_googleapis//google/cloud/securitycentermanagement/v1:securitycentermanagement_cc_grpc"
   ["servicecontrol"]="$(
     printf ",%s" \

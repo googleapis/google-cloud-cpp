@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,18 +36,18 @@ class ProfilerServiceStub {
   virtual ~ProfilerServiceStub() = 0;
 
   virtual StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudprofiler::v2::CreateProfileRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::cloudprofiler::v2::Profile>
   CreateOfflineProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
           request) = 0;
 };
@@ -59,17 +61,17 @@ class DefaultProfilerServiceStub : public ProfilerServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudprofiler::v2::CreateProfileRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request)
       override;
 

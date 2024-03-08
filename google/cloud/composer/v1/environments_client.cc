@@ -18,6 +18,7 @@
 
 #include "google/cloud/composer/v1/environments_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -166,6 +167,240 @@ EnvironmentsClient::PollAirflowCommand(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PollAirflowCommand(request);
+}
+
+StreamRange<google::cloud::orchestration::airflow::service::v1::
+                ListWorkloadsResponse::ComposerWorkload>
+EnvironmentsClient::ListWorkloads(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListWorkloads(request);
+}
+
+StreamRange<google::cloud::orchestration::airflow::service::v1::
+                ListWorkloadsResponse::ComposerWorkload>
+EnvironmentsClient::ListWorkloads(
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListWorkloads(std::move(request));
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::CreateUserWorkloadsSecret(
+    std::string const& parent,
+    google::cloud::orchestration::airflow::service::v1::
+        UserWorkloadsSecret const& user_workloads_secret,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      CreateUserWorkloadsSecretRequest request;
+  request.set_parent(parent);
+  *request.mutable_user_workloads_secret() = user_workloads_secret;
+  return connection_->CreateUserWorkloadsSecret(request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::CreateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateUserWorkloadsSecret(request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::GetUserWorkloadsSecret(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      GetUserWorkloadsSecretRequest request;
+  request.set_name(name);
+  return connection_->GetUserWorkloadsSecret(request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::GetUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetUserWorkloadsSecret(request);
+}
+
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::ListUserWorkloadsSecrets(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      ListUserWorkloadsSecretsRequest request;
+  request.set_parent(parent);
+  return connection_->ListUserWorkloadsSecrets(request);
+}
+
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::ListUserWorkloadsSecrets(
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListUserWorkloadsSecrets(std::move(request));
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::UpdateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        UserWorkloadsSecret const& user_workloads_secret,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      UpdateUserWorkloadsSecretRequest request;
+  *request.mutable_user_workloads_secret() = user_workloads_secret;
+  return connection_->UpdateUserWorkloadsSecret(request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::UpdateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateUserWorkloadsSecret(request);
+}
+
+Status EnvironmentsClient::DeleteUserWorkloadsSecret(std::string const& name,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      DeleteUserWorkloadsSecretRequest request;
+  request.set_name(name);
+  return connection_->DeleteUserWorkloadsSecret(request);
+}
+
+Status EnvironmentsClient::DeleteUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteUserWorkloadsSecret(request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::CreateUserWorkloadsConfigMap(
+    std::string const& parent,
+    google::cloud::orchestration::airflow::service::v1::
+        UserWorkloadsConfigMap const& user_workloads_config_map,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      CreateUserWorkloadsConfigMapRequest request;
+  request.set_parent(parent);
+  *request.mutable_user_workloads_config_map() = user_workloads_config_map;
+  return connection_->CreateUserWorkloadsConfigMap(request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::CreateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateUserWorkloadsConfigMap(request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::GetUserWorkloadsConfigMap(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      GetUserWorkloadsConfigMapRequest request;
+  request.set_name(name);
+  return connection_->GetUserWorkloadsConfigMap(request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::GetUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetUserWorkloadsConfigMap(request);
+}
+
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::ListUserWorkloadsConfigMaps(std::string const& parent,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      ListUserWorkloadsConfigMapsRequest request;
+  request.set_parent(parent);
+  return connection_->ListUserWorkloadsConfigMaps(request);
+}
+
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::ListUserWorkloadsConfigMaps(
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListUserWorkloadsConfigMaps(std::move(request));
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::UpdateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        UserWorkloadsConfigMap const& user_workloads_config_map,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      UpdateUserWorkloadsConfigMapRequest request;
+  *request.mutable_user_workloads_config_map() = user_workloads_config_map;
+  return connection_->UpdateUserWorkloadsConfigMap(request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::UpdateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateUserWorkloadsConfigMap(request);
+}
+
+Status EnvironmentsClient::DeleteUserWorkloadsConfigMap(std::string const& name,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::orchestration::airflow::service::v1::
+      DeleteUserWorkloadsConfigMapRequest request;
+  request.set_name(name);
+  return connection_->DeleteUserWorkloadsConfigMap(request);
+}
+
+Status EnvironmentsClient::DeleteUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteUserWorkloadsConfigMap(request);
 }
 
 future<StatusOr<

@@ -64,6 +64,31 @@ Idempotency BigtableTableAdminConnectionIdempotencyPolicy::UndeleteTable(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CreateAuthorizedView(
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::ListAuthorizedViews(
+    google::bigtable::admin::v2::ListAuthorizedViewsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::GetAuthorizedView(
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::UpdateAuthorizedView(
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::DeleteAuthorizedView(
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::ModifyColumnFamilies(
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&) {
   return Idempotency::kNonIdempotent;

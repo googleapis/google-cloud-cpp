@@ -24,6 +24,7 @@
 #include <google/cloud/compute/node_groups/v1/node_groups.pb.h>
 #include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -48,7 +49,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncAddNodes(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -61,7 +62,7 @@ DefaultNodeGroupsRestStub::AsyncAddNodes(
                 *service, *rest_context,
                 request.node_groups_add_nodes_request_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group(), "/", "addNodes"),
@@ -72,7 +73,7 @@ DefaultNodeGroupsRestStub::AsyncAddNodes(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -109,7 +110,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncDeleteNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -121,7 +122,7 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodeGroup(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group()),
@@ -132,7 +133,7 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodeGroup(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -143,7 +144,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncDeleteNodes(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -156,7 +157,7 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodes(
                 *service, *rest_context,
                 request.node_groups_delete_nodes_request_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group(), "/", "deleteNodes"),
@@ -167,7 +168,7 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodes(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -211,7 +212,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncInsertNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -223,7 +224,7 @@ DefaultNodeGroupsRestStub::AsyncInsertNodeGroup(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.node_group_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -236,7 +237,7 @@ DefaultNodeGroupsRestStub::AsyncInsertNodeGroup(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -291,7 +292,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncPatchNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -303,7 +304,7 @@ DefaultNodeGroupsRestStub::AsyncPatchNodeGroup(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.node_group_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group()),
@@ -314,7 +315,7 @@ DefaultNodeGroupsRestStub::AsyncPatchNodeGroup(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -341,7 +342,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncSetNodeTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -354,7 +355,7 @@ DefaultNodeGroupsRestStub::AsyncSetNodeTemplate(
                 *service, *rest_context,
                 request.node_groups_set_node_template_request_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group(), "/", "setNodeTemplate"),
@@ -365,7 +366,7 @@ DefaultNodeGroupsRestStub::AsyncSetNodeTemplate(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -376,7 +377,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncSimulateMaintenanceEvent(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::
         SimulateMaintenanceEventRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -391,7 +392,7 @@ DefaultNodeGroupsRestStub::AsyncSimulateMaintenanceEvent(
                     .node_groups_simulate_maintenance_event_request_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group(), "/",
@@ -403,7 +404,7 @@ DefaultNodeGroupsRestStub::AsyncSimulateMaintenanceEvent(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -431,7 +432,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -444,7 +445,7 @@ DefaultNodeGroupsRestStub::AsyncGetOperation(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/projects/", request.project(), "/zones/",
                              request.zone(), "/operations/",
                              request.operation())));
@@ -453,7 +454,7 @@ DefaultNodeGroupsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -463,7 +464,7 @@ DefaultNodeGroupsRestStub::AsyncGetOperation(
 future<Status> DefaultNodeGroupsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::zone_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
@@ -474,7 +475,7 @@ future<Status> DefaultNodeGroupsRestStub::AsyncCancelOperation(
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", options),
+                         rest_internal::DetermineApiVersion("v1", *options),
                          "/projects/", request.project(), "/zones/",
                          request.zone(), "/operations/", request.operation())));
       },
@@ -482,7 +483,7 @@ future<Status> DefaultNodeGroupsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -78,22 +78,6 @@ TEST(RestRetryLoopTest, Success) {
   EXPECT_EQ(84, *actual);
 }
 
-TEST(RestRetryLoopTest, SuccessWithoutOptions) {
-  internal::OptionsSpan span(Options{}.set<StringOption>("Success"));
-  StatusOr<int> actual = RestRetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [](RestContext& context, int request) {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "Success");
-        EXPECT_EQ(context.options().get<StringOption>(), "Success");
-        return StatusOr<int>(2 * request);
-      },
-      /*request=*/42,
-      /*location=*/"error message");
-  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  EXPECT_STATUS_OK(actual);
-  EXPECT_EQ(84, *actual);
-}
-
 TEST(RestRetryLoopTest, TransientThenSuccess) {
   int counter = 0;
   StatusOr<int> actual = RestRetryLoop(
@@ -270,21 +254,6 @@ TEST(RestRetryLoopTest, TracingEnabledExplicitOptions) {
         return StatusOr<int>(internal::UnavailableError("try again"));
       },
       options, /*request=*/42, /*location=*/"error message");
-
-  auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, AllOf(SizeIs(kNumRetries), Each(SpanNamed("Backoff"))));
-}
-
-TEST(RestRetryLoopTest, TracingEnabledImplicitOptions) {
-  auto span_catcher = testing_util::InstallSpanCatcher();
-
-  StatusOr<int> actual = RestRetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [](RestContext&, Options const&, int) {
-        return StatusOr<int>(internal::UnavailableError("try again"));
-      },
-      /*options=*/EnableTracing(Options{}), /*request=*/42,
-      /*location=*/"error message");
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, AllOf(SizeIs(kNumRetries), Each(SpanNamed("Backoff"))));

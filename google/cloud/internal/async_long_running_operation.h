@@ -147,46 +147,6 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
       });
 }
 
-// TODO(#12359) - remove this overload once it becomes unused
-template <typename ReturnType, typename RequestType, typename StartFunctor,
-          typename RetryPolicyType>
-future<StatusOr<ReturnType>> AsyncLongRunningOperation(
-    google::cloud::CompletionQueue cq, RequestType&& request,
-    StartFunctor&& start, AsyncPollLongRunningOperationImplicitOptions poll,
-    AsyncCancelLongRunningOperationImplicitOptions cancel,
-    LongRunningOperationValueExtractor<ReturnType> value_extractor,
-    std::unique_ptr<RetryPolicyType> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
-    std::unique_ptr<PollingPolicy> polling_policy, char const* location) {
-  auto start_wrapper = [start = std::forward<StartFunctor>(start)](
-                           google::cloud::CompletionQueue& cq,
-                           std::shared_ptr<grpc::ClientContext> context,
-                           Options const&, RequestType const& request) {
-    return start(cq, std::move(context), request);
-  };
-  auto poll_wrapper =
-      [poll = std::move(poll)](
-          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          Options const&,
-          google::longrunning::GetOperationRequest const& request) {
-        return poll(cq, std::move(context), request);
-      };
-  auto cancel_wrapper =
-      [cancel = std::move(cancel)](
-          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          Options const&,
-          google::longrunning::CancelOperationRequest const& request) {
-        return cancel(cq, std::move(context), request);
-      };
-  return AsyncLongRunningOperation<ReturnType>(
-      std::move(cq), google::cloud::internal::SaveCurrentOptions(),
-      std::forward<RequestType>(request), std::move(start_wrapper),
-      std::move(poll_wrapper), std::move(cancel_wrapper),
-      std::move(value_extractor), std::move(retry_policy),
-      std::move(backoff_policy), idempotent, std::move(polling_policy),
-      location);
-}
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

@@ -39,7 +39,7 @@ class SessionsMetadata : public SessionsStub {
                    std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DetectIntentRequest const& request)
       override;
 
@@ -48,7 +48,8 @@ class SessionsMetadata : public SessionsStub {
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,

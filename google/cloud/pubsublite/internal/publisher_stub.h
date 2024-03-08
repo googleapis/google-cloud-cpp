@@ -21,10 +21,12 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/publisher.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,7 +41,8 @@ class PublisherServiceStub {
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>>
   AsyncPublish(google::cloud::CompletionQueue const& cq,
-               std::shared_ptr<grpc::ClientContext> context) = 0;
+               std::shared_ptr<grpc::ClientContext> context,
+               google::cloud::internal::ImmutableOptions options) = 0;
 };
 
 class DefaultPublisherServiceStub : public PublisherServiceStub {
@@ -54,7 +57,8 @@ class DefaultPublisherServiceStub : public PublisherServiceStub {
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>>
   AsyncPublish(google::cloud::CompletionQueue const& cq,
-               std::shared_ptr<grpc::ClientContext> context) override;
+               std::shared_ptr<grpc::ClientContext> context,
+               google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::unique_ptr<

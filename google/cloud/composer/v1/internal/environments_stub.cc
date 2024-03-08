@@ -22,6 +22,7 @@
 #include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ EnvironmentsStub::~EnvironmentsStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::orchestration::airflow::
@@ -51,7 +53,7 @@ DefaultEnvironmentsStub::AsyncCreateEnvironment(
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 DefaultEnvironmentsStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         GetEnvironmentRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::Environment response;
@@ -65,7 +67,7 @@ DefaultEnvironmentsStub::GetEnvironment(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListEnvironmentsResponse>
 DefaultEnvironmentsStub::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         ListEnvironmentsRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::ListEnvironmentsResponse
@@ -80,7 +82,8 @@ DefaultEnvironmentsStub::ListEnvironments(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::orchestration::airflow::
@@ -99,7 +102,8 @@ DefaultEnvironmentsStub::AsyncUpdateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::orchestration::airflow::
@@ -118,7 +122,7 @@ DefaultEnvironmentsStub::AsyncDeleteEnvironment(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ExecuteAirflowCommandResponse>
 DefaultEnvironmentsStub::ExecuteAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         ExecuteAirflowCommandRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::
@@ -133,7 +137,7 @@ DefaultEnvironmentsStub::ExecuteAirflowCommand(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              StopAirflowCommandResponse>
 DefaultEnvironmentsStub::StopAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         StopAirflowCommandRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse
@@ -148,7 +152,7 @@ DefaultEnvironmentsStub::StopAirflowCommand(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              PollAirflowCommandResponse>
 DefaultEnvironmentsStub::PollAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         PollAirflowCommandRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse
@@ -160,10 +164,180 @@ DefaultEnvironmentsStub::PollAirflowCommand(
   return response;
 }
 
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
+DefaultEnvironmentsStub::ListWorkloads(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        ListWorkloadsRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse
+      response;
+  auto status = grpc_stub_->ListWorkloads(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+DefaultEnvironmentsStub::CreateUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret
+      response;
+  auto status =
+      grpc_stub_->CreateUserWorkloadsSecret(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+DefaultEnvironmentsStub::GetUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret
+      response;
+  auto status =
+      grpc_stub_->GetUserWorkloadsSecret(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsSecretsResponse>
+DefaultEnvironmentsStub::ListUserWorkloadsSecrets(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::
+      ListUserWorkloadsSecretsResponse response;
+  auto status =
+      grpc_stub_->ListUserWorkloadsSecrets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+DefaultEnvironmentsStub::UpdateUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret
+      response;
+  auto status =
+      grpc_stub_->UpdateUserWorkloadsSecret(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultEnvironmentsStub::DeleteUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteUserWorkloadsSecret(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+DefaultEnvironmentsStub::CreateUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap
+      response;
+  auto status =
+      grpc_stub_->CreateUserWorkloadsConfigMap(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+DefaultEnvironmentsStub::GetUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap
+      response;
+  auto status =
+      grpc_stub_->GetUserWorkloadsConfigMap(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsConfigMapsResponse>
+DefaultEnvironmentsStub::ListUserWorkloadsConfigMaps(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::
+      ListUserWorkloadsConfigMapsResponse response;
+  auto status =
+      grpc_stub_->ListUserWorkloadsConfigMaps(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+DefaultEnvironmentsStub::UpdateUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap
+      response;
+  auto status =
+      grpc_stub_->UpdateUserWorkloadsConfigMap(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultEnvironmentsStub::DeleteUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteUserWorkloadsConfigMap(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -182,7 +356,8 @@ DefaultEnvironmentsStub::AsyncSaveSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncLoadSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -201,7 +376,8 @@ DefaultEnvironmentsStub::AsyncLoadSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncDatabaseFailover(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         DatabaseFailoverRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::orchestration::airflow::
@@ -220,7 +396,7 @@ DefaultEnvironmentsStub::AsyncDatabaseFailover(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              FetchDatabasePropertiesResponse>
 DefaultEnvironmentsStub::FetchDatabaseProperties(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         FetchDatabasePropertiesRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::
@@ -236,7 +412,9 @@ DefaultEnvironmentsStub::FetchDatabaseProperties(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -251,7 +429,9 @@ DefaultEnvironmentsStub::AsyncGetOperation(
 
 future<Status> DefaultEnvironmentsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

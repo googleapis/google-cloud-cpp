@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/pipeline_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ PipelineServiceStub::~PipelineServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 DefaultPipelineServiceStub::CreateTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
         request) {
   google::cloud::aiplatform::v1::TrainingPipeline response;
@@ -46,7 +47,7 @@ DefaultPipelineServiceStub::CreateTrainingPipeline(
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 DefaultPipelineServiceStub::GetTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
   google::cloud::aiplatform::v1::TrainingPipeline response;
   auto status = grpc_stub_->GetTrainingPipeline(&context, request, &response);
@@ -58,7 +59,7 @@ DefaultPipelineServiceStub::GetTrainingPipeline(
 
 StatusOr<google::cloud::aiplatform::v1::ListTrainingPipelinesResponse>
 DefaultPipelineServiceStub::ListTrainingPipelines(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
         request) {
   google::cloud::aiplatform::v1::ListTrainingPipelinesResponse response;
@@ -72,7 +73,8 @@ DefaultPipelineServiceStub::ListTrainingPipelines(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPipelineServiceStub::AsyncDeleteTrainingPipeline(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -89,7 +91,7 @@ DefaultPipelineServiceStub::AsyncDeleteTrainingPipeline(
 }
 
 Status DefaultPipelineServiceStub::CancelTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
         request) {
   google::protobuf::Empty response;
@@ -103,7 +105,7 @@ Status DefaultPipelineServiceStub::CancelTrainingPipeline(
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 DefaultPipelineServiceStub::CreatePipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
   google::cloud::aiplatform::v1::PipelineJob response;
   auto status = grpc_stub_->CreatePipelineJob(&context, request, &response);
@@ -115,7 +117,7 @@ DefaultPipelineServiceStub::CreatePipelineJob(
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 DefaultPipelineServiceStub::GetPipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
   google::cloud::aiplatform::v1::PipelineJob response;
   auto status = grpc_stub_->GetPipelineJob(&context, request, &response);
@@ -127,7 +129,7 @@ DefaultPipelineServiceStub::GetPipelineJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListPipelineJobsResponse>
 DefaultPipelineServiceStub::ListPipelineJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListPipelineJobsRequest const& request) {
   google::cloud::aiplatform::v1::ListPipelineJobsResponse response;
   auto status = grpc_stub_->ListPipelineJobs(&context, request, &response);
@@ -140,7 +142,8 @@ DefaultPipelineServiceStub::ListPipelineJobs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPipelineServiceStub::AsyncDeletePipelineJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeletePipelineJobRequest,
@@ -156,7 +159,7 @@ DefaultPipelineServiceStub::AsyncDeletePipelineJob(
 }
 
 Status DefaultPipelineServiceStub::CancelPipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->CancelPipelineJob(&context, request, &response);
@@ -169,7 +172,9 @@ Status DefaultPipelineServiceStub::CancelPipelineJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPipelineServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -184,7 +189,9 @@ DefaultPipelineServiceStub::AsyncGetOperation(
 
 future<Status> DefaultPipelineServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

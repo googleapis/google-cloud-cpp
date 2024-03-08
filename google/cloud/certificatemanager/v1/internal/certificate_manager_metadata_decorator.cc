@@ -44,298 +44,316 @@ CertificateManagerMetadata::CertificateManagerMetadata(
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
 CertificateManagerMetadata::ListCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::ListCertificatesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCertificates(context, request);
+  return child_->ListCertificates(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::Certificate>
 CertificateManagerMetadata::GetCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::GetCertificateRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCertificate(context, request);
+  return child_->GetCertificate(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateCertificate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::CreateCertificateRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCertificate(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncCreateCertificate(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncUpdateCertificate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("certificate.name=",
                            internal::UrlEncode(request.certificate().name())));
-  return child_->AsyncUpdateCertificate(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncUpdateCertificate(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteCertificate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCertificate(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncDeleteCertificate(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificateMapsResponse>
 CertificateManagerMetadata::ListCertificateMaps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::ListCertificateMapsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCertificateMaps(context, request);
+  return child_->ListCertificateMaps(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
 CertificateManagerMetadata::GetCertificateMap(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCertificateMap(context, request);
+  return child_->GetCertificateMap(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateCertificateMap(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCertificateMap(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncCreateCertificateMap(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncUpdateCertificateMap(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("certificate_map.name=",
                    internal::UrlEncode(request.certificate_map().name())));
-  return child_->AsyncUpdateCertificateMap(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncUpdateCertificateMap(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteCertificateMap(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCertificateMap(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncDeleteCertificateMap(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<
     google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse>
 CertificateManagerMetadata::ListCertificateMapEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::
         ListCertificateMapEntriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCertificateMapEntries(context, request);
+  return child_->ListCertificateMapEntries(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
 CertificateManagerMetadata::GetCertificateMapEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCertificateMapEntry(context, request);
+  return child_->GetCertificateMapEntry(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::
         CreateCertificateMapEntryRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCertificateMapEntry(cq, std::move(context), options,
-                                                request);
+  return child_->AsyncCreateCertificateMapEntry(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncUpdateCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::
         UpdateCertificateMapEntryRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat(
                   "certificate_map_entry.name=",
                   internal::UrlEncode(request.certificate_map_entry().name())));
-  return child_->AsyncUpdateCertificateMapEntry(cq, std::move(context), options,
-                                                request);
+  return child_->AsyncUpdateCertificateMapEntry(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::
         DeleteCertificateMapEntryRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCertificateMapEntry(cq, std::move(context), options,
-                                                request);
+  return child_->AsyncDeleteCertificateMapEntry(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse>
 CertificateManagerMetadata::ListDnsAuthorizations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDnsAuthorizations(context, request);
+  return child_->ListDnsAuthorizations(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
 CertificateManagerMetadata::GetDnsAuthorization(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDnsAuthorization(context, request);
+  return child_->GetDnsAuthorization(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateDnsAuthorization(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDnsAuthorization(cq, std::move(context), options,
-                                             request);
+  return child_->AsyncCreateDnsAuthorization(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncUpdateDnsAuthorization(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("dns_authorization.name=",
                    internal::UrlEncode(request.dns_authorization().name())));
-  return child_->AsyncUpdateDnsAuthorization(cq, std::move(context), options,
-                                             request);
+  return child_->AsyncUpdateDnsAuthorization(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteDnsAuthorization(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDnsAuthorization(cq, std::move(context), options,
-                                             request);
+  return child_->AsyncDeleteDnsAuthorization(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::
              ListCertificateIssuanceConfigsResponse>
 CertificateManagerMetadata::ListCertificateIssuanceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::
         ListCertificateIssuanceConfigsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCertificateIssuanceConfigs(context, request);
+  return child_->ListCertificateIssuanceConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
 CertificateManagerMetadata::GetCertificateIssuanceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::
         GetCertificateIssuanceConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCertificateIssuanceConfig(context, request);
+  return child_->GetCertificateIssuanceConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::
         CreateCertificateIssuanceConfigRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCertificateIssuanceConfig(cq, std::move(context),
-                                                      options, request);
+  return child_->AsyncCreateCertificateIssuanceConfig(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::certificatemanager::v1::
         DeleteCertificateIssuanceConfigRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCertificateIssuanceConfig(cq, std::move(context),
-                                                      options, request);
+  return child_->AsyncDeleteCertificateIssuanceConfig(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> CertificateManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void CertificateManagerMetadata::SetMetadata(

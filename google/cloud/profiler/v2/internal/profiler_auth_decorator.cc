@@ -19,6 +19,7 @@
 #include "google/cloud/profiler/v2/internal/profiler_auth_decorator.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,30 +33,30 @@ ProfilerServiceAuth::ProfilerServiceAuth(
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceAuth::CreateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateProfile(context, request);
+  return child_->CreateProfile(context, options, request);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceAuth::CreateOfflineProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateOfflineProfile(context, request);
+  return child_->CreateOfflineProfile(context, options, request);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceAuth::UpdateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateProfile(context, request);
+  return child_->UpdateProfile(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

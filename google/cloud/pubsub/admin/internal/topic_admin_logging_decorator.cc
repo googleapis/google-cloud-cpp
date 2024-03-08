@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,93 +36,94 @@ TopicAdminLogging::TopicAdminLogging(std::shared_ptr<TopicAdminStub> child,
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::pubsub::v1::Topic> TopicAdminLogging::CreateTopic(
-    grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::pubsub::v1::Topic const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::Topic const& request) {
-        return child_->CreateTopic(context, request);
+        return child_->CreateTopic(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::Topic> TopicAdminLogging::UpdateTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::UpdateTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::UpdateTopicRequest const& request) {
-        return child_->UpdateTopic(context, request);
+        return child_->UpdateTopic(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::Topic> TopicAdminLogging::GetTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::GetTopicRequest const& request) {
-        return child_->GetTopic(context, request);
+        return child_->GetTopic(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::ListTopicsResponse> TopicAdminLogging::ListTopics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::ListTopicsRequest const& request) {
-        return child_->ListTopics(context, request);
+        return child_->ListTopics(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 TopicAdminLogging::ListTopicSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
-        return child_->ListTopicSubscriptions(context, request);
+        return child_->ListTopicSubscriptions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 TopicAdminLogging::ListTopicSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-        return child_->ListTopicSnapshots(context, request);
+        return child_->ListTopicSnapshots(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status TopicAdminLogging::DeleteTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::DeleteTopicRequest const& request) {
-        return child_->DeleteTopic(context, request);
+        return child_->DeleteTopic(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 TopicAdminLogging::DetachSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::DetachSubscriptionRequest const& request) {
-        return child_->DetachSubscription(context, request);
+        return child_->DetachSubscription(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

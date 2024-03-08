@@ -22,6 +22,7 @@
 #include <google/cloud/dataproc/v1/batches.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ BatchControllerStub::~BatchControllerStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultBatchControllerStub::AsyncCreateBatch(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataproc::v1::CreateBatchRequest,
@@ -49,7 +51,7 @@ DefaultBatchControllerStub::AsyncCreateBatch(
 
 StatusOr<google::cloud::dataproc::v1::Batch>
 DefaultBatchControllerStub::GetBatch(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {
   google::cloud::dataproc::v1::Batch response;
   auto status = grpc_stub_->GetBatch(&context, request, &response);
@@ -61,7 +63,7 @@ DefaultBatchControllerStub::GetBatch(
 
 StatusOr<google::cloud::dataproc::v1::ListBatchesResponse>
 DefaultBatchControllerStub::ListBatches(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::ListBatchesRequest const& request) {
   google::cloud::dataproc::v1::ListBatchesResponse response;
   auto status = grpc_stub_->ListBatches(&context, request, &response);
@@ -72,7 +74,7 @@ DefaultBatchControllerStub::ListBatches(
 }
 
 Status DefaultBatchControllerStub::DeleteBatch(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteBatch(&context, request, &response);
@@ -85,7 +87,9 @@ Status DefaultBatchControllerStub::DeleteBatch(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBatchControllerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -100,7 +104,9 @@ DefaultBatchControllerStub::AsyncGetOperation(
 
 future<Status> DefaultBatchControllerStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

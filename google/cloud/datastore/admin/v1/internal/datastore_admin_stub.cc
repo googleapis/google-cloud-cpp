@@ -22,6 +22,7 @@
 #include <google/datastore/admin/v1/datastore_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ DatastoreAdminStub::~DatastoreAdminStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastoreAdminStub::AsyncExportEntities(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::datastore::admin::v1::ExportEntitiesRequest,
@@ -50,7 +52,8 @@ DefaultDatastoreAdminStub::AsyncExportEntities(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastoreAdminStub::AsyncImportEntities(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::datastore::admin::v1::ImportEntitiesRequest,
@@ -67,7 +70,8 @@ DefaultDatastoreAdminStub::AsyncImportEntities(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastoreAdminStub::AsyncCreateIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::datastore::admin::v1::CreateIndexRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::datastore::admin::v1::CreateIndexRequest,
@@ -84,7 +88,8 @@ DefaultDatastoreAdminStub::AsyncCreateIndex(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastoreAdminStub::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::datastore::admin::v1::DeleteIndexRequest,
@@ -100,7 +105,7 @@ DefaultDatastoreAdminStub::AsyncDeleteIndex(
 
 StatusOr<google::datastore::admin::v1::Index>
 DefaultDatastoreAdminStub::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::admin::v1::GetIndexRequest const& request) {
   google::datastore::admin::v1::Index response;
   auto status = grpc_stub_->GetIndex(&context, request, &response);
@@ -112,7 +117,7 @@ DefaultDatastoreAdminStub::GetIndex(
 
 StatusOr<google::datastore::admin::v1::ListIndexesResponse>
 DefaultDatastoreAdminStub::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::admin::v1::ListIndexesRequest const& request) {
   google::datastore::admin::v1::ListIndexesResponse response;
   auto status = grpc_stub_->ListIndexes(&context, request, &response);
@@ -125,7 +130,9 @@ DefaultDatastoreAdminStub::ListIndexes(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastoreAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -140,7 +147,9 @@ DefaultDatastoreAdminStub::AsyncGetOperation(
 
 future<Status> DefaultDatastoreAdminStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

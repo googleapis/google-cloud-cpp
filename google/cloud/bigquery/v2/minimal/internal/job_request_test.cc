@@ -33,9 +33,6 @@ using ::google::cloud::bigquery_v2_minimal_testing::
 using ::google::cloud::bigquery_v2_minimal_testing::MakeJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryRequest;
 
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::HasSubstr;
-
 auto static const kMinCreationTimeMs = 1111111111111;
 auto static const kMaxCreationTimeMs = 1111111111211;
 auto static const kMinTime = std::chrono::system_clock::from_time_t(0) +
@@ -269,19 +266,6 @@ TEST(InsertJobRequestTest, Success) {
   expected.SetPath(
       "https://bigquery.googleapis.com/bigquery/v2/projects/1234/jobs");
   EXPECT_EQ(expected, *actual);
-}
-
-TEST(InsertJobRequestTest, EmptyQuery) {
-  InsertJobRequest request;
-  request.set_project_id("1234");
-
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
-  internal::OptionsSpan span(opts);
-
-  auto actual = BuildRestRequest(request);
-  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
-                               HasSubstr("Invalid Job object")));
 }
 
 TEST(InsertJobRequest, DebugString) {
@@ -1025,18 +1009,6 @@ TEST(PostQueryRequestTest, Success) {
       "https://bigquery.googleapis.com/bigquery/v2/projects/test-project-id/"
       "queries");
   EXPECT_EQ(expected, *actual);
-}
-
-TEST(PostQueryRequestTest, MissingQuery) {
-  PostQueryRequest request("1234");
-
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
-  internal::OptionsSpan span(opts);
-
-  auto actual = BuildRestRequest(request);
-  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
-                               HasSubstr("Missing required query field")));
 }
 
 TEST(PostQueryRequestTest, DebugString) {

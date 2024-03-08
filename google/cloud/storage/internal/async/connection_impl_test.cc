@@ -33,7 +33,6 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::MockAsyncBidiWriteObjectStream;
 using ::google::cloud::storage::testing::MockAsyncInsertStream;
 using ::google::cloud::storage::testing::MockAsyncObjectMediaStream;
@@ -142,9 +141,10 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
       })
       .WillOnce([&](CompletionQueue const&,
                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                    std::shared_ptr<grpc::ClientContext> context) {
-        // TODO(#12359) - use the explicit `options` when available.
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+                    std::shared_ptr<grpc::ClientContext> context,
+                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                    internal::ImmutableOptions options) {
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -313,10 +313,12 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
       .WillOnce([&](CompletionQueue const&,
                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
                     std::shared_ptr<grpc::ClientContext> context,
+                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                    google::cloud::internal::ImmutableOptions options,
                     google::storage::v2::ReadObjectRequest const& request) {
         // Verify at least one option is initialized with the correct
         // values.
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -442,7 +444,7 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {
         });
       })
       .WillOnce(
-          [&](auto&, auto,
+          [&](auto&, auto, auto,
               google::storage::v2::StartResumableWriteRequest const& request) {
             auto const& spec = request.write_object_spec();
             EXPECT_TRUE(spec.has_if_generation_match());
@@ -577,7 +579,7 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadResumeUpload) {
         });
       })
       .WillOnce(
-          [&](auto&, auto,
+          [&](auto&, auto, auto,
               google::storage::v2::QueryWriteStatusRequest const& request) {
             EXPECT_EQ(request.upload_id(), "test-upload-id");
 
@@ -703,7 +705,7 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadResumeFinalizedUpload) {
         });
       })
       .WillOnce(
-          [&](auto&, auto,
+          [&](auto&, auto, auto,
               google::storage::v2::QueryWriteStatusRequest const& request) {
             EXPECT_EQ(request.upload_id(), "test-upload-id");
 
@@ -956,7 +958,7 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
         });
       })
       .WillOnce(
-          [&](auto&, auto,
+          [&](auto&, auto, auto,
               google::storage::v2::StartResumableWriteRequest const& request) {
             auto const& spec = request.write_object_spec();
             EXPECT_TRUE(spec.has_if_generation_match());
@@ -1077,7 +1079,7 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUploadResume) {
         });
       })
       .WillOnce(
-          [&](auto&, auto,
+          [&](auto&, auto, auto,
               google::storage::v2::StartResumableWriteRequest const& request) {
             auto const& spec = request.write_object_spec();
             EXPECT_TRUE(spec.has_if_generation_match());
@@ -1102,7 +1104,7 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUploadResume) {
         });
       })
       .WillOnce(
-          [&](auto&, auto,
+          [&](auto&, auto, auto,
               google::storage::v2::QueryWriteStatusRequest const& request) {
             EXPECT_EQ(request.upload_id(), "test-upload-id");
 
@@ -1265,10 +1267,11 @@ TEST_F(AsyncConnectionImplTest, DeleteObject) {
         });
       })
       .WillOnce([&](CompletionQueue&, auto context,
+                    google::cloud::internal::ImmutableOptions const& options,
                     google::storage::v2::DeleteObjectRequest const& request) {
         // Verify at least one option is initialized with the correct
         // values.
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),

@@ -27,6 +27,7 @@
 #include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,43 +40,48 @@ class ServiceUsageStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncEnableService(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::serviceusage::v1::EnableServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDisableService(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::serviceusage::v1::DisableServiceRequest const& request) = 0;
 
   virtual StatusOr<google::api::serviceusage::v1::Service> GetService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::GetServiceRequest const& request) = 0;
 
   virtual StatusOr<google::api::serviceusage::v1::ListServicesResponse>
   ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::ListServicesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncBatchEnableServices(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::serviceusage::v1::BatchEnableServicesRequest const&
           request) = 0;
 
   virtual StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(grpc::ClientContext& context,
+  BatchGetServices(grpc::ClientContext& context, Options const& options,
                    google::api::serviceusage::v1::BatchGetServicesRequest const&
                        request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -91,44 +97,49 @@ class DefaultServiceUsageStub : public ServiceUsageStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncEnableService(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::serviceusage::v1::EnableServiceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDisableService(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::serviceusage::v1::DisableServiceRequest const& request)
       override;
 
   StatusOr<google::api::serviceusage::v1::Service> GetService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::GetServiceRequest const& request) override;
 
   StatusOr<google::api::serviceusage::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::ListServicesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchEnableServices(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
       override;
 
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(grpc::ClientContext& context,
+  BatchGetServices(grpc::ClientContext& context, Options const& options,
                    google::api::serviceusage::v1::BatchGetServicesRequest const&
                        request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -67,11 +68,11 @@ SubscriptionAdminConnectionImpl::CreateSubscription(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSubscription(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::Subscription const& request) {
-        return stub_->CreateSubscription(context, request);
+        return stub_->CreateSubscription(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::pubsub::v1::Subscription>
@@ -81,11 +82,11 @@ SubscriptionAdminConnectionImpl::GetSubscription(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSubscription(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::GetSubscriptionRequest const& request) {
-        return stub_->GetSubscription(context, request);
+        return stub_->GetSubscription(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::pubsub::v1::Subscription>
@@ -95,11 +96,11 @@ SubscriptionAdminConnectionImpl::UpdateSubscription(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSubscription(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::UpdateSubscriptionRequest const& request) {
-        return stub_->UpdateSubscription(context, request);
+        return stub_->UpdateSubscription(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::pubsub::v1::Subscription>
@@ -111,20 +112,21 @@ SubscriptionAdminConnectionImpl::ListSubscriptions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::pubsub::v1::Subscription>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<pubsub_admin::SubscriptionAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::pubsub::v1::ListSubscriptionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::pubsub::v1::ListSubscriptionsRequest const& request) {
-              return stub->ListSubscriptions(context, request);
+              return stub->ListSubscriptions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::pubsub::v1::ListSubscriptionsResponse r) {
         std::vector<google::pubsub::v1::Subscription> result(
@@ -141,11 +143,11 @@ Status SubscriptionAdminConnectionImpl::DeleteSubscription(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSubscription(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::DeleteSubscriptionRequest const& request) {
-        return stub_->DeleteSubscription(context, request);
+        return stub_->DeleteSubscription(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status SubscriptionAdminConnectionImpl::ModifyPushConfig(
@@ -154,11 +156,11 @@ Status SubscriptionAdminConnectionImpl::ModifyPushConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ModifyPushConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::ModifyPushConfigRequest const& request) {
-        return stub_->ModifyPushConfig(context, request);
+        return stub_->ModifyPushConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::pubsub::v1::Snapshot>
@@ -168,11 +170,11 @@ SubscriptionAdminConnectionImpl::GetSnapshot(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSnapshot(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::GetSnapshotRequest const& request) {
-        return stub_->GetSnapshot(context, request);
+        return stub_->GetSnapshot(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::pubsub::v1::Snapshot>
@@ -184,19 +186,20 @@ SubscriptionAdminConnectionImpl::ListSnapshots(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::pubsub::v1::Snapshot>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<pubsub_admin::SubscriptionAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::pubsub::v1::ListSnapshotsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::pubsub::v1::ListSnapshotsRequest const& request) {
-              return stub->ListSnapshots(context, request);
+              return stub->ListSnapshots(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::pubsub::v1::ListSnapshotsResponse r) {
         std::vector<google::pubsub::v1::Snapshot> result(r.snapshots().size());
@@ -213,11 +216,11 @@ SubscriptionAdminConnectionImpl::CreateSnapshot(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSnapshot(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::CreateSnapshotRequest const& request) {
-        return stub_->CreateSnapshot(context, request);
+        return stub_->CreateSnapshot(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::pubsub::v1::Snapshot>
@@ -227,11 +230,11 @@ SubscriptionAdminConnectionImpl::UpdateSnapshot(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSnapshot(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::UpdateSnapshotRequest const& request) {
-        return stub_->UpdateSnapshot(context, request);
+        return stub_->UpdateSnapshot(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status SubscriptionAdminConnectionImpl::DeleteSnapshot(
@@ -240,11 +243,11 @@ Status SubscriptionAdminConnectionImpl::DeleteSnapshot(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSnapshot(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::DeleteSnapshotRequest const& request) {
-        return stub_->DeleteSnapshot(context, request);
+        return stub_->DeleteSnapshot(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::pubsub::v1::SeekResponse>
@@ -254,11 +257,11 @@ SubscriptionAdminConnectionImpl::Seek(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Seek(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::SeekRequest const& request) {
-        return stub_->Seek(context, request);
+        return stub_->Seek(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

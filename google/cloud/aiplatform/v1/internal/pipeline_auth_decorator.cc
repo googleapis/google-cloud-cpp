@@ -19,6 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/pipeline_auth_decorator.h"
 #include <google/cloud/aiplatform/v1/pipeline_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,42 +33,43 @@ PipelineServiceAuth::PipelineServiceAuth(
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceAuth::CreateTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTrainingPipeline(context, request);
+  return child_->CreateTrainingPipeline(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceAuth::GetTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTrainingPipeline(context, request);
+  return child_->GetTrainingPipeline(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTrainingPipelinesResponse>
 PipelineServiceAuth::ListTrainingPipelines(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTrainingPipelines(context, request);
+  return child_->ListTrainingPipelines(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceAuth::AsyncDeleteTrainingPipeline(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -75,104 +77,107 @@ PipelineServiceAuth::AsyncDeleteTrainingPipeline(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncDeleteTrainingPipeline(cq, *std::move(context),
-                                                  options, request);
+                                                  std::move(options), request);
       });
 }
 
 Status PipelineServiceAuth::CancelTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelTrainingPipeline(context, request);
+  return child_->CancelTrainingPipeline(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceAuth::CreatePipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreatePipelineJob(context, request);
+  return child_->CreatePipelineJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceAuth::GetPipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPipelineJob(context, request);
+  return child_->GetPipelineJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListPipelineJobsResponse>
 PipelineServiceAuth::ListPipelineJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListPipelineJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPipelineJobs(context, request);
+  return child_->ListPipelineJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceAuth::AsyncDeletePipelineJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeletePipelineJob(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncDeletePipelineJob(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 Status PipelineServiceAuth::CancelPipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelPipelineJob(context, request);
+  return child_->CancelPipelineJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> PipelineServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

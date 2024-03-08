@@ -40,12 +40,12 @@ class DeploymentsAuth : public DeploymentsStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
   ListDeployments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request)
       override;
 

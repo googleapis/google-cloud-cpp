@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/internal/publisher_auth_decorator.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,94 +32,97 @@ PublisherAuth::PublisherAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::pubsub::v1::Topic> PublisherAuth::CreateTopic(
-    grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::pubsub::v1::Topic const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTopic(context, request);
+  return child_->CreateTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Topic> PublisherAuth::UpdateTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::UpdateTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTopic(context, request);
+  return child_->UpdateTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::PublishResponse> PublisherAuth::Publish(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::PublishRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Publish(context, request);
+  return child_->Publish(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Topic> PublisherAuth::GetTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTopic(context, request);
+  return child_->GetTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicsResponse> PublisherAuth::ListTopics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTopics(context, request);
+  return child_->ListTopics(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 PublisherAuth::ListTopicSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTopicSubscriptions(context, request);
+  return child_->ListTopicSubscriptions(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 PublisherAuth::ListTopicSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTopicSnapshots(context, request);
+  return child_->ListTopicSnapshots(context, options, request);
 }
 
 Status PublisherAuth::DeleteTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTopic(context, request);
+  return child_->DeleteTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 PublisherAuth::DetachSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DetachSubscription(context, request);
+  return child_->DetachSubscription(context, options, request);
 }
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherAuth::AsyncPublish(google::cloud::CompletionQueue& cq,
                             std::shared_ptr<grpc::ClientContext> context,
+                            google::cloud::internal::ImmutableOptions options,
                             google::pubsub::v1::PublishRequest const& request) {
-  using ReturnType = StatusOr<google::pubsub::v1::PublishResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::pubsub::v1::PublishResponse>(
+                  std::move(context).status()));
         }
-        return child->AsyncPublish(cq, *std::move(context), request);
+        return child->AsyncPublish(cq, *std::move(context), std::move(options),
+                                   request);
       });
 }
 

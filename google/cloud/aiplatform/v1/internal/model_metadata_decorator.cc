@@ -45,197 +45,211 @@ ModelServiceMetadata::ModelServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncUploadModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::UploadModelRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncUploadModel(cq, std::move(context), options, request);
+  return child_->AsyncUploadModel(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceMetadata::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetModel(context, request);
+  return child_->GetModel(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListModelsResponse>
 ModelServiceMetadata::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListModelsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListModels(context, request);
+  return child_->ListModels(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListModelVersionsResponse>
 ModelServiceMetadata::ListModelVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListModelVersionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ListModelVersions(context, request);
+  return child_->ListModelVersions(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceMetadata::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateModelRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
-  return child_->UpdateModel(context, request);
+  return child_->UpdateModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncUpdateExplanationDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("model=", internal::UrlEncode(request.model())));
-  return child_->AsyncUpdateExplanationDataset(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncUpdateExplanationDataset(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteModel(cq, std::move(context), options, request);
+  return child_->AsyncDeleteModel(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncDeleteModelVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteModelVersion(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncDeleteModelVersion(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceMetadata::MergeVersionAliases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->MergeVersionAliases(context, request);
+  return child_->MergeVersionAliases(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::ExportModelRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncExportModel(cq, std::move(context), options, request);
+  return child_->AsyncExportModel(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncCopyModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CopyModelRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCopyModel(cq, std::move(context), options, request);
+  return child_->AsyncCopyModel(cq, std::move(context), std::move(options),
+                                request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
 ModelServiceMetadata::ImportModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ImportModelEvaluation(context, request);
+  return child_->ImportModelEvaluation(context, options, request);
 }
 
 StatusOr<
     google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
 ModelServiceMetadata::BatchImportModelEvaluationSlices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         BatchImportModelEvaluationSlicesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->BatchImportModelEvaluationSlices(context, request);
+  return child_->BatchImportModelEvaluationSlices(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
 ModelServiceMetadata::BatchImportEvaluatedAnnotations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->BatchImportEvaluatedAnnotations(context, request);
+  return child_->BatchImportEvaluatedAnnotations(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
 ModelServiceMetadata::GetModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetModelEvaluation(context, request);
+  return child_->GetModelEvaluation(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationsResponse>
 ModelServiceMetadata::ListModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListModelEvaluationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListModelEvaluations(context, request);
+  return child_->ListModelEvaluations(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
 ModelServiceMetadata::GetModelEvaluationSlice(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetModelEvaluationSlice(context, request);
+  return child_->GetModelEvaluationSlice(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse>
 ModelServiceMetadata::ListModelEvaluationSlices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListModelEvaluationSlices(context, request);
+  return child_->ListModelEvaluationSlices(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ModelServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ModelServiceMetadata::SetMetadata(grpc::ClientContext& context,

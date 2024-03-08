@@ -27,6 +27,7 @@
 #include <google/cloud/dataproc/v1/jobs.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -38,43 +39,46 @@ class JobControllerStub {
   virtual ~JobControllerStub() = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncSubmitJobAsOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::Job> GetJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::Job> UpdateJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::UpdateJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::CancelJobRequest const& request) = 0;
 
   virtual Status DeleteJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::DeleteJobRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -88,42 +92,45 @@ class DefaultJobControllerStub : public JobControllerStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSubmitJobAsOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetJobRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Job> UpdateJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::UpdateJobRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::CancelJobRequest const& request) override;
 
   Status DeleteJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

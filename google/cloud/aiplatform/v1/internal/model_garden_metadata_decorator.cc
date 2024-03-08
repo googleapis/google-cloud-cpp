@@ -44,11 +44,11 @@ ModelGardenServiceMetadata::ModelGardenServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 ModelGardenServiceMetadata::GetPublisherModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPublisherModel(context, request);
+  return child_->GetPublisherModel(context, options, request);
 }
 
 void ModelGardenServiceMetadata::SetMetadata(

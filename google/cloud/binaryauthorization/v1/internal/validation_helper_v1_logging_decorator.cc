@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,16 +38,16 @@ ValidationHelperV1Logging::ValidationHelperV1Logging(
 StatusOr<google::cloud::binaryauthorization::v1::
              ValidateAttestationOccurrenceResponse>
 ValidationHelperV1Logging::ValidateAttestationOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::binaryauthorization::v1::
                  ValidateAttestationOccurrenceRequest const& request) {
-        return child_->ValidateAttestationOccurrence(context, request);
+        return child_->ValidateAttestationOccurrence(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

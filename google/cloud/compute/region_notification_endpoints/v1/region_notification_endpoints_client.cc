@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

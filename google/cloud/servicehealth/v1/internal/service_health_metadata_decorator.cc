@@ -44,60 +44,60 @@ ServiceHealthMetadata::ServiceHealthMetadata(
 
 StatusOr<google::cloud::servicehealth::v1::ListEventsResponse>
 ServiceHealthMetadata::ListEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListEventsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEvents(context, request);
+  return child_->ListEvents(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::Event>
 ServiceHealthMetadata::GetEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetEventRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEvent(context, request);
+  return child_->GetEvent(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
 ServiceHealthMetadata::ListOrganizationEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListOrganizationEvents(context, request);
+  return child_->ListOrganizationEvents(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
 ServiceHealthMetadata::GetOrganizationEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetOrganizationEvent(context, request);
+  return child_->GetOrganizationEvent(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
 ServiceHealthMetadata::ListOrganizationImpacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListOrganizationImpacts(context, request);
+  return child_->ListOrganizationImpacts(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
 ServiceHealthMetadata::GetOrganizationImpact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetOrganizationImpact(context, request);
+  return child_->GetOrganizationImpact(context, options, request);
 }
 
 void ServiceHealthMetadata::SetMetadata(grpc::ClientContext& context,

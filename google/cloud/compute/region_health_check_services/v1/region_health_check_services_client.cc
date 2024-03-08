@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/region_health_check_services/v1/region_health_check_services_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

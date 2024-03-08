@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -76,19 +77,22 @@ HubServiceConnectionImpl::ListHubs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Hub>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListHubsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkconnectivity::v1::ListHubsRequest const&
-                    request) { return stub->ListHubs(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListHubs(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListHubsResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Hub> result(
@@ -106,44 +110,48 @@ HubServiceConnectionImpl::GetHub(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetHub(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetHubRequest const&
-                 request) { return stub_->GetHub(context, request); },
-      request, __func__);
+                 request) { return stub_->GetHub(context, options, request); },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
 HubServiceConnectionImpl::CreateHub(
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->CreateHub(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkconnectivity::v1::Hub>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::networkconnectivity::v1::CreateHubRequest const&
               request) {
-        return stub->AsyncCreateHub(cq, std::move(context), options, request);
+        return stub->AsyncCreateHub(cq, std::move(context), std::move(options),
+                                    request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkconnectivity::v1::Hub>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateHub(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -151,34 +159,38 @@ future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
 HubServiceConnectionImpl::UpdateHub(
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->UpdateHub(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkconnectivity::v1::Hub>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::networkconnectivity::v1::UpdateHubRequest const&
               request) {
-        return stub->AsyncUpdateHub(cq, std::move(context), options, request);
+        return stub->AsyncUpdateHub(cq, std::move(context), std::move(options),
+                                    request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkconnectivity::v1::Hub>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateHub(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -186,34 +198,38 @@ future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceConnectionImpl::DeleteHub(
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->DeleteHub(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkconnectivity::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::networkconnectivity::v1::DeleteHubRequest const&
               request) {
-        return stub->AsyncDeleteHub(cq, std::move(context), options, request);
+        return stub->AsyncDeleteHub(cq, std::move(context), std::move(options),
+                                    request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkconnectivity::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteHub(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -226,21 +242,22 @@ HubServiceConnectionImpl::ListHubSpokes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Spoke>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::networkconnectivity::v1::
                        ListHubSpokesRequest const& request) {
-              return stub->ListHubSpokes(context, request);
+              return stub->ListHubSpokes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListHubSpokesResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Spoke> result(
@@ -260,19 +277,22 @@ HubServiceConnectionImpl::ListSpokes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Spoke>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListSpokesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkconnectivity::v1::ListSpokesRequest const&
-                    request) { return stub->ListSpokes(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListSpokes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListSpokesResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Spoke> result(
@@ -290,44 +310,51 @@ HubServiceConnectionImpl::GetSpoke(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSpoke(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetSpokeRequest const&
-                 request) { return stub_->GetSpoke(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetSpoke(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
 HubServiceConnectionImpl::CreateSpoke(
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateSpoke(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkconnectivity::v1::Spoke>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
               request) {
-        return stub->AsyncCreateSpoke(cq, std::move(context), options, request);
+        return stub->AsyncCreateSpoke(cq, std::move(context),
+                                      std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkconnectivity::v1::Spoke>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateSpoke(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -335,34 +362,39 @@ future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
 HubServiceConnectionImpl::UpdateSpoke(
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateSpoke(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkconnectivity::v1::Spoke>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
               request) {
-        return stub->AsyncUpdateSpoke(cq, std::move(context), options, request);
+        return stub->AsyncUpdateSpoke(cq, std::move(context),
+                                      std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkconnectivity::v1::Spoke>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateSpoke(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -371,35 +403,39 @@ HubServiceConnectionImpl::RejectHubSpoke(
     google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RejectHubSpoke(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
               request) {
-        return stub->AsyncRejectHubSpoke(cq, std::move(context), options,
-                                         request);
+        return stub->AsyncRejectHubSpoke(cq, std::move(context),
+                                         std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RejectHubSpoke(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -408,35 +444,39 @@ HubServiceConnectionImpl::AcceptHubSpoke(
     google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AcceptHubSpoke(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
               request) {
-        return stub->AsyncAcceptHubSpoke(cq, std::move(context), options,
-                                         request);
+        return stub->AsyncAcceptHubSpoke(cq, std::move(context),
+                                         std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AcceptHubSpoke(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -444,34 +484,39 @@ future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceConnectionImpl::DeleteSpoke(
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSpoke(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkconnectivity::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
               request) {
-        return stub->AsyncDeleteSpoke(cq, std::move(context), options, request);
+        return stub->AsyncDeleteSpoke(cq, std::move(context),
+                                      std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkconnectivity::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSpoke(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -483,10 +528,12 @@ HubServiceConnectionImpl::GetRouteTable(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRouteTable(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
-                 request) { return stub_->GetRouteTable(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRouteTable(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Route>
@@ -496,10 +543,12 @@ HubServiceConnectionImpl::GetRoute(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRoute(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetRouteRequest const&
-                 request) { return stub_->GetRoute(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRoute(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Route>
@@ -511,19 +560,22 @@ HubServiceConnectionImpl::ListRoutes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Route>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListRoutesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkconnectivity::v1::ListRoutesRequest const&
-                    request) { return stub->ListRoutes(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListRoutes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListRoutesResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Route> result(
@@ -543,21 +595,22 @@ HubServiceConnectionImpl::ListRouteTables(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::RouteTable>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::networkconnectivity::v1::
                        ListRouteTablesRequest const& request) {
-              return stub->ListRouteTables(context, request);
+              return stub->ListRouteTables(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListRouteTablesResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::RouteTable> result(
@@ -575,10 +628,12 @@ HubServiceConnectionImpl::GetGroup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGroup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetGroupRequest const&
-                 request) { return stub_->GetGroup(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetGroup(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Group>
@@ -590,19 +645,22 @@ HubServiceConnectionImpl::ListGroups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Group>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkconnectivity::v1::ListGroupsRequest const&
-                    request) { return stub->ListGroups(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListGroups(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListGroupsResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Group> result(

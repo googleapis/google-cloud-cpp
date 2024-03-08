@@ -19,6 +19,7 @@
 #include "google/cloud/optimization/v1/internal/fleet_routing_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -265,6 +265,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# App Hub
+service {
+  service_proto_path: "google/cloud/apphub/v1/apphub_service.proto"
+  product_path: "google/cloud/apphub/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Artifact Registry
 service {
   service_proto_path: "google/devtools/artifactregistry/v1/service.proto"
@@ -580,6 +588,21 @@ service {
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
   emitted_rpcs: ["RunReportJob", "FetchReportResults", "ListReports"]
+}
+
+# Cloud Controls Partner
+service {
+  service_proto_path: "google/cloud/cloudcontrolspartner/v1/core.proto"
+  product_path: "google/cloud/cloudcontrolspartner/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/cloudcontrolspartner/v1/monitoring.proto"
+  product_path: "google/cloud/cloudcontrolspartner/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Cloud Quotas
@@ -2966,6 +2989,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/securitycenter/v2/securitycenter_service.proto"
+  product_path: "google/cloud/securitycenter/v2"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Security Center Management
 service {
   service_proto_path: "google/cloud/securitycentermanagement/v1/security_center_management.proto"
@@ -3238,8 +3268,19 @@ service {
   service_proto_path: "google/storage/control/v2/storage_control.proto"
   product_path: "google/cloud/storagecontrol/v2"
   initial_copyright_year: "2024"
-  retryable_status_codes: ["kUnavailable"]
+  retryable_status_codes: [
+    "kResourceExhausted",
+    "kUnavailable",
+    "kDeadlineExceeded",
+    "kInternal",
+    "kUnknown"
+  ]
   omit_repo_metadata: true
+  idempotency_overrides: [
+    {rpc_name: "StorageControl.GetFolder", idempotency: IDEMPOTENT},
+    {rpc_name: "StorageControl.ListFolders", idempotency: IDEMPOTENT},
+    {rpc_name: "StorageControl.GetStorageLayout", idempotency: IDEMPOTENT}
+  ]
 }
 
 # Storage Insights

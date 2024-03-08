@@ -44,44 +44,44 @@ PagesMetadata::PagesMetadata(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse>
 PagesMetadata::ListPages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPages(context, request);
+  return child_->ListPages(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::GetPage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPage(context, request);
+  return child_->GetPage(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::CreatePage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreatePage(context, request);
+  return child_->CreatePage(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::UpdatePage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("page.name=", internal::UrlEncode(request.page().name())));
-  return child_->UpdatePage(context, request);
+  return child_->UpdatePage(context, options, request);
 }
 
 Status PagesMetadata::DeletePage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeletePage(context, request);
+  return child_->DeletePage(context, options, request);
 }
 
 void PagesMetadata::SetMetadata(grpc::ClientContext& context,

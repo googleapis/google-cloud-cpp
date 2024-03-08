@@ -44,47 +44,96 @@ EntityTypesMetadata::EntityTypesMetadata(
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesMetadata::GetEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEntityType(context, request);
+  return child_->GetEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesMetadata::CreateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateEntityType(context, request);
+  return child_->CreateEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesMetadata::UpdateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("entity_type.name=",
                            internal::UrlEncode(request.entity_type().name())));
-  return child_->UpdateEntityType(context, request);
+  return child_->UpdateEntityType(context, options, request);
 }
 
 Status EntityTypesMetadata::DeleteEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteEntityType(context, request);
+  return child_->DeleteEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
 EntityTypesMetadata::ListEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEntityTypes(context, request);
+  return child_->ListEntityTypes(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EntityTypesMetadata::AsyncExportEntityTypes(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncExportEntityTypes(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EntityTypesMetadata::AsyncImportEntityTypes(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportEntityTypes(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EntityTypesMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+future<Status> EntityTypesMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void EntityTypesMetadata::SetMetadata(grpc::ClientContext& context,

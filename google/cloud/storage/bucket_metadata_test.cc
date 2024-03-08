@@ -31,6 +31,7 @@ namespace {
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Optional;
 
 BucketMetadata CreateBucketMetadataForTest() {
   // This metadata object has some impossible combination of fields in it. The
@@ -160,6 +161,10 @@ BucketMetadata CreateBucketMetadataForTest() {
       },
       "rpo": "DEFAULT",
       "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket",
+      "softDeletePolicy": {
+        "retentionDurationSeconds": 604800,
+        "effectiveTime": "2024-02-15T12:34:56Z"
+      },
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
       "updated": "2018-05-19T19:31:24Z",
@@ -282,6 +287,14 @@ TEST(BucketMetadataTest, Parse) {
 
   EXPECT_EQ("https://storage.googleapis.com/storage/v1/b/test-bucket",
             actual.self_link());
+
+  // soft_delete_policy
+  ASSERT_THAT(actual.soft_delete_policy_as_optional(),
+              Optional(BucketSoftDeletePolicy{
+                  std::chrono::seconds(604800),
+                  google::cloud::internal::ParseRfc3339("2024-02-15T12:34:56Z")
+                      .value()}));
+
   EXPECT_EQ(storage_class::Standard(), actual.storage_class());
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   auto magic_timestamp = 1526758274L;
@@ -379,6 +392,12 @@ TEST(BucketMetadataTest, IOStream) {
 
   // rpo()
   EXPECT_THAT(actual, HasSubstr("rpo=DEFAULT"));
+
+  // soft_delete_policy()
+  EXPECT_THAT(
+      actual,
+      HasSubstr("soft_delete_policy=BucketSoftDeletePolicy={retention_duration="
+                "604800s, effective_time=2024-02-15T12:34:56Z}"));
 
   // versioning()
   EXPECT_THAT(actual, HasSubstr("versioning.enabled=true"));
@@ -515,6 +534,14 @@ TEST(BucketMetadataTest, ToJsonString) {
   // rpo()
   EXPECT_TRUE(actual.contains("rpo"));
   EXPECT_EQ("DEFAULT", actual.value("rpo", ""));
+
+  // soft_delete_policy()
+  EXPECT_TRUE(actual.contains("softDeletePolicy"));
+  // The effectiveTime field is only set by the service and should not be sent
+  // in requests. Therefore, `ToJsonString()` does not output its value.
+  auto const expected_soft_delete_policy =
+      nlohmann::json{{"retentionDurationSeconds", 604800}};
+  EXPECT_EQ(expected_soft_delete_policy, actual["softDeletePolicy"]);
 
   // storage_class()
   ASSERT_EQ("STANDARD", actual.value("storageClass", ""));
@@ -874,6 +901,33 @@ TEST(BucketMetadataTest, SetRPO) {
   std::ostringstream os;
   os << copy;
   EXPECT_THAT(os.str(), HasSubstr("rpo=ASYNC_TURBO"));
+}
+
+/// @test Verify we can change the soft delete policy in BucketMetadata.
+TEST(BucketMetadataTest, SetSoftDeletePolicy) {
+  auto expected = CreateBucketMetadataForTest();
+  BucketSoftDeletePolicy change{
+      std::chrono::seconds(3600),
+      google::cloud::internal::ParseRfc3339("2024-02-15T23:45:60Z").value(),
+  };
+  auto copy = expected;
+  copy.set_soft_delete_policy(change);
+  ASSERT_THAT(copy.soft_delete_policy_as_optional(), Optional(change));
+  EXPECT_EQ(change, copy.soft_delete_policy());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the soft delete policy in BucketMetadata.
+TEST(BucketMetadataTest, ResetSoftDeletePolicy) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_soft_delete_policy());
+  auto copy = expected;
+  copy.reset_soft_delete_policy();
+  EXPECT_FALSE(copy.has_soft_delete_policy());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("soft_delete_policy=")));
 }
 
 /// @test Verify we can clear the versioning field in BucketMetadata.
@@ -1375,6 +1429,30 @@ TEST(BucketMetadataPatchBuilder, ResetRpo) {
   auto json = nlohmann::json::parse(actual);
   ASSERT_TRUE(json.contains("rpo")) << json;
   ASSERT_TRUE(json["rpo"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetSoftDeletePolicy) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetSoftDeletePolicy(BucketSoftDeletePolicy{
+      std::chrono::seconds(604800),
+      google::cloud::internal::ParseRfc3339("2024-03-01T12:00:00Z").value()});
+
+  auto actual_patch = builder.BuildPatch();
+  auto actual_json = nlohmann::json::parse(actual_patch);
+  auto expected_json =
+      nlohmann::json{{"softDeletePolicy",
+                      nlohmann::json{{"retentionDurationSeconds", 604800}}}};
+  EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(BucketMetadataPatchBuilder, ResetSoftDeletePolicy) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetSoftDeletePolicy();
+
+  auto actual = builder.BuildPatch();
+  auto json = nlohmann::json::parse(actual);
+  ASSERT_EQ(1U, json.count("softDeletePolicy")) << json;
+  ASSERT_TRUE(json["softDeletePolicy"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetStorageClass) {

@@ -28,6 +28,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -331,6 +332,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///  Updatable fields:
   ///  @n
   ///    * `big_query_source`
+  ///    * `bigtable`
   ///    * `labels`
   ///    * `sync_config`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -434,7 +436,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L329}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L330}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -473,7 +475,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L329}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L330}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -518,7 +520,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L348}
+  /// [google.cloud.aiplatform.v1.CreateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L349}
   /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
   ///
   // clang-format on
@@ -558,7 +560,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L348}
+  /// [google.cloud.aiplatform.v1.CreateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L349}
   /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
   ///
   // clang-format on
@@ -588,7 +590,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
-  /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L380}
+  /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L381}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
@@ -618,7 +620,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
-  /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L380}
+  /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L381}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
@@ -655,7 +657,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
-  /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L394}
+  /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L395}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::FeatureView> ListFeatureViews(
@@ -694,7 +696,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
-  /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L394}
+  /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L395}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::FeatureView> ListFeatureViews(
@@ -719,6 +721,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///  Updatable fields:
   ///  @n
   ///    * `labels`
+  ///    * `serviceAgentType`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -740,7 +743,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L466}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L467}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
@@ -779,7 +782,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L466}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L467}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
@@ -814,7 +817,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L487}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L489}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -851,7 +854,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L487}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L489}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -879,8 +882,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.SyncFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L525}
-  /// [google.cloud.aiplatform.v1.SyncFeatureViewResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L538}
+  /// [google.cloud.aiplatform.v1.SyncFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L527}
+  /// [google.cloud.aiplatform.v1.SyncFeatureViewResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L540}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
@@ -909,8 +912,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.SyncFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L525}
-  /// [google.cloud.aiplatform.v1.SyncFeatureViewResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L538}
+  /// [google.cloud.aiplatform.v1.SyncFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L527}
+  /// [google.cloud.aiplatform.v1.SyncFeatureViewResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L540}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
@@ -939,7 +942,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureViewSync]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view_sync.proto#L35}
-  /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L546}
+  /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L548}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FeatureViewSync> GetFeatureViewSync(
@@ -969,7 +972,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureViewSync]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view_sync.proto#L35}
-  /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L546}
+  /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L548}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FeatureViewSync> GetFeatureViewSync(
@@ -1006,7 +1009,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureViewSync]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view_sync.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListFeatureViewSyncsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L560}
+  /// [google.cloud.aiplatform.v1.ListFeatureViewSyncsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L562}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
@@ -1045,7 +1048,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureViewSync]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view_sync.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListFeatureViewSyncsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L560}
+  /// [google.cloud.aiplatform.v1.ListFeatureViewSyncsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L562}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>

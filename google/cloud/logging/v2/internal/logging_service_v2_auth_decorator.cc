@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/logging/v2/logging.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,47 +33,47 @@ LoggingServiceV2Auth::LoggingServiceV2Auth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 Status LoggingServiceV2Auth::DeleteLog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteLogRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteLog(context, request);
+  return child_->DeleteLog(context, options, request);
 }
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Auth::WriteLogEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->WriteLogEntries(context, request);
+  return child_->WriteLogEntries(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Auth::ListLogEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogEntriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLogEntries(context, request);
+  return child_->ListLogEntries(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 LoggingServiceV2Auth::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMonitoredResourceDescriptors(context, request);
+  return child_->ListMonitoredResourceDescriptors(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListLogsResponse> LoggingServiceV2Auth::ListLogs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLogs(context, request);
+  return child_->ListLogs(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -80,14 +81,15 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Auth::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>;
 
-  auto& child = child_;
-  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncTailLogEntries(cq, std::move(ctx));
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncTailLogEntries(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
@@ -97,18 +99,20 @@ future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2Auth::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  using ReturnType = StatusOr<google::logging::v2::WriteLogEntriesResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::logging::v2::WriteLogEntriesResponse>(
+                  std::move(context).status()));
         }
-        return child->AsyncWriteLogEntries(cq, *std::move(context), request);
+        return child->AsyncWriteLogEntries(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

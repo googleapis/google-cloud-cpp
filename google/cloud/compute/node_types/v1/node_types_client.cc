@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/node_types/v1/node_types_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

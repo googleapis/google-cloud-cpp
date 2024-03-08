@@ -19,6 +19,7 @@
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_auth_decorator.h"
 #include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,12 +34,12 @@ ValidationHelperV1Auth::ValidationHelperV1Auth(
 StatusOr<google::cloud::binaryauthorization::v1::
              ValidateAttestationOccurrenceResponse>
 ValidationHelperV1Auth::ValidateAttestationOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ValidateAttestationOccurrence(context, request);
+  return child_->ValidateAttestationOccurrence(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/page.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ PagesStub::~PagesStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse>
 DefaultPagesStub::ListPages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListPagesResponse response;
   auto status = grpc_stub_->ListPages(&context, request, &response);
@@ -42,7 +43,7 @@ DefaultPagesStub::ListPages(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::GetPage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
   google::cloud::dialogflow::cx::v3::Page response;
   auto status = grpc_stub_->GetPage(&context, request, &response);
@@ -53,7 +54,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::GetPage(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::CreatePage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
   google::cloud::dialogflow::cx::v3::Page response;
   auto status = grpc_stub_->CreatePage(&context, request, &response);
@@ -64,7 +65,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::CreatePage(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::UpdatePage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
   google::cloud::dialogflow::cx::v3::Page response;
   auto status = grpc_stub_->UpdatePage(&context, request, &response);
@@ -75,7 +76,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> DefaultPagesStub::UpdatePage(
 }
 
 Status DefaultPagesStub::DeletePage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeletePage(&context, request, &response);

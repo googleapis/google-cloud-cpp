@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -30,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IAMPolicyStub::~IAMPolicyStub() = default;
 
 StatusOr<google::iam::v1::Policy> DefaultIAMPolicyStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -41,7 +42,7 @@ StatusOr<google::iam::v1::Policy> DefaultIAMPolicyStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultIAMPolicyStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -53,7 +54,7 @@ StatusOr<google::iam::v1::Policy> DefaultIAMPolicyStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultIAMPolicyStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

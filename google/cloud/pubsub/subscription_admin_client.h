@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 
+// TODO(#12987): Remove this file after the deprecation period expires
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/pubsub/snapshot_builder.h"
 #include "google/cloud/pubsub/subscription_admin_connection.h"
 #include "google/cloud/pubsub/subscription_builder.h"
@@ -61,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [pubsub-doc-link]: https://cloud.google.com/pubsub/docs
  */
-class SubscriptionAdminClient {
+class GOOGLE_CLOUD_CPP_PUBSUB_ADMIN_API_DEPRECATED("SubscriptionAdminClient")
+    SubscriptionAdminClient {
  public:
   explicit SubscriptionAdminClient(
       std::shared_ptr<SubscriptionAdminConnection> connection,
@@ -83,15 +86,6 @@ class SubscriptionAdminClient {
    * status code of `kAlreadyExists` as a consequence of retrying a successful
    * (but reported as failed) request.
    *
-   * @par Example: Create a Pull Subscription
-   * @snippet samples.cc create-subscription
-   *
-   * @par Example: Create a Push Subscription
-   * @snippet samples.cc create-push-subscription
-   *
-   * @par Example: Create a BigQuery Subscription
-   * @snippet samples.cc create-bigquery-subscription
-   *
    * @param topic the topic that the subscription will attach to
    * @param subscription the name for the subscription
    * @param builder any additional configuration for the subscription
@@ -112,9 +106,6 @@ class SubscriptionAdminClient {
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
-   *
-   * @par Example
-   * @snippet samples.cc get-subscription
    */
   StatusOr<google::pubsub::v1::Subscription> GetSubscription(
       Subscription subscription, Options opts = {}) {
@@ -129,9 +120,6 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
-   *
-   * @par Example
-   * @snippet samples.cc update-subscription
    *
    * @param subscription the name for the subscription
    * @param builder any additional configuration for the subscription
@@ -152,9 +140,6 @@ class SubscriptionAdminClient {
    *
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
-   *
-   * @par Example
-   * @snippet samples.cc list-subscriptions
    */
   ListSubscriptionsRange ListSubscriptions(std::string const& project_id,
                                            Options opts = {}) {
@@ -171,9 +156,6 @@ class SubscriptionAdminClient {
    * or several calls, and therefore it is always retried. It might return a
    * status code of `kNotFound` as a consequence of retrying a successful
    * (but reported as failed) request.
-   *
-   * @par Example
-   * @snippet samples.cc delete-subscription
    *
    * @param subscription the name of the subscription to be deleted.
    * @param opts Override the class-level options, such as retry and backoff
@@ -195,9 +177,6 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
-   *
-   * @par Example
-   * @snippet samples.cc modify-push-config
    *
    * @param subscription the name of the subscription to be modified.
    * @param builder a description of the changes to be made.
@@ -241,9 +220,6 @@ class SubscriptionAdminClient {
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
    *
-   * @par Example
-   * @snippet samples.cc create-snapshot-with-name
-   *
    * @param subscription the name of the subscription
    * @param snapshot the name of the snapshot
    * @param builder additional configuration for the snapshot, e.g., labels
@@ -268,9 +244,6 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
    *
-   * @par Example
-   * @snippet samples.cc get-snapshot
-   *
    * @param snapshot the name of the snapshot
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
@@ -291,9 +264,6 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
-   *
-   * @par Example
-   * @snippet samples.cc update-snapshot
    *
    * @param snapshot the name of the snapshot
    * @param builder the changes applied to the snapshot
@@ -317,9 +287,6 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
    *
-   * @par Example
-   * @snippet samples.cc list-snapshots
-   *
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's snapshots.
    */
@@ -336,9 +303,6 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
-   *
-   * @par Example
-   * @snippet samples.cc create-snapshot-with-name
    *
    * @param snapshot the name of the snapshot
    * @param opts Override the class-level options, such as retry and backoff
@@ -364,9 +328,6 @@ class SubscriptionAdminClient {
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
    *
-   * @par Example
-   * @snippet samples.cc seek-with-timestamp
-   *
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's `Seek()` functionality.
    */
@@ -380,9 +341,6 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
-   *
-   * @par Example
-   * @snippet samples.cc seek-with-timestamp
    *
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's `Seek()` functionality.

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/timeseriesinsights/v1/timeseries_insights.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,84 +37,96 @@ TimeseriesInsightsControllerLogging::TimeseriesInsightsControllerLogging(
 
 StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
 TimeseriesInsightsControllerLogging::ListDataSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::timeseriesinsights::v1::ListDataSetsRequest const&
-                 request) { return child_->ListDataSets(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListDataSets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
 TimeseriesInsightsControllerLogging::CreateDataSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
-                 request) { return child_->CreateDataSet(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateDataSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status TimeseriesInsightsControllerLogging::DeleteDataSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
-                 request) { return child_->DeleteDataSet(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteDataSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
 TimeseriesInsightsControllerLogging::AppendEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
-                 request) { return child_->AppendEvents(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->AppendEvents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
 TimeseriesInsightsControllerLogging::QueryDataSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
-                 request) { return child_->QueryDataSet(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->QueryDataSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 TimeseriesInsightsControllerLogging::EvaluateSlice(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
-                 request) { return child_->EvaluateSlice(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->EvaluateSlice(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 TimeseriesInsightsControllerLogging::EvaluateTimeseries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::timeseriesinsights::v1::
                  EvaluateTimeseriesRequest const& request) {
-        return child_->EvaluateTimeseries(context, request);
+        return child_->EvaluateTimeseries(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

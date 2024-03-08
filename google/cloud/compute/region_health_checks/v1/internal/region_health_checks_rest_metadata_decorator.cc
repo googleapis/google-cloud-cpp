@@ -45,12 +45,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksRestMetadata::AsyncDeleteHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_health_checks::v1::
         DeleteHealthCheckRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncDeleteHealthCheck(cq, std::move(rest_context), options,
-                                        request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncDeleteHealthCheck(cq, std::move(rest_context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
@@ -66,12 +66,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksRestMetadata::AsyncInsertHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_health_checks::v1::
         InsertHealthCheckRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncInsertHealthCheck(cq, std::move(rest_context), options,
-                                        request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncInsertHealthCheck(cq, std::move(rest_context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckList>
@@ -87,47 +87,47 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksRestMetadata::AsyncPatchHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_health_checks::v1::
         PatchHealthCheckRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncPatchHealthCheck(cq, std::move(rest_context), options,
-                                       request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncPatchHealthCheck(cq, std::move(rest_context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksRestMetadata::AsyncUpdateHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_health_checks::v1::
         UpdateHealthCheckRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncUpdateHealthCheck(cq, std::move(rest_context), options,
-                                        request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncUpdateHealthCheck(cq, std::move(rest_context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
-                                   request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
 future<Status> RegionHealthChecksRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void RegionHealthChecksRestMetadata::SetMetadata(

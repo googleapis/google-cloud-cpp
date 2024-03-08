@@ -44,188 +44,196 @@ ConnectorsMetadata::ConnectorsMetadata(
 
 StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
 ConnectorsMetadata::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConnections(context, request);
+  return child_->ListConnections(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::Connection>
 ConnectorsMetadata::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConnection(context, request);
+  return child_->GetConnection(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsMetadata::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateConnection(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncCreateConnection(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsMetadata::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("connection.name=",
                            internal::UrlEncode(request.connection().name())));
-  return child_->AsyncUpdateConnection(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncUpdateConnection(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsMetadata::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteConnection(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncDeleteConnection(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
 ConnectorsMetadata::ListProviders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListProvidersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListProviders(context, request);
+  return child_->ListProviders(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::Provider>
 ConnectorsMetadata::GetProvider(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetProviderRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetProvider(context, request);
+  return child_->GetProvider(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
 ConnectorsMetadata::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectorsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConnectors(context, request);
+  return child_->ListConnectors(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::Connector>
 ConnectorsMetadata::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConnector(context, request);
+  return child_->GetConnector(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
 ConnectorsMetadata::ListConnectorVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectorVersionsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConnectorVersions(context, request);
+  return child_->ListConnectorVersions(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectorVersion>
 ConnectorsMetadata::GetConnectorVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConnectorVersion(context, request);
+  return child_->GetConnectorVersion(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
 ConnectorsMetadata::GetConnectionSchemaMetadata(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConnectionSchemaMetadata(context, request);
+  return child_->GetConnectionSchemaMetadata(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsMetadata::AsyncRefreshConnectionSchemaMetadata(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRefreshConnectionSchemaMetadata(cq, std::move(context),
-                                                      options, request);
+  return child_->AsyncRefreshConnectionSchemaMetadata(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
 ConnectorsMetadata::ListRuntimeEntitySchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRuntimeEntitySchemas(context, request);
+  return child_->ListRuntimeEntitySchemas(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
 ConnectorsMetadata::ListRuntimeActionSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRuntimeActionSchemas(context, request);
+  return child_->ListRuntimeActionSchemas(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
 ConnectorsMetadata::GetRuntimeConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRuntimeConfig(context, request);
+  return child_->GetRuntimeConfig(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::Settings>
 ConnectorsMetadata::GetGlobalSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGlobalSettings(context, request);
+  return child_->GetGlobalSettings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ConnectorsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ConnectorsMetadata::SetMetadata(grpc::ClientContext& context,

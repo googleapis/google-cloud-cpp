@@ -19,6 +19,7 @@
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_auth_decorator.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,20 +33,20 @@ TextToSpeechAuth::TextToSpeechAuth(
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechAuth::ListVoices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVoices(context, request);
+  return child_->ListVoices(context, options, request);
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechAuth::SynthesizeSpeech(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SynthesizeSpeech(context, request);
+  return child_->SynthesizeSpeech(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

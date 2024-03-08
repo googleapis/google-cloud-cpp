@@ -20,6 +20,7 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,19 +38,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncAddResourcePolicies(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         AddResourcePoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  AddResourcePoliciesRequest const& request) {
         return child_->AsyncAddResourcePolicies(cq, std::move(rest_context),
-                                                options, request);
+                                                std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -57,19 +58,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncBulkInsert(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  BulkInsertRequest const& request) {
-        return child_->AsyncBulkInsert(cq, std::move(rest_context), options,
-                                       request);
+        return child_->AsyncBulkInsert(cq, std::move(rest_context),
+                                       std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -77,19 +78,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncCreateSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  CreateSnapshotRequest const& request) {
-        return child_->AsyncCreateSnapshot(cq, std::move(rest_context), options,
-                                           request);
+        return child_->AsyncCreateSnapshot(cq, std::move(rest_context),
+                                           std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -97,19 +98,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncDeleteDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  DeleteDiskRequest const& request) {
-        return child_->AsyncDeleteDisk(cq, std::move(rest_context), options,
-                                       request);
+        return child_->AsyncDeleteDisk(cq, std::move(rest_context),
+                                       std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -145,19 +146,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncInsertDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  InsertDiskRequest const& request) {
-        return child_->AsyncInsertDisk(cq, std::move(rest_context), options,
-                                       request);
+        return child_->AsyncInsertDisk(cq, std::move(rest_context),
+                                       std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -179,19 +180,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncRemoveResourcePolicies(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         RemoveResourcePoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  RemoveResourcePoliciesRequest const& request) {
         return child_->AsyncRemoveResourcePolicies(cq, std::move(rest_context),
-                                                   options, request);
+                                                   std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -199,19 +200,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncResize(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
                  request) {
-        return child_->AsyncResize(cq, std::move(rest_context), options,
-                                   request);
+        return child_->AsyncResize(cq, std::move(rest_context),
+                                   std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -233,20 +234,20 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> rest_context,
-          Options const& options,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
               request) {
-        return child_->AsyncSetLabels(cq, std::move(rest_context), options,
-                                      request);
+        return child_->AsyncSetLabels(cq, std::move(rest_context),
+                                      std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -254,19 +255,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncStartAsyncReplication(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         StartAsyncReplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  StartAsyncReplicationRequest const& request) {
         return child_->AsyncStartAsyncReplication(cq, std::move(rest_context),
-                                                  options, request);
+                                                  std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -274,19 +275,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncStopAsyncReplication(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         StopAsyncReplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  StopAsyncReplicationRequest const& request) {
         return child_->AsyncStopAsyncReplication(cq, std::move(rest_context),
-                                                 options, request);
+                                                 std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -294,19 +295,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncStopGroupAsyncReplication(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         StopGroupAsyncReplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  StopGroupAsyncReplicationRequest const& request) {
         return child_->AsyncStopGroupAsyncReplication(
-            cq, std::move(rest_context), options, request);
+            cq, std::move(rest_context), std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -328,19 +329,19 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncUpdateDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_disks::v1::
                  UpdateDiskRequest const& request) {
-        return child_->AsyncUpdateDisk(cq, std::move(rest_context), options,
-                                       request);
+        return child_->AsyncUpdateDisk(cq, std::move(rest_context),
+                                       std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
@@ -348,38 +349,38 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_operations::v1::
                  GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context), options,
-                                         request);
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
 future<Status> RegionDisksRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::cpp::compute::region_operations::v1::
                  DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                            options, request);
+                                            std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__,
+      cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 

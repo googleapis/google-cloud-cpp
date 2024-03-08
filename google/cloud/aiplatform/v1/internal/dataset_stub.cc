@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/dataset_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ DatasetServiceStub::~DatasetServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncCreateDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CreateDatasetRequest,
@@ -49,7 +51,7 @@ DefaultDatasetServiceStub::AsyncCreateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DefaultDatasetServiceStub::GetDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
   google::cloud::aiplatform::v1::Dataset response;
   auto status = grpc_stub_->GetDataset(&context, request, &response);
@@ -61,7 +63,7 @@ DefaultDatasetServiceStub::GetDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DefaultDatasetServiceStub::UpdateDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
   google::cloud::aiplatform::v1::Dataset response;
   auto status = grpc_stub_->UpdateDataset(&context, request, &response);
@@ -73,7 +75,7 @@ DefaultDatasetServiceStub::UpdateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse>
 DefaultDatasetServiceStub::ListDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
   google::cloud::aiplatform::v1::ListDatasetsResponse response;
   auto status = grpc_stub_->ListDatasets(&context, request, &response);
@@ -86,7 +88,8 @@ DefaultDatasetServiceStub::ListDatasets(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncDeleteDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteDatasetRequest,
@@ -103,7 +106,8 @@ DefaultDatasetServiceStub::AsyncDeleteDataset(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncImportData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::ImportDataRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::ImportDataRequest,
@@ -120,7 +124,8 @@ DefaultDatasetServiceStub::AsyncImportData(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncExportData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::ExportDataRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::ExportDataRequest,
@@ -137,7 +142,8 @@ DefaultDatasetServiceStub::AsyncExportData(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncCreateDatasetVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest,
@@ -155,7 +161,8 @@ DefaultDatasetServiceStub::AsyncCreateDatasetVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncDeleteDatasetVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteDatasetVersionRequest,
@@ -172,7 +179,7 @@ DefaultDatasetServiceStub::AsyncDeleteDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
 DefaultDatasetServiceStub::GetDatasetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
   google::cloud::aiplatform::v1::DatasetVersion response;
   auto status = grpc_stub_->GetDatasetVersion(&context, request, &response);
@@ -184,7 +191,7 @@ DefaultDatasetServiceStub::GetDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
 DefaultDatasetServiceStub::ListDatasetVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
   google::cloud::aiplatform::v1::ListDatasetVersionsResponse response;
   auto status = grpc_stub_->ListDatasetVersions(&context, request, &response);
@@ -197,7 +204,8 @@ DefaultDatasetServiceStub::ListDatasetVersions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncRestoreDatasetVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -215,7 +223,7 @@ DefaultDatasetServiceStub::AsyncRestoreDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DefaultDatasetServiceStub::ListDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
   google::cloud::aiplatform::v1::ListDataItemsResponse response;
   auto status = grpc_stub_->ListDataItems(&context, request, &response);
@@ -227,7 +235,7 @@ DefaultDatasetServiceStub::ListDataItems(
 
 StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
 DefaultDatasetServiceStub::SearchDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) {
   google::cloud::aiplatform::v1::SearchDataItemsResponse response;
   auto status = grpc_stub_->SearchDataItems(&context, request, &response);
@@ -239,7 +247,7 @@ DefaultDatasetServiceStub::SearchDataItems(
 
 StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
 DefaultDatasetServiceStub::ListSavedQueries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) {
   google::cloud::aiplatform::v1::ListSavedQueriesResponse response;
   auto status = grpc_stub_->ListSavedQueries(&context, request, &response);
@@ -252,7 +260,8 @@ DefaultDatasetServiceStub::ListSavedQueries(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncDeleteSavedQuery(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteSavedQueryRequest,
@@ -269,7 +278,7 @@ DefaultDatasetServiceStub::AsyncDeleteSavedQuery(
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DefaultDatasetServiceStub::GetAnnotationSpec(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
   google::cloud::aiplatform::v1::AnnotationSpec response;
   auto status = grpc_stub_->GetAnnotationSpec(&context, request, &response);
@@ -281,7 +290,7 @@ DefaultDatasetServiceStub::GetAnnotationSpec(
 
 StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
 DefaultDatasetServiceStub::ListAnnotations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) {
   google::cloud::aiplatform::v1::ListAnnotationsResponse response;
   auto status = grpc_stub_->ListAnnotations(&context, request, &response);
@@ -294,7 +303,9 @@ DefaultDatasetServiceStub::ListAnnotations(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -309,7 +320,9 @@ DefaultDatasetServiceStub::AsyncGetOperation(
 
 future<Status> DefaultDatasetServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

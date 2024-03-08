@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -72,19 +73,20 @@ ConfigServiceV2ConnectionImpl::ListBuckets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::logging::v2::LogBucket>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::logging::v2::ListBucketsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::logging::v2::ListBucketsRequest const& request) {
-              return stub->ListBuckets(context, request);
+              return stub->ListBuckets(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::logging::v2::ListBucketsResponse r) {
         std::vector<google::logging::v2::LogBucket> result(r.buckets().size());
@@ -101,45 +103,48 @@ ConfigServiceV2ConnectionImpl::GetBucket(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBucket(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::GetBucketRequest const& request) {
-        return stub_->GetBucket(context, request);
+        return stub_->GetBucket(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2ConnectionImpl::CreateBucketAsync(
     google::logging::v2::CreateBucketRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBucketAsync(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::LogBucket>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::logging::v2::CreateBucketRequest const& request) {
-        return stub->AsyncCreateBucketAsync(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncCreateBucketAsync(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::LogBucket>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBucketAsync(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -147,34 +152,37 @@ future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
     google::logging::v2::UpdateBucketRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBucketAsync(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::LogBucket>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::logging::v2::UpdateBucketRequest const& request) {
-        return stub->AsyncUpdateBucketAsync(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncUpdateBucketAsync(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::LogBucket>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateBucketAsync(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -185,11 +193,11 @@ ConfigServiceV2ConnectionImpl::CreateBucket(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateBucket(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::CreateBucketRequest const& request) {
-        return stub_->CreateBucket(context, request);
+        return stub_->CreateBucket(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::LogBucket>
@@ -199,11 +207,11 @@ ConfigServiceV2ConnectionImpl::UpdateBucket(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateBucket(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::UpdateBucketRequest const& request) {
-        return stub_->UpdateBucket(context, request);
+        return stub_->UpdateBucket(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ConfigServiceV2ConnectionImpl::DeleteBucket(
@@ -212,11 +220,11 @@ Status ConfigServiceV2ConnectionImpl::DeleteBucket(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBucket(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::DeleteBucketRequest const& request) {
-        return stub_->DeleteBucket(context, request);
+        return stub_->DeleteBucket(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ConfigServiceV2ConnectionImpl::UndeleteBucket(
@@ -225,11 +233,11 @@ Status ConfigServiceV2ConnectionImpl::UndeleteBucket(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UndeleteBucket(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::UndeleteBucketRequest const& request) {
-        return stub_->UndeleteBucket(context, request);
+        return stub_->UndeleteBucket(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::logging::v2::LogView>
@@ -241,19 +249,20 @@ ConfigServiceV2ConnectionImpl::ListViews(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::logging::v2::LogView>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::logging::v2::ListViewsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::logging::v2::ListViewsRequest const& request) {
-              return stub->ListViews(context, request);
+              return stub->ListViews(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::logging::v2::ListViewsResponse r) {
         std::vector<google::logging::v2::LogView> result(r.views().size());
@@ -269,11 +278,11 @@ StatusOr<google::logging::v2::LogView> ConfigServiceV2ConnectionImpl::GetView(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetView(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::GetViewRequest const& request) {
-        return stub_->GetView(context, request);
+        return stub_->GetView(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::LogView>
@@ -283,11 +292,11 @@ ConfigServiceV2ConnectionImpl::CreateView(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateView(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::CreateViewRequest const& request) {
-        return stub_->CreateView(context, request);
+        return stub_->CreateView(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::LogView>
@@ -297,11 +306,11 @@ ConfigServiceV2ConnectionImpl::UpdateView(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateView(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::UpdateViewRequest const& request) {
-        return stub_->UpdateView(context, request);
+        return stub_->UpdateView(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ConfigServiceV2ConnectionImpl::DeleteView(
@@ -310,11 +319,11 @@ Status ConfigServiceV2ConnectionImpl::DeleteView(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteView(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::DeleteViewRequest const& request) {
-        return stub_->DeleteView(context, request);
+        return stub_->DeleteView(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::logging::v2::LogSink>
@@ -326,19 +335,20 @@ ConfigServiceV2ConnectionImpl::ListSinks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::logging::v2::LogSink>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::logging::v2::ListSinksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::logging::v2::ListSinksRequest const& request) {
-              return stub->ListSinks(context, request);
+              return stub->ListSinks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::logging::v2::ListSinksResponse r) {
         std::vector<google::logging::v2::LogSink> result(r.sinks().size());
@@ -354,11 +364,11 @@ StatusOr<google::logging::v2::LogSink> ConfigServiceV2ConnectionImpl::GetSink(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSink(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::GetSinkRequest const& request) {
-        return stub_->GetSink(context, request);
+        return stub_->GetSink(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::LogSink>
@@ -368,11 +378,11 @@ ConfigServiceV2ConnectionImpl::CreateSink(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSink(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::CreateSinkRequest const& request) {
-        return stub_->CreateSink(context, request);
+        return stub_->CreateSink(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::LogSink>
@@ -382,11 +392,11 @@ ConfigServiceV2ConnectionImpl::UpdateSink(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSink(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::UpdateSinkRequest const& request) {
-        return stub_->UpdateSink(context, request);
+        return stub_->UpdateSink(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ConfigServiceV2ConnectionImpl::DeleteSink(
@@ -395,44 +405,48 @@ Status ConfigServiceV2ConnectionImpl::DeleteSink(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSink(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::DeleteSinkRequest const& request) {
-        return stub_->DeleteSink(context, request);
+        return stub_->DeleteSink(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::logging::v2::Link>>
 ConfigServiceV2ConnectionImpl::CreateLink(
     google::logging::v2::CreateLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateLink(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::Link>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::logging::v2::CreateLinkRequest const& request) {
-        return stub->AsyncCreateLink(cq, std::move(context), options, request);
+        return stub->AsyncCreateLink(cq, std::move(context), std::move(options),
+                                     request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::Link>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateLink(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -440,33 +454,37 @@ future<StatusOr<google::logging::v2::LinkMetadata>>
 ConfigServiceV2ConnectionImpl::DeleteLink(
     google::logging::v2::DeleteLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteLink(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::LinkMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::logging::v2::DeleteLinkRequest const& request) {
-        return stub->AsyncDeleteLink(cq, std::move(context), options, request);
+        return stub->AsyncDeleteLink(cq, std::move(context), std::move(options),
+                                     request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::logging::v2::LinkMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteLink(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -478,19 +496,20 @@ StreamRange<google::logging::v2::Link> ConfigServiceV2ConnectionImpl::ListLinks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::logging::v2::Link>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::logging::v2::ListLinksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::logging::v2::ListLinksRequest const& request) {
-              return stub->ListLinks(context, request);
+              return stub->ListLinks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::logging::v2::ListLinksResponse r) {
         std::vector<google::logging::v2::Link> result(r.links().size());
@@ -506,11 +525,11 @@ StatusOr<google::logging::v2::Link> ConfigServiceV2ConnectionImpl::GetLink(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetLink(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::GetLinkRequest const& request) {
-        return stub_->GetLink(context, request);
+        return stub_->GetLink(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::logging::v2::LogExclusion>
@@ -522,19 +541,20 @@ ConfigServiceV2ConnectionImpl::ListExclusions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::logging::v2::LogExclusion>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::logging::v2::ListExclusionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::logging::v2::ListExclusionsRequest const& request) {
-              return stub->ListExclusions(context, request);
+              return stub->ListExclusions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::logging::v2::ListExclusionsResponse r) {
         std::vector<google::logging::v2::LogExclusion> result(
@@ -552,11 +572,11 @@ ConfigServiceV2ConnectionImpl::GetExclusion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetExclusion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::GetExclusionRequest const& request) {
-        return stub_->GetExclusion(context, request);
+        return stub_->GetExclusion(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::LogExclusion>
@@ -566,11 +586,11 @@ ConfigServiceV2ConnectionImpl::CreateExclusion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateExclusion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::CreateExclusionRequest const& request) {
-        return stub_->CreateExclusion(context, request);
+        return stub_->CreateExclusion(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::LogExclusion>
@@ -580,11 +600,11 @@ ConfigServiceV2ConnectionImpl::UpdateExclusion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateExclusion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::UpdateExclusionRequest const& request) {
-        return stub_->UpdateExclusion(context, request);
+        return stub_->UpdateExclusion(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ConfigServiceV2ConnectionImpl::DeleteExclusion(
@@ -593,11 +613,11 @@ Status ConfigServiceV2ConnectionImpl::DeleteExclusion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteExclusion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::DeleteExclusionRequest const& request) {
-        return stub_->DeleteExclusion(context, request);
+        return stub_->DeleteExclusion(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::CmekSettings>
@@ -607,11 +627,11 @@ ConfigServiceV2ConnectionImpl::GetCmekSettings(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCmekSettings(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::GetCmekSettingsRequest const& request) {
-        return stub_->GetCmekSettings(context, request);
+        return stub_->GetCmekSettings(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::CmekSettings>
@@ -621,11 +641,11 @@ ConfigServiceV2ConnectionImpl::UpdateCmekSettings(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCmekSettings(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::UpdateCmekSettingsRequest const& request) {
-        return stub_->UpdateCmekSettings(context, request);
+        return stub_->UpdateCmekSettings(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::Settings>
@@ -635,11 +655,11 @@ ConfigServiceV2ConnectionImpl::GetSettings(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSettings(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::GetSettingsRequest const& request) {
-        return stub_->GetSettings(context, request);
+        return stub_->GetSettings(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::logging::v2::Settings>
@@ -649,45 +669,49 @@ ConfigServiceV2ConnectionImpl::UpdateSettings(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSettings(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::UpdateSettingsRequest const& request) {
-        return stub_->UpdateSettings(context, request);
+        return stub_->UpdateSettings(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
 ConfigServiceV2ConnectionImpl::CopyLogEntries(
     google::logging::v2::CopyLogEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CopyLogEntries(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::CopyLogEntriesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::logging::v2::CopyLogEntriesRequest const& request) {
-        return stub->AsyncCopyLogEntries(cq, std::move(context), options,
-                                         request);
+        return stub->AsyncCopyLogEntries(cq, std::move(context),
+                                         std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::CopyLogEntriesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CopyLogEntries(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

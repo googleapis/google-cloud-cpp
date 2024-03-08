@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/api/servicecontrol/v1/quota_controller.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ QuotaControllerStub::~QuotaControllerStub() = default;
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 DefaultQuotaControllerStub::AllocateQuota(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
   google::api::servicecontrol::v1::AllocateQuotaResponse response;
   auto status = grpc_stub_->AllocateQuota(&context, request, &response);

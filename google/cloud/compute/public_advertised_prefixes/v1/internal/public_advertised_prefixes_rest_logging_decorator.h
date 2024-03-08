@@ -47,7 +47,7 @@ class PublicAdvertisedPrefixesRestLogging
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAnnounce(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           AnnounceRequest const& request) override;
 
@@ -55,7 +55,7 @@ class PublicAdvertisedPrefixesRestLogging
   AsyncDeletePublicAdvertisedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           DeletePublicAdvertisedPrefixRequest const& request) override;
 
@@ -70,7 +70,7 @@ class PublicAdvertisedPrefixesRestLogging
   AsyncInsertPublicAdvertisedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           InsertPublicAdvertisedPrefixRequest const& request) override;
 
@@ -85,14 +85,14 @@ class PublicAdvertisedPrefixesRestLogging
   AsyncPatchPublicAdvertisedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           PatchPublicAdvertisedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncWithdraw(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           WithdrawRequest const& request) override;
 
@@ -100,14 +100,14 @@ class PublicAdvertisedPrefixesRestLogging
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

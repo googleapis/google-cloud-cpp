@@ -44,65 +44,65 @@ ExperimentsMetadata::ExperimentsMetadata(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
 ExperimentsMetadata::ListExperiments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListExperiments(context, request);
+  return child_->ListExperiments(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::GetExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetExperiment(context, request);
+  return child_->GetExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::CreateExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateExperiment(context, request);
+  return child_->CreateExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::UpdateExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("experiment.name=",
                            internal::UrlEncode(request.experiment().name())));
-  return child_->UpdateExperiment(context, request);
+  return child_->UpdateExperiment(context, options, request);
 }
 
 Status ExperimentsMetadata::DeleteExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteExperiment(context, request);
+  return child_->DeleteExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::StartExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->StartExperiment(context, request);
+  return child_->StartExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::StopExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->StopExperiment(context, request);
+  return child_->StopExperiment(context, options, request);
 }
 
 void ExperimentsMetadata::SetMetadata(grpc::ClientContext& context,

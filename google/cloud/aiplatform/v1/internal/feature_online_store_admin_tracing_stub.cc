@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_admin_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ FeatureOnlineStoreAdminServiceTracingStub::
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceTracingStub::AsyncCreateFeatureOnlineStore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -42,13 +44,14 @@ FeatureOnlineStoreAdminServiceTracingStub::AsyncCreateFeatureOnlineStore(
       "CreateFeatureOnlineStore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateFeatureOnlineStore(cq, context, options, request);
+  auto f = child_->AsyncCreateFeatureOnlineStore(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
 FeatureOnlineStoreAdminServiceTracingStub::GetFeatureOnlineStore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -56,13 +59,13 @@ FeatureOnlineStoreAdminServiceTracingStub::GetFeatureOnlineStore(
       "GetFeatureOnlineStore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetFeatureOnlineStore(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetFeatureOnlineStore(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureOnlineStoresResponse>
 FeatureOnlineStoreAdminServiceTracingStub::ListFeatureOnlineStores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -70,14 +73,16 @@ FeatureOnlineStoreAdminServiceTracingStub::ListFeatureOnlineStores(
       "ListFeatureOnlineStores");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListFeatureOnlineStores(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListFeatureOnlineStores(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceTracingStub::AsyncUpdateFeatureOnlineStore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -85,14 +90,16 @@ FeatureOnlineStoreAdminServiceTracingStub::AsyncUpdateFeatureOnlineStore(
       "UpdateFeatureOnlineStore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateFeatureOnlineStore(cq, context, options, request);
+  auto f = child_->AsyncUpdateFeatureOnlineStore(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceTracingStub::AsyncDeleteFeatureOnlineStore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -100,27 +107,30 @@ FeatureOnlineStoreAdminServiceTracingStub::AsyncDeleteFeatureOnlineStore(
       "DeleteFeatureOnlineStore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteFeatureOnlineStore(cq, context, options, request);
+  auto f = child_->AsyncDeleteFeatureOnlineStore(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceTracingStub::AsyncCreateFeatureView(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeatureOnlineStoreAdminService",
       "CreateFeatureView");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateFeatureView(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateFeatureView(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
 FeatureOnlineStoreAdminServiceTracingStub::GetFeatureView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeatureOnlineStoreAdminService",
@@ -128,12 +138,12 @@ FeatureOnlineStoreAdminServiceTracingStub::GetFeatureView(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetFeatureView(context, request));
+                           child_->GetFeatureView(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureViewsResponse>
 FeatureOnlineStoreAdminServiceTracingStub::ListFeatureViews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeatureViewsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeatureOnlineStoreAdminService",
@@ -141,40 +151,44 @@ FeatureOnlineStoreAdminServiceTracingStub::ListFeatureViews(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListFeatureViews(context, request));
+                           child_->ListFeatureViews(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceTracingStub::AsyncUpdateFeatureView(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeatureOnlineStoreAdminService",
       "UpdateFeatureView");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateFeatureView(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateFeatureView(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceTracingStub::AsyncDeleteFeatureView(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeatureOnlineStoreAdminService",
       "DeleteFeatureView");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteFeatureView(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteFeatureView(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
 FeatureOnlineStoreAdminServiceTracingStub::SyncFeatureView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeatureOnlineStoreAdminService",
@@ -182,57 +196,60 @@ FeatureOnlineStoreAdminServiceTracingStub::SyncFeatureView(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SyncFeatureView(context, request));
+                           child_->SyncFeatureView(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
 FeatureOnlineStoreAdminServiceTracingStub::GetFeatureViewSync(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeatureOnlineStoreAdminService",
       "GetFeatureViewSync");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetFeatureViewSync(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetFeatureViewSync(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureViewSyncsResponse>
 FeatureOnlineStoreAdminServiceTracingStub::ListFeatureViewSyncs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeatureOnlineStoreAdminService",
       "ListFeatureViewSyncs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListFeatureViewSyncs(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListFeatureViewSyncs(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> FeatureOnlineStoreAdminServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

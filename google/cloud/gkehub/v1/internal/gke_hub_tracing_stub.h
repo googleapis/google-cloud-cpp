@@ -38,69 +38,77 @@ class GkeHubTracingStub : public GkeHubStub {
   explicit GkeHubTracingStub(std::shared_ptr<GkeHubStub> child);
 
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::ListMembershipsRequest const& request)
       override;
 
   StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse> ListFeatures(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::ListFeaturesRequest const& request) override;
 
   StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GetMembershipRequest const& request) override;
 
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GetFeatureRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMembership(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkehub::v1::CreateMembershipRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeature(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMembership(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkehub::v1::DeleteMembershipRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeature(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMembership(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFeature(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
 
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
   GenerateConnectManifest(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

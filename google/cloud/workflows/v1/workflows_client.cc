@@ -18,6 +18,7 @@
 
 #include "google/cloud/workflows/v1/workflows_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

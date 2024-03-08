@@ -22,6 +22,7 @@
 #include <google/cloud/dataplex/v1/service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ DataplexServiceStub::~DataplexServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateLake(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::CreateLakeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::CreateLakeRequest,
@@ -50,7 +52,8 @@ DefaultDataplexServiceStub::AsyncCreateLake(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateLake(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::UpdateLakeRequest,
@@ -67,7 +70,8 @@ DefaultDataplexServiceStub::AsyncUpdateLake(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteLake(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::DeleteLakeRequest,
@@ -83,7 +87,7 @@ DefaultDataplexServiceStub::AsyncDeleteLake(
 
 StatusOr<google::cloud::dataplex::v1::ListLakesResponse>
 DefaultDataplexServiceStub::ListLakes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListLakesRequest const& request) {
   google::cloud::dataplex::v1::ListLakesResponse response;
   auto status = grpc_stub_->ListLakes(&context, request, &response);
@@ -94,7 +98,7 @@ DefaultDataplexServiceStub::ListLakes(
 }
 
 StatusOr<google::cloud::dataplex::v1::Lake> DefaultDataplexServiceStub::GetLake(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::GetLakeRequest const& request) {
   google::cloud::dataplex::v1::Lake response;
   auto status = grpc_stub_->GetLake(&context, request, &response);
@@ -106,7 +110,7 @@ StatusOr<google::cloud::dataplex::v1::Lake> DefaultDataplexServiceStub::GetLake(
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DefaultDataplexServiceStub::ListLakeActions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListLakeActionsRequest const& request) {
   google::cloud::dataplex::v1::ListActionsResponse response;
   auto status = grpc_stub_->ListLakeActions(&context, request, &response);
@@ -119,7 +123,8 @@ DefaultDataplexServiceStub::ListLakeActions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateZone(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::CreateZoneRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::CreateZoneRequest,
@@ -136,7 +141,8 @@ DefaultDataplexServiceStub::AsyncCreateZone(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateZone(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::UpdateZoneRequest,
@@ -153,7 +159,8 @@ DefaultDataplexServiceStub::AsyncUpdateZone(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteZone(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::DeleteZoneRequest,
@@ -169,7 +176,7 @@ DefaultDataplexServiceStub::AsyncDeleteZone(
 
 StatusOr<google::cloud::dataplex::v1::ListZonesResponse>
 DefaultDataplexServiceStub::ListZones(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListZonesRequest const& request) {
   google::cloud::dataplex::v1::ListZonesResponse response;
   auto status = grpc_stub_->ListZones(&context, request, &response);
@@ -180,7 +187,7 @@ DefaultDataplexServiceStub::ListZones(
 }
 
 StatusOr<google::cloud::dataplex::v1::Zone> DefaultDataplexServiceStub::GetZone(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::GetZoneRequest const& request) {
   google::cloud::dataplex::v1::Zone response;
   auto status = grpc_stub_->GetZone(&context, request, &response);
@@ -192,7 +199,7 @@ StatusOr<google::cloud::dataplex::v1::Zone> DefaultDataplexServiceStub::GetZone(
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DefaultDataplexServiceStub::ListZoneActions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListZoneActionsRequest const& request) {
   google::cloud::dataplex::v1::ListActionsResponse response;
   auto status = grpc_stub_->ListZoneActions(&context, request, &response);
@@ -205,7 +212,8 @@ DefaultDataplexServiceStub::ListZoneActions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::CreateAssetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::CreateAssetRequest,
@@ -222,7 +230,8 @@ DefaultDataplexServiceStub::AsyncCreateAsset(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::UpdateAssetRequest,
@@ -239,7 +248,8 @@ DefaultDataplexServiceStub::AsyncUpdateAsset(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::DeleteAssetRequest,
@@ -255,7 +265,7 @@ DefaultDataplexServiceStub::AsyncDeleteAsset(
 
 StatusOr<google::cloud::dataplex::v1::ListAssetsResponse>
 DefaultDataplexServiceStub::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListAssetsRequest const& request) {
   google::cloud::dataplex::v1::ListAssetsResponse response;
   auto status = grpc_stub_->ListAssets(&context, request, &response);
@@ -267,7 +277,7 @@ DefaultDataplexServiceStub::ListAssets(
 
 StatusOr<google::cloud::dataplex::v1::Asset>
 DefaultDataplexServiceStub::GetAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::GetAssetRequest const& request) {
   google::cloud::dataplex::v1::Asset response;
   auto status = grpc_stub_->GetAsset(&context, request, &response);
@@ -279,7 +289,7 @@ DefaultDataplexServiceStub::GetAsset(
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DefaultDataplexServiceStub::ListAssetActions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListAssetActionsRequest const& request) {
   google::cloud::dataplex::v1::ListActionsResponse response;
   auto status = grpc_stub_->ListAssetActions(&context, request, &response);
@@ -292,7 +302,8 @@ DefaultDataplexServiceStub::ListAssetActions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateTask(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::CreateTaskRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::CreateTaskRequest,
@@ -309,7 +320,8 @@ DefaultDataplexServiceStub::AsyncCreateTask(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateTask(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::UpdateTaskRequest,
@@ -326,7 +338,8 @@ DefaultDataplexServiceStub::AsyncUpdateTask(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteTask(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::DeleteTaskRequest,
@@ -342,7 +355,7 @@ DefaultDataplexServiceStub::AsyncDeleteTask(
 
 StatusOr<google::cloud::dataplex::v1::ListTasksResponse>
 DefaultDataplexServiceStub::ListTasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListTasksRequest const& request) {
   google::cloud::dataplex::v1::ListTasksResponse response;
   auto status = grpc_stub_->ListTasks(&context, request, &response);
@@ -353,7 +366,7 @@ DefaultDataplexServiceStub::ListTasks(
 }
 
 StatusOr<google::cloud::dataplex::v1::Task> DefaultDataplexServiceStub::GetTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::GetTaskRequest const& request) {
   google::cloud::dataplex::v1::Task response;
   auto status = grpc_stub_->GetTask(&context, request, &response);
@@ -365,7 +378,7 @@ StatusOr<google::cloud::dataplex::v1::Task> DefaultDataplexServiceStub::GetTask(
 
 StatusOr<google::cloud::dataplex::v1::ListJobsResponse>
 DefaultDataplexServiceStub::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListJobsRequest const& request) {
   google::cloud::dataplex::v1::ListJobsResponse response;
   auto status = grpc_stub_->ListJobs(&context, request, &response);
@@ -377,7 +390,7 @@ DefaultDataplexServiceStub::ListJobs(
 
 StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
 DefaultDataplexServiceStub::RunTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::RunTaskRequest const& request) {
   google::cloud::dataplex::v1::RunTaskResponse response;
   auto status = grpc_stub_->RunTask(&context, request, &response);
@@ -388,7 +401,7 @@ DefaultDataplexServiceStub::RunTask(
 }
 
 StatusOr<google::cloud::dataplex::v1::Job> DefaultDataplexServiceStub::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::GetJobRequest const& request) {
   google::cloud::dataplex::v1::Job response;
   auto status = grpc_stub_->GetJob(&context, request, &response);
@@ -399,7 +412,7 @@ StatusOr<google::cloud::dataplex::v1::Job> DefaultDataplexServiceStub::GetJob(
 }
 
 Status DefaultDataplexServiceStub::CancelJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::CancelJobRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->CancelJob(&context, request, &response);
@@ -412,7 +425,8 @@ Status DefaultDataplexServiceStub::CancelJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::CreateEnvironmentRequest,
@@ -430,7 +444,8 @@ DefaultDataplexServiceStub::AsyncCreateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::UpdateEnvironmentRequest,
@@ -448,7 +463,8 @@ DefaultDataplexServiceStub::AsyncUpdateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataplex::v1::DeleteEnvironmentRequest,
@@ -465,7 +481,7 @@ DefaultDataplexServiceStub::AsyncDeleteEnvironment(
 
 StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
 DefaultDataplexServiceStub::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
   google::cloud::dataplex::v1::ListEnvironmentsResponse response;
   auto status = grpc_stub_->ListEnvironments(&context, request, &response);
@@ -477,7 +493,7 @@ DefaultDataplexServiceStub::ListEnvironments(
 
 StatusOr<google::cloud::dataplex::v1::Environment>
 DefaultDataplexServiceStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
   google::cloud::dataplex::v1::Environment response;
   auto status = grpc_stub_->GetEnvironment(&context, request, &response);
@@ -489,7 +505,7 @@ DefaultDataplexServiceStub::GetEnvironment(
 
 StatusOr<google::cloud::dataplex::v1::ListSessionsResponse>
 DefaultDataplexServiceStub::ListSessions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListSessionsRequest const& request) {
   google::cloud::dataplex::v1::ListSessionsResponse response;
   auto status = grpc_stub_->ListSessions(&context, request, &response);
@@ -502,7 +518,9 @@ DefaultDataplexServiceStub::ListSessions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -517,7 +535,9 @@ DefaultDataplexServiceStub::AsyncGetOperation(
 
 future<Status> DefaultDataplexServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

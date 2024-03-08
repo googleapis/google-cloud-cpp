@@ -18,6 +18,7 @@
 
 #include "google/cloud/talent/v4/company_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

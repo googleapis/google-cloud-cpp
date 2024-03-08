@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -70,41 +71,53 @@ StatusOr<google::storage::control::v2::Folder>
 StorageControlConnectionImpl::CreateFolder(
     google::storage::control::v2::CreateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFolder(request),
-      [this](grpc::ClientContext& context,
+      idempotency_policy(*current)->CreateFolder(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::CreateFolderRequest const& request) {
-        return stub_->CreateFolder(context, request);
+        return stub_->CreateFolder(context, options, request);
       },
-      request, __func__);
+      *current, request_copy, __func__);
 }
 
 Status StorageControlConnectionImpl::DeleteFolder(
     google::storage::control::v2::DeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteFolder(request),
-      [this](grpc::ClientContext& context,
+      idempotency_policy(*current)->DeleteFolder(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::DeleteFolderRequest const& request) {
-        return stub_->DeleteFolder(context, request);
+        return stub_->DeleteFolder(context, options, request);
       },
-      request, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::storage::control::v2::Folder>
 StorageControlConnectionImpl::GetFolder(
     google::storage::control::v2::GetFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetFolder(request),
-      [this](grpc::ClientContext& context,
+      idempotency_policy(*current)->GetFolder(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::GetFolderRequest const& request) {
-        return stub_->GetFolder(context, request);
+        return stub_->GetFolder(context, options, request);
       },
-      request, __func__);
+      *current, request_copy, __func__);
 }
 
 StreamRange<google::storage::control::v2::Folder>
@@ -116,18 +129,21 @@ StorageControlConnectionImpl::ListFolders(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::storage::control::v2::Folder>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::storage::control::v2::ListFoldersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::storage::control::v2::ListFoldersRequest const&
-                       request) { return stub->ListFolders(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListFolders(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::storage::control::v2::ListFoldersResponse r) {
         std::vector<google::storage::control::v2::Folder> result(
@@ -142,34 +158,41 @@ future<StatusOr<google::storage::control::v2::Folder>>
 StorageControlConnectionImpl::RenameFolder(
     google::storage::control::v2::RenameFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  auto const idempotent =
+      idempotency_policy(*current)->RenameFolder(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::storage::control::v2::Folder>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::storage::control::v2::RenameFolderRequest const& request) {
-        return stub->AsyncRenameFolder(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncRenameFolder(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::storage::control::v2::Folder>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RenameFolder(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -177,13 +200,19 @@ StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlConnectionImpl::GetStorageLayout(
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetStorageLayout(request),
-      [this](grpc::ClientContext& context,
+      idempotency_policy(*current)->GetStorageLayout(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::GetStorageLayoutRequest const&
-                 request) { return stub_->GetStorageLayout(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetStorageLayout(context, options, request);
+      },
+      *current, request_copy, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

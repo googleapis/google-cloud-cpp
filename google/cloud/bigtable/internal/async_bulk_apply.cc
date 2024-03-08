@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 
 namespace google {
 namespace cloud {
@@ -25,7 +26,7 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
     std::shared_ptr<MutateRowsLimiter> limiter,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
     bigtable::BulkMutation mut) {
@@ -35,8 +36,8 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
 
   std::shared_ptr<AsyncBulkApplier> bulk_apply(new AsyncBulkApplier(
       std::move(cq), std::move(stub), std::move(limiter),
-      std::move(retry_policy), std::move(backoff_policy), idempotent_policy,
-      app_profile_id, table_name, std::move(mut)));
+      std::move(retry_policy), std::move(backoff_policy), enable_server_retries,
+      idempotent_policy, app_profile_id, table_name, std::move(mut)));
   bulk_apply->StartIteration();
   return bulk_apply->promise_.get_future();
 }
@@ -45,7 +46,7 @@ AsyncBulkApplier::AsyncBulkApplier(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
     std::shared_ptr<MutateRowsLimiter> limiter,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
     bigtable::BulkMutation mut)
@@ -54,8 +55,11 @@ AsyncBulkApplier::AsyncBulkApplier(
       limiter_(std::move(limiter)),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
+      enable_server_retries_(enable_server_retries),
       state_(app_profile_id, table_name, idempotent_policy, std::move(mut)),
-      promise_([this] { keep_reading_ = false; }) {}
+      promise_([this] { keep_reading_ = false; }),
+      options_(internal::SaveCurrentOptions()),
+      call_context_(options_) {}
 
 void AsyncBulkApplier::StartIteration() {
   auto self = this->shared_from_this();
@@ -68,12 +72,12 @@ void AsyncBulkApplier::StartIteration() {
 void AsyncBulkApplier::MakeRequest() {
   internal::ScopedCallContext scope(call_context_);
   context_ = std::make_shared<grpc::ClientContext>();
-  internal::ConfigureContext(*context_, internal::CurrentOptions());
+  internal::ConfigureContext(*context_, *call_context_.options);
   retry_context_->PreCall(*context_);
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
-      stub_->AsyncMutateRows(cq_, context_, state_.BeforeStart()),
+      stub_->AsyncMutateRows(cq_, context_, options_, state_.BeforeStart()),
       [self](google::bigtable::v2::MutateRowsResponse r) {
         self->OnRead(std::move(r));
         return make_ready_future(self->keep_reading_.load());
@@ -89,7 +93,14 @@ void AsyncBulkApplier::OnRead(
 
 void AsyncBulkApplier::OnFinish(Status const& status) {
   state_.OnFinish(status);
-  if (!state_.HasPendingMutations() || !retry_policy_->OnFailure(status)) {
+  if (!state_.HasPendingMutations()) {
+    SetPromise();
+    return;
+  }
+  auto delay = internal::Backoff(status, "AsyncBulkApply", *retry_policy_,
+                                 *backoff_policy_, Idempotency::kIdempotent,
+                                 enable_server_retries_);
+  if (!delay) {
     SetPromise();
     return;
   }
@@ -97,8 +108,8 @@ void AsyncBulkApplier::OnFinish(Status const& status) {
   retry_context_->PostCall(*context_);
   context_.reset();
   auto self = this->shared_from_this();
-  internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
-                               backoff_policy_->OnCompletion(), "Async Backoff")
+  internal::TracedAsyncBackoff(cq_, *call_context_.options, *delay,
+                               "Async Backoff")
       .then([self](auto result) {
         if (result.get()) {
           self->StartIteration();

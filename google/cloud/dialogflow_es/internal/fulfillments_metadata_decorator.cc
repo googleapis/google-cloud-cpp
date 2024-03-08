@@ -44,21 +44,21 @@ FulfillmentsMetadata::FulfillmentsMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsMetadata::GetFulfillment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetFulfillment(context, request);
+  return child_->GetFulfillment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsMetadata::UpdateFulfillment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("fulfillment.name=",
                            internal::UrlEncode(request.fulfillment().name())));
-  return child_->UpdateFulfillment(context, request);
+  return child_->UpdateFulfillment(context, options, request);
 }
 
 void FulfillmentsMetadata::SetMetadata(grpc::ClientContext& context,

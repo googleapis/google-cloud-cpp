@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/accessapproval/v1/accessapproval.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ AccessApprovalStub::~AccessApprovalStub() = default;
 
 StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
 DefaultAccessApprovalStub::ListApprovalRequests(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
         request) {
   google::cloud::accessapproval::v1::ListApprovalRequestsResponse response;
@@ -44,7 +45,7 @@ DefaultAccessApprovalStub::ListApprovalRequests(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 DefaultAccessApprovalStub::GetApprovalRequest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
         request) {
   google::cloud::accessapproval::v1::ApprovalRequest response;
@@ -57,7 +58,7 @@ DefaultAccessApprovalStub::GetApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 DefaultAccessApprovalStub::ApproveApprovalRequest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
         request) {
   google::cloud::accessapproval::v1::ApprovalRequest response;
@@ -71,7 +72,7 @@ DefaultAccessApprovalStub::ApproveApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 DefaultAccessApprovalStub::DismissApprovalRequest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
         request) {
   google::cloud::accessapproval::v1::ApprovalRequest response;
@@ -85,7 +86,7 @@ DefaultAccessApprovalStub::DismissApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 DefaultAccessApprovalStub::InvalidateApprovalRequest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
         request) {
   google::cloud::accessapproval::v1::ApprovalRequest response;
@@ -99,7 +100,7 @@ DefaultAccessApprovalStub::InvalidateApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 DefaultAccessApprovalStub::GetAccessApprovalSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
         request) {
   google::cloud::accessapproval::v1::AccessApprovalSettings response;
@@ -113,7 +114,7 @@ DefaultAccessApprovalStub::GetAccessApprovalSettings(
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 DefaultAccessApprovalStub::UpdateAccessApprovalSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::accessapproval::v1::
         UpdateAccessApprovalSettingsMessage const& request) {
   google::cloud::accessapproval::v1::AccessApprovalSettings response;
@@ -126,7 +127,7 @@ DefaultAccessApprovalStub::UpdateAccessApprovalSettings(
 }
 
 Status DefaultAccessApprovalStub::DeleteAccessApprovalSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::accessapproval::v1::
         DeleteAccessApprovalSettingsMessage const& request) {
   google::protobuf::Empty response;
@@ -140,7 +141,7 @@ Status DefaultAccessApprovalStub::DeleteAccessApprovalSettings(
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
 DefaultAccessApprovalStub::GetAccessApprovalServiceAccount(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::accessapproval::v1::
         GetAccessApprovalServiceAccountMessage const& request) {
   google::cloud::accessapproval::v1::AccessApprovalServiceAccount response;

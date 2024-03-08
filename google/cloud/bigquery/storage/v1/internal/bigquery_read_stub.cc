@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ BigQueryReadStub::~BigQueryReadStub() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 DefaultBigQueryReadStub::CreateReadSession(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
   google::cloud::bigquery::storage::v1::ReadSession response;
@@ -55,7 +56,7 @@ DefaultBigQueryReadStub::ReadRows(
 
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 DefaultBigQueryReadStub::SplitReadStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
   google::cloud::bigquery::storage::v1::SplitReadStreamResponse response;

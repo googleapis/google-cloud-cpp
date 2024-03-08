@@ -22,6 +22,7 @@
 #include <google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ContactCenterInsightsStub::~ContactCenterInsightsStub() = default;
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 DefaultContactCenterInsightsStub::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Conversation response;
@@ -46,7 +47,8 @@ DefaultContactCenterInsightsStub::CreateConversation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncUploadConversation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -64,7 +66,7 @@ DefaultContactCenterInsightsStub::AsyncUploadConversation(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 DefaultContactCenterInsightsStub::UpdateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Conversation response;
@@ -77,7 +79,7 @@ DefaultContactCenterInsightsStub::UpdateConversation(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 DefaultContactCenterInsightsStub::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::GetConversationRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Conversation response;
@@ -90,7 +92,7 @@ DefaultContactCenterInsightsStub::GetConversation(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListConversationsResponse>
 DefaultContactCenterInsightsStub::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::ListConversationsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListConversationsResponse response;
@@ -102,7 +104,7 @@ DefaultContactCenterInsightsStub::ListConversations(
 }
 
 Status DefaultContactCenterInsightsStub::DeleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
         request) {
   google::protobuf::Empty response;
@@ -116,7 +118,8 @@ Status DefaultContactCenterInsightsStub::DeleteConversation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncCreateAnalysis(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -135,7 +138,7 @@ DefaultContactCenterInsightsStub::AsyncCreateAnalysis(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 DefaultContactCenterInsightsStub::GetAnalysis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Analysis response;
@@ -148,7 +151,7 @@ DefaultContactCenterInsightsStub::GetAnalysis(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysesResponse>
 DefaultContactCenterInsightsStub::ListAnalyses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListAnalysesResponse response;
@@ -160,7 +163,7 @@ DefaultContactCenterInsightsStub::ListAnalyses(
 }
 
 Status DefaultContactCenterInsightsStub::DeleteAnalysis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
         request) {
   google::protobuf::Empty response;
@@ -174,7 +177,8 @@ Status DefaultContactCenterInsightsStub::DeleteAnalysis(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncBulkAnalyzeConversations(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::
         BulkAnalyzeConversationsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -193,7 +197,8 @@ DefaultContactCenterInsightsStub::AsyncBulkAnalyzeConversations(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncBulkDeleteConversations(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::
         BulkDeleteConversationsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -212,7 +217,8 @@ DefaultContactCenterInsightsStub::AsyncBulkDeleteConversations(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -231,7 +237,8 @@ DefaultContactCenterInsightsStub::AsyncIngestConversations(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -250,7 +257,8 @@ DefaultContactCenterInsightsStub::AsyncExportInsightsData(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncCreateIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -268,7 +276,7 @@ DefaultContactCenterInsightsStub::AsyncCreateIssueModel(
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 DefaultContactCenterInsightsStub::UpdateIssueModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::IssueModel response;
@@ -281,7 +289,7 @@ DefaultContactCenterInsightsStub::UpdateIssueModel(
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 DefaultContactCenterInsightsStub::GetIssueModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::IssueModel response;
@@ -294,7 +302,7 @@ DefaultContactCenterInsightsStub::GetIssueModel(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
 DefaultContactCenterInsightsStub::ListIssueModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListIssueModelsResponse response;
@@ -308,7 +316,8 @@ DefaultContactCenterInsightsStub::ListIssueModels(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncDeleteIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -327,7 +336,8 @@ DefaultContactCenterInsightsStub::AsyncDeleteIssueModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncDeployIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -346,7 +356,8 @@ DefaultContactCenterInsightsStub::AsyncDeployIssueModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncUndeployIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -364,7 +375,7 @@ DefaultContactCenterInsightsStub::AsyncUndeployIssueModel(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 DefaultContactCenterInsightsStub::GetIssue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::GetIssueRequest const& request) {
   google::cloud::contactcenterinsights::v1::Issue response;
   auto status = grpc_stub_->GetIssue(&context, request, &response);
@@ -376,7 +387,7 @@ DefaultContactCenterInsightsStub::GetIssue(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
 DefaultContactCenterInsightsStub::ListIssues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListIssuesResponse response;
@@ -389,7 +400,7 @@ DefaultContactCenterInsightsStub::ListIssues(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 DefaultContactCenterInsightsStub::UpdateIssue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Issue response;
@@ -401,7 +412,7 @@ DefaultContactCenterInsightsStub::UpdateIssue(
 }
 
 Status DefaultContactCenterInsightsStub::DeleteIssue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
         request) {
   google::protobuf::Empty response;
@@ -415,7 +426,7 @@ Status DefaultContactCenterInsightsStub::DeleteIssue(
 StatusOr<
     google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
 DefaultContactCenterInsightsStub::CalculateIssueModelStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::
         CalculateIssueModelStatsRequest const& request) {
   google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse
@@ -430,7 +441,7 @@ DefaultContactCenterInsightsStub::CalculateIssueModelStats(
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 DefaultContactCenterInsightsStub::CreatePhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::PhraseMatcher response;
@@ -443,7 +454,7 @@ DefaultContactCenterInsightsStub::CreatePhraseMatcher(
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 DefaultContactCenterInsightsStub::GetPhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::PhraseMatcher response;
@@ -456,7 +467,7 @@ DefaultContactCenterInsightsStub::GetPhraseMatcher(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse>
 DefaultContactCenterInsightsStub::ListPhraseMatchers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse response;
@@ -468,7 +479,7 @@ DefaultContactCenterInsightsStub::ListPhraseMatchers(
 }
 
 Status DefaultContactCenterInsightsStub::DeletePhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const&
         request) {
   google::protobuf::Empty response;
@@ -481,7 +492,7 @@ Status DefaultContactCenterInsightsStub::DeletePhraseMatcher(
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 DefaultContactCenterInsightsStub::UpdatePhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::PhraseMatcher response;
@@ -494,7 +505,7 @@ DefaultContactCenterInsightsStub::UpdatePhraseMatcher(
 
 StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
 DefaultContactCenterInsightsStub::CalculateStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::CalculateStatsResponse response;
@@ -507,7 +518,7 @@ DefaultContactCenterInsightsStub::CalculateStats(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 DefaultContactCenterInsightsStub::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Settings response;
@@ -520,7 +531,7 @@ DefaultContactCenterInsightsStub::GetSettings(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 DefaultContactCenterInsightsStub::UpdateSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::Settings response;
@@ -533,7 +544,7 @@ DefaultContactCenterInsightsStub::UpdateSettings(
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 DefaultContactCenterInsightsStub::CreateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::CreateViewRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::View response;
@@ -546,7 +557,7 @@ DefaultContactCenterInsightsStub::CreateView(
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 DefaultContactCenterInsightsStub::GetView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::GetViewRequest const& request) {
   google::cloud::contactcenterinsights::v1::View response;
   auto status = grpc_stub_->GetView(&context, request, &response);
@@ -558,7 +569,7 @@ DefaultContactCenterInsightsStub::GetView(
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListViewsResponse>
 DefaultContactCenterInsightsStub::ListViews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::ListViewsRequest const& request) {
   google::cloud::contactcenterinsights::v1::ListViewsResponse response;
   auto status = grpc_stub_->ListViews(&context, request, &response);
@@ -570,7 +581,7 @@ DefaultContactCenterInsightsStub::ListViews(
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 DefaultContactCenterInsightsStub::UpdateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
         request) {
   google::cloud::contactcenterinsights::v1::View response;
@@ -582,7 +593,7 @@ DefaultContactCenterInsightsStub::UpdateView(
 }
 
 Status DefaultContactCenterInsightsStub::DeleteView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
         request) {
   google::protobuf::Empty response;
@@ -596,7 +607,9 @@ Status DefaultContactCenterInsightsStub::DeleteView(
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -611,7 +624,9 @@ DefaultContactCenterInsightsStub::AsyncGetOperation(
 
 future<Status> DefaultContactCenterInsightsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

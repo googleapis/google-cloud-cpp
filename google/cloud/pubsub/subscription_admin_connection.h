@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CONNECTION_H
 
+// TODO(#12987): Remove this file after the deprecation period expires
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
@@ -231,6 +233,7 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
  *       - `google::cloud::GrpcOptionList`
  *       - `google::cloud::pubsub::PolicyOptionList`
  */
+GOOGLE_CLOUD_CPP_PUBSUB_ADMIN_API_DEPRECATED("MakeSubscriptionAdminConnection")
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     Options opts = {});
 

@@ -44,61 +44,67 @@ TagBindingsMetadata::TagBindingsMetadata(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
 TagBindingsMetadata::ListTagBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListTagBindings(context, request);
+  SetMetadata(context, options);
+  return child_->ListTagBindings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TagBindingsMetadata::AsyncCreateTagBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
         request) {
-  SetMetadata(*context, options);
-  return child_->AsyncCreateTagBinding(cq, std::move(context), options,
-                                       request);
+  SetMetadata(*context, *options);
+  return child_->AsyncCreateTagBinding(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TagBindingsMetadata::AsyncDeleteTagBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTagBinding(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncDeleteTagBinding(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
 TagBindingsMetadata::ListEffectiveTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListEffectiveTags(context, request);
+  SetMetadata(context, options);
+  return child_->ListEffectiveTags(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TagBindingsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> TagBindingsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void TagBindingsMetadata::SetMetadata(grpc::ClientContext& context,

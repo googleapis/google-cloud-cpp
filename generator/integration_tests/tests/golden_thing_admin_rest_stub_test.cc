@@ -145,7 +145,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateDatabase) {
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   StatusOr<google::longrunning::Operation> success =
-      stub.AsyncCreateDatabase(cq, std::move(rest_context), Options{},
+      stub.AsyncCreateDatabase(cq, std::move(rest_context),
+                               internal::MakeImmutableOptions({}),
                                proto_request)
           .get();
   cq.Shutdown();
@@ -213,7 +214,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncUpdateDatabaseDdl) {
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success = stub.AsyncUpdateDatabaseDdl(cq, std::move(rest_context),
-                                             Options{}, proto_request)
+                                             internal::MakeImmutableOptions({}),
+                                             proto_request)
                      .get();
   cq.Shutdown();
   t.join();
@@ -471,9 +473,10 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateBackup) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncCreateBackup(cq, std::move(rest_context), Options{},
-                                        proto_request)
-                     .get();
+  auto success =
+      stub.AsyncCreateBackup(cq, std::move(rest_context),
+                             internal::MakeImmutableOptions({}), proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 
@@ -639,7 +642,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncRestoreDatabase) {
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success = stub.AsyncRestoreDatabase(cq, std::move(rest_context),
-                                           Options{}, proto_request)
+                                           internal::MakeImmutableOptions({}),
+                                           proto_request)
                      .get();
   cq.Shutdown();
   t.join();
@@ -754,9 +758,10 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncGetDatabase(cq, std::move(rest_context), Options{},
-                                       proto_request)
-                     .get();
+  auto success =
+      stub.AsyncGetDatabase(cq, std::move(rest_context),
+                            internal::MakeImmutableOptions({}), proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 
@@ -791,9 +796,11 @@ TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncDropDatabase(cq, std::move(rest_context), Options{},
-                                        proto_request)
-                     .get();
+  auto success =
+      stub.AsyncDropDatabase(cq, std::move(rest_context),
+                             google::cloud::internal::MakeImmutableOptions({}),
+                             proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 
@@ -822,9 +829,10 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetOperation) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncGetOperation(cq, std::move(rest_context), Options{},
-                                        proto_request)
-                     .get();
+  auto success =
+      stub.AsyncGetOperation(cq, std::move(rest_context),
+                             internal::MakeImmutableOptions({}), proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 
@@ -857,7 +865,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncCancelOperation) {
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success = stub.AsyncCancelOperation(cq, std::move(rest_context),
-                                           Options{}, proto_request)
+                                           internal::MakeImmutableOptions({}),
+                                           proto_request)
                      .get();
   cq.Shutdown();
   t.join();

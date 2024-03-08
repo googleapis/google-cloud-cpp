@@ -23,6 +23,7 @@
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

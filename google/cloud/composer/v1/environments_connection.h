@@ -226,6 +226,66 @@ class EnvironmentsConnection {
   PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::
                          PollAirflowCommandRequest const& request);
 
+  virtual StreamRange<google::cloud::orchestration::airflow::service::v1::
+                          ListWorkloadsResponse::ComposerWorkload>
+  ListWorkloads(
+      google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+          request);
+
+  virtual StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  CreateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsSecretRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::
+                             GetUserWorkloadsSecretRequest const& request);
+
+  virtual StreamRange<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::
+                               ListUserWorkloadsSecretsRequest request);
+
+  virtual StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  UpdateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsSecretRequest const& request);
+
+  virtual Status DeleteUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsSecretRequest const& request);
+
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       UserWorkloadsConfigMap>
+  CreateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsConfigMapRequest const& request);
+
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       UserWorkloadsConfigMap>
+  GetUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsConfigMapRequest const& request);
+
+  virtual StreamRange<google::cloud::orchestration::airflow::service::v1::
+                          UserWorkloadsConfigMap>
+  ListUserWorkloadsConfigMaps(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsConfigMapsRequest request);
+
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       UserWorkloadsConfigMap>
+  UpdateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsConfigMapRequest const& request);
+
+  virtual Status DeleteUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsConfigMapRequest const& request);
+
   virtual future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
   SaveSnapshot(google::cloud::orchestration::airflow::service::v1::

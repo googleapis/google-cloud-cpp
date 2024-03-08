@@ -39,7 +39,7 @@ class PredictionServiceLogging : public PredictionServiceStub {
                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::PredictRequest const& request) override;
 
  private:

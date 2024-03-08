@@ -20,6 +20,7 @@
 #include "google/cloud/iam/admin/v1/iam_options.h"
 #include <memory>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

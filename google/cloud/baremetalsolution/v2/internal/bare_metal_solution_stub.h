@@ -27,6 +27,7 @@
 #include <google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,266 +40,284 @@ class BareMetalSolutionStub {
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListInstancesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetInstanceRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::Instance>
   RenameInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncResetInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStartInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::StartInstanceRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStopInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::StopInstanceRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncEnableInteractiveSerialConsole(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::
           EnableInteractiveSerialConsoleRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDisableInteractiveSerialConsole(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::
           DisableInteractiveSerialConsoleRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDetachLun(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::DetachLunRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
-  ListSSHKeys(grpc::ClientContext& context,
+  ListSSHKeys(grpc::ClientContext& context, Options const& options,
               google::cloud::baremetalsolution::v2::ListSSHKeysRequest const&
                   request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const&
           request) = 0;
 
   virtual Status DeleteSSHKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
-  ListVolumes(grpc::ClientContext& context,
+  ListVolumes(grpc::ClientContext& context, Options const& options,
               google::cloud::baremetalsolution::v2::ListVolumesRequest const&
                   request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetVolumeRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateVolume(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameVolumeRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncEvictVolume(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::EvictVolumeRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncResizeVolume(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
-  ListNetworks(grpc::ClientContext& context,
+  ListNetworks(grpc::ClientContext& context, Options const& options,
                google::cloud::baremetalsolution::v2::ListNetworksRequest const&
                    request) = 0;
 
   virtual StatusOr<
       google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
   ListNetworkUsage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetNetworkRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateNetwork(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
   CreateVolumeSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncRestoreVolumeSnapshot(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
           request) = 0;
 
   virtual Status DeleteVolumeSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
   GetVolumeSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
   ListVolumeSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetLunRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse>
   ListLuns(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListLunsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncEvictLun(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::EvictLunRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetNfsShareRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
   ListNfsShares(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListNfsSharesRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateNfsShare(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateNfsShare(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
   RenameNfsShare(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteNfsShare(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
   ListProvisioningQuotas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
   SubmitProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::
           SubmitProvisioningConfigRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
   GetProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
   CreateProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::
           CreateProvisioningConfigRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
   UpdateProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::
           UpdateProvisioningConfigRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameNetworkRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
-  ListOSImages(grpc::ClientContext& context,
+  ListOSImages(grpc::ClientContext& context, Options const& options,
                google::cloud::baremetalsolution::v2::ListOSImagesRequest const&
                    request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -314,262 +333,280 @@ class DefaultBareMetalSolutionStub : public BareMetalSolutionStub {
 
   StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Instance> RenameInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResetInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::StartInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncEnableInteractiveSerialConsole(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::
           EnableInteractiveSerialConsoleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncDisableInteractiveSerialConsole(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::
           DisableInteractiveSerialConsoleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDetachLun(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
-  ListSSHKeys(grpc::ClientContext& context,
+  ListSSHKeys(grpc::ClientContext& context, Options const& options,
               google::cloud::baremetalsolution::v2::ListSSHKeysRequest const&
                   request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request)
       override;
 
   Status DeleteSSHKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
-  ListVolumes(grpc::ClientContext& context,
+  ListVolumes(grpc::ClientContext& context, Options const& options,
               google::cloud::baremetalsolution::v2::ListVolumesRequest const&
                   request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetVolumeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateVolume(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncEvictVolume(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResizeVolume(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
-  ListNetworks(grpc::ClientContext& context,
+  ListNetworks(grpc::ClientContext& context, Options const& options,
                google::cloud::baremetalsolution::v2::ListNetworksRequest const&
                    request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
   ListNetworkUsage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetNetworkRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateNetwork(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
   CreateVolumeSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreVolumeSnapshot(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
           request) override;
 
   Status DeleteVolumeSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
   GetVolumeSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
   ListVolumeSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetLunRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse> ListLuns(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListLunsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncEvictLun(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::EvictLunRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
   ListNfsShares(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateNfsShare(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNfsShare(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::NfsShare> RenameNfsShare(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNfsShare(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
   ListProvisioningQuotas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
           request) override;
 
   StatusOr<
       google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
   SubmitProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::
           SubmitProvisioningConfigRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
   GetProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
   CreateProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::
           CreateProvisioningConfigRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
   UpdateProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::
           UpdateProvisioningConfigRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
-  ListOSImages(grpc::ClientContext& context,
+  ListOSImages(grpc::ClientContext& context, Options const& options,
                google::cloud::baremetalsolution::v2::ListOSImagesRequest const&
                    request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

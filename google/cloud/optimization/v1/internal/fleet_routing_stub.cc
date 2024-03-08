@@ -22,6 +22,7 @@
 #include <google/cloud/optimization/v1/fleet_routing.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ FleetRoutingStub::~FleetRoutingStub() = default;
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 DefaultFleetRoutingStub::OptimizeTours(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
   google::cloud::optimization::v1::OptimizeToursResponse response;
   auto status = grpc_stub_->OptimizeTours(&context, request, &response);
@@ -45,7 +46,8 @@ DefaultFleetRoutingStub::OptimizeTours(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFleetRoutingStub::AsyncBatchOptimizeTours(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::optimization::v1::BatchOptimizeToursRequest,
@@ -63,7 +65,9 @@ DefaultFleetRoutingStub::AsyncBatchOptimizeTours(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFleetRoutingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -78,7 +82,9 @@ DefaultFleetRoutingStub::AsyncGetOperation(
 
 future<Status> DefaultFleetRoutingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

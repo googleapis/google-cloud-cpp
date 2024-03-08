@@ -39,38 +39,38 @@ class EssentialContactsServiceLogging : public EssentialContactsServiceStub {
       TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::essentialcontacts::v1::CreateContactRequest const& request)
       override;
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::essentialcontacts::v1::UpdateContactRequest const& request)
       override;
 
   StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
-  ListContacts(grpc::ClientContext& context,
+  ListContacts(grpc::ClientContext& context, Options const& options,
                google::cloud::essentialcontacts::v1::ListContactsRequest const&
                    request) override;
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::essentialcontacts::v1::GetContactRequest const& request)
       override;
 
   Status DeleteContact(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::essentialcontacts::v1::DeleteContactRequest const& request)
       override;
 
   StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
   ComputeContacts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
           request) override;
 
   Status SendTestMessage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
           request) override;
 

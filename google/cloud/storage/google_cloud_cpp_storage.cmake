@@ -42,6 +42,8 @@ add_library(
     bucket_retention_policy.cc
     bucket_retention_policy.h
     bucket_rpo.h
+    bucket_soft_delete_policy.cc
+    bucket_soft_delete_policy.h
     bucket_versioning.h
     bucket_website.h
     client.cc
@@ -59,6 +61,7 @@ add_library(
     iam_policy.h
     idempotency_policy.cc
     idempotency_policy.h
+    include_folders_as_prefixes.h
     internal/access_control_common.h
     internal/access_control_common_parser.cc
     internal/access_control_common_parser.h
@@ -121,8 +124,6 @@ add_library(
     internal/http_response.h
     internal/impersonate_service_account_credentials.cc
     internal/impersonate_service_account_credentials.h
-    internal/invocation_id_generator.cc
-    internal/invocation_id_generator.h
     internal/lifecycle_rule_parser.cc
     internal/lifecycle_rule_parser.h
     internal/logging_stub.cc
@@ -181,6 +182,7 @@ add_library(
     internal/tuple_filter.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
+    internal/well_known_parameters_impl.h
     lifecycle_rule.cc
     lifecycle_rule.h
     list_buckets_reader.cc
@@ -234,6 +236,7 @@ add_library(
     service_account.cc
     service_account.h
     signed_url_options.h
+    soft_deleted.h
     storage_class.h
     upload_options.h
     user_ip_option.h
@@ -249,7 +252,6 @@ target_link_libraries(
     PUBLIC absl::cord
            absl::memory
            absl::strings
-           absl::str_format
            absl::time
            absl::variant
            google-cloud-cpp::common
@@ -426,6 +428,7 @@ if (BUILD_TESTING)
         bucket_cors_entry_test.cc
         bucket_iam_configuration_test.cc
         bucket_metadata_test.cc
+        bucket_soft_delete_policy_test.cc
         client_bucket_acl_test.cc
         client_bucket_test.cc
         client_default_object_acl_test.cc
@@ -472,7 +475,6 @@ if (BUILD_TESTING)
         internal/hmac_key_requests_test.cc
         internal/http_response_test.cc
         internal/impersonate_service_account_credentials_test.cc
-        internal/invocation_id_generator_test.cc
         internal/logging_stub_test.cc
         internal/make_jwt_assertion_test.cc
         internal/metadata_parser_test.cc

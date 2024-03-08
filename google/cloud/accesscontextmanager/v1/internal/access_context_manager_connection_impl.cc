@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -82,22 +83,22 @@ AccessContextManagerConnectionImpl::ListAccessPolicies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::identity::accesscontextmanager::v1::
-              ListAccessPoliciesRequest const& r) {
+          Options const& options, google::identity::accesscontextmanager::v1::
+                                      ListAccessPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::identity::accesscontextmanager::v1::
                        ListAccessPoliciesRequest const& request) {
-              return stub->ListAccessPolicies(context, request);
+              return stub->ListAccessPolicies(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse
              r) {
@@ -117,47 +118,51 @@ AccessContextManagerConnectionImpl::GetAccessPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAccessPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::identity::accesscontextmanager::v1::
                  GetAccessPolicyRequest const& request) {
-        return stub_->GetAccessPolicy(context, request);
+        return stub_->GetAccessPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnectionImpl::CreateAccessPolicy(
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAccessPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::AccessPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::identity::accesscontextmanager::v1::AccessPolicy const&
               request) {
-        return stub->AsyncCreateAccessPolicy(cq, std::move(context), options,
-                                             request);
+        return stub->AsyncCreateAccessPolicy(cq, std::move(context),
+                                             std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::AccessPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAccessPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -166,35 +171,38 @@ AccessContextManagerConnectionImpl::UpdateAccessPolicy(
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAccessPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::AccessPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          UpdateAccessPolicyRequest const& request) {
-        return stub->AsyncUpdateAccessPolicy(cq, std::move(context), options,
-                                             request);
+        return stub->AsyncUpdateAccessPolicy(cq, std::move(context),
+                                             std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::AccessPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateAccessPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -204,37 +212,40 @@ AccessContextManagerConnectionImpl::DeleteAccessPolicy(
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAccessPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           AccessContextManagerOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          DeleteAccessPolicyRequest const& request) {
-        return stub->AsyncDeleteAccessPolicy(cq, std::move(context), options,
-                                             request);
+        return stub->AsyncDeleteAccessPolicy(cq, std::move(context),
+                                             std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::identity::accesscontextmanager::v1::
               AccessContextManagerOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAccessPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -248,22 +259,22 @@ AccessContextManagerConnectionImpl::ListAccessLevels(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::identity::accesscontextmanager::v1::
-              ListAccessLevelsRequest const& r) {
+          Options const& options, google::identity::accesscontextmanager::v1::
+                                      ListAccessLevelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::identity::accesscontextmanager::v1::
                        ListAccessLevelsRequest const& request) {
-              return stub->ListAccessLevels(context, request);
+              return stub->ListAccessLevels(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::identity::accesscontextmanager::v1::ListAccessLevelsResponse
              r) {
@@ -283,12 +294,12 @@ AccessContextManagerConnectionImpl::GetAccessLevel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAccessLevel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::identity::accesscontextmanager::v1::
                  GetAccessLevelRequest const& request) {
-        return stub_->GetAccessLevel(context, request);
+        return stub_->GetAccessLevel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
@@ -296,35 +307,38 @@ AccessContextManagerConnectionImpl::CreateAccessLevel(
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAccessLevel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::AccessLevel>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          CreateAccessLevelRequest const& request) {
-        return stub->AsyncCreateAccessLevel(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncCreateAccessLevel(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::AccessLevel>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAccessLevel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -333,35 +347,38 @@ AccessContextManagerConnectionImpl::UpdateAccessLevel(
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAccessLevel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::AccessLevel>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          UpdateAccessLevelRequest const& request) {
-        return stub->AsyncUpdateAccessLevel(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncUpdateAccessLevel(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::AccessLevel>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateAccessLevel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -371,37 +388,40 @@ AccessContextManagerConnectionImpl::DeleteAccessLevel(
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAccessLevel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           AccessContextManagerOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          DeleteAccessLevelRequest const& request) {
-        return stub->AsyncDeleteAccessLevel(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncDeleteAccessLevel(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::identity::accesscontextmanager::v1::
               AccessContextManagerOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAccessLevel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -411,36 +431,39 @@ AccessContextManagerConnectionImpl::ReplaceAccessLevels(
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ReplaceAccessLevels(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          ReplaceAccessLevelsRequest const& request) {
-        return stub->AsyncReplaceAccessLevels(cq, std::move(context), options,
-                                              request);
+        return stub->AsyncReplaceAccessLevels(cq, std::move(context),
+                                              std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::
               ReplaceAccessLevelsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ReplaceAccessLevels(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -455,22 +478,22 @@ AccessContextManagerConnectionImpl::ListServicePerimeters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::ServicePerimeter>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::identity::accesscontextmanager::v1::
-              ListServicePerimetersRequest const& r) {
+          Options const& options, google::identity::accesscontextmanager::v1::
+                                      ListServicePerimetersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::identity::accesscontextmanager::v1::
                        ListServicePerimetersRequest const& request) {
-              return stub->ListServicePerimeters(context, request);
+              return stub->ListServicePerimeters(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::identity::accesscontextmanager::v1::
              ListServicePerimetersResponse r) {
@@ -491,12 +514,12 @@ AccessContextManagerConnectionImpl::GetServicePerimeter(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServicePerimeter(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::identity::accesscontextmanager::v1::
                  GetServicePerimeterRequest const& request) {
-        return stub_->GetServicePerimeter(context, request);
+        return stub_->GetServicePerimeter(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
@@ -504,35 +527,38 @@ AccessContextManagerConnectionImpl::CreateServicePerimeter(
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateServicePerimeter(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::ServicePerimeter>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          CreateServicePerimeterRequest const& request) {
         return stub->AsyncCreateServicePerimeter(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::ServicePerimeter>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateServicePerimeter(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -541,35 +567,38 @@ AccessContextManagerConnectionImpl::UpdateServicePerimeter(
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateServicePerimeter(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::ServicePerimeter>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          UpdateServicePerimeterRequest const& request) {
         return stub->AsyncUpdateServicePerimeter(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::ServicePerimeter>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateServicePerimeter(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -579,37 +608,40 @@ AccessContextManagerConnectionImpl::DeleteServicePerimeter(
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteServicePerimeter(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           AccessContextManagerOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          DeleteServicePerimeterRequest const& request) {
         return stub->AsyncDeleteServicePerimeter(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::identity::accesscontextmanager::v1::
               AccessContextManagerOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteServicePerimeter(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -619,37 +651,40 @@ AccessContextManagerConnectionImpl::ReplaceServicePerimeters(
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ReplaceServicePerimeters(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           ReplaceServicePerimetersResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          ReplaceServicePerimetersRequest const& request) {
         return stub->AsyncReplaceServicePerimeters(cq, std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::
               ReplaceServicePerimetersResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ReplaceServicePerimeters(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -659,37 +694,40 @@ AccessContextManagerConnectionImpl::CommitServicePerimeters(
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CommitServicePerimeters(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           CommitServicePerimetersResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          CommitServicePerimetersRequest const& request) {
         return stub->AsyncCommitServicePerimeters(cq, std::move(context),
-                                                  options, request);
+                                                  std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::
               CommitServicePerimetersResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CommitServicePerimeters(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -704,22 +742,23 @@ AccessContextManagerConnectionImpl::ListGcpUserAccessBindings(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::identity::accesscontextmanager::v1::
               ListGcpUserAccessBindingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::identity::accesscontextmanager::v1::
                        ListGcpUserAccessBindingsRequest const& request) {
-              return stub->ListGcpUserAccessBindings(context, request);
+              return stub->ListGcpUserAccessBindings(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::identity::accesscontextmanager::v1::
              ListGcpUserAccessBindingsResponse r) {
@@ -740,12 +779,12 @@ AccessContextManagerConnectionImpl::GetGcpUserAccessBinding(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGcpUserAccessBinding(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::identity::accesscontextmanager::v1::
                  GetGcpUserAccessBindingRequest const& request) {
-        return stub_->GetGcpUserAccessBinding(context, request);
+        return stub_->GetGcpUserAccessBinding(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<
@@ -754,35 +793,38 @@ AccessContextManagerConnectionImpl::CreateGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateGcpUserAccessBinding(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          CreateGcpUserAccessBindingRequest const& request) {
-        return stub->AsyncCreateGcpUserAccessBinding(cq, std::move(context),
-                                                     options, request);
+        return stub->AsyncCreateGcpUserAccessBinding(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::GcpUserAccessBinding>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateGcpUserAccessBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -792,35 +834,38 @@ AccessContextManagerConnectionImpl::UpdateGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateGcpUserAccessBinding(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          UpdateGcpUserAccessBindingRequest const& request) {
-        return stub->AsyncUpdateGcpUserAccessBinding(cq, std::move(context),
-                                                     options, request);
+        return stub->AsyncUpdateGcpUserAccessBinding(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::identity::accesscontextmanager::v1::GcpUserAccessBinding>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateGcpUserAccessBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -830,37 +875,40 @@ AccessContextManagerConnectionImpl::DeleteGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteGcpUserAccessBinding(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           GcpUserAccessBindingOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::identity::accesscontextmanager::v1::
                          DeleteGcpUserAccessBindingRequest const& request) {
-        return stub->AsyncDeleteGcpUserAccessBinding(cq, std::move(context),
-                                                     options, request);
+        return stub->AsyncDeleteGcpUserAccessBinding(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::identity::accesscontextmanager::v1::
               GcpUserAccessBindingOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteGcpUserAccessBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -871,11 +919,11 @@ AccessContextManagerConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -885,11 +933,11 @@ AccessContextManagerConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -899,11 +947,11 @@ AccessContextManagerConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

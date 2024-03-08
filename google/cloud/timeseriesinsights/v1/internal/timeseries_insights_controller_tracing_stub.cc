@@ -18,6 +18,7 @@
 
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,7 @@ TimeseriesInsightsControllerTracingStub::
 
 StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
 TimeseriesInsightsControllerTracingStub::ListDataSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
@@ -41,12 +42,12 @@ TimeseriesInsightsControllerTracingStub::ListDataSets(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListDataSets(context, request));
+                           child_->ListDataSets(context, options, request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
 TimeseriesInsightsControllerTracingStub::CreateDataSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -55,11 +56,11 @@ TimeseriesInsightsControllerTracingStub::CreateDataSet(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateDataSet(context, request));
+                           child_->CreateDataSet(context, options, request));
 }
 
 Status TimeseriesInsightsControllerTracingStub::DeleteDataSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -68,12 +69,12 @@ Status TimeseriesInsightsControllerTracingStub::DeleteDataSet(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteDataSet(context, request));
+                           child_->DeleteDataSet(context, options, request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
 TimeseriesInsightsControllerTracingStub::AppendEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
@@ -81,12 +82,12 @@ TimeseriesInsightsControllerTracingStub::AppendEvents(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->AppendEvents(context, request));
+                           child_->AppendEvents(context, options, request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
 TimeseriesInsightsControllerTracingStub::QueryDataSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
@@ -94,12 +95,12 @@ TimeseriesInsightsControllerTracingStub::QueryDataSet(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->QueryDataSet(context, request));
+                           child_->QueryDataSet(context, options, request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 TimeseriesInsightsControllerTracingStub::EvaluateSlice(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -108,12 +109,12 @@ TimeseriesInsightsControllerTracingStub::EvaluateSlice(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->EvaluateSlice(context, request));
+                           child_->EvaluateSlice(context, options, request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 TimeseriesInsightsControllerTracingStub::EvaluateTimeseries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -121,8 +122,8 @@ TimeseriesInsightsControllerTracingStub::EvaluateTimeseries(
       "EvaluateTimeseries");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->EvaluateTimeseries(context, request));
+  return internal::EndSpan(
+      context, *span, child_->EvaluateTimeseries(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

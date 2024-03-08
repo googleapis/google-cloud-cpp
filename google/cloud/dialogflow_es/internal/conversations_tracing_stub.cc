@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversations_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,67 +33,67 @@ ConversationsTracingStub::ConversationsTracingStub(
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsTracingStub::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateConversationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "CreateConversation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateConversation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateConversation(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse>
 ConversationsTracingStub::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "ListConversations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConversations(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListConversations(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsTracingStub::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "GetConversation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetConversation(context, request));
+                           child_->GetConversation(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsTracingStub::CompleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CompleteConversationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "CompleteConversation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CompleteConversation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CompleteConversation(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
 ConversationsTracingStub::ListMessages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListMessagesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "ListMessages");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListMessages(context, request));
+                           child_->ListMessages(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
 ConversationsTracingStub::SuggestConversationSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
@@ -100,32 +101,34 @@ ConversationsTracingStub::SuggestConversationSummary(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->SuggestConversationSummary(context, request));
+      context, *span,
+      child_->SuggestConversationSummary(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
 ConversationsTracingStub::GenerateStatelessSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "GenerateStatelessSummary");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateStatelessSummary(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateStatelessSummary(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 ConversationsTracingStub::SearchKnowledge(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "SearchKnowledge");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SearchKnowledge(context, request));
+                           child_->SearchKnowledge(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

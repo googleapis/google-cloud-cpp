@@ -62,6 +62,10 @@
 ./include/google/cloud/appengine/v1
 ./include/google/cloud/appengine/v1/internal
 ./include/google/cloud/appengine/v1/mocks
+./include/google/cloud/apphub
+./include/google/cloud/apphub/v1
+./include/google/cloud/apphub/v1/internal
+./include/google/cloud/apphub/v1/mocks
 ./include/google/cloud/artifactregistry
 ./include/google/cloud/artifactregistry/mocks
 ./include/google/cloud/artifactregistry/v1
@@ -177,6 +181,10 @@
 ./include/google/cloud/cloudbuild/v2
 ./include/google/cloud/cloudbuild/v2/internal
 ./include/google/cloud/cloudbuild/v2/mocks
+./include/google/cloud/cloudcontrolspartner
+./include/google/cloud/cloudcontrolspartner/v1
+./include/google/cloud/cloudcontrolspartner/v1/internal
+./include/google/cloud/cloudcontrolspartner/v1/mocks
 ./include/google/cloud/clouddms
 ./include/google/cloud/clouddms/v1
 ./include/google/cloud/cloudquotas
@@ -959,6 +967,9 @@
 ./include/google/cloud/securitycenter/v1
 ./include/google/cloud/securitycenter/v1/internal
 ./include/google/cloud/securitycenter/v1/mocks
+./include/google/cloud/securitycenter/v2
+./include/google/cloud/securitycenter/v2/internal
+./include/google/cloud/securitycenter/v2/mocks
 ./include/google/cloud/securitycentermanagement
 ./include/google/cloud/securitycentermanagement/v1
 ./include/google/cloud/securitycentermanagement/v1/internal
@@ -1211,6 +1222,8 @@
 ./lib64/cmake/google_cloud_cpp_apikeys_mocks
 ./lib64/cmake/google_cloud_cpp_appengine
 ./lib64/cmake/google_cloud_cpp_appengine_mocks
+./lib64/cmake/google_cloud_cpp_apphub
+./lib64/cmake/google_cloud_cpp_apphub_mocks
 ./lib64/cmake/google_cloud_cpp_artifactregistry
 ./lib64/cmake/google_cloud_cpp_artifactregistry_mocks
 ./lib64/cmake/google_cloud_cpp_asset
@@ -1239,6 +1252,8 @@
 ./lib64/cmake/google_cloud_cpp_channel_mocks
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_cloudbuild_mocks
+./lib64/cmake/google_cloud_cpp_cloudcontrolspartner
+./lib64/cmake/google_cloud_cpp_cloudcontrolspartner_mocks
 ./lib64/cmake/google_cloud_cpp_cloudquotas
 ./lib64/cmake/google_cloud_cpp_cloudquotas_mocks
 ./lib64/cmake/google_cloud_cpp_commerce

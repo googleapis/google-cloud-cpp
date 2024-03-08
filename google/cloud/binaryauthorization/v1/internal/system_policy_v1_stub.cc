@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ SystemPolicyV1Stub::~SystemPolicyV1Stub() = default;
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 DefaultSystemPolicyV1Stub::GetSystemPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
         request) {
   google::cloud::binaryauthorization::v1::Policy response;

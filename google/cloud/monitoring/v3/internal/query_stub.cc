@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/query_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ QueryServiceStub::~QueryServiceStub() = default;
 
 StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 DefaultQueryServiceStub::QueryTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
   google::monitoring::v3::QueryTimeSeriesResponse response;
   auto status = grpc_stub_->QueryTimeSeries(&context, request, &response);

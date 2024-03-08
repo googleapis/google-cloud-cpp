@@ -45,58 +45,66 @@ VpcAccessServiceMetadata::VpcAccessServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceMetadata::AsyncCreateConnector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateConnector(cq, std::move(context), options, request);
+  return child_->AsyncCreateConnector(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceMetadata::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConnector(context, request);
+  return child_->GetConnector(context, options, request);
 }
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 VpcAccessServiceMetadata::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConnectors(context, request);
+  return child_->ListConnectors(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceMetadata::AsyncDeleteConnector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteConnector(cq, std::move(context), options, request);
+  return child_->AsyncDeleteConnector(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> VpcAccessServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void VpcAccessServiceMetadata::SetMetadata(grpc::ClientContext& context,

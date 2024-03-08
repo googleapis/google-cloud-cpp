@@ -28,6 +28,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -471,7 +472,7 @@ class IndexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.UpsertDatapointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L242}
-  /// [google.cloud.aiplatform.v1.UpsertDatapointsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L259}
+  /// [google.cloud.aiplatform.v1.UpsertDatapointsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L269}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
@@ -502,8 +503,8 @@ class IndexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.RemoveDatapointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L263}
-  /// [google.cloud.aiplatform.v1.RemoveDatapointsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L280}
+  /// [google.cloud.aiplatform.v1.RemoveDatapointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L273}
+  /// [google.cloud.aiplatform.v1.RemoveDatapointsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L290}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>

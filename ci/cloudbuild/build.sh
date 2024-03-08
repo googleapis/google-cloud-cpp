@@ -357,6 +357,10 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     # Makes the generate-libraries build ONLY touch golden files in the
     # generator dir.
     "--env=GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY-}"
+    # Makes the generate-libraries build expect new files to be created
+    # in protos/google/cloud/${UPDATED_DISCOVERY_DOCUMENT} and
+    # in google/cloud/${UPDATED_DISCOVERY_DOCUMENT} and git add such files.
+    "--env=UPDATED_DISCOVERY_DOCUMENT=${UPDATED_DISCOVERY_DOCUMENT-}"
   )
   if [[ -r "${HOME}/.cloudcxxrc" ]]; then
     run_flags+=(

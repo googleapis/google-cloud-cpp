@@ -236,9 +236,10 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $response_type$>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->Async$method_name$(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->Async$method_name$(cq, std::move(context), std::move(options));
 }
 )""");
       continue;
@@ -249,13 +250,14 @@ future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kPointer, "options"));
+                    SetMetadataText(method, kPointer, "*options"));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(cq, std::move(context), options, request);
+  return child_->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
       continue;
@@ -276,27 +278,26 @@ $metadata_class_name$::$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-            {
-                {IsResponseTypeEmpty,
-                 // clang-format off
-    "\nStatus\n",
-    "\nStatusOr<$response_type$>\n"},
-   {"$metadata_class_name$::$method_name$(\n"
-    "    grpc::ClientContext& context,\n"
-    "    $request_type$ const& request) {\n"},
-    {SetMetadataText(method, kReference, "internal::CurrentOptions()")},
-   {"\n  return child_->$method_name$(context, request);\n"
-    "}\n",}
-                // clang-format on
-            },
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  IsResponseTypeEmpty(method) ? "\nStatus"
+                                              : "\nStatusOr<$response_type$>");
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+$metadata_class_name$::$method_name$(
+    grpc::ClientContext& context,
+    Options const& options,
+    $request_type$ const& request) {
+)""");
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  SetMetadataText(method, kReference, "options"));
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return child_->$method_name$(context, options, request);
+}
+)""");
   }
 
   for (auto const& method : async_methods()) {
+    // Nothing to do, these are always asynchronous.
+    if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
       auto const definition = absl::StrCat(
           R"""(
@@ -305,11 +306,13 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
 )""",
-          SetMetadataText(method, kPointer, "internal::CurrentOptions()"),
+          SetMetadataText(method, kPointer, "*options"),
           R"""(
-  return child_->Async$method_name$(cq, std::move(context), request);
+  return child_->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
       CcPrintMethod(method, __FILE__, __LINE__, definition);
@@ -326,33 +329,33 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     $request_type$, $response_type$>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->Async$method_name$(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->Async$method_name$(cq, std::move(context), std::move(options));
 }
 )""");
       CcPrintMethod(method, __FILE__, __LINE__, definition);
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
-    "\nfuture<Status>\n",
-    "\nfuture<StatusOr<$response_type$>>\n"},
-    {R"""($metadata_class_name$::Async$method_name$(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    $request_type$ const& request) {
-)"""},
-   {SetMetadataText(method, kPointer, "internal::CurrentOptions()")}, {R"""(
-  return child_->Async$method_name$(cq, std::move(context), request);
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  IsResponseTypeEmpty(method)
+                      ? "\nfuture<Status>"
+                      : "\nfuture<StatusOr<$response_type$>>");
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+$metadata_class_name$::Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) {
+)""");
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  SetMetadataText(method, kPointer, "*options"));
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return child_->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
-)"""}},
-            // clang-format on
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+)""");
   }
 
   // long running operation support methods
@@ -362,21 +365,23 @@ future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> $metadata_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-   SetMetadata(*context, options,
-               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
   }

@@ -22,6 +22,7 @@
 #include <google/cloud/run/v2/revision.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RevisionsStub::~RevisionsStub() = default;
 
 StatusOr<google::cloud::run::v2::Revision> DefaultRevisionsStub::GetRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::GetRevisionRequest const& request) {
   google::cloud::run::v2::Revision response;
   auto status = grpc_stub_->GetRevision(&context, request, &response);
@@ -43,7 +44,7 @@ StatusOr<google::cloud::run::v2::Revision> DefaultRevisionsStub::GetRevision(
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 DefaultRevisionsStub::ListRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
   google::cloud::run::v2::ListRevisionsResponse response;
   auto status = grpc_stub_->ListRevisions(&context, request, &response);
@@ -56,7 +57,8 @@ DefaultRevisionsStub::ListRevisions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRevisionsStub::AsyncDeleteRevision(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::run::v2::DeleteRevisionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::run::v2::DeleteRevisionRequest,
@@ -73,7 +75,9 @@ DefaultRevisionsStub::AsyncDeleteRevision(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRevisionsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -88,7 +92,9 @@ DefaultRevisionsStub::AsyncGetOperation(
 
 future<Status> DefaultRevisionsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

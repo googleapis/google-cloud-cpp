@@ -92,6 +92,14 @@ TEST(GrpcClientFromProto, ObjectSimple) {
       key_sha256_bytes: "01234567"
     }
     etag: "test-etag"
+    soft_delete_time {
+      seconds: 1709555696
+      nanos: 987654321
+    }
+    hard_delete_time {
+      seconds: 1710160496
+      nanos: 987654321
+    }
 )""",
                                                             &input));
 
@@ -149,7 +157,9 @@ TEST(GrpcClientFromProto, ObjectSimple) {
       "encryptionAlgorithm": "test-encryption-algorithm",
       "keySha256": "MDEyMzQ1Njc="
     },
-    "etag": "test-etag"
+    "etag": "test-etag",
+    "softDeleteTime": "2024-03-04T12:34:56.987654321Z",
+    "hardDeleteTime": "2024-03-11T12:34:56.987654321Z"
 })""");
   ASSERT_STATUS_OK(expected);
 

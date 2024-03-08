@@ -20,6 +20,7 @@
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_auth_decorator.h"
 #include <google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,203 +35,215 @@ SecurityCenterManagementAuth::SecurityCenterManagementAuth(
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterManagementAuth::ListEffectiveSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
             request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(context,
-                                                                   request);
+  return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EffectiveSecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementAuth::GetEffectiveSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
-                                                                 request);
+  return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterManagementAuth::ListSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSecurityHealthAnalyticsCustomModules(context, request);
+  return child_->ListSecurityHealthAnalyticsCustomModules(context, options,
+                                                          request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterManagementAuth::
     ListDescendantSecurityHealthAnalyticsCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
                 request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDescendantSecurityHealthAnalyticsCustomModules(context,
-                                                                    request);
+  return child_->ListDescendantSecurityHealthAnalyticsCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementAuth::GetSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->GetSecurityHealthAnalyticsCustomModule(context, options,
+                                                        request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementAuth::CreateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->CreateSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementAuth::UpdateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->UpdateSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 Status SecurityCenterManagementAuth::DeleteSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->DeleteSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SimulateSecurityHealthAnalyticsCustomModuleResponse>
 SecurityCenterManagementAuth::SimulateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SimulateSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->SimulateSecurityHealthAnalyticsCustomModule(context, options,
+                                                             request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListEffectiveEventThreatDetectionCustomModulesResponse>
 SecurityCenterManagementAuth::ListEffectiveEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListEffectiveEventThreatDetectionCustomModulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEffectiveEventThreatDetectionCustomModules(context,
-                                                                request);
+  return child_->ListEffectiveEventThreatDetectionCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EffectiveEventThreatDetectionCustomModule>
 SecurityCenterManagementAuth::GetEffectiveEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEffectiveEventThreatDetectionCustomModule(context, request);
+  return child_->GetEffectiveEventThreatDetectionCustomModule(context, options,
+                                                              request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListEventThreatDetectionCustomModulesResponse>
 SecurityCenterManagementAuth::ListEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListEventThreatDetectionCustomModulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEventThreatDetectionCustomModules(context, request);
+  return child_->ListEventThreatDetectionCustomModules(context, options,
+                                                       request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListDescendantEventThreatDetectionCustomModulesResponse>
 SecurityCenterManagementAuth::ListDescendantEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListDescendantEventThreatDetectionCustomModulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDescendantEventThreatDetectionCustomModules(context,
-                                                                 request);
+  return child_->ListDescendantEventThreatDetectionCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 SecurityCenterManagementAuth::GetEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetEventThreatDetectionCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEventThreatDetectionCustomModule(context, request);
+  return child_->GetEventThreatDetectionCustomModule(context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 SecurityCenterManagementAuth::CreateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         CreateEventThreatDetectionCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEventThreatDetectionCustomModule(context, request);
+  return child_->CreateEventThreatDetectionCustomModule(context, options,
+                                                        request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 SecurityCenterManagementAuth::UpdateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         UpdateEventThreatDetectionCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEventThreatDetectionCustomModule(context, request);
+  return child_->UpdateEventThreatDetectionCustomModule(context, options,
+                                                        request);
 }
 
 Status SecurityCenterManagementAuth::DeleteEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         DeleteEventThreatDetectionCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEventThreatDetectionCustomModule(context, request);
+  return child_->DeleteEventThreatDetectionCustomModule(context, options,
+                                                        request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ValidateEventThreatDetectionCustomModuleResponse>
 SecurityCenterManagementAuth::ValidateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ValidateEventThreatDetectionCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ValidateEventThreatDetectionCustomModule(context, request);
+  return child_->ValidateEventThreatDetectionCustomModule(context, options,
+                                                          request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

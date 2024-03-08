@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/internal/schema_auth_decorator.h"
 #include <google/pubsub/v1/schema.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,87 +32,87 @@ SchemaServiceAuth::SchemaServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::CreateSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::CreateSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateSchema(context, request);
+  return child_->CreateSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::GetSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSchema(context, request);
+  return child_->GetSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListSchemasResponse>
 SchemaServiceAuth::ListSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSchemasRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSchemas(context, request);
+  return child_->ListSchemas(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
 SchemaServiceAuth::ListSchemaRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSchemaRevisions(context, request);
+  return child_->ListSchemaRevisions(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::CommitSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::CommitSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CommitSchema(context, request);
+  return child_->CommitSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::RollbackSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::RollbackSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RollbackSchema(context, request);
+  return child_->RollbackSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::DeleteSchemaRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteSchemaRevision(context, request);
+  return child_->DeleteSchemaRevision(context, options, request);
 }
 
 Status SchemaServiceAuth::DeleteSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteSchema(context, request);
+  return child_->DeleteSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
 SchemaServiceAuth::ValidateSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ValidateSchema(context, request);
+  return child_->ValidateSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
 SchemaServiceAuth::ValidateMessage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ValidateMessageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ValidateMessage(context, request);
+  return child_->ValidateMessage(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

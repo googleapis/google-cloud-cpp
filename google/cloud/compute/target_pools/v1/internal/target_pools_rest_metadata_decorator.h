@@ -43,7 +43,7 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
   AsyncAddHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_pools::v1::
           AddHealthCheckRequest const& request) override;
 
@@ -51,7 +51,7 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
   AsyncAddInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
           request) override;
 
@@ -66,7 +66,7 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
   AsyncDeleteTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_pools::v1::
           DeleteTargetPoolRequest const& request) override;
 
@@ -86,7 +86,7 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
   AsyncInsertTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_pools::v1::
           InsertTargetPoolRequest const& request) override;
 
@@ -100,7 +100,7 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
   AsyncRemoveHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_pools::v1::
           RemoveHealthCheckRequest const& request) override;
 
@@ -108,7 +108,7 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
   AsyncRemoveInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_pools::v1::
           RemoveInstanceRequest const& request) override;
 
@@ -116,7 +116,7 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
   AsyncSetBackup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
           request) override;
 
@@ -124,7 +124,7 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
   AsyncSetSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_pools::v1::
           SetSecurityPolicyRequest const& request) override;
 
@@ -132,14 +132,14 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

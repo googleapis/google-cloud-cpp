@@ -20,6 +20,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -205,6 +206,16 @@ Status DataTransferServiceTracingConnection::EnrollDataSources(
       "EnrollDataSources");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->EnrollDataSources(request));
+}
+
+Status DataTransferServiceTracingConnection::UnenrollDataSources(
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
+      "UnenrollDataSources");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UnenrollDataSources(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

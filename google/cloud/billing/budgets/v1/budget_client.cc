@@ -18,6 +18,7 @@
 
 #include "google/cloud/billing/budgets/v1/budget_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

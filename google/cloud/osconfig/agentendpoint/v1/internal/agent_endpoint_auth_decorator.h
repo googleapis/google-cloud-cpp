@@ -48,31 +48,31 @@ class AgentEndpointServiceAuth : public AgentEndpointServiceStub {
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
   StartNextTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
           request) override;
 
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-  ReportTaskProgress(grpc::ClientContext& context,
+  ReportTaskProgress(grpc::ClientContext& context, Options const& options,
                      google::cloud::osconfig::agentendpoint::v1::
                          ReportTaskProgressRequest const& request) override;
 
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-  ReportTaskComplete(grpc::ClientContext& context,
+  ReportTaskComplete(grpc::ClientContext& context, Options const& options,
                      google::cloud::osconfig::agentendpoint::v1::
                          ReportTaskCompleteRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
   RegisterAgent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
           request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
   ReportInventory(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request) override;
 

@@ -18,7 +18,9 @@
 
 #include "google/cloud/dialogflow_cx/internal/sessions_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -40,6 +42,17 @@ SessionsTracingConnection::DetectIntent(
   return internal::EndSpan(*span, child_->DetectIntent(request));
 }
 
+StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
+SessionsTracingConnection::ServerStreamingDetectIntent(
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SessionsConnection::ServerStreamingDetectIntent");
+  internal::OTelScope scope(span);
+  auto sr = child_->ServerStreamingDetectIntent(request);
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>(std::move(span),
+                                                               std::move(sr));
+}
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>

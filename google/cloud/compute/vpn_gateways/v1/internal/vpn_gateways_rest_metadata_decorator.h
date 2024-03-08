@@ -50,7 +50,7 @@ class VpnGatewaysRestMetadata : public VpnGatewaysRestStub {
   AsyncDeleteVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::vpn_gateways::v1::
           DeleteVpnGatewayRequest const& request) override;
 
@@ -71,7 +71,7 @@ class VpnGatewaysRestMetadata : public VpnGatewaysRestStub {
   AsyncInsertVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::vpn_gateways::v1::
           InsertVpnGatewayRequest const& request) override;
 
@@ -85,7 +85,7 @@ class VpnGatewaysRestMetadata : public VpnGatewaysRestStub {
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
           request) override;
 
@@ -99,14 +99,14 @@ class VpnGatewaysRestMetadata : public VpnGatewaysRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/experiment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ ExperimentsStub::~ExperimentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
 DefaultExperimentsStub::ListExperiments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListExperimentsResponse response;
   auto status = grpc_stub_->ListExperiments(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultExperimentsStub::ListExperiments(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::GetExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
   auto status = grpc_stub_->GetExperiment(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultExperimentsStub::GetExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::CreateExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
   auto status = grpc_stub_->CreateExperiment(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultExperimentsStub::CreateExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::UpdateExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
   auto status = grpc_stub_->UpdateExperiment(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultExperimentsStub::UpdateExperiment(
 }
 
 Status DefaultExperimentsStub::DeleteExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteExperiment(&context, request, &response);
@@ -90,7 +91,7 @@ Status DefaultExperimentsStub::DeleteExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::StartExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
   auto status = grpc_stub_->StartExperiment(&context, request, &response);
@@ -102,7 +103,7 @@ DefaultExperimentsStub::StartExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 DefaultExperimentsStub::StopExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Experiment response;
   auto status = grpc_stub_->StopExperiment(&context, request, &response);

@@ -44,72 +44,79 @@ DomainMappingsMetadata::DomainMappingsMetadata(
 
 StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DomainMappingsMetadata::ListDomainMappings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDomainMappings(context, request);
+  return child_->ListDomainMappings(context, options, request);
 }
 
 StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsMetadata::GetDomainMapping(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetDomainMappingRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDomainMapping(context, request);
+  return child_->GetDomainMapping(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncCreateDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::appengine::v1::CreateDomainMappingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDomainMapping(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncCreateDomainMapping(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncUpdateDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUpdateDomainMapping(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncUpdateDomainMapping(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncDeleteDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDomainMapping(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncDeleteDomainMapping(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> DomainMappingsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void DomainMappingsMetadata::SetMetadata(grpc::ClientContext& context,

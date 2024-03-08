@@ -69,12 +69,12 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Subscription const subscription("test-project", "test-subscription");
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
@@ -121,32 +121,33 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Subscription const subscription("test-project", "test-subscription");
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly(
-          [&](google::cloud::CompletionQueue const& cq, auto context) {
-            ValidateMetadataFixture fixture;
-            auto metadata = fixture.GetMetadata(*context);
-            EXPECT_THAT(
-                metadata,
-                UnorderedElementsAre(
-                    Pair("x-goog-api-client",
-                         google::cloud::internal::HandCraftedLibClientHeader()),
-                    Pair("x-goog-request-params",
-                         "subscription=" +
-                             internal::UrlEncode(subscription.FullName()))));
-            return FakeAsyncStreamingPull(cq, std::move(context));
-          });
+      .WillRepeatedly([&](google::cloud::CompletionQueue const& cq,
+                          auto context, auto options) {
+        ValidateMetadataFixture fixture;
+        auto metadata = fixture.GetMetadata(*context);
+        EXPECT_THAT(
+            metadata,
+            UnorderedElementsAre(
+                Pair("x-goog-api-client",
+                     google::cloud::internal::HandCraftedLibClientHeader()),
+                Pair("x-goog-request-params",
+                     "subscription=" +
+                         internal::UrlEncode(subscription.FullName()))));
+        return FakeAsyncStreamingPull(cq, std::move(context),
+                                      std::move(options));
+      });
 
   auto subscriber = MakeTestSubscriberConnection(subscription, mock);
   std::atomic_flag received_one{false};
@@ -182,23 +183,24 @@ TEST(MakeSubscriberConnectionTest, TracingEnabledForUnaryPull) {
   auto const subscription = Subscription("test-project", "test-subscription");
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto context,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto context, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         SetServerMetadata(*context, {});
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillOnce([](google::cloud::CompletionQueue&, auto context,
+      .WillOnce([](google::cloud::CompletionQueue&, auto context, auto,
                    google::pubsub::v1::AcknowledgeRequest const& request) {
         SetServerMetadata(*context, {});
         EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
         return make_ready_future(
             Status{StatusCode::kUnknown, "test-only-unknown"});
       });
-  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
-                                   Property(&PullRequest::subscription,
-                                            subscription.FullName()))))
-      .WillOnce([&](grpc::ClientContext& context,
+  EXPECT_CALL(*mock, Pull(_, _,
+                          AllOf(Property(&PullRequest::max_messages, 1),
+                                Property(&PullRequest::subscription,
+                                         subscription.FullName()))))
+      .WillOnce([&](grpc::ClientContext& context, Options const&,
                     google::pubsub::v1::PullRequest const&) {
         ValidatePropagator(context);
         google::pubsub::v1::PullResponse response;
@@ -231,29 +233,30 @@ TEST(MakeSubscriberConnectionTest, TracingDisabledForUnaryPull) {
   auto const subscription = Subscription("test-project", "test-subscription");
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillOnce([](google::cloud::CompletionQueue&, auto,
+      .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
                    google::pubsub::v1::AcknowledgeRequest const& request) {
         EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
         return make_ready_future(
             Status{StatusCode::kUnknown, "test-only-unknown"});
       });
-  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
-                                   Property(&PullRequest::subscription,
-                                            subscription.FullName()))))
-      .WillOnce(
-          [&](grpc::ClientContext&, google::pubsub::v1::PullRequest const&) {
-            google::pubsub::v1::PullResponse response;
-            auto& message = *response.add_received_messages();
-            message.set_delivery_attempt(42);
-            message.set_ack_id("test-ack-id-0");
-            message.mutable_message()->set_data("test-data-0");
-            return response;
-          });
+  EXPECT_CALL(*mock, Pull(_, _,
+                          AllOf(Property(&PullRequest::max_messages, 1),
+                                Property(&PullRequest::subscription,
+                                         subscription.FullName()))))
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::pubsub::v1::PullRequest const&) {
+        google::pubsub::v1::PullResponse response;
+        auto& message = *response.add_received_messages();
+        message.set_delivery_attempt(42);
+        message.set_ack_id("test-ack-id-0");
+        message.mutable_message()->set_data("test-data-0");
+        return response;
+      });
 
   auto subscriber = MakeTestSubscriberConnection(subscription, mock,
                                                  DisableTracing(Options{}));

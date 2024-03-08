@@ -19,6 +19,7 @@
 #include "google/cloud/tasks/v2/internal/cloud_tasks_auth_decorator.h"
 #include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,132 +33,132 @@ CloudTasksAuth::CloudTasksAuth(
 
 StatusOr<google::cloud::tasks::v2::ListQueuesResponse>
 CloudTasksAuth::ListQueues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::ListQueuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListQueues(context, request);
+  return child_->ListQueues(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::GetQueue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::GetQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetQueue(context, request);
+  return child_->GetQueue(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::CreateQueue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::CreateQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateQueue(context, request);
+  return child_->CreateQueue(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::UpdateQueue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::UpdateQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateQueue(context, request);
+  return child_->UpdateQueue(context, options, request);
 }
 
 Status CloudTasksAuth::DeleteQueue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::DeleteQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteQueue(context, request);
+  return child_->DeleteQueue(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::PurgeQueue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::PurgeQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PurgeQueue(context, request);
+  return child_->PurgeQueue(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::PauseQueue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::PauseQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PauseQueue(context, request);
+  return child_->PauseQueue(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::ResumeQueue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::ResumeQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ResumeQueue(context, request);
+  return child_->ResumeQueue(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudTasksAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudTasksAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudTasksAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::ListTasksResponse> CloudTasksAuth::ListTasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::ListTasksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTasks(context, request);
+  return child_->ListTasks(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::GetTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::GetTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTask(context, request);
+  return child_->GetTask(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::CreateTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::CreateTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTask(context, request);
+  return child_->CreateTask(context, options, request);
 }
 
 Status CloudTasksAuth::DeleteTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTask(context, request);
+  return child_->DeleteTask(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::RunTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tasks::v2::RunTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RunTask(context, request);
+  return child_->RunTask(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

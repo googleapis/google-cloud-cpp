@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/v1/versions_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

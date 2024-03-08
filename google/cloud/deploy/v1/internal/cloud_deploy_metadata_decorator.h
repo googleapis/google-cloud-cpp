@@ -41,207 +41,223 @@ class CloudDeployMetadata : public CloudDeployStub {
 
   StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
   ListDeliveryPipelines(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::ListDeliveryPipelinesRequest const& request)
       override;
 
   StatusOr<google::cloud::deploy::v1::DeliveryPipeline> GetDeliveryPipeline(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDeliveryPipeline(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDeliveryPipeline(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeliveryPipeline(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request)
       override;
 
   StatusOr<google::cloud::deploy::v1::ListTargetsResponse> ListTargets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::ListTargetsRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::RollbackTargetResponse> RollbackTarget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::RollbackTargetRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::Target> GetTarget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::GetTargetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTarget(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::CreateTargetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTarget(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::UpdateTargetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTarget(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::DeleteTargetRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
   ListCustomTargetTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::ListCustomTargetTypesRequest const& request)
       override;
 
   StatusOr<google::cloud::deploy::v1::CustomTargetType> GetCustomTargetType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCustomTargetType(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCustomTargetType(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCustomTargetType(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::deploy::v1::ListReleasesResponse> ListReleases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::ListReleasesRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::Release> GetRelease(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::GetReleaseRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRelease(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::CreateReleaseRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::AbandonReleaseRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> ApproveRollout(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::ApproveRolloutRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse> AdvanceRollout(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::AdvanceRolloutRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::CancelRolloutResponse> CancelRollout(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::CancelRolloutRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::ListRolloutsResponse> ListRollouts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::ListRolloutsRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::Rollout> GetRollout(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::GetRolloutRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRollout(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::CreateRolloutRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::IgnoreJobRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::RetryJobRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::ListJobRunsResponse> ListJobRuns(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::ListJobRunsRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::GetJobRunRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> TerminateJobRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::TerminateJobRunRequest const& request)
       override;
 
   StatusOr<google::cloud::deploy::v1::Config> GetConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::GetConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAutomation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::CreateAutomationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAutomation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::UpdateAutomationRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAutomation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::deploy::v1::DeleteAutomationRequest const& request)
       override;
 
   StatusOr<google::cloud::deploy::v1::Automation> GetAutomation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::GetAutomationRequest const& request) override;
 
   StatusOr<google::cloud::deploy::v1::ListAutomationsResponse> ListAutomations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::ListAutomationsRequest const& request)
       override;
 
   StatusOr<google::cloud::deploy::v1::AutomationRun> GetAutomationRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::GetAutomationRunRequest const& request)
       override;
 
   StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse>
-  ListAutomationRuns(grpc::ClientContext& context,
+  ListAutomationRuns(grpc::ClientContext& context, Options const& options,
                      google::cloud::deploy::v1::ListAutomationRunsRequest const&
                          request) override;
 
   StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
   CancelAutomationRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::CancelAutomationRunRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

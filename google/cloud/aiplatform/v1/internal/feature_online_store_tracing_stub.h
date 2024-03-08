@@ -41,13 +41,13 @@ class FeatureOnlineStoreServiceTracingStub
 
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
   FetchFeatureValues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
   SearchNearestEntities(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
           request) override;
 

@@ -44,22 +44,22 @@ AnswerRecordsMetadata::AnswerRecordsMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 AnswerRecordsMetadata::ListAnswerRecords(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAnswerRecords(context, request);
+  return child_->ListAnswerRecords(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 AnswerRecordsMetadata::UpdateAnswerRecord(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("answer_record.name=",
                    internal::UrlEncode(request.answer_record().name())));
-  return child_->UpdateAnswerRecord(context, request);
+  return child_->UpdateAnswerRecord(context, options, request);
 }
 
 void AnswerRecordsMetadata::SetMetadata(grpc::ClientContext& context,

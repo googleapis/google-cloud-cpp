@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudtrace/v1/trace.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,38 +37,38 @@ TraceServiceLogging::TraceServiceLogging(
 
 StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 TraceServiceLogging::ListTraces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
-        return child_->ListTraces(context, request);
+        return child_->ListTraces(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceLogging::GetTrace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
-        return child_->GetTrace(context, request);
+        return child_->GetTrace(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status TraceServiceLogging::PatchTraces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
-        return child_->PatchTraces(context, request);
+        return child_->PatchTraces(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

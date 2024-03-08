@@ -47,7 +47,8 @@ CloudBuildMetadata::CloudBuildMetadata(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncCreateBuild(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -66,15 +67,16 @@ CloudBuildMetadata::AsyncCreateBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncCreateBuild(cq, std::move(context), options, request);
+  return child_->AsyncCreateBuild(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildMetadata::GetBuild(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -93,17 +95,16 @@ StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildMetadata::GetBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->GetBuild(context, request);
+  return child_->GetBuild(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
 CloudBuildMetadata::ListBuilds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -122,17 +123,16 @@ CloudBuildMetadata::ListBuilds(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ListBuilds(context, request);
+  return child_->ListBuilds(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildMetadata::CancelBuild(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -151,18 +151,18 @@ CloudBuildMetadata::CancelBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->CancelBuild(context, request);
+  return child_->CancelBuild(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncRetryBuild(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -181,17 +181,19 @@ CloudBuildMetadata::AsyncRetryBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncRetryBuild(cq, std::move(context), options, request);
+  return child_->AsyncRetryBuild(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncApproveBuild(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -210,16 +212,17 @@ CloudBuildMetadata::AsyncApproveBuild(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncApproveBuild(cq, std::move(context), options, request);
+  return child_->AsyncApproveBuild(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildMetadata::CreateBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
         request) {
   std::vector<std::string> params;
@@ -240,17 +243,16 @@ CloudBuildMetadata::CreateBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->CreateBuildTrigger(context, request);
+  return child_->CreateBuildTrigger(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildMetadata::GetBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -269,17 +271,16 @@ CloudBuildMetadata::GetBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->GetBuildTrigger(context, request);
+  return child_->GetBuildTrigger(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
 CloudBuildMetadata::ListBuildTriggers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -299,16 +300,15 @@ CloudBuildMetadata::ListBuildTriggers(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ListBuildTriggers(context, request);
+  return child_->ListBuildTriggers(context, options, request);
 }
 
 Status CloudBuildMetadata::DeleteBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
         request) {
   std::vector<std::string> params;
@@ -329,17 +329,16 @@ Status CloudBuildMetadata::DeleteBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->DeleteBuildTrigger(context, request);
+  return child_->DeleteBuildTrigger(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildMetadata::UpdateBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
         request) {
   std::vector<std::string> params;
@@ -362,18 +361,18 @@ CloudBuildMetadata::UpdateBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->UpdateBuildTrigger(context, request);
+  return child_->UpdateBuildTrigger(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncRunBuildTrigger(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -392,29 +391,31 @@ CloudBuildMetadata::AsyncRunBuildTrigger(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncRunBuildTrigger(cq, std::move(context), options, request);
+  return child_->AsyncRunBuildTrigger(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildMetadata::ReceiveTriggerWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "trigger=", internal::UrlEncode(request.trigger())));
-  return child_->ReceiveTriggerWebhook(context, request);
+  return child_->ReceiveTriggerWebhook(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncCreateWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -433,17 +434,17 @@ CloudBuildMetadata::AsyncCreateWorkerPool(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncCreateWorkerPool(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncCreateWorkerPool(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildMetadata::GetWorkerPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -462,18 +463,18 @@ CloudBuildMetadata::GetWorkerPool(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->GetWorkerPool(context, request);
+  return child_->GetWorkerPool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncDeleteWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -492,18 +493,19 @@ CloudBuildMetadata::AsyncDeleteWorkerPool(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncDeleteWorkerPool(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncDeleteWorkerPool(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncUpdateWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -524,17 +526,17 @@ CloudBuildMetadata::AsyncUpdateWorkerPool(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncUpdateWorkerPool(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncUpdateWorkerPool(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
 CloudBuildMetadata::ListWorkerPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -553,31 +555,34 @@ CloudBuildMetadata::ListWorkerPools(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ListWorkerPools(context, request);
+  return child_->ListWorkerPools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> CloudBuildMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void CloudBuildMetadata::SetMetadata(grpc::ClientContext& context,

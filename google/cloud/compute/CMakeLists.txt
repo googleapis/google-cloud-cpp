@@ -110,42 +110,44 @@ set_target_properties(google_cloud_cpp_compute
                       PROPERTIES EXPORT_NAME "google-cloud-cpp::compute")
 add_library(google-cloud-cpp::compute ALIAS google_cloud_cpp_compute)
 
-# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
-# for these, a regular library would not work on macOS (where the library needs
-# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
-# that they need absolute paths for their sources.
-foreach (dir IN LISTS service_dirs operation_service_dirs)
-    string(REPLACE "/v1/" "" short_dir "${dir}")
-    file(
-        GLOB ${short_dir}_relative_mock_files
-        LIST_DIRECTORIES false
-        RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}mocks/*.h")
-    list(SORT ${short_dir}_relative_mock_files)
-    set(mock_files)
-    foreach (file IN LISTS ${short_dir}_relative_mock_files)
-        list(APPEND mock_files "${file}")
+if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
+    # Create a header-only library for the mocks. We use a CMake `INTERFACE`
+    # library for these, a regular library would not work on macOS (where the
+    # library needs at least one .o file). Unfortunately INTERFACE libraries are
+    # a bit weird in that they need absolute paths for their sources.
+    foreach (dir IN LISTS service_dirs operation_service_dirs)
+        string(REPLACE "/v1/" "" short_dir "${dir}")
+        file(
+            GLOB ${short_dir}_relative_mock_files
+            LIST_DIRECTORIES false
+            RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}mocks/*.h")
+        list(SORT ${short_dir}_relative_mock_files)
+        set(mock_files)
+        foreach (file IN LISTS ${short_dir}_relative_mock_files)
+            list(APPEND mock_files "${file}")
+        endforeach ()
+        add_library(google_cloud_cpp_compute_${short_dir}_mocks INTERFACE)
+        target_sources(google_cloud_cpp_compute_${short_dir}_mocks
+                       INTERFACE ${mock_files})
+        target_link_libraries(
+            google_cloud_cpp_compute_${short_dir}_mocks
+            INTERFACE google-cloud-cpp::compute-${short_dir} GTest::gmock_main
+                      GTest::gmock GTest::gtest)
+        set_target_properties(
+            google_cloud_cpp_compute_${short_dir}_mocks
+            PROPERTIES EXPORT_NAME google-cloud-cpp::compute-${short_dir}_mocks)
+        target_include_directories(
+            google_cloud_cpp_compute_${short_dir}_mocks
+            INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                      $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                      $<INSTALL_INTERFACE:include>)
+        target_compile_options(google_cloud_cpp_compute_${short_dir}_mocks
+                               INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+        google_cloud_cpp_install_headers(
+            "google_cloud_cpp_compute_${short_dir}_mocks"
+            "include/google/cloud/compute")
     endforeach ()
-    add_library(google_cloud_cpp_compute_${short_dir}_mocks INTERFACE)
-    target_sources(google_cloud_cpp_compute_${short_dir}_mocks
-                   INTERFACE ${mock_files})
-    target_link_libraries(
-        google_cloud_cpp_compute_${short_dir}_mocks
-        INTERFACE google-cloud-cpp::compute-${short_dir} GTest::gmock_main
-                  GTest::gmock GTest::gtest)
-    set_target_properties(
-        google_cloud_cpp_compute_${short_dir}_mocks
-        PROPERTIES EXPORT_NAME google-cloud-cpp::compute-${short_dir}_mocks)
-    target_include_directories(
-        google_cloud_cpp_compute_${short_dir}_mocks
-        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                  $<INSTALL_INTERFACE:include>)
-    target_compile_options(google_cloud_cpp_compute_${short_dir}_mocks
-                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-    google_cloud_cpp_install_headers(
-        "google_cloud_cpp_compute_${short_dir}_mocks"
-        "include/google/cloud/compute")
-endforeach ()
+endif ()
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(compute_quickstart "quickstart/quickstart.cc")

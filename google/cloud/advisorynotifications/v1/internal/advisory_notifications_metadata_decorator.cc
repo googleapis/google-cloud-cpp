@@ -44,43 +44,43 @@ AdvisoryNotificationsServiceMetadata::AdvisoryNotificationsServiceMetadata(
 
 StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
 AdvisoryNotificationsServiceMetadata::ListNotifications(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListNotifications(context, request);
+  return child_->ListNotifications(context, options, request);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
 AdvisoryNotificationsServiceMetadata::GetNotification(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::advisorynotifications::v1::GetNotificationRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNotification(context, request);
+  return child_->GetNotification(context, options, request);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 AdvisoryNotificationsServiceMetadata::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::advisorynotifications::v1::GetSettingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSettings(context, request);
+  return child_->GetSettings(context, options, request);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 AdvisoryNotificationsServiceMetadata::UpdateSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("settings.name=",
                            internal::UrlEncode(request.settings().name())));
-  return child_->UpdateSettings(context, request);
+  return child_->UpdateSettings(context, options, request);
 }
 
 void AdvisoryNotificationsServiceMetadata::SetMetadata(

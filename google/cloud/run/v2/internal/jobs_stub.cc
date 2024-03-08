@@ -22,6 +22,7 @@
 #include <google/cloud/run/v2/job.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ JobsStub::~JobsStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobsStub::AsyncCreateJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::run::v2::CreateJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::run::v2::CreateJobRequest,
                                     google::longrunning::Operation>(
@@ -47,7 +49,7 @@ DefaultJobsStub::AsyncCreateJob(
 }
 
 StatusOr<google::cloud::run::v2::Job> DefaultJobsStub::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::GetJobRequest const& request) {
   google::cloud::run::v2::Job response;
   auto status = grpc_stub_->GetJob(&context, request, &response);
@@ -58,7 +60,7 @@ StatusOr<google::cloud::run::v2::Job> DefaultJobsStub::GetJob(
 }
 
 StatusOr<google::cloud::run::v2::ListJobsResponse> DefaultJobsStub::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::ListJobsRequest const& request) {
   google::cloud::run::v2::ListJobsResponse response;
   auto status = grpc_stub_->ListJobs(&context, request, &response);
@@ -71,7 +73,8 @@ StatusOr<google::cloud::run::v2::ListJobsResponse> DefaultJobsStub::ListJobs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobsStub::AsyncUpdateJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::run::v2::UpdateJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::run::v2::UpdateJobRequest,
                                     google::longrunning::Operation>(
@@ -87,7 +90,8 @@ DefaultJobsStub::AsyncUpdateJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobsStub::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::run::v2::DeleteJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::run::v2::DeleteJobRequest,
                                     google::longrunning::Operation>(
@@ -102,7 +106,8 @@ DefaultJobsStub::AsyncDeleteJob(
 
 future<StatusOr<google::longrunning::Operation>> DefaultJobsStub::AsyncRunJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::run::v2::RunJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::run::v2::RunJobRequest,
                                     google::longrunning::Operation>(
@@ -116,7 +121,7 @@ future<StatusOr<google::longrunning::Operation>> DefaultJobsStub::AsyncRunJob(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultJobsStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -127,7 +132,7 @@ StatusOr<google::iam::v1::Policy> DefaultJobsStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultJobsStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -139,7 +144,7 @@ StatusOr<google::iam::v1::Policy> DefaultJobsStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultJobsStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -152,7 +157,9 @@ DefaultJobsStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -167,7 +174,9 @@ DefaultJobsStub::AsyncGetOperation(
 
 future<Status> DefaultJobsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

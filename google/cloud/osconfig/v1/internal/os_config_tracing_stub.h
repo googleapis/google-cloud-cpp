@@ -39,63 +39,63 @@ class OsConfigServiceTracingStub : public OsConfigServiceStub {
       std::shared_ptr<OsConfigServiceStub> child);
 
   StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::ExecutePatchJobRequest const& request)
       override;
 
   StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::GetPatchJobRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::v1::PatchJob> CancelPatchJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::CancelPatchJobRequest const& request)
       override;
 
   StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse> ListPatchJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::ListPatchJobsRequest const& request)
       override;
 
   StatusOr<google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse>
   ListPatchJobInstanceDetails(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
           request) override;
 
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> CreatePatchDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request)
       override;
 
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> GetPatchDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request)
       override;
 
   StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse>
   ListPatchDeployments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& request)
       override;
 
   Status DeletePatchDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request)
       override;
 
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request)
       override;
 
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request)
       override;
 
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request)
       override;
 

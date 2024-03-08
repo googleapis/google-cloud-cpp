@@ -38,31 +38,31 @@ class ContextsTracingStub : public ContextsStub {
   explicit ContextsTracingStub(std::shared_ptr<ContextsStub> child);
 
   StatusOr<google::cloud::dialogflow::v2::ListContextsResponse> ListContexts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListContextsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetContextRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateContextRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateContextRequest const& request)
       override;
 
   Status DeleteContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteContextRequest const& request)
       override;
 
   Status DeleteAllContexts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request)
       override;
 

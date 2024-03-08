@@ -24,6 +24,7 @@
 #include <google/cloud/compute/forwarding_rules/v1/forwarding_rules.pb.h>
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -74,7 +75,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultForwardingRulesRestStub::AsyncDeleteForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::forwarding_rules::v1::
         DeleteForwardingRuleRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -86,7 +87,7 @@ DefaultForwardingRulesRestStub::AsyncDeleteForwardingRule(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "forwardingRules", "/", request.forwarding_rule()),
@@ -97,7 +98,7 @@ DefaultForwardingRulesRestStub::AsyncDeleteForwardingRule(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -123,7 +124,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultForwardingRulesRestStub::AsyncInsertForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::forwarding_rules::v1::
         InsertForwardingRuleRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -136,7 +137,7 @@ DefaultForwardingRulesRestStub::AsyncInsertForwardingRule(
                 *service, *rest_context, request.forwarding_rule_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "forwardingRules"),
@@ -147,7 +148,7 @@ DefaultForwardingRulesRestStub::AsyncInsertForwardingRule(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -180,7 +181,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultForwardingRulesRestStub::AsyncPatchForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::forwarding_rules::v1::
         PatchForwardingRuleRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -193,7 +194,7 @@ DefaultForwardingRulesRestStub::AsyncPatchForwardingRule(
                 *service, *rest_context, request.forwarding_rule_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "forwardingRules", "/", request.forwarding_rule()),
@@ -204,7 +205,7 @@ DefaultForwardingRulesRestStub::AsyncPatchForwardingRule(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -215,7 +216,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultForwardingRulesRestStub::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -228,7 +229,7 @@ DefaultForwardingRulesRestStub::AsyncSetLabels(
                 *service, *rest_context,
                 request.region_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "forwardingRules", "/", request.resource(), "/",
@@ -240,7 +241,7 @@ DefaultForwardingRulesRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -251,7 +252,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultForwardingRulesRestStub::AsyncSetTarget(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -264,7 +265,7 @@ DefaultForwardingRulesRestStub::AsyncSetTarget(
                 *service, *rest_context, request.target_reference_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "forwardingRules", "/", request.forwarding_rule(),
@@ -276,7 +277,7 @@ DefaultForwardingRulesRestStub::AsyncSetTarget(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -287,7 +288,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultForwardingRulesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -300,7 +301,7 @@ DefaultForwardingRulesRestStub::AsyncGetOperation(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/projects/", request.project(), "/regions/",
                              request.region(), "/operations/",
                              request.operation())));
@@ -309,7 +310,7 @@ DefaultForwardingRulesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -319,7 +320,7 @@ DefaultForwardingRulesRestStub::AsyncGetOperation(
 future<Status> DefaultForwardingRulesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
@@ -330,7 +331,7 @@ future<Status> DefaultForwardingRulesRestStub::AsyncCancelOperation(
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", options),
+                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
                 "/projects/", request.project(), "/regions/", request.region(),
                 "/operations/", request.operation())));
       },
@@ -338,7 +339,7 @@ future<Status> DefaultForwardingRulesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

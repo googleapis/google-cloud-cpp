@@ -27,6 +27,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -77,6 +78,9 @@ class StorageControlConnectionImpl
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<storagecontrol_v2_internal::StorageControlStub> stub_;
   Options options_;
+  std::shared_ptr<google::cloud::internal::InvocationIdGenerator>
+      invocation_id_generator_ =
+          std::make_shared<google::cloud::internal::InvocationIdGenerator>();
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -27,8 +27,9 @@ set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
 # Protobuf messages. We do not bother to have an internal library that depends
 # on Protobuf but not gRPC. So these libraries must depend on
 # `google_cloud_cpp_grpc_utils`.
-set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES
-    "oauth2;storage;experimental-bigquery_rest")
+set(GOOGLE_CLOUD_CPP_NO_GRPC_FEATURES
+    # cmake-format: sort
+    "experimental-bigquery_rest" "mocks" "oauth2" "storage")
 
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sort
@@ -49,6 +50,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "apigeeconnect"
     "apikeys"
     "appengine"
+    "apphub"
     "artifactregistry"
     "asset"
     "assuredworkloads"
@@ -63,6 +65,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "certificatemanager"
     "channel"
     "cloudbuild"
+    "cloudcontrolspartner"
     "cloudquotas"
     "commerce"
     "composer"
@@ -352,7 +355,7 @@ macro (google_cloud_cpp_enable_cleanup)
     list(REMOVE_DUPLICATES GOOGLE_CLOUD_CPP_ENABLE)
 
     set(grpc_features ${GOOGLE_CLOUD_CPP_ENABLE})
-    list(REMOVE_ITEM grpc_features ${GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES})
+    list(REMOVE_ITEM grpc_features ${GOOGLE_CLOUD_CPP_NO_GRPC_FEATURES})
     if (grpc_features)
         set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
     endif ()

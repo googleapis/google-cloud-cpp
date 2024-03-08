@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/document_link_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,53 +37,61 @@ DocumentLinkServiceLogging::DocumentLinkServiceLogging(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
 DocumentLinkServiceLogging::ListLinkedTargets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-              request) { return child_->ListLinkedTargets(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ListLinkedTargets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
 DocumentLinkServiceLogging::ListLinkedSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
-              request) { return child_->ListLinkedSources(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ListLinkedSources(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
 DocumentLinkServiceLogging::CreateDocumentLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-              request) { return child_->CreateDocumentLink(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->CreateDocumentLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status DocumentLinkServiceLogging::DeleteDocumentLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-              request) { return child_->DeleteDocumentLink(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->DeleteDocumentLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

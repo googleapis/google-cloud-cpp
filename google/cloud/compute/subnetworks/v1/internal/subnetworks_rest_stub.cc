@@ -24,6 +24,7 @@
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <google/cloud/compute/subnetworks/v1/subnetworks.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -74,7 +75,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSubnetworksRestStub::AsyncDeleteSubnetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -86,7 +87,7 @@ DefaultSubnetworksRestStub::AsyncDeleteSubnetwork(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "subnetworks", "/", request.subnetwork()),
@@ -97,7 +98,7 @@ DefaultSubnetworksRestStub::AsyncDeleteSubnetwork(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +109,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSubnetworksRestStub::AsyncExpandIpCidrRange(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::subnetworks::v1::
         ExpandIpCidrRangeRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -122,7 +123,7 @@ DefaultSubnetworksRestStub::AsyncExpandIpCidrRange(
                 request.subnetworks_expand_ip_cidr_range_request_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "subnetworks", "/", request.subnetwork(), "/",
@@ -134,7 +135,7 @@ DefaultSubnetworksRestStub::AsyncExpandIpCidrRange(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -178,7 +179,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSubnetworksRestStub::AsyncInsertSubnetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -190,7 +191,7 @@ DefaultSubnetworksRestStub::AsyncInsertSubnetwork(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.subnetwork_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "subnetworks"),
@@ -201,7 +202,7 @@ DefaultSubnetworksRestStub::AsyncInsertSubnetwork(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -255,7 +256,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSubnetworksRestStub::AsyncPatchSubnetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -267,7 +268,7 @@ DefaultSubnetworksRestStub::AsyncPatchSubnetwork(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.subnetwork_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "subnetworks", "/", request.subnetwork()),
@@ -281,7 +282,7 @@ DefaultSubnetworksRestStub::AsyncPatchSubnetwork(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -308,7 +309,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSubnetworksRestStub::AsyncSetPrivateIpGoogleAccess(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::subnetworks::v1::
         SetPrivateIpGoogleAccessRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -322,10 +323,11 @@ DefaultSubnetworksRestStub::AsyncSetPrivateIpGoogleAccess(
             request.subnetworks_set_private_ip_google_access_request_resource(),
             false,
             absl::StrCat("/", "compute", "/",
-                         rest_internal::DetermineApiVersion("v1", options), "/",
-                         "projects", "/", request.project(), "/", "regions",
-                         "/", request.region(), "/", "subnetworks", "/",
-                         request.subnetwork(), "/", "setPrivateIpGoogleAccess"),
+                         rest_internal::DetermineApiVersion("v1", *options),
+                         "/", "projects", "/", request.project(), "/",
+                         "regions", "/", request.region(), "/", "subnetworks",
+                         "/", request.subnetwork(), "/",
+                         "setPrivateIpGoogleAccess"),
             rest_internal::TrimEmptyQueryParameters(
                 {std::make_pair("request_id", request.request_id())})));
       },
@@ -333,7 +335,7 @@ DefaultSubnetworksRestStub::AsyncSetPrivateIpGoogleAccess(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -361,7 +363,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSubnetworksRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -374,7 +376,7 @@ DefaultSubnetworksRestStub::AsyncGetOperation(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/projects/", request.project(), "/regions/",
                              request.region(), "/operations/",
                              request.operation())));
@@ -383,7 +385,7 @@ DefaultSubnetworksRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -393,7 +395,7 @@ DefaultSubnetworksRestStub::AsyncGetOperation(
 future<Status> DefaultSubnetworksRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
@@ -404,7 +406,7 @@ future<Status> DefaultSubnetworksRestStub::AsyncCancelOperation(
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", options),
+                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
                 "/projects/", request.project(), "/regions/", request.region(),
                 "/operations/", request.operation())));
       },
@@ -412,7 +414,7 @@ future<Status> DefaultSubnetworksRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

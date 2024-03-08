@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/inventory/v1/key_dashboard_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

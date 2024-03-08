@@ -45,12 +45,12 @@ FeaturestoreOnlineServingServiceMetadata::
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceMetadata::ReadFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
-  return child_->ReadFeatureValues(context, request);
+  return child_->ReadFeatureValues(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -68,12 +68,12 @@ FeaturestoreOnlineServingServiceMetadata::StreamingReadFeatureValues(
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 FeaturestoreOnlineServingServiceMetadata::WriteFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
-  return child_->WriteFeatureValues(context, request);
+  return child_->WriteFeatureValues(context, options, request);
 }
 
 void FeaturestoreOnlineServingServiceMetadata::SetMetadata(

@@ -162,7 +162,14 @@ storage::ObjectMetadata FromProto(google::storage::v2::Object object,
     metadata.set_custom_time(
         google::cloud::internal::ToChronoTimePoint(object.custom_time()));
   }
-
+  if (object.has_soft_delete_time()) {
+    metadata.set_soft_delete_time(
+        google::cloud::internal::ToChronoTimePoint(object.soft_delete_time()));
+  }
+  if (object.has_hard_delete_time()) {
+    metadata.set_hard_delete_time(
+        google::cloud::internal::ToChronoTimePoint(object.hard_delete_time()));
+  }
   return metadata;
 }
 

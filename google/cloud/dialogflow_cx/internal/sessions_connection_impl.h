@@ -29,6 +29,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,6 +37,10 @@ namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+void SessionsServerStreamingDetectIntentStreamingUpdater(
+    google::cloud::dialogflow::cx::v3::DetectIntentResponse const& response,
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest& request);
 
 class SessionsConnectionImpl : public dialogflow_cx::SessionsConnection {
  public:
@@ -51,6 +56,11 @@ class SessionsConnectionImpl : public dialogflow_cx::SessionsConnection {
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
   DetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) override;
+
+  StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
+  ServerStreamingDetectIntent(
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
+      override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,

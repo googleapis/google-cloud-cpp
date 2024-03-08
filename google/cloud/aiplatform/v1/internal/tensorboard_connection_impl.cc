@@ -27,6 +27,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -72,35 +73,39 @@ future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnectionImpl::CreateTensorboard(
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTensorboard(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::Tensorboard>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::aiplatform::v1::CreateTensorboardRequest const&
               request) {
-        return stub->AsyncCreateTensorboard(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncCreateTensorboard(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::Tensorboard>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTensorboard(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -112,46 +117,50 @@ TensorboardServiceConnectionImpl::GetTensorboard(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTensorboard(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
-        return stub_->GetTensorboard(context, request);
+        return stub_->GetTensorboard(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnectionImpl::UpdateTensorboard(
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateTensorboard(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::Tensorboard>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::aiplatform::v1::UpdateTensorboardRequest const&
               request) {
-        return stub->AsyncUpdateTensorboard(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncUpdateTensorboard(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::Tensorboard>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateTensorboard(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -164,20 +173,21 @@ TensorboardServiceConnectionImpl::ListTensorboards(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Tensorboard>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::TensorboardServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListTensorboardsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListTensorboardsRequest const&
                        request) {
-              return stub->ListTensorboards(context, request);
+              return stub->ListTensorboards(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListTensorboardsResponse r) {
         std::vector<google::cloud::aiplatform::v1::Tensorboard> result(
@@ -192,35 +202,39 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnectionImpl::DeleteTensorboard(
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTensorboard(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::aiplatform::v1::DeleteTensorboardRequest const&
               request) {
-        return stub->AsyncDeleteTensorboard(cq, std::move(context), options,
-                                            request);
+        return stub->AsyncDeleteTensorboard(cq, std::move(context),
+                                            std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTensorboard(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -231,12 +245,12 @@ TensorboardServiceConnectionImpl::ReadTensorboardUsage(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReadTensorboardUsage(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
                  request) {
-        return stub_->ReadTensorboardUsage(context, request);
+        return stub_->ReadTensorboardUsage(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
@@ -246,12 +260,12 @@ TensorboardServiceConnectionImpl::ReadTensorboardSize(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReadTensorboardSize(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&
                  request) {
-        return stub_->ReadTensorboardSize(context, request);
+        return stub_->ReadTensorboardSize(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
@@ -262,12 +276,12 @@ TensorboardServiceConnectionImpl::CreateTensorboardExperiment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTensorboardExperiment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  CreateTensorboardExperimentRequest const& request) {
-        return stub_->CreateTensorboardExperiment(context, request);
+        return stub_->CreateTensorboardExperiment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
@@ -279,12 +293,12 @@ TensorboardServiceConnectionImpl::GetTensorboardExperiment(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTensorboardExperiment(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
               request) {
-        return stub_->GetTensorboardExperiment(context, request);
+        return stub_->GetTensorboardExperiment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
@@ -295,12 +309,12 @@ TensorboardServiceConnectionImpl::UpdateTensorboardExperiment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTensorboardExperiment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  UpdateTensorboardExperimentRequest const& request) {
-        return stub_->UpdateTensorboardExperiment(context, request);
+        return stub_->UpdateTensorboardExperiment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>
@@ -313,21 +327,23 @@ TensorboardServiceConnectionImpl::ListTensorboardExperiments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::TensorboardServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::
               ListTensorboardExperimentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::
                        ListTensorboardExperimentsRequest const& request) {
-              return stub->ListTensorboardExperiments(context, request);
+              return stub->ListTensorboardExperiments(context, options,
+                                                      request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse r) {
         std::vector<google::cloud::aiplatform::v1::TensorboardExperiment>
@@ -343,35 +359,38 @@ TensorboardServiceConnectionImpl::DeleteTensorboardExperiment(
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTensorboardExperiment(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::cloud::aiplatform::v1::
                          DeleteTensorboardExperimentRequest const& request) {
-        return stub->AsyncDeleteTensorboardExperiment(cq, std::move(context),
-                                                      options, request);
+        return stub->AsyncDeleteTensorboardExperiment(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTensorboardExperiment(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -382,12 +401,12 @@ TensorboardServiceConnectionImpl::CreateTensorboardRun(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTensorboardRun(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CreateTensorboardRunRequest const&
                  request) {
-        return stub_->CreateTensorboardRun(context, request);
+        return stub_->CreateTensorboardRun(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
@@ -398,12 +417,12 @@ TensorboardServiceConnectionImpl::BatchCreateTensorboardRuns(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchCreateTensorboardRuns(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  BatchCreateTensorboardRunsRequest const& request) {
-        return stub_->BatchCreateTensorboardRuns(context, request);
+        return stub_->BatchCreateTensorboardRuns(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
@@ -413,12 +432,12 @@ TensorboardServiceConnectionImpl::GetTensorboardRun(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTensorboardRun(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetTensorboardRunRequest const&
                  request) {
-        return stub_->GetTensorboardRun(context, request);
+        return stub_->GetTensorboardRun(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
@@ -428,12 +447,12 @@ TensorboardServiceConnectionImpl::UpdateTensorboardRun(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTensorboardRun(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const&
                  request) {
-        return stub_->UpdateTensorboardRun(context, request);
+        return stub_->UpdateTensorboardRun(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TensorboardRun>
@@ -445,21 +464,22 @@ TensorboardServiceConnectionImpl::ListTensorboardRuns(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TensorboardRun>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::TensorboardServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::aiplatform::v1::ListTensorboardRunsRequest const&
                     request) {
-              return stub->ListTensorboardRuns(context, request);
+              return stub->ListTensorboardRuns(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListTensorboardRunsResponse r) {
         std::vector<google::cloud::aiplatform::v1::TensorboardRun> result(
@@ -474,35 +494,39 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnectionImpl::DeleteTensorboardRun(
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTensorboardRun(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
               request) {
-        return stub->AsyncDeleteTensorboardRun(cq, std::move(context), options,
-                                               request);
+        return stub->AsyncDeleteTensorboardRun(cq, std::move(context),
+                                               std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTensorboardRun(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -515,12 +539,13 @@ TensorboardServiceConnectionImpl::BatchCreateTensorboardTimeSeries(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchCreateTensorboardTimeSeries(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  BatchCreateTensorboardTimeSeriesRequest const& request) {
-        return stub_->BatchCreateTensorboardTimeSeries(context, request);
+        return stub_->BatchCreateTensorboardTimeSeries(context, options,
+                                                       request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
@@ -531,12 +556,12 @@ TensorboardServiceConnectionImpl::CreateTensorboardTimeSeries(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTensorboardTimeSeries(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  CreateTensorboardTimeSeriesRequest const& request) {
-        return stub_->CreateTensorboardTimeSeries(context, request);
+        return stub_->CreateTensorboardTimeSeries(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
@@ -548,12 +573,12 @@ TensorboardServiceConnectionImpl::GetTensorboardTimeSeries(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTensorboardTimeSeries(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
               request) {
-        return stub_->GetTensorboardTimeSeries(context, request);
+        return stub_->GetTensorboardTimeSeries(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
@@ -564,12 +589,12 @@ TensorboardServiceConnectionImpl::UpdateTensorboardTimeSeries(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTensorboardTimeSeries(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  UpdateTensorboardTimeSeriesRequest const& request) {
-        return stub_->UpdateTensorboardTimeSeries(context, request);
+        return stub_->UpdateTensorboardTimeSeries(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>
@@ -582,21 +607,22 @@ TensorboardServiceConnectionImpl::ListTensorboardTimeSeries(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::TensorboardServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::
                        ListTensorboardTimeSeriesRequest const& request) {
-              return stub->ListTensorboardTimeSeries(context, request);
+              return stub->ListTensorboardTimeSeries(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse r) {
         std::vector<google::cloud::aiplatform::v1::TensorboardTimeSeries>
@@ -612,35 +638,38 @@ TensorboardServiceConnectionImpl::DeleteTensorboardTimeSeries(
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTensorboardTimeSeries(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::cloud::aiplatform::v1::
                          DeleteTensorboardTimeSeriesRequest const& request) {
-        return stub->AsyncDeleteTensorboardTimeSeries(cq, std::move(context),
-                                                      options, request);
+        return stub->AsyncDeleteTensorboardTimeSeries(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTensorboardTimeSeries(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -653,12 +682,13 @@ TensorboardServiceConnectionImpl::BatchReadTensorboardTimeSeriesData(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchReadTensorboardTimeSeriesData(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  BatchReadTensorboardTimeSeriesDataRequest const& request) {
-        return stub_->BatchReadTensorboardTimeSeriesData(context, request);
+        return stub_->BatchReadTensorboardTimeSeriesData(context, options,
+                                                         request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
@@ -669,12 +699,12 @@ TensorboardServiceConnectionImpl::ReadTensorboardTimeSeriesData(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReadTensorboardTimeSeriesData(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  ReadTensorboardTimeSeriesDataRequest const& request) {
-        return stub_->ReadTensorboardTimeSeriesData(context, request);
+        return stub_->ReadTensorboardTimeSeriesData(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>
@@ -707,12 +737,12 @@ TensorboardServiceConnectionImpl::WriteTensorboardExperimentData(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteTensorboardExperimentData(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  WriteTensorboardExperimentDataRequest const& request) {
-        return stub_->WriteTensorboardExperimentData(context, request);
+        return stub_->WriteTensorboardExperimentData(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
@@ -724,12 +754,12 @@ TensorboardServiceConnectionImpl::WriteTensorboardRunData(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteTensorboardRunData(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
               request) {
-        return stub_->WriteTensorboardRunData(context, request);
+        return stub_->WriteTensorboardRunData(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>
@@ -743,21 +773,23 @@ TensorboardServiceConnectionImpl::ExportTensorboardTimeSeriesData(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::TensorboardServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::
               ExportTensorboardTimeSeriesDataRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::
                        ExportTensorboardTimeSeriesDataRequest const& request) {
-              return stub->ExportTensorboardTimeSeriesData(context, request);
+              return stub->ExportTensorboardTimeSeriesData(context, options,
+                                                           request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse
              r) {

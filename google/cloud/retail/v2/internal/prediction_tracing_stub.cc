@@ -18,6 +18,7 @@
 
 #include "google/cloud/retail/v2/internal/prediction_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,13 +33,14 @@ PredictionServiceTracingStub::PredictionServiceTracingStub(
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceTracingStub::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::PredictRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.PredictionService",
                                      "Predict");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Predict(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Predict(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

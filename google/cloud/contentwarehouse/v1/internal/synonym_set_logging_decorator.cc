@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/synonymset_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,66 +37,70 @@ SynonymSetServiceLogging::SynonymSetServiceLogging(
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceLogging::CreateSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
                  request) {
-        return child_->CreateSynonymSet(context, request);
+        return child_->CreateSynonymSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceLogging::GetSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::GetSynonymSetRequest const&
-                 request) { return child_->GetSynonymSet(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetSynonymSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceLogging::UpdateSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
                  request) {
-        return child_->UpdateSynonymSet(context, request);
+        return child_->UpdateSynonymSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status SynonymSetServiceLogging::DeleteSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
                  request) {
-        return child_->DeleteSynonymSet(context, request);
+        return child_->DeleteSynonymSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
 SynonymSetServiceLogging::ListSynonymSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
-                 request) { return child_->ListSynonymSets(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListSynonymSets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

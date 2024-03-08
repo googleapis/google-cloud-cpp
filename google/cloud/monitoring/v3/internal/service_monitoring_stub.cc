@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/service_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ ServiceMonitoringServiceStub::~ServiceMonitoringServiceStub() = default;
 
 StatusOr<google::monitoring::v3::Service>
 DefaultServiceMonitoringServiceStub::CreateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::CreateServiceRequest const& request) {
   google::monitoring::v3::Service response;
   auto status = grpc_stub_->CreateService(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultServiceMonitoringServiceStub::CreateService(
 
 StatusOr<google::monitoring::v3::Service>
 DefaultServiceMonitoringServiceStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetServiceRequest const& request) {
   google::monitoring::v3::Service response;
   auto status = grpc_stub_->GetService(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultServiceMonitoringServiceStub::GetService(
 
 StatusOr<google::monitoring::v3::ListServicesResponse>
 DefaultServiceMonitoringServiceStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListServicesRequest const& request) {
   google::monitoring::v3::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultServiceMonitoringServiceStub::ListServices(
 
 StatusOr<google::monitoring::v3::Service>
 DefaultServiceMonitoringServiceStub::UpdateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::UpdateServiceRequest const& request) {
   google::monitoring::v3::Service response;
   auto status = grpc_stub_->UpdateService(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultServiceMonitoringServiceStub::UpdateService(
 }
 
 Status DefaultServiceMonitoringServiceStub::DeleteService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::DeleteServiceRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteService(&context, request, &response);
@@ -90,7 +91,7 @@ Status DefaultServiceMonitoringServiceStub::DeleteService(
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 DefaultServiceMonitoringServiceStub::CreateServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
   google::monitoring::v3::ServiceLevelObjective response;
   auto status =
@@ -103,7 +104,7 @@ DefaultServiceMonitoringServiceStub::CreateServiceLevelObjective(
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 DefaultServiceMonitoringServiceStub::GetServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
   google::monitoring::v3::ServiceLevelObjective response;
   auto status =
@@ -116,7 +117,7 @@ DefaultServiceMonitoringServiceStub::GetServiceLevelObjective(
 
 StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
 DefaultServiceMonitoringServiceStub::ListServiceLevelObjectives(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListServiceLevelObjectivesRequest const& request) {
   google::monitoring::v3::ListServiceLevelObjectivesResponse response;
   auto status =
@@ -129,7 +130,7 @@ DefaultServiceMonitoringServiceStub::ListServiceLevelObjectives(
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 DefaultServiceMonitoringServiceStub::UpdateServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
   google::monitoring::v3::ServiceLevelObjective response;
   auto status =
@@ -141,7 +142,7 @@ DefaultServiceMonitoringServiceStub::UpdateServiceLevelObjective(
 }
 
 Status DefaultServiceMonitoringServiceStub::DeleteServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
   google::protobuf::Empty response;
   auto status =

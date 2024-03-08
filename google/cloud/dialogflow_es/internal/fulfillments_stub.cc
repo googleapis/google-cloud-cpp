@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/fulfillment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ FulfillmentsStub::~FulfillmentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 DefaultFulfillmentsStub::GetFulfillment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
   google::cloud::dialogflow::v2::Fulfillment response;
   auto status = grpc_stub_->GetFulfillment(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultFulfillmentsStub::GetFulfillment(
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 DefaultFulfillmentsStub::UpdateFulfillment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
   google::cloud::dialogflow::v2::Fulfillment response;
   auto status = grpc_stub_->UpdateFulfillment(&context, request, &response);

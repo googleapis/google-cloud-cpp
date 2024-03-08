@@ -96,6 +96,10 @@ class DataTransferServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency EnrollDataSources(
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request);
+
+  virtual google::cloud::Idempotency UnenrollDataSources(
+      google::cloud::bigquery::datatransfer::v1::
+          UnenrollDataSourcesRequest const& request);
 };
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>

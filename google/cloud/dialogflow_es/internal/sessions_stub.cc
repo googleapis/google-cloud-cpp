@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/session.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ SessionsStub::~SessionsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 DefaultSessionsStub::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
   google::cloud::dialogflow::v2::DetectIntentResponse response;
   auto status = grpc_stub_->DetectIntent(&context, request, &response);
@@ -47,11 +48,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
 DefaultSessionsStub::AsyncStreamingDetectIntent(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamingDetectIntent(context, cq);
       });

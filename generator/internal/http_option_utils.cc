@@ -14,6 +14,7 @@
 
 #include "generator/internal/http_option_utils.h"
 #include "generator/internal/http_annotation_parser.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
@@ -64,21 +65,25 @@ struct RestPathVisitor {
   void operator()(PathTemplate::Match const&) { ; }
   void operator()(PathTemplate::MatchRecursive const&) { ; }
   void operator()(std::string const& s) {
-    path.emplace_back([piece = s, api = api_version](
-                          google::protobuf::MethodDescriptor const&) {
-      if (piece == api) {
-        return absl::StrFormat(
-            "rest_internal::DetermineApiVersion(\"%s\", options)", api);
-      }
-      return absl::StrFormat("\"%s\"", piece);
-    });
+    path.emplace_back(
+        [piece = s, api = api_version](
+            google::protobuf::MethodDescriptor const& method, bool is_async) {
+          if (piece != api) return absl::StrFormat("\"%s\"", piece);
+          if (IsLongrunningOperation(method) || is_async) {
+            return absl::StrFormat(
+                "rest_internal::DetermineApiVersion(\"%s\", *options)", api);
+          }
+          return absl::StrFormat(
+              "rest_internal::DetermineApiVersion(\"%s\", options)", api);
+        });
   }
   void operator()(PathTemplate::Variable const& v) {
-    path.emplace_back([piece = v.field_path](
-                          google::protobuf::MethodDescriptor const& method) {
-      return absl::StrFormat("request.%s()",
-                             FormatFieldAccessorCall(method, piece));
-    });
+    path.emplace_back(
+        [piece = v.field_path](google::protobuf::MethodDescriptor const& method,
+                               bool) {
+          return absl::StrFormat("request.%s()",
+                                 FormatFieldAccessorCall(method, piece));
+        });
   }
   void operator()(PathTemplate::Segment const& s) {
     RestPathVisitorHelper(api_version, s, path);
@@ -127,16 +132,23 @@ void SetHttpDerivedMethodVars(
       method_vars["method_request_body"] = info.body;
       method_vars["method_http_verb"] = info.http_verb;
       // method_rest_path is only used for REST transport.
+      auto trailer = [&info] {
+        if (info.rest_path_verb.empty()) return std::string(")");
+        return absl::StrFormat(R"""(, ":%s"))""", info.rest_path_verb);
+      };
+      auto path_expression = [&info, method = &method](bool is_async) {
+        return absl::StrCat(
+            ", ", absl::StrJoin(info.rest_path, R"""(, "/", )""",
+                                [method, is_async](
+                                    std::string* out,
+                                    HttpExtensionInfo::RestPathPiece const& p) {
+                                  out->append(p(*method, is_async));
+                                }));
+      };
       method_vars["method_rest_path"] = absl::StrCat(
-          "absl::StrCat(\"/\", ",
-          absl::StrJoin(
-              info.rest_path, ", \"/\", ",
-              [&](std::string* out, HttpExtensionInfo::RestPathPiece const& p) {
-                out->append(p(method));
-              }),
-          info.rest_path_verb.empty()
-              ? ")"
-              : absl::StrFormat(", \":%s\")", info.rest_path_verb));
+          R"""(absl::StrCat("/")""", path_expression(false), trailer());
+      method_vars["method_rest_path_async"] = absl::StrCat(
+          R"""(absl::StrCat("/")""", path_expression(true), trailer());
     }
 
     // This visitor handles the case where no request field is specified in the
@@ -147,15 +159,21 @@ void SetHttpDerivedMethodVars(
       method_vars["method_request_params"] = method.full_name();
       if (absl::StrContains(info.url_path, info.api_version)) {
         std::string needle = absl::StrFormat("/%s/", info.api_version);
-        auto start = info.url_path.find(needle);
-        method_vars["method_rest_path"] = absl::StrCat(
-            "absl::StrCat(\"", info.url_path.substr(0, start), "/\", ",
-            absl::StrFormat(
-                R"""(rest_internal::DetermineApiVersion("%s", options), "/)""",
-                info.api_version),
-            info.url_path.substr(start + needle.length()), "\")");
+        auto url_path = absl::string_view(info.url_path);
+        auto start = url_path.find(needle);
+        auto pre_needle = url_path.substr(0, start);
+        auto pos_needle = url_path.substr(start + needle.length());
+
+        method_vars["method_rest_path"] = absl::StrFormat(
+            R"""(absl::StrCat("%s/", rest_internal::DetermineApiVersion("%s", options), "/%s"))""",
+            pre_needle, info.api_version, pos_needle);
+        method_vars["method_rest_path_async"] = absl::StrFormat(
+            R"""(absl::StrCat("%s/", rest_internal::DetermineApiVersion("%s", *options), "/%s"))""",
+            pre_needle, info.api_version, pos_needle);
       } else {
         method_vars["method_rest_path"] =
+            absl::StrCat("\"", info.url_path, "\"");
+        method_vars["method_rest_path_async"] =
             absl::StrCat("\"", info.url_path, "\"");
       }
     }
@@ -168,6 +186,7 @@ void SetHttpDerivedMethodVars(
       method_vars["method_http_verb"] = method.full_name();
       method_vars["method_request_param_value"] = method.full_name();
       method_vars["method_rest_path"] = method.full_name();
+      method_vars["method_rest_path_async"] = method.full_name();
     }
     google::protobuf::MethodDescriptor const& method;
     VarsDictionary& method_vars;

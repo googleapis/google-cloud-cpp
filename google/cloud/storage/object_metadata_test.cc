@@ -122,7 +122,9 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "timeDeleted": "2018-05-19T19:32:24Z",
       "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
       "updated": "2018-05-19T19:31:24Z",
-      "customTime": "2020-08-10T12:34:56Z"
+      "customTime": "2020-08-10T12:34:56Z",
+      "softDeleteTime": "2024-03-04T12:34:56.789Z",
+      "hardDeleteTime": "2024-03-11T12:34:56.789Z"
 })""";
   return internal::ObjectMetadataParser::FromString(text).value();
 }
@@ -184,6 +186,14 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ(magic_timestamp + 10, duration_cast<std::chrono::seconds>(
                                       actual.updated().time_since_epoch())
                                       .count());
+  // Use `date -u +%s --date=2024-03-04T12:34:56Z` to get the magic number:
+  EXPECT_EQ(actual.soft_delete_time(),
+            std::chrono::system_clock::from_time_t(1709555696L) +
+                std::chrono::milliseconds(789));
+  // Use `date -u +%s --date=2024-03-11T12:34:56Z` to get the magic number:
+  EXPECT_EQ(actual.hard_delete_time(),
+            std::chrono::system_clock::from_time_t(1710160496L) +
+                std::chrono::milliseconds(789));
 }
 
 /// @test Verify that the IOStream operator works as expected.
@@ -203,6 +213,9 @@ TEST(ObjectMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("size=102400"));
   EXPECT_THAT(actual, HasSubstr("temporary_hold=true"));
   EXPECT_THAT(actual, HasSubstr("custom_time=2020-08-10T12:34:56Z"));
+
+  EXPECT_THAT(actual, HasSubstr("soft_delete_time=2024-03-04T12:34:56.789Z"));
+  EXPECT_THAT(actual, HasSubstr("hard_delete_time=2024-03-11T12:34:56.789Z"));
 }
 
 /// @test Verify that ObjectMetadataJsonForCompose works as expected.
@@ -538,6 +551,50 @@ TEST(ObjectMetadataTest, InsertMetadata) {
   EXPECT_FALSE(copy.has_metadata("not-there"));
   copy.upsert_metadata("not-there", "now-it-is");
   EXPECT_EQ("now-it-is", copy.metadata("not-there"));
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the softDeleteTime field.
+TEST(ObjectMetadataTest, SetSoftDeleteTime) {
+  auto const expected = CreateObjectMetadataForTest();
+  auto copy = expected;
+  auto tp =
+      google::cloud::internal::ParseRfc3339("2020-08-11T09:00:00Z").value();
+  copy.set_soft_delete_time(tp);
+  EXPECT_TRUE(expected.has_soft_delete_time());
+  EXPECT_TRUE(copy.has_soft_delete_time());
+  EXPECT_EQ(tp, copy.soft_delete_time());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can reset the softDeleteTime field.
+TEST(ObjectMetadataTest, ResetSoftDeleteTime) {
+  auto const expected = CreateObjectMetadataForTest();
+  auto copy = expected;
+  copy.reset_soft_delete_time();
+  EXPECT_FALSE(copy.has_soft_delete_time());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the hardDeleteTime field.
+TEST(ObjectMetadataTest, SetHardDeleteTime) {
+  auto const expected = CreateObjectMetadataForTest();
+  auto copy = expected;
+  auto tp =
+      google::cloud::internal::ParseRfc3339("2020-08-11T09:00:00Z").value();
+  copy.set_hard_delete_time(tp);
+  EXPECT_TRUE(expected.has_hard_delete_time());
+  EXPECT_TRUE(copy.has_hard_delete_time());
+  EXPECT_EQ(tp, copy.hard_delete_time());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can reset the softDeleteTime field.
+TEST(ObjectMetadataTest, ResetHardDeleteTime) {
+  auto const expected = CreateObjectMetadataForTest();
+  auto copy = expected;
+  copy.reset_hard_delete_time();
+  EXPECT_FALSE(copy.has_hard_delete_time());
   EXPECT_NE(expected, copy);
 }
 

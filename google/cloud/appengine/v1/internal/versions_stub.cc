@@ -22,6 +22,7 @@
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ VersionsStub::~VersionsStub() = default;
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 DefaultVersionsStub::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::ListVersionsRequest const& request) {
   google::appengine::v1::ListVersionsResponse response;
   auto status = grpc_stub_->ListVersions(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultVersionsStub::ListVersions(
 }
 
 StatusOr<google::appengine::v1::Version> DefaultVersionsStub::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::GetVersionRequest const& request) {
   google::appengine::v1::Version response;
   auto status = grpc_stub_->GetVersion(&context, request, &response);
@@ -56,7 +57,8 @@ StatusOr<google::appengine::v1::Version> DefaultVersionsStub::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVersionsStub::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::appengine::v1::CreateVersionRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::appengine::v1::CreateVersionRequest,
                                     google::longrunning::Operation>(
@@ -72,7 +74,8 @@ DefaultVersionsStub::AsyncCreateVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVersionsStub::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::appengine::v1::UpdateVersionRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::appengine::v1::UpdateVersionRequest,
                                     google::longrunning::Operation>(
@@ -88,7 +91,8 @@ DefaultVersionsStub::AsyncUpdateVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVersionsStub::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::appengine::v1::DeleteVersionRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::appengine::v1::DeleteVersionRequest,
                                     google::longrunning::Operation>(
@@ -104,7 +108,9 @@ DefaultVersionsStub::AsyncDeleteVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVersionsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -119,7 +125,9 @@ DefaultVersionsStub::AsyncGetOperation(
 
 future<Status> DefaultVersionsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

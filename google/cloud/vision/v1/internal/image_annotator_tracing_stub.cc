@@ -18,6 +18,7 @@
 
 #include "google/cloud/vision/v1/internal/image_annotator_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,76 +33,83 @@ ImageAnnotatorTracingStub::ImageAnnotatorTracingStub(
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorTracingStub::BatchAnnotateImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
                                      "BatchAnnotateImages");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchAnnotateImages(context, request));
+  return internal::EndSpan(
+      context, *span, child_->BatchAnnotateImages(context, options, request));
 }
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorTracingStub::BatchAnnotateFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
                                      "BatchAnnotateFiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchAnnotateFiles(context, request));
+  return internal::EndSpan(
+      context, *span, child_->BatchAnnotateFiles(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorTracingStub::AsyncAsyncBatchAnnotateImages(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
                                      "AsyncBatchAnnotateImages");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncAsyncBatchAnnotateImages(cq, context, options, request);
+  auto f = child_->AsyncAsyncBatchAnnotateImages(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorTracingStub::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
                                      "AsyncBatchAnnotateFiles");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncAsyncBatchAnnotateFiles(cq, context, options, request);
+  auto f = child_->AsyncAsyncBatchAnnotateFiles(cq, context, std::move(options),
+                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ImageAnnotatorTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

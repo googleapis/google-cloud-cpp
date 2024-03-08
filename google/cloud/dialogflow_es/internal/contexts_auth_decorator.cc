@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/contexts_auth_decorator.h"
 #include <google/cloud/dialogflow/v2/context.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,51 +33,51 @@ ContextsAuth::ContextsAuth(
 
 StatusOr<google::cloud::dialogflow::v2::ListContextsResponse>
 ContextsAuth::ListContexts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListContextsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListContexts(context, request);
+  return child_->ListContexts(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context> ContextsAuth::GetContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetContext(context, request);
+  return child_->GetContext(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context> ContextsAuth::CreateContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateContext(context, request);
+  return child_->CreateContext(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context> ContextsAuth::UpdateContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateContext(context, request);
+  return child_->UpdateContext(context, options, request);
 }
 
 Status ContextsAuth::DeleteContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteContext(context, request);
+  return child_->DeleteContext(context, options, request);
 }
 
 Status ContextsAuth::DeleteAllContexts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteAllContexts(context, request);
+  return child_->DeleteAllContexts(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

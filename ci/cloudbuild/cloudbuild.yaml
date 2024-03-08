@@ -26,6 +26,7 @@ options:
     'PR_NUMBER=${_PR_NUMBER}',
     'TRIGGER_TYPE=${_TRIGGER_TYPE}',
     'GENERATE_GOLDEN_ONLY=',
+    'UPDATED_DISCOVERY_DOCUMENT=',
     'CONSOLE_LOG_URL=https://console.cloud.google.com/cloud-build/builds;region=us-east1/${BUILD_ID};tab=detail?project=${PROJECT_ID}',
     'RAW_LOG_URL=https://storage.googleapis.com/${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}/log-${BUILD_ID}.txt'
   ]
@@ -65,22 +66,48 @@ availableSecrets:
 logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}-${_SHARD}'
 
 steps:
-  # Builds the docker image that will be used by the main build step.
-- name: 'gcr.io/kaniko-project/executor:v1.20.1'
+  # Builds the docker image that will be used by the main build step. Makes 3
+  # attempts to workaround #6438.
+- name: 'gcr.io/kaniko-project/executor:v1.21.1'
+  id: 'kaniko-attempt-1'
   args: [
     '--log-format=text',
     '--context=dir:///workspace/ci',
     '--dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile',
     '--cache=true',
     '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',
-    '--push-retry=3',
     '--image-fs-extract-retry=3',
-    '--image-download-retry=3'
-]
+    '--image-download-retry=3',
+    '--push-retry=3'
+  ]
+  allowFailure: true
 
   # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
   # automatically, and also fill the log with about 2-3 pages of noise.
 - name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
+  id: 'download-runner-image-attempt-1'
+  entrypoint: '/bin/true'
+  allowFailure: true
+
+- name: 'gcr.io/kaniko-project/executor:v1.21.1'
+  id: 'kaniko-attempt-2'
+  waitFor: [ 'kaniko-attempt-1' ]
+  args: [
+    '--log-format=text',
+    '--context=dir:///workspace/ci',
+    '--dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile',
+    '--cache=true',
+    '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',
+    '--image-fs-extract-retry=3',
+    '--image-download-retry=3',
+    '--push-retry=3'
+  ]
+  allowFailure: true
+
+  # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
+  # automatically, and also fill the log with about 2-3 pages of noise.
+- name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
+  id: 'download-runner-image-attempt-2'
   entrypoint: '/bin/true'
 
   # Restores the homedir cache into /h in parallel with the previous step.

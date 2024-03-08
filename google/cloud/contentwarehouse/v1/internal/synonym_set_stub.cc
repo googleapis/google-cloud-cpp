@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/synonymset_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ SynonymSetServiceStub::~SynonymSetServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 DefaultSynonymSetServiceStub::CreateSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
         request) {
   google::cloud::contentwarehouse::v1::SynonymSet response;
@@ -44,7 +45,7 @@ DefaultSynonymSetServiceStub::CreateSynonymSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 DefaultSynonymSetServiceStub::GetSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
   google::cloud::contentwarehouse::v1::SynonymSet response;
   auto status = grpc_stub_->GetSynonymSet(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultSynonymSetServiceStub::GetSynonymSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 DefaultSynonymSetServiceStub::UpdateSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
         request) {
   google::cloud::contentwarehouse::v1::SynonymSet response;
@@ -68,7 +69,7 @@ DefaultSynonymSetServiceStub::UpdateSynonymSet(
 }
 
 Status DefaultSynonymSetServiceStub::DeleteSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
         request) {
   google::protobuf::Empty response;
@@ -81,7 +82,7 @@ Status DefaultSynonymSetServiceStub::DeleteSynonymSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
 DefaultSynonymSetServiceStub::ListSynonymSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
         request) {
   google::cloud::contentwarehouse::v1::ListSynonymSetsResponse response;

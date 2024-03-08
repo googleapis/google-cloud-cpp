@@ -34,39 +34,41 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
       StatusOr<
           ::google::test::admin::database::v1::GenerateAccessTokenResponse>,
       GenerateAccessToken,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::GenerateAccessTokenRequest const&),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
       GenerateIdToken,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::GenerateIdTokenRequest const&),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
       WriteLogEntries,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::WriteLogEntriesRequest const&),
       (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::ListLogsResponse>,
               ListLogs,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                ::google::test::admin::database::v1::ListLogsRequest const&),
               (override));
   MOCK_METHOD(
       StatusOr<
           ::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
       ListServiceAccountKeys,
-      (grpc::ClientContext&, ::google::test::admin::database::v1::
-                                 ListServiceAccountKeysRequest const&),
+      (grpc::ClientContext&, Options const&,
+       ::google::test::admin::database::v1::
+           ListServiceAccountKeysRequest const&),
       (override));
   MOCK_METHOD(Status, DoNothing,
-              (grpc::ClientContext&, ::google::protobuf::Empty const&),
+              (grpc::ClientContext&, Options const&,
+               ::google::protobuf::Empty const&),
               (override));
   MOCK_METHOD(
       Status, Deprecated2,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::GenerateAccessTokenRequest const&),
       (override));
 
@@ -75,7 +77,8 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
                    ::google::test::admin::database::v1::Response>>),
               AsyncStreamingReadWrite,
               (google::cloud::CompletionQueue const&,
-               std::shared_ptr<grpc::ClientContext>),
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions),
               (override));
 
   MOCK_METHOD((std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
@@ -94,13 +97,13 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
 
   MOCK_METHOD(
       Status, ExplicitRouting1,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::ExplicitRoutingRequest const&),
       (override));
 
   MOCK_METHOD(
       Status, ExplicitRouting2,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::ExplicitRoutingRequest const&),
       (override));
 
@@ -109,6 +112,7 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
               AsyncStreamingRead,
               (google::cloud::CompletionQueue const&,
                std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::test::admin::database::v1::Request const&),
               (override));
 
@@ -118,7 +122,8 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
            ::google::test::admin::database::v1::Response>>),
       AsyncStreamingWrite,
       (google::cloud::CompletionQueue const& cq,
-       std::shared_ptr<grpc::ClientContext> context),
+       std::shared_ptr<grpc::ClientContext> context,
+       google::cloud::internal::ImmutableOptions options),
       (override));
 };
 

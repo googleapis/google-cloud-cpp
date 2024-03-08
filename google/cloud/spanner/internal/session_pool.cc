@@ -398,15 +398,16 @@ Status SessionPool::CreateSessionsSync(
   }
   request.set_session_count(std::int32_t{num_sessions});
   auto const& stub = channel->stub;
+  auto const& current = internal::CurrentOptions();
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       google::cloud::Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context,
+      [&stub](grpc::ClientContext& context, Options const& options,
               google::spanner::v1::BatchCreateSessionsRequest const& request) {
         RouteToLeader(context);  // always for BatchCreateSessions()
-        return stub->BatchCreateSessions(context, request);
+        return stub->BatchCreateSessions(context, options, request);
       },
-      request, __func__);
+      current, request, __func__);
   return HandleBatchCreateSessionsDone(channel, std::move(response));
 }
 
@@ -462,11 +463,13 @@ SessionPool::AsyncBatchCreateSessions(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       Idempotency::kIdempotent, cq,
       [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+             internal::ImmutableOptions options,
              google::spanner::v1::BatchCreateSessionsRequest const& request) {
         RouteToLeader(*context);  // always for BatchCreateSessions()
-        return stub->AsyncBatchCreateSessions(cq, std::move(context), request);
+        return stub->AsyncBatchCreateSessions(cq, std::move(context),
+                                              std::move(options), request);
       },
-      std::move(request), __func__);
+      internal::SaveCurrentOptions(), std::move(request), __func__);
 }
 
 future<Status> SessionPool::AsyncDeleteSession(
@@ -478,10 +481,12 @@ future<Status> SessionPool::AsyncDeleteSession(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       Idempotency::kIdempotent, cq,
       [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
              google::spanner::v1::DeleteSessionRequest const& request) {
-        return stub->AsyncDeleteSession(cq, std::move(context), request);
+        return stub->AsyncDeleteSession(cq, std::move(context),
+                                        std::move(options), request);
       },
-      std::move(request), __func__);
+      internal::SaveCurrentOptions(), std::move(request), __func__);
 }
 
 /// Refresh the session `session_name` by executing a `SELECT 1` query on it.
@@ -499,11 +504,13 @@ SessionPool::AsyncRefreshSession(CompletionQueue& cq,
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       Idempotency::kIdempotent, cq,
       [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
              google::spanner::v1::ExecuteSqlRequest const& request) {
         // Read-only transaction, so no route-to-leader.
-        return stub->AsyncExecuteSql(cq, std::move(context), request);
+        return stub->AsyncExecuteSql(cq, std::move(context), std::move(options),
+                                     request);
       },
-      std::move(request), __func__);
+      internal::SaveCurrentOptions(), std::move(request), __func__);
 }
 
 Status SessionPool::HandleBatchCreateSessionsDone(

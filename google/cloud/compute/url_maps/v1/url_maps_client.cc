@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/url_maps/v1/url_maps_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

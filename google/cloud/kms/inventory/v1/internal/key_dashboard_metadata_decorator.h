@@ -40,7 +40,7 @@ class KeyDashboardServiceMetadata : public KeyDashboardServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-  ListCryptoKeys(grpc::ClientContext& context,
+  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
                  google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
                      request) override;
 

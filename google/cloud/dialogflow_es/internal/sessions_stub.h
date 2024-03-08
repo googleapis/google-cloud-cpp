@@ -21,10 +21,12 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/v2/session.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,14 +39,16 @@ class SessionsStub {
 
   virtual StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
   DetectIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DetectIntentRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
-  AsyncStreamingDetectIntent(google::cloud::CompletionQueue const& cq,
-                             std::shared_ptr<grpc::ClientContext> context) = 0;
+  AsyncStreamingDetectIntent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 };
 
 class DefaultSessionsStub : public SessionsStub {
@@ -55,7 +59,7 @@ class DefaultSessionsStub : public SessionsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DetectIntentRequest const& request)
       override;
 
@@ -64,7 +68,8 @@ class DefaultSessionsStub : public SessionsStub {
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::unique_ptr<google::cloud::dialogflow::v2::Sessions::StubInterface>

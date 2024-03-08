@@ -73,7 +73,7 @@ class DefaultPullLeaseManager
 
   CompletionQueue cq_;
   std::weak_ptr<SubscriberStub> stub_;
-  Options options_;
+  google::cloud::internal::ImmutableOptions options_;
   pubsub::Subscription subscription_;
   std::string ack_id_;
   std::shared_ptr<Clock> clock_;

@@ -38,7 +38,7 @@ class ExportServiceTracingStub : public ExportServiceStub {
   explicit ExportServiceTracingStub(std::shared_ptr<ExportServiceStub> child);
 
   StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
-  ListProfiles(grpc::ClientContext& context,
+  ListProfiles(grpc::ClientContext& context, Options const& options,
                google::devtools::cloudprofiler::v2::ListProfilesRequest const&
                    request) override;
 

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -73,12 +74,12 @@ DataPolicyServiceConnectionImpl::CreateDataPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDataPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::datapolicies::v1::
                  CreateDataPolicyRequest const& request) {
-        return stub_->CreateDataPolicy(context, request);
+        return stub_->CreateDataPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
@@ -89,12 +90,12 @@ DataPolicyServiceConnectionImpl::UpdateDataPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDataPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::datapolicies::v1::
                  UpdateDataPolicyRequest const& request) {
-        return stub_->UpdateDataPolicy(context, request);
+        return stub_->UpdateDataPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
@@ -105,12 +106,12 @@ DataPolicyServiceConnectionImpl::RenameDataPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RenameDataPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::datapolicies::v1::
                  RenameDataPolicyRequest const& request) {
-        return stub_->RenameDataPolicy(context, request);
+        return stub_->RenameDataPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status DataPolicyServiceConnectionImpl::DeleteDataPolicy(
@@ -120,12 +121,12 @@ Status DataPolicyServiceConnectionImpl::DeleteDataPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDataPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::datapolicies::v1::
                  DeleteDataPolicyRequest const& request) {
-        return stub_->DeleteDataPolicy(context, request);
+        return stub_->DeleteDataPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
@@ -137,10 +138,12 @@ DataPolicyServiceConnectionImpl::GetDataPolicy(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataPolicy(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-              request) { return stub_->GetDataPolicy(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetDataPolicy(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
@@ -153,22 +156,22 @@ DataPolicyServiceConnectionImpl::ListDataPolicies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::bigquery::datapolicies::v1::
-              ListDataPoliciesRequest const& r) {
+          Options const& options, google::cloud::bigquery::datapolicies::v1::
+                                      ListDataPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::bigquery::datapolicies::v1::
                        ListDataPoliciesRequest const& request) {
-              return stub->ListDataPolicies(context, request);
+              return stub->ListDataPolicies(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse
              r) {
@@ -186,11 +189,11 @@ StatusOr<google::iam::v1::Policy> DataPolicyServiceConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> DataPolicyServiceConnectionImpl::SetIamPolicy(
@@ -199,11 +202,11 @@ StatusOr<google::iam::v1::Policy> DataPolicyServiceConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -213,11 +216,11 @@ DataPolicyServiceConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

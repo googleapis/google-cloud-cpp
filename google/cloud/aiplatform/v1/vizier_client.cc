@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/vizier_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

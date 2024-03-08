@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/group_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ GroupServiceStub::~GroupServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListGroupsResponse>
 DefaultGroupServiceStub::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListGroupsRequest const& request) {
   google::monitoring::v3::ListGroupsResponse response;
   auto status = grpc_stub_->ListGroups(&context, request, &response);
@@ -42,7 +43,7 @@ DefaultGroupServiceStub::ListGroups(
 }
 
 StatusOr<google::monitoring::v3::Group> DefaultGroupServiceStub::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetGroupRequest const& request) {
   google::monitoring::v3::Group response;
   auto status = grpc_stub_->GetGroup(&context, request, &response);
@@ -53,7 +54,7 @@ StatusOr<google::monitoring::v3::Group> DefaultGroupServiceStub::GetGroup(
 }
 
 StatusOr<google::monitoring::v3::Group> DefaultGroupServiceStub::CreateGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::CreateGroupRequest const& request) {
   google::monitoring::v3::Group response;
   auto status = grpc_stub_->CreateGroup(&context, request, &response);
@@ -64,7 +65,7 @@ StatusOr<google::monitoring::v3::Group> DefaultGroupServiceStub::CreateGroup(
 }
 
 StatusOr<google::monitoring::v3::Group> DefaultGroupServiceStub::UpdateGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::UpdateGroupRequest const& request) {
   google::monitoring::v3::Group response;
   auto status = grpc_stub_->UpdateGroup(&context, request, &response);
@@ -75,7 +76,7 @@ StatusOr<google::monitoring::v3::Group> DefaultGroupServiceStub::UpdateGroup(
 }
 
 Status DefaultGroupServiceStub::DeleteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::DeleteGroupRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteGroup(&context, request, &response);
@@ -87,7 +88,7 @@ Status DefaultGroupServiceStub::DeleteGroup(
 
 StatusOr<google::monitoring::v3::ListGroupMembersResponse>
 DefaultGroupServiceStub::ListGroupMembers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListGroupMembersRequest const& request) {
   google::monitoring::v3::ListGroupMembersResponse response;
   auto status = grpc_stub_->ListGroupMembers(&context, request, &response);

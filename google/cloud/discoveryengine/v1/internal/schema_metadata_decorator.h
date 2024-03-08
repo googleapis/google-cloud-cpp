@@ -40,41 +40,46 @@ class SchemaServiceMetadata : public SchemaServiceStub {
                         std::string api_client_header = "");
 
   StatusOr<google::cloud::discoveryengine::v1::Schema> GetSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetSchemaRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::ListSchemasRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSchema(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSchema(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchema(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

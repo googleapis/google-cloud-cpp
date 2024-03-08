@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/session_entity_type.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ SessionEntityTypesStub::~SessionEntityTypesStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListSessionEntityTypesResponse>
 DefaultSessionEntityTypesStub::ListSessionEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
         request) {
   google::cloud::dialogflow::v2::ListSessionEntityTypesResponse response;
@@ -45,7 +46,7 @@ DefaultSessionEntityTypesStub::ListSessionEntityTypes(
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 DefaultSessionEntityTypesStub::GetSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) {
   google::cloud::dialogflow::v2::SessionEntityType response;
   auto status = grpc_stub_->GetSessionEntityType(&context, request, &response);
@@ -57,7 +58,7 @@ DefaultSessionEntityTypesStub::GetSessionEntityType(
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 DefaultSessionEntityTypesStub::CreateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
         request) {
   google::cloud::dialogflow::v2::SessionEntityType response;
@@ -71,7 +72,7 @@ DefaultSessionEntityTypesStub::CreateSessionEntityType(
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 DefaultSessionEntityTypesStub::UpdateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
         request) {
   google::cloud::dialogflow::v2::SessionEntityType response;
@@ -84,7 +85,7 @@ DefaultSessionEntityTypesStub::UpdateSessionEntityType(
 }
 
 Status DefaultSessionEntityTypesStub::DeleteSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
         request) {
   google::protobuf::Empty response;

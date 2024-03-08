@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/machine_images/v1/machine_images_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -67,19 +68,20 @@ SearchServiceConnectionImpl::Search(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<retail_v2::SearchServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::retail::v2::SearchRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::retail::v2::SearchRequest const& request) {
-              return stub->Search(context, request);
+              return stub->Search(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::retail::v2::SearchResponse r) {
         std::vector<google::cloud::retail::v2::SearchResponse::SearchResult>

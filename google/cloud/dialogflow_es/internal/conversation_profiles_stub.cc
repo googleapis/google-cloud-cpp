@@ -22,6 +22,7 @@
 #include <google/cloud/dialogflow/v2/conversation_profile.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ConversationProfilesStub::~ConversationProfilesStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
 DefaultConversationProfilesStub::ListConversationProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
         request) {
   google::cloud::dialogflow::v2::ListConversationProfilesResponse response;
@@ -46,7 +47,7 @@ DefaultConversationProfilesStub::ListConversationProfiles(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 DefaultConversationProfilesStub::GetConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetConversationProfileRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationProfile response;
@@ -60,7 +61,7 @@ DefaultConversationProfilesStub::GetConversationProfile(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 DefaultConversationProfilesStub::CreateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationProfile response;
@@ -74,7 +75,7 @@ DefaultConversationProfilesStub::CreateConversationProfile(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 DefaultConversationProfilesStub::UpdateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationProfile response;
@@ -87,7 +88,7 @@ DefaultConversationProfilesStub::UpdateConversationProfile(
 }
 
 Status DefaultConversationProfilesStub::DeleteConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
         request) {
   google::protobuf::Empty response;
@@ -102,7 +103,8 @@ Status DefaultConversationProfilesStub::DeleteConversationProfile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationProfilesStub::AsyncSetSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -122,7 +124,8 @@ DefaultConversationProfilesStub::AsyncSetSuggestionFeatureConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationProfilesStub::AsyncClearSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -142,7 +145,9 @@ DefaultConversationProfilesStub::AsyncClearSuggestionFeatureConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationProfilesStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -157,7 +162,9 @@ DefaultConversationProfilesStub::AsyncGetOperation(
 
 future<Status> DefaultConversationProfilesStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

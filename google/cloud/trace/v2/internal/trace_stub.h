@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_INTERNAL_TRACE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_INTERNAL_TRACE_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/devtools/cloudtrace/v2/tracing.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,12 +36,12 @@ class TraceServiceStub {
   virtual ~TraceServiceStub() = 0;
 
   virtual Status BatchWriteSpans(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::Span const& request) = 0;
 };
 
@@ -52,12 +54,12 @@ class DefaultTraceServiceStub : public TraceServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   Status BatchWriteSpans(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:

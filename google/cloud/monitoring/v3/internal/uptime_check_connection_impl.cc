@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -70,20 +71,21 @@ UptimeCheckServiceConnectionImpl::ListUptimeCheckConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckConfig>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListUptimeCheckConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::monitoring::v3::ListUptimeCheckConfigsRequest const&
                        request) {
-              return stub->ListUptimeCheckConfigs(context, request);
+              return stub->ListUptimeCheckConfigs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListUptimeCheckConfigsResponse r) {
         std::vector<google::monitoring::v3::UptimeCheckConfig> result(
@@ -102,11 +104,11 @@ UptimeCheckServiceConnectionImpl::GetUptimeCheckConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetUptimeCheckConfig(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
-        return stub_->GetUptimeCheckConfig(context, request);
+        return stub_->GetUptimeCheckConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
@@ -116,12 +118,12 @@ UptimeCheckServiceConnectionImpl::CreateUptimeCheckConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateUptimeCheckConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateUptimeCheckConfigRequest const&
                  request) {
-        return stub_->CreateUptimeCheckConfig(context, request);
+        return stub_->CreateUptimeCheckConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
@@ -131,12 +133,12 @@ UptimeCheckServiceConnectionImpl::UpdateUptimeCheckConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateUptimeCheckConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateUptimeCheckConfigRequest const&
                  request) {
-        return stub_->UpdateUptimeCheckConfig(context, request);
+        return stub_->UpdateUptimeCheckConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status UptimeCheckServiceConnectionImpl::DeleteUptimeCheckConfig(
@@ -145,12 +147,12 @@ Status UptimeCheckServiceConnectionImpl::DeleteUptimeCheckConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteUptimeCheckConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteUptimeCheckConfigRequest const&
                  request) {
-        return stub_->DeleteUptimeCheckConfig(context, request);
+        return stub_->DeleteUptimeCheckConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::monitoring::v3::UptimeCheckIp>
@@ -162,20 +164,21 @@ UptimeCheckServiceConnectionImpl::ListUptimeCheckIps(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckIp>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListUptimeCheckIpsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::monitoring::v3::ListUptimeCheckIpsRequest const&
                        request) {
-              return stub->ListUptimeCheckIps(context, request);
+              return stub->ListUptimeCheckIps(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListUptimeCheckIpsResponse r) {
         std::vector<google::monitoring::v3::UptimeCheckIp> result(

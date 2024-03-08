@@ -18,6 +18,7 @@
 
 #include "google/cloud/eventarc/publishing/v1/publisher_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

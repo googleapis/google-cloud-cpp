@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -65,12 +66,12 @@ ParticipantsConnectionImpl::CreateParticipant(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateParticipant(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::CreateParticipantRequest const&
                  request) {
-        return stub_->CreateParticipant(context, request);
+        return stub_->CreateParticipant(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
@@ -81,11 +82,11 @@ ParticipantsConnectionImpl::GetParticipant(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetParticipant(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
-        return stub_->GetParticipant(context, request);
+        return stub_->GetParticipant(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dialogflow::v2::Participant>
@@ -97,20 +98,21 @@ ParticipantsConnectionImpl::ListParticipants(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Participant>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_es::ParticipantsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::v2::ListParticipantsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::v2::ListParticipantsRequest const&
                        request) {
-              return stub->ListParticipants(context, request);
+              return stub->ListParticipants(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::v2::ListParticipantsResponse r) {
         std::vector<google::cloud::dialogflow::v2::Participant> result(
@@ -128,12 +130,12 @@ ParticipantsConnectionImpl::UpdateParticipant(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateParticipant(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::UpdateParticipantRequest const&
                  request) {
-        return stub_->UpdateParticipant(context, request);
+        return stub_->UpdateParticipant(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
@@ -144,11 +146,11 @@ ParticipantsConnectionImpl::AnalyzeContent(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AnalyzeContent(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
-        return stub_->AnalyzeContent(context, request);
+        return stub_->AnalyzeContent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
@@ -158,10 +160,12 @@ ParticipantsConnectionImpl::SuggestArticles(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SuggestArticles(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::SuggestArticlesRequest const&
-                 request) { return stub_->SuggestArticles(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->SuggestArticles(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
@@ -171,12 +175,12 @@ ParticipantsConnectionImpl::SuggestFaqAnswers(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SuggestFaqAnswers(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const&
                  request) {
-        return stub_->SuggestFaqAnswers(context, request);
+        return stub_->SuggestFaqAnswers(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
@@ -186,12 +190,12 @@ ParticipantsConnectionImpl::SuggestSmartReplies(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SuggestSmartReplies(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&
                  request) {
-        return stub_->SuggestSmartReplies(context, request);
+        return stub_->SuggestSmartReplies(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

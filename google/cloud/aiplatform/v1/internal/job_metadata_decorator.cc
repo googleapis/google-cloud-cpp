@@ -44,369 +44,382 @@ JobServiceMetadata::JobServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 JobServiceMetadata::CreateCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateCustomJob(context, request);
+  return child_->CreateCustomJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 JobServiceMetadata::GetCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCustomJob(context, request);
+  return child_->GetCustomJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
 JobServiceMetadata::ListCustomJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCustomJobs(context, request);
+  return child_->ListCustomJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncDeleteCustomJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCustomJob(cq, std::move(context), options, request);
+  return child_->AsyncDeleteCustomJob(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 Status JobServiceMetadata::CancelCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CancelCustomJob(context, request);
+  return child_->CancelCustomJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 JobServiceMetadata::CreateDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateDataLabelingJob(context, request);
+  return child_->CreateDataLabelingJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 JobServiceMetadata::GetDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDataLabelingJob(context, request);
+  return child_->GetDataLabelingJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
 JobServiceMetadata::ListDataLabelingJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDataLabelingJobs(context, request);
+  return child_->ListDataLabelingJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncDeleteDataLabelingJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDataLabelingJob(cq, std::move(context), options,
-                                            request);
+  return child_->AsyncDeleteDataLabelingJob(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 Status JobServiceMetadata::CancelDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CancelDataLabelingJob(context, request);
+  return child_->CancelDataLabelingJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 JobServiceMetadata::CreateHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateHyperparameterTuningJob(context, request);
+  return child_->CreateHyperparameterTuningJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 JobServiceMetadata::GetHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetHyperparameterTuningJob(context, request);
+  return child_->GetHyperparameterTuningJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse>
 JobServiceMetadata::ListHyperparameterTuningJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListHyperparameterTuningJobs(context, request);
+  return child_->ListHyperparameterTuningJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncDeleteHyperparameterTuningJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteHyperparameterTuningJob(cq, std::move(context),
-                                                    options, request);
+  return child_->AsyncDeleteHyperparameterTuningJob(
+      cq, std::move(context), std::move(options), request);
 }
 
 Status JobServiceMetadata::CancelHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CancelHyperparameterTuningJob(context, request);
+  return child_->CancelHyperparameterTuningJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
 JobServiceMetadata::CreateNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateNasJob(context, request);
+  return child_->CreateNasJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceMetadata::GetNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNasJob(context, request);
+  return child_->GetNasJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse>
 JobServiceMetadata::ListNasJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListNasJobs(context, request);
+  return child_->ListNasJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncDeleteNasJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteNasJob(cq, std::move(context), options, request);
+  return child_->AsyncDeleteNasJob(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 Status JobServiceMetadata::CancelNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CancelNasJob(context, request);
+  return child_->CancelNasJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
 JobServiceMetadata::GetNasTrialDetail(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNasTrialDetail(context, request);
+  return child_->GetNasTrialDetail(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
 JobServiceMetadata::ListNasTrialDetails(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListNasTrialDetails(context, request);
+  return child_->ListNasTrialDetails(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 JobServiceMetadata::CreateBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateBatchPredictionJob(context, request);
+  return child_->CreateBatchPredictionJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 JobServiceMetadata::GetBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBatchPredictionJob(context, request);
+  return child_->GetBatchPredictionJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse>
 JobServiceMetadata::ListBatchPredictionJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBatchPredictionJobs(context, request);
+  return child_->ListBatchPredictionJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncDeleteBatchPredictionJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteBatchPredictionJob(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncDeleteBatchPredictionJob(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 Status JobServiceMetadata::CancelBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CancelBatchPredictionJob(context, request);
+  return child_->CancelBatchPredictionJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 JobServiceMetadata::CreateModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         CreateModelDeploymentMonitoringJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateModelDeploymentMonitoringJob(context, request);
+  return child_->CreateModelDeploymentMonitoringJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::
              SearchModelDeploymentMonitoringStatsAnomaliesResponse>
 JobServiceMetadata::SearchModelDeploymentMonitoringStatsAnomalies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("model_deployment_monitoring_job=",
                            internal::UrlEncode(
                                request.model_deployment_monitoring_job())));
-  return child_->SearchModelDeploymentMonitoringStatsAnomalies(context,
+  return child_->SearchModelDeploymentMonitoringStatsAnomalies(context, options,
                                                                request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 JobServiceMetadata::GetModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetModelDeploymentMonitoringJob(context, request);
+  return child_->GetModelDeploymentMonitoringJob(context, options, request);
 }
 
 StatusOr<
     google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
 JobServiceMetadata::ListModelDeploymentMonitoringJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         ListModelDeploymentMonitoringJobsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListModelDeploymentMonitoringJobs(context, request);
+  return child_->ListModelDeploymentMonitoringJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncUpdateModelDeploymentMonitoringJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::
         UpdateModelDeploymentMonitoringJobRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("model_deployment_monitoring_job.name=",
                    internal::UrlEncode(
                        request.model_deployment_monitoring_job().name())));
-  return child_->AsyncUpdateModelDeploymentMonitoringJob(cq, std::move(context),
-                                                         options, request);
+  return child_->AsyncUpdateModelDeploymentMonitoringJob(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncDeleteModelDeploymentMonitoringJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::
         DeleteModelDeploymentMonitoringJobRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteModelDeploymentMonitoringJob(cq, std::move(context),
-                                                         options, request);
+  return child_->AsyncDeleteModelDeploymentMonitoringJob(
+      cq, std::move(context), std::move(options), request);
 }
 
 Status JobServiceMetadata::PauseModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         PauseModelDeploymentMonitoringJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->PauseModelDeploymentMonitoringJob(context, request);
+  return child_->PauseModelDeploymentMonitoringJob(context, options, request);
 }
 
 Status JobServiceMetadata::ResumeModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         ResumeModelDeploymentMonitoringJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ResumeModelDeploymentMonitoringJob(context, request);
+  return child_->ResumeModelDeploymentMonitoringJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> JobServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void JobServiceMetadata::SetMetadata(grpc::ClientContext& context,

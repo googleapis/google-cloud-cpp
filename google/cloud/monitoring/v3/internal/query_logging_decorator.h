@@ -39,7 +39,7 @@ class QueryServiceLogging : public QueryServiceStub {
                       std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryTimeSeries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::QueryTimeSeriesRequest const& request) override;
 
  private:

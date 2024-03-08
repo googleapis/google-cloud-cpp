@@ -18,6 +18,7 @@
 
 #include "google/cloud/translate/v3/translation_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -43,19 +43,19 @@ TasksMetadata::TasksMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::run::v2::Task> TasksMetadata::GetTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetTaskRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTask(context, request);
+  return child_->GetTask(context, options, request);
 }
 
 StatusOr<google::cloud::run::v2::ListTasksResponse> TasksMetadata::ListTasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListTasksRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTasks(context, request);
+  return child_->ListTasks(context, options, request);
 }
 
 void TasksMetadata::SetMetadata(grpc::ClientContext& context,

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataplex/v1/content.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ ContentServiceStub::~ContentServiceStub() = default;
 
 StatusOr<google::cloud::dataplex::v1::Content>
 DefaultContentServiceStub::CreateContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::CreateContentRequest const& request) {
   google::cloud::dataplex::v1::Content response;
   auto status = grpc_stub_->CreateContent(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultContentServiceStub::CreateContent(
 
 StatusOr<google::cloud::dataplex::v1::Content>
 DefaultContentServiceStub::UpdateContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::UpdateContentRequest const& request) {
   google::cloud::dataplex::v1::Content response;
   auto status = grpc_stub_->UpdateContent(&context, request, &response);
@@ -54,7 +55,7 @@ DefaultContentServiceStub::UpdateContent(
 }
 
 Status DefaultContentServiceStub::DeleteContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::DeleteContentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteContent(&context, request, &response);
@@ -66,7 +67,7 @@ Status DefaultContentServiceStub::DeleteContent(
 
 StatusOr<google::cloud::dataplex::v1::Content>
 DefaultContentServiceStub::GetContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::GetContentRequest const& request) {
   google::cloud::dataplex::v1::Content response;
   auto status = grpc_stub_->GetContent(&context, request, &response);
@@ -77,7 +78,7 @@ DefaultContentServiceStub::GetContent(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -88,7 +89,7 @@ StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -100,7 +101,7 @@ StatusOr<google::iam::v1::Policy> DefaultContentServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultContentServiceStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -112,7 +113,7 @@ DefaultContentServiceStub::TestIamPermissions(
 
 StatusOr<google::cloud::dataplex::v1::ListContentResponse>
 DefaultContentServiceStub::ListContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListContentRequest const& request) {
   google::cloud::dataplex::v1::ListContentResponse response;
   auto status = grpc_stub_->ListContent(&context, request, &response);

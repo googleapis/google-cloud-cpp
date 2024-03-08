@@ -18,6 +18,7 @@
 
 #include "google/cloud/certificatemanager/v1/certificate_manager_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

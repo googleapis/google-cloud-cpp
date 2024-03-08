@@ -18,6 +18,7 @@
 
 #include "google/cloud/vmmigration/v1/vm_migration_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

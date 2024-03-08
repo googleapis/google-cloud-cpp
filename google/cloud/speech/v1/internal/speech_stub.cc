@@ -23,6 +23,7 @@
 #include <google/cloud/speech/v1/cloud_speech.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,7 @@ SpeechStub::~SpeechStub() = default;
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 DefaultSpeechStub::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v1::RecognizeRequest const& request) {
   google::cloud::speech::v1::RecognizeResponse response;
   auto status = grpc_stub_->Recognize(&context, request, &response);
@@ -46,7 +47,8 @@ DefaultSpeechStub::Recognize(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpeechStub::AsyncLongRunningRecognize(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::speech::v1::LongRunningRecognizeRequest,
@@ -66,11 +68,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeResponse>>
 DefaultSpeechStub::AsyncStreamingRecognize(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamingRecognize(context, cq);
       });
@@ -79,7 +82,9 @@ DefaultSpeechStub::AsyncStreamingRecognize(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpeechStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -94,7 +99,9 @@ DefaultSpeechStub::AsyncGetOperation(
 
 future<Status> DefaultSpeechStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

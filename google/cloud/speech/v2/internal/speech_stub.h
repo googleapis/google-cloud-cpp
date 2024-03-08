@@ -28,6 +28,7 @@
 #include <google/cloud/speech/v2/cloud_speech.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -41,130 +42,147 @@ class SpeechStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::CreateRecognizerRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
   ListRecognizers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::ListRecognizersRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetRecognizerRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UpdateRecognizerRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::DeleteRecognizerRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUndeleteRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UndeleteRecognizerRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::RecognizeRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v2::StreamingRecognizeRequest,
       google::cloud::speech::v2::StreamingRecognizeResponse>>
-  AsyncStreamingRecognize(google::cloud::CompletionQueue const& cq,
-                          std::shared_ptr<grpc::ClientContext> context) = 0;
+  AsyncStreamingRecognize(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchRecognize(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::BatchRecognizeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::speech::v2::Config> GetConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetConfigRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::UpdateConfigRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::CreateCustomClassRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
   ListCustomClasses(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::ListCustomClassesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetCustomClassRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UpdateCustomClassRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::DeleteCustomClassRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUndeleteCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UndeleteCustomClassRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreatePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::CreatePhraseSetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
   ListPhraseSets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::ListPhraseSetsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetPhraseSetRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdatePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UpdatePhraseSetRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeletePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::DeletePhraseSetRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUndeletePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UndeletePhraseSetRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -179,39 +197,43 @@ class DefaultSpeechStub : public SpeechStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::CreateRecognizerRequest const& request)
       override;
 
   StatusOr<google::cloud::speech::v2::ListRecognizersResponse> ListRecognizers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::ListRecognizersRequest const& request)
       override;
 
   StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetRecognizerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UpdateRecognizerRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::DeleteRecognizerRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UndeleteRecognizerRequest const& request)
       override;
 
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::RecognizeRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -219,94 +241,106 @@ class DefaultSpeechStub : public SpeechStub {
       google::cloud::speech::v2::StreamingRecognizeResponse>>
   AsyncStreamingRecognize(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchRecognize(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::BatchRecognizeRequest const& request) override;
 
   StatusOr<google::cloud::speech::v2::Config> GetConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetConfigRequest const& request) override;
 
   StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::UpdateConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::CreateCustomClassRequest const& request)
       override;
 
   StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
-  ListCustomClasses(grpc::ClientContext& context,
+  ListCustomClasses(grpc::ClientContext& context, Options const& options,
                     google::cloud::speech::v2::ListCustomClassesRequest const&
                         request) override;
 
   StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetCustomClassRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UpdateCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::DeleteCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UndeleteCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::CreatePhraseSetRequest const& request)
       override;
 
   StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse> ListPhraseSets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::ListPhraseSetsRequest const& request) override;
 
   StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetPhraseSetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UpdatePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::DeletePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeletePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::speech::v2::UndeletePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

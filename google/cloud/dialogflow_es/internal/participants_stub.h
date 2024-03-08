@@ -21,10 +21,12 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,28 +39,28 @@ class ParticipantsStub {
 
   virtual StatusOr<google::cloud::dialogflow::v2::Participant>
   CreateParticipant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateParticipantRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetParticipantRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
-  ListParticipants(grpc::ClientContext& context,
+  ListParticipants(grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::v2::ListParticipantsRequest const&
                        request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Participant>
   UpdateParticipant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateParticipantRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
   AnalyzeContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -66,22 +68,23 @@ class ParticipantsStub {
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
   AsyncStreamingAnalyzeContent(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) = 0;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
   SuggestFaqAnswers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
   SuggestSmartReplies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&
           request) = 0;
 };
@@ -95,27 +98,27 @@ class DefaultParticipantsStub : public ParticipantsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateParticipantRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetParticipantRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
-  ListParticipants(grpc::ClientContext& context,
+  ListParticipants(grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::v2::ListParticipantsRequest const&
                        request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateParticipantRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-  AnalyzeContent(grpc::ClientContext& context,
+  AnalyzeContent(grpc::ClientContext& context, Options const& options,
                  google::cloud::dialogflow::v2::AnalyzeContentRequest const&
                      request) override;
 
@@ -124,22 +127,23 @@ class DefaultParticipantsStub : public ParticipantsStub {
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
   AsyncStreamingAnalyzeContent(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
-  SuggestArticles(grpc::ClientContext& context,
+  SuggestArticles(grpc::ClientContext& context, Options const& options,
                   google::cloud::dialogflow::v2::SuggestArticlesRequest const&
                       request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
   SuggestFaqAnswers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
   SuggestSmartReplies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request)
       override;
 

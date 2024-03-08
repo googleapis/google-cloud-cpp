@@ -19,6 +19,7 @@
 #include "google/cloud/apigeeconnect/v1/internal/connection_auth_decorator.h"
 #include <google/cloud/apigeeconnect/v1/connection.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,11 +33,11 @@ ConnectionServiceAuth::ConnectionServiceAuth(
 
 StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
 ConnectionServiceAuth::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnections(context, request);
+  return child_->ListConnections(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

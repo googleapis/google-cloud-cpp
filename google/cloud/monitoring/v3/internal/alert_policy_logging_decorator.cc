@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/alert_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,61 +37,61 @@ AlertPolicyServiceLogging::AlertPolicyServiceLogging(
 
 StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
 AlertPolicyServiceLogging::ListAlertPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListAlertPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::ListAlertPoliciesRequest const& request) {
-        return child_->ListAlertPolicies(context, request);
+        return child_->ListAlertPolicies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceLogging::GetAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetAlertPolicyRequest const& request) {
-        return child_->GetAlertPolicy(context, request);
+        return child_->GetAlertPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceLogging::CreateAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateAlertPolicyRequest const& request) {
-        return child_->CreateAlertPolicy(context, request);
+        return child_->CreateAlertPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AlertPolicyServiceLogging::DeleteAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
-        return child_->DeleteAlertPolicy(context, request);
+        return child_->DeleteAlertPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceLogging::UpdateAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
-        return child_->UpdateAlertPolicy(context, request);
+        return child_->UpdateAlertPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

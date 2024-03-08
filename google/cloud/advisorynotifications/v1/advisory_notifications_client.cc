@@ -18,6 +18,7 @@
 
 #include "google/cloud/advisorynotifications/v1/advisory_notifications_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

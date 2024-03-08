@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/compute/zones/v1/zones.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

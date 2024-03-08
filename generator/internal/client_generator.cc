@@ -84,10 +84,10 @@ Status ClientGenerator::GenerateHeader() {
     HeaderLocalIncludes({"google/cloud/iam_updater.h"});
   }
   HeaderSystemIncludes(MethodSignatureWellKnownProtobufTypeIncludes());
-  HeaderSystemIncludes({HasGRPCLongrunningOperation()
-                            ? "google/longrunning/operations.grpc.pb.h"
-                            : "",
-                        HasMessageWithMapField() ? "map" : "", "memory"});
+  HeaderSystemIncludes(
+      {HasGRPCLongrunningOperation() ? "google/longrunning/operations.grpc.pb.h"
+                                     : "",
+       HasMessageWithMapField() ? "map" : "", "memory", "string"});
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
@@ -362,6 +362,7 @@ Status ClientGenerator::GenerateCc() {
     CcLocalIncludes({vars("options_header_path")});
     CcSystemIncludes({"thread"});
   }
+  CcSystemIncludes({"utility"});
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;

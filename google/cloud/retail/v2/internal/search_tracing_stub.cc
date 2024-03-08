@@ -18,6 +18,7 @@
 
 #include "google/cloud/retail/v2/internal/search_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,13 +33,14 @@ SearchServiceTracingStub::SearchServiceTracingStub(
 
 StatusOr<google::cloud::retail::v2::SearchResponse>
 SearchServiceTracingStub::Search(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::SearchRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.retail.v2.SearchService", "Search");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Search(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Search(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

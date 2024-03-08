@@ -60,16 +60,17 @@ TEST(GoldenThingAdminTracingStubTest, ListDatabases) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, ListDatabases).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, ListDatabases)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::ListDatabasesRequest request;
-  auto result = under_test.ListDatabases(context, request);
+  auto result = under_test.ListDatabases(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -95,7 +96,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateDatabase) {
   google::test::admin::database::v1::CreateDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncCreateDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -115,16 +117,17 @@ TEST(GoldenThingAdminTracingStubTest, GetDatabase) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, GetDatabase).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, GetDatabase)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::GetDatabaseRequest request;
-  auto result = under_test.GetDatabase(context, request);
+  auto result = under_test.GetDatabase(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -150,7 +153,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncUpdateDatabaseDdl) {
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncUpdateDatabaseDdl(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -170,16 +174,17 @@ TEST(GoldenThingAdminTracingStubTest, DropDatabase) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, DropDatabase).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, DropDatabase)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::DropDatabaseRequest request;
-  auto result = under_test.DropDatabase(context, request);
+  auto result = under_test.DropDatabase(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -199,16 +204,17 @@ TEST(GoldenThingAdminTracingStubTest, GetDatabaseDdl) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, GetDatabaseDdl).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, GetDatabaseDdl)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::GetDatabaseDdlRequest request;
-  auto result = under_test.GetDatabaseDdl(context, request);
+  auto result = under_test.GetDatabaseDdl(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -228,16 +234,17 @@ TEST(GoldenThingAdminTracingStubTest, SetIamPolicy) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, SetIamPolicy).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, SetIamPolicy)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::iam::v1::SetIamPolicyRequest request;
-  auto result = under_test.SetIamPolicy(context, request);
+  auto result = under_test.SetIamPolicy(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -257,16 +264,17 @@ TEST(GoldenThingAdminTracingStubTest, GetIamPolicy) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, GetIamPolicy).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, GetIamPolicy)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::iam::v1::GetIamPolicyRequest request;
-  auto result = under_test.GetIamPolicy(context, request);
+  auto result = under_test.GetIamPolicy(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -287,7 +295,7 @@ TEST(GoldenThingAdminTracingStubTest, TestIamPermissions) {
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, TestIamPermissions)
-      .WillOnce([](auto& context, auto const&) {
+      .WillOnce([](auto& context, auto const&, auto const&) {
         ValidatePropagator(context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
         return internal::AbortedError("fail");
@@ -296,7 +304,7 @@ TEST(GoldenThingAdminTracingStubTest, TestIamPermissions) {
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::iam::v1::TestIamPermissionsRequest request;
-  auto result = under_test.TestIamPermissions(context, request);
+  auto result = under_test.TestIamPermissions(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -321,8 +329,9 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateBackup) {
   auto under_test = GoldenThingAdminTracingStub(mock);
   google::test::admin::database::v1::CreateBackupRequest request;
   CompletionQueue cq;
-  auto result = under_test.AsyncCreateBackup(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+  auto result =
+      under_test.AsyncCreateBackup(cq, std::make_shared<grpc::ClientContext>(),
+                                   internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -342,16 +351,17 @@ TEST(GoldenThingAdminTracingStubTest, GetBackup) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, GetBackup).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, GetBackup)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::GetBackupRequest request;
-  auto result = under_test.GetBackup(context, request);
+  auto result = under_test.GetBackup(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -370,16 +380,17 @@ TEST(GoldenThingAdminTracingStubTest, UpdateBackup) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, UpdateBackup).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, UpdateBackup)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::UpdateBackupRequest request;
-  auto result = under_test.UpdateBackup(context, request);
+  auto result = under_test.UpdateBackup(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -399,16 +410,17 @@ TEST(GoldenThingAdminTracingStubTest, DeleteBackup) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, DeleteBackup).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, DeleteBackup)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::DeleteBackupRequest request;
-  auto result = under_test.DeleteBackup(context, request);
+  auto result = under_test.DeleteBackup(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -428,16 +440,17 @@ TEST(GoldenThingAdminTracingStubTest, ListBackups) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, ListBackups).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, ListBackups)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::ListBackupsRequest request;
-  auto result = under_test.ListBackups(context, request);
+  auto result = under_test.ListBackups(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -463,7 +476,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncRestoreDatabase) {
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncRestoreDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -484,7 +498,7 @@ TEST(GoldenThingAdminTracingStubTest, ListDatabaseOperations) {
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListDatabaseOperations)
-      .WillOnce([](auto& context, auto const&) {
+      .WillOnce([](auto& context, auto const&, auto const&) {
         ValidatePropagator(context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
         return internal::AbortedError("fail");
@@ -493,7 +507,7 @@ TEST(GoldenThingAdminTracingStubTest, ListDatabaseOperations) {
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::ListDatabaseOperationsRequest request;
-  auto result = under_test.ListDatabaseOperations(context, request);
+  auto result = under_test.ListDatabaseOperations(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -514,7 +528,7 @@ TEST(GoldenThingAdminTracingStubTest, ListBackupOperations) {
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListBackupOperations)
-      .WillOnce([](auto& context, auto const&) {
+      .WillOnce([](auto& context, auto const&, auto const&) {
         ValidatePropagator(context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
         return internal::AbortedError("fail");
@@ -523,7 +537,7 @@ TEST(GoldenThingAdminTracingStubTest, ListBackupOperations) {
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
   google::test::admin::database::v1::ListBackupOperationsRequest request;
-  auto result = under_test.ListBackupOperations(context, request);
+  auto result = under_test.ListBackupOperations(context, Options{}, request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -544,7 +558,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
-      .WillOnce([](auto const&, auto context, auto const&) {
+      .WillOnce([](auto const&, auto context, auto, auto const&) {
         ValidatePropagator(*context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
         EXPECT_TRUE(OTelContextCaptured());
@@ -557,7 +571,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
   google::test::admin::database::v1::GetDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncGetDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -578,7 +593,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncDropDatabase)
-      .WillOnce([](auto const&, auto context, auto const&) {
+      .WillOnce([](auto const&, auto context, auto, auto const&) {
         ValidatePropagator(*context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
         EXPECT_TRUE(OTelContextCaptured());
@@ -589,7 +604,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
   google::test::admin::database::v1::DropDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncDropDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -614,8 +630,9 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetOperation) {
   auto under_test = GoldenThingAdminTracingStub(mock);
   google::longrunning::GetOperationRequest request;
   CompletionQueue cq;
-  auto result = under_test.AsyncGetOperation(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+  auto result =
+      under_test.AsyncGetOperation(cq, std::make_shared<grpc::ClientContext>(),
+                                   internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -635,7 +652,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCancelOperation)
-      .WillOnce([](auto const&, auto context, Options const&, auto const&) {
+      .WillOnce([](auto const&, auto context, auto, auto const&) {
         ValidatePropagator(*context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
         EXPECT_TRUE(OTelContextCaptured());
@@ -646,7 +663,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
   google::longrunning::CancelOperationRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncCancelOperation(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -665,14 +683,15 @@ TEST(MakeGoldenThingAdminTracingStub, OpenTelemetry) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, DropDatabase).WillOnce([](auto& context, auto const&) {
-    ValidatePropagator(context);
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, DropDatabase)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        ValidatePropagator(context);
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = MakeGoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
-  auto result = under_test->DropDatabase(context, {});
+  auto result = under_test->DropDatabase(context, Options{}, {});
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -691,7 +710,7 @@ TEST(MakeGoldenThingAdminTracingStub, NoOpenTelemetry) {
 
   auto under_test = MakeGoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
-  auto result = under_test->DropDatabase(context, {});
+  auto result = under_test->DropDatabase(context, Options{}, {});
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 }
 

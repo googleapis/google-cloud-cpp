@@ -22,6 +22,7 @@
 #include <google/cloud/datacatalog/v1/datacatalog.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ DataCatalogStub::~DataCatalogStub() = default;
 
 StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse>
 DefaultDataCatalogStub::SearchCatalog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::SearchCatalogRequest const& request) {
   google::cloud::datacatalog::v1::SearchCatalogResponse response;
   auto status = grpc_stub_->SearchCatalog(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultDataCatalogStub::SearchCatalog(
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DefaultDataCatalogStub::CreateEntryGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
   google::cloud::datacatalog::v1::EntryGroup response;
   auto status = grpc_stub_->CreateEntryGroup(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultDataCatalogStub::CreateEntryGroup(
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DefaultDataCatalogStub::GetEntryGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
   google::cloud::datacatalog::v1::EntryGroup response;
   auto status = grpc_stub_->GetEntryGroup(&context, request, &response);
@@ -68,7 +69,7 @@ DefaultDataCatalogStub::GetEntryGroup(
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DefaultDataCatalogStub::UpdateEntryGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
   google::cloud::datacatalog::v1::EntryGroup response;
   auto status = grpc_stub_->UpdateEntryGroup(&context, request, &response);
@@ -79,7 +80,7 @@ DefaultDataCatalogStub::UpdateEntryGroup(
 }
 
 Status DefaultDataCatalogStub::DeleteEntryGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteEntryGroup(&context, request, &response);
@@ -91,7 +92,7 @@ Status DefaultDataCatalogStub::DeleteEntryGroup(
 
 StatusOr<google::cloud::datacatalog::v1::ListEntryGroupsResponse>
 DefaultDataCatalogStub::ListEntryGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ListEntryGroupsRequest const& request) {
   google::cloud::datacatalog::v1::ListEntryGroupsResponse response;
   auto status = grpc_stub_->ListEntryGroups(&context, request, &response);
@@ -103,7 +104,7 @@ DefaultDataCatalogStub::ListEntryGroups(
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DefaultDataCatalogStub::CreateEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
   google::cloud::datacatalog::v1::Entry response;
   auto status = grpc_stub_->CreateEntry(&context, request, &response);
@@ -115,7 +116,7 @@ DefaultDataCatalogStub::CreateEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DefaultDataCatalogStub::UpdateEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
   google::cloud::datacatalog::v1::Entry response;
   auto status = grpc_stub_->UpdateEntry(&context, request, &response);
@@ -126,7 +127,7 @@ DefaultDataCatalogStub::UpdateEntry(
 }
 
 Status DefaultDataCatalogStub::DeleteEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteEntry(&context, request, &response);
@@ -138,7 +139,7 @@ Status DefaultDataCatalogStub::DeleteEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DefaultDataCatalogStub::GetEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::GetEntryRequest const& request) {
   google::cloud::datacatalog::v1::Entry response;
   auto status = grpc_stub_->GetEntry(&context, request, &response);
@@ -150,7 +151,7 @@ DefaultDataCatalogStub::GetEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DefaultDataCatalogStub::LookupEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
   google::cloud::datacatalog::v1::Entry response;
   auto status = grpc_stub_->LookupEntry(&context, request, &response);
@@ -162,7 +163,7 @@ DefaultDataCatalogStub::LookupEntry(
 
 StatusOr<google::cloud::datacatalog::v1::ListEntriesResponse>
 DefaultDataCatalogStub::ListEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ListEntriesRequest const& request) {
   google::cloud::datacatalog::v1::ListEntriesResponse response;
   auto status = grpc_stub_->ListEntries(&context, request, &response);
@@ -174,7 +175,7 @@ DefaultDataCatalogStub::ListEntries(
 
 StatusOr<google::cloud::datacatalog::v1::EntryOverview>
 DefaultDataCatalogStub::ModifyEntryOverview(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
   google::cloud::datacatalog::v1::EntryOverview response;
   auto status = grpc_stub_->ModifyEntryOverview(&context, request, &response);
@@ -186,7 +187,7 @@ DefaultDataCatalogStub::ModifyEntryOverview(
 
 StatusOr<google::cloud::datacatalog::v1::Contacts>
 DefaultDataCatalogStub::ModifyEntryContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
   google::cloud::datacatalog::v1::Contacts response;
   auto status = grpc_stub_->ModifyEntryContacts(&context, request, &response);
@@ -198,7 +199,7 @@ DefaultDataCatalogStub::ModifyEntryContacts(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DefaultDataCatalogStub::CreateTagTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
   google::cloud::datacatalog::v1::TagTemplate response;
   auto status = grpc_stub_->CreateTagTemplate(&context, request, &response);
@@ -210,7 +211,7 @@ DefaultDataCatalogStub::CreateTagTemplate(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DefaultDataCatalogStub::GetTagTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
   google::cloud::datacatalog::v1::TagTemplate response;
   auto status = grpc_stub_->GetTagTemplate(&context, request, &response);
@@ -222,7 +223,7 @@ DefaultDataCatalogStub::GetTagTemplate(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DefaultDataCatalogStub::UpdateTagTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
   google::cloud::datacatalog::v1::TagTemplate response;
   auto status = grpc_stub_->UpdateTagTemplate(&context, request, &response);
@@ -233,7 +234,7 @@ DefaultDataCatalogStub::UpdateTagTemplate(
 }
 
 Status DefaultDataCatalogStub::DeleteTagTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTagTemplate(&context, request, &response);
@@ -245,7 +246,7 @@ Status DefaultDataCatalogStub::DeleteTagTemplate(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DefaultDataCatalogStub::CreateTagTemplateField(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
         request) {
   google::cloud::datacatalog::v1::TagTemplateField response;
@@ -259,7 +260,7 @@ DefaultDataCatalogStub::CreateTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DefaultDataCatalogStub::UpdateTagTemplateField(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
         request) {
   google::cloud::datacatalog::v1::TagTemplateField response;
@@ -273,7 +274,7 @@ DefaultDataCatalogStub::UpdateTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DefaultDataCatalogStub::RenameTagTemplateField(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
         request) {
   google::cloud::datacatalog::v1::TagTemplateField response;
@@ -287,7 +288,7 @@ DefaultDataCatalogStub::RenameTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DefaultDataCatalogStub::RenameTagTemplateFieldEnumValue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::
         RenameTagTemplateFieldEnumValueRequest const& request) {
   google::cloud::datacatalog::v1::TagTemplateField response;
@@ -300,7 +301,7 @@ DefaultDataCatalogStub::RenameTagTemplateFieldEnumValue(
 }
 
 Status DefaultDataCatalogStub::DeleteTagTemplateField(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
         request) {
   google::protobuf::Empty response;
@@ -313,7 +314,7 @@ Status DefaultDataCatalogStub::DeleteTagTemplateField(
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DefaultDataCatalogStub::CreateTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::CreateTagRequest const& request) {
   google::cloud::datacatalog::v1::Tag response;
   auto status = grpc_stub_->CreateTag(&context, request, &response);
@@ -324,7 +325,7 @@ StatusOr<google::cloud::datacatalog::v1::Tag> DefaultDataCatalogStub::CreateTag(
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DefaultDataCatalogStub::UpdateTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
   google::cloud::datacatalog::v1::Tag response;
   auto status = grpc_stub_->UpdateTag(&context, request, &response);
@@ -335,7 +336,7 @@ StatusOr<google::cloud::datacatalog::v1::Tag> DefaultDataCatalogStub::UpdateTag(
 }
 
 Status DefaultDataCatalogStub::DeleteTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTag(&context, request, &response);
@@ -347,7 +348,7 @@ Status DefaultDataCatalogStub::DeleteTag(
 
 StatusOr<google::cloud::datacatalog::v1::ListTagsResponse>
 DefaultDataCatalogStub::ListTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ListTagsRequest const& request) {
   google::cloud::datacatalog::v1::ListTagsResponse response;
   auto status = grpc_stub_->ListTags(&context, request, &response);
@@ -360,7 +361,8 @@ DefaultDataCatalogStub::ListTags(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataCatalogStub::AsyncReconcileTags(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datacatalog::v1::ReconcileTagsRequest,
@@ -377,7 +379,7 @@ DefaultDataCatalogStub::AsyncReconcileTags(
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DefaultDataCatalogStub::StarEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::StarEntryRequest const& request) {
   google::cloud::datacatalog::v1::StarEntryResponse response;
   auto status = grpc_stub_->StarEntry(&context, request, &response);
@@ -389,7 +391,7 @@ DefaultDataCatalogStub::StarEntry(
 
 StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
 DefaultDataCatalogStub::UnstarEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
   google::cloud::datacatalog::v1::UnstarEntryResponse response;
   auto status = grpc_stub_->UnstarEntry(&context, request, &response);
@@ -400,7 +402,7 @@ DefaultDataCatalogStub::UnstarEntry(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDataCatalogStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -411,7 +413,7 @@ StatusOr<google::iam::v1::Policy> DefaultDataCatalogStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDataCatalogStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -423,7 +425,7 @@ StatusOr<google::iam::v1::Policy> DefaultDataCatalogStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDataCatalogStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -436,7 +438,8 @@ DefaultDataCatalogStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataCatalogStub::AsyncImportEntries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datacatalog::v1::ImportEntriesRequest,
@@ -454,7 +457,9 @@ DefaultDataCatalogStub::AsyncImportEntries(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataCatalogStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -469,7 +474,9 @@ DefaultDataCatalogStub::AsyncGetOperation(
 
 future<Status> DefaultDataCatalogStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

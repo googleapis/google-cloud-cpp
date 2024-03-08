@@ -22,6 +22,7 @@
 #include <google/cloud/gkemulticloud/v1/attached_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ AttachedClustersStub::~AttachedClustersStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultAttachedClustersStub::AsyncCreateAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -53,7 +55,8 @@ DefaultAttachedClustersStub::AsyncCreateAttachedCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAttachedClustersStub::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -73,7 +76,8 @@ DefaultAttachedClustersStub::AsyncUpdateAttachedCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAttachedClustersStub::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -92,7 +96,7 @@ DefaultAttachedClustersStub::AsyncImportAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
 DefaultAttachedClustersStub::GetAttachedCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
         request) {
   google::cloud::gkemulticloud::v1::AttachedCluster response;
@@ -105,7 +109,7 @@ DefaultAttachedClustersStub::GetAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
 DefaultAttachedClustersStub::ListAttachedClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
         request) {
   google::cloud::gkemulticloud::v1::ListAttachedClustersResponse response;
@@ -119,7 +123,8 @@ DefaultAttachedClustersStub::ListAttachedClusters(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAttachedClustersStub::AsyncDeleteAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -138,7 +143,7 @@ DefaultAttachedClustersStub::AsyncDeleteAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
 DefaultAttachedClustersStub::GetAttachedServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
         request) {
   google::cloud::gkemulticloud::v1::AttachedServerConfig response;
@@ -153,7 +158,7 @@ DefaultAttachedClustersStub::GetAttachedServerConfig(
 StatusOr<google::cloud::gkemulticloud::v1::
              GenerateAttachedClusterInstallManifestResponse>
 DefaultAttachedClustersStub::GenerateAttachedClusterInstallManifest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterInstallManifestRequest const& request) {
   google::cloud::gkemulticloud::v1::
@@ -169,7 +174,7 @@ DefaultAttachedClustersStub::GenerateAttachedClusterInstallManifest(
 StatusOr<
     google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
 DefaultAttachedClustersStub::GenerateAttachedClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterAgentTokenRequest const& request) {
   google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse
@@ -185,7 +190,9 @@ DefaultAttachedClustersStub::GenerateAttachedClusterAgentToken(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAttachedClustersStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -200,7 +207,9 @@ DefaultAttachedClustersStub::AsyncGetOperation(
 
 future<Status> DefaultAttachedClustersStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

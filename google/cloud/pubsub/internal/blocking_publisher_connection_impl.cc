@@ -41,11 +41,11 @@ StatusOr<std::string> BlockingPublisherConnectionImpl::Publish(
       current.get<pubsub::RetryPolicyOption>()->clone(),
       current.get<pubsub::BackoffPolicyOption>()->clone(),
       Idempotency::kIdempotent,
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::PublishRequest const& request) {
-        return stub_->Publish(context, request);
+        return stub_->Publish(context, options, request);
       },
-      request, __func__);
+      current, request, __func__);
   if (!response) return std::move(response).status();
   if (response->message_ids_size() != 1) {
     return Status(StatusCode::kInternal,

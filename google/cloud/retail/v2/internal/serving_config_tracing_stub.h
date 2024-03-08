@@ -39,36 +39,36 @@ class ServingConfigServiceTracingStub : public ServingConfigServiceStub {
       std::shared_ptr<ServingConfigServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::ServingConfig> CreateServingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CreateServingConfigRequest const& request)
       override;
 
   Status DeleteServingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteServingConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> UpdateServingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateServingConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> GetServingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetServingConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
-  ListServingConfigs(grpc::ClientContext& context,
+  ListServingConfigs(grpc::ClientContext& context, Options const& options,
                      google::cloud::retail::v2::ListServingConfigsRequest const&
                          request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> AddControl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::AddControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> RemoveControl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::RemoveControlRequest const& request) override;
 
  private:

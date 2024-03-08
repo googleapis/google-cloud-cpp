@@ -203,8 +203,6 @@ add_library(
     internal/readrowsparser.h
     internal/retry_context.cc
     internal/retry_context.h
-    internal/retry_info_helper.cc
-    internal/retry_info_helper.h
     internal/retry_traits.h
     internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
@@ -279,37 +277,85 @@ add_library(google-cloud-cpp::bigtable ALIAS google_cloud_cpp_bigtable)
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_bigtable)
 
-add_library(google_cloud_cpp_bigtable_mocks INTERFACE)
-set(google_cloud_cpp_bigtable_mocks_hdrs
-    # cmake-format: sort
-    admin/mocks/mock_bigtable_instance_admin_connection.h
-    admin/mocks/mock_bigtable_table_admin_connection.h
-    mocks/mock_data_connection.h
-    mocks/mock_row_reader.h)
-export_list_to_bazel("google_cloud_cpp_bigtable_mocks.bzl"
-                     google_cloud_cpp_bigtable_mocks_hdrs YEAR "2021")
-foreach (file IN LISTS google_cloud_cpp_bigtable_mocks_hdrs)
-    # We use a generator expression per the recommendation in:
-    # https://stackoverflow.com/a/62465051
-    list(APPEND mock_files
-         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
-endforeach ()
-target_sources(google_cloud_cpp_bigtable_mocks INTERFACE ${mock_files})
-target_link_libraries(
-    google_cloud_cpp_bigtable_mocks
-    INTERFACE google-cloud-cpp::bigtable GTest::gmock_main GTest::gmock
-              GTest::gtest)
-set_target_properties(google_cloud_cpp_bigtable_mocks
-                      PROPERTIES EXPORT_NAME google-cloud-cpp::bigtable_mocks)
-target_include_directories(
-    google_cloud_cpp_bigtable_mocks
-    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-              $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_bigtable_mocks
-                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-add_library(google-cloud-cpp::bigtable_mocks ALIAS
-            google_cloud_cpp_bigtable_mocks)
+# Export the CMake targets to make it easy to create configuration files.
+install(
+    EXPORT google_cloud_cpp_bigtable-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable"
+    COMPONENT google_cloud_cpp_development)
+
+install(
+    TARGETS google_cloud_cpp_bigtable google_cloud_cpp_bigtable_protos
+    EXPORT google_cloud_cpp_bigtable-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_runtime
+            NAMELINK_COMPONENT google_cloud_cpp_development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_install_headers("google_cloud_cpp_bigtable"
+                                 "include/google/cloud/bigtable")
+
+google_cloud_cpp_add_pkgconfig(
+    bigtable
+    "The Google Cloud Bigtable C++ Client Library"
+    "Provides C++ APIs to access Google Cloud Bigtable."
+    "google_cloud_cpp_grpc_utils"
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_bigtable_protos")
+
+# Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
+configure_file("config.cmake.in" "google_cloud_cpp_bigtable-config.cmake" @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_bigtable-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable"
+    COMPONENT google_cloud_cpp_development)
+
+if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
+    add_library(google_cloud_cpp_bigtable_mocks INTERFACE)
+    set(google_cloud_cpp_bigtable_mocks_hdrs
+        # cmake-format: sort
+        admin/mocks/mock_bigtable_instance_admin_connection.h
+        admin/mocks/mock_bigtable_table_admin_connection.h
+        mocks/mock_data_connection.h
+        mocks/mock_row_reader.h)
+    export_list_to_bazel("google_cloud_cpp_bigtable_mocks.bzl"
+                         google_cloud_cpp_bigtable_mocks_hdrs YEAR "2021")
+    foreach (file IN LISTS google_cloud_cpp_bigtable_mocks_hdrs)
+        # We use a generator expression per the recommendation in:
+        # https://stackoverflow.com/a/62465051
+        list(APPEND mock_files
+             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
+    endforeach ()
+    target_sources(google_cloud_cpp_bigtable_mocks INTERFACE ${mock_files})
+    target_link_libraries(
+        google_cloud_cpp_bigtable_mocks
+        INTERFACE google-cloud-cpp::bigtable GTest::gmock_main GTest::gmock
+                  GTest::gtest)
+    set_target_properties(
+        google_cloud_cpp_bigtable_mocks
+        PROPERTIES EXPORT_NAME google-cloud-cpp::bigtable_mocks)
+    target_include_directories(
+        google_cloud_cpp_bigtable_mocks
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                  $<INSTALL_INTERFACE:include>)
+    target_compile_options(google_cloud_cpp_bigtable_mocks
+                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    add_library(google-cloud-cpp::bigtable_mocks ALIAS
+                google_cloud_cpp_bigtable_mocks)
+
+    google_cloud_cpp_install_mocks(bigtable "Google Cloud Bigtable")
+endif ()
 
 if (BUILD_TESTING)
     add_library(
@@ -405,7 +451,6 @@ if (BUILD_TESTING)
         internal/prefix_range_end_test.cc
         internal/rate_limiter_test.cc
         internal/retry_context_test.cc
-        internal/retry_info_helper_test.cc
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
         legacy_table_test.cc
@@ -492,48 +537,3 @@ if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     set_tests_properties(bigtable_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
-
-# Export the CMake targets to make it easy to create configuration files.
-install(
-    EXPORT google_cloud_cpp_bigtable-targets
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable"
-    COMPONENT google_cloud_cpp_development)
-
-install(
-    TARGETS google_cloud_cpp_bigtable google_cloud_cpp_bigtable_protos
-    EXPORT google_cloud_cpp_bigtable-targets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_runtime
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_runtime
-            NAMELINK_COMPONENT google_cloud_cpp_development
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-
-google_cloud_cpp_install_headers("google_cloud_cpp_bigtable"
-                                 "include/google/cloud/bigtable")
-
-google_cloud_cpp_add_pkgconfig(
-    bigtable
-    "The Google Cloud Bigtable C++ Client Library"
-    "Provides C++ APIs to access Google Cloud Bigtable."
-    "google_cloud_cpp_grpc_utils"
-    "google_cloud_cpp_common"
-    "google_cloud_cpp_bigtable_protos")
-
-# Create and install the CMake configuration files.
-include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_bigtable-config.cmake" @ONLY)
-write_basic_package_version_file(
-    "google_cloud_cpp_bigtable-config-version.cmake"
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY ExactVersion)
-
-install(
-    FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable"
-    COMPONENT google_cloud_cpp_development)
-
-google_cloud_cpp_install_mocks(bigtable "Google Cloud Bigtable")

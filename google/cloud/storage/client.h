@@ -991,7 +991,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `SoftDeleted`, `Projection`, and
+   *     `UserProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -1017,7 +1018,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
    *     `Delimiter`, `IncludeTrailingDelimiter`, `StartOffset`, `EndOffset`,
-   *     `MatchGlob`, `Projection`, `UserProject`, and `Versions`.
+   *     `MatchGlob`, `Projection`, `SoftDeleted`, `UserProject`, and
+   *     `Versions`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -1049,13 +1051,17 @@ class Client {
    *     Valid types for this operation include
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *     `Projection`, `Prefix`, `Delimiter`, `IncludeTrailingDelimiter`,
-   *     `StartOffset`, `EndOffset`, `MatchGlob`, and `Versions`.
+   *     `IncludeFoldersAsPrefixes`, `StartOffset`, `EndOffset`, `MatchGlob`,
+   *     `SoftDeleted`, and `Versions`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc list objects and prefixes
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc list-objects-and-folders
    */
   template <typename... Options>
   ListObjectsAndPrefixesReader ListObjectsAndPrefixes(

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -67,11 +68,11 @@ OsConfigServiceConnectionImpl::ExecutePatchJob(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExecutePatchJob(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
-        return stub_->ExecutePatchJob(context, request);
+        return stub_->ExecutePatchJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
@@ -81,11 +82,11 @@ OsConfigServiceConnectionImpl::GetPatchJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPatchJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
-        return stub_->GetPatchJob(context, request);
+        return stub_->GetPatchJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
@@ -96,11 +97,11 @@ OsConfigServiceConnectionImpl::CancelPatchJob(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelPatchJob(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
-        return stub_->CancelPatchJob(context, request);
+        return stub_->CancelPatchJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJob>
@@ -112,20 +113,21 @@ OsConfigServiceConnectionImpl::ListPatchJobs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJob>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<osconfig_v1::OsConfigServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::osconfig::v1::ListPatchJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::osconfig::v1::ListPatchJobsRequest const&
                        request) {
-              return stub->ListPatchJobs(context, request);
+              return stub->ListPatchJobs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::osconfig::v1::ListPatchJobsResponse r) {
         std::vector<google::cloud::osconfig::v1::PatchJob> result(
@@ -146,21 +148,23 @@ OsConfigServiceConnectionImpl::ListPatchJobInstanceDetails(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<osconfig_v1::OsConfigServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::osconfig::v1::
                        ListPatchJobInstanceDetailsRequest const& request) {
-              return stub->ListPatchJobInstanceDetails(context, request);
+              return stub->ListPatchJobInstanceDetails(context, options,
+                                                       request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse r) {
         std::vector<google::cloud::osconfig::v1::PatchJobInstanceDetails>
@@ -178,12 +182,12 @@ OsConfigServiceConnectionImpl::CreatePatchDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePatchDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::CreatePatchDeploymentRequest const&
                  request) {
-        return stub_->CreatePatchDeployment(context, request);
+        return stub_->CreatePatchDeployment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
@@ -193,12 +197,12 @@ OsConfigServiceConnectionImpl::GetPatchDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPatchDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetPatchDeploymentRequest const&
                  request) {
-        return stub_->GetPatchDeployment(context, request);
+        return stub_->GetPatchDeployment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchDeployment>
@@ -211,21 +215,22 @@ OsConfigServiceConnectionImpl::ListPatchDeployments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchDeployment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<osconfig_v1::OsConfigServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::osconfig::v1::ListPatchDeploymentsRequest const&
                     request) {
-              return stub->ListPatchDeployments(context, request);
+              return stub->ListPatchDeployments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::osconfig::v1::ListPatchDeploymentsResponse r) {
         std::vector<google::cloud::osconfig::v1::PatchDeployment> result(
@@ -242,12 +247,12 @@ Status OsConfigServiceConnectionImpl::DeletePatchDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePatchDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::DeletePatchDeploymentRequest const&
                  request) {
-        return stub_->DeletePatchDeployment(context, request);
+        return stub_->DeletePatchDeployment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
@@ -257,12 +262,12 @@ OsConfigServiceConnectionImpl::UpdatePatchDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdatePatchDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&
                  request) {
-        return stub_->UpdatePatchDeployment(context, request);
+        return stub_->UpdatePatchDeployment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
@@ -272,12 +277,12 @@ OsConfigServiceConnectionImpl::PausePatchDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PausePatchDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::PausePatchDeploymentRequest const&
                  request) {
-        return stub_->PausePatchDeployment(context, request);
+        return stub_->PausePatchDeployment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
@@ -287,12 +292,12 @@ OsConfigServiceConnectionImpl::ResumePatchDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ResumePatchDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&
                  request) {
-        return stub_->ResumePatchDeployment(context, request);
+        return stub_->ResumePatchDeployment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

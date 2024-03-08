@@ -18,6 +18,7 @@
 
 #include "google/cloud/memcache/v1/cloud_memcache_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

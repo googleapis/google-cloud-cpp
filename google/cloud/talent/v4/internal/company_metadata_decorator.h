@@ -39,23 +39,23 @@ class CompanyServiceMetadata : public CompanyServiceStub {
                          std::string api_client_header = "");
 
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
 
   Status DeleteCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::ListCompaniesResponse> ListCompanies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
 
  private:

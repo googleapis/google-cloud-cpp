@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,7 @@ StatusOr<google::cloud::securitycentermanagement::v1::
              ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
 DefaultSecurityCenterManagementStub::
     ListEffectiveSecurityHealthAnalyticsCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const&,
         google::cloud::securitycentermanagement::v1::
             ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
                 request) {
@@ -52,7 +53,7 @@ StatusOr<google::cloud::securitycentermanagement::v1::
              EffectiveSecurityHealthAnalyticsCustomModule>
 DefaultSecurityCenterManagementStub::
     GetEffectiveSecurityHealthAnalyticsCustomModule(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const&,
         google::cloud::securitycentermanagement::v1::
             GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
                 request) {
@@ -69,7 +70,7 @@ DefaultSecurityCenterManagementStub::
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListSecurityHealthAnalyticsCustomModulesResponse>
 DefaultSecurityCenterManagementStub::ListSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
   google::cloud::securitycentermanagement::v1::
@@ -86,7 +87,7 @@ StatusOr<google::cloud::securitycentermanagement::v1::
              ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
 DefaultSecurityCenterManagementStub::
     ListDescendantSecurityHealthAnalyticsCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const&,
         google::cloud::securitycentermanagement::v1::
             ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
                 request) {
@@ -103,7 +104,7 @@ DefaultSecurityCenterManagementStub::
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 DefaultSecurityCenterManagementStub::GetSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::cloud::securitycentermanagement::v1::
@@ -119,7 +120,7 @@ DefaultSecurityCenterManagementStub::GetSecurityHealthAnalyticsCustomModule(
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 DefaultSecurityCenterManagementStub::CreateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::cloud::securitycentermanagement::v1::
@@ -135,7 +136,7 @@ DefaultSecurityCenterManagementStub::CreateSecurityHealthAnalyticsCustomModule(
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 DefaultSecurityCenterManagementStub::UpdateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::cloud::securitycentermanagement::v1::
@@ -150,7 +151,7 @@ DefaultSecurityCenterManagementStub::UpdateSecurityHealthAnalyticsCustomModule(
 
 Status
 DefaultSecurityCenterManagementStub::DeleteSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::protobuf::Empty response;
@@ -166,7 +167,7 @@ StatusOr<google::cloud::securitycentermanagement::v1::
              SimulateSecurityHealthAnalyticsCustomModuleResponse>
 DefaultSecurityCenterManagementStub::
     SimulateSecurityHealthAnalyticsCustomModule(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const&,
         google::cloud::securitycentermanagement::v1::
             SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   google::cloud::securitycentermanagement::v1::
@@ -183,7 +184,7 @@ StatusOr<google::cloud::securitycentermanagement::v1::
              ListEffectiveEventThreatDetectionCustomModulesResponse>
 DefaultSecurityCenterManagementStub::
     ListEffectiveEventThreatDetectionCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const&,
         google::cloud::securitycentermanagement::v1::
             ListEffectiveEventThreatDetectionCustomModulesRequest const&
                 request) {
@@ -201,7 +202,7 @@ StatusOr<google::cloud::securitycentermanagement::v1::
              EffectiveEventThreatDetectionCustomModule>
 DefaultSecurityCenterManagementStub::
     GetEffectiveEventThreatDetectionCustomModule(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const&,
         google::cloud::securitycentermanagement::v1::
             GetEffectiveEventThreatDetectionCustomModuleRequest const&
                 request) {
@@ -218,7 +219,7 @@ DefaultSecurityCenterManagementStub::
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListEventThreatDetectionCustomModulesResponse>
 DefaultSecurityCenterManagementStub::ListEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         ListEventThreatDetectionCustomModulesRequest const& request) {
   google::cloud::securitycentermanagement::v1::
@@ -235,7 +236,7 @@ StatusOr<google::cloud::securitycentermanagement::v1::
              ListDescendantEventThreatDetectionCustomModulesResponse>
 DefaultSecurityCenterManagementStub::
     ListDescendantEventThreatDetectionCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const&,
         google::cloud::securitycentermanagement::v1::
             ListDescendantEventThreatDetectionCustomModulesRequest const&
                 request) {
@@ -252,7 +253,7 @@ DefaultSecurityCenterManagementStub::
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 DefaultSecurityCenterManagementStub::GetEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         GetEventThreatDetectionCustomModuleRequest const& request) {
   google::cloud::securitycentermanagement::v1::EventThreatDetectionCustomModule
@@ -268,7 +269,7 @@ DefaultSecurityCenterManagementStub::GetEventThreatDetectionCustomModule(
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 DefaultSecurityCenterManagementStub::CreateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         CreateEventThreatDetectionCustomModuleRequest const& request) {
   google::cloud::securitycentermanagement::v1::EventThreatDetectionCustomModule
@@ -284,7 +285,7 @@ DefaultSecurityCenterManagementStub::CreateEventThreatDetectionCustomModule(
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 DefaultSecurityCenterManagementStub::UpdateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         UpdateEventThreatDetectionCustomModuleRequest const& request) {
   google::cloud::securitycentermanagement::v1::EventThreatDetectionCustomModule
@@ -299,7 +300,7 @@ DefaultSecurityCenterManagementStub::UpdateEventThreatDetectionCustomModule(
 
 Status
 DefaultSecurityCenterManagementStub::DeleteEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         DeleteEventThreatDetectionCustomModuleRequest const& request) {
   google::protobuf::Empty response;
@@ -314,7 +315,7 @@ DefaultSecurityCenterManagementStub::DeleteEventThreatDetectionCustomModule(
 StatusOr<google::cloud::securitycentermanagement::v1::
              ValidateEventThreatDetectionCustomModuleResponse>
 DefaultSecurityCenterManagementStub::ValidateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securitycentermanagement::v1::
         ValidateEventThreatDetectionCustomModuleRequest const& request) {
   google::cloud::securitycentermanagement::v1::

@@ -24,6 +24,7 @@
 #include <google/cloud/compute/region_disks/v1/region_disks.pb.h>
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -48,7 +49,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncAddResourcePolicies(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         AddResourcePoliciesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -62,7 +63,7 @@ DefaultRegionDisksRestStub::AsyncAddResourcePolicies(
                 request.region_disks_add_resource_policies_request_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "addResourcePolicies"),
@@ -73,7 +74,7 @@ DefaultRegionDisksRestStub::AsyncAddResourcePolicies(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -84,7 +85,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncBulkInsert(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -97,7 +98,7 @@ DefaultRegionDisksRestStub::AsyncBulkInsert(
                 *service, *rest_context, request.bulk_insert_disk_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", "bulkInsert"),
@@ -108,7 +109,7 @@ DefaultRegionDisksRestStub::AsyncBulkInsert(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -119,7 +120,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncCreateSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -131,7 +132,7 @@ DefaultRegionDisksRestStub::AsyncCreateSnapshot(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.snapshot_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "createSnapshot"),
@@ -142,7 +143,7 @@ DefaultRegionDisksRestStub::AsyncCreateSnapshot(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -153,7 +154,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncDeleteDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -165,7 +166,7 @@ DefaultRegionDisksRestStub::AsyncDeleteDisk(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk()),
@@ -176,7 +177,7 @@ DefaultRegionDisksRestStub::AsyncDeleteDisk(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -219,7 +220,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncInsertDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -231,7 +232,7 @@ DefaultRegionDisksRestStub::AsyncInsertDisk(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.disk_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -242,7 +243,7 @@ DefaultRegionDisksRestStub::AsyncInsertDisk(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -274,7 +275,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncRemoveResourcePolicies(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         RemoveResourcePoliciesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -289,7 +290,7 @@ DefaultRegionDisksRestStub::AsyncRemoveResourcePolicies(
                     .region_disks_remove_resource_policies_request_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/",
@@ -301,7 +302,7 @@ DefaultRegionDisksRestStub::AsyncRemoveResourcePolicies(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -312,7 +313,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncResize(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -325,7 +326,7 @@ DefaultRegionDisksRestStub::AsyncResize(
                 *service, *rest_context,
                 request.region_disks_resize_request_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "resize"),
@@ -336,7 +337,7 @@ DefaultRegionDisksRestStub::AsyncResize(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -363,7 +364,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -376,7 +377,7 @@ DefaultRegionDisksRestStub::AsyncSetLabels(
                 *service, *rest_context,
                 request.region_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.resource(), "/", "setLabels"),
@@ -387,7 +388,7 @@ DefaultRegionDisksRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -398,7 +399,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncStartAsyncReplication(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         StartAsyncReplicationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -412,7 +413,7 @@ DefaultRegionDisksRestStub::AsyncStartAsyncReplication(
                 request.region_disks_start_async_replication_request_resource(),
                 false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "startAsyncReplication"),
@@ -423,7 +424,7 @@ DefaultRegionDisksRestStub::AsyncStartAsyncReplication(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -434,7 +435,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncStopAsyncReplication(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         StopAsyncReplicationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -446,7 +447,7 @@ DefaultRegionDisksRestStub::AsyncStopAsyncReplication(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "stopAsyncReplication"),
@@ -457,7 +458,7 @@ DefaultRegionDisksRestStub::AsyncStopAsyncReplication(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -468,7 +469,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncStopGroupAsyncReplication(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::
         StopGroupAsyncReplicationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -481,7 +482,7 @@ DefaultRegionDisksRestStub::AsyncStopGroupAsyncReplication(
                 *service, *rest_context,
                 request.disks_stop_group_async_replication_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", "stopGroupAsyncReplication"),
@@ -492,7 +493,7 @@ DefaultRegionDisksRestStub::AsyncStopGroupAsyncReplication(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -520,7 +521,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncUpdateDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -532,7 +533,7 @@ DefaultRegionDisksRestStub::AsyncUpdateDisk(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.disk_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk()),
@@ -545,7 +546,7 @@ DefaultRegionDisksRestStub::AsyncUpdateDisk(
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -556,7 +557,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionDisksRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -569,7 +570,7 @@ DefaultRegionDisksRestStub::AsyncGetOperation(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/projects/", request.project(), "/regions/",
                              request.region(), "/operations/",
                              request.operation())));
@@ -578,7 +579,7 @@ DefaultRegionDisksRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -588,7 +589,7 @@ DefaultRegionDisksRestStub::AsyncGetOperation(
 future<Status> DefaultRegionDisksRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
@@ -599,7 +600,7 @@ future<Status> DefaultRegionDisksRestStub::AsyncCancelOperation(
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", options),
+                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
                 "/projects/", request.project(), "/regions/", request.region(),
                 "/operations/", request.operation())));
       },
@@ -607,7 +608,7 @@ future<Status> DefaultRegionDisksRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

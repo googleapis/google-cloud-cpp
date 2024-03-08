@@ -19,6 +19,7 @@
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_auth_decorator.h"
 #include <google/cloud/osconfig/v1/osconfig_zonal_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,180 +34,185 @@ OsConfigZonalServiceAuth::OsConfigZonalServiceAuth(
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceAuth::AsyncCreateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateOSPolicyAssignment(cq, *std::move(context),
-                                                    options, request);
+        return child->AsyncCreateOSPolicyAssignment(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceAuth::AsyncUpdateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateOSPolicyAssignment(cq, *std::move(context),
-                                                    options, request);
+        return child->AsyncUpdateOSPolicyAssignment(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
 OsConfigZonalServiceAuth::GetOSPolicyAssignment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetOSPolicyAssignment(context, request);
+  return child_->GetOSPolicyAssignment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentsResponse>
 OsConfigZonalServiceAuth::ListOSPolicyAssignments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListOSPolicyAssignments(context, request);
+  return child_->ListOSPolicyAssignments(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsResponse>
 OsConfigZonalServiceAuth::ListOSPolicyAssignmentRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListOSPolicyAssignmentRevisions(context, request);
+  return child_->ListOSPolicyAssignmentRevisions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceAuth::AsyncDeleteOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteOSPolicyAssignment(cq, *std::move(context),
-                                                    options, request);
+        return child->AsyncDeleteOSPolicyAssignment(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
 OsConfigZonalServiceAuth::GetOSPolicyAssignmentReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetOSPolicyAssignmentReport(context, request);
+  return child_->GetOSPolicyAssignmentReport(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsResponse>
 OsConfigZonalServiceAuth::ListOSPolicyAssignmentReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListOSPolicyAssignmentReports(context, request);
+  return child_->ListOSPolicyAssignmentReports(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::Inventory>
 OsConfigZonalServiceAuth::GetInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetInventoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInventory(context, request);
+  return child_->GetInventory(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListInventoriesResponse>
 OsConfigZonalServiceAuth::ListInventories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListInventoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInventories(context, request);
+  return child_->ListInventories(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
 OsConfigZonalServiceAuth::GetVulnerabilityReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetVulnerabilityReport(context, request);
+  return child_->GetVulnerabilityReport(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListVulnerabilityReportsResponse>
 OsConfigZonalServiceAuth::ListVulnerabilityReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVulnerabilityReports(context, request);
+  return child_->ListVulnerabilityReports(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> OsConfigZonalServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

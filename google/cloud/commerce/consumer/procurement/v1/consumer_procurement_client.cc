@@ -19,6 +19,7 @@
 
 #include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

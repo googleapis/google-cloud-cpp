@@ -24,6 +24,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

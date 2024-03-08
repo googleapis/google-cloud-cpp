@@ -23,6 +23,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -66,11 +67,11 @@ TextToSpeechConnectionImpl::ListVoices(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListVoices(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-        return stub_->ListVoices(context, request);
+        return stub_->ListVoices(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
@@ -80,10 +81,12 @@ TextToSpeechConnectionImpl::SynthesizeSpeech(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SynthesizeSpeech(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
-                 request) { return stub_->SynthesizeSpeech(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->SynthesizeSpeech(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

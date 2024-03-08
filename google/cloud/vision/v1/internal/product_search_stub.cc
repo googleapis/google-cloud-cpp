@@ -22,6 +22,7 @@
 #include <google/cloud/vision/v1/product_search_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ProductSearchStub::~ProductSearchStub() = default;
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 DefaultProductSearchStub::CreateProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::CreateProductSetRequest const& request) {
   google::cloud::vision::v1::ProductSet response;
   auto status = grpc_stub_->CreateProductSet(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultProductSearchStub::CreateProductSet(
 
 StatusOr<google::cloud::vision::v1::ListProductSetsResponse>
 DefaultProductSearchStub::ListProductSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::ListProductSetsRequest const& request) {
   google::cloud::vision::v1::ListProductSetsResponse response;
   auto status = grpc_stub_->ListProductSets(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultProductSearchStub::ListProductSets(
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 DefaultProductSearchStub::GetProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::GetProductSetRequest const& request) {
   google::cloud::vision::v1::ProductSet response;
   auto status = grpc_stub_->GetProductSet(&context, request, &response);
@@ -68,7 +69,7 @@ DefaultProductSearchStub::GetProductSet(
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 DefaultProductSearchStub::UpdateProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::UpdateProductSetRequest const& request) {
   google::cloud::vision::v1::ProductSet response;
   auto status = grpc_stub_->UpdateProductSet(&context, request, &response);
@@ -79,7 +80,7 @@ DefaultProductSearchStub::UpdateProductSet(
 }
 
 Status DefaultProductSearchStub::DeleteProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::DeleteProductSetRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteProductSet(&context, request, &response);
@@ -91,7 +92,7 @@ Status DefaultProductSearchStub::DeleteProductSet(
 
 StatusOr<google::cloud::vision::v1::Product>
 DefaultProductSearchStub::CreateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::CreateProductRequest const& request) {
   google::cloud::vision::v1::Product response;
   auto status = grpc_stub_->CreateProduct(&context, request, &response);
@@ -103,7 +104,7 @@ DefaultProductSearchStub::CreateProduct(
 
 StatusOr<google::cloud::vision::v1::ListProductsResponse>
 DefaultProductSearchStub::ListProducts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::ListProductsRequest const& request) {
   google::cloud::vision::v1::ListProductsResponse response;
   auto status = grpc_stub_->ListProducts(&context, request, &response);
@@ -115,7 +116,7 @@ DefaultProductSearchStub::ListProducts(
 
 StatusOr<google::cloud::vision::v1::Product>
 DefaultProductSearchStub::GetProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::GetProductRequest const& request) {
   google::cloud::vision::v1::Product response;
   auto status = grpc_stub_->GetProduct(&context, request, &response);
@@ -127,7 +128,7 @@ DefaultProductSearchStub::GetProduct(
 
 StatusOr<google::cloud::vision::v1::Product>
 DefaultProductSearchStub::UpdateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::UpdateProductRequest const& request) {
   google::cloud::vision::v1::Product response;
   auto status = grpc_stub_->UpdateProduct(&context, request, &response);
@@ -138,7 +139,7 @@ DefaultProductSearchStub::UpdateProduct(
 }
 
 Status DefaultProductSearchStub::DeleteProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::DeleteProductRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteProduct(&context, request, &response);
@@ -150,7 +151,7 @@ Status DefaultProductSearchStub::DeleteProduct(
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
 DefaultProductSearchStub::CreateReferenceImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::CreateReferenceImageRequest const& request) {
   google::cloud::vision::v1::ReferenceImage response;
   auto status = grpc_stub_->CreateReferenceImage(&context, request, &response);
@@ -161,7 +162,7 @@ DefaultProductSearchStub::CreateReferenceImage(
 }
 
 Status DefaultProductSearchStub::DeleteReferenceImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::DeleteReferenceImageRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteReferenceImage(&context, request, &response);
@@ -173,7 +174,7 @@ Status DefaultProductSearchStub::DeleteReferenceImage(
 
 StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse>
 DefaultProductSearchStub::ListReferenceImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::ListReferenceImagesRequest const& request) {
   google::cloud::vision::v1::ListReferenceImagesResponse response;
   auto status = grpc_stub_->ListReferenceImages(&context, request, &response);
@@ -185,7 +186,7 @@ DefaultProductSearchStub::ListReferenceImages(
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
 DefaultProductSearchStub::GetReferenceImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::GetReferenceImageRequest const& request) {
   google::cloud::vision::v1::ReferenceImage response;
   auto status = grpc_stub_->GetReferenceImage(&context, request, &response);
@@ -196,7 +197,7 @@ DefaultProductSearchStub::GetReferenceImage(
 }
 
 Status DefaultProductSearchStub::AddProductToProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::AddProductToProductSetRequest const& request) {
   google::protobuf::Empty response;
   auto status =
@@ -208,7 +209,7 @@ Status DefaultProductSearchStub::AddProductToProductSet(
 }
 
 Status DefaultProductSearchStub::RemoveProductFromProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
         request) {
   google::protobuf::Empty response;
@@ -222,7 +223,7 @@ Status DefaultProductSearchStub::RemoveProductFromProductSet(
 
 StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse>
 DefaultProductSearchStub::ListProductsInProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::ListProductsInProductSetRequest const& request) {
   google::cloud::vision::v1::ListProductsInProductSetResponse response;
   auto status =
@@ -236,7 +237,8 @@ DefaultProductSearchStub::ListProductsInProductSet(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductSearchStub::AsyncImportProductSets(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vision::v1::ImportProductSetsRequest,
@@ -253,7 +255,8 @@ DefaultProductSearchStub::AsyncImportProductSets(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductSearchStub::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vision::v1::PurgeProductsRequest,
@@ -270,7 +273,9 @@ DefaultProductSearchStub::AsyncPurgeProducts(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductSearchStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -285,7 +290,9 @@ DefaultProductSearchStub::AsyncGetOperation(
 
 future<Status> DefaultProductSearchStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

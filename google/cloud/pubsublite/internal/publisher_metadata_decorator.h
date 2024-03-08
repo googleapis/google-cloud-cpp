@@ -43,7 +43,8 @@ class PublisherServiceMetadata : public PublisherServiceStub {
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>>
   AsyncPublish(google::cloud::CompletionQueue const& cq,
-               std::shared_ptr<grpc::ClientContext> context) override;
+               std::shared_ptr<grpc::ClientContext> context,
+               google::cloud::internal::ImmutableOptions options) override;
 
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,

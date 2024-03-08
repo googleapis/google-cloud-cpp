@@ -41,7 +41,7 @@ class FeaturestoreOnlineServingServiceTracingStub
 
   StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
   ReadFeatureValues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
       override;
 
@@ -54,7 +54,7 @@ class FeaturestoreOnlineServingServiceTracingStub
 
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
   WriteFeatureValues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
       override;
 

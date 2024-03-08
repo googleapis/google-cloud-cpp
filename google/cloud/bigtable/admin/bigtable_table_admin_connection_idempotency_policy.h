@@ -55,6 +55,21 @@ class BigtableTableAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UndeleteTable(
       google::bigtable::admin::v2::UndeleteTableRequest const& request);
 
+  virtual google::cloud::Idempotency CreateAuthorizedView(
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request);
+
+  virtual google::cloud::Idempotency ListAuthorizedViews(
+      google::bigtable::admin::v2::ListAuthorizedViewsRequest request);
+
+  virtual google::cloud::Idempotency GetAuthorizedView(
+      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateAuthorizedView(
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteAuthorizedView(
+      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request);
+
   virtual google::cloud::Idempotency ModifyColumnFamilies(
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request);
 

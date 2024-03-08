@@ -21,8 +21,11 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -63,12 +66,35 @@ SessionsConnectionImpl::DetectIntent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DetectIntent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
-                 request) { return stub_->DetectIntent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DetectIntent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
+StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
+SessionsConnectionImpl::ServerStreamingDetectIntent(
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto factory =
+      [stub = stub_,
+       current](google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
+                    request) {
+        return stub->ServerStreamingDetectIntent(
+            std::make_shared<grpc::ClientContext>(), *current, request);
+      };
+  auto resumable = internal::MakeResumableStreamingReadRpc<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse,
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest>(
+      retry_policy(*current), backoff_policy(*current), factory,
+      SessionsServerStreamingDetectIntentStreamingUpdater, request);
+  return internal::MakeStreamRange(
+      internal::StreamReader<
+          google::cloud::dialogflow::cx::v3::DetectIntentResponse>(
+          [resumable] { return resumable->Read(); }));
+}
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsConnectionImpl::MatchIntent(
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
@@ -76,10 +102,12 @@ SessionsConnectionImpl::MatchIntent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->MatchIntent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::MatchIntentRequest const&
-                 request) { return stub_->MatchIntent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->MatchIntent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
@@ -89,10 +117,12 @@ SessionsConnectionImpl::FulfillIntent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FulfillIntent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
-                 request) { return stub_->FulfillIntent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->FulfillIntent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
@@ -104,12 +134,12 @@ SessionsConnectionImpl::SubmitAnswerFeedback(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SubmitAnswerFeedback(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
               request) {
-        return stub_->SubmitAnswerFeedback(context, request);
+        return stub_->SubmitAnswerFeedback(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

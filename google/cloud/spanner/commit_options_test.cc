@@ -34,9 +34,11 @@ TEST(CommitOptionsTest, SetValues) {
   options.set_return_stats(true);
   options.set_request_priority(RequestPriority::kLow);
   options.set_transaction_tag("tag");
+  options.set_max_commit_delay(std::chrono::milliseconds(100));
   EXPECT_TRUE(options.return_stats());
   EXPECT_EQ(RequestPriority::kLow, options.request_priority());
   EXPECT_EQ("tag", options.transaction_tag());
+  EXPECT_EQ(options.max_commit_delay(), std::chrono::milliseconds(100));
 }
 
 TEST(CommitOptionsTest, OptionsRoundTrip) {
@@ -44,10 +46,12 @@ TEST(CommitOptionsTest, OptionsRoundTrip) {
   options.set_return_stats(true);
   options.set_request_priority(RequestPriority::kLow);
   options.set_transaction_tag("tag");
+  options.set_max_commit_delay(std::chrono::milliseconds(100));
   CommitOptions rt_options(Options{options});
   EXPECT_TRUE(rt_options.return_stats());
   EXPECT_EQ(RequestPriority::kLow, rt_options.request_priority());
   EXPECT_EQ("tag", rt_options.transaction_tag());
+  EXPECT_EQ(options.max_commit_delay(), std::chrono::milliseconds(100));
 }
 
 }  // namespace

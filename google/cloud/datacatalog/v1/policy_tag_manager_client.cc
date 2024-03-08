@@ -18,6 +18,7 @@
 
 #include "google/cloud/datacatalog/v1/policy_tag_manager_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

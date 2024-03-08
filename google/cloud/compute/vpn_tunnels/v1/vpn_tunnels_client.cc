@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

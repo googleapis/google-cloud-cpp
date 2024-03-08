@@ -44,22 +44,22 @@ MatchServiceMetadata::MatchServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
 MatchServiceMetadata::FindNeighbors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("index_endpoint=",
                            internal::UrlEncode(request.index_endpoint())));
-  return child_->FindNeighbors(context, request);
+  return child_->FindNeighbors(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
 MatchServiceMetadata::ReadIndexDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("index_endpoint=",
                            internal::UrlEncode(request.index_endpoint())));
-  return child_->ReadIndexDatapoints(context, request);
+  return child_->ReadIndexDatapoints(context, options, request);
 }
 
 void MatchServiceMetadata::SetMetadata(grpc::ClientContext& context,

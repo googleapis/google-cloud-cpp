@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_SESSION_ENTITY_TYPES_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_SESSION_ENTITY_TYPES_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/session_entity_type.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,30 +38,30 @@ class SessionEntityTypesStub {
   virtual StatusOr<
       google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
   ListSessionEntityTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   GetSessionEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   CreateSessionEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   UpdateSessionEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
           request) = 0;
 
   virtual Status DeleteSessionEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
           request) = 0;
 };
@@ -74,30 +76,30 @@ class DefaultSessionEntityTypesStub : public SessionEntityTypesStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
   ListSessionEntityTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   GetSessionEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   CreateSessionEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   UpdateSessionEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
           request) override;
 
   Status DeleteSessionEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
           request) override;
 

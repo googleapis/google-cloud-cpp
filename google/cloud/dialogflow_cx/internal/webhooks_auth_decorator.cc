@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_cx/internal/webhooks_auth_decorator.h"
 #include <google/cloud/dialogflow/cx/v3/webhook.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,45 +33,45 @@ WebhooksAuth::WebhooksAuth(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
 WebhooksAuth::ListWebhooks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListWebhooks(context, request);
+  return child_->ListWebhooks(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook> WebhooksAuth::GetWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetWebhook(context, request);
+  return child_->GetWebhook(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksAuth::CreateWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateWebhook(context, request);
+  return child_->CreateWebhook(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksAuth::UpdateWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateWebhook(context, request);
+  return child_->UpdateWebhook(context, options, request);
 }
 
 Status WebhooksAuth::DeleteWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteWebhook(context, request);
+  return child_->DeleteWebhook(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

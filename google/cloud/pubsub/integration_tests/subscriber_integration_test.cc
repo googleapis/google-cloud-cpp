@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/subscription_admin_client.h"
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription.h"
-#include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -42,6 +42,10 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::pubsub_admin::MakeSubscriptionAdminConnection;
+using ::google::cloud::pubsub_admin::MakeTopicAdminConnection;
+using ::google::cloud::pubsub_admin::SubscriptionAdminClient;
+using ::google::cloud::pubsub_admin::TopicAdminClient;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
@@ -69,31 +73,36 @@ class SubscriberIntegrationTest
     auto subscription_admin =
         SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
-    auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic_));
+    auto topic_metadata = topic_admin.CreateTopic(topic_.FullName());
     ASSERT_THAT(topic_metadata,
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
 
-    auto subscription_metadata = subscription_admin.CreateSubscription(
-        topic_, subscription_,
-        SubscriptionBuilder{}.set_ack_deadline(std::chrono::seconds(10)));
+    google::pubsub::v1::Subscription request;
+    request.set_name(subscription_.FullName());
+    request.set_topic(topic_.FullName());
+    request.set_ack_deadline_seconds(10);
+    auto subscription_metadata = subscription_admin.CreateSubscription(request);
     ASSERT_THAT(subscription_metadata,
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
 
-    auto ordered_subscription_metadata = subscription_admin.CreateSubscription(
-        topic_, ordered_subscription_,
-        SubscriptionBuilder{}
-            .set_ack_deadline(std::chrono::seconds(30))
-            .enable_message_ordering(true));
+    google::pubsub::v1::Subscription ordered_request;
+    ordered_request.set_name(ordered_subscription_.FullName());
+    ordered_request.set_topic(topic_.FullName());
+    ordered_request.set_ack_deadline_seconds(30);
+    ordered_request.set_enable_message_ordering(true);
+    auto ordered_subscription_metadata =
+        subscription_admin.CreateSubscription(ordered_request);
     ASSERT_THAT(ordered_subscription_metadata,
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
 
+    google::pubsub::v1::Subscription exactly_once_request;
+    exactly_once_request.set_topic(topic_.FullName());
+    exactly_once_request.set_name(exactly_once_subscription_.FullName());
+    exactly_once_request.set_ack_deadline_seconds(30);
+    exactly_once_request.set_enable_exactly_once_delivery(true);
     auto exactly_once_subscription_metadata =
-        subscription_admin.CreateSubscription(
-            topic_, exactly_once_subscription_,
-            SubscriptionBuilder{}
-                .set_ack_deadline(std::chrono::seconds(30))
-                .enable_exactly_once_delivery(true));
-    ASSERT_THAT(ordered_subscription_metadata,
+        subscription_admin.CreateSubscription(exactly_once_request);
+    ASSERT_THAT(exactly_once_subscription_metadata,
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
   }
 
@@ -103,18 +112,19 @@ class SubscriberIntegrationTest
         SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
     auto delete_exactly_once_subscription =
-        subscription_admin.DeleteSubscription(exactly_once_subscription_);
+        subscription_admin.DeleteSubscription(
+            exactly_once_subscription_.FullName());
     EXPECT_THAT(delete_exactly_once_subscription,
                 AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
     auto delete_ordered_subscription =
-        subscription_admin.DeleteSubscription(ordered_subscription_);
+        subscription_admin.DeleteSubscription(ordered_subscription_.FullName());
     EXPECT_THAT(delete_ordered_subscription,
                 AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
     auto delete_subscription =
-        subscription_admin.DeleteSubscription(subscription_);
+        subscription_admin.DeleteSubscription(subscription_.FullName());
     EXPECT_THAT(delete_subscription,
                 AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
-    auto delete_topic = topic_admin.DeleteTopic(topic_);
+    auto delete_topic = topic_admin.DeleteTopic(topic_.FullName());
     EXPECT_THAT(delete_topic, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
   }
 
@@ -182,8 +192,9 @@ TEST_F(SubscriberIntegrationTest, Stub) {
   request.set_stream_ack_deadline_seconds(600);
 
   auto stream = [&stub](CompletionQueue const& cq) {
-    auto context = std::make_shared<grpc::ClientContext>();
-    return stub->AsyncStreamingPull(cq, std::move(context));
+    return stub->AsyncStreamingPull(
+        cq, std::make_shared<grpc::ClientContext>(),
+        google::cloud::internal::MakeImmutableOptions({}));
   }(background.cq());
 
   ASSERT_TRUE(stream->Start().get());

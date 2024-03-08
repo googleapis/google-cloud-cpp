@@ -41,47 +41,53 @@ class AppConnectorsServiceAuth : public AppConnectorsServiceStub {
 
   StatusOr<
       google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
-  ListAppConnectors(grpc::ClientContext& context,
+  ListAppConnectors(grpc::ClientContext& context, Options const& options,
                     google::cloud::beyondcorp::appconnectors::v1::
                         ListAppConnectorsRequest const& request) override;
 
   StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  GetAppConnector(grpc::ClientContext& context,
+  GetAppConnector(grpc::ClientContext& context, Options const& options,
                   google::cloud::beyondcorp::appconnectors::v1::
                       GetAppConnectorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAppConnector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnectors::v1::
           CreateAppConnectorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAppConnector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnectors::v1::
           UpdateAppConnectorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAppConnector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnectors::v1::
           DeleteAppConnectorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReportStatus(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

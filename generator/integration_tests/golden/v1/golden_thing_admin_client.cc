@@ -20,6 +20,7 @@
 #include <memory>
 #include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

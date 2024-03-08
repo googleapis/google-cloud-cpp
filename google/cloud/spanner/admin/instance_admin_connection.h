@@ -217,6 +217,11 @@ class InstanceAdminConnection {
   ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request);
 
+  virtual StreamRange<google::spanner::admin::instance::v1::InstancePartition>
+  ListInstancePartitions(
+      google::spanner::admin::instance::v1::ListInstancePartitionsRequest
+          request);
+
   virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       google::spanner::admin::instance::v1::GetInstanceRequest const& request);
 
@@ -242,6 +247,30 @@ class InstanceAdminConnection {
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+  GetInstancePartition(
+      google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  CreateInstancePartition(google::spanner::admin::instance::v1::
+                              CreateInstancePartitionRequest const& request);
+
+  virtual Status DeleteInstancePartition(
+      google::spanner::admin::instance::v1::
+          DeleteInstancePartitionRequest const& request);
+
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  UpdateInstancePartition(google::spanner::admin::instance::v1::
+                              UpdateInstancePartitionRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation>
+  ListInstancePartitionOperations(
+      google::spanner::admin::instance::v1::
+          ListInstancePartitionOperationsRequest request);
 };
 
 /**

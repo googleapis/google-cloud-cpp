@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/api/servicecontrol/v1/service_controller.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ ServiceControllerStub::~ServiceControllerStub() = default;
 
 StatusOr<google::api::servicecontrol::v1::CheckResponse>
 DefaultServiceControllerStub::Check(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicecontrol::v1::CheckRequest const& request) {
   google::api::servicecontrol::v1::CheckResponse response;
   auto status = grpc_stub_->Check(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultServiceControllerStub::Check(
 
 StatusOr<google::api::servicecontrol::v1::ReportResponse>
 DefaultServiceControllerStub::Report(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicecontrol::v1::ReportRequest const& request) {
   google::api::servicecontrol::v1::ReportResponse response;
   auto status = grpc_stub_->Report(&context, request, &response);

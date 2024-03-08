@@ -39,7 +39,7 @@ class QuotaControllerLogging : public QuotaControllerStub {
                          std::set<std::string> const& components);
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(grpc::ClientContext& context,
+  AllocateQuota(grpc::ClientContext& context, Options const& options,
                 google::api::servicecontrol::v1::AllocateQuotaRequest const&
                     request) override;
 

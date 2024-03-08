@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/transition_route_group.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ TransitionRouteGroupsStub::~TransitionRouteGroupsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
 DefaultTransitionRouteGroupsStub::ListTransitionRouteGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse response;
@@ -45,7 +46,7 @@ DefaultTransitionRouteGroupsStub::ListTransitionRouteGroups(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 DefaultTransitionRouteGroupsStub::GetTransitionRouteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::TransitionRouteGroup response;
@@ -59,7 +60,7 @@ DefaultTransitionRouteGroupsStub::GetTransitionRouteGroup(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 DefaultTransitionRouteGroupsStub::CreateTransitionRouteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::TransitionRouteGroup response;
@@ -73,7 +74,7 @@ DefaultTransitionRouteGroupsStub::CreateTransitionRouteGroup(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 DefaultTransitionRouteGroupsStub::UpdateTransitionRouteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::TransitionRouteGroup response;
@@ -86,7 +87,7 @@ DefaultTransitionRouteGroupsStub::UpdateTransitionRouteGroup(
 }
 
 Status DefaultTransitionRouteGroupsStub::DeleteTransitionRouteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
         request) {
   google::protobuf::Empty response;

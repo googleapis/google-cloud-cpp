@@ -42,136 +42,150 @@ TpuMetadata::TpuMetadata(std::shared_ptr<TpuStub> child,
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::tpu::v2::ListNodesResponse> TpuMetadata::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListNodesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListNodes(context, request);
+  return child_->ListNodes(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::Node> TpuMetadata::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetNodeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNode(context, request);
+  return child_->GetNode(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncCreateNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::tpu::v2::CreateNodeRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateNode(cq, std::move(context), options, request);
+  return child_->AsyncCreateNode(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::tpu::v2::DeleteNodeRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteNode(cq, std::move(context), options, request);
+  return child_->AsyncDeleteNode(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncStopNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::tpu::v2::StopNodeRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStopNode(cq, std::move(context), options, request);
+  return child_->AsyncStopNode(cq, std::move(context), std::move(options),
+                               request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::tpu::v2::StartNodeRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStartNode(cq, std::move(context), options, request);
+  return child_->AsyncStartNode(cq, std::move(context), std::move(options),
+                                request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncUpdateNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::tpu::v2::UpdateNodeRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("node.name=", internal::UrlEncode(request.node().name())));
-  return child_->AsyncUpdateNode(cq, std::move(context), options, request);
+  return child_->AsyncUpdateNode(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuMetadata::GenerateServiceIdentity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->GenerateServiceIdentity(context, request);
+  return child_->GenerateServiceIdentity(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
 TpuMetadata::ListAcceleratorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAcceleratorTypes(context, request);
+  return child_->ListAcceleratorTypes(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::AcceleratorType>
 TpuMetadata::GetAcceleratorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAcceleratorType(context, request);
+  return child_->GetAcceleratorType(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
 TpuMetadata::ListRuntimeVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListRuntimeVersionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRuntimeVersions(context, request);
+  return child_->ListRuntimeVersions(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::RuntimeVersion> TpuMetadata::GetRuntimeVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRuntimeVersion(context, request);
+  return child_->GetRuntimeVersion(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
 TpuMetadata::GetGuestAttributes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetGuestAttributesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGuestAttributes(context, request);
+  return child_->GetGuestAttributes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> TpuMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void TpuMetadata::SetMetadata(grpc::ClientContext& context,

@@ -82,6 +82,11 @@ class InstanceAdminRestConnectionImpl
       google::spanner::admin::instance::v1::ListInstancesRequest request)
       override;
 
+  StreamRange<google::spanner::admin::instance::v1::InstancePartition>
+  ListInstancePartitions(
+      google::spanner::admin::instance::v1::ListInstancePartitionsRequest
+          request) override;
+
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       google::spanner::admin::instance::v1::GetInstanceRequest const& request)
       override;
@@ -108,6 +113,29 @@ class InstanceAdminRestConnectionImpl
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+  GetInstancePartition(
+      google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  CreateInstancePartition(
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request) override;
+
+  Status DeleteInstancePartition(
+      google::spanner::admin::instance::v1::
+          DeleteInstancePartitionRequest const& request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  UpdateInstancePartition(
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation> ListInstancePartitionOperations(
+      google::spanner::admin::instance::v1::
+          ListInstancePartitionOperationsRequest request) override;
 
  private:
   static std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy> retry_policy(

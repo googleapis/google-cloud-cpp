@@ -45,162 +45,295 @@ EnvironmentsMetadata::EnvironmentsMetadata(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEnvironment(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncCreateEnvironment(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsMetadata::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         GetEnvironmentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListEnvironmentsResponse>
 EnvironmentsMetadata::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         ListEnvironmentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEnvironments(context, request);
+  return child_->ListEnvironments(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUpdateEnvironment(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncUpdateEnvironment(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteEnvironment(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncDeleteEnvironment(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ExecuteAirflowCommandResponse>
 EnvironmentsMetadata::ExecuteAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         ExecuteAirflowCommandRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->ExecuteAirflowCommand(context, request);
+  return child_->ExecuteAirflowCommand(context, options, request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              StopAirflowCommandResponse>
 EnvironmentsMetadata::StopAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         StopAirflowCommandRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->StopAirflowCommand(context, request);
+  return child_->StopAirflowCommand(context, options, request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              PollAirflowCommandResponse>
 EnvironmentsMetadata::PollAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         PollAirflowCommandRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->PollAirflowCommand(context, request);
+  return child_->PollAirflowCommand(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
+EnvironmentsMetadata::ListWorkloads(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        ListWorkloadsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListWorkloads(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsMetadata::CreateUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateUserWorkloadsSecret(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsMetadata::GetUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetUserWorkloadsSecret(context, options, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsSecretsResponse>
+EnvironmentsMetadata::ListUserWorkloadsSecrets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListUserWorkloadsSecrets(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsMetadata::UpdateUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat(
+                  "user_workloads_secret.name=",
+                  internal::UrlEncode(request.user_workloads_secret().name())));
+  return child_->UpdateUserWorkloadsSecret(context, options, request);
+}
+
+Status EnvironmentsMetadata::DeleteUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteUserWorkloadsSecret(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsMetadata::CreateUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateUserWorkloadsConfigMap(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsMetadata::GetUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetUserWorkloadsConfigMap(context, options, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsConfigMapsResponse>
+EnvironmentsMetadata::ListUserWorkloadsConfigMaps(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListUserWorkloadsConfigMaps(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsMetadata::UpdateUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("user_workloads_config_map.name=",
+                           internal::UrlEncode(
+                               request.user_workloads_config_map().name())));
+  return child_->UpdateUserWorkloadsConfigMap(context, options, request);
+}
+
+Status EnvironmentsMetadata::DeleteUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteUserWorkloadsConfigMap(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->AsyncSaveSnapshot(cq, std::move(context), options, request);
+  return child_->AsyncSaveSnapshot(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncLoadSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->AsyncLoadSnapshot(cq, std::move(context), options, request);
+  return child_->AsyncLoadSnapshot(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncDatabaseFailover(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         DatabaseFailoverRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->AsyncDatabaseFailover(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncDatabaseFailover(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              FetchDatabasePropertiesResponse>
 EnvironmentsMetadata::FetchDatabaseProperties(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         FetchDatabasePropertiesRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->FetchDatabaseProperties(context, request);
+  return child_->FetchDatabaseProperties(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> EnvironmentsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context,

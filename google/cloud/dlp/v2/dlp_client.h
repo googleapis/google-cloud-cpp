@@ -25,7 +25,9 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -41,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// data sets.
 ///
 /// To learn more about concepts and find how-to guides see
-/// https://cloud.google.com/dlp/docs/.
+/// https://cloud.google.com/sensitive-data-protection/docs/.
 ///
 /// @par Equality
 ///
@@ -99,8 +101,10 @@ class DlpServiceClient {
   /// system will automatically choose what detectors to run. By default this may
   /// be all types, but may change over time as detectors are updated.
   ///
-  /// For how to guides, see https://cloud.google.com/dlp/docs/inspecting-images
-  /// and https://cloud.google.com/dlp/docs/inspecting-text,
+  /// For how to guides, see
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-images
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -121,8 +125,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1526}
-  /// [google.privacy.dlp.v2.InspectContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1566}
+  /// [google.privacy.dlp.v2.InspectContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1652}
+  /// [google.privacy.dlp.v2.InspectContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1692}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
@@ -133,8 +137,9 @@ class DlpServiceClient {
   ///
   /// Redacts potentially sensitive info from an image.
   /// This method has limits on input size, processing time, and output size.
-  /// See https://cloud.google.com/dlp/docs/redacting-sensitive-data-images to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images
+  /// to learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in this request, the
   /// system will automatically choose what detectors to run. By default this may
@@ -159,8 +164,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.RedactImageRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1300}
-  /// [google.privacy.dlp.v2.RedactImageResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1371}
+  /// [google.privacy.dlp.v2.RedactImageRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1426}
+  /// [google.privacy.dlp.v2.RedactImageResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1497}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::RedactImageResponse> RedactImage(
@@ -171,8 +176,9 @@ class DlpServiceClient {
   ///
   /// De-identifies potentially sensitive info from a ContentItem.
   /// This method has limits on input size and output size.
-  /// See https://cloud.google.com/dlp/docs/deidentify-sensitive-data to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data
+  /// to learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in this request, the
   /// system will automatically choose what detectors to run. By default this may
@@ -197,8 +203,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1385}
-  /// [google.privacy.dlp.v2.DeidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1445}
+  /// [google.privacy.dlp.v2.DeidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1511}
+  /// [google.privacy.dlp.v2.DeidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1571}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
@@ -210,7 +216,7 @@ class DlpServiceClient {
   ///
   /// Re-identifies content that has been de-identified.
   /// See
-  /// https://cloud.google.com/dlp/docs/pseudonymization#re-identification_in_free_text_code_example
+  /// https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example
   /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -232,8 +238,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ReidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1454}
-  /// [google.privacy.dlp.v2.ReidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1517}
+  /// [google.privacy.dlp.v2.ReidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1580}
+  /// [google.privacy.dlp.v2.ReidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1643}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
@@ -244,8 +250,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Returns a list of the sensitive information types that DLP API
-  /// supports. See https://cloud.google.com/dlp/docs/infotypes-reference to
-  /// learn more.
+  /// supports. See
+  /// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+  /// to learn more.
   ///
   /// @param parent  The parent resource name.
   ///  @n
@@ -265,8 +272,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1984}
-  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2006}
+  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2112}
+  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2134}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
@@ -275,8 +282,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Returns a list of the sensitive information types that DLP API
-  /// supports. See https://cloud.google.com/dlp/docs/infotypes-reference to
-  /// learn more.
+  /// supports. See
+  /// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -297,8 +305,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1984}
-  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2006}
+  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2112}
+  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2134}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
@@ -309,13 +317,15 @@ class DlpServiceClient {
   ///
   /// Creates an InspectTemplate for reusing frequently used configuration
   /// for inspecting content, images, and storage.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param parent  Required. Parent resource name.
   ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -345,8 +355,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3956}
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3621}
+  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4116}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3773}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
@@ -358,7 +368,9 @@ class DlpServiceClient {
   ///
   /// Creates an InspectTemplate for reusing frequently used configuration
   /// for inspecting content, images, and storage.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -379,8 +391,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3956}
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3621}
+  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4116}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3773}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
@@ -390,7 +402,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Updates the InspectTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of organization and inspectTemplate to be updated,
   ///  for example `organizations/433245324/inspectTemplates/432452342` or
@@ -410,8 +424,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3621}
-  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3998}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3773}
+  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4158}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
@@ -422,7 +436,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Updates the InspectTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -443,8 +459,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3621}
-  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3998}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3773}
+  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4158}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
@@ -454,7 +470,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets an InspectTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of the organization and inspectTemplate to be read,
   ///  for example `organizations/433245324/inspectTemplates/432452342` or
@@ -472,8 +490,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4017}
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3621}
+  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4177}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3773}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
@@ -482,7 +500,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets an InspectTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -503,8 +523,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4017}
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3621}
+  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4177}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3773}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
@@ -514,13 +534,15 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists InspectTemplates.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param parent  Required. Parent resource name.
   ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -558,8 +580,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3621}
-  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4030}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3773}
+  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4190}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
@@ -568,7 +590,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists InspectTemplates.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -598,8 +622,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3621}
-  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4030}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3773}
+  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4190}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
@@ -609,7 +633,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Deletes an InspectTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of the organization and inspectTemplate to be
   ///  deleted, for example `organizations/433245324/inspectTemplates/432452342`
@@ -625,7 +651,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4096}
+  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4256}
   ///
   // clang-format on
   Status DeleteInspectTemplate(std::string const& name, Options opts = {});
@@ -633,7 +659,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Deletes an InspectTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -652,7 +680,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4096}
+  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4256}
   ///
   // clang-format on
   Status DeleteInspectTemplate(
@@ -663,14 +691,15 @@ class DlpServiceClient {
   ///
   /// Creates a DeidentifyTemplate for reusing frequently used configuration
   /// for de-identifying content, images, and storage.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param parent  Required. Parent resource name.
   ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -700,8 +729,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5164}
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3657}
+  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5326}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3811}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -714,8 +743,9 @@ class DlpServiceClient {
   ///
   /// Creates a DeidentifyTemplate for reusing frequently used configuration
   /// for de-identifying content, images, and storage.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -736,8 +766,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5164}
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3657}
+  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5326}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3811}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -748,8 +778,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Updates the DeidentifyTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of organization and deidentify template to be
   ///  updated, for example
@@ -770,8 +801,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3657}
-  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5207}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3811}
+  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5369}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -783,8 +814,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Updates the DeidentifyTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -805,8 +837,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3657}
-  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5207}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3811}
+  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5369}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -817,8 +849,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets a DeidentifyTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of the organization and deidentify template to be
   ///  read, for example `organizations/433245324/deidentifyTemplates/432452342`
@@ -836,8 +869,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3657}
-  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5227}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3811}
+  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5389}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
@@ -846,8 +879,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets a DeidentifyTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -868,8 +902,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3657}
-  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5227}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3811}
+  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5389}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
@@ -879,14 +913,15 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists DeidentifyTemplates.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param parent  Required. Parent resource name.
   ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -924,8 +959,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3657}
-  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5240}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3811}
+  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5402}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -934,8 +969,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists DeidentifyTemplates.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -965,8 +1001,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3657}
-  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5240}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3811}
+  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5402}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -977,8 +1013,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Deletes a DeidentifyTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of the organization and deidentify template to be
   ///  deleted, for example
@@ -995,7 +1032,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5307}
+  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5469}
   ///
   // clang-format on
   Status DeleteDeidentifyTemplate(std::string const& name, Options opts = {});
@@ -1003,8 +1040,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Deletes a DeidentifyTemplate.
-  /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-  /// more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1023,7 +1061,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5307}
+  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5469}
   ///
   // clang-format on
   Status DeleteDeidentifyTemplate(
@@ -1034,13 +1072,15 @@ class DlpServiceClient {
   ///
   /// Creates a job trigger to run DLP actions such as scanning storage for
   /// sensitive information on a set schedule.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param parent  Required. Parent resource name.
   ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -1066,8 +1106,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4109}
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3704}
+  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4269}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3860}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
@@ -1079,7 +1119,9 @@ class DlpServiceClient {
   ///
   /// Creates a job trigger to run DLP actions such as scanning storage for
   /// sensitive information on a set schedule.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1100,8 +1142,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4109}
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3704}
+  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4269}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3860}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
@@ -1111,7 +1153,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Updates a job trigger.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of the project and the triggeredJob, for example
   ///  `projects/dlp-test-project/jobTriggers/53234423`.
@@ -1130,8 +1174,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3704}
-  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4157}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3860}
+  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4317}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
@@ -1142,7 +1186,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Updates a job trigger.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1163,8 +1209,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3704}
-  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4157}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3860}
+  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4317}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
@@ -1192,8 +1238,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5588}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5666}
+  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5751}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5829}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
@@ -1224,8 +1270,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5588}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5666}
+  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5751}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5829}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
@@ -1236,7 +1282,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets a job trigger.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of the project and the triggeredJob, for example
   ///  `projects/dlp-test-project/jobTriggers/53234423`.
@@ -1253,8 +1301,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4173}
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3704}
+  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4333}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3860}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
@@ -1263,7 +1311,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets a job trigger.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1284,8 +1334,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4173}
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3704}
+  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4333}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3860}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
@@ -1295,13 +1345,15 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists job triggers.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param parent  Required. Parent resource name.
   ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -1335,8 +1387,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3704}
-  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4353}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3860}
+  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4513}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
@@ -1345,7 +1397,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists job triggers.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1375,8 +1429,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3704}
-  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4353}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3860}
+  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4513}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
@@ -1386,7 +1440,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Deletes a job trigger.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of the project and the triggeredJob, for example
   ///  `projects/dlp-test-project/jobTriggers/53234423`.
@@ -1401,7 +1457,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4446}
+  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4606}
   ///
   // clang-format on
   Status DeleteJobTrigger(std::string const& name, Options opts = {});
@@ -1409,7 +1465,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Deletes a job trigger.
-  /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1428,7 +1486,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4446}
+  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4606}
   ///
   // clang-format on
   Status DeleteJobTrigger(
@@ -1459,8 +1517,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ActivateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4147}
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4960}
+  /// [google.privacy.dlp.v2.ActivateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4307}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5121}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> ActivateJobTrigger(
@@ -1495,8 +1553,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4183}
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4689}
+  /// [google.privacy.dlp.v2.CreateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4343}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4850}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
@@ -1527,8 +1585,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4183}
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4689}
+  /// [google.privacy.dlp.v2.CreateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4343}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4850}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
@@ -1556,8 +1614,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4689}
-  /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4212}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4850}
+  /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4372}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
@@ -1588,8 +1646,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4689}
-  /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4212}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4850}
+  /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4372}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
@@ -1615,8 +1673,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4689}
-  /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4230}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4850}
+  /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4390}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
@@ -1645,8 +1703,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4689}
-  /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4230}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4850}
+  /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4390}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
@@ -1689,8 +1747,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4689}
-  /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4242}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4850}
+  /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4402}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DiscoveryConfig> ListDiscoveryConfigs(
@@ -1728,8 +1786,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4689}
-  /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4242}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4850}
+  /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4402}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DiscoveryConfig> ListDiscoveryConfigs(
@@ -1753,7 +1811,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4294}
+  /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4454}
   ///
   // clang-format on
   Status DeleteDiscoveryConfig(std::string const& name, Options opts = {});
@@ -1779,7 +1837,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4294}
+  /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4454}
   ///
   // clang-format on
   Status DeleteDiscoveryConfig(
@@ -1789,8 +1847,11 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Creates a new job to inspect storage or calculate risk metrics.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the
   /// system will automatically choose what detectors to run. By default this may
@@ -1800,7 +1861,7 @@ class DlpServiceClient {
   ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -1826,8 +1887,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4308}
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4960}
+  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4468}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5121}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
@@ -1838,8 +1899,11 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Creates a new job to inspect storage or calculate risk metrics.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the
   /// system will automatically choose what detectors to run. By default this may
@@ -1849,7 +1913,7 @@ class DlpServiceClient {
   ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -1876,8 +1940,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4308}
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4960}
+  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4468}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5121}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
@@ -1888,8 +1952,11 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Creates a new job to inspect storage or calculate risk metrics.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the
   /// system will automatically choose what detectors to run. By default this may
@@ -1914,8 +1981,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4308}
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4960}
+  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4468}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5121}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
@@ -1925,14 +1992,17 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists DlpJobs that match the specified filter in the request.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// @param parent  Required. Parent resource name.
   ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -1966,8 +2036,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4960}
-  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5045}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5121}
+  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5207}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
@@ -1976,8 +2046,11 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists DlpJobs that match the specified filter in the request.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2007,8 +2080,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4960}
-  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5045}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5121}
+  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5207}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
@@ -2017,8 +2090,11 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets the latest state of a long-running DlpJob.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// @param name  Required. The name of the DlpJob resource.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2034,8 +2110,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4960}
-  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5036}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5121}
+  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5198}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(std::string const& name,
@@ -2044,8 +2120,11 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets the latest state of a long-running DlpJob.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2066,8 +2145,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4960}
-  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5036}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5121}
+  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5198}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(
@@ -2079,8 +2158,11 @@ class DlpServiceClient {
   /// Deletes a long-running DlpJob. This method indicates that the client is
   /// no longer interested in the DlpJob result. The job will be canceled if
   /// possible.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// @param name  Required. The name of the DlpJob resource to be deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2094,7 +2176,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5155}
+  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5317}
   ///
   // clang-format on
   Status DeleteDlpJob(std::string const& name, Options opts = {});
@@ -2104,8 +2186,11 @@ class DlpServiceClient {
   /// Deletes a long-running DlpJob. This method indicates that the client is
   /// no longer interested in the DlpJob result. The job will be canceled if
   /// possible.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2124,7 +2209,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5155}
+  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5317}
   ///
   // clang-format on
   Status DeleteDlpJob(
@@ -2136,8 +2221,11 @@ class DlpServiceClient {
   /// Starts asynchronous cancellation on a long-running DlpJob. The server
   /// makes a best effort to cancel the DlpJob, but success is not
   /// guaranteed.
-  /// See https://cloud.google.com/dlp/docs/inspecting-storage and
-  /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+  /// and
+  /// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2156,7 +2244,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CancelDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5137}
+  /// [google.privacy.dlp.v2.CancelDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5299}
   ///
   // clang-format on
   Status CancelDlpJob(
@@ -2166,14 +2254,15 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Creates a pre-built stored infoType to be used for inspection.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param parent  Required. Parent resource name.
   ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -2203,8 +2292,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5436}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5415}
+  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5599}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5578}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
@@ -2215,8 +2304,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Creates a pre-built stored infoType to be used for inspection.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2237,8 +2327,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5436}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5415}
+  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5599}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5578}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
@@ -2249,8 +2339,9 @@ class DlpServiceClient {
   ///
   /// Updates the stored infoType by creating a new version. The existing version
   /// will continue to be used until the new version is ready.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of organization and storedInfoType to be updated,
   ///  for example `organizations/433245324/storedInfoTypes/432452342` or
@@ -2272,8 +2363,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5415}
-  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5478}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5578}
+  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5641}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
@@ -2285,8 +2376,9 @@ class DlpServiceClient {
   ///
   /// Updates the stored infoType by creating a new version. The existing version
   /// will continue to be used until the new version is ready.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2307,8 +2399,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5415}
-  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5478}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5578}
+  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5641}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
@@ -2318,8 +2410,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets a stored infoType.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of the organization and storedInfoType to be read,
   ///  for example `organizations/433245324/storedInfoTypes/432452342` or
@@ -2337,8 +2430,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5499}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5415}
+  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5662}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5578}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
@@ -2347,8 +2440,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Gets a stored infoType.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2369,8 +2463,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5499}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5415}
+  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5662}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5578}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
@@ -2380,14 +2474,15 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists stored infoTypes.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param parent  Required. Parent resource name.
   ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
-  ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  location](https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
   ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -2421,8 +2516,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5512}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5415}
+  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5675}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5578}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
@@ -2431,8 +2526,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Lists stored infoTypes.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2462,8 +2558,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5512}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5415}
+  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5675}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5578}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
@@ -2473,8 +2569,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Deletes a stored infoType.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param name  Required. Resource name of the organization and storedInfoType to be
   ///  deleted, for example `organizations/433245324/storedInfoTypes/432452342` or
@@ -2490,7 +2587,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5575}
+  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5738}
   ///
   // clang-format on
   Status DeleteStoredInfoType(std::string const& name, Options opts = {});
@@ -2498,8 +2595,9 @@ class DlpServiceClient {
   // clang-format off
   ///
   /// Deletes a stored infoType.
-  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
-  /// learn more.
+  /// See
+  /// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+  /// to learn more.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2518,11 +2616,410 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5575}
+  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5738}
   ///
   // clang-format on
   Status DeleteStoredInfoType(
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists data profiles for an organization.
+  ///
+  /// @param parent  Required. organizations/{org_id}/locations/{loc_id}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.ProjectDataProfile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ListProjectDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5954}
+  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6214}
+  ///
+  // clang-format on
+  StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
+  ListProjectDataProfiles(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists data profiles for an organization.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ListProjectDataProfilesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.ProjectDataProfile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ListProjectDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5954}
+  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6214}
+  ///
+  // clang-format on
+  StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
+  ListProjectDataProfiles(
+      google::privacy::dlp::v2::ListProjectDataProfilesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists data profiles for an organization.
+  ///
+  /// @param parent  Required. Resource name of the organization or project, for
+  ///  example `organizations/433245324/locations/europe` or
+  ///  `projects/project-id/locations/asia`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.TableDataProfile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ListTableDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6022}
+  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6276}
+  ///
+  // clang-format on
+  StreamRange<google::privacy::dlp::v2::TableDataProfile> ListTableDataProfiles(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists data profiles for an organization.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ListTableDataProfilesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.TableDataProfile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ListTableDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6022}
+  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6276}
+  ///
+  // clang-format on
+  StreamRange<google::privacy::dlp::v2::TableDataProfile> ListTableDataProfiles(
+      google::privacy::dlp::v2::ListTableDataProfilesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists data profiles for an organization.
+  ///
+  /// @param parent  Required. Resource name of the organization or project, for
+  ///  example `organizations/433245324/locations/europe` or
+  ///  `projects/project-id/locations/asia`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.ColumnDataProfile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6465}
+  /// [google.privacy.dlp.v2.ListColumnDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6103}
+  ///
+  // clang-format on
+  StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
+  ListColumnDataProfiles(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists data profiles for an organization.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ListColumnDataProfilesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.ColumnDataProfile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6465}
+  /// [google.privacy.dlp.v2.ListColumnDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6103}
+  ///
+  // clang-format on
+  StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
+  ListColumnDataProfiles(
+      google::privacy::dlp::v2::ListColumnDataProfilesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a project data profile.
+  ///
+  /// @param name  Required. Resource name, for example
+  ///  `organizations/12345/locations/us/projectDataProfiles/53234423`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.ProjectDataProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetProjectDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6614}
+  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6214}
+  ///
+  // clang-format on
+  StatusOr<google::privacy::dlp::v2::ProjectDataProfile> GetProjectDataProfile(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a project data profile.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.GetProjectDataProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.ProjectDataProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetProjectDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6614}
+  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6214}
+  ///
+  // clang-format on
+  StatusOr<google::privacy::dlp::v2::ProjectDataProfile> GetProjectDataProfile(
+      google::privacy::dlp::v2::GetProjectDataProfileRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a table data profile.
+  ///
+  /// @param name  Required. Resource name, for example
+  ///  `organizations/12345/locations/us/tableDataProfiles/53234423`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.TableDataProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6626}
+  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6276}
+  ///
+  // clang-format on
+  StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a table data profile.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.GetTableDataProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.TableDataProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6626}
+  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6276}
+  ///
+  // clang-format on
+  StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
+      google::privacy::dlp::v2::GetTableDataProfileRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a column data profile.
+  ///
+  /// @param name  Required. Resource name, for example
+  ///  `organizations/12345/locations/us/columnDataProfiles/53234423`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.ColumnDataProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6465}
+  /// [google.privacy.dlp.v2.GetColumnDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6638}
+  ///
+  // clang-format on
+  StatusOr<google::privacy::dlp::v2::ColumnDataProfile> GetColumnDataProfile(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a column data profile.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.GetColumnDataProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.ColumnDataProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6465}
+  /// [google.privacy.dlp.v2.GetColumnDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6638}
+  ///
+  // clang-format on
+  StatusOr<google::privacy::dlp::v2::ColumnDataProfile> GetColumnDataProfile(
+      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -2546,8 +3043,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5601}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5666}
+  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5764}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5829}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
@@ -2578,8 +3075,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5601}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5666}
+  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5764}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5829}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
@@ -2608,7 +3105,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.FinishDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5146}
+  /// [google.privacy.dlp.v2.FinishDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5308}
   ///
   // clang-format on
   Status FinishDlpJob(

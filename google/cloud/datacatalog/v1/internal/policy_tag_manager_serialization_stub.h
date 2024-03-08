@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_INTERNAL_POLICY_TAG_MANAGER_SERIALIZATION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_INTERNAL_POLICY_TAG_MANAGER_SERIALIZATION_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/datacatalog/v1/policytagmanagerserialization.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,19 +36,19 @@ class PolicyTagManagerSerializationStub {
   virtual ~PolicyTagManagerSerializationStub() = 0;
 
   virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
   ImportTaxonomies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
   ExportTaxonomies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&
           request) = 0;
 };
@@ -61,19 +63,19 @@ class DefaultPolicyTagManagerSerializationStub
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
   ImportTaxonomies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
   ExportTaxonomies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request)
       override;
 

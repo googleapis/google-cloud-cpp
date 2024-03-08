@@ -45,94 +45,106 @@ ApiKeysMetadata::ApiKeysMetadata(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncCreateKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateKey(cq, std::move(context), options, request);
+  return child_->AsyncCreateKey(cq, std::move(context), std::move(options),
+                                request);
 }
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysMetadata::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListKeys(context, request);
+  return child_->ListKeys(context, options, request);
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysMetadata::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetKey(context, request);
+  return child_->GetKey(context, options, request);
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysMetadata::GetKeyString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetKeyString(context, request);
+  return child_->GetKeyString(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncUpdateKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("key.name=", internal::UrlEncode(request.key().name())));
-  return child_->AsyncUpdateKey(cq, std::move(context), options, request);
+  return child_->AsyncUpdateKey(cq, std::move(context), std::move(options),
+                                request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteKey(cq, std::move(context), options, request);
+  return child_->AsyncDeleteKey(cq, std::move(context), std::move(options),
+                                request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUndeleteKey(cq, std::move(context), options, request);
+  return child_->AsyncUndeleteKey(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 ApiKeysMetadata::LookupKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->LookupKey(context, request);
+  SetMetadata(context, options);
+  return child_->LookupKey(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ApiKeysMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ApiKeysMetadata::SetMetadata(grpc::ClientContext& context,

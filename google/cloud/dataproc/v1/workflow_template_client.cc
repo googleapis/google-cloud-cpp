@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/v1/workflow_template_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

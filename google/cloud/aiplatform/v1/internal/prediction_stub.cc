@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/prediction_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ PredictionServiceStub::~PredictionServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
 DefaultPredictionServiceStub::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::PredictRequest const& request) {
   google::cloud::aiplatform::v1::PredictResponse response;
   auto status = grpc_stub_->Predict(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultPredictionServiceStub::Predict(
 }
 
 StatusOr<google::api::HttpBody> DefaultPredictionServiceStub::RawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::RawPredictRequest const& request) {
   google::api::HttpBody response;
   auto status = grpc_stub_->RawPredict(&context, request, &response);
@@ -66,7 +67,7 @@ DefaultPredictionServiceStub::StreamRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 DefaultPredictionServiceStub::DirectPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
   google::cloud::aiplatform::v1::DirectPredictResponse response;
   auto status = grpc_stub_->DirectPredict(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultPredictionServiceStub::DirectPredict(
 
 StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
 DefaultPredictionServiceStub::DirectRawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
   google::cloud::aiplatform::v1::DirectRawPredictResponse response;
   auto status = grpc_stub_->DirectRawPredict(&context, request, &response);
@@ -93,11 +94,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
 DefaultPredictionServiceStub::AsyncStreamDirectPredict(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamDirectPredictRequest,
       google::cloud::aiplatform::v1::StreamDirectPredictResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamDirectPredict(context, cq);
       });
@@ -108,11 +110,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
 DefaultPredictionServiceStub::AsyncStreamDirectRawPredict(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
       google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamDirectRawPredict(context, cq);
       });
@@ -123,11 +126,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 DefaultPredictionServiceStub::AsyncStreamingPredict(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingPredictRequest,
       google::cloud::aiplatform::v1::StreamingPredictResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamingPredict(context, cq);
       });
@@ -149,11 +153,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
 DefaultPredictionServiceStub::AsyncStreamingRawPredict(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingRawPredictRequest,
       google::cloud::aiplatform::v1::StreamingRawPredictResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamingRawPredict(context, cq);
       });
@@ -161,7 +166,7 @@ DefaultPredictionServiceStub::AsyncStreamingRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 DefaultPredictionServiceStub::Explain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
   google::cloud::aiplatform::v1::ExplainResponse response;
   auto status = grpc_stub_->Explain(&context, request, &response);
@@ -173,7 +178,7 @@ DefaultPredictionServiceStub::Explain(
 
 StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
 DefaultPredictionServiceStub::GenerateContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
   google::cloud::aiplatform::v1::GenerateContentResponse response;
   auto status = grpc_stub_->GenerateContent(&context, request, &response);

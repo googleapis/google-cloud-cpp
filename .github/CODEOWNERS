@@ -4,3 +4,9 @@
 
 # The owners for all files in the repo.
 * @googleapis/cloud-cxx-owners
+
+# These libraries are also owned by the GCS clients team.
+/google/cloud/storage/ @googleapis/cloud-storage-dpe @googleapis/cloud-cxx-owners
+/google/cloud/storagecontrol/ @googleapis/cloud-storage-dpe @googleapis/cloud-cxx-owners
+/google/cloud/storageinsights/ @googleapis/cloud-storage-dpe @googleapis/cloud-cxx-owners
+/google/cloud/storagetransfer/ @googleapis/cloud-storage-dpe @googleapis/cloud-cxx-owners

@@ -44,30 +44,30 @@ ResourceSettingsServiceMetadata::ResourceSettingsServiceMetadata(
 
 StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 ResourceSettingsServiceMetadata::ListSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSettings(context, request);
+  return child_->ListSettings(context, options, request);
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceMetadata::GetSetting(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSetting(context, request);
+  return child_->GetSetting(context, options, request);
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceMetadata::UpdateSetting(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("setting.name=",
                            internal::UrlEncode(request.setting().name())));
-  return child_->UpdateSetting(context, request);
+  return child_->UpdateSetting(context, options, request);
 }
 
 void ResourceSettingsServiceMetadata::SetMetadata(

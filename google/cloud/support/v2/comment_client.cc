@@ -18,6 +18,7 @@
 
 #include "google/cloud/support/v2/comment_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

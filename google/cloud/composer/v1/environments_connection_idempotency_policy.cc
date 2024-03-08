@@ -82,6 +82,76 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::PollAirflowCommand(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListWorkloads(
+    google::cloud::orchestration::airflow::service::v1::
+        ListWorkloadsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::CreateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListUserWorkloadsSecrets(
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::UpdateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+EnvironmentsConnectionIdempotencyPolicy::CreateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+EnvironmentsConnectionIdempotencyPolicy::ListUserWorkloadsConfigMaps(
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+EnvironmentsConnectionIdempotencyPolicy::UpdateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+EnvironmentsConnectionIdempotencyPolicy::DeleteUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency EnvironmentsConnectionIdempotencyPolicy::SaveSnapshot(
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const&) {

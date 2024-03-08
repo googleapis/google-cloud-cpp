@@ -29,6 +29,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -132,6 +133,14 @@ RecaptchaEnterpriseServiceConnection::UpdateFirewallPolicy(
 Status RecaptchaEnterpriseServiceConnection::DeleteFirewallPolicy(
     google::cloud::recaptchaenterprise::v1::
         DeleteFirewallPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceConnection::ReorderFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

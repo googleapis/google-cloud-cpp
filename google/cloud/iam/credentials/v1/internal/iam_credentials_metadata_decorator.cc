@@ -44,38 +44,38 @@ IAMCredentialsMetadata::IAMCredentialsMetadata(
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsMetadata::GenerateAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GenerateAccessToken(context, request);
+  return child_->GenerateAccessToken(context, options, request);
 }
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsMetadata::GenerateIdToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GenerateIdToken(context, request);
+  return child_->GenerateIdToken(context, options, request);
 }
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsMetadata::SignBlob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::credentials::v1::SignBlobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->SignBlob(context, request);
+  return child_->SignBlob(context, options, request);
 }
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsMetadata::SignJwt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::credentials::v1::SignJwtRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->SignJwt(context, request);
+  return child_->SignJwt(context, options, request);
 }
 
 void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context,

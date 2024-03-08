@@ -40,32 +40,32 @@ class UptimeCheckServiceAuth : public UptimeCheckServiceStub {
 
   StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
   ListUptimeCheckConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListUptimeCheckConfigsRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetUptimeCheckConfigRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateUptimeCheckConfigRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request)
       override;
 
   Status DeleteUptimeCheckConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
-  ListUptimeCheckIps(grpc::ClientContext& context,
+  ListUptimeCheckIps(grpc::ClientContext& context, Options const& options,
                      google::monitoring::v3::ListUptimeCheckIpsRequest const&
                          request) override;
 

@@ -5,8 +5,14 @@
 The GCS C++ client library includes an optional plugin to access GCS via gRPC.
 When using GCS from Google Compute Engine (GCE) this plugin can enable higher
 total throughput across large workloads that run on hundreds or thousands of
-VMs.  Note that this feature is not GA. Consult with your account manager to be
-included in the early access program.
+VMs.
+
+@warning At present, GCS gRPC is GA with Allowlist. To access this API,
+  kindly contact the Google Cloud Storage gRPC team at
+  gcs-grpc-contact@google.com with a list of GCS buckets you would like to
+  Allowlist. Please note that while the **service** is GA (with Allowlist),
+  the client library features remain experimental and subject to change
+  without notice.
 
 ## Release Notes
 
@@ -35,6 +41,10 @@ differently from the REST-based implementation.
    of calling these functions. Our telemetry shows these functions are not used
    via the C++ client library, but you should keep this in mind before deciding
    to use these functions in new code.
+1. The functions to create, list, query, and delete HMAC keys and notifications
+   are unavailable in gRPC. Our telemetry indicates that these functions are
+   never used in C++, and therefore we do not anticipate this can cause
+   problems.
 
 [OCC loop]: https://en.wikipedia.org/wiki/Optimistic_concurrency_control
 [file a bug]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose

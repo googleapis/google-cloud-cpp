@@ -19,6 +19,7 @@
 #include "google/cloud/vmmigration/v1/internal/vm_migration_auth_decorator.h"
 #include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,116 +33,120 @@ VmMigrationAuth::VmMigrationAuth(
 
 StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse>
 VmMigrationAuth::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListSourcesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSources(context, request);
+  return child_->ListSources(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::Source> VmMigrationAuth::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetSourceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSource(context, request);
+  return child_->GetSource(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCreateSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateSource(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncCreateSource(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncUpdateSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateSource(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncUpdateSource(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncDeleteSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteSource(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncDeleteSource(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
 VmMigrationAuth::FetchInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::FetchInventoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchInventory(context, request);
+  return child_->FetchInventory(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
 VmMigrationAuth::ListUtilizationReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListUtilizationReports(context, request);
+  return child_->ListUtilizationReports(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationAuth::GetUtilizationReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetUtilizationReport(context, request);
+  return child_->GetUtilizationReport(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCreateUtilizationReport(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -149,19 +154,20 @@ VmMigrationAuth::AsyncCreateUtilizationReport(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncCreateUtilizationReport(cq, *std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncDeleteUtilizationReport(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -169,453 +175,472 @@ VmMigrationAuth::AsyncDeleteUtilizationReport(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncDeleteUtilizationReport(cq, *std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
 VmMigrationAuth::ListDatacenterConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDatacenterConnectors(context, request);
+  return child_->ListDatacenterConnectors(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
 VmMigrationAuth::GetDatacenterConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDatacenterConnector(context, request);
+  return child_->GetDatacenterConnector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCreateDatacenterConnector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDatacenterConnector(cq, *std::move(context),
-                                                     options, request);
+        return child->AsyncCreateDatacenterConnector(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncDeleteDatacenterConnector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDatacenterConnector(cq, *std::move(context),
-                                                     options, request);
+        return child->AsyncDeleteDatacenterConnector(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncUpgradeAppliance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpgradeAppliance(cq, *std::move(context), options,
-                                            request);
+        return child->AsyncUpgradeAppliance(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCreateMigratingVm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateMigratingVm(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncCreateMigratingVm(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
 VmMigrationAuth::ListMigratingVms(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListMigratingVmsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMigratingVms(context, request);
+  return child_->ListMigratingVms(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::MigratingVm>
 VmMigrationAuth::GetMigratingVm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMigratingVm(context, request);
+  return child_->GetMigratingVm(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncUpdateMigratingVm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateMigratingVm(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncUpdateMigratingVm(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncDeleteMigratingVm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteMigratingVm(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncDeleteMigratingVm(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncStartMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStartMigration(cq, *std::move(context), options,
-                                          request);
+        return child->AsyncStartMigration(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncResumeMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncResumeMigration(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncResumeMigration(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncPauseMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncPauseMigration(cq, *std::move(context), options,
-                                          request);
+        return child->AsyncPauseMigration(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncFinalizeMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncFinalizeMigration(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncFinalizeMigration(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCreateCloneJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCloneJob(cq, *std::move(context), options,
-                                          request);
+        return child->AsyncCreateCloneJob(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCancelCloneJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCancelCloneJob(cq, *std::move(context), options,
-                                          request);
+        return child->AsyncCancelCloneJob(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse>
 VmMigrationAuth::ListCloneJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListCloneJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCloneJobs(context, request);
+  return child_->ListCloneJobs(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::CloneJob> VmMigrationAuth::GetCloneJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCloneJob(context, request);
+  return child_->GetCloneJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCreateCutoverJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCutoverJob(cq, *std::move(context), options,
-                                            request);
+        return child->AsyncCreateCutoverJob(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCancelCutoverJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCancelCutoverJob(cq, *std::move(context), options,
-                                            request);
+        return child->AsyncCancelCutoverJob(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
 VmMigrationAuth::ListCutoverJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListCutoverJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCutoverJobs(context, request);
+  return child_->ListCutoverJobs(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::CutoverJob>
 VmMigrationAuth::GetCutoverJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCutoverJob(context, request);
+  return child_->GetCutoverJob(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse>
 VmMigrationAuth::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListGroups(context, request);
+  return child_->ListGroups(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::Group> VmMigrationAuth::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGroup(context, request);
+  return child_->GetGroup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCreateGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateGroup(cq, *std::move(context), options,
-                                       request);
+        return child->AsyncCreateGroup(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncUpdateGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateGroup(cq, *std::move(context), options,
-                                       request);
+        return child->AsyncUpdateGroup(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncDeleteGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteGroup(cq, *std::move(context), options,
-                                       request);
+        return child->AsyncDeleteGroup(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncAddGroupMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAddGroupMigration(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncAddGroupMigration(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncRemoveGroupMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -623,135 +648,140 @@ VmMigrationAuth::AsyncRemoveGroupMigration(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncRemoveGroupMigration(cq, *std::move(context),
-                                                options, request);
+                                                std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
 VmMigrationAuth::ListTargetProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListTargetProjectsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTargetProjects(context, request);
+  return child_->ListTargetProjects(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::TargetProject>
 VmMigrationAuth::GetTargetProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTargetProject(context, request);
+  return child_->GetTargetProject(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncCreateTargetProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateTargetProject(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncCreateTargetProject(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncUpdateTargetProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateTargetProject(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncUpdateTargetProject(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncDeleteTargetProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteTargetProject(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncDeleteTargetProject(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
 VmMigrationAuth::ListReplicationCycles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListReplicationCycles(context, request);
+  return child_->ListReplicationCycles(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
 VmMigrationAuth::GetReplicationCycle(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetReplicationCycle(context, request);
+  return child_->GetReplicationCycle(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> VmMigrationAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

@@ -176,6 +176,43 @@ TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
                                             object_prefix + "/foo"));
 }
 
+TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixesWithFolders) {
+  if (UsingEmulator()) GTEST_SKIP();
+
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_prefix = MakeRandomObjectName();
+  for (auto const* suffix :
+       {"/foo", "/foo/bar", "/foo/baz", "/qux/quux", "/something"}) {
+    auto meta =
+        client->InsertObject(bucket_name_, object_prefix + suffix, LoremIpsum(),
+                             storage::IfGenerationMatch(0));
+    ASSERT_STATUS_OK(meta);
+    ScheduleForDelete(*meta);
+  }
+
+  auto reader = client->ListObjectsAndPrefixes(
+      bucket_name_, IncludeFoldersAsPrefixes(true), Prefix(object_prefix + "/"),
+      Delimiter("/"));
+  std::vector<std::string> prefixes;
+  std::vector<std::string> objects;
+  for (auto& it : reader) {
+    auto const& result = it.value();
+    if (absl::holds_alternative<std::string>(result)) {
+      prefixes.push_back(absl::get<std::string>(result));
+    } else {
+      auto const& meta = absl::get<ObjectMetadata>(result);
+      EXPECT_EQ(bucket_name_, meta.bucket());
+      objects.push_back(meta.name());
+    }
+  }
+  EXPECT_THAT(prefixes, UnorderedElementsAre(object_prefix + "/qux/",
+                                             object_prefix + "/foo/"));
+  EXPECT_THAT(objects, UnorderedElementsAre(object_prefix + "/something",
+                                            object_prefix + "/foo"));
+}
+
 TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

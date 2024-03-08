@@ -22,6 +22,7 @@
 #include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ AnalyticsHubServiceStub::~AnalyticsHubServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
 DefaultAnalyticsHubServiceStub::ListDataExchanges(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse response;
@@ -46,7 +47,7 @@ DefaultAnalyticsHubServiceStub::ListDataExchanges(
 StatusOr<
     google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse>
 DefaultAnalyticsHubServiceStub::ListOrgDataExchanges(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::
         ListOrgDataExchangesRequest const& request) {
   google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse
@@ -60,7 +61,7 @@ DefaultAnalyticsHubServiceStub::ListOrgDataExchanges(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 DefaultAnalyticsHubServiceStub::GetDataExchange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::DataExchange response;
@@ -73,7 +74,7 @@ DefaultAnalyticsHubServiceStub::GetDataExchange(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 DefaultAnalyticsHubServiceStub::CreateDataExchange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::DataExchange response;
@@ -86,7 +87,7 @@ DefaultAnalyticsHubServiceStub::CreateDataExchange(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 DefaultAnalyticsHubServiceStub::UpdateDataExchange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::DataExchange response;
@@ -98,7 +99,7 @@ DefaultAnalyticsHubServiceStub::UpdateDataExchange(
 }
 
 Status DefaultAnalyticsHubServiceStub::DeleteDataExchange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&
         request) {
   google::protobuf::Empty response;
@@ -111,7 +112,7 @@ Status DefaultAnalyticsHubServiceStub::DeleteDataExchange(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::ListListingsResponse>
 DefaultAnalyticsHubServiceStub::ListListings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::ListListingsResponse response;
@@ -124,7 +125,7 @@ DefaultAnalyticsHubServiceStub::ListListings(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 DefaultAnalyticsHubServiceStub::GetListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::Listing response;
@@ -137,7 +138,7 @@ DefaultAnalyticsHubServiceStub::GetListing(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 DefaultAnalyticsHubServiceStub::CreateListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::Listing response;
@@ -150,7 +151,7 @@ DefaultAnalyticsHubServiceStub::CreateListing(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 DefaultAnalyticsHubServiceStub::UpdateListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::Listing response;
@@ -162,7 +163,7 @@ DefaultAnalyticsHubServiceStub::UpdateListing(
 }
 
 Status DefaultAnalyticsHubServiceStub::DeleteListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
         request) {
   google::protobuf::Empty response;
@@ -175,7 +176,7 @@ Status DefaultAnalyticsHubServiceStub::DeleteListing(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
 DefaultAnalyticsHubServiceStub::SubscribeListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse response;
@@ -189,7 +190,8 @@ DefaultAnalyticsHubServiceStub::SubscribeListing(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncSubscribeDataExchange(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::bigquery::analyticshub::v1::
         SubscribeDataExchangeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -208,7 +210,8 @@ DefaultAnalyticsHubServiceStub::AsyncSubscribeDataExchange(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncRefreshSubscription(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -226,7 +229,7 @@ DefaultAnalyticsHubServiceStub::AsyncRefreshSubscription(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
 DefaultAnalyticsHubServiceStub::GetSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::Subscription response;
@@ -239,7 +242,7 @@ DefaultAnalyticsHubServiceStub::GetSubscription(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
 DefaultAnalyticsHubServiceStub::ListSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse response;
@@ -253,7 +256,7 @@ DefaultAnalyticsHubServiceStub::ListSubscriptions(
 StatusOr<google::cloud::bigquery::analyticshub::v1::
              ListSharedResourceSubscriptionsResponse>
 DefaultAnalyticsHubServiceStub::ListSharedResourceSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::
         ListSharedResourceSubscriptionsRequest const& request) {
   google::cloud::bigquery::analyticshub::v1::
@@ -268,7 +271,7 @@ DefaultAnalyticsHubServiceStub::ListSharedResourceSubscriptions(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
 DefaultAnalyticsHubServiceStub::RevokeSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
         request) {
   google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse
@@ -283,7 +286,8 @@ DefaultAnalyticsHubServiceStub::RevokeSubscription(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncDeleteSubscription(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -300,7 +304,7 @@ DefaultAnalyticsHubServiceStub::AsyncDeleteSubscription(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -311,7 +315,7 @@ StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -323,7 +327,7 @@ StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultAnalyticsHubServiceStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -336,7 +340,9 @@ DefaultAnalyticsHubServiceStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -351,7 +357,9 @@ DefaultAnalyticsHubServiceStub::AsyncGetOperation(
 
 future<Status> DefaultAnalyticsHubServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

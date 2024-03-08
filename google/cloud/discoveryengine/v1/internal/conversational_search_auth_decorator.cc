@@ -19,6 +19,7 @@
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_auth_decorator.h"
 #include <google/cloud/discoveryengine/v1/conversational_search_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,60 +33,60 @@ ConversationalSearchServiceAuth::ConversationalSearchServiceAuth(
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 ConversationalSearchServiceAuth::ConverseConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ConverseConversationRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ConverseConversation(context, request);
+  return child_->ConverseConversation(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceAuth::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateConversationRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateConversation(context, request);
+  return child_->CreateConversation(context, options, request);
 }
 
 Status ConversationalSearchServiceAuth::DeleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteConversationRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteConversation(context, request);
+  return child_->DeleteConversation(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceAuth::UpdateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateConversationRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateConversation(context, request);
+  return child_->UpdateConversation(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceAuth::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConversation(context, request);
+  return child_->GetConversation(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
 ConversationalSearchServiceAuth::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListConversationsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConversations(context, request);
+  return child_->ListConversations(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

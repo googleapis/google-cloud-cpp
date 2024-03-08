@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/connection/v1/internal/connection_auth_decorator.h"
 #include <google/cloud/bigquery/connection/v1/connection.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,76 +33,76 @@ ConnectionServiceAuth::ConnectionServiceAuth(
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceAuth::CreateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateConnection(context, request);
+  return child_->CreateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceAuth::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::GetConnectionRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnection(context, request);
+  return child_->GetConnection(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::ListConnectionsResponse>
 ConnectionServiceAuth::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::ListConnectionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnections(context, request);
+  return child_->ListConnections(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceAuth::UpdateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateConnection(context, request);
+  return child_->UpdateConnection(context, options, request);
 }
 
 Status ConnectionServiceAuth::DeleteConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteConnection(context, request);
+  return child_->DeleteConnection(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ConnectionServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ConnectionServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ConnectionServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

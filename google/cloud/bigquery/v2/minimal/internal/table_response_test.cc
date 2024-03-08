@@ -165,20 +165,6 @@ TEST(ListTablesResponseTest, InvalidListFormatTable) {
                        HasSubstr("Not a valid Json ListFormatTable object")));
 }
 
-TEST(ListTablesResponseTest, InvalidTotalItems) {
-  BigQueryHttpResponse http_response;
-  http_response.payload =
-      R"({"etag": "tag-1",
-          "kind": "kind-1",
-          "nextPageToken": "npt-123",
-          "totalItems": -1,
-          "tables": []})";
-  auto const response =
-      ListTablesResponse::BuildFromHttpResponse(http_response);
-  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
-                                 HasSubstr("Invalid value for totalItems")));
-}
-
 TEST(GetTableResponseTest, DebugString) {
   BigQueryHttpResponse http_response;
   http_response.http_status_code = HttpStatusCode::kOk;

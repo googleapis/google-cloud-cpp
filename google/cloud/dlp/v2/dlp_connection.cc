@@ -29,6 +29,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -258,6 +259,48 @@ DlpServiceConnection::ListStoredInfoTypes(
 
 Status DlpServiceConnection::DeleteStoredInfoType(
     google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
+DlpServiceConnection::ListProjectDataProfiles(
+    google::privacy::dlp::v2::
+        ListProjectDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::ProjectDataProfile>>();
+}
+
+StreamRange<google::privacy::dlp::v2::TableDataProfile>
+DlpServiceConnection::ListTableDataProfiles(
+    google::privacy::dlp::v2::
+        ListTableDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::TableDataProfile>>();
+}
+
+StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
+DlpServiceConnection::ListColumnDataProfiles(
+    google::privacy::dlp::v2::
+        ListColumnDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::ColumnDataProfile>>();
+}
+
+StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+DlpServiceConnection::GetProjectDataProfile(
+    google::privacy::dlp::v2::GetProjectDataProfileRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::privacy::dlp::v2::TableDataProfile>
+DlpServiceConnection::GetTableDataProfile(
+    google::privacy::dlp::v2::GetTableDataProfileRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+DlpServiceConnection::GetColumnDataProfile(
+    google::privacy::dlp::v2::GetColumnDataProfileRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

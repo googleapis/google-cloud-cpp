@@ -22,6 +22,7 @@
 #include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ CloudBuildStub::~CloudBuildStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncCreateBuild(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v1::CreateBuildRequest,
@@ -50,7 +52,7 @@ DefaultCloudBuildStub::AsyncCreateBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 DefaultCloudBuildStub::GetBuild(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
   google::devtools::cloudbuild::v1::Build response;
   auto status = grpc_stub_->GetBuild(&context, request, &response);
@@ -62,7 +64,7 @@ DefaultCloudBuildStub::GetBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
 DefaultCloudBuildStub::ListBuilds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
   google::devtools::cloudbuild::v1::ListBuildsResponse response;
   auto status = grpc_stub_->ListBuilds(&context, request, &response);
@@ -74,7 +76,7 @@ DefaultCloudBuildStub::ListBuilds(
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 DefaultCloudBuildStub::CancelBuild(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
   google::devtools::cloudbuild::v1::Build response;
   auto status = grpc_stub_->CancelBuild(&context, request, &response);
@@ -87,7 +89,8 @@ DefaultCloudBuildStub::CancelBuild(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncRetryBuild(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v1::RetryBuildRequest,
@@ -104,7 +107,8 @@ DefaultCloudBuildStub::AsyncRetryBuild(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncApproveBuild(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v1::ApproveBuildRequest,
@@ -121,7 +125,7 @@ DefaultCloudBuildStub::AsyncApproveBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 DefaultCloudBuildStub::CreateBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
         request) {
   google::devtools::cloudbuild::v1::BuildTrigger response;
@@ -134,7 +138,7 @@ DefaultCloudBuildStub::CreateBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 DefaultCloudBuildStub::GetBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
   google::devtools::cloudbuild::v1::BuildTrigger response;
   auto status = grpc_stub_->GetBuildTrigger(&context, request, &response);
@@ -146,7 +150,7 @@ DefaultCloudBuildStub::GetBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
 DefaultCloudBuildStub::ListBuildTriggers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
   google::devtools::cloudbuild::v1::ListBuildTriggersResponse response;
   auto status = grpc_stub_->ListBuildTriggers(&context, request, &response);
@@ -157,7 +161,7 @@ DefaultCloudBuildStub::ListBuildTriggers(
 }
 
 Status DefaultCloudBuildStub::DeleteBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
         request) {
   google::protobuf::Empty response;
@@ -170,7 +174,7 @@ Status DefaultCloudBuildStub::DeleteBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 DefaultCloudBuildStub::UpdateBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
         request) {
   google::devtools::cloudbuild::v1::BuildTrigger response;
@@ -184,7 +188,8 @@ DefaultCloudBuildStub::UpdateBuildTrigger(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncRunBuildTrigger(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest,
@@ -201,7 +206,7 @@ DefaultCloudBuildStub::AsyncRunBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 DefaultCloudBuildStub::ReceiveTriggerWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
   google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse response;
@@ -215,7 +220,8 @@ DefaultCloudBuildStub::ReceiveTriggerWebhook(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncCreateWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest,
@@ -232,7 +238,7 @@ DefaultCloudBuildStub::AsyncCreateWorkerPool(
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 DefaultCloudBuildStub::GetWorkerPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
   google::devtools::cloudbuild::v1::WorkerPool response;
   auto status = grpc_stub_->GetWorkerPool(&context, request, &response);
@@ -245,7 +251,8 @@ DefaultCloudBuildStub::GetWorkerPool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncDeleteWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest,
@@ -263,7 +270,8 @@ DefaultCloudBuildStub::AsyncDeleteWorkerPool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncUpdateWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest,
@@ -280,7 +288,7 @@ DefaultCloudBuildStub::AsyncUpdateWorkerPool(
 
 StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
 DefaultCloudBuildStub::ListWorkerPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
   google::devtools::cloudbuild::v1::ListWorkerPoolsResponse response;
   auto status = grpc_stub_->ListWorkerPools(&context, request, &response);
@@ -293,7 +301,9 @@ DefaultCloudBuildStub::ListWorkerPools(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -308,7 +318,9 @@ DefaultCloudBuildStub::AsyncGetOperation(
 
 future<Status> DefaultCloudBuildStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

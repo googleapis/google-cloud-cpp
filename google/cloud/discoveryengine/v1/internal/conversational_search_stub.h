@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_CONVERSATIONAL_SEARCH_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_CONVERSATIONAL_SEARCH_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/discoveryengine/v1/conversational_search_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,37 +38,37 @@ class ConversationalSearchServiceStub {
   virtual StatusOr<
       google::cloud::discoveryengine::v1::ConverseConversationResponse>
   ConverseConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::ConverseConversationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Conversation>
   CreateConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CreateConversationRequest const&
           request) = 0;
 
   virtual Status DeleteConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::DeleteConversationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Conversation>
   UpdateConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::UpdateConversationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Conversation>
   GetConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetConversationRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::discoveryengine::v1::ListConversationsResponse>
   ListConversations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::ListConversationsRequest const&
           request) = 0;
 };
@@ -82,33 +84,33 @@ class DefaultConversationalSearchServiceStub
 
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
   ConverseConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::ConverseConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CreateConversationRequest const&
           request) override;
 
   Status DeleteConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::DeleteConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::UpdateConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetConversationRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
   ListConversations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::ListConversationsRequest const&
           request) override;
 

@@ -23,6 +23,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include "absl/algorithm/container.h"
 #include "absl/strings/str_split.h"
@@ -225,6 +226,10 @@ Options DefaultDataOptions(Options opts) {
   if (user_project && !user_project->empty()) {
     opts.set<UserProjectOption>(*std::move(user_project));
   }
+  auto tracing = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING");
+  if (tracing && !tracing->empty()) {
+    opts.set<OpenTelemetryTracingOption>(true);
+  }
   if (!opts.has<AuthorityOption>()) {
     auto ep = google::cloud::internal::UniverseDomainEndpoint(
         "bigtable.googleapis.com", opts);
@@ -246,8 +251,8 @@ Options DefaultDataOptions(Options opts) {
     opts.set<bigtable::IdempotentMutationPolicyOption>(
         bigtable::DefaultIdempotentMutationPolicy());
   }
-  if (!opts.has<google::cloud::internal::EnableServerRetriesOption>()) {
-    opts.set<google::cloud::internal::EnableServerRetriesOption>(true);
+  if (!opts.has<EnableServerRetriesOption>()) {
+    opts.set<EnableServerRetriesOption>(true);
   }
   opts = DefaultOptions(std::move(opts));
   return opts.set<EndpointOption>(opts.get<DataEndpointOption>());

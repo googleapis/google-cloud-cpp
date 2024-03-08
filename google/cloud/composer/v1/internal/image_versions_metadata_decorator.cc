@@ -45,12 +45,12 @@ ImageVersionsMetadata::ImageVersionsMetadata(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListImageVersionsResponse>
 ImageVersionsMetadata::ListImageVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         ListImageVersionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListImageVersions(context, request);
+  return child_->ListImageVersions(context, options, request);
 }
 
 void ImageVersionsMetadata::SetMetadata(grpc::ClientContext& context,

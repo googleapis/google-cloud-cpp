@@ -19,6 +19,7 @@
 #include "google/cloud/run/v2/internal/tasks_auth_decorator.h"
 #include <google/cloud/run/v2/task.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,19 +32,19 @@ TasksAuth::TasksAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::run::v2::Task> TasksAuth::GetTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTask(context, request);
+  return child_->GetTask(context, options, request);
 }
 
 StatusOr<google::cloud::run::v2::ListTasksResponse> TasksAuth::ListTasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListTasksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTasks(context, request);
+  return child_->ListTasks(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

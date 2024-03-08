@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/servicehealth/v1/event_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,86 +37,86 @@ ServiceHealthLogging::ServiceHealthLogging(
 
 StatusOr<google::cloud::servicehealth::v1::ListEventsResponse>
 ServiceHealthLogging::ListEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::servicehealth::v1::ListEventsRequest const& request) {
-        return child_->ListEvents(context, request);
+        return child_->ListEvents(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::servicehealth::v1::Event>
 ServiceHealthLogging::GetEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicehealth::v1::GetEventRequest const& request) {
-        return child_->GetEvent(context, request);
+        return child_->GetEvent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
 ServiceHealthLogging::ListOrganizationEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
               request) {
-        return child_->ListOrganizationEvents(context, request);
+        return child_->ListOrganizationEvents(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
 ServiceHealthLogging::GetOrganizationEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
               request) {
-        return child_->GetOrganizationEvent(context, request);
+        return child_->GetOrganizationEvent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
 ServiceHealthLogging::ListOrganizationImpacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicehealth::v1::
                  ListOrganizationImpactsRequest const& request) {
-        return child_->ListOrganizationImpacts(context, request);
+        return child_->ListOrganizationImpacts(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
 ServiceHealthLogging::GetOrganizationImpact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
               request) {
-        return child_->GetOrganizationImpact(context, request);
+        return child_->GetOrganizationImpact(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

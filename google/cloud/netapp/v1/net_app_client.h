@@ -28,6 +28,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -112,7 +113,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.ListStoragePoolsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L45}
-  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L127}
+  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L128}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::StoragePool> ListStoragePools(
@@ -151,7 +152,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.ListStoragePoolsRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L45}
-  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L127}
+  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L128}
   ///
   // clang-format on
   StreamRange<google::cloud::netapp::v1::StoragePool> ListStoragePools(
@@ -187,8 +188,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L81}
-  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L127}
+  /// [google.cloud.netapp.v1.CreateStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L82}
+  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::StoragePool>> CreateStoragePool(
@@ -226,8 +227,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.CreateStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L81}
-  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L127}
+  /// [google.cloud.netapp.v1.CreateStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L82}
+  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::StoragePool>> CreateStoragePool(
@@ -253,7 +254,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.GetStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L34}
-  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L127}
+  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::StoragePool> GetStoragePool(
@@ -283,7 +284,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.GetStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L34}
-  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L127}
+  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::netapp::v1::StoragePool> GetStoragePool(
@@ -320,8 +321,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L127}
-  /// [google.cloud.netapp.v1.UpdateStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L100}
+  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L128}
+  /// [google.cloud.netapp.v1.UpdateStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L101}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::StoragePool>> UpdateStoragePool(
@@ -358,8 +359,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L127}
-  /// [google.cloud.netapp.v1.UpdateStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L100}
+  /// [google.cloud.netapp.v1.StoragePool]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L128}
+  /// [google.cloud.netapp.v1.UpdateStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L101}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::StoragePool>> UpdateStoragePool(
@@ -391,7 +392,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L114}
+  /// [google.cloud.netapp.v1.DeleteStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L115}
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on
@@ -428,7 +429,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.DeleteStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L114}
+  /// [google.cloud.netapp.v1.DeleteStoragePoolRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L115}
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L653}
   ///
   // clang-format on

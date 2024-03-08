@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ CompanyServiceStub::~CompanyServiceStub() = default;
 
 StatusOr<google::cloud::talent::v4::Company>
 DefaultCompanyServiceStub::CreateCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
   google::cloud::talent::v4::Company response;
   auto status = grpc_stub_->CreateCompany(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultCompanyServiceStub::CreateCompany(
 
 StatusOr<google::cloud::talent::v4::Company>
 DefaultCompanyServiceStub::GetCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
   google::cloud::talent::v4::Company response;
   auto status = grpc_stub_->GetCompany(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultCompanyServiceStub::GetCompany(
 
 StatusOr<google::cloud::talent::v4::Company>
 DefaultCompanyServiceStub::UpdateCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
   google::cloud::talent::v4::Company response;
   auto status = grpc_stub_->UpdateCompany(&context, request, &response);
@@ -66,7 +67,7 @@ DefaultCompanyServiceStub::UpdateCompany(
 }
 
 Status DefaultCompanyServiceStub::DeleteCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteCompany(&context, request, &response);
@@ -78,7 +79,7 @@ Status DefaultCompanyServiceStub::DeleteCompany(
 
 StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 DefaultCompanyServiceStub::ListCompanies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
   google::cloud::talent::v4::ListCompaniesResponse response;
   auto status = grpc_stub_->ListCompanies(&context, request, &response);

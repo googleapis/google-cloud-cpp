@@ -59,6 +59,27 @@ class BigtableTableAdminTracingConnection
       google::bigtable::admin::v2::UndeleteTableRequest const& request)
       override;
 
+  future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+  CreateAuthorizedView(
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
+      override;
+
+  StreamRange<google::bigtable::admin::v2::AuthorizedView> ListAuthorizedViews(
+      google::bigtable::admin::v2::ListAuthorizedViewsRequest request) override;
+
+  StatusOr<google::bigtable::admin::v2::AuthorizedView> GetAuthorizedView(
+      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+  UpdateAuthorizedView(
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
+      override;
+
+  Status DeleteAuthorizedView(
+      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request)
+      override;
+
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request)
       override;

@@ -38,7 +38,7 @@ class MockGoldenThingAdminRestStub
       future<StatusOr<::google::longrunning::Operation>>, AsyncCreateDatabase,
       (google::cloud::CompletionQueue & cq,
        std::unique_ptr<google::cloud::rest_internal::RestContext>,
-       Options const&,
+       google::cloud::internal::ImmutableOptions,
        ::google::test::admin::database::v1::CreateDatabaseRequest const&),
       (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Database>,
@@ -51,7 +51,7 @@ class MockGoldenThingAdminRestStub
       AsyncUpdateDatabaseDdl,
       (google::cloud::CompletionQueue & cq,
        std::unique_ptr<google::cloud::rest_internal::RestContext>,
-       Options const&,
+       google::cloud::internal::ImmutableOptions,
        ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&),
       (override));
   MOCK_METHOD(Status, DropDatabase,
@@ -81,7 +81,7 @@ class MockGoldenThingAdminRestStub
               AsyncCreateBackup,
               (google::cloud::CompletionQueue & cq,
                std::unique_ptr<google::cloud::rest_internal::RestContext>,
-               Options const&,
+               google::cloud::internal::ImmutableOptions,
                ::google::test::admin::database::v1::CreateBackupRequest const&),
               (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
@@ -107,7 +107,7 @@ class MockGoldenThingAdminRestStub
       future<StatusOr<::google::longrunning::Operation>>, AsyncRestoreDatabase,
       (google::cloud::CompletionQueue & cq,
        std::unique_ptr<google::cloud::rest_internal::RestContext>,
-       Options const&,
+       google::cloud::internal::ImmutableOptions,
        ::google::test::admin::database::v1::RestoreDatabaseRequest const&),
       (override));
   MOCK_METHOD(
@@ -130,7 +130,7 @@ class MockGoldenThingAdminRestStub
       AsyncGetDatabase,
       (google::cloud::CompletionQueue & cq,
        std::unique_ptr<google::cloud::rest_internal::RestContext>,
-       Options const&,
+       google::cloud::internal::ImmutableOptions,
        google::test::admin::database::v1::GetDatabaseRequest const& request),
       (override));
 
@@ -138,7 +138,7 @@ class MockGoldenThingAdminRestStub
       future<Status>, AsyncDropDatabase,
       (google::cloud::CompletionQueue & cq,
        std::unique_ptr<google::cloud::rest_internal::RestContext>,
-       Options const&,
+       google::cloud::internal::ImmutableOptions,
        google::test::admin::database::v1::DropDatabaseRequest const& request),
       (override));
 
@@ -146,14 +146,14 @@ class MockGoldenThingAdminRestStub
               AsyncGetOperation,
               (google::cloud::CompletionQueue & cq,
                std::unique_ptr<google::cloud::rest_internal::RestContext>,
-               Options const&,
+               google::cloud::internal::ImmutableOptions,
                google::longrunning::GetOperationRequest const& request),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncCancelOperation,
               (google::cloud::CompletionQueue & cq,
                std::unique_ptr<google::cloud::rest_internal::RestContext>,
-               Options const&,
+               google::cloud::internal::ImmutableOptions,
                google::longrunning::CancelOperationRequest const& request),
               (override));
 };

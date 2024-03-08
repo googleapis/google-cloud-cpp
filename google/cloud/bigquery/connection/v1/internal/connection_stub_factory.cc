@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/bigquery/connection/v1/connection.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

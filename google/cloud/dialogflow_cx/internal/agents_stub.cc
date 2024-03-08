@@ -22,6 +22,7 @@
 #include <google/cloud/dialogflow/cx/v3/agent.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ AgentsStub::~AgentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse>
 DefaultAgentsStub::ListAgents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListAgentsResponse response;
   auto status = grpc_stub_->ListAgents(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultAgentsStub::ListAgents(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> DefaultAgentsStub::GetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Agent response;
   auto status = grpc_stub_->GetAgent(&context, request, &response);
@@ -55,7 +56,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Agent> DefaultAgentsStub::GetAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 DefaultAgentsStub::CreateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Agent response;
   auto status = grpc_stub_->CreateAgent(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultAgentsStub::CreateAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 DefaultAgentsStub::UpdateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Agent response;
   auto status = grpc_stub_->UpdateAgent(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultAgentsStub::UpdateAgent(
 }
 
 Status DefaultAgentsStub::DeleteAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteAgent(&context, request, &response);
@@ -91,7 +92,8 @@ Status DefaultAgentsStub::DeleteAgent(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncExportAgent(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ExportAgentRequest,
@@ -109,7 +111,8 @@ DefaultAgentsStub::AsyncExportAgent(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest,
@@ -126,7 +129,7 @@ DefaultAgentsStub::AsyncRestoreAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 DefaultAgentsStub::ValidateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::AgentValidationResult response;
   auto status = grpc_stub_->ValidateAgent(&context, request, &response);
@@ -138,7 +141,7 @@ DefaultAgentsStub::ValidateAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 DefaultAgentsStub::GetAgentValidationResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::AgentValidationResult response;
@@ -152,7 +155,7 @@ DefaultAgentsStub::GetAgentValidationResult(
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 DefaultAgentsStub::GetGenerativeSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::GenerativeSettings response;
@@ -165,7 +168,7 @@ DefaultAgentsStub::GetGenerativeSettings(
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 DefaultAgentsStub::UpdateGenerativeSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::GenerativeSettings response;
@@ -180,7 +183,9 @@ DefaultAgentsStub::UpdateGenerativeSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -195,7 +200,9 @@ DefaultAgentsStub::AsyncGetOperation(
 
 future<Status> DefaultAgentsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

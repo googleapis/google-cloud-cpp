@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MATCH_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MATCH_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/match_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,12 +37,12 @@ class MatchServiceStub {
 
   virtual StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
   FindNeighbors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::FindNeighborsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
   ReadIndexDatapoints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const&
           request) = 0;
 };
@@ -54,13 +56,13 @@ class DefaultMatchServiceStub : public MatchServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
   ReadIndexDatapoints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
       override;
 

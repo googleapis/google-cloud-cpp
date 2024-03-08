@@ -23,6 +23,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -73,12 +74,12 @@ ConfidentialComputingConnectionImpl::CreateChallenge(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateChallenge(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::confidentialcomputing::v1::
                  CreateChallengeRequest const& request) {
-        return stub_->CreateChallenge(context, request);
+        return stub_->CreateChallenge(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
@@ -89,12 +90,12 @@ ConfidentialComputingConnectionImpl::VerifyAttestation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->VerifyAttestation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::confidentialcomputing::v1::
                  VerifyAttestationRequest const& request) {
-        return stub_->VerifyAttestation(context, request);
+        return stub_->VerifyAttestation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

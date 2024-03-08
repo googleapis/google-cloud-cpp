@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/region_disks/v1/region_disks_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

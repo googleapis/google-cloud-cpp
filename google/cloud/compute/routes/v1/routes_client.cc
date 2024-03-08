@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/routes/v1/routes_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

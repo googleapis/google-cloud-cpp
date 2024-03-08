@@ -145,7 +145,7 @@ TEST_F(StorageStubFactory, WriteObject) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, AsyncWriteObject)
             .WillOnce([this](google::cloud::CompletionQueue const&,
-                             auto context) {
+                             auto context, auto /*options*/) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context->credentials(), NotNull());
               // Verify the Metadata decorator is present
@@ -172,8 +172,9 @@ TEST_F(StorageStubFactory, WriteObject) {
   ScopedLog log;
   internal::AutomaticallyCreatedBackgroundThreads pool;
   auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(), {});
-  auto stream = stub->AsyncWriteObject(pool.cq(),
-                                       std::make_shared<grpc::ClientContext>());
+  auto stream =
+      stub->AsyncWriteObject(pool.cq(), std::make_shared<grpc::ClientContext>(),
+                             google::cloud::internal::MakeImmutableOptions({}));
   EXPECT_TRUE(stream->Start().get());
   auto close = stream->Finish().get();
   EXPECT_THAT(close, StatusIs(StatusCode::kUnavailable));
@@ -188,7 +189,7 @@ TEST_F(StorageStubFactory, StartResumableWrite) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, StartResumableWrite)
             .WillOnce([this](
-                          grpc::ClientContext& context,
+                          grpc::ClientContext& context, Options const&,
                           google::storage::v2::StartResumableWriteRequest const&
                               request) {
               // Verify the Auth decorator is present
@@ -212,8 +213,7 @@ TEST_F(StorageStubFactory, StartResumableWrite) {
   internal::AutomaticallyCreatedBackgroundThreads pool;
   auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(), {});
   grpc::ClientContext context;
-  auto response = stub->StartResumableWrite(
-      context, google::storage::v2::StartResumableWriteRequest{});
+  auto response = stub->StartResumableWrite(context, Options{}, {});
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("StartResumableWrite")));
 }
@@ -225,7 +225,7 @@ TEST_F(StorageStubFactory, QueryWriteStatus) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, QueryWriteStatus)
-            .WillOnce([this](grpc::ClientContext& context,
+            .WillOnce([this](grpc::ClientContext& context, Options const&,
                              google::storage::v2::QueryWriteStatusRequest const&
                                  request) {
               // Verify the Auth decorator is present
@@ -249,8 +249,7 @@ TEST_F(StorageStubFactory, QueryWriteStatus) {
   internal::AutomaticallyCreatedBackgroundThreads pool;
   auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(), {});
   grpc::ClientContext context;
-  auto response = stub->QueryWriteStatus(
-      context, google::storage::v2::QueryWriteStatusRequest{});
+  auto response = stub->QueryWriteStatus(context, Options{}, {});
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("QueryWriteStatus")));
 }
@@ -272,7 +271,7 @@ TEST_F(StorageStubFactory, TracingEnabled) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, DeleteBucket)
-            .WillOnce([](auto& context, auto const&) {
+            .WillOnce([](auto& context, auto const&, auto const&) {
               ValidatePropagator(context);
               return internal::AbortedError("fail");
             });
@@ -283,7 +282,7 @@ TEST_F(StorageStubFactory, TracingEnabled) {
   auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(),
                              EnableTracing({}).set<GrpcNumChannelsOption>(1));
   grpc::ClientContext context;
-  (void)stub->DeleteBucket(context, {});
+  (void)stub->DeleteBucket(context, Options{}, {});
 
   EXPECT_THAT(span_catcher->GetSpans(),
               ElementsAre(SpanNamed("google.storage.v2.Storage/DeleteBucket")));
@@ -297,7 +296,7 @@ TEST_F(StorageStubFactory, TracingDisabled) {
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, DeleteBucket)
-            .WillOnce([](auto& context, auto const&) {
+            .WillOnce([](auto& context, auto const&, auto const&) {
               ValidateNoPropagator(context);
               return internal::AbortedError("fail");
             });
@@ -308,7 +307,7 @@ TEST_F(StorageStubFactory, TracingDisabled) {
   auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(),
                              DisableTracing({}).set<GrpcNumChannelsOption>(1));
   grpc::ClientContext context;
-  (void)stub->DeleteBucket(context, {});
+  (void)stub->DeleteBucket(context, Options{}, {});
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }

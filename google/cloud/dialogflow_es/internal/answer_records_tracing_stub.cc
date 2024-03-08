@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/answer_records_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,26 +33,26 @@ AnswerRecordsTracingStub::AnswerRecordsTracingStub(
 
 StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 AnswerRecordsTracingStub::ListAnswerRecords(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.AnswerRecords",
                                      "ListAnswerRecords");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAnswerRecords(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAnswerRecords(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 AnswerRecordsTracingStub::UpdateAnswerRecord(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.AnswerRecords",
                                      "UpdateAnswerRecord");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateAnswerRecord(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateAnswerRecord(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

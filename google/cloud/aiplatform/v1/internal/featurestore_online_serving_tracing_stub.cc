@@ -19,6 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/featurestore_online_serving_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/streaming_read_rpc_tracing.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,15 +35,15 @@ FeaturestoreOnlineServingServiceTracingStub::
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceTracingStub::ReadFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeaturestoreOnlineServingService",
       "ReadFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ReadFeatureValues(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ReadFeatureValues(context, options, request));
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -64,15 +65,15 @@ FeaturestoreOnlineServingServiceTracingStub::StreamingReadFeatureValues(
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 FeaturestoreOnlineServingServiceTracingStub::WriteFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.FeaturestoreOnlineServingService",
       "WriteFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->WriteFeatureValues(context, request));
+  return internal::EndSpan(
+      context, *span, child_->WriteFeatureValues(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

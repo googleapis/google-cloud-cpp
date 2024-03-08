@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -63,11 +64,11 @@ AdaptationConnectionImpl::CreatePhraseSet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePhraseSet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
-        return stub_->CreatePhraseSet(context, request);
+        return stub_->CreatePhraseSet(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
@@ -77,11 +78,11 @@ AdaptationConnectionImpl::GetPhraseSet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPhraseSet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::GetPhraseSetRequest const& request) {
-        return stub_->GetPhraseSet(context, request);
+        return stub_->GetPhraseSet(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::speech::v1::PhraseSet>
@@ -93,20 +94,21 @@ AdaptationConnectionImpl::ListPhraseSet(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::speech::v1::PhraseSet>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::speech::v1::ListPhraseSetRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::speech::v1::ListPhraseSetRequest const&
                        request) {
-              return stub->ListPhraseSet(context, request);
+              return stub->ListPhraseSet(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::speech::v1::ListPhraseSetResponse r) {
         std::vector<google::cloud::speech::v1::PhraseSet> result(
@@ -124,11 +126,11 @@ AdaptationConnectionImpl::UpdatePhraseSet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdatePhraseSet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
-        return stub_->UpdatePhraseSet(context, request);
+        return stub_->UpdatePhraseSet(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status AdaptationConnectionImpl::DeletePhraseSet(
@@ -137,11 +139,11 @@ Status AdaptationConnectionImpl::DeletePhraseSet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePhraseSet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
-        return stub_->DeletePhraseSet(context, request);
+        return stub_->DeletePhraseSet(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
@@ -152,11 +154,11 @@ AdaptationConnectionImpl::CreateCustomClass(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCustomClass(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::speech::v1::CreateCustomClassRequest const& request) {
-        return stub_->CreateCustomClass(context, request);
+        return stub_->CreateCustomClass(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
@@ -166,11 +168,11 @@ AdaptationConnectionImpl::GetCustomClass(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCustomClass(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::GetCustomClassRequest const& request) {
-        return stub_->GetCustomClass(context, request);
+        return stub_->GetCustomClass(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::speech::v1::CustomClass>
@@ -182,20 +184,21 @@ AdaptationConnectionImpl::ListCustomClasses(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::speech::v1::CustomClass>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::speech::v1::ListCustomClassesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::speech::v1::ListCustomClassesRequest const&
                        request) {
-              return stub->ListCustomClasses(context, request);
+              return stub->ListCustomClasses(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::speech::v1::ListCustomClassesResponse r) {
         std::vector<google::cloud::speech::v1::CustomClass> result(
@@ -214,11 +217,11 @@ AdaptationConnectionImpl::UpdateCustomClass(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCustomClass(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
-        return stub_->UpdateCustomClass(context, request);
+        return stub_->UpdateCustomClass(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status AdaptationConnectionImpl::DeleteCustomClass(
@@ -228,11 +231,11 @@ Status AdaptationConnectionImpl::DeleteCustomClass(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCustomClass(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
-        return stub_->DeleteCustomClass(context, request);
+        return stub_->DeleteCustomClass(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

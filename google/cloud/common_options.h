@@ -210,6 +210,24 @@ struct ProxyOption {
 };
 
 /**
+ * Let the server make retry decisions, when applicable.
+ *
+ * In some cases the server knows how to handle retry behavior better than the
+ * client. For example, if a server-side resource is exhausted and the server
+ * knows when it will come back online, it can tell the client exactly when to
+ * retry.
+ *
+ * If this option is enabled, any supplied retry, backoff, or idempotency
+ * policies may be overridden by a recommendation from the server.
+ *
+ * For example, the server may know it is safe to retry a non-idempotent
+ * request, or safe to retry a status code that is typically a permanent error.
+ */
+struct EnableServerRetriesOption {
+  using Type = bool;
+};
+
+/**
  * A list of all the common options.
  */
 using CommonOptionList =

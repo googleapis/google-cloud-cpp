@@ -18,6 +18,7 @@
 
 #include "google/cloud/networkconnectivity/v1/hub_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

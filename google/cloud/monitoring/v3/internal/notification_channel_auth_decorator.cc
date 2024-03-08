@@ -19,6 +19,7 @@
 #include "google/cloud/monitoring/v3/internal/notification_channel_auth_decorator.h"
 #include <google/monitoring/v3/notification_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,94 +33,96 @@ NotificationChannelServiceAuth::NotificationChannelServiceAuth(
 
 StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
 NotificationChannelServiceAuth::ListNotificationChannelDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListNotificationChannelDescriptorsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNotificationChannelDescriptors(context, request);
+  return child_->ListNotificationChannelDescriptors(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceAuth::GetNotificationChannelDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNotificationChannelDescriptor(context, request);
+  return child_->GetNotificationChannelDescriptor(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListNotificationChannelsResponse>
 NotificationChannelServiceAuth::ListNotificationChannels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListNotificationChannelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNotificationChannels(context, request);
+  return child_->ListNotificationChannels(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceAuth::GetNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetNotificationChannelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNotificationChannel(context, request);
+  return child_->GetNotificationChannel(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceAuth::CreateNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateNotificationChannelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateNotificationChannel(context, request);
+  return child_->CreateNotificationChannel(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceAuth::UpdateNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateNotificationChannelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateNotificationChannel(context, request);
+  return child_->UpdateNotificationChannel(context, options, request);
 }
 
 Status NotificationChannelServiceAuth::DeleteNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteNotificationChannelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteNotificationChannel(context, request);
+  return child_->DeleteNotificationChannel(context, options, request);
 }
 
 Status NotificationChannelServiceAuth::SendNotificationChannelVerificationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::
         SendNotificationChannelVerificationCodeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SendNotificationChannelVerificationCode(context, request);
+  return child_->SendNotificationChannelVerificationCode(context, options,
+                                                         request);
 }
 
 StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
 NotificationChannelServiceAuth::GetNotificationChannelVerificationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNotificationChannelVerificationCode(context, request);
+  return child_->GetNotificationChannelVerificationCode(context, options,
+                                                        request);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceAuth::VerifyNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::VerifyNotificationChannelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->VerifyNotificationChannel(context, request);
+  return child_->VerifyNotificationChannel(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -39,12 +39,12 @@ class FulfillmentsLogging : public FulfillmentsStub {
                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetFulfillmentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> UpdateFulfillment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request)
       override;
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -290,6 +291,14 @@ Status DataTransferServiceClient::EnrollDataSources(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EnrollDataSources(request);
+}
+
+Status DataTransferServiceClient::UnenrollDataSources(
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnenrollDataSources(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

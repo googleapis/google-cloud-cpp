@@ -237,6 +237,39 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       (override));
 
   MOCK_METHOD(
+      (StreamRange<google::privacy::dlp::v2::ProjectDataProfile>),
+      ListProjectDataProfiles,
+      (google::privacy::dlp::v2::ListProjectDataProfilesRequest request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::privacy::dlp::v2::TableDataProfile>),
+              ListTableDataProfiles,
+              (google::privacy::dlp::v2::ListTableDataProfilesRequest request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::privacy::dlp::v2::ColumnDataProfile>),
+              ListColumnDataProfiles,
+              (google::privacy::dlp::v2::ListColumnDataProfilesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::privacy::dlp::v2::ProjectDataProfile>,
+      GetProjectDataProfile,
+      (google::privacy::dlp::v2::GetProjectDataProfileRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::privacy::dlp::v2::TableDataProfile>, GetTableDataProfile,
+      (google::privacy::dlp::v2::GetTableDataProfileRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::privacy::dlp::v2::ColumnDataProfile>,
+      GetColumnDataProfile,
+      (google::privacy::dlp::v2::GetColumnDataProfileRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::privacy::dlp::v2::HybridInspectResponse>,
       HybridInspectDlpJob,
       (google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request),

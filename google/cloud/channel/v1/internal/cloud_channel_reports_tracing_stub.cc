@@ -18,6 +18,7 @@
 
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,63 +34,67 @@ CloudChannelReportsServiceTracingStub::CloudChannelReportsServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelReportsServiceTracingStub::AsyncRunReportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::RunReportJobRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelReportsService", "RunReportJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRunReportJob(cq, context, options, request);
+  auto f = child_->AsyncRunReportJob(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
 CloudChannelReportsServiceTracingStub::FetchReportResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::FetchReportResultsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelReportsService",
       "FetchReportResults");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchReportResults(context, request));
+  return internal::EndSpan(
+      context, *span, child_->FetchReportResults(context, options, request));
 }
 
 StatusOr<google::cloud::channel::v1::ListReportsResponse>
 CloudChannelReportsServiceTracingStub::ListReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListReportsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelReportsService", "ListReports");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListReports(context, request));
+                           child_->ListReports(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelReportsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> CloudChannelReportsServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

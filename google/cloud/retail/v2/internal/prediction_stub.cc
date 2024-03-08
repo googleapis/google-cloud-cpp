@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/retail/v2/prediction_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ PredictionServiceStub::~PredictionServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
 DefaultPredictionServiceStub::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::PredictRequest const& request) {
   google::cloud::retail::v2::PredictResponse response;
   auto status = grpc_stub_->Predict(&context, request, &response);

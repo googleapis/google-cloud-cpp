@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ ConversationDatasetsTracingStub::ConversationDatasetsTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsTracingStub::AsyncCreateConversationDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
   auto span =
@@ -41,14 +43,14 @@ ConversationDatasetsTracingStub::AsyncCreateConversationDataset(
                              "CreateConversationDataset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateConversationDataset(cq, context, options, request);
+  auto f = child_->AsyncCreateConversationDataset(cq, context,
+                                                  std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsTracingStub::GetConversationDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
   auto span =
@@ -56,13 +58,14 @@ ConversationDatasetsTracingStub::GetConversationDataset(
                              "GetConversationDataset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConversationDataset(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetConversationDataset(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
 ConversationDatasetsTracingStub::ListConversationDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
   auto span =
@@ -70,14 +73,16 @@ ConversationDatasetsTracingStub::ListConversationDatasets(
                              "ListConversationDatasets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConversationDatasets(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListConversationDatasets(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsTracingStub::AsyncDeleteConversationDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
   auto span =
@@ -85,15 +90,16 @@ ConversationDatasetsTracingStub::AsyncDeleteConversationDataset(
                              "DeleteConversationDataset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteConversationDataset(cq, context, options, request);
+  auto f = child_->AsyncDeleteConversationDataset(cq, context,
+                                                  std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsTracingStub::AsyncImportConversationData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
   auto span =
@@ -101,32 +107,36 @@ ConversationDatasetsTracingStub::AsyncImportConversationData(
                              "ImportConversationData");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportConversationData(cq, context, options, request);
+  auto f = child_->AsyncImportConversationData(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ConversationDatasetsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -27,6 +27,7 @@
 #include <google/cloud/aiplatform/v1/model_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,115 +40,123 @@ class ModelServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUploadModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::UploadModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListModelsResponse>
   ListModels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListModelVersionsResponse>
   ListModelVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelVersionsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateModelRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateExplanationDataset(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::DeleteModelRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteModelVersion(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::MergeVersionAliasesRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncExportModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::ExportModelRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCopyModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::CopyModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
   ImportModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
   BatchImportModelEvaluationSlices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           BatchImportModelEvaluationSlicesRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
   BatchImportEvaluatedAnnotations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           BatchImportEvaluatedAnnotationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
   GetModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelEvaluationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationsResponse>
   ListModelEvaluations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelEvaluationsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
   GetModelEvaluationSlice(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse>
   ListModelEvaluationSlices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -163,115 +172,123 @@ class DefaultModelServiceStub : public ModelServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUploadModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::UploadModelRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListModelsResponse> ListModels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelsRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListModelVersionsResponse>
   ListModelVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelVersionsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateModelRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateExplanationDataset(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::DeleteModelRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteModelVersion(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::ExportModelRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCopyModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
   ImportModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
           request) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
   BatchImportModelEvaluationSlices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           BatchImportModelEvaluationSlicesRequest const& request) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
   BatchImportEvaluatedAnnotations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           BatchImportEvaluatedAnnotationsRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluation> GetModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationsResponse>
   ListModelEvaluations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelEvaluationsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
   GetModelEvaluationSlice(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse>
   ListModelEvaluationSlices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

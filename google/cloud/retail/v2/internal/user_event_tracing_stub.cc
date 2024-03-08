@@ -18,6 +18,7 @@
 
 #include "google/cloud/retail/v2/internal/user_event_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,88 +33,97 @@ UserEventServiceTracingStub::UserEventServiceTracingStub(
 
 StatusOr<google::cloud::retail::v2::UserEvent>
 UserEventServiceTracingStub::WriteUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::WriteUserEventRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.UserEventService",
                                      "WriteUserEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->WriteUserEvent(context, request));
+                           child_->WriteUserEvent(context, options, request));
 }
 
 StatusOr<google::api::HttpBody> UserEventServiceTracingStub::CollectUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CollectUserEventRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.UserEventService",
                                      "CollectUserEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CollectUserEvent(context, request));
+                           child_->CollectUserEvent(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncPurgeUserEvents(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.UserEventService",
                                      "PurgeUserEvents");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncPurgeUserEvents(cq, context, options, request);
+  auto f =
+      child_->AsyncPurgeUserEvents(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncImportUserEvents(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.UserEventService",
                                      "ImportUserEvents");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportUserEvents(cq, context, options, request);
+  auto f =
+      child_->AsyncImportUserEvents(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncRejoinUserEvents(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.UserEventService",
                                      "RejoinUserEvents");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRejoinUserEvents(cq, context, options, request);
+  auto f =
+      child_->AsyncRejoinUserEvents(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> UserEventServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -23,6 +23,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -69,10 +70,12 @@ BigQueryWriteConnectionImpl::CreateWriteStream(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateWriteStream(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-              request) { return stub_->CreateWriteStream(context, request); },
-      request, __func__);
+              request) {
+        return stub_->CreateWriteStream(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
@@ -83,10 +86,12 @@ BigQueryWriteConnectionImpl::GetWriteStream(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWriteStream(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-                 request) { return stub_->GetWriteStream(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetWriteStream(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
@@ -97,12 +102,12 @@ BigQueryWriteConnectionImpl::FinalizeWriteStream(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FinalizeWriteStream(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::
                  FinalizeWriteStreamRequest const& request) {
-        return stub_->FinalizeWriteStream(context, request);
+        return stub_->FinalizeWriteStream(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
@@ -113,12 +118,12 @@ BigQueryWriteConnectionImpl::BatchCommitWriteStreams(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchCommitWriteStreams(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::
                  BatchCommitWriteStreamsRequest const& request) {
-        return stub_->BatchCommitWriteStreams(context, request);
+        return stub_->BatchCommitWriteStreams(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
@@ -128,10 +133,12 @@ BigQueryWriteConnectionImpl::FlushRows(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FlushRows(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::FlushRowsRequest const&
-                 request) { return stub_->FlushRows(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->FlushRows(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

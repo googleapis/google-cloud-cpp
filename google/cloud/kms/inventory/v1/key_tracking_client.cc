@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/inventory/v1/key_tracking_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

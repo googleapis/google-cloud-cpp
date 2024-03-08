@@ -20,6 +20,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

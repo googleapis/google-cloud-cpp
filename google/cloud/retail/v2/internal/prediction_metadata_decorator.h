@@ -40,7 +40,7 @@ class PredictionServiceMetadata : public PredictionServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::PredictRequest const& request) override;
 
  private:

@@ -19,6 +19,7 @@
 #include "google/cloud/composer/v1/internal/environments_auth_decorator.h"
 #include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,219 +34,344 @@ EnvironmentsAuth::EnvironmentsAuth(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateEnvironment(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncCreateEnvironment(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsAuth::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         GetEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListEnvironmentsResponse>
 EnvironmentsAuth::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         ListEnvironmentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEnvironments(context, request);
+  return child_->ListEnvironments(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateEnvironment(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncUpdateEnvironment(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteEnvironment(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncDeleteEnvironment(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ExecuteAirflowCommandResponse>
 EnvironmentsAuth::ExecuteAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         ExecuteAirflowCommandRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ExecuteAirflowCommand(context, request);
+  return child_->ExecuteAirflowCommand(context, options, request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              StopAirflowCommandResponse>
 EnvironmentsAuth::StopAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         StopAirflowCommandRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->StopAirflowCommand(context, request);
+  return child_->StopAirflowCommand(context, options, request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              PollAirflowCommandResponse>
 EnvironmentsAuth::PollAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         PollAirflowCommandRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PollAirflowCommand(context, request);
+  return child_->PollAirflowCommand(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
+EnvironmentsAuth::ListWorkloads(grpc::ClientContext& context,
+                                Options const& options,
+                                google::cloud::orchestration::airflow::service::
+                                    v1::ListWorkloadsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListWorkloads(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsAuth::CreateUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateUserWorkloadsSecret(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsAuth::GetUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetUserWorkloadsSecret(context, options, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsSecretsResponse>
+EnvironmentsAuth::ListUserWorkloadsSecrets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListUserWorkloadsSecrets(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsAuth::UpdateUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateUserWorkloadsSecret(context, options, request);
+}
+
+Status EnvironmentsAuth::DeleteUserWorkloadsSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteUserWorkloadsSecret(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsAuth::CreateUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateUserWorkloadsConfigMap(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsAuth::GetUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetUserWorkloadsConfigMap(context, options, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsConfigMapsResponse>
+EnvironmentsAuth::ListUserWorkloadsConfigMaps(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListUserWorkloadsConfigMaps(context, options, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsAuth::UpdateUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateUserWorkloadsConfigMap(context, options, request);
+}
+
+Status EnvironmentsAuth::DeleteUserWorkloadsConfigMap(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteUserWorkloadsConfigMap(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncSaveSnapshot(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncSaveSnapshot(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncLoadSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncLoadSnapshot(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncLoadSnapshot(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncDatabaseFailover(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::orchestration::airflow::service::v1::
         DatabaseFailoverRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDatabaseFailover(cq, *std::move(context), options,
-                                            request);
+        return child->AsyncDatabaseFailover(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              FetchDatabasePropertiesResponse>
 EnvironmentsAuth::FetchDatabaseProperties(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         FetchDatabasePropertiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchDatabaseProperties(context, request);
+  return child_->FetchDatabaseProperties(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> EnvironmentsAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

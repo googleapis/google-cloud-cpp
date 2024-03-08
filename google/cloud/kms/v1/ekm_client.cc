@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/v1/ekm_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
