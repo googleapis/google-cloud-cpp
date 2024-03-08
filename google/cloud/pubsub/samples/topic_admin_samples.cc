@@ -618,6 +618,7 @@ void AutoRun(std::vector<std::string> const& argv) {
             });
       },
       StatusCode::kNotFound);
+      
   ignore_emulator_failures(
       [&] {
         std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
