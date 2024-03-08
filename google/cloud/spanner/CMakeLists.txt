@@ -184,6 +184,8 @@ add_library(
     partition_options.h
     partitioned_dml_result.h
     polling_policy.h
+    proto_enum.h
+    proto_message.h
     query_options.cc
     query_options.h
     query_partition.cc
@@ -395,6 +397,10 @@ function (spanner_client_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
+    google_cloud_cpp_proto_library(
+        spanner_client_testing_protos testing/singer.proto
+        PROTO_PATH_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR})
+
     add_library(
         spanner_client_testing # cmake-format: sort
         testing/cleanup_stale_databases.cc
@@ -426,8 +432,12 @@ function (spanner_client_define_tests)
         testing/status_utils.h)
     target_link_libraries(
         spanner_client_testing
-        PUBLIC google_cloud_cpp_testing google-cloud-cpp::spanner_mocks
-               google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
+        PUBLIC google_cloud_cpp_testing
+               spanner_client_testing_protos
+               google-cloud-cpp::spanner_mocks
+               google-cloud-cpp::spanner
+               GTest::gmock_main
+               GTest::gmock
                GTest::gtest)
     create_bazel_config(spanner_client_testing YEAR "2019")
     google_cloud_cpp_add_common_options(spanner_client_testing)
@@ -476,6 +486,8 @@ function (spanner_client_define_tests)
         mutations_test.cc
         numeric_test.cc
         partition_options_test.cc
+        proto_enum_test.cc
+        proto_message_test.cc
         query_options_test.cc
         query_partition_test.cc
         read_options_test.cc
