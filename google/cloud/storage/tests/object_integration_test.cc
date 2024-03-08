@@ -177,8 +177,6 @@ TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixesWithFolders) {
-  if (UsingEmulator()) GTEST_SKIP();
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
