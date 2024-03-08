@@ -16,6 +16,8 @@
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
+#include "google/cloud/pubsub/internal/default_batch_callback.h"
+#include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -268,31 +270,34 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
 
   // This must be declared after `source` as it captures it and uses it to send
   // back acknowledgements.
-  auto callback =
-      [&](StatusOr<google::pubsub::v1::StreamingPullResponse> const& response) {
-        ASSERT_STATUS_OK(response);
-        {
-          std::lock_guard<std::mutex> lk(callback_mu);
-          for (auto const& m : response->received_messages()) {
-            received_ids.insert(m.message().message_id());
-          }
-          ++callback_count;
-          for (auto const& m : response->received_messages()) {
-            source->AckMessage(m.ack_id());
-          }
-          ack_count += response->received_messages_size();
-          std::cout << "callback(" << response->received_messages_size() << ")"
-                    << ", ack_count=" << ack_count
-                    << ", received_ids.size()=" << received_ids.size()
-                    << std::endl;
-        }
-        // This condition variable must have a lifetime longer than the thread
-        // pools.
-        callback_cv.notify_one();
-      };
+  std::shared_ptr<BatchCallback> batch_callback =
+      std::make_shared<DefaultBatchCallback>(
+          [&](StatusOr<google::pubsub::v1::StreamingPullResponse> const&
+                  response) {
+            ASSERT_STATUS_OK(response);
+            {
+              std::lock_guard<std::mutex> lk(callback_mu);
+              for (auto const& m : response->received_messages()) {
+                received_ids.insert(m.message().message_id());
+              }
+              ++callback_count;
+              for (auto const& m : response->received_messages()) {
+                source->AckMessage(m.ack_id());
+              }
+              ack_count += response->received_messages_size();
+              std::cout << "callback(" << response->received_messages_size()
+                        << ")"
+                        << ", ack_count=" << ack_count
+                        << ", received_ids.size()=" << received_ids.size()
+                        << std::endl;
+            }
+            // This condition variable must have a lifetime longer than the
+            // thread pools.
+            callback_cv.notify_one();
+          });
 
   auto done = shutdown->Start({});
-  source->Start(std::move(callback));
+  source->Start(batch_callback);
 
   auto constexpr kPublishCount = 1000;
   auto const expected_ids = [&] {
