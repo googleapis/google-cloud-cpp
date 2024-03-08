@@ -15,13 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
 
-// TODO(#12987): Remove this file after the deprecation period expires
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/schema_client.h"
 #include "google/cloud/pubsub/subscriber.h"
-#include "google/cloud/pubsub/subscription_admin_client.h"
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <string>
 #include <vector>
@@ -44,21 +40,6 @@ using SubscriberCommand =
 google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
     SubscriberCommand const& command);
-
-using TopicAdminCommand = std::function<void(pubsub::TopicAdminClient,
-                                             std::vector<std::string> const&)>;
-
-google::cloud::testing_util::Commands::value_type CreateTopicAdminCommand(
-    std::string const& name, std::vector<std::string> const& arg_names,
-    TopicAdminCommand const& command);
-
-using SubscriptionAdminCommand = std::function<void(
-    pubsub::SubscriptionAdminClient, std::vector<std::string> const&)>;
-
-google::cloud::testing_util::Commands::value_type
-CreateSubscriptionAdminCommand(std::string const& name,
-                               std::vector<std::string> const& arg_names,
-                               SubscriptionAdminCommand const& command);
 
 using SchemaServiceCommand = std::function<void(
     pubsub::SchemaServiceClient, std::vector<std::string> const&)>;
