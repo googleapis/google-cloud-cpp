@@ -90,7 +90,9 @@ class AcceleratorTypesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of accelerator types.
+  /// Retrieves an aggregated list of accelerator types. To prevent failure,
+  /// Google recommends that you set the `returnPartialSuccess` parameter to
+  /// `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/aggregatedList
   ///
   /// @param project  Project ID for this request.
@@ -116,7 +118,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L71}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L73}
   /// [google.cloud.cpp.compute.v1.AcceleratorTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L281}
   ///
   // clang-format on
@@ -126,7 +128,9 @@ class AcceleratorTypesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of accelerator types.
+  /// Retrieves an aggregated list of accelerator types. To prevent failure,
+  /// Google recommends that you set the `returnPartialSuccess` parameter to
+  /// `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -157,7 +161,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L71}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L73}
   /// [google.cloud.cpp.compute.v1.AcceleratorTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L281}
   ///
   // clang-format on
@@ -189,7 +193,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L149}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L155}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on
@@ -221,7 +225,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L149}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L155}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on
@@ -260,7 +264,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L163}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L169}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on
@@ -302,7 +306,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L163}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L169}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on

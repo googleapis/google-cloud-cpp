@@ -83,6 +83,11 @@ class ProjectsTracingConnection
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetCloudArmorTier(
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCommonInstanceMetadata(
       google::cloud::cpp::compute::projects::v1::
           SetCommonInstanceMetadataRequest const& request) override;

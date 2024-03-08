@@ -416,7 +416,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L250}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -457,7 +457,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L250}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -486,8 +486,8 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L269}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L30}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L271}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -521,8 +521,8 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L269}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L30}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L271}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

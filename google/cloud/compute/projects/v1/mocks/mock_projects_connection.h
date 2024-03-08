@@ -110,6 +110,12 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetCloudArmorTier,
+              (google::cloud::cpp::compute::projects::v1::
+                   SetCloudArmorTierRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetCommonInstanceMetadata,
               (google::cloud::cpp::compute::projects::v1::
                    SetCommonInstanceMetadataRequest const& request),

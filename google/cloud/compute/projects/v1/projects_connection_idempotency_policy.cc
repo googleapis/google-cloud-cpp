@@ -86,6 +86,12 @@ Idempotency ProjectsConnectionIdempotencyPolicy::MoveInstance(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ProjectsConnectionIdempotencyPolicy::SetCloudArmorTier(
+    google::cloud::cpp::compute::projects::v1::
+        SetCloudArmorTierRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ProjectsConnectionIdempotencyPolicy::SetCommonInstanceMetadata(
     google::cloud::cpp::compute::projects::v1::
         SetCommonInstanceMetadataRequest const&) {
