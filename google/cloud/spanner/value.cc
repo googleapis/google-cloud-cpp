@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/strerror.h"
 #include "absl/time/civil_time.h"
+#include <google/protobuf/descriptor.h>
+#include <google/protobuf/message.h>
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>
@@ -57,6 +60,10 @@ bool Equal(google::spanner::v1::Type const& pt1,  // NOLINT(misc-no-recursion)
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::NUMERIC:
       if (pt1.type_annotation() != pt2.type_annotation()) return false;
+      return pv1.string_value() == pv2.string_value();
+    case google::spanner::v1::TypeCode::PROTO:
+    case google::spanner::v1::TypeCode::ENUM:
+      if (pt1.proto_type_fqn() != pt2.proto_type_fqn()) return false;
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::ARRAY: {
       auto const& etype1 = pt1.array_element_type();
@@ -151,6 +158,36 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     case google::spanner::v1::TypeCode::DATE:
       return os
              << spanner_internal::FromProto(t, v).get<absl::CivilDay>().value();
+
+    case google::spanner::v1::TypeCode::ENUM:
+      if (auto const* p = google::protobuf::DescriptorPool::generated_pool()) {
+        if (auto const* d = p->FindEnumTypeByName(t.proto_type_fqn())) {
+          auto number = std::stoi(v.string_value());
+          if (std::to_string(number) == v.string_value()) {
+            if (auto const* vd = d->FindValueByNumber(number)) {
+              return os << vd->full_name();
+            }
+          }
+        }
+      }
+      return os << t.proto_type_fqn() << ".{" << v.string_value() << "}";
+
+    case google::spanner::v1::TypeCode::PROTO:
+      if (auto const* p = google::protobuf::DescriptorPool::generated_pool()) {
+        if (auto const* d = p->FindMessageTypeByName(t.proto_type_fqn())) {
+          if (auto bytes = internal::Base64DecodeToBytes(v.string_value())) {
+            auto* f = google::protobuf::MessageFactory::generated_factory();
+            if (auto const* pt = f->GetPrototype(d)) {
+              std::unique_ptr<google::protobuf::Message> m(pt->New());
+              m->ParseFromString(std::string(bytes->begin(), bytes->end()));
+              auto s = m->ShortDebugString();
+              return os << t.proto_type_fqn() << " { " << s
+                        << (s.empty() ? "" : " ") << "}";
+            }
+          }
+        }
+      }
+      return os << t.proto_type_fqn() << " { <unknown> }";
 
     case google::spanner::v1::TypeCode::ARRAY: {
       char const* delimiter = "";
