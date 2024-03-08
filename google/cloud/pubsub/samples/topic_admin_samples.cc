@@ -553,16 +553,16 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const schema_id = RandomSchemaId(generator);
   auto const kinesis_topic_id =
       "kinesis-" + RandomTopicId(generator) + "_ingestion_topic";
-  auto const kinesis_stream_arn =
+  auto const* const kinesis_stream_arn =
       "arn:aws:kinesis:us-west-2:111111111111:stream/fake-stream-name";
-  auto const kinesis_consumer_arn =
+  auto const* const kinesis_consumer_arn =
       "arn:aws:kinesis:us-west-2:111111111111:stream/fake-stream-name/consumer/"
       "consumer-1:1111111111";
-  auto const kinesis_aws_role_arn =
+  auto const* const kinesis_aws_role_arn =
       "arn:aws:iam::111111111111:role/fake-role-name";
-  auto const kinesis_gcp_service_account =
+  auto const* const kinesis_gcp_service_account =
       "fake-service-account@fake-gcp-project.iam.gserviceaccount.com";
-  auto const kinesis_updated_gcp_service_account =
+  auto const* const kinesis_updated_gcp_service_account =
       "fake-update-service-account@fake-gcp-project.iam.gserviceaccount.com";
 
   using ::google::cloud::StatusCode;
