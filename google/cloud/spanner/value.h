@@ -21,8 +21,11 @@
 #include "google/cloud/spanner/json.h"
 #include "google/cloud/spanner/numeric.h"
 #include "google/cloud/spanner/oid.h"
+#include "google/cloud/spanner/proto_enum.h"
+#include "google/cloud/spanner/proto_message.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
@@ -72,6 +75,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * OID(PG)      | `google::cloud::spanner::PgOid`
  * TIMESTAMP    | `google::cloud::spanner::Timestamp`
  * DATE         | `absl::CivilDay`
+ * ENUM         | `google::cloud::spanner::ProtoEnum<E>`
+ * PROTO        | `google::cloud::spanner::ProtoMessage<M>`
  * ARRAY        | `std::vector<T>`  // [1]
  * STRUCT       | `std::tuple<Ts...>`
  *
@@ -211,6 +216,13 @@ class Value {
       : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(absl::CivilDay v)
+      : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
+  template <typename E>
+  explicit Value(ProtoEnum<E> v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
+  template <typename M>
+  explicit Value(ProtoMessage<M> v)
       : Value(PrivateConstructor{}, std::move(v)) {}
 
   /**
@@ -377,6 +389,18 @@ class Value {
   static bool TypeProtoIs(Numeric const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(PgNumeric const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(PgOid const&, google::spanner::v1::Type const&);
+  template <typename E>
+  static bool TypeProtoIs(ProtoEnum<E> const&,
+                          google::spanner::v1::Type const& type) {
+    return type.code() == google::spanner::v1::TypeCode::ENUM &&
+           type.proto_type_fqn() == ProtoEnum<E>::TypeName();
+  }
+  template <typename M>
+  static bool TypeProtoIs(ProtoMessage<M> const&,
+                          google::spanner::v1::Type const& type) {
+    return type.code() == google::spanner::v1::TypeCode::PROTO &&
+           type.proto_type_fqn() == ProtoMessage<M>::TypeName();
+  }
   template <typename T>
   static bool TypeProtoIs(absl::optional<T>,
                           google::spanner::v1::Type const& type) {
@@ -430,6 +454,20 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(Timestamp);
   static google::spanner::v1::Type MakeTypeProto(CommitTimestamp);
   static google::spanner::v1::Type MakeTypeProto(absl::CivilDay);
+  template <typename E>
+  static google::spanner::v1::Type MakeTypeProto(ProtoEnum<E>) {
+    google::spanner::v1::Type t;
+    t.set_code(google::spanner::v1::TypeCode::ENUM);
+    t.set_proto_type_fqn(ProtoEnum<E>::TypeName());
+    return t;
+  }
+  template <typename M>
+  static google::spanner::v1::Type MakeTypeProto(ProtoMessage<M>) {
+    google::spanner::v1::Type t;
+    t.set_code(google::spanner::v1::TypeCode::PROTO);
+    t.set_proto_type_fqn(ProtoMessage<M>::TypeName());
+    return t;
+  }
   static google::spanner::v1::Type MakeTypeProto(int);
   static google::spanner::v1::Type MakeTypeProto(char const*);
   template <typename T>
@@ -494,6 +532,16 @@ class Value {
   static google::protobuf::Value MakeValueProto(Timestamp ts);
   static google::protobuf::Value MakeValueProto(CommitTimestamp ts);
   static google::protobuf::Value MakeValueProto(absl::CivilDay d);
+  template <typename E>
+  static google::protobuf::Value MakeValueProto(ProtoEnum<E> e) {
+    return MakeValueProto(std::int64_t{E{e}});
+  }
+  template <typename M>
+  static google::protobuf::Value MakeValueProto(ProtoMessage<M> m) {
+    internal::Base64Encoder encoder;
+    for (auto c : std::string{m}) encoder.PushBack(c);
+    return MakeValueProto(std::move(encoder).FlushAndPad());
+  }
   static google::protobuf::Value MakeValueProto(int i);
   static google::protobuf::Value MakeValueProto(char const* s);
   template <typename T>
@@ -572,6 +620,32 @@ class Value {
   static StatusOr<absl::CivilDay> GetValue(absl::CivilDay,
                                            google::protobuf::Value const&,
                                            google::spanner::v1::Type const&);
+  template <typename E>
+  static StatusOr<ProtoEnum<E>> GetValue(ProtoEnum<E>,
+                                         google::protobuf::Value const& pv,
+                                         google::spanner::v1::Type const& pt) {
+    if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+      return Status(StatusCode::kUnknown, "missing ENUM");
+    }
+    auto value = GetValue(std::int64_t{}, pv, pt);
+    if (!value) return std::move(value).status();
+    if (static_cast<typename std::underlying_type_t<E>>(*value) != *value) {
+      return Status(StatusCode::kUnknown,
+                    "Value out of range: " + pv.string_value());
+    }
+    return ProtoEnum<E>(static_cast<E>(*std::move(value)));
+  }
+  template <typename M>
+  static StatusOr<ProtoMessage<M>> GetValue(ProtoMessage<M>,
+                                            google::protobuf::Value const& pv,
+                                            google::spanner::v1::Type const&) {
+    if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+      return Status(StatusCode::kUnknown, "missing PROTO");
+    }
+    auto bytes = internal::Base64DecodeToBytes(pv.string_value());
+    if (!bytes) return std::move(bytes).status();
+    return ProtoMessage<M>(std::string(bytes->begin(), bytes->end()));
+  }
   template <typename T, typename V>
   static StatusOr<absl::optional<T>> GetValue(
       absl::optional<T> const&, V&& pv, google::spanner::v1::Type const& pt) {
