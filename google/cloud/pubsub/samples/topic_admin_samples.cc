@@ -603,20 +603,25 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopicWithKinesisIngestion() sample"
             << std::endl;
 
-  ignore_emulator_failures([&] {
-    CreateTopicWithKinesisIngestion(
-        topic_admin_client,
-        {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
-         kinesis_aws_role_arn, kinesis_gcp_service_account});
-    cleanup.Defer([topic_admin_client, project_id, kinesis_topic_id]() mutable {
-      std::cout << "\nRunning DeleteTopic() sample" << std::endl;
-      DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
-    });
+  ignore_emulator_failures(
+      [&] {
+        CreateTopicWithKinesisIngestion(
+            topic_admin_client,
+            {project_id, kinesis_topic_id, kinesis_stream_arn,
+             kinesis_consumer_arn, kinesis_aws_role_arn,
+             kinesis_gcp_service_account});
+        cleanup.Defer(
+            [topic_admin_client, project_id, kinesis_topic_id]() mutable {
+              std::cout << "\nRunning DeleteTopic() sample" << std::endl;
+              DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
+            });
 
-    std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
-    UpdateTopicType(topic_admin_client, {project_id, kinesis_topic_id,
-                                         kinesis_updated_gcp_service_account});
-  });
+        std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
+        UpdateTopicType(topic_admin_client,
+                        {project_id, kinesis_topic_id,
+                         kinesis_updated_gcp_service_account});
+      },
+      StatusCode::kInvalidArgument);
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
