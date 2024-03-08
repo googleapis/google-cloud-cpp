@@ -226,6 +226,11 @@ class ProjectsConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetCloudArmorTier(
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCommonInstanceMetadata(
       google::cloud::cpp::compute::projects::v1::
           SetCommonInstanceMetadataRequest const& request);

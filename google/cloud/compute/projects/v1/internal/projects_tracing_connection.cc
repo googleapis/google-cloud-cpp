@@ -135,6 +135,16 @@ ProjectsTracingConnection::MoveInstance(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::SetCloudArmorTier(
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetCloudArmorTier");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SetCloudArmorTier(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsTracingConnection::SetCommonInstanceMetadata(
     google::cloud::cpp::compute::projects::v1::
         SetCommonInstanceMetadataRequest const& request) {

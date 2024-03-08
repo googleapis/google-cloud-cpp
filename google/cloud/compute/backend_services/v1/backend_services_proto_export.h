@@ -34,9 +34,9 @@
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
 #include <google/cloud/compute/v1/internal/common_046.pb.h>
 #include <google/cloud/compute/v1/internal/common_050.pb.h>
-#include <google/cloud/compute/v1/internal/common_106.pb.h>
-#include <google/cloud/compute/v1/internal/common_109.pb.h>
-#include <google/cloud/compute/v1/internal/common_131.pb.h>
+#include <google/cloud/compute/v1/internal/common_108.pb.h>
+#include <google/cloud/compute/v1/internal/common_111.pb.h>
+#include <google/cloud/compute/v1/internal/common_133.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_BACKEND_SERVICES_PROTO_EXPORT_H

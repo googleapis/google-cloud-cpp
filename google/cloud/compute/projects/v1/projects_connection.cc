@@ -112,6 +112,14 @@ ProjectsConnection::MoveInstance(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsConnection::SetCloudArmorTier(google::cloud::cpp::compute::projects::
+                                          v1::SetCloudArmorTierRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetCommonInstanceMetadata(
     google::cloud::cpp::compute::projects::v1::
         SetCommonInstanceMetadataRequest const&) {
