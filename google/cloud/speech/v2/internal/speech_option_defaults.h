@@ -21,13 +21,14 @@
 
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace speech_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options SpeechDefaultOptions(Options options);
+Options SpeechDefaultOptions(std::string const& location, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2_internal

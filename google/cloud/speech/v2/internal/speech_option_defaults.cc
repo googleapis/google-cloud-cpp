@@ -19,6 +19,7 @@
 #include "google/cloud/speech/v2/internal/speech_option_defaults.h"
 #include "google/cloud/speech/v2/speech_connection.h"
 #include "google/cloud/speech/v2/speech_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
@@ -33,10 +34,12 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options SpeechDefaultOptions(Options options) {
+Options SpeechDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SPEECH_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SPEECH_AUTHORITY", "speech.googleapis.com");
+      "GOOGLE_CLOUD_CPP_SPEECH_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "speech.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<speech_v2::SpeechRetryPolicyOption>()) {
     options.set<speech_v2::SpeechRetryPolicyOption>(
