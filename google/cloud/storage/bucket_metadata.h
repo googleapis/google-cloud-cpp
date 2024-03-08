@@ -21,6 +21,7 @@
 #include "google/cloud/storage/bucket_cors_entry.h"
 #include "google/cloud/storage/bucket_custom_placement_config.h"
 #include "google/cloud/storage/bucket_encryption.h"
+#include "google/cloud/storage/bucket_hierarchical_namespace.h"
 #include "google/cloud/storage/bucket_iam_configuration.h"
 #include "google/cloud/storage/bucket_lifecycle.h"
 #include "google/cloud/storage/bucket_logging.h"
@@ -211,6 +212,30 @@ class BucketMetadata {
     etag_ = std::move(v);
     return *this;
   }
+
+  /**
+   * @name Get and set the hierarchical namespaces configuration.
+   */
+  ///@{
+  bool has_hierarchical_namespace() const {
+    return hierarchical_namespace_.has_value();
+  }
+  BucketHierarchicalNamespace const& hierarchical_namespace() const {
+    return *hierarchical_namespace_;
+  }
+  absl::optional<BucketHierarchicalNamespace> const&
+  hierarchical_namespace_as_optional() const {
+    return hierarchical_namespace_;
+  }
+  BucketMetadata& set_hierarchical_namespace(BucketHierarchicalNamespace v) {
+    hierarchical_namespace_ = std::move(v);
+    return *this;
+  }
+  BucketMetadata& reset_hierarchical_namespace() {
+    hierarchical_namespace_.reset();
+    return *this;
+  }
+  ///@}
 
   /**
    * @name Get and set the IAM configuration.
@@ -612,6 +637,7 @@ class BucketMetadata {
   bool default_event_based_hold_ = false;
   absl::optional<BucketEncryption> encryption_;
   std::string etag_;
+  absl::optional<BucketHierarchicalNamespace> hierarchical_namespace_;
   absl::optional<BucketIamConfiguration> iam_configuration_;
   std::string id_;
   std::string kind_;
@@ -689,6 +715,12 @@ class BucketMetadataPatchBuilder {
   BucketMetadataPatchBuilder& SetIamConfiguration(
       BucketIamConfiguration const& v);
   BucketMetadataPatchBuilder& ResetIamConfiguration();
+
+  /// Sets a new hierarchical namespace configuration.
+  BucketMetadataPatchBuilder& SetHierarchicalNamespace(
+      BucketHierarchicalNamespace const& v);
+  /// Resets the hierarchical namespace configuration
+  BucketMetadataPatchBuilder& ResetHierarchicalNamespace();
 
   BucketMetadataPatchBuilder& SetEncryption(BucketEncryption const& v);
   BucketMetadataPatchBuilder& ResetEncryption();

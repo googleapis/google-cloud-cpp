@@ -144,6 +144,26 @@ void CreateBucketDualRegion(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void CreateBucketWithHNS(google::cloud::storage::Client client,
+                         std::vector<std::string> const& argv) {
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name) {
+    auto metadata = client.CreateBucket(
+        bucket_name,
+        gcs::BucketMetadata()
+            .set_hierarchical_namespace(
+                gcs::BucketHierarchicalNamespace{/*.enabled=*/true})
+            .set_iam_configuration(gcs::BucketIamConfiguration{
+                gcs::UniformBucketLevelAccess{/*.enabled=*/true, {}},
+                absl::nullopt}));
+    if (!metadata) throw std::move(metadata).status();
+
+    std::cout << "Bucket " << metadata->name() << " created."
+              << "\nFull Metadata: " << *metadata << "\n";
+  }(std::move(client), argv.at(0));
+}
+
 void GetBucketMetadata(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [get bucket metadata]
@@ -675,6 +695,11 @@ void RunAll(std::vector<std::string> const& argv) {
             << std::endl;
   CreateBucketWithStorageClassLocation(client, {bucket_name, "STANDARD", "US"});
 
+  auto const hns_bucket_name = examples::MakeRandomBucketName(generator);
+  std::cout << "\nRunning CreateBucketWithHNS() example" << std::endl;
+  CreateBucketWithHNS(client, {hns_bucket_name});
+  (void)client.DeleteBucket(hns_bucket_name);
+
   std::cout << "\nRunning DeleteBucket() example [3]" << std::endl;
   DeleteBucket(client, {bucket_name});
 
@@ -705,6 +730,7 @@ int main(int argc, char* argv[]) {
                  CreateBucketWithStorageClassLocation),
       make_entry("create-bucket-dual-region", {"<region-a>", "<region-b>"},
                  CreateBucketDualRegion),
+      make_entry("create-bucket-with-hns", {}, CreateBucketWithHNS),
       make_entry("get-bucket-metadata", {}, GetBucketMetadata),
       make_entry("delete-bucket", {}, DeleteBucket),
       make_entry("change-default-storage-class", {"<new-class>"},

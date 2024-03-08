@@ -91,6 +91,7 @@ bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
          && lhs.default_event_based_hold_ == rhs.default_event_based_hold_  //
          && lhs.encryption_ == rhs.encryption_                              //
          && lhs.etag_ == rhs.etag_                                          //
+         && lhs.hierarchical_namespace_ == rhs.hierarchical_namespace_      //
          && lhs.iam_configuration_ == rhs.iam_configuration_                //
          && lhs.id_ == rhs.id_                                              //
          && lhs.kind_ == rhs.kind_                                          //
@@ -150,6 +151,10 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   }
 
   os << ", etag=" << rhs.etag();
+
+  if (rhs.has_hierarchical_namespace()) {
+    os << ", hierarchical_namespace=" << rhs.hierarchical_namespace();
+  }
 
   if (rhs.has_iam_configuration()) {
     os << ", iam_configuration=" << rhs.iam_configuration();
@@ -387,6 +392,21 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetIamConfiguration(
 BucketMetadataPatchBuilder&
 BucketMetadataPatchBuilder::ResetIamConfiguration() {
   impl_.RemoveField("iamConfiguration");
+  return *this;
+}
+
+BucketMetadataPatchBuilder&
+BucketMetadataPatchBuilder::SetHierarchicalNamespace(
+    BucketHierarchicalNamespace const& v) {
+  internal::PatchBuilder subpatch;
+  subpatch.SetBoolField("enabled", v.enabled);
+  impl_.AddSubPatch("hierarchicalNamespace", subpatch);
+  return *this;
+}
+
+BucketMetadataPatchBuilder&
+BucketMetadataPatchBuilder::ResetHierarchicalNamespace() {
+  impl_.RemoveField("hierarchicalNamespace");
   return *this;
 }
 

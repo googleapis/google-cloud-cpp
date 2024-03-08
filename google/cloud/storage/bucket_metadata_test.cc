@@ -107,6 +107,9 @@ BucketMetadata CreateBucketMetadataForTest() {
         "defaultKmsKeyName": "projects/test-project-name/locations/us-central1/keyRings/test-keyring-name/cryptoKeys/test-key-name"
       },
       "etag": "XYZ=",
+      "hierarchicalNamespace": {
+        "enabled": true
+      },
       "iamConfiguration": {
         "uniformBucketLevelAccess": {
           "enabled": true,
@@ -216,6 +219,10 @@ TEST(BucketMetadataTest, Parse) {
       "test-keyring-name/cryptoKeys/test-key-name",
       actual.encryption().default_kms_key_name);
   EXPECT_EQ("XYZ=", actual.etag());
+  // hierarchicalNamespace
+  ASSERT_TRUE(actual.has_hierarchical_namespace());
+  ASSERT_TRUE(actual.hierarchical_namespace_as_optional().has_value());
+  ASSERT_EQ(actual.hierarchical_namespace(), BucketHierarchicalNamespace{true});
   ASSERT_TRUE(actual.has_iam_configuration());
   ASSERT_TRUE(
       actual.iam_configuration().uniform_bucket_level_access.has_value());
@@ -361,6 +368,12 @@ TEST(BucketMetadataTest, IOStream) {
               HasSubstr("projects/test-project-name/locations/us-central1/"
                         "keyRings/test-keyring-name/cryptoKeys/test-key-name"));
 
+  // hierarchical_namespace()
+  EXPECT_THAT(
+      actual,
+      HasSubstr(
+          "hierarchical_namespace=BucketHierarchicalNamespace={enabled=true}"));
+
   // iam_policy()
   EXPECT_THAT(actual, HasSubstr("BucketIamConfiguration={"));
   EXPECT_THAT(actual, HasSubstr("locked_time=2020-01-02T03:04:05Z"));
@@ -465,6 +478,11 @@ TEST(BucketMetadataTest, ToJsonString) {
       "projects/test-project-name/locations/us-central1/keyRings/"
       "test-keyring-name/cryptoKeys/test-key-name",
       actual["encryption"].value("defaultKmsKeyName", ""));
+
+  // hierarchical_namespace()
+  ASSERT_EQ(1, actual.count("hierarchicalNamespace"));
+  EXPECT_EQ(actual["hierarchicalNamespace"],
+            nlohmann::json({{"enabled", true}}));
 
   // iam_configuration()
   ASSERT_EQ(1U, actual.count("iamConfiguration"));
@@ -744,6 +762,25 @@ TEST(BucketMetadataTest, SetDefaultObjectAcl) {
   copy.set_default_acl(std::move(default_acl));
   EXPECT_EQ(2, copy.default_acl().size());
   EXPECT_EQ("allAuthenticatedUsers", copy.default_acl().at(1).entity());
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can change the Hierarchical Namespace configuration.
+TEST(BucketMetadataTest, SetHierarchicalNamespace) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  copy.set_hierarchical_namespace(BucketHierarchicalNamespace{false});
+  ASSERT_TRUE(copy.has_hierarchical_namespace());
+  EXPECT_EQ(copy.hierarchical_namespace(), BucketHierarchicalNamespace{false});
+  EXPECT_NE(expected, copy);
+}
+
+/// @test Verify we can reset the Hierarchical Namespace configuration.
+TEST(BucketMetadataTest, ResetHierarchicalNamespace) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  copy.reset_hierarchical_namespace();
+  ASSERT_FALSE(copy.has_hierarchical_namespace());
   EXPECT_NE(expected, copy);
 }
 
@@ -1224,6 +1261,26 @@ TEST(BucketMetadataPatchBuilder, ResetIamConfiguration) {
   auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("iamConfiguration")) << json;
   ASSERT_TRUE(json["iamConfiguration"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetHierarchicalNamespace) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetHierarchicalNamespace(BucketHierarchicalNamespace{true});
+
+  auto actual = builder.BuildPatch();
+  auto json = nlohmann::json::parse(actual);
+  ASSERT_EQ(1U, json.count("hierarchicalNamespace")) << json;
+  ASSERT_EQ(json["hierarchicalNamespace"], nlohmann::json({{"enabled", true}}));
+}
+
+TEST(BucketMetadataPatchBuilder, ResetHierarchicalNamespace) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetHierarchicalNamespace();
+
+  auto actual = builder.BuildPatch();
+  auto json = nlohmann::json::parse(actual);
+  ASSERT_EQ(1U, json.count("hierarchicalNamespace")) << json;
+  ASSERT_TRUE(json["hierarhicalNamespace"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetEncryption) {

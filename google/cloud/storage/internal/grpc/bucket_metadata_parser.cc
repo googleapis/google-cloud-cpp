@@ -106,6 +106,10 @@ google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs) {
   if (rhs.has_autoclass()) {
     *result.mutable_autoclass() = ToProto(rhs.autoclass());
   }
+  if (rhs.has_hierarchical_namespace()) {
+    auto& hns = *result.mutable_hierarchical_namespace();
+    hns.set_enabled(rhs.hierarchical_namespace().enabled);
+  }
   if (rhs.has_soft_delete_policy()) {
     *result.mutable_soft_delete_policy() = ToProto(rhs.soft_delete_policy());
   }
@@ -138,6 +142,10 @@ storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs,
   }
   if (rhs.has_iam_config()) {
     metadata.set_iam_configuration(FromProto(rhs.iam_config()));
+  }
+  if (rhs.has_hierarchical_namespace()) {
+    metadata.set_hierarchical_namespace(storage::BucketHierarchicalNamespace{
+        /*.enabled=*/rhs.hierarchical_namespace().enabled()});
   }
   metadata.set_etag(rhs.etag());
   metadata.set_id(rhs.bucket_id());
