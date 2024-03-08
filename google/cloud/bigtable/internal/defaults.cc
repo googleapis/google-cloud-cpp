@@ -23,6 +23,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include "absl/algorithm/container.h"
 #include "absl/strings/str_split.h"
@@ -224,6 +225,10 @@ Options DefaultDataOptions(Options opts) {
   auto user_project = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
   if (user_project && !user_project->empty()) {
     opts.set<UserProjectOption>(*std::move(user_project));
+  }
+  auto tracing = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING");
+  if (tracing && !tracing->empty()) {
+    opts.set<OpenTelemetryTracingOption>(true);
   }
   if (!opts.has<AuthorityOption>()) {
     auto ep = google::cloud::internal::UniverseDomainEndpoint(
