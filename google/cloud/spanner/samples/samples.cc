@@ -344,18 +344,57 @@ void CreateInstanceWithProcessingUnits(
 }
 // [END spanner_create_instance_with_processing_units]
 
+// [START spanner_create_instance_with_autoscaling_config]
+void CreateInstanceWithAutoscalingConfig(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& display_name, std::string const& config_id) {
+  auto pr = google::cloud::Project(project_id);
+  auto in = google::cloud::spanner::Instance(pr, instance_id);
+  auto config = pr.FullName() + "/instanceConfigs/" + config_id;
+
+  google::spanner::admin::instance::v1::CreateInstanceRequest request;
+  request.set_parent(pr.FullName());
+  request.set_instance_id(instance_id);
+  request.mutable_instance()->set_name(in.FullName());
+  request.mutable_instance()->set_config(config);
+  request.mutable_instance()->set_display_name(display_name);
+
+  auto* autoscaling = request.mutable_instance()->mutable_autoscaling_config();
+  auto* limits = autoscaling->mutable_autoscaling_limits();
+  limits->set_min_nodes(1);
+  limits->set_max_nodes(2);
+  auto* targets = autoscaling->mutable_autoscaling_targets();
+  targets->set_high_priority_cpu_utilization_percent(65);
+  targets->set_storage_utilization_percent(95);
+
+  auto instance = client.CreateInstance(request).get();
+  if (!instance) throw std::move(instance).status();
+  std::cout << "Created instance " << in << " with autoscaling config\n";
+
+  instance = client.GetInstance(in.FullName());
+  if (!instance) throw std::move(instance).status();
+  std::cout << "Instance " << in << ":\n"
+            << instance->autoscaling_config().DebugString();
+}
+// [END spanner_create_instance_with_autoscaling_config]
+
 void CreateInstanceCommand(std::vector<std::string> argv) {
+  bool auto_scaler = !argv.empty() && argv.front() == "--auto-scaler";
   bool low_cost = !argv.empty() && argv.front() == "--low-cost";
-  if (low_cost) argv.erase(argv.begin());
+  if (auto_scaler || low_cost) argv.erase(argv.begin());
   if (argv.size() != 3 && argv.size() != 4) {
     throw std::runtime_error(
-        "create-instance [--low-cost] <project-id> <instance-id>"
-        " <display-name> [config-id]");
+        "create-instance [--auto-scaler|--low-cost] <project-id>"
+        " <instance-id> <display-name> [config-id]");
   }
   google::cloud::spanner_admin::InstanceAdminClient client(
       google::cloud::spanner_admin::MakeInstanceAdminConnection());
   std::string config_id = argv.size() == 4 ? argv[3] : "regional-us-central1";
-  if (low_cost) {
+  if (auto_scaler) {
+    CreateInstanceWithAutoscalingConfig(std::move(client), argv[0], argv[1],
+                                        argv[2], config_id);
+  } else if (low_cost) {
     CreateInstanceWithProcessingUnits(std::move(client), argv[0], argv[1],
                                       argv[2], config_id);
   } else {
@@ -4605,6 +4644,16 @@ void RunAllSlowInstanceTests(
 
   SampleBanner("delete-instance");
   DeleteInstance(instance_admin_client, project_id, crud_instance_id);
+
+  if (!emulator) {
+    SampleBanner("spanner_create_instance_with_autoscaling_config");
+    CreateInstanceWithAutoscalingConfig(instance_admin_client, project_id,
+                                        crud_instance_id,
+                                        "Test Autoscaling Instance", config_id);
+
+    SampleBanner("delete-instance");
+    DeleteInstance(instance_admin_client, project_id, crud_instance_id);
+  }
 
   SampleBanner("spanner_create_instance_with_processing_units");
   CreateInstanceWithProcessingUnits(instance_admin_client, project_id,
