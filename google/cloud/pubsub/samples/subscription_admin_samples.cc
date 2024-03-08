@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/subscription.h"
+#include "google/cloud/pubsub/snapshot.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/project.h"
