@@ -616,7 +616,10 @@ void AutoRun(std::vector<std::string> const& argv) {
               std::cout << "\nRunning DeleteTopic() sample" << std::endl;
               DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
             });
-
+      },
+      StatusCode::kNotFound);
+  ignore_emulator_failures(
+      [&] {
         std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
         UpdateTopicType(topic_admin_client,
                         {project_id, kinesis_topic_id,
