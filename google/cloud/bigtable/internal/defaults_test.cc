@@ -18,6 +18,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -45,6 +46,8 @@ using mins = std::chrono::minutes;
 TEST(OptionsTest, Defaults) {
   ScopedEnvironment user_project("GOOGLE_CLOUD_CPP_USER_PROJECT",
                                  absl::nullopt);
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING",
+                            absl::nullopt);
   ScopedEnvironment emulator_host("BIGTABLE_EMULATOR_HOST", absl::nullopt);
   ScopedEnvironment instance_emulator_host(
       "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", absl::nullopt);
@@ -57,6 +60,7 @@ TEST(OptionsTest, Defaults) {
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_FALSE(opts.has<UserProjectOption>());
+  EXPECT_FALSE(opts.has<OpenTelemetryTracingOption>());
 
   auto args = google::cloud::internal::MakeChannelArguments(opts);
   // Check that the pool domain is not set by default
@@ -206,6 +210,12 @@ TEST(OptionsTest, DataUserProjectOption) {
   options =
       DefaultDataOptions(Options{}.set<UserProjectOption>("test-project"));
   EXPECT_EQ(options.get<UserProjectOption>(), "env-project");
+}
+
+TEST(OptionsTest, DataOpenTelemetryOption) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", "on");
+  auto options = DefaultDataOptions(Options{});
+  EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
 }
 
 TEST(OptionsTest, DataAuthorityOption) {
