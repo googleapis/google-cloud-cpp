@@ -15,10 +15,6 @@ environment variables are convenient when troubleshooting problems.
   used by `MakeAdaptationConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SPEECH_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "<location>-speech.googleapis.com")
-  used by `MakeSpeechConnection()`.
-
-- `GOOGLE_CLOUD_CPP_SPEECH_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "speech.googleapis.com")
   used by `MakeSpeechConnection()`.
 
