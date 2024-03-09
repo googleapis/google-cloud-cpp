@@ -30,6 +30,7 @@
 #include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
+#include "google/cloud/spanner/testing/singer.pb.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -988,6 +989,22 @@ void AddTimestampColumn(
   std::cout << "Added LastUpdateTime column\n";
 }
 // [END spanner_add_timestamp_column]
+
+//! [drop-column]
+void DropColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
+                std::string const& project_id, std::string const& instance_id,
+                std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  auto metadata =
+      client
+          .UpdateDatabaseDdl(database.FullName(),
+                             {"ALTER TABLE Singers DROP COLUMN SingerInfo"})
+          .get();
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Dropped SingerInfo column\n";
+}
+//! [drop-column]
 
 // [START spanner_create_storing_index]
 void AddStoringIndex(google::cloud::spanner_admin::DatabaseAdminClient client,
@@ -3649,6 +3666,250 @@ void DropForeignKeyConstraintDeleteCascade(
 }
 // [END spanner_drop_foreign_key_constraint_delete_cascade]
 
+// [START spanner_add_proto_type_columns]
+void AddProtoTypeColumns(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  google::spanner::admin::database::v1::UpdateDatabaseDdlRequest request;
+  request.set_database(database.FullName());
+  google::protobuf::FileDescriptorSet fds;
+  google::cloud::spanner::testing::SingerInfo::default_instance()
+      .GetMetadata()
+      .descriptor->file()
+      ->CopyTo(fds.add_file());
+  fds.SerializeToString(request.mutable_proto_descriptors());
+  request.add_statements(R"""(
+      CREATE PROTO BUNDLE (
+          google.cloud.spanner.testing.SingerInfo,
+          google.cloud.spanner.testing.Genre,
+      )
+  )""");
+  request.add_statements(R"""(
+      ALTER TABLE Singers ADD COLUMN
+          SingerInfo google.cloud.spanner.testing.SingerInfo
+  )""");
+  request.add_statements(R"""(
+      ALTER TABLE Singers ADD COLUMN
+          SingerInfoArray ARRAY<google.cloud.spanner.testing.SingerInfo>
+  )""");
+  request.add_statements(R"""(
+      ALTER TABLE Singers ADD COLUMN
+          SingerGenre google.cloud.spanner.testing.Genre
+  )""");
+  request.add_statements(R"""(
+      ALTER TABLE Singers ADD COLUMN
+          SingerGenreArray ARRAY<google.cloud.spanner.testing.Genre>
+  )""");
+  auto metadata = client.UpdateDatabaseDdl(request).get();
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "`Singers` table altered, new DDL:\n" << metadata->DebugString();
+}
+// [END spanner_add_proto_type_columns]
+
+// [START spanner_update_data_with_proto_message_column]
+void UpdateDataWithProtoMessageColumn(google::cloud::spanner::Client client) {
+  google::cloud::spanner::testing::SingerInfo singer_proto;
+  singer_proto.set_singer_id(2);
+  singer_proto.set_birth_date("1942-06-18");
+  singer_proto.set_nationality("British");
+  singer_proto.set_genre(google::cloud::spanner::testing::Genre::POP);
+
+  using SingerInfoMessage = google::cloud::spanner::ProtoMessage<
+      google::cloud::spanner::testing::SingerInfo>;
+  auto singer_info = SingerInfoMessage(singer_proto);
+  auto commit_results =
+      client.CommitAtLeastOnce({google::cloud::spanner::Mutations{
+          google::cloud::spanner::InsertOrUpdateMutationBuilder(
+              "Singers", {"SingerId", "SingerInfo", "SingerInfoArray"})
+              .EmplaceRow(2, singer_info,
+                          std::vector<SingerInfoMessage>{singer_info})
+              .EmplaceRow(3, absl::optional<SingerInfoMessage>(),
+                          absl::optional<std::vector<SingerInfoMessage>>())
+              .Build()}});
+  for (auto& commit_result : commit_results) {
+    if (!commit_result) throw std::move(commit_result).status();
+  }
+  std::cout << "Update was successful "
+            << "[spanner_update_data_with_proto_message_column]\n";
+}
+// [END spanner_update_data_with_proto_message_column]
+
+// [START spanner_update_data_with_proto_message_column_with_dml]
+void UpdateDataWithProtoMessageColumnWithDml(
+    google::cloud::spanner::Client client) {
+  std::int64_t rows_modified = 0;
+  auto commit_result = client.Commit(
+      [&client, &rows_modified](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        google::cloud::spanner::testing::SingerInfo singer_proto;
+        singer_proto.set_singer_id(1);
+        singer_proto.set_birth_date("1943-06-15");
+        singer_proto.set_nationality("French");
+        singer_proto.set_genre(google::cloud::spanner::testing::Genre::ROCK);
+
+        using SingerInfoMessage = google::cloud::spanner::ProtoMessage<
+            google::cloud::spanner::testing::SingerInfo>;
+        auto singer_info = SingerInfoMessage(singer_proto);
+        auto update = client.ExecuteDml(
+            std::move(txn),
+            google::cloud::spanner::SqlStatement(
+                "UPDATE Singers"
+                " SET SingerInfo = @singer_info,"
+                "     SingerInfoArray = @singer_info_array"
+                " WHERE SingerId = 1",
+                {{"singer_info", google::cloud::spanner::Value(singer_info)},
+                 {"singer_info_array",
+                  google::cloud::spanner::Value(
+                      std::vector<SingerInfoMessage>{singer_info})}}));
+        if (!update) return std::move(update).status();
+        rows_modified = update->RowsModified();
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit_result) throw std::move(commit_result).status();
+  std::cout << "Updated " << rows_modified << " row(s) "
+            << "[spanner_update_data_with_proto_message_column_with_dml]\n";
+}
+// [END spanner_update_data_with_proto_message_column_with_dml]
+
+// [START spanner_query_with_proto_message_parameter]
+void QueryWithProtoMessageParameter(google::cloud::spanner::Client client) {
+  google::cloud::spanner::SqlStatement select(
+      "SELECT SingerId, SingerInfo, SingerInfoArray FROM Singers"
+      " WHERE SingerInfo.Nationality = @nationality",
+      {{"nationality", google::cloud::spanner::Value("British")}});
+  using SingerInfoMessage = google::cloud::spanner::ProtoMessage<
+      google::cloud::spanner::testing::SingerInfo>;
+  using RowType = std::tuple<std::int64_t, absl::optional<SingerInfoMessage>,
+                             absl::optional<std::vector<SingerInfoMessage>>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
+    std::cout << "SingerId: " << std::get<0>(*row);
+    std::cout << ", SingerInfo: ";
+    auto singer_info = std::get<1>(*row);
+    if (!singer_info) {
+      std::cout << "NULL";
+    } else {
+      std::cout << *singer_info;
+    }
+    std::cout << ", SingerInfoArray: ";
+    auto singer_info_array = std::get<2>(*row);
+    if (!singer_info_array) {
+      std::cout << "NULL";
+    } else {
+      std::cout << "{";
+      char const* sep = " ";
+      for (auto const& singer_info : *singer_info_array) {
+        std::cout << sep << singer_info;
+        sep = ", ";
+      }
+      std::cout << " }";
+    }
+    std::cout << "\n";
+  }
+  std::cout << "Query completed for "
+            << "[spanner_query_with_proto_message_parameter]\n";
+}
+// [END spanner_query_with_proto_message_parameter]
+
+// [START spanner_update_data_with_proto_enum_column]
+void UpdateDataWithProtoEnumColumn(google::cloud::spanner::Client client) {
+  using GenreEnum =
+      google::cloud::spanner::ProtoEnum<google::cloud::spanner::testing::Genre>;
+  auto singer_genre = GenreEnum(google::cloud::spanner::testing::Genre::FOLK);
+  auto commit_results =
+      client.CommitAtLeastOnce({google::cloud::spanner::Mutations{
+          google::cloud::spanner::InsertOrUpdateMutationBuilder(
+              "Singers", {"SingerId", "SingerGenre", "SingerGenreArray"})
+              .EmplaceRow(2, singer_genre, std::vector<GenreEnum>{singer_genre})
+              .EmplaceRow(3, absl::optional<GenreEnum>(),
+                          absl::optional<std::vector<GenreEnum>>())
+              .Build()}});
+  for (auto& commit_result : commit_results) {
+    if (!commit_result) throw std::move(commit_result).status();
+  }
+  std::cout << "Update was successful "
+            << "[spanner_update_data_with_proto_enum_column]\n";
+}
+// [END spanner_update_data_with_proto_enum_column]
+
+// [START spanner_update_data_with_proto_enum_column_with_dml]
+void UpdateDataWithProtoEnumColumnWithDml(
+    google::cloud::spanner::Client client) {
+  std::int64_t rows_modified = 0;
+  auto commit_result = client.Commit(
+      [&client, &rows_modified](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        using GenreEnum = google::cloud::spanner::ProtoEnum<
+            google::cloud::spanner::testing::Genre>;
+        auto singer_genre =
+            GenreEnum(google::cloud::spanner::testing::Genre::ROCK);
+        auto update = client.ExecuteDml(
+            std::move(txn),
+            google::cloud::spanner::SqlStatement(
+                "UPDATE Singers"
+                " SET SingerGenre = @singer_genre,"
+                "     SingerGenreArray = @singer_genre_array"
+                " WHERE SingerId = 1",
+                {{"singer_genre", google::cloud::spanner::Value(singer_genre)},
+                 {"singer_genre_array",
+                  google::cloud::spanner::Value(
+                      std::vector<GenreEnum>{singer_genre})}}));
+        if (!update) return std::move(update).status();
+        rows_modified = update->RowsModified();
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit_result) throw std::move(commit_result).status();
+  std::cout << "Updated " << rows_modified << " row(s) "
+            << "[spanner_update_data_with_proto_enum_column_with_dml]\n";
+}
+// [END spanner_update_data_with_proto_enum_column_with_dml]
+
+// [START spanner_query_with_proto_enum_parameter]
+void QueryWithProtoEnumParameter(google::cloud::spanner::Client client) {
+  using GenreEnum =
+      google::cloud::spanner::ProtoEnum<google::cloud::spanner::testing::Genre>;
+  auto singer_genre = GenreEnum(google::cloud::spanner::testing::Genre::ROCK);
+  google::cloud::spanner::SqlStatement select(
+      "SELECT SingerId, SingerGenre, SingerGenreArray FROM Singers"
+      " WHERE SingerGenre = @singer_genre",
+      {{"singer_genre", google::cloud::spanner::Value(singer_genre)}});
+  using RowType = std::tuple<std::int64_t, absl::optional<GenreEnum>,
+                             absl::optional<std::vector<GenreEnum>>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
+    std::cout << "SingerId: " << std::get<0>(*row);
+    std::cout << ", SingerGenre: ";
+    auto singer_genre = std::get<1>(*row);
+    if (!singer_genre) {
+      std::cout << "NULL";
+    } else {
+      std::cout << *singer_genre;
+    }
+    std::cout << ", SingerGenreArray: ";
+    auto singer_genre_array = std::get<2>(*row);
+    if (!singer_genre_array) {
+      std::cout << "NULL";
+    } else {
+      std::cout << "{";
+      char const* sep = " ";
+      for (auto const& singer_genre : *singer_genre_array) {
+        std::cout << sep << singer_genre;
+        sep = ", ";
+      }
+      std::cout << " }";
+    }
+    std::cout << "\n";
+  }
+  std::cout << "Query completed for "
+            << "[spanner_query_with_proto_enum_parameter]\n";
+}
+// [END spanner_query_with_proto_enum_parameter]
+
 void ExampleStatusOr(google::cloud::spanner::Client client) {
   //! [example-status-or]
   namespace spanner = ::google::cloud::spanner;
@@ -4292,6 +4553,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_database_command_entry("list-database-roles", ListDatabaseRoles),
       make_database_command_entry("add-column", AddColumn),
       make_database_command_entry("add-timestamp-column", AddTimestampColumn),
+      make_database_command_entry("drop-column", DropColumn),
       {"list-databases", ListDatabasesCommand},
       {"create-backup", CreateBackupCommand},
       {"restore-database", RestoreDatabaseCommand},
@@ -4411,6 +4673,21 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("make-delete-mutation", MakeDeleteMutation),
       make_command_entry("query-information-schema-database-options",
                          QueryInformationSchemaDatabaseOptions),
+      make_database_command_entry("spanner_add_proto_type_columns",
+                                  AddProtoTypeColumns),
+      make_command_entry("spanner_update_data_with_proto_message_column",
+                         UpdateDataWithProtoMessageColumn),
+      make_command_entry(
+          "spanner_update_data_with_proto_message_column_with_dml",
+          UpdateDataWithProtoMessageColumnWithDml),
+      make_command_entry("spanner_query_with_proto_message_parameter",
+                         QueryWithProtoMessageParameter),
+      make_command_entry("spanner_update_data_with_proto_enum_column",
+                         UpdateDataWithProtoEnumColumn),
+      make_command_entry("spanner_update_data_with_proto_enum_column_with_dml",
+                         UpdateDataWithProtoEnumColumnWithDml),
+      make_command_entry("spanner_query_with_proto_enum_parameter",
+                         QueryWithProtoEnumParameter),
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -5227,6 +5504,44 @@ void RunAll(bool emulator) {
     UpdateDatabaseWithDefaultLeader(database_admin_client, project_id,
                                     instance_id, database_id,
                                     leader_options[0]);
+
+    SampleBanner("spanner_drop_database");
+    DropDatabase(database_admin_client, project_id, instance_id, database_id);
+  }
+
+  if (!emulator) {  // proto columns and enums
+    SampleBanner("spanner_create_database");
+    CreateDatabase(database_admin_client, project_id, instance_id, database_id);
+
+    SampleBanner("drop-column");
+    DropColumn(database_admin_client, project_id, instance_id, database_id);
+
+    SampleBanner("spanner_add_proto_type_columns");
+    AddProtoTypeColumns(database_admin_client, project_id, instance_id,
+                        database_id);
+
+    client = MakeSampleClient(project_id, instance_id, database_id);
+
+    SampleBanner("insert-mutation-builder");
+    InsertMutationBuilder(client);
+
+    SampleBanner("spanner_update_data_with_proto_message_column");
+    UpdateDataWithProtoMessageColumn(client);
+
+    SampleBanner("spanner_update_data_with_proto_message_column_with_dml");
+    UpdateDataWithProtoMessageColumnWithDml(client);
+
+    SampleBanner("spanner_query_with_proto_message_parameter");
+    QueryWithProtoMessageParameter(client);
+
+    SampleBanner("spanner_update_data_with_proto_enum_column");
+    UpdateDataWithProtoEnumColumn(client);
+
+    SampleBanner("spanner_update_data_with_proto_enum_column_with_dml");
+    UpdateDataWithProtoEnumColumnWithDml(client);
+
+    SampleBanner("spanner_query_with_proto_enum_parameter");
+    QueryWithProtoEnumParameter(client);
 
     SampleBanner("spanner_drop_database");
     DropDatabase(database_admin_client, project_id, instance_id, database_id);

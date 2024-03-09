@@ -101,7 +101,10 @@ proto_library(
 
 cc_proto_library(
     name = "singer_cc_proto",
-    visibility = ["//:__pkg__"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":singer_proto"],
 )
 
@@ -142,6 +145,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_spanner",
         ":google_cloud_cpp_spanner_mocks",
+        ":singer_cc_proto",
         ":spanner_client_testing_private",
         "//:common",
         "//google/cloud:google_cloud_cpp_mocks",
