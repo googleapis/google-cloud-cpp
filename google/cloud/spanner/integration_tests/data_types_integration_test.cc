@@ -17,10 +17,13 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
+#include "google/cloud/spanner/testing/singer.pb.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
+#include <cstdint>
+#include <string>
 #include <vector>
 
 namespace google {
@@ -41,6 +44,16 @@ using ::testing::UnorderedElementsAreArray;
 
 absl::Time MakeTime(std::time_t sec, int nanos) {
   return absl::FromTimeT(sec) + absl::Nanoseconds(nanos);
+}
+
+testing::SingerInfo MakeSinger(std::int64_t singer_id, std::string birth_date,
+                               std::string nationality, testing::Genre genre) {
+  testing::SingerInfo singer;
+  singer.set_singer_id(singer_id);
+  singer.set_birth_date(std::move(birth_date));
+  singer.set_nationality(std::move(nationality));
+  singer.set_genre(genre);
+  return singer;
 }
 
 // A helper function used in the test fixtures below. This function writes the
@@ -292,6 +305,30 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
+TEST_F(DataTypeIntegrationTest, WriteReadProtoEnum) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PROTO";
+
+  std::vector<ProtoEnum<testing::Genre>> const data = {
+      testing::Genre::POP,
+      testing::Genre::JAZZ,
+      testing::Genre::FOLK,
+      testing::Genre::ROCK,
+  };
+  auto result = WriteReadData(*client_, data, "SingerGenre");
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadProtoMessage) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PROTO";
+
+  std::vector<ProtoMessage<testing::SingerInfo>> const data = {
+      MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK),
+      MakeSinger(2123139547, "1942-06-18", "British", testing::Genre::POP),
+  };
+  auto result = WriteReadData(*client_, data, "SingerInfo");
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+}
+
 TEST_F(DataTypeIntegrationTest, WriteReadArrayBool) {
   std::vector<std::vector<bool>> const data = {
       std::vector<bool>{},
@@ -434,6 +471,36 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadArrayNumeric) {
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
+TEST_F(DataTypeIntegrationTest, WriteReadArrayProtoEnum) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PROTO";
+
+  std::vector<std::vector<ProtoEnum<testing::Genre>>> const data = {
+      std::vector<ProtoEnum<testing::Genre>>{},
+      std::vector<ProtoEnum<testing::Genre>>{
+          testing::Genre::POP,
+          testing::Genre::JAZZ,
+          testing::Genre::FOLK,
+          testing::Genre::ROCK,
+      },
+  };
+  auto result = WriteReadData(*client_, data, "ArraySingerGenre");
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayProtoMessage) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PROTO";
+
+  std::vector<std::vector<ProtoMessage<testing::SingerInfo>>> const data = {
+      std::vector<ProtoMessage<testing::SingerInfo>>{},
+      std::vector<ProtoMessage<testing::SingerInfo>>{
+          MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK),
+          MakeSinger(2123139547, "1942-06-18", "British", testing::Genre::POP),
+      },
+  };
+  auto result = WriteReadData(*client_, data, "ArraySingerInfo");
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+}
+
 TEST_F(DataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
   spanner_admin::DatabaseAdminClient admin_client(
       spanner_admin::MakeDatabaseAdminConnection());
@@ -571,6 +638,25 @@ TEST_F(PgDataTypeIntegrationTest, NumericPrimaryKey) {
   EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
                                  AllOf(HasSubstr("has type PG.NUMERIC"),
                                        HasSubstr("part of the primary key"))));
+}
+
+TEST_F(DataTypeIntegrationTest, InsertAndQueryWithProtoEnumKey) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PROTO";
+
+  auto& client = *client_;
+  auto const key = testing::Genre::POP;
+
+  auto commit_result = client.Commit(
+      Mutations{InsertOrUpdateMutationBuilder("ProtoEnumKey", {"Key"})
+                    .EmplaceRow(key)
+                    .Build()});
+  ASSERT_STATUS_OK(commit_result);
+
+  auto rows = client.Read("ProtoEnumKey", KeySet::All(), {"Key"});
+  using RowType = std::tuple<ProtoEnum<testing::Genre>>;
+  auto row = GetSingularRow(StreamOf<RowType>(rows));
+  ASSERT_STATUS_OK(row);
+  EXPECT_EQ(std::get<0>(*std::move(row)), key);
 }
 
 TEST_F(DataTypeIntegrationTest, DmlReturning) {

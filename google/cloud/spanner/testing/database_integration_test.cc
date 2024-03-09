@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/testing/cleanup_stale_databases.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
+#include "google/cloud/spanner/testing/singer.pb.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <chrono>
@@ -96,12 +97,52 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           ArrayNumericValue ARRAY<NUMERIC>
         ) PRIMARY KEY (Id)
       )sql");
+  if (!emulator_) {  // proto columns
+    google::protobuf::FileDescriptorSet fds;
+    google::cloud::spanner::testing::SingerInfo::default_instance()
+        .GetMetadata()
+        .descriptor->file()
+        ->CopyTo(fds.add_file());
+    fds.SerializeToString(request.mutable_proto_descriptors());
+    request.add_extra_statements(R"sql(
+        CREATE PROTO BUNDLE (
+          google.cloud.spanner.testing.SingerInfo,
+          google.cloud.spanner.testing.Genre,
+        )
+      )sql");
+    request.add_extra_statements(R"sql(
+          ALTER TABLE DataTypes
+            ADD COLUMN SingerInfo google.cloud.spanner.testing.SingerInfo
+      )sql");
+    request.add_extra_statements(R"sql(
+          ALTER TABLE DataTypes
+            ADD COLUMN SingerGenre google.cloud.spanner.testing.Genre
+      )sql");
+    request.add_extra_statements(R"sql(
+          ALTER TABLE DataTypes
+            ADD COLUMN ArraySingerInfo
+              ARRAY<google.cloud.spanner.testing.SingerInfo>
+      )sql");
+    request.add_extra_statements(R"sql(
+          ALTER TABLE DataTypes
+            ADD COLUMN ArraySingerGenre
+              ARRAY<google.cloud.spanner.testing.Genre>
+      )sql");
+  }
   // Verify that NUMERIC can be used as a table key.
   request.add_extra_statements(R"sql(
         CREATE TABLE NumericKey (
           Key NUMERIC NOT NULL
         ) PRIMARY KEY (Key)
       )sql");
+  if (!emulator_) {  // proto columns
+    // Verify that ProtoEnum<T> can be used as a table key.
+    request.add_extra_statements(R"sql(
+          CREATE TABLE ProtoEnumKey (
+            Key google.cloud.spanner.testing.Genre NOT NULL
+          ) PRIMARY KEY (Key)
+        )sql");
+  }
   auto database_future = admin_client.CreateDatabase(request);
 
   int i = 0;
