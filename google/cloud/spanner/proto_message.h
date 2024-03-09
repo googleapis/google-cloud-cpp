@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_PROTO_MESSAGE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_PROTO_MESSAGE_H
 
+#include "google/cloud/internal/debug_string_protobuf.h"
 #include "google/cloud/version.h"
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
@@ -90,8 +91,7 @@ class ProtoMessage {
 
   /// Outputs string representation of the `ProtoMessage` to the stream.
   friend std::ostream& operator<<(std::ostream& os, ProtoMessage const& m) {
-    auto s = message_type(m).ShortDebugString();
-    return os << TypeName() << " { " << s << (s.empty() ? "" : " ") << "}";
+    return os << internal::DebugString(message_type(m), TracingOptions{});
   }
 
  private:

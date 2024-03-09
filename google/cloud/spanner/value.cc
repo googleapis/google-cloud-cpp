@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/debug_string_protobuf.h"
 #include "google/cloud/internal/strerror.h"
 #include "absl/time/civil_time.h"
 #include <google/protobuf/descriptor.h>
@@ -180,9 +181,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
             if (auto const* pt = f->GetPrototype(d)) {
               std::unique_ptr<google::protobuf::Message> m(pt->New());
               m->ParseFromString(std::string(bytes->begin(), bytes->end()));
-              auto s = m->ShortDebugString();
-              return os << t.proto_type_fqn() << " { " << s
-                        << (s.empty() ? "" : " ") << "}";
+              return os << internal::DebugString(*m, TracingOptions{});
             }
           }
         }
