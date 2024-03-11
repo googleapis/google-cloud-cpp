@@ -23,28 +23,48 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/speech/v1/speech_client.h"
+#include "google/cloud/speech/v2/speech_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
+// Configure a simple recognizer for en-US.
+void ConfigureRecognizer(google::cloud::speech::v2::RecognizeRequest& request) {
+  *request.mutable_config()->add_language_codes() = "en-US";
+  request.mutable_config()->set_model("short");
+  *request.mutable_config()->mutable_auto_decoding_config() = {};
+}
+
 int main(int argc, char* argv[]) try {
   auto constexpr kDefaultUri = "gs://cloud-samples-data/speech/hello.wav";
-  if (argc > 2) {
-    std::cerr << "Usage: " << argv[0] << " [gcs-uri]\n"
+  if (argc > 4) {
+    std::cerr << "Usage: " << argv[0] << " project <region>|global [gcs-uri]\n"
+              << "  Specify the region desired or \"global\"\n"
               << "  The gcs-uri must be in gs://... format. It defaults to "
               << kDefaultUri << "\n";
     return 1;
   }
-  auto uri = std::string{argc == 2 ? argv[1] : kDefaultUri};
+  std::string const project = argv[1];
+  std::string const location = argv[2];
+  auto const uri = std::string{argc == 4 ? argv[3] : kDefaultUri};
+  namespace speech = ::google::cloud::speech_v2;
 
-  namespace speech = ::google::cloud::speech_v1;
-  auto client = speech::SpeechClient(speech::MakeSpeechConnection());
+  std::shared_ptr<speech::SpeechConnection> connection;
+  google::cloud::speech::v2::RecognizeRequest request;
+  ConfigureRecognizer(request);
+  request.set_uri(uri);
 
-  google::cloud::speech::v1::RecognitionConfig config;
-  config.set_language_code("en-US");
-  google::cloud::speech::v1::RecognitionAudio audio;
-  audio.set_uri(uri);
-  auto response = client.Recognize(config, audio);
+  if (location == "global") {
+    connection = speech::MakeSpeechConnection();
+    request.set_recognizer("projects/" + project +
+                           "/locations/global/recognizers/_");
+  } else {
+    connection = speech::MakeSpeechConnection(location);
+    request.set_recognizer("projects/" + project + "/locations/" + location +
+                           "/recognizers/_");
+  }
+
+  auto client = speech::SpeechClient(connection);
+  auto response = client.Recognize(request);
   if (!response) throw std::move(response).status();
   std::cout << response->DebugString() << "\n";
 
