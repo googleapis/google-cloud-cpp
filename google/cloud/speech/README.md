@@ -36,7 +36,7 @@ void ConfigureRecognizer(google::cloud::speech::v2::RecognizeRequest& request) {
 
 int main(int argc, char* argv[]) try {
   auto constexpr kDefaultUri = "gs://cloud-samples-data/speech/hello.wav";
-  if (argc < 3 || argc > 4) {
+  if (argc != 3 && argc != 4) {
     std::cerr << "Usage: " << argv[0] << " project <region>|global [gcs-uri]\n"
               << "  Specify the region desired or \"global\"\n"
               << "  The gcs-uri must be in gs://... format. It defaults to "
