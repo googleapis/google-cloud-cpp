@@ -32,6 +32,8 @@ add_library(
     bucket_custom_placement_config.cc
     bucket_custom_placement_config.h
     bucket_encryption.h
+    bucket_hierarchical_namespace.cc
+    bucket_hierarchical_namespace.h
     bucket_iam_configuration.cc
     bucket_iam_configuration.h
     bucket_lifecycle.h
