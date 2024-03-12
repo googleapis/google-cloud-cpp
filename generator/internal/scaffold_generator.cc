@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/scaffold_generator.h"
+#include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/filesystem.h"
@@ -25,11 +26,6 @@
 #include <fstream>
 #include <iterator>
 #include <regex>
-#ifdef _WIN32
-#include <direct.h>
-#else
-#include <sys/stat.h>
-#endif  // _WIN32
 
 namespace google {
 namespace cloud {
@@ -222,14 +218,6 @@ std::string ServiceConfigYamlPath(
   auto const name = vars.find("service_config_yaml_name");
   if (name == vars.end()) return {};
   return absl::StrCat(root, "/", name->second);
-}
-
-void MakeDirectory(std::string const& path) {
-#if _WIN32
-  _mkdir(path.c_str());
-#else
-  mkdir(path.c_str(), 0755);
-#endif  // _WIN32
 }
 
 void GenerateMetadata(

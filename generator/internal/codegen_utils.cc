@@ -26,6 +26,11 @@
 #include <cctype>
 #include <string>
 #include <unordered_set>
+#if _WIN32
+#include <direct.h>
+#else
+#include <sys/stat.h>
+#endif  // _WIN32
 
 namespace google {
 namespace cloud {
@@ -378,6 +383,14 @@ std::string FormatHeaderIncludeGuard(absl::string_view header_path) {
   return absl::AsciiStrToUpper(
       absl::StrReplaceAll(absl::StrCat("GOOGLE_CLOUD_CPP_", header_path),
                           {{"/", "_"}, {".", "_"}}));
+}
+
+void MakeDirectory(std::string const& path) {
+#if _WIN32
+  _mkdir(path.c_str());
+#else
+  mkdir(path.c_str(), 0755);
+#endif  // _WIN32
 }
 
 }  // namespace generator_internal
