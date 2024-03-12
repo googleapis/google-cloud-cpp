@@ -19,6 +19,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_response.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -431,7 +432,7 @@ TEST_F(ClientOptionsTest, CAPathOption) {
   EXPECT_EQ("test-only", options.get<rest::CAPathOption>());
 }
 
-TEST_F(ClientOptionsTest, TracingWithoutEnv) {
+TEST_F(ClientOptionsTest, LoggingWithoutEnv) {
   ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
                                absl::nullopt);
   ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -440,7 +441,7 @@ TEST_F(ClientOptionsTest, TracingWithoutEnv) {
   EXPECT_FALSE(options.has<TracingComponentsOption>());
 }
 
-TEST_F(ClientOptionsTest, TracingWithEnv) {
+TEST_F(ClientOptionsTest, LoggingWithEnv) {
   ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
                                absl::nullopt);
   ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", "rpc,http");
@@ -448,6 +449,27 @@ TEST_F(ClientOptionsTest, TracingWithEnv) {
       internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
   EXPECT_THAT(options.get<TracingComponentsOption>(),
               UnorderedElementsAre("rpc", "http"));
+}
+
+TEST_F(ClientOptionsTest, TracingWithoutEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING",
+                        absl::nullopt);
+  auto options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_FALSE(options.get<OpenTelemetryTracingOption>());
+
+  options =
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
+                               Options{}.set<OpenTelemetryTracingOption>(true));
+  EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
+}
+
+TEST_F(ClientOptionsTest, TracingWithEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", "ON");
+  auto const options = internal::DefaultOptions(
+      oauth2::CreateAnonymousCredentials(),
+      Options{}.set<OpenTelemetryTracingOption>(false));
+  EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
 }
 
 TEST_F(ClientOptionsTest, ProjectIdWithoutEnv) {
