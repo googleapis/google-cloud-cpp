@@ -597,8 +597,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopicWithKinesisIngestion() sample"
             << std::endl;
 
-  ignore_emulator_failures(
-      [&] {
+  // ignore_emulator_failures(
+  //     [&] {
         CreateTopicWithKinesisIngestion(
             topic_admin_client,
             {project_id, kinesis_topic_id, kinesis_stream_arn,
@@ -609,17 +609,17 @@ void AutoRun(std::vector<std::string> const& argv) {
               std::cout << "\nRunning DeleteTopic() sample" << std::endl;
               DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
             });
-      },
-      StatusCode::kNotFound);
+      // },
+      // StatusCode::kNotFound);
 
-  ignore_emulator_failures(
-      [&] {
+  // ignore_emulator_failures(
+  //     [&] {
         std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
         UpdateTopicType(topic_admin_client,
                         {project_id, kinesis_topic_id,
                          kinesis_updated_gcp_service_account});
-      },
-      StatusCode::kInvalidArgument);
+      // },
+      // StatusCode::kInvalidArgument);
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
