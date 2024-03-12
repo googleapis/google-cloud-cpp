@@ -13,11 +13,17 @@
 // limitations under the License.
 
 #include "generator/internal/scaffold_generator.h"
+#include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
+#if _WIN32
+#include <direct.h>
+#else
+#include <unistd.h>
+#endif  // _WIN32
 
 namespace google {
 namespace cloud {

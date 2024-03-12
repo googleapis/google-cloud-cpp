@@ -130,6 +130,9 @@ std::string FormatCommentKeyValueList(
 // Formats a header include guard per the provided header_path.
 std::string FormatHeaderIncludeGuard(absl::string_view header_path);
 
+/// Create a directory. The parent must exist.
+void MakeDirectory(std::string const& path);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

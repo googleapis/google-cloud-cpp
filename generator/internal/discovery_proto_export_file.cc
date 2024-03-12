@@ -19,27 +19,10 @@
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <fstream>
-#ifdef _WIN32
-#include <direct.h>
-#else
-#include <sys/stat.h>
-#endif  // _WIN32
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
-namespace {
-
-// TODO(#12818): refactor this function to single translation unit.
-void MakeDirectory(std::string const& path) {
-#if _WIN32
-  _mkdir(path.c_str());
-#else
-  mkdir(path.c_str(), 0777);
-#endif  // _WIN32
-}
-
-}  // namespace
 
 DiscoveryProtoExportFile::DiscoveryProtoExportFile(
     std::string output_file_path, std::string relative_file_path,
