@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/logging_result_set_reader.h"
-#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/debug_string.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
@@ -22,16 +23,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::DebugString;
 
-void LoggingResultSetReader::TryCancel() {
-  GCP_LOG(DEBUG) << __func__ << "() << (void)";
-  impl_->TryCancel();
-  GCP_LOG(DEBUG) << __func__ << "() >> (void)";
-}
+void LoggingResultSetReader::TryCancel() { impl_->TryCancel(); }
 
 absl::optional<PartialResultSet> LoggingResultSetReader::Read(
     absl::optional<std::string> const& resume_token) {
   if (resume_token) {
-    GCP_LOG(DEBUG) << __func__ << "() << \""
+    GCP_LOG(DEBUG) << __func__ << "() << resume_token=\""
                    << DebugString(*resume_token, tracing_options_) << "\"";
   } else {
     GCP_LOG(DEBUG) << __func__ << "() << (unresumable)";
@@ -40,20 +37,13 @@ absl::optional<PartialResultSet> LoggingResultSetReader::Read(
   if (!result) {
     GCP_LOG(DEBUG) << __func__ << "() >> (optional-with-no-value)";
   } else {
-    GCP_LOG(DEBUG) << __func__ << "() >> "
-                   << (result->resumption ? "resumption " : "")
-                   << DebugString(result->result, tracing_options_);
+    GCP_LOG(DEBUG) << __func__ << "() >> resumption="
+                   << (result->resumption ? "true" : "false");
   }
   return result;
 }
 
-Status LoggingResultSetReader::Finish() {
-  GCP_LOG(DEBUG) << __func__ << "() << (void)";
-  auto status = impl_->Finish();
-  GCP_LOG(DEBUG) << __func__ << "() >> "
-                 << DebugString(status, tracing_options_);
-  return status;
-}
+Status LoggingResultSetReader::Finish() { return impl_->Finish(); }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
