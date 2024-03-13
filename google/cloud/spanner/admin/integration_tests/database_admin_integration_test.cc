@@ -556,30 +556,29 @@ TEST_F(DatabaseAdminClientTest, DatabasePostgreSQLBasics) {
                   DATABASE_DIALECT_UNSPECIFIED);
     GTEST_SKIP() << "emulator does not support PostgreSQL";
   }
-}
-EXPECT_EQ(database->database_dialect(),
-          google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
+  EXPECT_EQ(database->database_dialect(),
+            google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
 
-// Verify that GetDatabase() returns the correct dialect.
-auto get = client_.GetDatabase(database->name());
-ASSERT_THAT(get, IsOk());
-EXPECT_EQ(database->name(), get->name());
-EXPECT_EQ(database->database_dialect(), get->database_dialect());
+  // Verify that GetDatabase() returns the correct dialect.
+  auto get = client_.GetDatabase(database->name());
+  ASSERT_THAT(get, IsOk());
+  EXPECT_EQ(database->name(), get->name());
+  EXPECT_EQ(database->database_dialect(), get->database_dialect());
 
-// Verify that ListDatabases() returns the correct dialect.
-auto list_db = [&] {
-  for (auto const& db : client_.ListDatabases(instance_.FullName())) {
-    if (db && db->name() == database_.FullName()) return db;
-  }
-  return StatusOr<google::spanner::admin::database::v1::Database>{
-      Status{StatusCode::kNotFound, "disappeared"}};
-}();
-ASSERT_THAT(list_db, IsOk());
-EXPECT_EQ(database->name(), list_db->name());
-EXPECT_EQ(database->database_dialect(), list_db->database_dialect());
+  // Verify that ListDatabases() returns the correct dialect.
+  auto list_db = [&] {
+    for (auto const& db : client_.ListDatabases(instance_.FullName())) {
+      if (db && db->name() == database_.FullName()) return db;
+    }
+    return StatusOr<google::spanner::admin::database::v1::Database>{
+        Status{StatusCode::kNotFound, "disappeared"}};
+  }();
+  ASSERT_THAT(list_db, IsOk());
+  EXPECT_EQ(database->name(), list_db->name());
+  EXPECT_EQ(database->database_dialect(), list_db->database_dialect());
 
-auto drop_status = client_.DropDatabase(database->name());
-EXPECT_STATUS_OK(drop_status);
+  auto drop_status = client_.DropDatabase(database->name());
+  EXPECT_STATUS_OK(drop_status);
 }
 
 /// @test Verify dropping a database fails with drop protection enabled.
