@@ -80,7 +80,6 @@ class MetadataServiceLogging : public MetadataServiceStub {
  private:
   std::shared_ptr<MetadataServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // MetadataServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

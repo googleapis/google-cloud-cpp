@@ -86,7 +86,6 @@ class SpecialistPoolServiceLogging : public SpecialistPoolServiceStub {
  private:
   std::shared_ptr<SpecialistPoolServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SpecialistPoolServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

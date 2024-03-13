@@ -257,7 +257,6 @@ class ArtifactRegistryLogging : public ArtifactRegistryStub {
  private:
   std::shared_ptr<ArtifactRegistryStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ArtifactRegistryLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

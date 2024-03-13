@@ -158,7 +158,6 @@ class DatasetServiceLogging : public DatasetServiceStub {
  private:
   std::shared_ptr<DatasetServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DatasetServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

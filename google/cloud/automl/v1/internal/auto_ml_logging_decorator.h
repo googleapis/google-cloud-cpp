@@ -148,7 +148,6 @@ class AutoMlLogging : public AutoMlStub {
  private:
   std::shared_ptr<AutoMlStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AutoMlLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

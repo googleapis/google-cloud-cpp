@@ -64,7 +64,6 @@ class PagesLogging : public PagesStub {
  private:
   std::shared_ptr<PagesStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // PagesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

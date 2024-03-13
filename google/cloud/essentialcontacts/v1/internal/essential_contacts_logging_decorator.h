@@ -77,7 +77,6 @@ class EssentialContactsServiceLogging : public EssentialContactsServiceStub {
  private:
   std::shared_ptr<EssentialContactsServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // EssentialContactsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

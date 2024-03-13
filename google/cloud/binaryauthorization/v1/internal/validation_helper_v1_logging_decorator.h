@@ -48,7 +48,6 @@ class ValidationHelperV1Logging : public ValidationHelperV1Stub {
  private:
   std::shared_ptr<ValidationHelperV1Stub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ValidationHelperV1Logging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,10 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KnowledgeBasesLogging::KnowledgeBasesLogging(
     std::shared_ptr<KnowledgeBasesStub> child, TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
-      stream_logging_(components.find("rpc-streams") != components.end()) {}
+    std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 KnowledgeBasesLogging::ListKnowledgeBases(

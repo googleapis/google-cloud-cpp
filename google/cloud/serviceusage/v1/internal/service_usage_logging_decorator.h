@@ -89,7 +89,6 @@ class ServiceUsageLogging : public ServiceUsageStub {
  private:
   std::shared_ptr<ServiceUsageStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ServiceUsageLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -150,7 +150,6 @@ class DomainsLogging : public DomainsStub {
  private:
   std::shared_ptr<DomainsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DomainsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

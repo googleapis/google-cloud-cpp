@@ -64,7 +64,6 @@ class AdvisoryNotificationsServiceLogging
  private:
   std::shared_ptr<AdvisoryNotificationsServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AdvisoryNotificationsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

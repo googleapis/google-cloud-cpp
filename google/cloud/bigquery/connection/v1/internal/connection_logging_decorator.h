@@ -81,7 +81,6 @@ class ConnectionServiceLogging : public ConnectionServiceStub {
  private:
   std::shared_ptr<ConnectionServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ConnectionServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -106,7 +106,6 @@ class DocumentsLogging : public DocumentsStub {
  private:
   std::shared_ptr<DocumentsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DocumentsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

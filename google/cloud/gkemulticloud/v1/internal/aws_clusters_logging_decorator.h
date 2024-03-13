@@ -156,7 +156,6 @@ class AwsClustersLogging : public AwsClustersStub {
  private:
   std::shared_ptr<AwsClustersStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AwsClustersLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

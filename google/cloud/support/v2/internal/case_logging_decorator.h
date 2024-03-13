@@ -75,7 +75,6 @@ class CaseServiceLogging : public CaseServiceStub {
  private:
   std::shared_ptr<CaseServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CaseServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

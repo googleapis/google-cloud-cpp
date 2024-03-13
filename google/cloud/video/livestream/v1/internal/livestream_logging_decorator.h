@@ -186,7 +186,6 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
  private:
   std::shared_ptr<LivestreamServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // LivestreamServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

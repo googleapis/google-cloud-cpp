@@ -72,7 +72,6 @@ class BatchControllerLogging : public BatchControllerStub {
  private:
   std::shared_ptr<BatchControllerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // BatchControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

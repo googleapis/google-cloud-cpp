@@ -140,7 +140,6 @@ class RepositoryManagerLogging : public RepositoryManagerStub {
  private:
   std::shared_ptr<RepositoryManagerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // RepositoryManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

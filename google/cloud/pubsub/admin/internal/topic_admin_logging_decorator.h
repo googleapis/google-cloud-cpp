@@ -75,7 +75,6 @@ class TopicAdminLogging : public TopicAdminStub {
  private:
   std::shared_ptr<TopicAdminStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // TopicAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

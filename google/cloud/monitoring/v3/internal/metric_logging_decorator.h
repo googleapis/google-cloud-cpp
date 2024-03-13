@@ -92,7 +92,6 @@ class MetricServiceLogging : public MetricServiceStub {
  private:
   std::shared_ptr<MetricServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // MetricServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

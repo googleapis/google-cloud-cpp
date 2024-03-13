@@ -320,7 +320,6 @@ class DataMigrationServiceLogging : public DataMigrationServiceStub {
  private:
   std::shared_ptr<DataMigrationServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DataMigrationServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

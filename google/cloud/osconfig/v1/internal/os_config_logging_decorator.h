@@ -102,7 +102,6 @@ class OsConfigServiceLogging : public OsConfigServiceStub {
  private:
   std::shared_ptr<OsConfigServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // OsConfigServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

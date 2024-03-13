@@ -30,10 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ManagedNotebookServiceLogging::ManagedNotebookServiceLogging(
     std::shared_ptr<ManagedNotebookServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const& components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
-      stream_logging_(components.find("rpc-streams") != components.end()) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>
 ManagedNotebookServiceLogging::ListRuntimes(

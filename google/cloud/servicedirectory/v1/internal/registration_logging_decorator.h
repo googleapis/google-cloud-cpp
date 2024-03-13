@@ -129,7 +129,6 @@ class RegistrationServiceLogging : public RegistrationServiceStub {
  private:
   std::shared_ptr<RegistrationServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // RegistrationServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

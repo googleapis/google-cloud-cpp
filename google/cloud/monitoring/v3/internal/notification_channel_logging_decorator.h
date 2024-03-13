@@ -102,7 +102,6 @@ class NotificationChannelServiceLogging
  private:
   std::shared_ptr<NotificationChannelServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // NotificationChannelServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

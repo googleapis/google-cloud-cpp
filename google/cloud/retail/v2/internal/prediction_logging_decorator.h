@@ -45,7 +45,6 @@ class PredictionServiceLogging : public PredictionServiceStub {
  private:
   std::shared_ptr<PredictionServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // PredictionServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

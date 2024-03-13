@@ -78,7 +78,6 @@ class VpcAccessServiceLogging : public VpcAccessServiceStub {
  private:
   std::shared_ptr<VpcAccessServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // VpcAccessServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,10 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SnoozeServiceLogging::SnoozeServiceLogging(
     std::shared_ptr<SnoozeServiceStub> child, TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
-      stream_logging_(components.find("rpc-streams") != components.end()) {}
+    std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceLogging::CreateSnooze(
     grpc::ClientContext& context, Options const& options,

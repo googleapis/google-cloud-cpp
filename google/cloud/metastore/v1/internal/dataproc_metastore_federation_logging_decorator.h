@@ -86,7 +86,6 @@ class DataprocMetastoreFederationLogging
  private:
   std::shared_ptr<DataprocMetastoreFederationStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DataprocMetastoreFederationLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

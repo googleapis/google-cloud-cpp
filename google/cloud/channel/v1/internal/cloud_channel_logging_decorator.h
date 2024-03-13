@@ -336,7 +336,6 @@ class CloudChannelServiceLogging : public CloudChannelServiceStub {
  private:
   std::shared_ptr<CloudChannelServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudChannelServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

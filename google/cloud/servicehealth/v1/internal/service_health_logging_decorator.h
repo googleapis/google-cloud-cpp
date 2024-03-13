@@ -75,7 +75,6 @@ class ServiceHealthLogging : public ServiceHealthStub {
  private:
   std::shared_ptr<ServiceHealthStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ServiceHealthLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

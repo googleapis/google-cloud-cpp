@@ -94,7 +94,6 @@ class CatalogServiceLogging : public CatalogServiceStub {
  private:
   std::shared_ptr<CatalogServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CatalogServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -66,7 +66,6 @@ class RuleSetServiceLogging : public RuleSetServiceStub {
  private:
   std::shared_ptr<RuleSetServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // RuleSetServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

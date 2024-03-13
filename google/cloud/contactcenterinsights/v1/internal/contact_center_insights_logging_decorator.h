@@ -282,7 +282,6 @@ class ContactCenterInsightsLogging : public ContactCenterInsightsStub {
  private:
   std::shared_ptr<ContactCenterInsightsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ContactCenterInsightsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

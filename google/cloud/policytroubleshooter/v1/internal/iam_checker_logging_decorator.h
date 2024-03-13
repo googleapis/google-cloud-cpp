@@ -48,7 +48,6 @@ class IamCheckerLogging : public IamCheckerStub {
  private:
   std::shared_ptr<IamCheckerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // IamCheckerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

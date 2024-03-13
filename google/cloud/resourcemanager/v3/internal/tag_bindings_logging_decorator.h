@@ -80,7 +80,6 @@ class TagBindingsLogging : public TagBindingsStub {
  private:
   std::shared_ptr<TagBindingsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // TagBindingsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

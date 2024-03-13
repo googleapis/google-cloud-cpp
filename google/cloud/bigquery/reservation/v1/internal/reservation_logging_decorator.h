@@ -164,7 +164,6 @@ class ReservationServiceLogging : public ReservationServiceStub {
  private:
   std::shared_ptr<ReservationServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ReservationServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -353,7 +353,6 @@ class NetAppLogging : public NetAppStub {
  private:
   std::shared_ptr<NetAppStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // NetAppLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

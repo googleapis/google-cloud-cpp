@@ -70,7 +70,6 @@ class SecuritySettingsServiceLogging : public SecuritySettingsServiceStub {
  private:
   std::shared_ptr<SecuritySettingsServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SecuritySettingsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

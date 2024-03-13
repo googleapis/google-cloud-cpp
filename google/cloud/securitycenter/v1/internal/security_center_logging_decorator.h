@@ -317,7 +317,6 @@ class SecurityCenterLogging : public SecurityCenterStub {
  private:
   std::shared_ptr<SecurityCenterStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SecurityCenterLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

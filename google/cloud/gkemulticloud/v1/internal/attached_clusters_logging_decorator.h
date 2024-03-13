@@ -115,7 +115,6 @@ class AttachedClustersLogging : public AttachedClustersStub {
  private:
   std::shared_ptr<AttachedClustersStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AttachedClustersLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

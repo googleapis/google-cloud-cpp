@@ -66,7 +66,6 @@ class WebhooksLogging : public WebhooksStub {
  private:
   std::shared_ptr<WebhooksStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // WebhooksLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

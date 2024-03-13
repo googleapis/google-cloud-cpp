@@ -115,7 +115,6 @@ class RecommenderLogging : public RecommenderStub {
  private:
   std::shared_ptr<RecommenderStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // RecommenderLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

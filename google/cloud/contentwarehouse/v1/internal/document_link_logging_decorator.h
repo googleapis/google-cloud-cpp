@@ -64,7 +64,6 @@ class DocumentLinkServiceLogging : public DocumentLinkServiceStub {
  private:
   std::shared_ptr<DocumentLinkServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DocumentLinkServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

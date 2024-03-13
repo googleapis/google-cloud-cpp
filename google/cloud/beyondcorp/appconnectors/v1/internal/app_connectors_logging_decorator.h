@@ -93,7 +93,6 @@ class AppConnectorsServiceLogging : public AppConnectorsServiceStub {
  private:
   std::shared_ptr<AppConnectorsServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AppConnectorsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

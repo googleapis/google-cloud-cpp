@@ -129,7 +129,6 @@ class OsConfigZonalServiceLogging : public OsConfigZonalServiceStub {
  private:
   std::shared_ptr<OsConfigZonalServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // OsConfigZonalServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

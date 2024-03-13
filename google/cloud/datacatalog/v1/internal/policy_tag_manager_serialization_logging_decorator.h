@@ -59,7 +59,6 @@ class PolicyTagManagerSerializationLogging
  private:
   std::shared_ptr<PolicyTagManagerSerializationStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // PolicyTagManagerSerializationLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

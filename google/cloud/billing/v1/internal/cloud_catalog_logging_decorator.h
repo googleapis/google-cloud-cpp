@@ -49,7 +49,6 @@ class CloudCatalogLogging : public CloudCatalogStub {
  private:
   std::shared_ptr<CloudCatalogStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudCatalogLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

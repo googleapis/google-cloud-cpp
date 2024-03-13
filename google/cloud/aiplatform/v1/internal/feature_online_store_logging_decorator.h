@@ -53,7 +53,6 @@ class FeatureOnlineStoreServiceLogging : public FeatureOnlineStoreServiceStub {
  private:
   std::shared_ptr<FeatureOnlineStoreServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // FeatureOnlineStoreServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

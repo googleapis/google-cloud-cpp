@@ -46,7 +46,6 @@ class SystemPolicyV1Logging : public SystemPolicyV1Stub {
  private:
   std::shared_ptr<SystemPolicyV1Stub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SystemPolicyV1Logging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

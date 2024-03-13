@@ -60,7 +60,6 @@ class ContainerAnalysisLogging : public ContainerAnalysisStub {
  private:
   std::shared_ptr<ContainerAnalysisStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ContainerAnalysisLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

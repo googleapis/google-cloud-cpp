@@ -46,7 +46,6 @@ class SearchServiceLogging : public SearchServiceStub {
  private:
   std::shared_ptr<SearchServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SearchServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

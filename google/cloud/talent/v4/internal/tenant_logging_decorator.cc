@@ -30,10 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TenantServiceLogging::TenantServiceLogging(
     std::shared_ptr<TenantServiceStub> child, TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
-      stream_logging_(components.find("rpc-streams") != components.end()) {}
+    std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceLogging::CreateTenant(
     grpc::ClientContext& context, Options const& options,

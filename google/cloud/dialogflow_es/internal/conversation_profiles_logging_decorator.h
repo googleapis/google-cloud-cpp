@@ -99,7 +99,6 @@ class ConversationProfilesLogging : public ConversationProfilesStub {
  private:
   std::shared_ptr<ConversationProfilesStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ConversationProfilesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

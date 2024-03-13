@@ -263,7 +263,6 @@ class CloudDeployLogging : public CloudDeployStub {
  private:
   std::shared_ptr<CloudDeployStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudDeployLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

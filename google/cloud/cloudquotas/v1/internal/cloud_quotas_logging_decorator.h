@@ -72,7 +72,6 @@ class CloudQuotasLogging : public CloudQuotasStub {
  private:
   std::shared_ptr<CloudQuotasStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudQuotasLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

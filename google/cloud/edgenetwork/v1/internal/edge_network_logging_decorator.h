@@ -206,7 +206,6 @@ class EdgeNetworkLogging : public EdgeNetworkStub {
  private:
   std::shared_ptr<EdgeNetworkStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // EdgeNetworkLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

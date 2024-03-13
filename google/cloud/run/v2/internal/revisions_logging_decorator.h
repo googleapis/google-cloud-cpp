@@ -68,7 +68,6 @@ class RevisionsLogging : public RevisionsStub {
  private:
   std::shared_ptr<RevisionsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // RevisionsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

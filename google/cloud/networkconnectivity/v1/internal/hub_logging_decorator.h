@@ -167,7 +167,6 @@ class HubServiceLogging : public HubServiceStub {
  private:
   std::shared_ptr<HubServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // HubServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

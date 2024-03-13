@@ -67,7 +67,6 @@ class SynonymSetServiceLogging : public SynonymSetServiceStub {
  private:
   std::shared_ptr<SynonymSetServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SynonymSetServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

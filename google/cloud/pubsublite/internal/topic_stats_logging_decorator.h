@@ -59,7 +59,6 @@ class TopicStatsServiceLogging : public TopicStatsServiceStub {
  private:
   std::shared_ptr<TopicStatsServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // TopicStatsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

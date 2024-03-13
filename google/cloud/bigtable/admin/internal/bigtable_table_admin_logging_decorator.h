@@ -187,7 +187,6 @@ class BigtableTableAdminLogging : public BigtableTableAdminStub {
  private:
   std::shared_ptr<BigtableTableAdminStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // BigtableTableAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

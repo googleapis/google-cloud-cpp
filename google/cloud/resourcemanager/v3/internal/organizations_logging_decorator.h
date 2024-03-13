@@ -64,7 +64,6 @@ class OrganizationsLogging : public OrganizationsStub {
  private:
   std::shared_ptr<OrganizationsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // OrganizationsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

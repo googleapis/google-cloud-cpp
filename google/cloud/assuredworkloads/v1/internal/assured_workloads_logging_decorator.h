@@ -105,7 +105,6 @@ class AssuredWorkloadsServiceLogging : public AssuredWorkloadsServiceStub {
  private:
   std::shared_ptr<AssuredWorkloadsServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AssuredWorkloadsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -46,7 +46,6 @@ class CaseAttachmentServiceLogging : public CaseAttachmentServiceStub {
  private:
   std::shared_ptr<CaseAttachmentServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CaseAttachmentServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

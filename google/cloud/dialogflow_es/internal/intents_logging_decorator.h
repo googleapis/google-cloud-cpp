@@ -91,7 +91,6 @@ class IntentsLogging : public IntentsStub {
  private:
   std::shared_ptr<IntentsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // IntentsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

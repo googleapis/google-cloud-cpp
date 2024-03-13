@@ -81,7 +81,6 @@ class TranscoderServiceLogging : public TranscoderServiceStub {
  private:
   std::shared_ptr<TranscoderServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // TranscoderServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

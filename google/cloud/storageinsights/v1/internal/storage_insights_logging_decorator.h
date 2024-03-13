@@ -78,7 +78,6 @@ class StorageInsightsLogging : public StorageInsightsStub {
  private:
   std::shared_ptr<StorageInsightsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // StorageInsightsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

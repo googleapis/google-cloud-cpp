@@ -169,7 +169,6 @@ class AssetServiceLogging : public AssetServiceStub {
  private:
   std::shared_ptr<AssetServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AssetServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

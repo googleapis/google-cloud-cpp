@@ -66,7 +66,6 @@ class DashboardsServiceLogging : public DashboardsServiceStub {
  private:
   std::shared_ptr<DashboardsServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DashboardsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

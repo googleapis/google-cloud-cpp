@@ -48,7 +48,6 @@ class TasksLogging : public TasksStub {
  private:
   std::shared_ptr<TasksStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // TasksLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

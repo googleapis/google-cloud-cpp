@@ -255,7 +255,6 @@ class CertificateAuthorityServiceLogging
  private:
   std::shared_ptr<CertificateAuthorityServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CertificateAuthorityServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

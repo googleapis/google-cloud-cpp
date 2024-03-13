@@ -60,7 +60,6 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
  private:
   std::shared_ptr<IAMCredentialsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // IAMCredentialsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

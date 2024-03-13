@@ -152,7 +152,6 @@ class ConnectorsLogging : public ConnectorsStub {
  private:
   std::shared_ptr<ConnectorsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ConnectorsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

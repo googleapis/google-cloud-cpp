@@ -114,7 +114,6 @@ class ProductServiceLogging : public ProductServiceStub {
  private:
   std::shared_ptr<ProductServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ProductServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
