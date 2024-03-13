@@ -161,7 +161,6 @@ class GoldenThingAdminLogging : public GoldenThingAdminStub {
  private:
   std::shared_ptr<GoldenThingAdminStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // GoldenThingAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
