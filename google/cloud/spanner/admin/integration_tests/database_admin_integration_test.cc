@@ -261,7 +261,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
       )""");
   metadata = client_.UpdateDatabaseDdl(database_.FullName(), statements).get();
   if (emulator_) {
-    EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument));
+    EXPECT_THAT(metadata, StatusIs(StatusCode::kInternal));
   } else {
     EXPECT_THAT(metadata, IsOk());
     std::vector<std::string> roles;
@@ -546,16 +546,15 @@ TEST_F(DatabaseAdminClientTest, DatabasePostgreSQLBasics) {
   creq.set_database_dialect(
       google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
   auto database = client_.CreateDatabase(creq).get();
-  if (emulator_) {
-    // This will let us know when the emulator starts supporting PostgreSQL
-    // syntax to quote identifiers.
-    EXPECT_THAT(database,
-                StatusIs(StatusCode::kInvalidArgument,
-                         HasSubstr("Error parsing Spanner DDL statement")));
-    GTEST_SKIP() << "emulator does not support PostgreSQL";
-  }
   ASSERT_STATUS_OK(database);
   EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
+  if (emulator_) {
+    // This will let us know when the emulator starts supporting PostgreSql.
+    EXPECT_EQ(database->database_dialect(),
+              google::spanner::admin::database::v1::DatabaseDialect::
+                  DATABASE_DIALECT_UNSPECIFIED);
+    GTEST_SKIP() << "emulator does not support PostgreSQL";
+  }
   EXPECT_EQ(database->database_dialect(),
             google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
 
