@@ -70,7 +70,6 @@ class AuthorizedCertificatesLogging : public AuthorizedCertificatesStub {
  private:
   std::shared_ptr<AuthorizedCertificatesStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AuthorizedCertificatesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

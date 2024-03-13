@@ -263,7 +263,6 @@ class TelcoAutomationLogging : public TelcoAutomationStub {
  private:
   std::shared_ptr<TelcoAutomationStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // TelcoAutomationLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

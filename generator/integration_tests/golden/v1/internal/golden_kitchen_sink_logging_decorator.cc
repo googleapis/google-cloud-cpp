@@ -37,7 +37,8 @@ GoldenKitchenSinkLogging::GoldenKitchenSinkLogging(
     std::shared_ptr<GoldenKitchenSinkStub> child,
     TracingOptions tracing_options,
     std::set<std::string> const& components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>

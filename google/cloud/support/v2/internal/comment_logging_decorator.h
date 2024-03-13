@@ -49,7 +49,6 @@ class CommentServiceLogging : public CommentServiceStub {
  private:
   std::shared_ptr<CommentServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CommentServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

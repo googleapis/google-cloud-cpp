@@ -80,7 +80,6 @@ class ImageAnnotatorLogging : public ImageAnnotatorStub {
  private:
   std::shared_ptr<ImageAnnotatorStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ImageAnnotatorLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

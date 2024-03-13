@@ -114,7 +114,6 @@ class EntityTypesLogging : public EntityTypesStub {
  private:
   std::shared_ptr<EntityTypesStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // EntityTypesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

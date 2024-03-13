@@ -101,7 +101,6 @@ class FunctionServiceLogging : public FunctionServiceStub {
  private:
   std::shared_ptr<FunctionServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // FunctionServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -72,7 +72,6 @@ class NodeGroupControllerLogging : public NodeGroupControllerStub {
  private:
   std::shared_ptr<NodeGroupControllerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // NodeGroupControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -346,7 +346,6 @@ class VmMigrationLogging : public VmMigrationStub {
  private:
   std::shared_ptr<VmMigrationStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // VmMigrationLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

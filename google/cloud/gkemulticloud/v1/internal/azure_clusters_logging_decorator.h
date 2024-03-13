@@ -174,7 +174,6 @@ class AzureClustersLogging : public AzureClustersStub {
  private:
   std::shared_ptr<AzureClustersStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AzureClustersLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

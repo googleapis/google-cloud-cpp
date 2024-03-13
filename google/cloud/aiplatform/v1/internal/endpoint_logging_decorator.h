@@ -104,7 +104,6 @@ class EndpointServiceLogging : public EndpointServiceStub {
  private:
   std::shared_ptr<EndpointServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // EndpointServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

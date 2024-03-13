@@ -69,7 +69,6 @@ class AutoscalingPolicyServiceLogging : public AutoscalingPolicyServiceStub {
  private:
   std::shared_ptr<AutoscalingPolicyServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AutoscalingPolicyServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

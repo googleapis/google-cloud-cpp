@@ -73,7 +73,6 @@ class EkmServiceLogging : public EkmServiceStub {
  private:
   std::shared_ptr<EkmServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // EkmServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

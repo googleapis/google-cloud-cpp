@@ -66,7 +66,6 @@ class BudgetServiceLogging : public BudgetServiceStub {
  private:
   std::shared_ptr<BudgetServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // BudgetServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

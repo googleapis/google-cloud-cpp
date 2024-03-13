@@ -197,7 +197,6 @@ class BackupForGKELogging : public BackupForGKEStub {
  private:
   std::shared_ptr<BackupForGKEStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // BackupForGKELogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

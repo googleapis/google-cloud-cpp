@@ -67,7 +67,6 @@ class MigrationServiceLogging : public MigrationServiceStub {
  private:
   std::shared_ptr<MigrationServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // MigrationServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

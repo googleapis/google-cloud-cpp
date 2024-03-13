@@ -102,7 +102,6 @@ class ClusterControllerLogging : public ClusterControllerStub {
  private:
   std::shared_ptr<ClusterControllerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ClusterControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

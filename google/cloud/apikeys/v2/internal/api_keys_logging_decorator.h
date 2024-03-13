@@ -94,7 +94,6 @@ class ApiKeysLogging : public ApiKeysStub {
  private:
   std::shared_ptr<ApiKeysStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ApiKeysLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

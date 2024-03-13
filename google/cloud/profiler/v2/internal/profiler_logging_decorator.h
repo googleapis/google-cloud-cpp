@@ -56,7 +56,6 @@ class ProfilerServiceLogging : public ProfilerServiceStub {
  private:
   std::shared_ptr<ProfilerServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ProfilerServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

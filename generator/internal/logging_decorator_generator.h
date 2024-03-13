@@ -49,6 +49,7 @@ class LoggingDecoratorGenerator : public StubGeneratorBase {
   LoggingDecoratorGenerator& operator=(LoggingDecoratorGenerator&&) = default;
 
  private:
+  bool HasStreamingMethod();
   Status GenerateHeader() override;
   Status GenerateCc() override;
 };

@@ -90,7 +90,6 @@ class ServiceMonitoringServiceLogging : public ServiceMonitoringServiceStub {
  private:
   std::shared_ptr<ServiceMonitoringServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ServiceMonitoringServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

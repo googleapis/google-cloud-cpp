@@ -173,7 +173,6 @@ class IAMLogging : public IAMStub {
  private:
   std::shared_ptr<IAMStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // IAMLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

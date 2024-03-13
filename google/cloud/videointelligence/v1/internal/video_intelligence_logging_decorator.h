@@ -61,7 +61,6 @@ class VideoIntelligenceServiceLogging : public VideoIntelligenceServiceStub {
  private:
   std::shared_ptr<VideoIntelligenceServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // VideoIntelligenceServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -84,7 +84,6 @@ class CloudShellServiceLogging : public CloudShellServiceStub {
  private:
   std::shared_ptr<CloudShellServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudShellServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

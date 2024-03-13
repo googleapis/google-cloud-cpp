@@ -320,7 +320,6 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
  private:
   std::shared_ptr<BareMetalSolutionStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // BareMetalSolutionLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

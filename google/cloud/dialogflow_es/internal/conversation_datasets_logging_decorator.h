@@ -89,7 +89,6 @@ class ConversationDatasetsLogging : public ConversationDatasetsStub {
  private:
   std::shared_ptr<ConversationDatasetsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ConversationDatasetsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -224,7 +224,6 @@ class AccessContextManagerLogging : public AccessContextManagerStub {
  private:
   std::shared_ptr<AccessContextManagerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AccessContextManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

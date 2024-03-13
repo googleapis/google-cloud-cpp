@@ -53,7 +53,6 @@ class CloudControlsPartnerMonitoringLogging
  private:
   std::shared_ptr<CloudControlsPartnerMonitoringStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudControlsPartnerMonitoringLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

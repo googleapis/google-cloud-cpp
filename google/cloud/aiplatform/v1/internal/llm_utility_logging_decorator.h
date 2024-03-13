@@ -51,7 +51,6 @@ class LlmUtilityServiceLogging : public LlmUtilityServiceStub {
  private:
   std::shared_ptr<LlmUtilityServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // LlmUtilityServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

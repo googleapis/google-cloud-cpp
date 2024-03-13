@@ -94,7 +94,6 @@ class IndexServiceLogging : public IndexServiceStub {
  private:
   std::shared_ptr<IndexServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // IndexServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -126,7 +126,6 @@ class StorageTransferServiceLogging : public StorageTransferServiceStub {
  private:
   std::shared_ptr<StorageTransferServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // StorageTransferServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

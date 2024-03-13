@@ -66,7 +66,6 @@ class FleetRoutingLogging : public FleetRoutingStub {
  private:
   std::shared_ptr<FleetRoutingStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // FleetRoutingLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

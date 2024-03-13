@@ -192,7 +192,6 @@ class ConfigServiceV2Logging : public ConfigServiceV2Stub {
  private:
   std::shared_ptr<ConfigServiceV2Stub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ConfigServiceV2Logging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

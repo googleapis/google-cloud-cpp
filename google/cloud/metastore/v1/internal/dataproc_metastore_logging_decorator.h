@@ -167,7 +167,6 @@ class DataprocMetastoreLogging : public DataprocMetastoreStub {
  private:
   std::shared_ptr<DataprocMetastoreStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DataprocMetastoreLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

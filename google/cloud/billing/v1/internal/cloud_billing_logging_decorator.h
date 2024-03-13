@@ -97,7 +97,6 @@ class CloudBillingLogging : public CloudBillingStub {
  private:
   std::shared_ptr<CloudBillingStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudBillingLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

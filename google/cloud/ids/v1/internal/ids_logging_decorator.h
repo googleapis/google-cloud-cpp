@@ -73,7 +73,6 @@ class IDSLogging : public IDSStub {
  private:
   std::shared_ptr<IDSStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // IDSLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -116,7 +116,6 @@ class FoldersLogging : public FoldersStub {
  private:
   std::shared_ptr<FoldersStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // FoldersLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

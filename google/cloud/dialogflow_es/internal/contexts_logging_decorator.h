@@ -70,7 +70,6 @@ class ContextsLogging : public ContextsStub {
  private:
   std::shared_ptr<ContextsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ContextsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

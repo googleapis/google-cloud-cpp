@@ -72,7 +72,6 @@ class SimulatorLogging : public SimulatorStub {
  private:
   std::shared_ptr<SimulatorStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SimulatorLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

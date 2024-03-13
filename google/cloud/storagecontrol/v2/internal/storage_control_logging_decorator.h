@@ -83,7 +83,6 @@ class StorageControlLogging : public StorageControlStub {
  private:
   std::shared_ptr<StorageControlStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // StorageControlLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -187,7 +187,6 @@ class ClusterManagerLogging : public ClusterManagerStub {
  private:
   std::shared_ptr<ClusterManagerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ClusterManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

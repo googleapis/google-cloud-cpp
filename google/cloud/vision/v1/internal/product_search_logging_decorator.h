@@ -148,7 +148,6 @@ class ProductSearchLogging : public ProductSearchStub {
  private:
   std::shared_ptr<ProductSearchStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ProductSearchLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

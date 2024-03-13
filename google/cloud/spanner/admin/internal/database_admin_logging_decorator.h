@@ -168,7 +168,6 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
  private:
   std::shared_ptr<DatabaseAdminStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DatabaseAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

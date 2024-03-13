@@ -76,7 +76,6 @@ class ApplicationsLogging : public ApplicationsStub {
  private:
   std::shared_ptr<ApplicationsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ApplicationsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

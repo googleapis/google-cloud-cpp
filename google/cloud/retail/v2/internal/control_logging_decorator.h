@@ -61,7 +61,6 @@ class ControlServiceLogging : public ControlServiceStub {
  private:
   std::shared_ptr<ControlServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ControlServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

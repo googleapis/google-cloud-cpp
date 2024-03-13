@@ -88,7 +88,6 @@ class AdaptationLogging : public AdaptationStub {
  private:
   std::shared_ptr<AdaptationStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AdaptationLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

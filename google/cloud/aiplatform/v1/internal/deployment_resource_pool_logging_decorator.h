@@ -83,7 +83,6 @@ class DeploymentResourcePoolServiceLogging
  private:
   std::shared_ptr<DeploymentResourcePoolServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DeploymentResourcePoolServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
