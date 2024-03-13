@@ -546,7 +546,6 @@ TEST_F(DatabaseAdminClientTest, DatabasePostgreSQLBasics) {
   creq.set_database_dialect(
       google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
   auto database = client_.CreateDatabase(creq).get();
-
   ASSERT_STATUS_OK(database);
   EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
   if (emulator_) {
