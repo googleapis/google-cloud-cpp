@@ -110,7 +110,6 @@ class PipelineServiceLogging : public PipelineServiceStub {
  private:
   std::shared_ptr<PipelineServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // PipelineServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

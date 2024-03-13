@@ -225,6 +225,29 @@ ProjectsClient::MoveInstance(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsClient::SetCloudArmorTier(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::ProjectsSetCloudArmorTierRequest const&
+        projects_set_cloud_armor_tier_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest request;
+  request.set_project(project);
+  *request.mutable_projects_set_cloud_armor_tier_request_resource() =
+      projects_set_cloud_armor_tier_request_resource;
+  return connection_->SetCloudArmorTier(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsClient::SetCloudArmorTier(
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetCloudArmorTier(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::SetCommonInstanceMetadata(
     std::string const& project,
     google::cloud::cpp::compute::v1::Metadata const& metadata_resource,

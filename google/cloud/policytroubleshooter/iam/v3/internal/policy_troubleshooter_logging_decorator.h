@@ -48,7 +48,6 @@ class PolicyTroubleshooterLogging : public PolicyTroubleshooterStub {
  private:
   std::shared_ptr<PolicyTroubleshooterStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // PolicyTroubleshooterLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

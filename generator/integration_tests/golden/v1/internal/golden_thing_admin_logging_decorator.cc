@@ -31,9 +31,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GoldenThingAdminLogging::GoldenThingAdminLogging(
     std::shared_ptr<GoldenThingAdminStub> child,
     TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
-      stream_logging_(components.find("rpc-streams") != components.end()) {}
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 GoldenThingAdminLogging::ListDatabases(

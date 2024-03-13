@@ -94,7 +94,6 @@ class ReachabilityServiceLogging : public ReachabilityServiceStub {
  private:
   std::shared_ptr<ReachabilityServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ReachabilityServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "absl/strings/str_split.h"
 #include <cstdlib>
 #include <set>
@@ -223,12 +224,17 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
                                                                 "/iamapi");
   }
 
-  auto tracing = GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
-  if (tracing.has_value()) {
-    for (auto c : absl::StrSplit(*tracing, ',')) {
+  auto logging = GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
+  if (logging) {
+    for (auto c : absl::StrSplit(*logging, ',')) {
       GCP_LOG(INFO) << "Enabling logging for " << c;
       o.lookup<TracingComponentsOption>().insert(std::string(c));
     }
+  }
+
+  auto tracing = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING");
+  if (tracing && !tracing->empty()) {
+    o.set<OpenTelemetryTracingOption>(true);
   }
 
   auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT");

@@ -89,7 +89,6 @@ class SubscriptionAdminLogging : public SubscriptionAdminStub {
  private:
   std::shared_ptr<SubscriptionAdminStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SubscriptionAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

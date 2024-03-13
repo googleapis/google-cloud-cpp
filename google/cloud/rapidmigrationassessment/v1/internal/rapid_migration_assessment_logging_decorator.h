@@ -121,7 +121,6 @@ class RapidMigrationAssessmentLogging : public RapidMigrationAssessmentStub {
  private:
   std::shared_ptr<RapidMigrationAssessmentStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // RapidMigrationAssessmentLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

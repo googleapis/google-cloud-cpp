@@ -47,7 +47,6 @@ class ImageVersionsLogging : public ImageVersionsStub {
  private:
   std::shared_ptr<ImageVersionsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ImageVersionsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

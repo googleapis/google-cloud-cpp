@@ -159,7 +159,6 @@ class AdminServiceLogging : public AdminServiceStub {
  private:
   std::shared_ptr<AdminServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AdminServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

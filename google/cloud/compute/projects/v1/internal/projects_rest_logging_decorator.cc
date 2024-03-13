@@ -213,6 +213,26 @@ ProjectsRestLogging::AsyncMoveInstance(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsRestLogging::AsyncSetCloudArmorTier(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::projects::v1::
+                 SetCloudArmorTierRequest const& request) {
+        return child_->AsyncSetCloudArmorTier(cq, std::move(rest_context),
+                                              std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncSetCommonInstanceMetadata(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

@@ -52,7 +52,6 @@ class AnswerRecordsLogging : public AnswerRecordsStub {
  private:
   std::shared_ptr<AnswerRecordsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AnswerRecordsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

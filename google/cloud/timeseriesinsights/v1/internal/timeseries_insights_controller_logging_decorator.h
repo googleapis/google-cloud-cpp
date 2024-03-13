@@ -78,7 +78,6 @@ class TimeseriesInsightsControllerLogging
  private:
   std::shared_ptr<TimeseriesInsightsControllerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // TimeseriesInsightsControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

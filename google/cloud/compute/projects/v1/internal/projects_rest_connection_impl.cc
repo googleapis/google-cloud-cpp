@@ -477,6 +477,64 @@ ProjectsRestConnectionImpl::MoveInstance(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsRestConnectionImpl::SetCloudArmorTier(
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return rest_internal::AsyncRestLongRunningOperation<
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::projects::v1::
+                         SetCloudArmorTierRequest const& request) {
+        return stub->AsyncSetCloudArmorTier(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetCloudArmorTier(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
+        return op.status() == "DONE";
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::SetCommonInstanceMetadata(
     google::cloud::cpp::compute::projects::v1::
         SetCommonInstanceMetadataRequest const& request) {

@@ -61,7 +61,6 @@ class CompanyServiceLogging : public CompanyServiceStub {
  private:
   std::shared_ptr<CompanyServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CompanyServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

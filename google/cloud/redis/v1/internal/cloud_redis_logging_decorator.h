@@ -117,7 +117,6 @@ class CloudRedisLogging : public CloudRedisStub {
  private:
   std::shared_ptr<CloudRedisStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudRedisLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

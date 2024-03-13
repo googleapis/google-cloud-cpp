@@ -152,7 +152,6 @@ class RecaptchaEnterpriseServiceLogging
  private:
   std::shared_ptr<RecaptchaEnterpriseServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // RecaptchaEnterpriseServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

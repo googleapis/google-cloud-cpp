@@ -98,7 +98,6 @@ class DataFusionLogging : public DataFusionStub {
  private:
   std::shared_ptr<DataFusionStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DataFusionLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

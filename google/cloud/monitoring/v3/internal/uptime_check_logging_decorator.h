@@ -72,7 +72,6 @@ class UptimeCheckServiceLogging : public UptimeCheckServiceStub {
  private:
   std::shared_ptr<UptimeCheckServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // UptimeCheckServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -74,7 +74,6 @@ class ServingConfigServiceLogging : public ServingConfigServiceStub {
  private:
   std::shared_ptr<ServingConfigServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ServingConfigServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

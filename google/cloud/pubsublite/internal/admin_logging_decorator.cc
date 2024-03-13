@@ -30,10 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AdminServiceLogging::AdminServiceLogging(
     std::shared_ptr<AdminServiceStub> child, TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
-      stream_logging_(components.find("rpc-streams") != components.end()) {}
+    std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceLogging::CreateTopic(
     grpc::ClientContext& context, Options const& options,

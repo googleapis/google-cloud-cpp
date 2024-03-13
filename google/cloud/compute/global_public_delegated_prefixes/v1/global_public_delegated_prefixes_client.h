@@ -188,7 +188,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L131}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L29}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -221,7 +221,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L131}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L29}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -338,7 +338,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L170}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L29}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -379,7 +379,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L170}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L29}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -418,7 +418,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L236}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L238}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -461,7 +461,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L236}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L238}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

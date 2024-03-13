@@ -157,7 +157,6 @@ class EdgeContainerLogging : public EdgeContainerStub {
  private:
   std::shared_ptr<EdgeContainerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // EdgeContainerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

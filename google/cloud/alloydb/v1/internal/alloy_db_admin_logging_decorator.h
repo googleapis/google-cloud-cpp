@@ -227,7 +227,6 @@ class AlloyDBAdminLogging : public AlloyDBAdminStub {
  private:
   std::shared_ptr<AlloyDBAdminStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AlloyDBAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

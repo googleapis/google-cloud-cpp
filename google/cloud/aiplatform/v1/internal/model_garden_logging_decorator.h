@@ -46,7 +46,6 @@ class ModelGardenServiceLogging : public ModelGardenServiceStub {
  private:
   std::shared_ptr<ModelGardenServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ModelGardenServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

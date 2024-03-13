@@ -210,7 +210,6 @@ class AppHubLogging : public AppHubStub {
  private:
   std::shared_ptr<AppHubStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AppHubLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

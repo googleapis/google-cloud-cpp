@@ -914,6 +914,7 @@ TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
         lexicographic_end: "test/prefix/abc"
         match_glob: "**/*.cc"
         soft_deleted: true
+        include_folders_as_prefixes: true
       )pb",
       &expected));
 
@@ -924,7 +925,8 @@ TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
       storage::IncludeTrailingDelimiter(true), storage::Prefix("test/prefix"),
       storage::Versions(true), storage::StartOffset("test/prefix/a"),
       storage::EndOffset("test/prefix/abc"), storage::MatchGlob("**/*.cc"),
-      storage::SoftDeleted(true), storage::UserProject("test-user-project"),
+      storage::SoftDeleted(true), storage::IncludeFoldersAsPrefixes(true),
+      storage::UserProject("test-user-project"),
       storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
   auto const actual = ToProto(req);

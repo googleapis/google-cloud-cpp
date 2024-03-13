@@ -70,7 +70,6 @@ class SessionEntityTypesLogging : public SessionEntityTypesStub {
  private:
   std::shared_ptr<SessionEntityTypesStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SessionEntityTypesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

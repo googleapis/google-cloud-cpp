@@ -132,7 +132,6 @@ class NotebookServiceLogging : public NotebookServiceStub {
  private:
   std::shared_ptr<NotebookServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // NotebookServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

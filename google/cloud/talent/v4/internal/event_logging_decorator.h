@@ -46,7 +46,6 @@ class EventServiceLogging : public EventServiceStub {
  private:
   std::shared_ptr<EventServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // EventServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

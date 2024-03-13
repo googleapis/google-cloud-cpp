@@ -163,7 +163,6 @@ class ConfigLogging : public ConfigStub {
  private:
   std::shared_ptr<ConfigStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ConfigLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

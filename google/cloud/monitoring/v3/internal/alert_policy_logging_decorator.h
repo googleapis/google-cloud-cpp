@@ -61,7 +61,6 @@ class AlertPolicyServiceLogging : public AlertPolicyServiceStub {
  private:
   std::shared_ptr<AlertPolicyServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AlertPolicyServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

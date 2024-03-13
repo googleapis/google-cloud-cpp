@@ -160,6 +160,17 @@ Status ParseEncryption(BucketMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
+Status ParseHierarchicalNamespace(BucketMetadata& meta,
+                                  nlohmann::json const& json) {
+  auto const i = json.find("hierarchicalNamespace");
+  if (i == json.end()) return Status{};
+  if (!i->contains("enabled")) return Status{};
+  auto enabled = internal::ParseBoolField(*i, "enabled");
+  if (!enabled) return std::move(enabled).status();
+  meta.set_hierarchical_namespace(BucketHierarchicalNamespace{*enabled});
+  return Status{};
+}
+
 Status ParseIamConfiguration(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("iamConfiguration")) return Status{};
   BucketIamConfiguration value;
@@ -354,6 +365,13 @@ void ToJsonEncryption(nlohmann::json& json, BucketMetadata const& meta) {
   json["encryption"] = std::move(e);
 }
 
+void ToJsonHierarchicalNamespace(nlohmann::json& json,
+                                 BucketMetadata const& meta) {
+  if (!meta.has_hierarchical_namespace()) return;
+  json["hierarchicalNamespace"] =
+      nlohmann::json{{"enabled", meta.hierarchical_namespace().enabled}};
+}
+
 void ToJsonIamConfiguration(nlohmann::json& json, BucketMetadata const& meta) {
   if (!meta.has_iam_configuration()) return;
   nlohmann::json value;
@@ -513,6 +531,7 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
         meta.set_etag(json.value("etag", ""));
         return Status{};
       },
+      ParseHierarchicalNamespace,
       ParseIamConfiguration,
       [](BucketMetadata& meta, nlohmann::json const& json) {
         meta.set_id(json.value("id", ""));
@@ -601,6 +620,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   ToJsonDefaultEventBasedHold(json, meta);
   ToJsonDefaultAcl(json, meta);
   ToJsonEncryption(json, meta);
+  ToJsonHierarchicalNamespace(json, meta);
   ToJsonIamConfiguration(json, meta);
   ToJsonLabels(json, meta);
   ToJsonLifecycle(json, meta);

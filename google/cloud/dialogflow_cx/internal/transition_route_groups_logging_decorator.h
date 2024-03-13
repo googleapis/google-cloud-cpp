@@ -70,7 +70,6 @@ class TransitionRouteGroupsLogging : public TransitionRouteGroupsStub {
  private:
   std::shared_ptr<TransitionRouteGroupsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // TransitionRouteGroupsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

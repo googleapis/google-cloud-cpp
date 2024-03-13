@@ -87,7 +87,6 @@ class CloudControlsPartnerCoreLogging : public CloudControlsPartnerCoreStub {
  private:
   std::shared_ptr<CloudControlsPartnerCoreStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudControlsPartnerCoreLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

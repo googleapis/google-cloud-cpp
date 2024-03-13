@@ -30,10 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BinauthzManagementServiceV1Logging::BinauthzManagementServiceV1Logging(
     std::shared_ptr<BinauthzManagementServiceV1Stub> child,
-    TracingOptions tracing_options, std::set<std::string> const& components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
-      stream_logging_(components.find("rpc-streams") != components.end()) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1Logging::GetPolicy(

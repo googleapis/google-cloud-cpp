@@ -52,7 +52,6 @@ class MatchServiceLogging : public MatchServiceStub {
  private:
   std::shared_ptr<MatchServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // MatchServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

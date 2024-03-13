@@ -96,7 +96,6 @@ class GrafeasLogging : public GrafeasStub {
  private:
   std::shared_ptr<GrafeasStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // GrafeasLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

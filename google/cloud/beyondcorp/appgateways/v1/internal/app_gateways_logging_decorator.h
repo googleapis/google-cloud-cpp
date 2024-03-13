@@ -80,7 +80,6 @@ class AppGatewaysServiceLogging : public AppGatewaysServiceStub {
  private:
   std::shared_ptr<AppGatewaysServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AppGatewaysServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

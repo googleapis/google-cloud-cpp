@@ -88,7 +88,6 @@ class DatastoreAdminLogging : public DatastoreAdminStub {
  private:
   std::shared_ptr<DatastoreAdminStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DatastoreAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -151,7 +151,6 @@ class LineageLogging : public LineageStub {
  private:
   std::shared_ptr<LineageStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // LineageLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

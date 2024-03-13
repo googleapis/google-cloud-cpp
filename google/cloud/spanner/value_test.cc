@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/spanner/testing/singer.pb.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
@@ -20,6 +22,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <cmath>
+#include <cstdint>
 #include <ios>
 #include <limits>
 #include <string>
@@ -38,6 +41,7 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 absl::Time MakeTime(std::int64_t sec, int nanos) {
@@ -63,6 +67,16 @@ std::vector<Timestamp> TestTimes() {
     }
   }
   return times;
+}
+
+testing::SingerInfo MakeSinger(std::int64_t singer_id, std::string birth_date,
+                               std::string nationality, testing::Genre genre) {
+  testing::SingerInfo singer;
+  singer.set_singer_id(singer_id);
+  singer.set_birth_date(std::move(birth_date));
+  singer.set_nationality(std::move(nationality));
+  singer.set_genre(genre);
+  return singer;
 }
 
 template <typename T>
@@ -234,6 +248,29 @@ TEST(Value, BasicSemantics) {
   std::vector<absl::optional<CommitTimestamp>> v(5, x);
   v.resize(10);
   TestBasicSemantics(v);
+
+  for (auto x : {testing::Genre::POP, testing::Genre::JAZZ,
+                 testing::Genre::FOLK, testing::Genre::ROCK}) {
+    SCOPED_TRACE("Testing: ProtoEnum<testing::Genre> " +
+                 testing::Genre_Name(x));
+    TestBasicSemantics(ProtoEnum<testing::Genre>(x));
+    TestBasicSemantics(std::vector<ProtoEnum<testing::Genre>>(5, x));
+    std::vector<absl::optional<ProtoEnum<testing::Genre>>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
+  }
+
+  for (auto const& x :
+       {MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK),
+        MakeSinger(2123139547, "1942-06-18", "British", testing::Genre::POP)}) {
+    SCOPED_TRACE("Testing: ProtoMessage<testing::SingerInfo> { " +
+                 x.ShortDebugString() + " }");
+    TestBasicSemantics(ProtoMessage<testing::SingerInfo>(x));
+    TestBasicSemantics(std::vector<ProtoMessage<testing::SingerInfo>>(5, x));
+    std::vector<absl::optional<ProtoMessage<testing::SingerInfo>>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
+  }
 }
 
 TEST(Value, Equality) {
@@ -249,6 +286,11 @@ TEST(Value, Equality) {
       {Value(MakePgNumeric(0).value()), Value(MakePgNumeric(1).value())},
       {Value(PgOid(200)), Value(PgOid(999))},
       {Value(absl::CivilDay(1970, 1, 1)), Value(absl::CivilDay(2020, 3, 15))},
+      {Value(ProtoEnum<testing::Genre>(testing::Genre::POP)),
+       Value(ProtoEnum<testing::Genre>(testing::Genre::JAZZ))},
+      {Value(ProtoMessage<testing::SingerInfo>()),
+       Value(ProtoMessage<testing::SingerInfo>(
+           MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK)))},
       {Value(std::vector<double>{1.2, 3.4}),
        Value(std::vector<double>{4.5, 6.7})},
       {Value(std::make_tuple(false, 123, "foo")),
@@ -812,6 +854,34 @@ TEST(Value, ProtoConversionDate) {
   }
 }
 
+TEST(Value, ProtoConversionProtoEnum) {
+  for (auto e : {testing::Genre::POP, testing::Genre::JAZZ,
+                 testing::Genre::FOLK, testing::Genre::ROCK}) {
+    Value const v{ProtoEnum<testing::Genre>(e)};
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::ENUM, p.first.code());
+    EXPECT_EQ("google.cloud.spanner.testing.Genre", p.first.proto_type_fqn());
+    EXPECT_EQ(std::to_string(e), p.second.string_value());
+  }
+}
+
+TEST(Value, ProtoConversionProtoMessage) {
+  auto m = ProtoMessage<testing::SingerInfo>(
+      MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK));
+
+  Value const v{m};
+  auto const p = spanner_internal::ToProto(v);
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+  EXPECT_EQ(google::spanner::v1::TypeCode::PROTO, p.first.code());
+  EXPECT_EQ("google.cloud.spanner.testing.SingerInfo",
+            p.first.proto_type_fqn());
+
+  auto bytes = internal::Base64DecodeToBytes(p.second.string_value());
+  ASSERT_STATUS_OK(bytes);
+  EXPECT_EQ(std::string{m}, std::string(bytes->begin(), bytes->end()));
+}
+
 TEST(Value, ProtoConversionArray) {
   std::vector<std::int64_t> data{1, 2, 3};
   Value const v(data);
@@ -1086,6 +1156,63 @@ TEST(Value, GetBadDate) {
   EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 }
 
+TEST(Value, GetBadProtoEnum) {
+  Value v(ProtoEnum<testing::Genre>{});
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<ProtoEnum<testing::Genre>>(), Not(IsOk()));
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_THAT(v.get<ProtoEnum<testing::Genre>>(), Not(IsOk()));
+
+  SetProtoKind(v, "");
+  EXPECT_THAT(v.get<ProtoEnum<testing::Genre>>(), Not(IsOk()));
+
+  SetProtoKind(v, "blah");
+  EXPECT_THAT(v.get<ProtoEnum<testing::Genre>>(), Not(IsOk()));
+
+  SetProtoKind(v, "1blah");
+  EXPECT_THAT(v.get<ProtoEnum<testing::Genre>>(), Not(IsOk()));
+
+  SetProtoKind(v, "2147483648");
+  EXPECT_THAT(v.get<ProtoEnum<testing::Genre>>(), Not(IsOk()));
+}
+
+TEST(Value, GetBadProtoEnumFQN) {
+  Value v(ProtoEnum<testing::Genre>{});
+  EXPECT_THAT(v.get<ProtoEnum<testing::Genre>>(), IsOk());
+
+  auto p = spanner_internal::ToProto(v);
+  ASSERT_THAT(p.first.proto_type_fqn(), Not(IsEmpty()));
+  p.first.mutable_proto_type_fqn()->pop_back();
+  v = spanner_internal::FromProto(p.first, p.second);
+  EXPECT_THAT(v.get<ProtoEnum<testing::Genre>>(), Not(IsOk()));
+}
+
+TEST(Value, GetBadProtoMessage) {
+  Value v(ProtoMessage<testing::SingerInfo>(
+      MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK)));
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<ProtoMessage<testing::SingerInfo>>(), Not(IsOk()));
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_THAT(v.get<ProtoMessage<testing::SingerInfo>>(), Not(IsOk()));
+
+  SetProtoKind(v, "invalid-base64-because-of-hyphens");
+  EXPECT_THAT(v.get<ProtoMessage<testing::SingerInfo>>(), Not(IsOk()));
+}
+
+TEST(Value, GetBadProtoMessageFQN) {
+  Value v(ProtoMessage<testing::SingerInfo>(
+      MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK)));
+  EXPECT_THAT(v.get<ProtoMessage<testing::SingerInfo>>(), IsOk());
+
+  auto p = spanner_internal::ToProto(v);
+  ASSERT_THAT(p.first.proto_type_fqn(), Not(IsEmpty()));
+  p.first.mutable_proto_type_fqn()->pop_back();
+  v = spanner_internal::FromProto(p.first, p.second);
+  EXPECT_THAT(v.get<ProtoMessage<testing::SingerInfo>>(), Not(IsOk()));
+}
+
 TEST(Value, GetBadOptional) {
   Value v(absl::optional<double>{});
   ClearProtoKind(v);
@@ -1169,6 +1296,8 @@ TEST(Value, OutputStream) {
   };
 
   auto const inf = std::numeric_limits<double>::infinity();
+  auto const singer =
+      MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK);
 
   struct TestCase {
     Value value;
@@ -1200,6 +1329,12 @@ TEST(Value, OutputStream) {
       {Value(PgOid(1234567890)), "1234567890", normal},
       {Value(absl::CivilDay()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
+      {Value(ProtoEnum<testing::Genre>(testing::Genre::POP)),
+       "google.cloud.spanner.testing.POP", normal},
+      {Value(ProtoMessage<testing::SingerInfo>(singer)),
+       R"(google.cloud.spanner.testing.SingerInfo { singer_id: 1)"
+       R"( birth_date: "1817-05-25" nationality: "French" genre: FOLK })",
+       normal},
 
       // Tests string quoting: No quotes for scalars; quotes within aggregates
       {Value(""), "", normal},
@@ -1226,6 +1361,8 @@ TEST(Value, OutputStream) {
       {MakeNullValue<PgOid>(), "NULL", normal},
       {MakeNullValue<absl::CivilDay>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
+      {MakeNullValue<ProtoEnum<testing::Genre>>(), "NULL", normal},
+      {MakeNullValue<ProtoMessage<testing::SingerInfo>>(), "NULL", normal},
 
       // Tests arrays
       {Value(std::vector<bool>{false, true}), "[0, 1]", normal},
@@ -1242,6 +1379,14 @@ TEST(Value, OutputStream) {
       {Value(std::vector<absl::CivilDay>{2}), "[1970-01-01, 1970-01-01]",
        normal},
       {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
+      {Value(std::vector<ProtoEnum<testing::Genre>>{testing::JAZZ,
+                                                    testing::FOLK}),
+       "[google.cloud.spanner.testing.JAZZ, google.cloud.spanner.testing.FOLK]",
+       normal},
+      {Value(std::vector<ProtoMessage<testing::SingerInfo>>{singer}),
+       R"([google.cloud.spanner.testing.SingerInfo { singer_id: 1)"
+       R"( birth_date: "1817-05-25" nationality: "French" genre: FOLK }])",
+       normal},
 
       // Tests arrays with null elements
       {Value(std::vector<absl::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
@@ -1258,6 +1403,9 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<Numeric>>(), "NULL", normal},
       {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
+      {MakeNullValue<std::vector<ProtoEnum<testing::Genre>>>(), "NULL", normal},
+      {MakeNullValue<std::vector<ProtoMessage<testing::SingerInfo>>>(), "NULL",
+       normal},
 
       // Tests structs
       {Value(std::make_tuple(true, 123)), "(1, 123)", normal},
@@ -1391,6 +1539,17 @@ TEST(Value, OutputStreamMatchesT) {
   // Timestamp
   StreamMatchesValueStream(Timestamp());
   StreamMatchesValueStream(MakeTimestamp(MakeTime(1, 1)).value());
+
+  // ProtoEnum
+  StreamMatchesValueStream(ProtoEnum<testing::Genre>());
+  StreamMatchesValueStream(ProtoEnum<testing::Genre>(testing::ROCK));
+  StreamMatchesValueStream(
+      ProtoEnum<testing::Genre>(static_cast<testing::Genre>(42)));
+
+  // ProtoMessage
+  StreamMatchesValueStream(ProtoMessage<testing::SingerInfo>());
+  StreamMatchesValueStream(ProtoMessage<testing::SingerInfo>(
+      MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK)));
 
   // std::vector<T>
   // Not included, because a raw vector cannot be streamed.

@@ -94,7 +94,6 @@ class AccessApprovalLogging : public AccessApprovalStub {
  private:
   std::shared_ptr<AccessApprovalStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AccessApprovalLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

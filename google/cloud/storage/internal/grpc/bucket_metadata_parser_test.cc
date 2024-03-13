@@ -128,6 +128,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
         nanos: 123456000
       }
     }
+    hierarchical_namespace { enabled: true }
     soft_delete_policy {
       effective_time { seconds: 1708000496 nanos: 700000000 }
       retention_duration { seconds: 864000 }
@@ -246,6 +247,9 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       "toggleTime": "2022-10-07T02:03:04.123456000Z",
       "terminalStorageClass": "NEARLINE",
       "terminalStorageClassUpdateTime": "2022-10-07T02:02:04.123456000Z"
+    },
+    "hierarchicalNamespace": {
+      "enabled": true
     },
     "softDeletePolicy": {
       "effectiveTime": "2024-02-15T12:34:56.700Z",

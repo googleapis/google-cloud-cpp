@@ -124,7 +124,6 @@ class TestCasesLogging : public TestCasesStub {
  private:
   std::shared_ptr<TestCasesStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // TestCasesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

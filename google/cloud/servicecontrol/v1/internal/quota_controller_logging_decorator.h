@@ -46,7 +46,6 @@ class QuotaControllerLogging : public QuotaControllerStub {
  private:
   std::shared_ptr<QuotaControllerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // QuotaControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

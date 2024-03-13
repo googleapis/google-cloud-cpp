@@ -202,7 +202,6 @@ class DatastreamLogging : public DatastreamStub {
  private:
   std::shared_ptr<DatastreamStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DatastreamLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

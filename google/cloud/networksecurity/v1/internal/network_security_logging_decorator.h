@@ -157,7 +157,6 @@ class NetworkSecurityLogging : public NetworkSecurityStub {
  private:
   std::shared_ptr<NetworkSecurityStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // NetworkSecurityLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

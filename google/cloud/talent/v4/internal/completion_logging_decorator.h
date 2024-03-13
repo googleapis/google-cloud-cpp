@@ -45,7 +45,6 @@ class CompletionLogging : public CompletionStub {
  private:
   std::shared_ptr<CompletionStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CompletionLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

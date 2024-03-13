@@ -47,7 +47,6 @@ class LookupServiceLogging : public LookupServiceStub {
  private:
   std::shared_ptr<LookupServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // LookupServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,6 +33,7 @@
 #include <google/cloud/speech/v2/cloud_speech.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -285,8 +286,19 @@ class SpeechConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
+ * @param location Sets the prefix for the default `EndpointOption` value.
  * @param options (optional) Configure the `SpeechConnection` created by
  * this function.
+ */
+std::shared_ptr<SpeechConnection> MakeSpeechConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A backwards-compatible version of the previous factory function.  Unless
+ * the service also offers a global endpoint, the default value of the
+ * `EndpointOption` may be useless, in which case it must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
  */
 std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
 

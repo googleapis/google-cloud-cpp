@@ -102,7 +102,6 @@ class OrgPolicyLogging : public OrgPolicyStub {
  private:
   std::shared_ptr<OrgPolicyStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // OrgPolicyLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

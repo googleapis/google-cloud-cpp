@@ -75,6 +75,10 @@ class ProjectsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
           request);
 
+  virtual google::cloud::Idempotency SetCloudArmorTier(
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+          request);
+
   virtual google::cloud::Idempotency SetCommonInstanceMetadata(
       google::cloud::cpp::compute::projects::v1::
           SetCommonInstanceMetadataRequest const& request);

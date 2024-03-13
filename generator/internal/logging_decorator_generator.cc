@@ -35,6 +35,11 @@ LoggingDecoratorGenerator::LoggingDecoratorGenerator(
                         service_descriptor, std::move(service_vars),
                         std::move(service_method_vars), context) {}
 
+bool LoggingDecoratorGenerator::HasStreamingMethod() {
+  return HasStreamingReadMethod() || HasStreamingWriteMethod() ||
+         HasBidirStreamingMethod();
+}
+
 Status LoggingDecoratorGenerator::GenerateHeader() {
   HeaderPrint(CopyrightLicenseFileHeader());
   HeaderPrint(  // clang-format off
@@ -76,10 +81,12 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     "\n"
     " private:\n"
     "  std::shared_ptr<$stub_class_name$> child_;\n"
-    "  TracingOptions tracing_options_;\n"
-    "  bool stream_logging_;\n"
-    "};  // $logging_class_name$\n");
+    "  TracingOptions tracing_options_;\n");
   // clang-format on
+  if (HasStreamingMethod()) {
+    HeaderPrint("  bool stream_logging_;\n");
+  }
+  HeaderPrint("};  // $logging_class_name$\n");
 
   HeaderCloseNamespaces();
   HeaderPrint("\n#endif  // $header_include_guard$\n");
@@ -126,10 +133,22 @@ Status LoggingDecoratorGenerator::GenerateCc() {
     "$logging_class_name$::$logging_class_name$(\n"
     "    std::shared_ptr<$stub_class_name$> child,\n"
     "    TracingOptions tracing_options,\n"
-    "    std::set<std::string> const& components)\n"
-    "    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),\n"
-    "      stream_logging_(components.find(\"rpc-streams\") != components.end()) {}\n");
+    "    std::set<std::string> const&");
   // clang-format on
+  if (HasStreamingMethod()) {
+    CcPrint(" components");
+  }
+  CcPrint(  // clang-format off
+    ")\n"
+    "    : child_(std::move(child)),\n"
+    "      tracing_options_(std::move(tracing_options))");
+  // clang-format on
+  if (HasStreamingMethod()) {
+    CcPrint(
+        ",\n      stream_logging_("
+        "components.find(\"rpc-streams\") != components.end())");
+  }
+  CcPrint(" {}\n");
 
   // logging decorator class member methods
   for (auto const& method : methods()) {

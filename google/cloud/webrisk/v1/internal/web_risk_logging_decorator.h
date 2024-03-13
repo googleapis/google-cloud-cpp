@@ -79,7 +79,6 @@ class WebRiskServiceLogging : public WebRiskServiceStub {
  private:
   std::shared_ptr<WebRiskServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // WebRiskServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

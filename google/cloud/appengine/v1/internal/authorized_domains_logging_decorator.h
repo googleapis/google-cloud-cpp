@@ -47,7 +47,6 @@ class AuthorizedDomainsLogging : public AuthorizedDomainsStub {
  private:
   std::shared_ptr<AuthorizedDomainsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // AuthorizedDomainsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

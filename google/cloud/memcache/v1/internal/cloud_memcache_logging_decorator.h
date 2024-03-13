@@ -105,7 +105,6 @@ class CloudMemcacheLogging : public CloudMemcacheStub {
  private:
   std::shared_ptr<CloudMemcacheStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // CloudMemcacheLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

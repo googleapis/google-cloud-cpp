@@ -78,7 +78,6 @@ class BinauthzManagementServiceV1Logging
  private:
   std::shared_ptr<BinauthzManagementServiceV1Stub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // BinauthzManagementServiceV1Logging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

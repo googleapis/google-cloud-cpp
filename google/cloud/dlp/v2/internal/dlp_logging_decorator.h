@@ -265,7 +265,6 @@ class DlpServiceLogging : public DlpServiceStub {
  private:
   std::shared_ptr<DlpServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DlpServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -141,7 +141,6 @@ class ApiGatewayServiceLogging : public ApiGatewayServiceStub {
  private:
   std::shared_ptr<ApiGatewayServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ApiGatewayServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

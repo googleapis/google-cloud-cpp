@@ -49,7 +49,6 @@ class ServiceControllerLogging : public ServiceControllerStub {
  private:
   std::shared_ptr<ServiceControllerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ServiceControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

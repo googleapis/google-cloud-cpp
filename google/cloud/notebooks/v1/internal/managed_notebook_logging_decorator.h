@@ -138,7 +138,6 @@ class ManagedNotebookServiceLogging : public ManagedNotebookServiceStub {
  private:
   std::shared_ptr<ManagedNotebookServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ManagedNotebookServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

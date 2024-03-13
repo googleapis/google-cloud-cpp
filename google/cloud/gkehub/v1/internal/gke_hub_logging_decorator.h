@@ -116,7 +116,6 @@ class GkeHubLogging : public GkeHubStub {
  private:
   std::shared_ptr<GkeHubStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // GkeHubLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

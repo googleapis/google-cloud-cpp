@@ -119,7 +119,6 @@ class ManagedIdentitiesServiceLogging : public ManagedIdentitiesServiceStub {
  private:
   std::shared_ptr<ManagedIdentitiesServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // ManagedIdentitiesServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

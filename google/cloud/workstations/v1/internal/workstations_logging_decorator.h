@@ -188,7 +188,6 @@ class WorkstationsLogging : public WorkstationsStub {
  private:
   std::shared_ptr<WorkstationsStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // WorkstationsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

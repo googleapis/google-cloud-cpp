@@ -163,7 +163,6 @@ class KeyManagementServiceLogging : public KeyManagementServiceStub {
  private:
   std::shared_ptr<KeyManagementServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // KeyManagementServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

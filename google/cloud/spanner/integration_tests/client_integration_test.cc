@@ -1608,11 +1608,7 @@ TEST_F(ClientIntegrationTest, SupportedOptimizerVersions) {
       )"""));
   using RowType = std::tuple<std::int64_t, absl::CivilDay>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (UsingEmulator()) {
-      EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
-    } else {
-      EXPECT_THAT(row, IsOk());
-    }
+    EXPECT_THAT(row, IsOk());
     if (!row) break;
     EXPECT_GT(std::get<0>(*row), 0);
     EXPECT_GE(std::get<1>(*row), absl::CivilDay(1998, 9, 4));

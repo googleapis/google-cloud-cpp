@@ -21,11 +21,14 @@
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
+#include "google/cloud/status.h"
 #include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
+#include <chrono>
 #include <thread>
 
 namespace google {
@@ -293,7 +296,14 @@ StatusOr<CommitResult> Client::Commit(
       // so that we have a slightly better chance of avoiding another abort.
       txn = MakeReadWriteTransaction(txn, txn_opts);
     }
-    std::this_thread::sleep_for(backoff_policy->OnCompletion());
+    std::chrono::nanoseconds delay = backoff_policy->OnCompletion();
+    if (internal::CurrentOptions().get<EnableServerRetriesOption>()) {
+      if (auto retry_info = internal::GetRetryInfo(status)) {
+        // Heed the `RetryInfo` from the service.
+        delay = retry_info->retry_delay();
+      }
+    }
+    std::this_thread::sleep_for(delay);
   }
 }
 

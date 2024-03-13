@@ -582,9 +582,10 @@ google::storage::v2::ListObjectsRequest ToProto(
   result.set_lexicographic_end(
       request.GetOption<storage::EndOffset>().value_or(""));
   result.set_match_glob(request.GetOption<storage::MatchGlob>().value_or(""));
-  if (request.GetOption<storage::SoftDeleted>().value_or(false)) {
-    result.set_soft_deleted(true);
-  }
+  result.set_soft_deleted(
+      request.GetOption<storage::SoftDeleted>().value_or(false));
+  result.set_include_folders_as_prefixes(
+      request.GetOption<storage::IncludeFoldersAsPrefixes>().value_or(false));
   return result;
 }
 

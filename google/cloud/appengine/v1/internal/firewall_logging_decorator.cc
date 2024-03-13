@@ -30,10 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FirewallLogging::FirewallLogging(std::shared_ptr<FirewallStub> child,
                                  TracingOptions tracing_options,
-                                 std::set<std::string> const& components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
-      stream_logging_(components.find("rpc-streams") != components.end()) {}
+                                 std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::appengine::v1::ListIngressRulesResponse>
 FirewallLogging::ListIngressRules(

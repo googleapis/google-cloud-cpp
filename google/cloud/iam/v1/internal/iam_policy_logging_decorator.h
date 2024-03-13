@@ -53,7 +53,6 @@ class IAMPolicyLogging : public IAMPolicyStub {
  private:
   std::shared_ptr<IAMPolicyStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // IAMPolicyLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

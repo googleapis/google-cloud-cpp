@@ -116,7 +116,6 @@ class SecureSourceManagerLogging : public SecureSourceManagerStub {
  private:
   std::shared_ptr<SecureSourceManagerStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // SecureSourceManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

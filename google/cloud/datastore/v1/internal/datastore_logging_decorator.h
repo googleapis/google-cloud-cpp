@@ -74,7 +74,6 @@ class DatastoreLogging : public DatastoreStub {
  private:
   std::shared_ptr<DatastoreStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DatastoreLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

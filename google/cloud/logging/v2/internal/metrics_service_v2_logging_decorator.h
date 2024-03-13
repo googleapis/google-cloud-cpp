@@ -61,7 +61,6 @@ class MetricsServiceV2Logging : public MetricsServiceV2Stub {
  private:
   std::shared_ptr<MetricsServiceV2Stub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // MetricsServiceV2Logging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

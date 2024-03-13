@@ -67,7 +67,6 @@ class KnowledgeBasesLogging : public KnowledgeBasesStub {
  private:
   std::shared_ptr<KnowledgeBasesStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // KnowledgeBasesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

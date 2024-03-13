@@ -27,8 +27,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::StartsWith;
 
 class LoggingResultSetReaderTest : public ::testing::Test {
  protected:
@@ -41,7 +44,7 @@ TEST_F(LoggingResultSetReaderTest, TryCancel) {
   LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   reader.TryCancel();
 
-  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("TryCancel")));
+  EXPECT_THAT(log_.ExtractLines(), IsEmpty());
 }
 
 TEST_F(LoggingResultSetReaderTest, Read) {
@@ -59,13 +62,16 @@ TEST_F(LoggingResultSetReaderTest, Read) {
   EXPECT_EQ("test-token", result->result.resume_token());
 
   auto log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("test-token")));
+  EXPECT_THAT(log_lines, AllOf(Contains(StartsWith("Read()"))));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("resume_token=\"\"")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("resumption=false")));
 
   result = reader.Read("test-token");
   ASSERT_FALSE(result.has_value());
 
   log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, AllOf(Contains(StartsWith("Read()"))));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("resume_token=\"test-token\"")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("(optional-with-no-value)")));
 }
 
@@ -80,8 +86,7 @@ TEST_F(LoggingResultSetReaderTest, Finish) {
   EXPECT_EQ(expected_status, status);
 
   auto log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Finish")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("weird")));
+  EXPECT_THAT(log_lines, IsEmpty());
 }
 
 }  // namespace

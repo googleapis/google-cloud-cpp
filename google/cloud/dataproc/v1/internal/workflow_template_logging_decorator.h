@@ -98,7 +98,6 @@ class WorkflowTemplateServiceLogging : public WorkflowTemplateServiceStub {
  private:
   std::shared_ptr<WorkflowTemplateServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // WorkflowTemplateServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

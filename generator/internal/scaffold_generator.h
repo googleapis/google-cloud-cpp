@@ -92,9 +92,6 @@ std::map<std::string, std::string> ScaffoldVars(
 std::string ServiceConfigYamlPath(
     std::string const& root, std::map<std::string, std::string> const& vars);
 
-/// Create a directory. The parent must exist.
-void MakeDirectory(std::string const& path);
-
 /**
  * Generates (if possible) a `.repo-metadata.json` file for @p service.
  *

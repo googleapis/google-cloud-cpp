@@ -147,6 +147,18 @@ ProjectsRestMetadata::AsyncMoveInstance(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsRestMetadata::AsyncSetCloudArmorTier(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncSetCloudArmorTier(cq, std::move(rest_context),
+                                        std::move(options), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestMetadata::AsyncSetCommonInstanceMetadata(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

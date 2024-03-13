@@ -191,7 +191,6 @@ class DocumentProcessorServiceLogging : public DocumentProcessorServiceStub {
  private:
   std::shared_ptr<DocumentProcessorServiceStub> child_;
   TracingOptions tracing_options_;
-  bool stream_logging_;
 };  // DocumentProcessorServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
