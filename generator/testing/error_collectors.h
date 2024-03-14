@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_TESTING_ERROR_COLLECTORS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_TESTING_ERROR_COLLECTORS_H
 
+#include "absl/strings/string_view.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.h>
 
@@ -26,9 +27,9 @@ class ErrorCollector : public google::protobuf::DescriptorPool::ErrorCollector {
  public:
   ~ErrorCollector() override = default;
 
-  void AddError(std::string const& filename, std::string const& element_name,
-                google::protobuf::Message const*, ErrorLocation,
-                std::string const& error_message) override;
+  void RecordError(absl::string_view filename, absl::string_view element_name,
+                   google::protobuf::Message const*, ErrorLocation,
+                   absl::string_view error_message) override;
 };
 
 class MultiFileErrorCollector
@@ -36,11 +37,11 @@ class MultiFileErrorCollector
  public:
   ~MultiFileErrorCollector() override = default;
 
-  void AddError(std::string const& filename, int line, int column,
-                std::string const& message) override;
+  void RecordError(absl::string_view, int line, int column,
+                   absl::string_view message) override;
 
-  void AddWarning(std::string const& filename, int line, int column,
-                  std::string const& message) override;
+  void RecordWarning(absl::string_view filename, int line, int column,
+                     absl::string_view message) override;
 };
 
 }  // namespace generator_testing
