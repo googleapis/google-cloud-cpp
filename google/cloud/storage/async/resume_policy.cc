@@ -26,7 +26,12 @@ class LimitedErrorCountResumePolicyImpl : public ResumePolicy {
       : maximum_resumes_(maximum_resumes) {}
   ~LimitedErrorCountResumePolicyImpl() override = default;
 
-  void OnStartSuccess() override {}
+  void OnStartSuccess() override {
+    // For this policy we are only interested in the number of failures.
+    // `OnStartSuccess()` is intended for policies that stop if the downloads
+    // "fail too fast" or monitor some other condition that depends on when
+    // the download started successfully and then failed.
+  }
   Action OnFinish(Status const& s) override {
     if (!s.ok()) ++error_count_;
     return error_count_ > maximum_resumes_ ? kStop : kContinue;
