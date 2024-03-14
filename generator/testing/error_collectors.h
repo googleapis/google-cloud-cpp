@@ -29,7 +29,7 @@ class ErrorCollector : public google::protobuf::DescriptorPool::ErrorCollector {
 
   void RecordError(absl::string_view filename, absl::string_view element_name,
                    google::protobuf::Message const*, ErrorLocation,
-                   absl::string_view error_message) override;
+                   absl::string_view message) override;
 };
 
 class MultiFileErrorCollector

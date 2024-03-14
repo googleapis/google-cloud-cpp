@@ -24,9 +24,8 @@ using ::testing::IsEmpty;
 void ErrorCollector::RecordError(absl::string_view filename,
                                  absl::string_view element_name,
                                  google::protobuf::Message const*,
-                                 ErrorLocation,
-                                 absl::string_view error_message) {
-  EXPECT_THAT(error_message, IsEmpty())
+                                 ErrorLocation, absl::string_view message) {
+  EXPECT_THAT(message, IsEmpty())
       << "filename=" << filename << ", element_name=" << element_name;
 }
 
