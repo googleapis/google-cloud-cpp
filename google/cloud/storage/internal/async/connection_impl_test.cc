@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/async/writer_connection.h"
+#include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
-#include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -89,7 +89,7 @@ std::shared_ptr<storage_experimental::AsyncConnection> MakeTestConnection(
           .set<storage::BackoffPolicyOption>(
               storage::ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone()));
   return MakeAsyncConnection(std::move(cq), std::move(mock),
-                             DefaultOptionsGrpc(std::move(options)));
+                             DefaultOptionsAsync(std::move(options)));
 }
 
 std::unique_ptr<AsyncWriteObjectStream> MakeErrorInsertStream(
