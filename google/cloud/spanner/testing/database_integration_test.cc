@@ -218,11 +218,6 @@ void PgDatabaseIntegrationTest::SetUpTestSuite() {
     FAIL();
   }
   auto database = database_future.get();
-  if (emulator_ && database.status().code() == StatusCode::kInvalidArgument) {
-    // The emulator does not support PostgreSQL syntax to quote identifiers.
-    std::cout << "INVALID-IGNORED\n";
-    return;
-  }
   ASSERT_THAT(database, IsOk());
 
   // DDL statements other than <CREATE DATABASE> are not allowed in database
