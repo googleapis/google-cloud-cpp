@@ -112,7 +112,7 @@ ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
        "use a different storage::Client object in each thread",
        [&options](std::string const& val) {
          options.client_per_thread =
-             testing_util::ParseBoolean(val).value_or("true");
+             testing_util::ParseBoolean(val).value_or(true);
        }},
       {"--grpc-channel-count", "controls the number of gRPC channels",
        [&options](std::string const& val) {

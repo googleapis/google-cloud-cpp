@@ -88,7 +88,7 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
        }},
       {"--use-embedded-server", "whether to use the embedded Bigtable server",
        [&options](std::string const& val) {
-         options.use_embedded_server = ParseBoolean(val).value_or("true");
+         options.use_embedded_server = ParseBoolean(val).value_or(true);
        }},
   };
 
