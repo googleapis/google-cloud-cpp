@@ -282,16 +282,21 @@ void UpdateTopicType(google::cloud::pubsub_admin::TopicAdminClient client,
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
-     std::string topic_id, std::string gcp_service_account) {
+     std::string topic_id, std::string stream_arn, std::string consumer_arn,
+     std::string aws_role_arn, std::string gcp_service_account) {
     google::pubsub::v1::UpdateTopicRequest request;
+
     request.mutable_topic()->set_name(
         pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
-    request.mutable_topic()
-        ->mutable_ingestion_data_source_settings()
-        ->mutable_aws_kinesis()
-        ->set_gcp_service_account(gcp_service_account);
+    auto* aws_kinesis = request.mutable_topic()
+                            ->mutable_ingestion_data_source_settings()
+                            ->mutable_aws_kinesis();
+    aws_kinesis->set_stream_arn(stream_arn);
+    aws_kinesis->set_consumer_arn(consumer_arn);
+    aws_kinesis->set_aws_role_arn(aws_role_arn);
+    aws_kinesis->set_gcp_service_account(gcp_service_account);
     *request.mutable_update_mask()->add_paths() =
-        "ingestion_data_source_settings.aws_kinesis.gcp_service_account";
+        "ingestion_data_source_settings";
 
     auto topic = client.UpdateTopic(request);
     if (!topic) throw std::move(topic).status();
@@ -300,7 +305,8 @@ void UpdateTopicType(google::cloud::pubsub_admin::TopicAdminClient client,
               << "\n";
   }
   //! [pubsub_update_topic_type]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   argv.at(4), argv.at(5));
 }
 
 void ListTopics(google::cloud::pubsub_admin::TopicAdminClient client,
@@ -598,29 +604,20 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopicWithKinesisIngestion() sample"
             << std::endl;
 
-  // ignore_emulator_failures(
-  //     [&] {
-        CreateTopicWithKinesisIngestion(
-            topic_admin_client,
-            {project_id, kinesis_topic_id, kinesis_stream_arn,
-             kinesis_consumer_arn, kinesis_aws_role_arn,
-             kinesis_gcp_service_account});
-        cleanup.Defer(
-            [topic_admin_client, project_id, kinesis_topic_id]() mutable {
-              std::cout << "\nRunning DeleteTopic() sample" << std::endl;
-              DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
-            });
-      // },
-      // StatusCode::kNotFound);
+  CreateTopicWithKinesisIngestion(
+      topic_admin_client,
+      {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
+       kinesis_aws_role_arn, kinesis_gcp_service_account});
+  cleanup.Defer([topic_admin_client, project_id, kinesis_topic_id]() mutable {
+    std::cout << "\nRunning DeleteTopic() sample" << std::endl;
+    DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
+  });
 
-  // ignore_emulator_failures(
-  //     [&] {
-        std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
-        UpdateTopicType(topic_admin_client,
-                        {project_id, kinesis_topic_id,
-                         kinesis_updated_gcp_service_account});
-      // },
-      // StatusCode::kInvalidArgument);
+  std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
+  UpdateTopicType(
+      topic_admin_client,
+      {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
+       kinesis_aws_role_arn, kinesis_updated_gcp_service_account});
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
@@ -701,9 +698,11 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "update-topic-schema",
           {"project-id", "topic-id", "first-revision-id", "last-revision-id"},
           UpdateTopicSchema),
-      CreateTopicAdminCommand("update-topic-type",
-                              {"project-id", "topic-id", "gcp-service-account"},
-                              UpdateTopicType),
+      CreateTopicAdminCommand(
+          "update-topic-type",
+          {"project-id", "topic-id", "stream-arn", "consumer-arn",
+           "aws-role-arn", "gcp-service-account"},
+          UpdateTopicType),
       CreateTopicAdminCommand("list-topics", {"project-id"}, ListTopics),
       CreateTopicAdminCommand("list-topic-subscriptions",
                               {"project-id", "topic-id"},
