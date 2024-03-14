@@ -93,14 +93,7 @@ class DataTypeIntegrationTestTmpl : public T {
     auto commit_result = client_->Commit(Mutations{
         MakeDeleteMutation("DataTypes", KeySet::All()),
     });
-    if (T::UsingEmulator()) {
-      // PgDataTypeIntegrationTest::SetUpTestSuite() will fail until
-      // the emulator supports PostgreSQL syntax to quote identifiers.
-      ASSERT_THAT(commit_result,
-                  AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
-    } else {
-      ASSERT_THAT(commit_result, IsOk());
-    }
+    ASSERT_THAT(commit_result, IsOk());
   }
 
   static void TearDownTestSuite() {
@@ -252,8 +245,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadJson) {
 }
 
 TEST_F(PgDataTypeIntegrationTest, WriteReadJson) {
-  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
-
   std::vector<JsonB> const data = {
       JsonB(),                     //
       JsonB(R"("Hello world!")"),  //
@@ -284,8 +275,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
 }
 
 TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
-  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
-
   auto limit = std::string(131072, '9') + "." + std::string(16383, '9');
   auto min = MakePgNumeric("-" + limit);
   ASSERT_STATUS_OK(min);
@@ -425,8 +414,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
 }
 
 TEST_F(PgDataTypeIntegrationTest, WriteReadArrayJson) {
-  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
-
   std::vector<std::vector<JsonB>> const data = {
       std::vector<JsonB>{},
       std::vector<JsonB>{JsonB()},
@@ -456,8 +443,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
 }
 
 TEST_F(PgDataTypeIntegrationTest, WriteReadArrayNumeric) {
-  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
-
   std::vector<std::vector<PgNumeric>> const data = {
       std::vector<PgNumeric>{},
       std::vector<PgNumeric>{PgNumeric()},
@@ -573,8 +558,6 @@ TEST_F(PgDataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
 }
 
 TEST_F(PgDataTypeIntegrationTest, InsertAndQueryWithJson) {
-  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
-
   auto& client = *client_;
   auto commit_result =
       client.Commit([&client](Transaction const& txn) -> StatusOr<Mutations> {
@@ -619,8 +602,6 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
 }
 
 TEST_F(PgDataTypeIntegrationTest, NumericPrimaryKey) {
-  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
-
   spanner_admin::DatabaseAdminClient admin_client(
       spanner_admin::MakeDatabaseAdminConnection());
 
