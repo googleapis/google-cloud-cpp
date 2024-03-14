@@ -17,9 +17,6 @@
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
-# Pick the right MSVC runtime libraries.
-include(SelectMSVCRuntime)
-
 # Enable Werror
 include(EnableWerror)
 

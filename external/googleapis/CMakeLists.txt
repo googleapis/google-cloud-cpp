@@ -164,8 +164,6 @@ externalproject_add(
 
 google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 
-include(SelectMSVCRuntime)
-
 google_cloud_cpp_add_protos_property()
 
 function (external_googleapis_short_name var proto)
