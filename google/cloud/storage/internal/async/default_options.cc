@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/default_options.h"
+#include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include <limits>
@@ -58,6 +59,10 @@ auto Adjust(Options opts) {
 }  // namespace
 
 Options DefaultOptionsAsync(Options opts) {
+  opts = internal::MergeOptions(
+      std::move(opts),
+      Options{}.set<storage_experimental::ResumePolicyOption>(
+          storage_experimental::UnlimitedErrorCountResumePolicy()));
   return Adjust(DefaultOptionsGrpc(std::move(opts)));
 }
 

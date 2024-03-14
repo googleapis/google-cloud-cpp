@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/default_options.h"
+#include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/common_options.h"
 #include <gmock/gmock.h>
@@ -25,6 +26,7 @@ namespace {
 
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::NotNull;
 
 TEST(DefaultOptionsAsync, Basic) {
   auto const options = DefaultOptionsAsync({});
@@ -35,6 +37,12 @@ TEST(DefaultOptionsAsync, Basic) {
   // We use EndpointOption as a canary to test that most options are set.
   EXPECT_TRUE(options.has<EndpointOption>());
   EXPECT_THAT(options.get<EndpointOption>(), Not(IsEmpty()));
+  // Verify the ResumePolicyOption is set and it creates valid policies.
+  EXPECT_TRUE(options.has<storage_experimental::ResumePolicyOption>());
+  auto factory = options.get<storage_experimental::ResumePolicyOption>();
+  EXPECT_TRUE(static_cast<bool>(factory));
+  auto policy = factory();
+  EXPECT_THAT(policy, NotNull());
 }
 
 TEST(DefaultOptionsAsync, Adjust) {

@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/internal/async/accumulate_read_object.h"
+#include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
@@ -29,7 +30,6 @@
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
-#include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
@@ -489,7 +489,7 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
 
 std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, Options options) {
-  options = storage_internal::DefaultOptionsGrpc(std::move(options));
+  options = DefaultOptionsAsync(std::move(options));
   auto p = CreateStorageStub(cq, options);
   return std::make_shared<AsyncConnectionImpl>(
       std::move(cq), std::move(p.first), std::move(p.second),
