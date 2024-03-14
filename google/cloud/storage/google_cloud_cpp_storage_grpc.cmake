@@ -47,6 +47,8 @@ else ()
         async/reader.cc
         async/reader.h
         async/reader_connection.h
+        async/resume_policy.cc
+        async/resume_policy.h
         async/rewriter.cc
         async/rewriter.h
         async/rewriter_connection.h
@@ -298,6 +300,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         # cmake-format: sort
         async/client_test.cc
         async/reader_test.cc
+        async/resume_policy_test.cc
         async/rewriter_test.cc
         async/token_test.cc
         async/writer_test.cc
