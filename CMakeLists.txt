@@ -53,7 +53,6 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 endif ()
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-include(SelectMSVCRuntime)
 
 option(GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
        "If enabled, check that the user has defined OPENSSL_ROOT_DIR on macOS"

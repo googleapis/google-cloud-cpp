@@ -20,9 +20,6 @@ if (NOT GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     return()
 endif ()
 
-# Pick the right MSVC runtime libraries.
-include(SelectMSVCRuntime)
-
 if (bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND storage IN_LIST
                                                  GOOGLE_CLOUD_CPP_ENABLE)
     add_executable(gcs2cbt gcs2cbt.cc)
