@@ -384,6 +384,7 @@ if (BUILD_TESTING)
         testing/constants.h
         testing/mock_client.h
         testing/mock_generic_stub.h
+        testing/mock_hash_function.h
         testing/mock_http_request.cc
         testing/mock_http_request.h
         testing/mock_storage_stub.h
