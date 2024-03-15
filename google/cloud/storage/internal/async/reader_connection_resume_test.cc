@@ -104,7 +104,7 @@ auto MakeMockReaderPartial(int offset)
   return mock;
 }
 
-auto MakeMockReaderFull(int offset, int size)
+auto MakeMockReaderFull(int offset)
     -> std::unique_ptr<storage_experimental::AsyncReaderConnection> {
   auto mock = std::make_unique<MockReader>();
   {
@@ -119,14 +119,6 @@ auto MakeMockReaderFull(int offset, int size)
                          .set_offset(kRangeStart + offset);
       return make_ready_future(ReadResponse(std::move(payload)));
     });
-    for (offset += kReadSize; offset < size; offset += kReadSize) {
-      EXPECT_CALL(*mock, Read).WillOnce([offset, size] {
-        auto payload =
-            ReadPayload(std::string(std::min(kReadSize, size - offset), '4'))
-                .set_offset(kRangeStart + offset);
-        return make_ready_future(ReadResponse(std::move(payload)));
-      });
-    }
     EXPECT_CALL(*mock, Read).WillOnce([] {
       return make_ready_future(ReadResponse(Status{}));
     });
@@ -196,7 +188,7 @@ TEST(AsyncReaderConnectionResume, Resume) {
       })
       .WillOnce([&] {
         return make_ready_future(
-            make_status_or(MakeMockReaderFull(4 * kReadSize, 5 * kReadSize)));
+            make_status_or(MakeMockReaderFull(4 * kReadSize)));
       });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
@@ -225,6 +217,64 @@ TEST(AsyncReaderConnectionResume, Resume) {
               UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
 }
 
+TEST(AsyncReaderConnectionResume, Cancel) {
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call(WithGeneration(0), 0)).WillOnce([] {
+    auto mock = std::make_unique<MockReader>();
+    EXPECT_CALL(*mock, Cancel).Times(1);
+    EXPECT_CALL(*mock, Read).WillOnce([] {
+      return make_ready_future(ReadResponse(TransientError()));
+    });
+    return make_ready_future(make_status_or(
+        std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+            std::move(mock))));
+  });
+
+  auto resume_policy = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnFinish)
+      .WillRepeatedly(Return(ResumePolicy::kStop));
+
+  AsyncReaderConnectionResume tested(std::move(resume_policy),
+                                     mock_factory.AsStdFunction());
+  EXPECT_NO_FATAL_FAILURE(tested.Cancel());
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(TransientError()));
+  EXPECT_NO_FATAL_FAILURE(tested.Cancel());
+}
+
+TEST(AsyncReaderConnectionResume, GetRequestMetadata) {
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call(WithGeneration(0), 0)).WillOnce([] {
+    auto mock = std::make_unique<MockReader>();
+    EXPECT_CALL(*mock, Read).WillOnce([] {
+      return make_ready_future(ReadResponse(TransientError()));
+    });
+    EXPECT_CALL(*mock, GetRequestMetadata)
+        .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
+                                     {{"tk0", "v0"}, {"tk1", "v1"}}}));
+    return make_ready_future(make_status_or(
+        std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+            std::move(mock))));
+  });
+
+  auto resume_policy = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnFinish)
+      .WillRepeatedly(Return(ResumePolicy::kStop));
+
+  AsyncReaderConnectionResume tested(std::move(resume_policy),
+                                     mock_factory.AsStdFunction());
+  auto const m0 = tested.GetRequestMetadata();
+  EXPECT_THAT(m0.headers, IsEmpty());
+  EXPECT_THAT(m0.trailers, IsEmpty());
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(TransientError()));
+  auto const m1 = tested.GetRequestMetadata();
+  EXPECT_THAT(m1.headers,
+              UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
+  EXPECT_THAT(m1.trailers,
+              UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
+}
+
 TEST(AsyncReaderConnectionResume, ResumeUpdatesOffset) {
   MockAsyncReaderConnectionFactory mock_factory;
   {
@@ -243,7 +293,7 @@ TEST(AsyncReaderConnectionResume, ResumeUpdatesOffset) {
     });
     EXPECT_CALL(mock_factory, Call(WithGeneration(1234), 0)).WillOnce([] {
       return make_ready_future(
-          make_status_or(MakeMockReaderFull(2 * kReadSize, 3 * kReadSize)));
+          make_status_or(MakeMockReaderFull(2 * kReadSize)));
     });
   }
 
