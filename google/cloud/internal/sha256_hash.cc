@@ -13,7 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/internal/sha256_hash.h"
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <Windows.h>
+#include <wincrypt.h>
+#else
 #include <openssl/evp.h>
+#endif  // _WIN32
 #include <algorithm>
 
 namespace google {
@@ -22,6 +29,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace {
+#ifdef _WIN32
+Sha256Type Sha256Hash(void const* data, std::size_t count) {
+  Sha256Type hash;
+  BCryptHash(BCRYPT_SHA256_ALG_HANDLE, nullptr, 0,
+             static_cast<PUCHAR>(const_cast<void*>(data)),
+             static_cast<ULONG>(count), hash.data(),
+             static_cast<ULONG>(hash.size()));
+  return hash;
+}
+#else
 Sha256Type Sha256Hash(void const* data, std::size_t count) {
   std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
   Sha256Type hash;
@@ -33,6 +50,7 @@ Sha256Type Sha256Hash(void const* data, std::size_t count) {
               hash.begin());
   return hash;
 }
+#endif  // _WIN32
 }  // namespace
 
 Sha256Type Sha256Hash(std::string const& str) {

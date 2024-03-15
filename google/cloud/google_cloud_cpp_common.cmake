@@ -14,7 +14,9 @@
 # limitations under the License.
 # ~~~
 
-find_package(OpenSSL REQUIRED)
+if (NOT WIN32)
+    find_package(OpenSSL REQUIRED)
+endif ()
 
 # Generate the version information from the CMake values.
 configure_file(internal/version_info.h.in
@@ -179,8 +181,13 @@ target_link_libraries(
            absl::str_format
            absl::time
            absl::variant
-           Threads::Threads
-           OpenSSL::Crypto)
+           Threads::Threads)
+if (WIN32)
+    target_link_libraries(google_cloud_cpp_common PUBLIC bcrypt)
+else ()
+    set(OPENSSL_PKGCONFIG_MAYBE openssl)
+    target_link_libraries(google_cloud_cpp_common PUBLIC OpenSSL::Crypto)
+endif ()
 
 if (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     find_package(opentelemetry-cpp CONFIG)
@@ -249,7 +256,7 @@ google_cloud_cpp_add_pkgconfig(
     "absl_time"
     "absl_time_zone"
     "absl_variant"
-    "openssl"
+    "${OPENSSL_PKGCONFIG_MAYBE}"
     "${GOOGLE_CLOUD_CPP_OPENTELEMETRY_API}")
 
 # Create and install the CMake configuration files.

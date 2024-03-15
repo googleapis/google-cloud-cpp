@@ -13,8 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/internal/sha256_hmac.h"
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <Windows.h>
+#include <wincrypt.h>
+#else
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
+#endif  // _WIN32
 #include <algorithm>
 #include <array>
 #include <type_traits>
@@ -25,11 +32,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-static_assert(EVP_MAX_MD_SIZE >= Sha256Type().size(),
-              "EVP_MAX_MD_SIZE is too small");
 static_assert(std::is_same<std::uint8_t, unsigned char>::value,
               "When `std::uint8_t` exists it must be `unsigned char`");
 
+#ifdef _WIN32
+template <typename T>
+Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
+                          std::size_t count) {
+  Sha256Type hash;
+  BCryptHash(BCRYPT_SHA256_ALG_HANDLE,
+             reinterpret_cast<PUCHAR>(const_cast<T*>(key.data())),
+             static_cast<ULONG>(key.size()), const_cast<PUCHAR>(data),
+             static_cast<ULONG>(count), hash.data(),
+             static_cast<ULONG>(hash.size()));
+  return hash;
+}
+#else
+static_assert(EVP_MAX_MD_SIZE >= Sha256Type().size(),
+              "EVP_MAX_MD_SIZE is too small");
 template <typename T>
 Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
                           std::size_t count) {
@@ -43,6 +63,7 @@ Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
               hash.begin());
   return hash;
 }
+#endif
 
 }  // namespace
 
