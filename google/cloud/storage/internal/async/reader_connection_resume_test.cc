@@ -79,7 +79,7 @@ auto WithoutGeneration() {
 auto constexpr kReadSize = 500;
 auto constexpr kRangeStart = 10000;
 
-auto MakeMockReaderPartial(int offset)
+auto MakeMockReaderPartial(std::int64_t offset)
     -> std::unique_ptr<storage_experimental::AsyncReaderConnection> {
   auto mock = std::make_unique<MockReader>();
   EXPECT_CALL(*mock, Read)

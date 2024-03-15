@@ -42,6 +42,11 @@ future<ReadResponse> AsyncReaderConnectionResume::Read(
   auto impl = CurrentImpl(lk);
   lk.unlock();
   if (!impl) return Reconnect();
+  // Capturing `this` is safe. This class is used as part of the
+  // `AsyncReaderConnection` stack, managed by a `AsyncReader`. We already warn
+  // users to extend the lifetime of an `AsyncReaderConnection` until any
+  // pending `Read()` calls complete successfully. And the `AsyncReader` class
+  // ensures this is the case.
   return impl->Read().then([this](auto f) { return OnRead(f.get()); });
 }
 
@@ -62,7 +67,8 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
 }
 
 future<ReadResponse> AsyncReaderConnectionResume::Reconnect() {
-  // TODO(coryan) - do we need a `self` here?
+  // Capturing `this` is safe here. See the comments in the implementation of
+  // `Read()` for details.
   return reader_factory_(generation_, received_bytes_).then([this](auto f) {
     return OnResume(f.get());
   });

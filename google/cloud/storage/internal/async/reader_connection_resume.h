@@ -36,10 +36,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AsyncReaderConnectionResume
     : public storage_experimental::AsyncReaderConnection {
  public:
-  using ProtoPayload = google::storage::v2::ReadObjectResponse;
-  using StreamingRpc =
-      ::google::cloud::internal::AsyncStreamingReadRpc<ProtoPayload>;
-
   explicit AsyncReaderConnectionResume(
       std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
       AsyncReaderConnectionFactory reader_factory)
@@ -53,18 +49,13 @@ class AsyncReaderConnectionResume
 
  private:
   future<ReadResponse> Read(std::unique_lock<std::mutex> lk);
-
   future<ReadResponse> OnRead(ReadResponse r);
-
   future<ReadResponse> Reconnect();
-
   future<ReadResponse> OnResume(
       StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>
           connection);
-
   std::shared_ptr<storage_experimental::AsyncReaderConnection> CurrentImpl(
       std::unique_lock<std::mutex> const&);
-
   std::shared_ptr<storage_experimental::AsyncReaderConnection> CurrentImpl();
 
   std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;
