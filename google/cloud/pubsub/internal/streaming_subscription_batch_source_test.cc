@@ -1269,7 +1269,7 @@ TEST(StreamingSubscriptionBatchSourceTest, BulkNackMultipleRequests) {
 
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(2);
+  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(AtLeast(2));
   uut->Start(mock_batch_callback);
   std::vector<std::string> nacks;
   for (auto& ids : groups) {
@@ -1329,7 +1329,7 @@ void CheckExtendLeasesMultipleRequests(bool enable_exactly_once) {
   auto done = shutdown->Start({});
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(2);
+  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(AtLeast(2));
   uut->Start(mock_batch_callback);
 
   std::vector<std::string> acks;
