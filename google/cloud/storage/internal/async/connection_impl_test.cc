@@ -1453,10 +1453,9 @@ TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactory) {
     next.first.set_value(true);
 
     // Then simulate a successful `ReadObject()`. To simplify the test we assume
-    // this returns no data. The streaming
-    // RPC completes with `true` on `Start()`, then an unset optional on
-    // `Read()` (indicating 'end of the streaming RPC'), and then a success
-    // `Status` for `Finish()`.
+    // this returns no data. The streaming RPC completes with `true` on
+    // `Start()`, then an unset optional on `Read()` (indicating 'end of the
+    // streaming RPC'), and then a success `Status` for `Finish()`.
     next = sequencer.PopFrontWithName();
     EXPECT_EQ(next.second, "Start");
     next.first.set_value(true);

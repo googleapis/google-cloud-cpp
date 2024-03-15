@@ -270,7 +270,6 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
   using StreamingRpc = google::cloud::internal::AsyncStreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
 
-  // Capture the variables needed to create the
   auto make_rpc = [stub = stub_, request = std::move(request)](
                       CompletionQueue& cq,
                       std::shared_ptr<grpc::ClientContext> context,
@@ -312,8 +311,8 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
 
     auto retry = retry_policy(*current);
     auto backoff = backoff_policy(*current);
-    // Do not use `std::move(current)`, we need to keep such variables unchanged
-    // for future calls.
+    // Do not use `std::move()` for the captured variables, as we need to keep
+    // such variables valid for all factory invocations.
     return google::cloud::internal::AsyncRetryLoop(
                std::move(retry), std::move(backoff), Idempotency::kIdempotent,
                cq, make_rpc, current, proto_request, caller)
