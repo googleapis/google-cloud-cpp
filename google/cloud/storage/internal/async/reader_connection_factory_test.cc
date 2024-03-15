@@ -53,13 +53,6 @@ TEST(AsyncReaderConnectionFactory, UpdateGenerationDefault) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
   UpdateGeneration(actual, storage::Generation(1234));
-  EXPECT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        generation: 1234
-      )pb",
-      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
