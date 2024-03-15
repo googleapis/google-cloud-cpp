@@ -73,6 +73,8 @@ else ()
         internal/async/partial_upload.h
         internal/async/read_payload_fwd.h
         internal/async/read_payload_impl.h
+        internal/async/reader_connection_factory.cc
+        internal/async/reader_connection_factory.h
         internal/async/reader_connection_impl.cc
         internal/async/reader_connection_impl.h
         internal/async/reader_connection_tracing.cc
@@ -312,6 +314,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/async/insert_object_test.cc
         internal/async/partial_upload_test.cc
         internal/async/read_payload_impl_test.cc
+        internal/async/reader_connection_factory_test.cc
         internal/async/reader_connection_impl_test.cc
         internal/async/reader_connection_tracing_test.cc
         internal/async/rewriter_connection_impl_test.cc
