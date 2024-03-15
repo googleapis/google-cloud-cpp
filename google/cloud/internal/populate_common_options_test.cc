@@ -154,52 +154,46 @@ TEST(PopulateCommonOptions, UniverseDomain) {
   EXPECT_EQ(actual.get<AuthorityOption>(), "default.my-ud.net");
 }
 
-TEST(PopulateCommonOptions, EndpointOptionOverridesUniverseDomain) {
-  auto actual = PopulateCommonOptions(
-      Options{}
-          .set<UniverseDomainOption>("test-ud.net")
-          .set<EndpointOption>("custom-endpoint.googleapis.com"),
-      {}, {}, {}, "default.googleapis.com");
-  EXPECT_EQ(actual.get<EndpointOption>(), "custom-endpoint.googleapis.com");
-  EXPECT_EQ(actual.get<AuthorityOption>(), "default.test-ud.net");
+TEST(PopulateCommonOptions, UniverseDomainEnvVar) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "env-var.net");
+  auto actual =
+      PopulateCommonOptions(Options{}.set<UniverseDomainOption>("option.com"),
+                            {}, {}, {}, "default.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "default.env-var.net");
+  EXPECT_EQ(actual.get<AuthorityOption>(), "default.env-var.net");
 }
 
-TEST(PopulateCommonOptions, AuthorityOptionOverridesUniverseDomain) {
-  auto actual = PopulateCommonOptions(
-      Options{}
-          .set<UniverseDomainOption>("test-ud.net")
-          .set<AuthorityOption>("custom-endpoint.googleapis.com"),
-      {}, {}, {}, "default.googleapis.com");
-  EXPECT_EQ(actual.get<EndpointOption>(), "default.test-ud.net");
-  EXPECT_EQ(actual.get<AuthorityOption>(), "custom-endpoint.googleapis.com");
+TEST(PopulateCommonOptions, EndpointOptionsOverrideUniverseDomain) {
+  for (auto const& e : std::vector<absl::optional<std::string>>{
+           absl::nullopt, "ud-env-var.net"}) {
+    ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", e);
+
+    auto actual = PopulateCommonOptions(
+        Options{}
+            .set<UniverseDomainOption>("ud-option.net")
+            .set<EndpointOption>("custom-endpoint.googleapis.com")
+            .set<AuthorityOption>("custom-authority.googleapis.com"),
+        {}, {}, {}, "default.googleapis.com");
+    EXPECT_EQ(actual.get<EndpointOption>(), "custom-endpoint.googleapis.com");
+    EXPECT_EQ(actual.get<AuthorityOption>(), "custom-authority.googleapis.com");
+  }
 }
 
-TEST(PopulateCommonOptions, EnvVarsOverridesUniverseDomain) {
+TEST(PopulateCommonOptions, EndpointEnvVarsOverrideUniverseDomain) {
   ScopedEnvironment authority("AUTHORITY_OPTION",
                               "authority-env.googleapis.com");
   ScopedEnvironment endpoint("SERVICE_ENDPOINT", "endpoint-env.googleapis.com");
   ScopedEnvironment emulator("SERVICE_EMULATOR", "emulator-env.googleapis.com");
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
 
   auto actual = PopulateCommonOptions(
-      Options{}.set<UniverseDomainOption>("test-ud.net"), "SERVICE_ENDPOINT",
-      {}, {}, "default.googleapis.com");
-  EXPECT_EQ(actual.get<EndpointOption>(), "endpoint-env.googleapis.com");
-  EXPECT_EQ(actual.get<AuthorityOption>(), "default.test-ud.net");
-
-  actual = PopulateCommonOptions(
-      Options{}.set<UniverseDomainOption>("test-ud.net"), {},
+      Options{}.set<UniverseDomainOption>("ud-option.net"), {},
       "SERVICE_EMULATOR", {}, "default.googleapis.com");
   EXPECT_EQ(actual.get<EndpointOption>(), "emulator-env.googleapis.com");
-  EXPECT_EQ(actual.get<AuthorityOption>(), "default.test-ud.net");
+  EXPECT_EQ(actual.get<AuthorityOption>(), "default.ud-env-var.net");
 
   actual = PopulateCommonOptions(
-      Options{}.set<UniverseDomainOption>("test-ud.net"), {}, {},
-      "AUTHORITY_OPTION", "default.googleapis.com");
-  EXPECT_EQ(actual.get<EndpointOption>(), "default.test-ud.net");
-  EXPECT_EQ(actual.get<AuthorityOption>(), "authority-env.googleapis.com");
-
-  actual = PopulateCommonOptions(
-      Options{}.set<UniverseDomainOption>("test-ud.net"), "SERVICE_ENDPOINT",
+      Options{}.set<UniverseDomainOption>("ud-option.net"), "SERVICE_ENDPOINT",
       {}, "AUTHORITY_OPTION", "default.googleapis.com");
   EXPECT_EQ(actual.get<EndpointOption>(), "endpoint-env.googleapis.com");
   EXPECT_EQ(actual.get<AuthorityOption>(), "authority-env.googleapis.com");
