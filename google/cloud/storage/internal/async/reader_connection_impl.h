@@ -56,6 +56,7 @@ class AsyncReaderConnectionImpl
   future<ReadResponse> DoFinish();
 
   google::cloud::internal::ImmutableOptions options_;
+  std::shared_ptr<storage::internal::HashFunction> hash_;
   std::unique_ptr<StreamingRpc> impl_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
   std::int64_t offset_ = 0;
