@@ -32,7 +32,7 @@ class MockBatchCallback : public pubsub_internal::BatchCallback {
  public:
   ~MockBatchCallback() override = default;
   MOCK_METHOD(void, OperatorOp, (BatchCallback::StreamingPullResponse));
-  virtual void operator()(StreamingPullResponse response) override {
+  void operator()(StreamingPullResponse response) override {
     return OperatorOp(response);
   }
 };
