@@ -18,7 +18,6 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/version.h"
 #include "absl/types/optional.h"
-#include <openssl/evp.h>
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -89,11 +88,11 @@ class MD5HashFunction : public HashFunction {
   HashValues Finish() override;
 
   struct ContextDeleter {
-    void operator()(EVP_MD_CTX*);
+    void operator()(void*);
   };
 
  private:
-  std::unique_ptr<EVP_MD_CTX, ContextDeleter> impl_;
+  std::unique_ptr<void, ContextDeleter> impl_;
   std::int64_t minimum_offset_ = 0;
   absl::optional<HashValues> hashes_;
 };

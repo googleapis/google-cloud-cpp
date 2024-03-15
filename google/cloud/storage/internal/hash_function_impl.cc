@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
+#include <openssl/evp.h>
 
 namespace google {
 namespace cloud {
@@ -29,7 +30,7 @@ namespace {
 using ::google::cloud::internal::InvalidArgumentError;
 using ::google::cloud::storage_internal::ExtendCrc32c;
 
-using ContextPtr = std::unique_ptr<EVP_MD_CTX, MD5HashFunction::ContextDeleter>;
+using ContextPtr = std::unique_ptr<void, MD5HashFunction::ContextDeleter>;
 
 ContextPtr CreateDigestCtx() {
 // The name of the function to create and delete EVP_MD_CTX objects changed
@@ -117,11 +118,12 @@ HashValues CompositeFunction::Finish() {
 }
 
 MD5HashFunction::MD5HashFunction() : impl_(CreateDigestCtx()) {
-  EVP_DigestInit_ex(impl_.get(), EVP_md5(), nullptr);
+  EVP_DigestInit_ex(static_cast<EVP_MD_CTX*>(impl_.get()), EVP_md5(), nullptr);
 }
 
 void MD5HashFunction::Update(absl::string_view buffer) {
-  EVP_DigestUpdate(impl_.get(), buffer.data(), buffer.size());
+  EVP_DigestUpdate(static_cast<EVP_MD_CTX*>(impl_.get()), buffer.data(),
+                   buffer.size());
 }
 
 Status MD5HashFunction::Update(std::int64_t offset, absl::string_view buffer) {
@@ -161,15 +163,15 @@ HashValues MD5HashFunction::Finish() {
   // unsigned. In those platforms it is possible that
   // `std::uint8_t != unsigned char` and the `reinterpret_cast<>` is needed. It
   // should be safe in any case.
-  EVP_DigestFinal_ex(impl_.get(), reinterpret_cast<unsigned char*>(hash.data()),
-                     &len);
+  EVP_DigestFinal_ex(static_cast<EVP_MD_CTX*>(impl_.get()),
+                     reinterpret_cast<unsigned char*>(hash.data()), &len);
   hash.resize(len);
   hashes_ = HashValues{/*.crc32c=*/{}, /*.md5=*/Base64Encode(hash)};
   return *hashes_;
 }
 
-void MD5HashFunction::ContextDeleter::operator()(EVP_MD_CTX* context) {
-  DeleteDigestCtx(context);
+void MD5HashFunction::ContextDeleter::operator()(void* context) {
+  DeleteDigestCtx(static_cast<EVP_MD_CTX*>(context));
 }
 
 void Crc32cHashFunction::Update(absl::string_view buffer) {
