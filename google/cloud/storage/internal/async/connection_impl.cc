@@ -120,10 +120,11 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   auto proto = ToProto(p.request.impl_);
   if (!proto) return make_ready_future(ReturnType(std::move(proto).status()));
 
-  auto const& resume_policy =
-      current->get<storage_experimental::ResumePolicyOption>();
+  // Get the policy factory and immediately create a policy.
+  auto resume_policy =
+      current->get<storage_experimental::ResumePolicyOption>()();
   auto connection = std::make_unique<AsyncReaderConnectionResume>(
-      resume_policy(),
+      std::move(resume_policy),
       MakeReaderConnectionFactory(std::move(current), std::move(p.request),
                                   *std::move(proto)));
 
