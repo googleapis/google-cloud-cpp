@@ -40,11 +40,6 @@ TEST(AsyncReaderConnectionFactory, UpdateGenerationDefault) {
   auto actual = ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
   UpdateGeneration(actual, storage::Generation());
-  EXPECT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
-      )pb",
-      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
   UpdateGeneration(actual, storage::Generation(1234));
@@ -84,23 +79,9 @@ TEST(AsyncReaderConnectionFactory, UpdateGenerationWithGeneration) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
   UpdateGeneration(actual, storage::Generation());
-  EXPECT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        generation: 1234
-      )pb",
-      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
   UpdateGeneration(actual, storage::Generation(2345));
-  EXPECT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        generation: 1234
-      )pb",
-      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -235,6 +216,36 @@ TEST(AsyncReaderConnectionFactory, UpdateReadRangeLast) {
         bucket: "projects/_/buckets/test-bucket"
         object: "test-object"
         read_offset: -998500
+      )pb",
+      &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(AsyncReaderConnectionFactory, UpdateReadRangeUnexpected) {
+  google::storage::v2::ReadObjectRequest expected;
+  EXPECT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        object: "test-object"
+        read_offset: 1000
+        read_limit: 1000
+      )pb",
+      &expected));
+  auto request =
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_option(storage::ReadRange(1000, 2000));
+  auto actual = ToProto(request).value();
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+  UpdateReadRange(actual, -1000);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+
+  UpdateReadRange(actual, 2000);
+  EXPECT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        object: "test-object"
+        read_offset: 1000
+        read_limit: -1
       )pb",
       &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));

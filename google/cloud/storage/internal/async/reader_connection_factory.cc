@@ -22,13 +22,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 void UpdateGeneration(google::storage::v2::ReadObjectRequest& request,
                       storage::Generation generation) {
   if (request.generation() != 0 || !generation.has_value()) return;
-  request.set_generation(generation.value_or(0));
+  request.set_generation(generation.value());
 }
 
 void UpdateReadRange(google::storage::v2::ReadObjectRequest& request,
                      std::int64_t received_bytes) {
-  if (received_bytes == 0) return;
+  if (received_bytes <= 0) return;
   if (request.read_limit() != 0) {
+    if (request.read_limit() <= received_bytes) {
+      // Should not happen, either the service returned more bytes than the
+      // limit or we are trying to resume a download that completed
+      // successfully. Set the request to a value that will make the next
+      // request fail.
+      request.set_read_limit(-1);
+      return;
+    }
     request.set_read_limit(request.read_limit() - received_bytes);
   }
   request.set_read_offset(request.read_offset() + received_bytes);
