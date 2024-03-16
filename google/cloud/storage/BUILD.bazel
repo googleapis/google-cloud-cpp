@@ -109,6 +109,12 @@ cc_library(
         "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }),
+    linkopts = select({
+        "@platforms//os:windows": [
+            "-DEFAULTLIB:bcrypt.lib",
+        ],
+        "//conditions:default": [],
+    }),
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
@@ -130,12 +136,6 @@ cc_library(
             "@boringssl//:crypto",
             "@boringssl//:ssl",
         ],
-    }),
-    linkopts = select({
-        "@platforms//os:windows": [
-            "-DEFAULTLIB:bcrypt.lib",
-        ],
-        "//conditions:default": [],
     }),
 )
 
