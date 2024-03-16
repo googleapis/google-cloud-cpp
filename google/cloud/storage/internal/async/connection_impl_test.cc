@@ -344,6 +344,12 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
                                  storage::QuotaUser("test-quota-user")),
        connection->options()});
 
+  ASSERT_TRUE(pending.is_ready());
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
+
   // First simulate a failed `ReadObject()`. This returns a streaming RPC
   // that completes with `false` on `Start()` (i.e. never starts) and then
   // completes with a transient error on `Finish()`.
@@ -362,11 +368,6 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
   next.first.set_value(true);
-
-  auto r = pending.get();
-  ASSERT_STATUS_OK(r);
-  auto reader = *std::move(r);
-  auto data = reader->Read();
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
@@ -418,6 +419,11 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectPermanentError) {
   auto pending = connection->ReadObject(
       {storage_experimental::ReadObjectRequest("test-bucket", "test-object"),
        connection->options()});
+  ASSERT_TRUE(pending.is_ready());
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
@@ -427,8 +433,8 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectPermanentError) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
-  auto r = pending.get();
-  EXPECT_THAT(r, StatusIs(PermanentError().code()));
+  auto response = data.get();
+  EXPECT_THAT(response, VariantWith<Status>(StatusIs(PermanentError().code())));
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncReadObjectTooManyTransients) {
@@ -443,6 +449,10 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectTooManyTransients) {
   auto pending = connection->ReadObject(
       {storage_experimental::ReadObjectRequest("test-bucket", "test-object"),
        connection->options()});
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
 
   for (int i = 0; i != 3; ++i) {
     auto next = sequencer.PopFrontWithName();
@@ -454,8 +464,8 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectTooManyTransients) {
     next.first.set_value(true);
   }
 
-  auto r = pending.get();
-  EXPECT_THAT(r, StatusIs(TransientError().code()));
+  auto response = data.get();
+  EXPECT_THAT(response, VariantWith<Status>(StatusIs(TransientError().code())));
 }
 
 TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {

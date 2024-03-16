@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
+#include "google/cloud/storage/internal/async/reader_connection_resume.h"
 #include "google/cloud/storage/internal/async/rewriter_connection_impl.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/async/writer_connection_buffered.h"
@@ -115,14 +116,19 @@ future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
 AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   using ReturnType =
       StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>;
-
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto proto = ToProto(p.request.impl_);
   if (!proto) return make_ready_future(ReturnType(std::move(proto).status()));
 
-  auto factory = MakeReaderConnectionFactory(
-      std::move(current), std::move(p.request), *std::move(proto));
-  return factory(storage::Generation(), 0);
+  // Get the policy factory and immediately create a policy.
+  auto resume_policy =
+      current->get<storage_experimental::ResumePolicyOption>()();
+  auto connection = std::make_unique<AsyncReaderConnectionResume>(
+      std::move(resume_policy),
+      MakeReaderConnectionFactory(std::move(current), std::move(p.request),
+                                  *std::move(proto)));
+
+  return make_ready_future(ReturnType(std::move(connection)));
 }
 
 future<StatusOr<storage_experimental::ReadPayload>>
