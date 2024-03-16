@@ -38,7 +38,7 @@ template <typename T>
 Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
                           std::size_t count) {
   Sha256Type hash;
-  BCryptHash(BCRYPT_SHA256_ALG_HANDLE,
+  BCryptHash(BCRYPT_HMAC_SHA256_ALG_HANDLE,
              reinterpret_cast<PUCHAR>(const_cast<T*>(key.data())),
              static_cast<ULONG>(key.size()), const_cast<PUCHAR>(data),
              static_cast<ULONG>(count), hash.data(),
