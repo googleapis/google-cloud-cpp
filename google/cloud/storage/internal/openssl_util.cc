@@ -15,7 +15,12 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/openssl_util.h"
+#ifdef _WIN32
+#include <Windows.h>
+#include <wincrypt.h>
+#else
 #include <openssl/evp.h>
+#endif  // _WIN32
 #include <memory>
 
 namespace google {
@@ -61,6 +66,16 @@ StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(
   return Base64Decode(b64str);
 }
 
+#ifdef _WIN32
+std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
+  std::vector<unsigned char> digest(16);
+  BCryptHash(BCRYPT_MD5_ALG_HANDLE, nullptr, 0,
+             reinterpret_cast<PUCHAR>(const_cast<char*>(payload.data())),
+             static_cast<ULONG>(payload.size()), digest.data(),
+             static_cast<ULONG>(digest.size()));
+  return digest;
+}
+#else
 std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
   std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
 
@@ -70,6 +85,7 @@ std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
   return std::vector<std::uint8_t>{digest.begin(),
                                    std::next(digest.begin(), size)};
 }
+#endif  // _WIN32
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

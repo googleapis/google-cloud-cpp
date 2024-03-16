@@ -15,7 +15,9 @@
 # ~~~
 
 find_package(CURL REQUIRED)
-find_package(OpenSSL REQUIRED)
+if (NOT WIN32)
+    find_package(OpenSSL REQUIRED)
+endif ()
 
 # the client library
 add_library(
@@ -261,13 +263,14 @@ target_link_libraries(
            nlohmann_json::nlohmann_json
            Crc32c::crc32c
            CURL::libcurl
-           Threads::Threads
-           OpenSSL::Crypto)
+           Threads::Threads)
 if (WIN32)
     target_compile_definitions(google_cloud_cpp_common PRIVATE WIN32_LEAN_AND_MEAN)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
-    target_link_libraries(google_cloud_cpp_storage PUBLIC ws2_32)
+    target_link_libraries(google_cloud_cpp_storage PUBLIC ws2_32 bcrypt)
+else ()
+    target_link_libraries(google_cloud_cpp_storage PUBLIC OpenSSL::Crypto)
 endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_storage)
 target_include_directories(
