@@ -265,7 +265,7 @@ target_link_libraries(
            CURL::libcurl
            Threads::Threads)
 if (WIN32)
-    target_compile_definitions(google_cloud_cpp_common PRIVATE WIN32_LEAN_AND_MEAN)
+    target_compile_definitions(google_cloud_cpp_storage PRIVATE WIN32_LEAN_AND_MEAN)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
     target_link_libraries(google_cloud_cpp_storage PUBLIC ws2_32 bcrypt)
