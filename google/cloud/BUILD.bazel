@@ -286,13 +286,24 @@ cc_library(
     visibility = ["//:__subpackages__"],
     deps = [
         ":google_cloud_cpp_common",
-        "@boringssl//:crypto",
-        "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/types:span",
-    ],
+    ] + select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "@boringssl//:crypto",
+            "@boringssl//:ssl",
+        ],
+    }),
+    linkopts = select({
+        ":windows": [
+            "-DEFAULTLIB:bcrypt.lib",
+            "-DEFAULTLIB:crypt32.lib",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 [cc_test(

@@ -16,7 +16,9 @@
 
 include(IncludeNlohmannJson)
 find_package(CURL REQUIRED)
-find_package(OpenSSL REQUIRED)
+if (NOT WIN32)
+    find_package(OpenSSL REQUIRED)
+endif ()
 
 # the library
 add_library(
@@ -121,11 +123,13 @@ add_library(
 target_link_libraries(
     google_cloud_cpp_rest_internal
     PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
-           nlohmann_json::nlohmann_json OpenSSL::SSL OpenSSL::Crypto)
+           nlohmann_json::nlohmann_json)
 if (WIN32)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
-    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32)
+    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32 bcrypt crypt32)
+else ()
+    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC OpenSSL::SSL OpenSSL::Crypto)
 endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_rest_internal)
 target_include_directories(

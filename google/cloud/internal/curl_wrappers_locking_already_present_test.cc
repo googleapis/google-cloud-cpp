@@ -15,7 +15,9 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include <gmock/gmock.h>
+#ifndef _WIN32
 #include <openssl/crypto.h>
+#endif  // _WIN32
 
 namespace google {
 namespace cloud {
@@ -28,6 +30,10 @@ extern "C" void test_cb(int /*mode*/, int /*type*/, char const* /*file*/,
 
 /// @test Verify that installing the libraries
 TEST(CurlWrappers, LockingDisabledTest) {
+#ifdef _WIN32
+  // We are not using OpenSSL on Windows.
+  GTEST_SKIP();
+#else
   // The test cannot execute in this case.
   if (!SslLibraryNeedsLocking(CurlSslLibraryId())) GTEST_SKIP();
   // Install a trivial callback, this should disable the installation of the
@@ -35,6 +41,7 @@ TEST(CurlWrappers, LockingDisabledTest) {
   CRYPTO_set_locking_callback(test_cb);
   CurlInitializeOnce(Options{}.set<EnableCurlSslLockingOption>(true));
   EXPECT_FALSE(SslLockingCallbacksInstalled());
+#endif
 }
 
 }  // namespace
