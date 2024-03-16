@@ -249,10 +249,28 @@ TEST(OptionsTest, UniverseDomain) {
             "bigtableadmin.ud.net");
 }
 
+TEST(OptionsTest, UniverseDomainEnvVar) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
+  auto options = Options{}.set<google::cloud::internal::UniverseDomainOption>(
+      "ud-option.net");
+
+  auto data_options = DefaultDataOptions(options);
+  EXPECT_EQ(data_options.get<EndpointOption>(), "bigtable.ud-env-var.net");
+  EXPECT_EQ(data_options.get<AuthorityOption>(), "bigtable.ud-env-var.net");
+
+  EXPECT_EQ(DefaultTableAdminOptions(options).get<EndpointOption>(),
+            "bigtableadmin.ud-env-var.net");
+  EXPECT_EQ(DefaultInstanceAdminOptions(options).get<EndpointOption>(),
+            "bigtableadmin.ud-env-var.net");
+}
+
 TEST(OptionsTest, EndpointOptionsOverrideUniverseDomain) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
   auto options =
       Options{}
-          .set<google::cloud::internal::UniverseDomainOption>("ud.net")
+          .set<google::cloud::internal::UniverseDomainOption>("ud-option.net")
           .set<EndpointOption>("data-endpoint.googleapis.com")
           .set<AuthorityOption>("data-authority.googleapis.com");
   auto data_options = DefaultDataOptions(options);
@@ -262,9 +280,11 @@ TEST(OptionsTest, EndpointOptionsOverrideUniverseDomain) {
 }
 
 TEST(OptionsTest, BigtableEndpointOptionsOverrideUniverseDomain) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
   auto options =
       Options{}
-          .set<google::cloud::internal::UniverseDomainOption>("ignored-ud.net")
+          .set<google::cloud::internal::UniverseDomainOption>("ud-option.net")
           .set<DataEndpointOption>("data.googleapis.com")
           .set<AdminEndpointOption>("tableadmin.googleapis.com")
           .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
@@ -279,10 +299,11 @@ TEST(OptionsTest, BigtableEndpointOptionsOverrideUniverseDomain) {
 
 TEST(OptionsTest, BigtableEndpointEnvVarsOverrideUniverseDomain) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
 
   auto options =
       Options{}
-          .set<google::cloud::internal::UniverseDomainOption>("ignored-ud.net")
+          .set<google::cloud::internal::UniverseDomainOption>("ud-option.net")
           .set<DataEndpointOption>("ignored-data.googleapis.com")
           .set<AdminEndpointOption>("ignored-tableadmin.googleapis.com")
           .set<InstanceAdminEndpointOption>(
