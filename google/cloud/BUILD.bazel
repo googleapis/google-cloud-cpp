@@ -124,7 +124,7 @@ to your build command, or set this value in your `.bazelrc` file(s).
         ],
     }),
     linkopts = select({
-        ":windows": [
+        "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",
         ],
         "//conditions:default": [],
@@ -303,7 +303,7 @@ cc_library(
         ],
     }),
     linkopts = select({
-        ":windows": [
+        "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",
             "-DEFAULTLIB:crypt32.lib",
         ],
