@@ -14,8 +14,6 @@
 
 #include "google/cloud/internal/sha256_hash.h"
 #ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
 #include <Windows.h>
 #include <wincrypt.h>
 #else

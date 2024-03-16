@@ -23,8 +23,6 @@
 #include "google/cloud/internal/rest_response.h"
 #include <nlohmann/json.hpp>
 #ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
 #include <Windows.h>
 #include <fstream>
 #include <type_traits>

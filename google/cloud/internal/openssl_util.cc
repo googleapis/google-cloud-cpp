@@ -15,8 +15,6 @@
 #include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/internal/base64_transforms.h"
 #ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
 #include "google/cloud/internal/sha256_hash.h"
 #include "absl/strings/string_view.h"
 #include <Ntstatus.h>
