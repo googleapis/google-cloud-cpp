@@ -18,7 +18,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <sys/types.h>
 #include <algorithm>
 #include <cstddef>
 #include <cstring>
