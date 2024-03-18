@@ -60,7 +60,7 @@ class SubscriptionConcurrencyControl
       : cq_(std::move(cq)),
         shutdown_manager_(std::move(shutdown_manager)),
         source_(std::move(source)),
-        subscription_(subscription),
+        subscription_(std::move(subscription)),
         max_concurrency_(max_concurrency) {}
 
   void MessageHandled();

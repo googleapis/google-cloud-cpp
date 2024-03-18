@@ -45,7 +45,7 @@ class AckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
   }
   std::int32_t delivery_attempt() const override { return delivery_attempt_; }
   std::string ack_id() const override { return ack_id_; }
-  pubsub::Subscription subscription() const override{ return subscription_; }
+  pubsub::Subscription subscription() const override { return subscription_; }
 
  private:
   std::weak_ptr<SubscriptionConcurrencyControl> source_;
