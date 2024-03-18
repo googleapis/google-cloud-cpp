@@ -43,7 +43,7 @@ class SubscriptionConcurrencyControl
     return std::shared_ptr<SubscriptionConcurrencyControl>(
         new SubscriptionConcurrencyControl(
             std::move(cq), std::move(shutdown_manager), std::move(source),
-            subscription, max_concurrency));
+            std::move(subscription), max_concurrency));
   }
 
   void Start(Callback);
