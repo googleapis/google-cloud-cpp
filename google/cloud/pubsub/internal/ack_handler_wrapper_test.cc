@@ -37,6 +37,8 @@ class MockExactlyOnceAckHandlerImpl
   MOCK_METHOD(future<Status>, ack, (), (override));
   MOCK_METHOD(future<Status>, nack, (), (override));
   MOCK_METHOD(std::int32_t, delivery_attempt, (), (const, override));
+  MOCK_METHOD(std::string, ack_id, (), (const, override));
+  MOCK_METHOD(pubsub::Subscription, subscription, (), (const, override));
 };
 
 TEST(AckHandlerWrapper, Ack) {
@@ -111,6 +113,21 @@ TEST(AckHandlerWrapper, DeliveryAttempt) {
   EXPECT_CALL(*mock, delivery_attempt).WillOnce(Return(42));
   AckHandlerWrapper tested(std::move(mock), "test-id");
   EXPECT_EQ(tested.delivery_attempt(), 42);
+}
+
+TEST(AckHandlerWrapper, AckId) {
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
+  EXPECT_CALL(*mock, ack_id).WillOnce(Return("ack-id-1"));
+  AckHandlerWrapper tested(std::move(mock), "test-id");
+  EXPECT_EQ(tested.ack_id(), "ack-id-1");
+}
+
+TEST(AckHandlerWrapper, Subscription) {
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto sub = pubsub::Subscription("test-project", "test-sub");
+  EXPECT_CALL(*mock, subscription).WillOnce(Return(sub));
+  AckHandlerWrapper tested(std::move(mock), "test-id");
+  EXPECT_EQ(tested.subscription(), sub);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
