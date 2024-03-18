@@ -31,6 +31,8 @@
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
+#include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
@@ -276,6 +278,10 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
   using StreamingRpc = google::cloud::internal::AsyncStreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
 
+  auto hash_function =
+      std::make_shared<storage::internal::Crc32cMessageHashFunction>(
+          storage::internal::CreateHashFunction(request.impl_));
+
   auto make_rpc = [stub = stub_, request = std::move(request)](
                       CompletionQueue& cq,
                       std::shared_ptr<grpc::ClientContext> context,
@@ -299,20 +305,23 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
   auto const* caller = __func__;
   return [caller, cq = cq_, current = std::move(current),
           make_rpc = std::move(make_rpc),
+          hash_function = std::move(hash_function),
           proto_request = std::move(proto_request)](
              storage::Generation generation,
              std::int64_t received_bytes) mutable {
     UpdateGeneration(proto_request, std::move(generation));
     UpdateReadRange(proto_request, received_bytes);
 
-    auto transform = [current](auto f) mutable
+    // Make this mutable, because it is called only once and we can
+    // `std::move()` the captured values.
+    auto transform = [current, hash_function](auto f) mutable
         -> StatusOr<
             std::unique_ptr<storage_experimental::AsyncReaderConnection>> {
       auto rpc = f.get();
       if (!rpc) return std::move(rpc).status();
       return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
-          std::make_unique<AsyncReaderConnectionImpl>(current,
-                                                      *std::move(rpc)));
+          std::make_unique<AsyncReaderConnectionImpl>(
+              std::move(current), *std::move(rpc), std::move(hash_function)));
     };
 
     auto retry = retry_policy(*current);
