@@ -105,6 +105,8 @@ add_library(
     exactly_once_ack_handler.h
     internal/ack_handler_wrapper.cc
     internal/ack_handler_wrapper.h
+    internal/batch_callback.h
+    internal/batch_callback_wrapper.h
     internal/batch_sink.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
@@ -117,6 +119,7 @@ add_library(
     internal/containing_publisher_connection.h
     internal/create_channel.cc
     internal/create_channel.h
+    internal/default_batch_callback.h
     internal/default_batch_sink.cc
     internal/default_batch_sink.h
     internal/default_pull_ack_handler.cc
@@ -412,6 +415,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         pubsub_client_testing # cmake-format: sort
         testing/fake_streaming_pull.cc
         testing/fake_streaming_pull.h
+        testing/mock_batch_callback.h
         testing/mock_batch_sink.h
         testing/mock_publisher_stub.h
         testing/mock_pull_lease_manager.h

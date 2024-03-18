@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_STREAMING_SUBSCRIPTION_BATCH_SOURCE_H
 
 #include "google/cloud/pubsub/backoff_policy.h"
+#include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
@@ -50,7 +51,7 @@ class StreamingSubscriptionBatchSource
 
   ~StreamingSubscriptionBatchSource() override = default;
 
-  void Start(BatchCallback callback) override;
+  void Start(std::shared_ptr<BatchCallback> callback) override;
 
   void Shutdown() override;
   future<Status> AckMessage(std::string const& ack_id) override;
@@ -134,7 +135,7 @@ class StreamingSubscriptionBatchSource
   std::chrono::seconds const max_deadline_time_;
 
   std::mutex mu_;
-  BatchCallback callback_;
+  std::shared_ptr<BatchCallback> callback_;
   StreamState stream_state_ = StreamState::kNull;
   bool shutdown_ = false;
   bool pending_write_ = false;
