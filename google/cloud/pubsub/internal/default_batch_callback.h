@@ -30,18 +30,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class DefaultBatchCallback : public BatchCallback {
  public:
-  using Callback = std::function<void(BatchCallback::StreamingPullResponse)>;
+  using CallbackFunction = std::function<void(BatchCallback::StreamingPullResponse)>;
 
-  explicit DefaultBatchCallback(Callback callback)
+  explicit DefaultBatchCallback(CallbackFunction callback)
       : callback_(std::move(callback)) {}
   ~DefaultBatchCallback() override = default;
 
-  void operator()(StreamingPullResponse response) override {
+  void callback(StreamingPullResponse response) override {
     callback_(std::move(response));
   };
 
  private:
-  Callback callback_;
+  CallbackFunction callback_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

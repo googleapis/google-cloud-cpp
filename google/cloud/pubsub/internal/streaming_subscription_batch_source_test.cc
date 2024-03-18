@@ -149,7 +149,7 @@ TEST(StreamingSubscriptionBatchSourceTest, Start) {
   auto done = shutdown->Start({});
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(1);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
   uut->Start(mock_batch_callback);
   success_stream.WaitForAction().set_value(true);  // Start()
   success_stream.WaitForAction().set_value(true);  // Write()
@@ -191,7 +191,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartWithRetry) {
   auto done = shutdown->Start({});
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(1);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
   uut->Start(mock_batch_callback);
 
   start_failure.WaitForAction().set_value(false);  // Start()
@@ -265,7 +265,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
   promise<Status> p;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp)
+  EXPECT_CALL(*mock_batch_callback, callback)
       .WillOnce([&](BatchCallback::StreamingPullResponse r) {
         p.set_value(std::move(r.response).status());
       });
@@ -328,7 +328,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
   promise<Status> p;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp)
+  EXPECT_CALL(*mock_batch_callback, callback)
       .WillOnce([&](BatchCallback::StreamingPullResponse r) {
         p.set_value(std::move(r.response).status());
       });
@@ -360,7 +360,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartUnexpected) {
   promise<Status> p;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp)
+  EXPECT_CALL(*mock_batch_callback, callback)
       .WillOnce([&](BatchCallback::StreamingPullResponse r) {
         p.set_value(std::move(r.response).status());
       });
@@ -499,7 +499,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
   std::vector<std::string> ids;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp)
+  EXPECT_CALL(*mock_batch_callback, callback)
       .WillRepeatedly([&](BatchCallback::StreamingPullResponse r) {
         if (!r.response) return;
         for (auto const& m : r.response->received_messages())
@@ -573,7 +573,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   auto done = shutdown->Start({});
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(1);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
   uut->Start(mock_batch_callback);
   success_stream.WaitForAction().set_value(true);  // Start()
   success_stream.WaitForAction().set_value(true);  // Write()
@@ -701,7 +701,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
   auto done = shutdown->Start({});
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(1);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);
@@ -740,7 +740,7 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
   auto done = shutdown->Start({});
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(1);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);
@@ -780,7 +780,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
   auto done = shutdown->Start({});
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(0);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(0);
   uut->Start(mock_batch_callback);
   fake_stream.WaitForAction().set_value(true);      // Start()
   fake_stream.WaitForAction().set_value(true);      // Write()
@@ -850,7 +850,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
 
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(0);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(0);
   uut->Start(mock_batch_callback);
 
   wait_and_check_name("Start").set_value(true);
@@ -966,7 +966,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
 
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(3);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(3);
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);
@@ -1049,7 +1049,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
 
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(1);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);
@@ -1118,7 +1118,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
 
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(1);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);
@@ -1269,7 +1269,7 @@ TEST(StreamingSubscriptionBatchSourceTest, BulkNackMultipleRequests) {
 
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(AtLeast(1));
+  EXPECT_CALL(*mock_batch_callback, callback).Times(AtLeast(1));
   uut->Start(mock_batch_callback);
   std::vector<std::string> nacks;
   for (auto& ids : groups) {
@@ -1329,7 +1329,7 @@ void CheckExtendLeasesMultipleRequests(bool enable_exactly_once) {
   auto done = shutdown->Start({});
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(AtLeast(1));
+  EXPECT_CALL(*mock_batch_callback, callback).Times(AtLeast(1));
   uut->Start(mock_batch_callback);
 
   std::vector<std::string> acks;

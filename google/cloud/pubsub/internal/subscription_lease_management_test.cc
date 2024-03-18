@@ -58,7 +58,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
 
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(1);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
 
   auto constexpr kTestDeadline = std::chrono::seconds(345);
   {
@@ -101,7 +101,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
 
   auto done = shutdown_manager->Start({});
   uut->Start(mock_batch_callback);
-  batch_callback->operator()(
+  batch_callback->callback(
       BatchCallback::StreamingPullResponse{GenerateMessages("0-", 3)});
   ASSERT_EQ(1U, fake_cq->size());
 
@@ -133,7 +133,7 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
 
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(2);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(2);
 
   auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(fake_cq);
@@ -145,11 +145,11 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
 
   auto done = shutdown_manager->Start({});
   uut->Start(mock_batch_callback);
-  batch_callback->operator()(
+  batch_callback->callback(
       BatchCallback::StreamingPullResponse{GenerateMessages("0-", 3)});
   EXPECT_EQ(1U, fake_cq->size());
 
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
       StatusOr<google::pubsub::v1::StreamingPullResponse>(
           Status(StatusCode::kPermissionDenied, "uh-oh"))});
   ASSERT_EQ(1U, fake_cq->size());
@@ -181,7 +181,7 @@ TEST(SubscriptionLeaseManagementTest, UsesDeadlineExtension) {
 
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, OperatorOp).Times(1);
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
 
   auto constexpr kTestDeadline = std::chrono::seconds(345);
   auto constexpr kTestExtension = std::chrono::seconds(100);
@@ -213,7 +213,7 @@ TEST(SubscriptionLeaseManagementTest, UsesDeadlineExtension) {
 
   auto done = shutdown_manager->Start({});
   uut->Start(mock_batch_callback);
-  batch_callback->operator()(
+  batch_callback->callback(
       BatchCallback::StreamingPullResponse{GenerateMessages("0-", 1)});
   ASSERT_EQ(1U, fake_cq->size());
 

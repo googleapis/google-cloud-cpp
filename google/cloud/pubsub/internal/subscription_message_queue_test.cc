@@ -148,7 +148,7 @@ TEST(SubscriptionMessageQueueTest, Basic) {
   uut->Read(1);
   EXPECT_THAT(received, ElementsAre());
 
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{response});
+  batch_callback->callback(BatchCallback::StreamingPullResponse{response});
   uut->Read(1);
 
   EXPECT_THAT(received, ElementsAre(IsProtoEqual(messages[0]),
@@ -187,7 +187,7 @@ TEST(SubscriptionMessageQueueTest, NackOnSessionShutdown) {
   uut->Read(1);
   shutdown->MarkAsShutdown("test", {});
 
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{response});
+  batch_callback->callback(BatchCallback::StreamingPullResponse{response});
   uut->Shutdown();
 }
 
@@ -208,7 +208,7 @@ TEST(SubscriptionMessageQueueTest, HandleError) {
   uut->Start(mock_handler.AsStdFunction());
   uut->Read(1);
   auto const expected = Status{StatusCode::kPermissionDenied, "uh-oh"};
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{expected});
+  batch_callback->callback(BatchCallback::StreamingPullResponse{expected});
 
   EXPECT_EQ(done.get(), expected);
 }
@@ -240,11 +240,11 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   uut->Read(5);
 
   // Generate some messages, expecting only one for each key.
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
       AsPullResponse(GenerateOrderKeyMessages("k0", 0, 3))});
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
       AsPullResponse(GenerateOrderKeyMessages("k1", 0, 3))});
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
       AsPullResponse(GenerateOrderKeyMessages({}, 0, 3))});
 
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000000"));
@@ -275,7 +275,7 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
 
   received.clear();  // keep expectations shorter
 
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
       AsPullResponse(GenerateOrderKeyMessages({}, 3, 2))});
   uut->AckMessage("ack-k0-000001");
   uut->AckMessage("ack-k1-000001");
@@ -294,7 +294,7 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   EXPECT_THAT(received["k1"], IsEmpty());
   EXPECT_THAT(received[{}], IsEmpty());
 
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
       AsPullResponse(GenerateOrderKeyMessages({}, 5, 5))});
   EXPECT_THAT(received[{}],
               ElementsAre("id--000005", "id--000006", "id--000007",
@@ -334,9 +334,9 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesNoKey) {
 
   // Generate some messages, expecting only one for each key.
   auto const response = AsPullResponse(GenerateOrderKeyMessages({}, 0, 2));
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{response});
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{response});
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+  batch_callback->callback(BatchCallback::StreamingPullResponse{response});
+  batch_callback->callback(BatchCallback::StreamingPullResponse{response});
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
       AsPullResponse(GenerateOrderKeyMessages({}, 2, 4))});
 
   EXPECT_THAT(received[{}], ElementsAre("id--000000", "id--000001",
@@ -384,10 +384,10 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesWithKey) {
   uut->Read(8);
 
   // Generate some messages, expecting only one for each key.
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
       AsPullResponse(GenerateOrderKeyMessages("k0", 0, 1))});
 
-  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
       AsPullResponse(GenerateOrderKeyMessages("k0", 0, 3))});
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000000"));
 
@@ -468,7 +468,7 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
     using random = std::uniform_int_distribution<int>;
     for (int i = 0; i < count;) {
       auto step = random(0, count - i)(gen);
-      batch_callback->operator()(BatchCallback::StreamingPullResponse{
+      batch_callback->callback(BatchCallback::StreamingPullResponse{
           AsPullResponse(GenerateOrderKeyMessages(key, i, step))});
       i += step;
       std::this_thread::sleep_for(

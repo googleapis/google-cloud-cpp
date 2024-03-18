@@ -42,7 +42,7 @@ class BatchCallback {
     StatusOr<google::pubsub::v1::StreamingPullResponse> response;
   };
 
-  virtual void operator()(StreamingPullResponse response) = 0;
+  virtual void callback(StreamingPullResponse response) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

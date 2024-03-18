@@ -31,10 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockBatchCallback : public pubsub_internal::BatchCallback {
  public:
   ~MockBatchCallback() override = default;
-  MOCK_METHOD(void, OperatorOp, (BatchCallback::StreamingPullResponse));
-  void operator()(StreamingPullResponse response) override {
-    return OperatorOp(response);
-  }
+  MOCK_METHOD(void, callback, (BatchCallback::StreamingPullResponse));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
