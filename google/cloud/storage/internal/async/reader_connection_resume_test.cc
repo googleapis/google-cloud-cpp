@@ -20,6 +20,7 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/mock_resume_policy.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -31,6 +32,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::testing::MockResumePolicy;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::storage_experimental::ReadPayload;
 using ::google::cloud::storage_experimental::ResumePolicy;
@@ -54,13 +56,6 @@ using ReadResponse =
 using MockAsyncReaderConnectionFactory = ::testing::MockFunction<future<
     StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>(
     storage::Generation, std::int64_t)>;
-
-class MockResumePolicy : public ResumePolicy {
- public:
-  ~MockResumePolicy() override = default;
-  MOCK_METHOD(void, OnStartSuccess, (), (override));
-  MOCK_METHOD(ResumePolicy::Action, OnFinish, (Status const&), (override));
-};
 
 auto WithGeneration(std::int64_t expected) {
   return ::testing::ResultOf(
