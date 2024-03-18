@@ -30,6 +30,38 @@ namespace internal {
 /**
  * Use with `google::cloud::Options` to configure the universe domain used in
  * determining service endpoints.
+ *
+ * Consider a service with the endpoint "foo.googleapis.com" in the Google
+ * Default Universe:
+ *
+ * @code
+ * namespace gc = ::google::cloud;
+ * auto conn = MakeFooConnection();
+ * assert(conn->options().get<gc::EndpointOption>() == "foo.googleapis.com");
+ *
+ * auto options = gc::Options{}.set<gc::UniverseDomainOption>("ud.net");
+ * auto conn = MakeFooConnection(options);
+ * assert(conn->options().get<EndpointOption>() == "foo.ud.net");
+ * @endcode
+ *
+ * @note Any `EndpointOption`, `AuthorityOption`, or endpoint environment
+ * variable (`GOOGLE_CLOUD_CPP_<SERVICE>_ENDPOINT`) will take precedence over
+ * this option. That is:
+ *
+ * @code
+ * namespace gc = ::google::cloud;
+ * auto options = gc::Options{}.set<gc::EndpointOption>("foo.googleapis.com")
+ *                             .set<gc::UniverseDomainOption>("ud.net");
+ * auto conn = MakeFooConnection(options);
+ * assert(conn->options().get<gc::EndpointOption>() == "foo.googleapis.com");
+ * @endcode
+ *
+ * @par Environment variable
+ * This option is controlled by the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` environment
+ * variable. The environment variable must be set to a non-empty value.
+ *
+ * `EndpointOption`, `AuthorityOption`, and endpoint environment variables all
+ * take precedence over `GOOGLE_CLOUD_UNIVERSE_DOMAIN`.
  */
 struct UniverseDomainOption {
   using Type = std::string;

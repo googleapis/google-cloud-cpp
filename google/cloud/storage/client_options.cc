@@ -25,6 +25,7 @@
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/log.h"
 #include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/universe_domain_options.h"
 #include "absl/strings/str_split.h"
 #include <cstdlib>
 #include <set>
@@ -171,6 +172,10 @@ Options ApplyPolicy(Options opts, IdempotencyPolicy const& p) {
 
 Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
                        Options opts) {
+  auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
+  if (ud && !ud->empty()) {
+    opts.set<google::cloud::internal::UniverseDomainOption>(*std::move(ud));
+  }
   auto gcs_ep = google::cloud::internal::UniverseDomainEndpoint(
       "https://storage.googleapis.com", opts);
   auto iam_ep = absl::StrCat(google::cloud::internal::UniverseDomainEndpoint(

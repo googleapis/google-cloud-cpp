@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
+#include "google/cloud/pubsub/internal/default_batch_callback.h"
 #include "google/cloud/pubsub/message.h"
 #include <algorithm>
 
@@ -27,9 +28,11 @@ void SubscriptionMessageQueue::Start(MessageCallback cb) {
   callback_ = std::move(cb);
   lk.unlock();
   auto weak = std::weak_ptr<SubscriptionMessageQueue>(shared_from_this());
-  source_->Start([weak](StatusOr<google::pubsub::v1::StreamingPullResponse> r) {
-    if (auto self = weak.lock()) self->OnRead(std::move(r));
-  });
+  auto batch_callback = std::make_shared<DefaultBatchCallback>(
+      [weak](BatchCallback::StreamingPullResponse r) {
+        if (auto self = weak.lock()) self->OnRead(std::move(r.response));
+      });
+  source_->Start(batch_callback);
 }
 
 void SubscriptionMessageQueue::Shutdown() {

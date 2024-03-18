@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_READER_CONNECTION_IMPL_H
 
 #include "google/cloud/storage/async/reader_connection.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
@@ -38,8 +39,11 @@ class AsyncReaderConnectionImpl
 
   explicit AsyncReaderConnectionImpl(
       google::cloud::internal::ImmutableOptions options,
-      std::unique_ptr<StreamingRpc> impl)
-      : options_(std::move(options)), impl_(std::move(impl)) {}
+      std::unique_ptr<StreamingRpc> impl,
+      std::shared_ptr<storage::internal::HashFunction> hash_function)
+      : options_(std::move(options)),
+        impl_(std::move(impl)),
+        hash_function_(std::move(hash_function)) {}
 
   void Cancel() override { return impl_->Cancel(); }
 
@@ -53,6 +57,7 @@ class AsyncReaderConnectionImpl
 
   google::cloud::internal::ImmutableOptions options_;
   std::unique_ptr<StreamingRpc> impl_;
+  std::shared_ptr<storage::internal::HashFunction> hash_function_;
   std::int64_t offset_ = 0;
 };
 

@@ -35,6 +35,13 @@ future<AsyncReaderConnectionImpl::ReadResponse>
 AsyncReaderConnectionImpl::OnRead(absl::optional<ProtoPayload> r) {
   if (!r) return DoFinish();
   auto response = *std::move(r);
+  auto hash =
+      hash_function_->Update(offset_, GetContent(response.checksummed_data()),
+                             response.checksummed_data().crc32c());
+  if (!hash.ok()) {
+    (void)DoFinish();
+    return make_ready_future(ReadResponse(std::move(hash)));
+  }
   auto result = ReadPayloadImpl::Make(
       StealMutableContent(*response.mutable_checksummed_data()));
   if (response.has_metadata()) {

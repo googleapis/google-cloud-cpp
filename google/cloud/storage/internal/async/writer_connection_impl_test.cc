@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -28,6 +29,7 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_experimental::WritePayload;
 using ::google::cloud::testing_util::AsyncSequencer;
@@ -45,18 +47,6 @@ using Request = google::storage::v2::BidiWriteObjectRequest;
 using Response = google::storage::v2::BidiWriteObjectResponse;
 using MockStream =
     ::google::cloud::mocks::MockAsyncStreamingReadWriteRpc<Request, Response>;
-
-class MockHash : public storage::internal::HashFunction {
- public:
-  MOCK_METHOD(std::string, Name, (), (const, override));
-  MOCK_METHOD(void, Update, (absl::string_view), (override));
-  MOCK_METHOD(Status, Update, (std::int64_t, absl::string_view), (override));
-  MOCK_METHOD(Status, Update, (std::int64_t, absl::string_view, std::uint32_t),
-              (override));
-  MOCK_METHOD(Status, Update, (std::int64_t, absl::Cord const&, std::uint32_t),
-              (override));
-  MOCK_METHOD(storage::internal::HashValues, Finish, (), (override));
-};
 
 auto TestOptions() {
   return google::cloud::internal::MakeImmutableOptions(
@@ -96,7 +86,7 @@ TEST(AsyncWriterConnectionTest, Basic) {
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
                                    {{"tk0", "v0"}, {"tk1", "v1"}}}));
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
   EXPECT_CALL(*hash, Finish).Times(0);
 
@@ -118,7 +108,7 @@ TEST(AsyncWriterConnectionTest, ResumeFinalized) {
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status{});
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
   EXPECT_CALL(*hash, Finish).Times(0);
 
@@ -135,7 +125,7 @@ TEST(AsyncWriterConnectionTest, Cancel) {
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status{});
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
   EXPECT_CALL(*hash, Finish).Times(0);
 
@@ -171,7 +161,7 @@ TEST(AsyncWriterConnectionTest, WriteSimple) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _))
       .Times(kWriteCount * kChunkCount);
   EXPECT_CALL(*hash, Finish).Times(0);
@@ -212,7 +202,7 @@ TEST(AsyncWriterConnectionTest, WriteError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(0);
 
@@ -245,7 +235,7 @@ TEST(AsyncWriterConnectionTest, UnexpectedWriteFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(0);
 
@@ -284,7 +274,7 @@ TEST(AsyncWriterConnectionTest, FinalizeEmpty) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(1);
 
@@ -319,7 +309,7 @@ TEST(AsyncWriterConnectionTest, FinalizeFails) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(1);
 
@@ -348,7 +338,7 @@ TEST(AsyncWriterConnectionTest, UnexpectedFinalizeFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(1);
 
@@ -383,7 +373,7 @@ TEST(AsyncWriterConnectionTest, QueryFinalFails) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(1);
 
@@ -421,7 +411,7 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFinalFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(1);
 
@@ -459,7 +449,7 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFinalMissingResource) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(1);
 
@@ -505,7 +495,7 @@ TEST(AsyncWriterConnectionTest, FlushEmpty) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(0);
 
@@ -542,7 +532,7 @@ TEST(AsyncWriterConnectionTest, FlushFails) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(1);
 
@@ -571,7 +561,7 @@ TEST(AsyncWriterConnectionTest, UnexpectedFlushFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
   EXPECT_CALL(*hash, Finish).Times(1);
 
@@ -601,7 +591,7 @@ TEST(AsyncWriterConnectionTest, QueryFails) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
   EXPECT_CALL(*hash, Finish).Times(0);
 
@@ -631,7 +621,7 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHash>();
+  auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
   EXPECT_CALL(*hash, Finish).Times(0);
 
