@@ -177,6 +177,69 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
 }
 )""");
 
+  if (HasLongrunningMethod()) {
+    HeaderPrint(R"""(
+void SetPollingPolicy(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-policy-policy"};
+  }
+  //! [set-polling-policy]
+
+  // The polling policy controls how the client waits for long-running
+  // operations. `GenericPollingPolicy<>` combines existing policies.
+  // In this case, keep polling until the operation completes (with success
+  // or error) or 45 minutes, whichever happens first. Initially pause for
+  // 10 seconds between polling requests, increasing the pause by a factor
+  // of 4 until it becomes 2 minutes.
+  auto options = google::cloud::Options{}
+  .set<google::cloud::$product_namespace$::$service_name$PollingPolicyOption>(
+    google::cloud::GenericPollingPolicy<google::cloud::$product_namespace$::$service_name$LimitedTimeRetryPolicy,ExponentialBackoffPolicy>(
+      google::cloud::LimitedTimeRetryPolicy(
+          /*maximum_duration=*/std::chrono::minutes(45)),
+      google::cloud::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::seconds(10),
+          /*maximum_delay=*/std::chrono::minutes(2),
+          /*scaling=*/4.0))
+      .clone(););
+  )""");
+    if (HasGenerateGrpcTransport()) {
+      HeaderPrint(R"""(
+  auto connection = google::cloud::$product_namespace$::Make$connection_class_name$()""");
+    } else {
+      HeaderPrint(R"""(
+  auto connection = google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
+    }
+    if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{}, ");
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT:
+        HeaderPrint(R"""("location-unused-in-this-example", )""");
+        break;
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      default:
+        break;
+    }
+    HeaderPrint(R"""(options);)""");
+    if (IsExperimental()) {
+      HeaderPrint(R"""(
+
+  // c1 and c2 share the same polling policies.
+  auto c1 = google::cloud::$product_namespace$::$client_class_name$(
+    google::cloud::ExperimentalTag{}, connection);
+  auto c2 = google::cloud::$product_namespace$::$client_class_name$(
+    google::cloud::ExperimentalTag{}, connection);
+  //! [set-polling-policy]
+}
+)""");
+    } else
+      HeaderPrint(R"""(
+
+  // c1 and c2 share the same polling policies.
+  auto c1 = google::cloud::$product_namespace$::$client_class_name$(connection);
+  auto c2 = google::cloud::$product_namespace$::$client_class_name$(connection);
+  //! [set-polling-policy]
+}
+)""");
+  }
   HeaderPrint(R"""(
 void WithServiceAccount(std::vector<std::string> const& argv) {
   if (argv.size() != 1 || argv[0] == "--help") {
@@ -229,7 +292,14 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
   SetRetryPolicy({});
-
+ )""");
+  if (HasLongrunningMethod()) {
+    HeaderPrint(R"""( 
+  std::cout << "\nRunning SetPollingPolicy() example" << std::endl;
+  SetPollingPolicy({});
+)""");
+  }
+  HeaderPrint(R"""(  
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
 }
@@ -240,7 +310,12 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
       {"set-retry-policy", SetRetryPolicy},
-      {"with-service-account", WithServiceAccount},
+  )""");
+  if (HasLongrunningMethod()) {
+    HeaderPrint(R"""(      {"set-polling-policy", SetPollingPolicy},
+    )""");
+  }
+  HeaderPrint(R"""(      {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
