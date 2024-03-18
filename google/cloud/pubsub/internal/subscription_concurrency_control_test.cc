@@ -114,7 +114,8 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageLifecycle) {
   auto shutdown = std::make_shared<SessionShutdownManager>();
 
   auto uut = SubscriptionConcurrencyControl::Create(
-      background.cq(), shutdown, source, /*max_concurrency=*/1);
+      background.cq(), shutdown, source,
+      pubsub::Subscription("test-project", "test-sub"), /*max_concurrency=*/1);
 
   std::mutex queue_mu;
   std::condition_variable queue_cv;
@@ -198,9 +199,10 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
   auto shutdown = std::make_shared<SessionShutdownManager>();
   // Create the unit under test, configured to run at most 4 events at a time.
-  auto uut =
-      SubscriptionConcurrencyControl::Create(background.cq(), shutdown, source,
-                                             /*max_concurrency=*/4);
+  auto uut = SubscriptionConcurrencyControl::Create(
+      background.cq(), shutdown, source,
+      pubsub::Subscription("test-project", "test-sub"),
+      /*max_concurrency=*/4);
 
   std::mutex callback_mu;
   std::condition_variable callback_cv;
@@ -280,8 +282,9 @@ TEST_F(SubscriptionConcurrencyControlTest,
   // it easier to setup expectations.
   auto shutdown = std::make_shared<SessionShutdownManager>();
 
-  auto uut = SubscriptionConcurrencyControl::Create(background.cq(), shutdown,
-                                                    source, kMaxConcurrency);
+  auto uut = SubscriptionConcurrencyControl::Create(
+      background.cq(), shutdown, source,
+      pubsub::Subscription("test-project", "test-sub"), kMaxConcurrency);
 
   std::mutex handler_mu;
   std::condition_variable handler_cv;
@@ -378,7 +381,9 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
     auto shutdown = std::make_shared<SessionShutdownManager>();
 
     auto uut = SubscriptionConcurrencyControl::Create(
-        background.cq(), shutdown, source, /*max_concurrency=*/4);
+        background.cq(), shutdown, source,
+        pubsub::Subscription("test-project", "test-sub"),
+        /*max_concurrency=*/4);
     promise<Status> p([shutdown, uut] {
       shutdown->MarkAsShutdown("test-function-", {});
       uut->Shutdown();
@@ -443,7 +448,9 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
     auto shutdown = std::make_shared<SessionShutdownManager>();
 
     auto uut = SubscriptionConcurrencyControl::Create(
-        background.cq(), shutdown, source, /*max_concurrency=*/4);
+        background.cq(), shutdown, source,
+        pubsub::Subscription("test-project", "test-sub"),
+        /*max_concurrency=*/4);
     promise<Status> p([shutdown, uut] {
       shutdown->MarkAsShutdown("test-function-", {});
       uut->Shutdown();
@@ -494,7 +501,8 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
   auto shutdown = std::make_shared<SessionShutdownManager>();
 
   auto uut = SubscriptionConcurrencyControl::Create(
-      background.cq(), shutdown, source, /*max_concurrency=*/10);
+      background.cq(), shutdown, source,
+      pubsub::Subscription("test-project", "test-sub"), /*max_concurrency=*/10);
 
   std::mutex callback_mu;
   std::condition_variable callback_cv;

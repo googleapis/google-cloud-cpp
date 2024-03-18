@@ -25,9 +25,11 @@ namespace {
 class AckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
  public:
   explicit AckHandlerImpl(std::weak_ptr<SubscriptionConcurrencyControl> w,
-                          std::string ack_id, std::int32_t delivery_attempt)
+                          std::string ack_id, pubsub::Subscription subscription,
+                          std::int32_t delivery_attempt)
       : source_(std::move(w)),
         ack_id_(std::move(ack_id)),
+        subscription_(std::move(subscription)),
         delivery_attempt_(delivery_attempt) {}
   ~AckHandlerImpl() override = default;
 
@@ -42,10 +44,13 @@ class AckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
         Status(StatusCode::kFailedPrecondition, "session already shutdown"));
   }
   std::int32_t delivery_attempt() const override { return delivery_attempt_; }
+  std::string ack_id() const { return ack_id_; }
+  pubsub::Subscription subscription() const { return subscription_; }
 
  private:
   std::weak_ptr<SubscriptionConcurrencyControl> source_;
   std::string ack_id_;
+  pubsub::Subscription subscription_;
   std::int32_t delivery_attempt_;
 };
 
@@ -115,7 +120,8 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
     std::weak_ptr<SubscriptionConcurrencyControl> w) {
   shutdown_manager_->StartOperation(__func__, "handler", [&] {
     auto h = std::make_unique<AckHandlerImpl>(
-        std::move(w), std::move(*m.mutable_ack_id()), m.delivery_attempt());
+        std::move(w), std::move(*m.mutable_ack_id()), subscription_,
+        m.delivery_attempt());
     callback_(FromProto(std::move(*m.mutable_message())), std::move(h));
   });
   shutdown_manager_->FinishedOperation("callback");

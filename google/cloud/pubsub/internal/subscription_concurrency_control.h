@@ -39,11 +39,11 @@ class SubscriptionConcurrencyControl
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionMessageSource> source,
-      std::size_t max_concurrency) {
+      pubsub::Subscription subscription, std::size_t max_concurrency) {
     return std::shared_ptr<SubscriptionConcurrencyControl>(
-        new SubscriptionConcurrencyControl(std::move(cq),
-                                           std::move(shutdown_manager),
-                                           std::move(source), max_concurrency));
+        new SubscriptionConcurrencyControl(
+            std::move(cq), std::move(shutdown_manager), std::move(source),
+            subscription, max_concurrency));
   }
 
   void Start(Callback);
@@ -56,10 +56,11 @@ class SubscriptionConcurrencyControl
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionMessageSource> source,
-      std::size_t max_concurrency)
+      pubsub::Subscription subscription, std::size_t max_concurrency)
       : cq_(std::move(cq)),
         shutdown_manager_(std::move(shutdown_manager)),
         source_(std::move(source)),
+        subscription_(subscription),
         max_concurrency_(max_concurrency) {}
 
   void MessageHandled();
@@ -79,6 +80,7 @@ class SubscriptionConcurrencyControl
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
   std::shared_ptr<SubscriptionMessageSource> const source_;
   std::size_t const max_concurrency_;
+  pubsub::Subscription subscription_;
 
   std::mutex mu_;
   Callback callback_;
