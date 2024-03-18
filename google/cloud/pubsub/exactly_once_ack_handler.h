@@ -124,12 +124,12 @@ class ExactlyOnceAckHandler {
     /// The implementation for `ExactlyOnceAckHandler::delivery_attempt()`
     virtual std::int32_t delivery_attempt() const { return 0; }
     /// Returns the ack id for the handler. There is no corresponding public
-    /// interface to access the ack id in `AckHandler`. This is for internal
-    /// use only.
+    /// interface to access the ack id in `ExactlyOnceAckHandler`. This is for
+    /// internal use only.
     virtual std::string ack_id() const { return ""; }
     /// Returns the subscription for the handler. There is no corresponding
-    /// public interface to access the subscription id in `AckHandler`. This
-    /// is for internal use only.
+    /// public interface to access the subscription id in
+    /// `ExactlyOnceAckHandler`. This is for internal use only.
     virtual pubsub::Subscription subscription() const {
       return pubsub::Subscription{};
     }
