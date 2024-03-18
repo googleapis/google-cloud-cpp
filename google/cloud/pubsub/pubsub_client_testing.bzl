@@ -20,6 +20,7 @@ pubsub_client_testing_hdrs = [
     "testing/fake_streaming_pull.h",
     "testing/mock_batch_callback.h",
     "testing/mock_batch_sink.h",
+    "testing/mock_message_callback.h",
     "testing/mock_publisher_stub.h",
     "testing/mock_pull_lease_manager.h",
     "testing/mock_subscriber_stub.h",

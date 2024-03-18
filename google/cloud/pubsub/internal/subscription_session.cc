@@ -16,6 +16,8 @@
 #include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/ack_handler_wrapper.h"
+#include "google/cloud/pubsub/internal/default_message_callback.h"
+#include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
@@ -35,7 +37,8 @@ class SubscriptionSessionImpl
   static future<Status> Create(
       Options const& opts, CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
-      std::shared_ptr<SubscriptionBatchSource> source, Callback callback) {
+      std::shared_ptr<SubscriptionBatchSource> source,
+      std::shared_ptr<MessageCallback> callback) {
     auto queue =
         SubscriptionMessageQueue::Create(shutdown_manager, std::move(source));
     auto concurrency_control = SubscriptionConcurrencyControl::Create(
@@ -70,15 +73,17 @@ class SubscriptionSessionImpl
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
       pubsub::ApplicationCallback application_callback) {
-    return Create(
-        opts, std::move(cq), std::move(shutdown_manager), std::move(source),
-        [cb = std::move(application_callback)](
-            pubsub::Message m,
-            std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> h) {
-          auto wrapper =
-              std::make_unique<AckHandlerWrapper>(std::move(h), m.message_id());
-          cb(std::move(m), pubsub::AckHandler(std::move(wrapper)));
-        });
+    std::shared_ptr<MessageCallback> callback =
+        std::make_shared<DefaultMessageCallback>(
+            [cb = std::move(application_callback)](
+                pubsub::Message m,
+                std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> h) {
+              auto wrapper = std::make_unique<AckHandlerWrapper>(
+                  std::move(h), m.message_id());
+              cb(std::move(m), pubsub::AckHandler(std::move(wrapper)));
+            });
+    return Create(opts, std::move(cq), std::move(shutdown_manager),
+                  std::move(source), std::move(callback));
   }
 
   static future<Status> Create(
@@ -86,12 +91,15 @@ class SubscriptionSessionImpl
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
       pubsub::ExactlyOnceApplicationCallback application_callback) {
-    return Create(
-        opts, std::move(cq), std::move(shutdown_manager), std::move(source),
-        [cb = std::move(application_callback)](
-            pubsub::Message m, std::unique_ptr<ExactlyOnceAckHandler::Impl> h) {
-          cb(std::move(m), pubsub::ExactlyOnceAckHandler(std::move(h)));
-        });
+    std::shared_ptr<MessageCallback> callback =
+        std::make_shared<DefaultMessageCallback>(
+            [cb = std::move(application_callback)](
+                pubsub::Message m,
+                std::unique_ptr<ExactlyOnceAckHandler::Impl> h) {
+              cb(std::move(m), pubsub::ExactlyOnceAckHandler(std::move(h)));
+            });
+    return Create(opts, std::move(cq), std::move(shutdown_manager),
+                  std::move(source), std::move(callback));
   }
 
   SubscriptionSessionImpl(

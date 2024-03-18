@@ -13,26 +13,27 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
-#include "google/cloud/pubsub/internal/default_batch_callback.h"
+#include "google/cloud/pubsub/internal/batch_callback_wrapper.h"
 #include "google/cloud/pubsub/message.h"
 #include <algorithm>
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void SubscriptionMessageQueue::Start(MessageCallback cb) {
+void SubscriptionMessageQueue::Start(std::shared_ptr<BatchCallback> cb) {
   std::unique_lock<std::mutex> lk(mu_);
   if (callback_) return;
-  callback_ = std::move(cb);
+  callback_ = cb;
   lk.unlock();
+
   auto weak = std::weak_ptr<SubscriptionMessageQueue>(shared_from_this());
-  auto batch_callback = std::make_shared<DefaultBatchCallback>(
-      [weak](BatchCallback::StreamingPullResponse r) {
-        if (auto self = weak.lock()) self->OnRead(std::move(r.response));
-      });
-  source_->Start(batch_callback);
+  source_->Start(std::make_shared<BatchCallbackWrapper>(
+      std::move(cb), [weak](BatchCallback::StreamingPullResponse r) {
+        if (auto self = weak.lock()) self->OnRead(r.response);
+      }));
 }
 
 void SubscriptionMessageQueue::Shutdown() {
@@ -148,7 +149,7 @@ void SubscriptionMessageQueue::DrainQueue(std::unique_lock<std::mutex> lk) {
     // Don't hold a lock during the callback, as the callee may call `Read()`
     // or something similar.
     lk.unlock();
-    callback_(std::move(m));
+    callback_->message_callback(MessageCallback::ReceivedMessage{std::move(m)});
     lk.lock();
   }
 }

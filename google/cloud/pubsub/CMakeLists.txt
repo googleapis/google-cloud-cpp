@@ -122,6 +122,7 @@ add_library(
     internal/default_batch_callback.h
     internal/default_batch_sink.cc
     internal/default_batch_sink.h
+    internal/default_message_callback.h
     internal/default_pull_ack_handler.cc
     internal/default_pull_ack_handler.h
     internal/default_pull_lease_manager.cc
@@ -136,6 +137,8 @@ add_library(
     internal/flow_controlled_publisher_connection.h
     internal/flow_controlled_publisher_tracing_connection.cc
     internal/flow_controlled_publisher_tracing_connection.h
+    internal/message_callback.h
+    internal/message_callback_wrapper.h
     internal/message_carrier.cc
     internal/message_carrier.h
     internal/message_propagator.cc
@@ -417,6 +420,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         testing/fake_streaming_pull.h
         testing/mock_batch_callback.h
         testing/mock_batch_sink.h
+        testing/mock_message_callback.h
         testing/mock_publisher_stub.h
         testing/mock_pull_lease_manager.h
         testing/mock_subscriber_stub.h

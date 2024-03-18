@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_WRAPPER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_WRAPPER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_WRAPPER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_WRAPPER_H
 
-#include "google/cloud/pubsub/internal/batch_callback.h"
+#include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
@@ -25,32 +25,23 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Tracing implementation.
- * */
-class BatchCallbackWrapper : public BatchCallback {
+class MessageCallbackWrapper : public MessageCallback {
  public:
-  using Callback = std::function<void(StreamingPullResponse)>;
-
-  explicit BatchCallbackWrapper(std::shared_ptr<BatchCallback> child,
-                                Callback wrapper)
+  using Callback = std::function<void(ReceivedMessage)>;
+  explicit MessageCallbackWrapper(std::shared_ptr<MessageCallback> child,
+                                  Callback wrapper)
       : child_(std::move(child)), wrapper_(std::move(wrapper)) {}
-  ~BatchCallbackWrapper() override = default;
+  ~MessageCallbackWrapper() override = default;
 
-  void callback(StreamingPullResponse response) override {
-    child_->callback(response);
-    wrapper_(response);
-  }
-
-  void message_callback(MessageCallback::ReceivedMessage message) override {
+  void message_callback(ReceivedMessage message) override {
     child_->message_callback(message);
+    wrapper_(message);
   }
-
-  void user_callback(MessageCallback::MessageAndHandler m) override {
+  void user_callback(MessageAndHandler m) override {
     child_->user_callback(std::move(m));
   }
 
-  std::shared_ptr<BatchCallback> child_;
+  std::shared_ptr<MessageCallback> child_;
   Callback wrapper_;
 };
 
@@ -59,4 +50,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_WRAPPER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_WRAPPER_H
