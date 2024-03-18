@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
+#include "google/cloud/pubsub/internal/batch_callback_wrapper.h"
 #include <chrono>
 
 namespace google {
@@ -23,13 +24,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::chrono::seconds constexpr SubscriptionLeaseManagement::kMinimumAckDeadline;
 std::chrono::seconds constexpr SubscriptionLeaseManagement::kAckDeadlineSlack;
 
-void SubscriptionLeaseManagement::Start(BatchCallback cb) {
+void SubscriptionLeaseManagement::Start(std::shared_ptr<BatchCallback> cb) {
   auto weak = std::weak_ptr<SubscriptionLeaseManagement>(shared_from_this());
-  child_->Start(
-      [weak, cb](StatusOr<google::pubsub::v1::StreamingPullResponse> r) {
-        if (auto self = weak.lock()) self->OnRead(r);
-        cb(std::move(r));
-      });
+  child_->Start(std::make_shared<BatchCallbackWrapper>(
+      std::move(cb), [weak](BatchCallback::StreamingPullResponse const& r) {
+        if (auto self = weak.lock()) self->OnRead(r.response);
+      }));
 }
 
 void SubscriptionLeaseManagement::Shutdown() {

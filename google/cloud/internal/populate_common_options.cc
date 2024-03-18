@@ -20,6 +20,7 @@
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/universe_domain_options.h"
 #include "absl/strings/str_split.h"
 
 namespace google {
@@ -31,6 +32,8 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
                               std::string const& authority_env_var,
                               std::string default_endpoint) {
+  auto e = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
+  if (e && !e->empty()) opts.set<UniverseDomainOption>(*std::move(e));
   default_endpoint = UniverseDomainEndpoint(std::move(default_endpoint), opts);
   if (!endpoint_env_var.empty()) {
     auto e = GetEnv(endpoint_env_var.c_str());
@@ -59,7 +62,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     opts.set<AuthorityOption>(std::move(default_endpoint));
   }
 
-  auto e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
+  e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
   if (e && !e->empty()) {
     opts.set<UserProjectOption>(*std::move(e));
   }

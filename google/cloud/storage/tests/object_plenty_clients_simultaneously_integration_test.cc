@@ -20,7 +20,6 @@
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <sys/types.h>
 #include <algorithm>
 #include <cstddef>
 #include <cstring>
@@ -57,7 +56,6 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  // Create an iostream to read the object back.
   auto num_fds_before_test = GetNumOpenFiles();
   std::vector<Client> read_clients;
   std::vector<ObjectReadStream> read_streams;

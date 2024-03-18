@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -25,10 +26,14 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_experimental::ReadPayload;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::AllOf;
+using ::testing::An;
 using ::testing::ElementsAre;
 using ::testing::Pair;
 using ::testing::ResultOf;
@@ -46,6 +51,10 @@ google::cloud::internal::ImmutableOptions TestOptions() {
       Options{}.set<storage::RestEndpointOption>(
           "https://test-only.p.googleapis.com"));
 }
+
+using HashUpdateType =
+    std::conditional_t<std::is_same<absl::Cord, ContentType>::value,
+                       absl::Cord const&, absl::string_view>;
 
 TEST(ReaderConnectionImpl, CleanFinish) {
   auto mock = std::make_unique<MockStream>();
@@ -80,7 +89,13 @@ TEST(ReaderConnectionImpl, CleanFinish) {
       .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
                                    {{"tk0", "v0"}, {"tk1", "v1"}}}));
 
-  AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock));
+  auto hash_function = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash_function, Update(_, An<HashUpdateType>(), _))
+      .Times(2)
+      .WillRepeatedly(Return(Status{}));
+
+  AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock),
+                                   std::move(hash_function));
   EXPECT_THAT(
       tested.Read().get(),
       VariantWith<ReadPayload>(AllOf(
@@ -139,8 +154,32 @@ TEST(ReaderConnectionImpl, WithError) {
     return make_ready_future(PermanentError());
   });
 
-  AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock));
+  auto hash_function = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash_function, Update(_, An<HashUpdateType>(), _)).Times(0);
+
+  AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock),
+                                   std::move(hash_function));
   EXPECT_THAT(tested.Read().get(), VariantWith<Status>(PermanentError()));
+}
+
+TEST(ReaderConnectionImpl, HashingError) {
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Read).WillOnce([] {
+    return make_ready_future(
+        absl::make_optional(google::storage::v2::ReadObjectResponse{}));
+  });
+  EXPECT_CALL(*mock, Finish).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+
+  auto hash_function = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash_function, Update(_, An<HashUpdateType>(), _))
+      .WillOnce(Return(Status(StatusCode::kInvalidArgument, "bad checksum")));
+
+  AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock),
+                                   std::move(hash_function));
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/storage/testing/upload_hash_cases.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -26,8 +27,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::storage::testing::MockHashFunction;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
+using ::testing::An;
 using ::testing::IsEmpty;
+using ::testing::Return;
 
 // These values were obtained using:
 // echo -n '' > foo.txt && gsutil hash foo.txt
@@ -241,6 +247,59 @@ TEST(HashFunctionImplTest, PrecomputedQuick) {
   auto const actual = std::move(function).Finish();
   EXPECT_THAT(actual.crc32c, kEmptyStringCrc32cChecksum);
   EXPECT_THAT(actual.md5, kEmptyStringMD5Hash);
+}
+
+TEST(HashFunctionImplTest, Crc32cMessageDelegation) {
+  auto expected_status = [](std::string m) {
+    return Status(StatusCode::kUnknown, std::move(m));
+  };
+
+  auto mock = std::make_unique<MockHashFunction>();
+  EXPECT_CALL(*mock, Name).WillOnce(Return("mock"));
+  EXPECT_CALL(*mock, Update(An<absl::string_view>())).Times(1);
+  EXPECT_CALL(*mock, Update(_, An<absl::string_view>()))
+      .WillOnce(Return(expected_status("Update(_, absl::string_view)")));
+  EXPECT_CALL(*mock, Update(_, An<absl::string_view>(), _))
+      .WillOnce(Return(expected_status("Update(_, absl::string_view, _)")));
+  EXPECT_CALL(*mock, Update(_, An<absl::Cord const&>(), _))
+      .WillOnce(Return(expected_status("Update(_, absl::Cord const&, _)")));
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(HashValues{"finish-crc32c", "finish-md5"}));
+
+  Crc32cMessageHashFunction function(std::move(mock));
+  EXPECT_EQ(function.Name(), "crc32c-message(mock)");
+  EXPECT_NO_FATAL_FAILURE(function.Update(absl::string_view("unused")));
+  EXPECT_THAT(function.Update(0, absl::string_view("")),
+              StatusIs(StatusCode::kUnknown, "Update(_, absl::string_view)"));
+  EXPECT_THAT(
+      function.Update(0, absl::string_view(""), 0),
+      StatusIs(StatusCode::kUnknown, "Update(_, absl::string_view, _)"));
+  EXPECT_THAT(
+      function.Update(0, absl::Cord(), 0),
+      StatusIs(StatusCode::kUnknown, "Update(_, absl::Cord const&, _)"));
+  auto const values = function.Finish();
+  EXPECT_EQ(values.crc32c, "finish-crc32c");
+  EXPECT_EQ(values.md5, "finish-md5");
+}
+
+TEST(HashFunctionImplTest, Crc32cMessageValidate) {
+  auto const message =
+      absl::string_view{"The quick brown fox jumps over the lazy dog"};
+  auto const expected_crc32c = storage_internal::Crc32c(message);
+  auto mock = std::make_unique<MockHashFunction>();
+  EXPECT_CALL(*mock, Update(_, message, expected_crc32c))
+      .WillRepeatedly(Return(Status{}));
+  EXPECT_CALL(*mock, Update(_, absl::Cord(message), expected_crc32c))
+      .WillRepeatedly(Return(Status{}));
+
+  Crc32cMessageHashFunction function(std::move(mock));
+  EXPECT_THAT(function.Update(0, message, expected_crc32c), IsOk());
+  EXPECT_THAT(function.Update(0, absl::Cord(message), expected_crc32c), IsOk());
+
+  EXPECT_THAT(function.Update(0, message, expected_crc32c + 1),
+              StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(function.Update(0, absl::Cord(message), expected_crc32c + 1),
+              StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(HashFunctionImplTest, CreateHashFunctionRead) {

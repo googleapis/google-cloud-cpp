@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_BATCH_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_BATCH_SOURCE_H
 
+#include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
@@ -30,9 +31,6 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using BatchCallback =
-    std::function<void(StatusOr<google::pubsub::v1::StreamingPullResponse>)>;
-
 /**
  * Defines the interface for message batch sources.
  *
@@ -46,7 +44,7 @@ class SubscriptionBatchSource {
   virtual ~SubscriptionBatchSource() = default;
 
   /// Start the source.
-  virtual void Start(BatchCallback cb) = 0;
+  virtual void Start(std::shared_ptr<BatchCallback> cb) = 0;
 
   /// Shutdown the source, cancel any outstanding requests and or timers. No
   /// callbacks should be generated after this call.

@@ -77,6 +77,8 @@ else ()
         internal/async/reader_connection_factory.h
         internal/async/reader_connection_impl.cc
         internal/async/reader_connection_impl.h
+        internal/async/reader_connection_resume.cc
+        internal/async/reader_connection_resume.h
         internal/async/reader_connection_tracing.cc
         internal/async/reader_connection_tracing.h
         internal/async/rewriter_connection_impl.cc
@@ -316,6 +318,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/async/read_payload_impl_test.cc
         internal/async/reader_connection_factory_test.cc
         internal/async/reader_connection_impl_test.cc
+        internal/async/reader_connection_resume_test.cc
         internal/async/reader_connection_tracing_test.cc
         internal/async/rewriter_connection_impl_test.cc
         internal/async/rewriter_connection_tracing_test.cc

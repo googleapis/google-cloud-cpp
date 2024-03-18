@@ -20,6 +20,7 @@
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/async/rewriter_connection.h"
 #include "google/cloud/storage/idempotency_policy.h"
+#include "google/cloud/storage/internal/async/reader_connection_factory.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
@@ -77,6 +78,13 @@ class AsyncConnectionImpl
 
   std::shared_ptr<storage_experimental::AsyncRewriterConnection> RewriteObject(
       RewriteObjectParams p) override;
+
+  // Expose this function for testing purposes. It creates a factory to create
+  // new `AsyncReaderConnection` instances at different offsets.
+  AsyncReaderConnectionFactory MakeReaderConnectionFactory(
+      google::cloud::internal::ImmutableOptions current,
+      google::cloud::storage_experimental::ReadObjectRequest request,
+      google::storage::v2::ReadObjectRequest proto_request);
 
  private:
   std::weak_ptr<AsyncConnectionImpl> WeakFromThis() {
