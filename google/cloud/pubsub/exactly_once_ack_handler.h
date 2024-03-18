@@ -126,7 +126,7 @@ class ExactlyOnceAckHandler {
     /// Returns the ack id for the handler. There is no corresponding public
     /// interface to access the ack id in `ExactlyOnceAckHandler`. This is for
     /// internal use only.
-    virtual std::string ack_id() const { return ""; }
+    virtual std::string ack_id() { return ""; }
     /// Returns the subscription for the handler. There is no corresponding
     /// public interface to access the subscription id in
     /// `ExactlyOnceAckHandler`. This is for internal use only.
