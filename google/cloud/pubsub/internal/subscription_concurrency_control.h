@@ -79,8 +79,8 @@ class SubscriptionConcurrencyControl
   google::cloud::CompletionQueue cq_;
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
   std::shared_ptr<SubscriptionMessageSource> const source_;
-  std::size_t const max_concurrency_;
   pubsub::Subscription subscription_;
+  std::size_t const max_concurrency_;
 
   std::mutex mu_;
   Callback callback_;
