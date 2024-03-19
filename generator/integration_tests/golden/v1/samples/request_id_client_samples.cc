@@ -108,11 +108,10 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}
   .set<google::cloud::golden_v1::RequestIdServicePollingPolicyOption>(
     google::cloud::GenericPollingPolicy<
-        google::cloud::golden_v1::RequestIdServiceRetryPolicy,
-        google::cloud::BackoffPolicy>(
+        google::cloud::RetryPolicy, google::cloud::BackoffPolicy>(
      google::cloud::golden_v1::RequestIdServiceLimitedTimeRetryPolicy(
           /*maximum_duration=*/std::chrono::minutes(45)),
-      google::cloud::ExponentialBackoffPolicy(
+      google::cloud::golden_v1::RequestIdServiceExponentialBackoffPolicy(
           /*initial_delay=*/std::chrono::seconds(10),
           /*maximum_delay=*/std::chrono::minutes(2),
           /*scaling=*/4.0))

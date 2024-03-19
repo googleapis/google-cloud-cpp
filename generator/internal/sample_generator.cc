@@ -193,12 +193,10 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   // of 4 until it becomes 2 minutes.
   auto options = google::cloud::Options{}
   .set<google::cloud::$product_namespace$::$service_name$PollingPolicyOption>(
-    google::cloud::GenericPollingPolicy<
-        google::cloud::$product_namespace$::$service_name$RetryPolicy,
-        google::cloud::BackoffPolicy>(
+    google::cloud::GenericPollingPolicy<>(
      google::cloud::$product_namespace$::$service_name$LimitedTimeRetryPolicy(
           /*maximum_duration=*/std::chrono::minutes(45)),
-      google::cloud::ExponentialBackoffPolicy(
+      google::cloud::$product_namespace$::$service_name$ExponentialBackoffPolicy(
           /*initial_delay=*/std::chrono::seconds(10),
           /*maximum_delay=*/std::chrono::minutes(2),
           /*scaling=*/4.0))
