@@ -28,6 +28,7 @@
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_read_source.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
+#include "google/cloud/storage/internal/grpc/scale_stall_timeout.h"
 #include "google/cloud/storage/internal/grpc/service_account_parser.h"
 #include "google/cloud/storage/internal/grpc/sign_blob_request_parser.h"
 #include "google/cloud/storage/internal/grpc/split_write_object_data.h"
@@ -115,22 +116,14 @@ StatusOr<storage::ObjectAccessControl> FindDefaultObjectAccessControl(
       "cannot find entity <" + entity + "> in bucket " + response->bucket_id());
 }
 
-std::chrono::milliseconds ScaleStallTimeout(std::chrono::milliseconds timeout,
-                                            std::uint32_t size,
-                                            std::uint32_t quantum) {
-  if (timeout == std::chrono::milliseconds(0)) return timeout;
-  if (quantum <= size || size == 0) return timeout;
-  return timeout * quantum / size;
-}
-
-Status TimeoutError(std::chrono::milliseconds timeout, std::string const& op) {
+Status TimeoutError(std::chrono::microseconds timeout, std::string const& op) {
   return Status(StatusCode::kDeadlineExceeded,
                 "timeout [" + absl::FormatDuration(absl::FromChrono(timeout)) +
                     "] while waiting for " + op);
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
-HandleWriteObjectError(std::chrono::milliseconds timeout,
+HandleWriteObjectError(std::chrono::microseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
                        std::unique_ptr<GrpcStub::WriteObjectStream> writer,
                        google::cloud::Options const& options) {
@@ -147,7 +140,7 @@ HandleWriteObjectError(std::chrono::milliseconds timeout,
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
-HandleUploadChunkError(std::chrono::milliseconds timeout,
+HandleUploadChunkError(std::chrono::microseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
                        std::unique_ptr<GrpcStub::WriteObjectStream> writer,
                        google::cloud::Options const& options) {
@@ -156,7 +149,7 @@ HandleUploadChunkError(std::chrono::milliseconds timeout,
 }
 
 StatusOr<storage::ObjectMetadata> HandleInsertObjectMediaError(
-    std::chrono::milliseconds timeout,
+    std::chrono::microseconds timeout,
     std::function<future<bool>()> const& create_watchdog,
     std::unique_ptr<GrpcStub::WriteObjectStream> writer,
     google::cloud::Options const& options) {
@@ -168,7 +161,7 @@ StatusOr<storage::ObjectMetadata> HandleInsertObjectMediaError(
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
-CloseWriteObjectStream(std::chrono::milliseconds timeout,
+CloseWriteObjectStream(std::chrono::microseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
                        std::unique_ptr<GrpcStub::WriteObjectStream> writer,
                        google::cloud::Options const& options) {
@@ -494,8 +487,8 @@ GrpcStub::ReadObject(rest_internal::RestContext& context,
   auto stream = stub_->ReadObject(std::move(ctx), options, *proto_request);
 
   // The default timer source is a no-op. It does not set a timer, and always
-  // returns an indication that the timer expired.  The GrpcObjectReadSource
-  // takes no action on expired timers.
+  // returns an indication that the timer was cancelled.  `GrpcObjectReadSource`
+  // takes no action on cancelled timers.
   GrpcObjectReadSource::TimerSource timer_source = [] {
     return make_ready_future(false);
   };
