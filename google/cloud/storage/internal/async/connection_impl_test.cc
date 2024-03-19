@@ -28,6 +28,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -488,7 +489,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectWithTimeout) {
   // that completes with `false` on `Start()` (i.e. never starts) and then
   // completes with a transient error on `Finish()`. Because the timeout
   // parameters are configured, the first thing to happen is that the timeout is
-  // set:
+  // set.
   auto data = reader->Read();
   auto timer = sequencer.PopFrontWithName();
   EXPECT_EQ(timer.second, "MakeRelativeTimer");
@@ -513,7 +514,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectWithTimeout) {
       absl::holds_alternative<storage_experimental::ReadPayload>(response));
 
   // Trigger another read. Since this closes the stream, the `Read()` and
-  // `Finish()` calls must happen before the second `Read()` it is satisfied.
+  // `Finish()` calls must happen before the second `Read()` is satisfied.
   data = reader->Read();
   timer = sequencer.PopFrontWithName();
   EXPECT_EQ(timer.second, "MakeRelativeTimer");
