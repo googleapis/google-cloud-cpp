@@ -10,7 +10,8 @@ find this useful. If you want to familiarize yourself with the code in the
 
 The goal of the libraries is to provide idiomatic C++ libraries to access
 services in [Google Cloud Platform](https://cloud.google.com). All services are
-in scope. As of 2024-03 we have over 100 libraries.
+in scope. As of 2024-03 we have over 100 libraries, covering most Google Cloud
+Platform services.
 
 What do we mean by idiomatic? We mean that C++ developers will find the APIs
 familiar, or "natural", that these APIs will fit well with the rest of the C++
@@ -38,6 +39,10 @@ More specifically, the functionality offered by these libraries include:
 - The libraries convert pagination APIs into C++ iterators.
 - The libraries can be configured to log RPCs and responses, to help application
   developers troubleshoot their code.
+- The libraries return errors using an "outcome" object: `StatusOr<T>`. Similar
+  to the upcoming `std::expected<T, E>` class in C++23.
+- Application developers can convert outcome objects to exceptions without
+  much effort.
 
 ## Where is the code?
 
@@ -138,13 +143,25 @@ corresponding `FooConnection`.
 Because `*Connection` classes are intended for customers to use (at least as
 mocks), they are part of the public API.
 
-There are two concrete versions of the (generally) abstract `*Connection` class:
+Typically there are three concrete versions of the `*Connection` interface:
 
-| Layer        | Description                                                   |
+| Name         | Description                                                   |
 | ------------ | ------------------------------------------------------------- |
 | `*Impl`      | An implementation using the `*Stub` layer                     |
-| `*Rest*Impl` | An implementation using the `*Rest*Stub` layer                |
 | `*Tracing`   | Instrument each retry loop with an [OpenTelemetry] trace span |
+| `Mock*Connection` | An implementation using `googlemock`                     |
+
+Only `Mock*Connection` is part of the public API. It is used by application
+developers that want to test their code using a mocked behavior for the
+`*Client` class.
+
+In some cases you may find a fourth implementation, used to implement clients
+over [HTTP and gRPC Transcoding][aip/127]. This class is also not part of the
+public API.
+
+| Name         | Description                                                   |
+| ------------ | ------------------------------------------------------------- |
+| `*Rest*Impl` | An implementation using the `*Rest*Stub` layer                |
 
 ## The `*Stub` classes
 
