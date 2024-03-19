@@ -32,8 +32,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * magnitude, from transferring basically empty objects to transferring 5 TiB
  * objects.
  *
- * Instead the library tries restart transfers that show "lack of progress" or
- * "stall". Applications configure the storage library to detect stalled
+ * Instead the library tries to restart transfers that show "lack of progress"
+ * or "stall". Applications configure the storage library to detect stalled
  * uploads and downloads using two parameters:
  * - A time duration, expressed in seconds
  * - The minimum number of bytes expected to be transferred in that duration.
@@ -41,10 +41,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A time duration of zero seconds disables this feature.
  *
  * This approach does not work well with gRPC-based transfers, where the
- * transfers is broken up in a series of messages. In the current implementation
- * we use a per-message timeout. The maximum message size is known: it is part
- * of the public contract in the service. So we can scale the timeout based on
- * this parameter.
+ * transfers are broken up into a series of messages. In the current
+ * implementation we use a per-message timeout. The maximum message size is
+ * known: it is part of the public contract in the service. So we can scale the
+ * timeout based on this parameter.
  */
 std::chrono::milliseconds ScaleStallTimeout(std::chrono::seconds stall_duration,
                                             std::size_t stall_size,

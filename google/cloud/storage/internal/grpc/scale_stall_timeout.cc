@@ -28,6 +28,13 @@ std::chrono::milliseconds ScaleStallTimeout(std::chrono::seconds stall_duration,
   if (stall_size <= maximum_message_size || stall_size == 0) {
     return ms(stall_duration);
   }
+  // In practice this should not overflow. The current value for
+  // `maximum_message_size` is 2MiB, that is 21 bits. Meanwhile
+  // `std::chrono::milliseconds::Rep` is guaranteed to have at least 45 bits,
+  // and in practice it is 64-bits. Even in the 45-bit case this should support
+  // `stall_duration <= 4.6 hours`. Like 640KiB, that should be enough for
+  // everybody. In practice, with 64-bit `Rep`, this supports values of
+  // `stall_duration` longer than 1,000 years.
   return ms(stall_duration) * maximum_message_size / stall_size;
 }
 
