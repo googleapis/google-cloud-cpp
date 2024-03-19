@@ -56,8 +56,8 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   git add "${PROJECT_ROOT}/protos/google/cloud/compute/v1/internal/common_*.proto"
 
   if [ -n "${UPDATED_DISCOVERY_DOCUMENT}" ]; then
-    io::log_h2 "Adding new ${UPDATED_DISCOVERY_DOCUMENT} protos"
-    git add "${PROJECT_ROOT}/protos/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}"
+    io::log_h2 "Adding new ${UPDATED_DISCOVERY_DOCUMENT} internal protos"
+    git add "${PROJECT_ROOT}/protos/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}/v1/internal"
   fi
 
   io::log_h2 "Formatting generated protos"
@@ -120,7 +120,8 @@ fi
 if [ -n "${UPDATED_DISCOVERY_DOCUMENT}" ]; then
   io::log_h2 "Adding new ${UPDATED_DISCOVERY_DOCUMENT} files post formatting"
   git add -u "${PROJECT_ROOT}/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}" \
-    "${PROJECT_ROOT}/protos/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}"
+    "${PROJECT_ROOT}/protos/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}" \
+    "${PROJECT_ROOT}/ci/etc/expected_install_directories"
 else
   # If the Discovery Document is not being updated, then this build should fail
   # if any generated files differ from what was checked in.
