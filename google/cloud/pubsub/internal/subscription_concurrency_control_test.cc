@@ -63,7 +63,7 @@ class SubscriptionConcurrencyControlTest : public ::testing::Test {
       auto m = std::move(messages_.front());
       messages_.pop_front();
       lk.unlock();
-      cb->callback(MessageCallback::ReceivedMessage{std::move(m)});
+      cb->message_callback(MessageCallback::ReceivedMessage{std::move(m)});
       lk.lock();
     }
   }
