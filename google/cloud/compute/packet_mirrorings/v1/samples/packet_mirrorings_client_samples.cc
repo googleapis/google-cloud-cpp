@@ -22,6 +22,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
 #include <iostream>
@@ -131,15 +132,18 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    PacketMirroringsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_packet_mirrorings_v1::
-                      PacketMirroringsRetryPolicy,
-                  google::cloud::BackoffPolicy>(
+                      PacketMirroringsRetryPolicyOption::Type,
+                  google::cloud::compute_packet_mirrorings_v1::
+                      PacketMirroringsBackoffPolicyOption::Type>(
                   google::cloud::compute_packet_mirrorings_v1::
                       PacketMirroringsLimitedTimeRetryPolicy(
-                          /*maximum_duration=*/std::chrono::minutes(45)),
+                          /*maximum_duration=*/std::chrono::minutes(45))
+                          .clone(),
                   google::cloud::ExponentialBackoffPolicy(
                       /*initial_delay=*/std::chrono::seconds(10),
                       /*maximum_delay=*/std::chrono::minutes(2),
-                      /*scaling=*/4.0))
+                      /*scaling=*/4.0)
+                      .clone())
                   .clone());
 
   auto connection = google::cloud::compute_packet_mirrorings_v1::

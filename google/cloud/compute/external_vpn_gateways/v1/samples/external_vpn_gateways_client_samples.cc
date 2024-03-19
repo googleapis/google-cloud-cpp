@@ -23,6 +23,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
 #include <iostream>
@@ -133,15 +134,18 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ExternalVpnGatewaysPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_external_vpn_gateways_v1::
-                      ExternalVpnGatewaysRetryPolicy,
-                  google::cloud::BackoffPolicy>(
+                      ExternalVpnGatewaysRetryPolicyOption::Type,
+                  google::cloud::compute_external_vpn_gateways_v1::
+                      ExternalVpnGatewaysBackoffPolicyOption::Type>(
                   google::cloud::compute_external_vpn_gateways_v1::
                       ExternalVpnGatewaysLimitedTimeRetryPolicy(
-                          /*maximum_duration=*/std::chrono::minutes(45)),
+                          /*maximum_duration=*/std::chrono::minutes(45))
+                          .clone(),
                   google::cloud::ExponentialBackoffPolicy(
                       /*initial_delay=*/std::chrono::seconds(10),
                       /*maximum_delay=*/std::chrono::minutes(2),
-                      /*scaling=*/4.0))
+                      /*scaling=*/4.0)
+                      .clone())
                   .clone());
 
   auto connection = google::cloud::compute_external_vpn_gateways_v1::

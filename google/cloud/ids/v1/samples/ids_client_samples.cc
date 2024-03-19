@@ -22,6 +22,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
 #include <iostream>
@@ -111,18 +112,21 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   // or error) or 45 minutes, whichever happens first. Initially pause for
   // 10 seconds between polling requests, increasing the pause by a factor
   // of 4 until it becomes 2 minutes.
-  auto options = google::cloud::Options{}
-                     .set<google::cloud::ids_v1::IDSPollingPolicyOption>(
-                         google::cloud::GenericPollingPolicy<
-                             google::cloud::ids_v1::IDSRetryPolicy,
-                             google::cloud::BackoffPolicy>(
-                             google::cloud::ids_v1::IDSLimitedTimeRetryPolicy(
-                                 /*maximum_duration=*/std::chrono::minutes(45)),
-                             google::cloud::ExponentialBackoffPolicy(
-                                 /*initial_delay=*/std::chrono::seconds(10),
-                                 /*maximum_delay=*/std::chrono::minutes(2),
-                                 /*scaling=*/4.0))
-                             .clone());
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::ids_v1::IDSPollingPolicyOption>(
+              google::cloud::GenericPollingPolicy<
+                  google::cloud::ids_v1::IDSRetryPolicyOption::Type,
+                  google::cloud::ids_v1::IDSBackoffPolicyOption::Type>(
+                  google::cloud::ids_v1::IDSLimitedTimeRetryPolicy(
+                      /*maximum_duration=*/std::chrono::minutes(45))
+                      .clone(),
+                  google::cloud::ExponentialBackoffPolicy(
+                      /*initial_delay=*/std::chrono::seconds(10),
+                      /*maximum_delay=*/std::chrono::minutes(2),
+                      /*scaling=*/4.0)
+                      .clone())
+                  .clone());
 
   auto connection = google::cloud::ids_v1::MakeIDSConnection(options);
 

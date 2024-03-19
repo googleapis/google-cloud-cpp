@@ -22,6 +22,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
 #include <iostream>
@@ -120,14 +121,17 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::eventarc_v1::EventarcPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::eventarc_v1::EventarcRetryPolicy,
-                  google::cloud::BackoffPolicy>(
+                  google::cloud::eventarc_v1::EventarcRetryPolicyOption::Type,
+                  google::cloud::eventarc_v1::EventarcBackoffPolicyOption::
+                      Type>(
                   google::cloud::eventarc_v1::EventarcLimitedTimeRetryPolicy(
-                      /*maximum_duration=*/std::chrono::minutes(45)),
+                      /*maximum_duration=*/std::chrono::minutes(45))
+                      .clone(),
                   google::cloud::ExponentialBackoffPolicy(
                       /*initial_delay=*/std::chrono::seconds(10),
                       /*maximum_delay=*/std::chrono::minutes(2),
-                      /*scaling=*/4.0))
+                      /*scaling=*/4.0)
+                      .clone())
                   .clone());
 
   auto connection = google::cloud::eventarc_v1::MakeEventarcConnection(options);
