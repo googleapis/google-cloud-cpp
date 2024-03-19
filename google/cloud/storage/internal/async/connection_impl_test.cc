@@ -420,7 +420,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
   EXPECT_THAT(data.get(), VariantWith<Status>(IsOk()));
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncReadObjecWithTimeout) {
+TEST_F(AsyncConnectionImplTest, AsyncReadObjectWithTimeout) {
   AsyncSequencer<bool> sequencer;
 
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
@@ -497,7 +497,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjecWithTimeout) {
   // the streaming RPC).
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
-  timer.first.set_value(false); // simulate a canceled timeout
+  timer.first.set_value(false);  // simulate a canceled timeout
   next.first.set_value(true);
 
   // Then the `Read()` operation and its timer are scheduled:
@@ -505,7 +505,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjecWithTimeout) {
   EXPECT_EQ(timer.second, "MakeRelativeTimer");
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
-  timer.first.set_value(false); // simulate a canceled timeout
+  timer.first.set_value(false);  // simulate a canceled timeout
   next.first.set_value(true);
 
   auto response = data.get();
@@ -519,7 +519,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjecWithTimeout) {
   EXPECT_EQ(timer.second, "MakeRelativeTimer");
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
-  timer.first.set_value(false); // simulate a canceled timeout
+  timer.first.set_value(false);  // simulate a canceled timeout
   next.first.set_value(true);
 
   next = sequencer.PopFrontWithName();
