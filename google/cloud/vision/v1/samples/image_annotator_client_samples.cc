@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::vision_v1::ImageAnnotatorPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::vision_v1::
-                      ImageAnnotatorLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::vision_v1::ImageAnnotatorRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::vision_v1::
                       ImageAnnotatorLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

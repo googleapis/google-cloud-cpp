@@ -129,8 +129,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    InstanceGroupsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_instance_groups_v1::
-                      InstanceGroupsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      InstanceGroupsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_instance_groups_v1::
                       InstanceGroupsLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

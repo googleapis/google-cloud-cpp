@@ -134,8 +134,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ConsumerProcurementServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::commerce_consumer_procurement_v1::
-                      ConsumerProcurementServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      ConsumerProcurementServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::commerce_consumer_procurement_v1::
                       ConsumerProcurementServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

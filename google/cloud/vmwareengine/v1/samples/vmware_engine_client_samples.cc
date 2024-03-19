@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::vmwareengine_v1::VmwareEnginePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::vmwareengine_v1::
-                      VmwareEngineLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::vmwareengine_v1::VmwareEngineRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::vmwareengine_v1::
                       VmwareEngineLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

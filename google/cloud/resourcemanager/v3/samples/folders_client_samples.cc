@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::resourcemanager_v3::FoldersPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::resourcemanager_v3::
-                      FoldersLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::resourcemanager_v3::FoldersRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::resourcemanager_v3::
                       FoldersLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

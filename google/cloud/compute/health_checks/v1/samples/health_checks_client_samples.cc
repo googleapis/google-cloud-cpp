@@ -129,8 +129,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    HealthChecksPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_health_checks_v1::
-                      HealthChecksLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      HealthChecksRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_health_checks_v1::
                       HealthChecksLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

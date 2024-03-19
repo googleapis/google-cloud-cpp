@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ReachabilityServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::networkmanagement_v1::
-                      ReachabilityServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      ReachabilityServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::networkmanagement_v1::
                       ReachabilityServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

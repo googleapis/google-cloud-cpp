@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::spanner_admin::DatabaseAdminPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::spanner_admin::
-                      DatabaseAdminLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::spanner_admin::DatabaseAdminRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::spanner_admin::
                       DatabaseAdminLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

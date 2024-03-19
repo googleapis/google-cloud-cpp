@@ -122,9 +122,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::gkemulticloud_v1::AwsClustersPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::gkemulticloud_v1::
-                      AwsClustersLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::gkemulticloud_v1::AwsClustersRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::gkemulticloud_v1::
                       AwsClustersLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

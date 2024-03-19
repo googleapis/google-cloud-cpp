@@ -135,8 +135,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    RegionHealthChecksPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_region_health_checks_v1::
-                      RegionHealthChecksLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      RegionHealthChecksRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_region_health_checks_v1::
                       RegionHealthChecksLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -130,8 +130,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ForwardingRulesPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_forwarding_rules_v1::
-                      ForwardingRulesLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      ForwardingRulesRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_forwarding_rules_v1::
                       ForwardingRulesLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

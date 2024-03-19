@@ -129,9 +129,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::filestore_v1::
                    CloudFilestoreManagerPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::filestore_v1::
-                      CloudFilestoreManagerLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::filestore_v1::CloudFilestoreManagerRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::filestore_v1::
                       CloudFilestoreManagerLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    SnapshotSettingsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_snapshot_settings_v1::
-                      SnapshotSettingsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      SnapshotSettingsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_snapshot_settings_v1::
                       SnapshotSettingsLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

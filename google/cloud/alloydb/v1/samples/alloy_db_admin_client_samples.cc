@@ -121,8 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::alloydb_v1::AlloyDBAdminPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::alloydb_v1::AlloyDBAdminLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::alloydb_v1::AlloyDBAdminRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::alloydb_v1::AlloyDBAdminLimitedTimeRetryPolicy(
                       /*maximum_duration=*/std::chrono::minutes(45)),
                   google::cloud::ExponentialBackoffPolicy(

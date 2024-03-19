@@ -129,8 +129,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    InterconnectsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_interconnects_v1::
-                      InterconnectsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      InterconnectsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_interconnects_v1::
                       InterconnectsLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

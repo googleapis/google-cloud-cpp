@@ -127,9 +127,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::discoveryengine_v1::
                    DocumentServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::discoveryengine_v1::
-                      DocumentServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::discoveryengine_v1::DocumentServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::discoveryengine_v1::
                       DocumentServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

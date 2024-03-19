@@ -129,8 +129,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ReservationsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_reservations_v1::
-                      ReservationsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      ReservationsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_reservations_v1::
                       ReservationsLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

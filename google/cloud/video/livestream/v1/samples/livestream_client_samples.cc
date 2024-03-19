@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    LivestreamServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::video_livestream_v1::
-                      LivestreamServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      LivestreamServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::video_livestream_v1::
                       LivestreamServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

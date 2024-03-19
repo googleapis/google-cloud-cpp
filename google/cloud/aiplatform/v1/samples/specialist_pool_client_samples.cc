@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    SpecialistPoolServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::aiplatform_v1::
-                      SpecialistPoolServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      SpecialistPoolServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::aiplatform_v1::
                       SpecialistPoolServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -107,7 +107,9 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   // of 4 until it becomes 2 minutes.
   auto options = google::cloud::Options{}
   .set<google::cloud::golden_v1::GoldenThingAdminPollingPolicyOption>(
-    google::cloud::GenericPollingPolicy<google::cloud::golden_v1::GoldenThingAdminLimitedTimeRetryPolicy,google::cloud::ExponentialBackoffPolicy>(
+    google::cloud::GenericPollingPolicy<
+        google::cloud::golden_v1::GoldenThingAdminRetryPolicy,
+        google::cloud::BackoffPolicy>(
      google::cloud::golden_v1::GoldenThingAdminLimitedTimeRetryPolicy(
           /*maximum_duration=*/std::chrono::minutes(45)),
       google::cloud::ExponentialBackoffPolicy(

@@ -133,8 +133,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ExternalVpnGatewaysPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_external_vpn_gateways_v1::
-                      ExternalVpnGatewaysLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      ExternalVpnGatewaysRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_external_vpn_gateways_v1::
                       ExternalVpnGatewaysLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

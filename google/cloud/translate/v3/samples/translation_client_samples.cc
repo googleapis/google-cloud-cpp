@@ -127,9 +127,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::translate_v3::
                    TranslationServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::translate_v3::
-                      TranslationServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::translate_v3::TranslationServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::translate_v3::
                       TranslationServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

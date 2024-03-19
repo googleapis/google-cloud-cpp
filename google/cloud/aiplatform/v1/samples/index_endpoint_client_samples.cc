@@ -130,9 +130,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::aiplatform_v1::
                    IndexEndpointServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::aiplatform_v1::
-                      IndexEndpointServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::aiplatform_v1::IndexEndpointServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::aiplatform_v1::
                       IndexEndpointServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -134,8 +134,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    DeploymentResourcePoolServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::aiplatform_v1::
-                      DeploymentResourcePoolServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      DeploymentResourcePoolServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::aiplatform_v1::
                       DeploymentResourcePoolServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -125,9 +125,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<
               google::cloud::vpcaccess_v1::VpcAccessServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::vpcaccess_v1::
-                      VpcAccessServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::vpcaccess_v1::VpcAccessServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::vpcaccess_v1::
                       VpcAccessServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

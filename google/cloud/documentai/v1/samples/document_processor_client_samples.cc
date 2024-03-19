@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    DocumentProcessorServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::documentai_v1::
-                      DocumentProcessorServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      DocumentProcessorServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::documentai_v1::
                       DocumentProcessorServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

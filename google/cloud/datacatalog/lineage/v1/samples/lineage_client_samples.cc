@@ -123,9 +123,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::datacatalog_lineage_v1::
                    LineagePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::datacatalog_lineage_v1::
-                      LineageLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::datacatalog_lineage_v1::LineageRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::datacatalog_lineage_v1::
                       LineageLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

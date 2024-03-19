@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::appengine_v1::DomainMappingsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::appengine_v1::
-                      DomainMappingsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::appengine_v1::DomainMappingsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::appengine_v1::
                       DomainMappingsLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

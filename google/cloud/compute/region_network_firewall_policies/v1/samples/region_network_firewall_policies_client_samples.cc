@@ -135,8 +135,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    RegionNetworkFirewallPoliciesPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_region_network_firewall_policies_v1::
-                      RegionNetworkFirewallPoliciesLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      RegionNetworkFirewallPoliciesRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_region_network_firewall_policies_v1::
                       RegionNetworkFirewallPoliciesLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

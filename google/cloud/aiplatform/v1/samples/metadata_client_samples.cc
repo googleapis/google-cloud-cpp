@@ -124,9 +124,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<
               google::cloud::aiplatform_v1::MetadataServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::aiplatform_v1::
-                      MetadataServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::aiplatform_v1::MetadataServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::aiplatform_v1::
                       MetadataServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

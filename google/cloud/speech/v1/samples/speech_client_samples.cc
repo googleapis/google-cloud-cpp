@@ -118,8 +118,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::speech_v1::SpeechPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::speech_v1::SpeechLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::speech_v1::SpeechRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::speech_v1::SpeechLimitedTimeRetryPolicy(
                       /*maximum_duration=*/std::chrono::minutes(45)),
                   google::cloud::ExponentialBackoffPolicy(

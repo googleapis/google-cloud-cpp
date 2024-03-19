@@ -130,8 +130,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    NodeTemplatesPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_node_templates_v1::
-                      NodeTemplatesLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      NodeTemplatesRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_node_templates_v1::
                       NodeTemplatesLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

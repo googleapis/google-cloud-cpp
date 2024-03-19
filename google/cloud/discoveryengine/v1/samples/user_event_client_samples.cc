@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    UserEventServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::discoveryengine_v1::
-                      UserEventServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      UserEventServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::discoveryengine_v1::
                       UserEventServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

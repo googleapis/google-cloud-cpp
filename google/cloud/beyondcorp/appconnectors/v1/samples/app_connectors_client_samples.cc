@@ -134,8 +134,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    AppConnectorsServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::beyondcorp_appconnectors_v1::
-                      AppConnectorsServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      AppConnectorsServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::beyondcorp_appconnectors_v1::
                       AppConnectorsServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

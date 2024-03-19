@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::gkebackup_v1::BackupForGKEPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::gkebackup_v1::
-                      BackupForGKELimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::gkebackup_v1::BackupForGKERetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::gkebackup_v1::
                       BackupForGKELimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

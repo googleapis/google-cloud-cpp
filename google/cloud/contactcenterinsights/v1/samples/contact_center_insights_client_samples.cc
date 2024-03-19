@@ -134,8 +134,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ContactCenterInsightsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::contactcenterinsights_v1::
-                      ContactCenterInsightsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      ContactCenterInsightsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::contactcenterinsights_v1::
                       ContactCenterInsightsLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

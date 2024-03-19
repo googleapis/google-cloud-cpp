@@ -128,9 +128,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::compute_subnetworks_v1::
                    SubnetworksPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::compute_subnetworks_v1::
-                      SubnetworksLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::compute_subnetworks_v1::SubnetworksRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_subnetworks_v1::
                       SubnetworksLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

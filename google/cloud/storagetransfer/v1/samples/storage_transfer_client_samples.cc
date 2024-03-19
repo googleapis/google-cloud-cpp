@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    StorageTransferServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::storagetransfer_v1::
-                      StorageTransferServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      StorageTransferServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::storagetransfer_v1::
                       StorageTransferServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

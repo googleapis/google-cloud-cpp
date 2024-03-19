@@ -121,8 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::dialogflow_cx::VersionsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::dialogflow_cx::VersionsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::dialogflow_cx::VersionsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::dialogflow_cx::VersionsLimitedTimeRetryPolicy(
                       /*maximum_duration=*/std::chrono::minutes(45)),
                   google::cloud::ExponentialBackoffPolicy(

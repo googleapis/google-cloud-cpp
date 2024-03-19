@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::datafusion_v1::DataFusionPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::datafusion_v1::
-                      DataFusionLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::datafusion_v1::DataFusionRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::datafusion_v1::
                       DataFusionLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

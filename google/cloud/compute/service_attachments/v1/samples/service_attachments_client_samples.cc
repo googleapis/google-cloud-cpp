@@ -134,8 +134,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ServiceAttachmentsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_service_attachments_v1::
-                      ServiceAttachmentsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      ServiceAttachmentsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_service_attachments_v1::
                       ServiceAttachmentsLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::dataplex_v1::DataplexServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::dataplex_v1::
-                      DataplexServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::dataplex_v1::DataplexServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::dataplex_v1::
                       DataplexServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

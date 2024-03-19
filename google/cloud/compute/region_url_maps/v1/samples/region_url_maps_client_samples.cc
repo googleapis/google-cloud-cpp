@@ -129,8 +129,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    RegionUrlMapsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_region_url_maps_v1::
-                      RegionUrlMapsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      RegionUrlMapsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_region_url_maps_v1::
                       RegionUrlMapsLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

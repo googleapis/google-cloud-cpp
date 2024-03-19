@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    CloudChannelReportsServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::channel_v1::
-                      CloudChannelReportsServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      CloudChannelReportsServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::channel_v1::
                       CloudChannelReportsServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

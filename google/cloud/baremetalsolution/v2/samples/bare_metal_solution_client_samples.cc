@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    BareMetalSolutionPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::baremetalsolution_v2::
-                      BareMetalSolutionLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      BareMetalSolutionRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::baremetalsolution_v2::
                       BareMetalSolutionLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

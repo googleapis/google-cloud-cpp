@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::webrisk_v1::WebRiskServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::webrisk_v1::
-                      WebRiskServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::webrisk_v1::WebRiskServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::webrisk_v1::
                       WebRiskServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

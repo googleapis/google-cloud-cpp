@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::dataproc_v1::BatchControllerPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::dataproc_v1::
-                      BatchControllerLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::dataproc_v1::BatchControllerRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::dataproc_v1::
                       BatchControllerLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

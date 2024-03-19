@@ -127,9 +127,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::apigateway_v1::
                    ApiGatewayServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::apigateway_v1::
-                      ApiGatewayServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::apigateway_v1::ApiGatewayServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::apigateway_v1::
                       ApiGatewayServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

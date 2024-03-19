@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    AnalyticsHubServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::bigquery_analyticshub_v1::
-                      AnalyticsHubServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      AnalyticsHubServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::bigquery_analyticshub_v1::
                       AnalyticsHubServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    WorkflowTemplateServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::dataproc_v1::
-                      WorkflowTemplateServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      WorkflowTemplateServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::dataproc_v1::
                       WorkflowTemplateServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

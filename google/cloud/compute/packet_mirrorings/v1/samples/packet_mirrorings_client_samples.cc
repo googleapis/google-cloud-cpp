@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    PacketMirroringsPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_packet_mirrorings_v1::
-                      PacketMirroringsLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      PacketMirroringsRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_packet_mirrorings_v1::
                       PacketMirroringsLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

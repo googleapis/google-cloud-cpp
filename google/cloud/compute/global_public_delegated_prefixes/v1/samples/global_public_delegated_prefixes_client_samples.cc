@@ -135,8 +135,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    GlobalPublicDelegatedPrefixesPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_global_public_delegated_prefixes_v1::
-                      GlobalPublicDelegatedPrefixesLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      GlobalPublicDelegatedPrefixesRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_global_public_delegated_prefixes_v1::
                       GlobalPublicDelegatedPrefixesLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ManagedIdentitiesServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::managedidentities_v1::
-                      ManagedIdentitiesServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      ManagedIdentitiesServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::managedidentities_v1::
                       ManagedIdentitiesServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    VideoIntelligenceServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::videointelligence_v1::
-                      VideoIntelligenceServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      VideoIntelligenceServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::videointelligence_v1::
                       VideoIntelligenceServiceLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

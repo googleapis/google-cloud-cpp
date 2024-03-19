@@ -125,9 +125,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::gkemulticloud_v1::
                    AzureClustersPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::gkemulticloud_v1::
-                      AzureClustersLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::gkemulticloud_v1::AzureClustersRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::gkemulticloud_v1::
                       AzureClustersLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

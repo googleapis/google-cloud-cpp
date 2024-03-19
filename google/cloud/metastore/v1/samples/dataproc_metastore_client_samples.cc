@@ -125,9 +125,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::metastore_v1::
                    DataprocMetastorePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::metastore_v1::
-                      DataprocMetastoreLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::metastore_v1::DataprocMetastoreRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::metastore_v1::
                       DataprocMetastoreLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

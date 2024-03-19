@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::edgenetwork_v1::EdgeNetworkPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::edgenetwork_v1::
-                      EdgeNetworkLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::edgenetwork_v1::EdgeNetworkRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::edgenetwork_v1::
                       EdgeNetworkLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

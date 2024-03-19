@@ -130,8 +130,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    GlobalAddressesPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_global_addresses_v1::
-                      GlobalAddressesLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      GlobalAddressesRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_global_addresses_v1::
                       GlobalAddressesLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

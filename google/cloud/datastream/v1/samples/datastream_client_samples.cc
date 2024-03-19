@@ -121,9 +121,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::datastream_v1::DatastreamPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::datastream_v1::
-                      DatastreamLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::datastream_v1::DatastreamRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::datastream_v1::
                       DatastreamLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

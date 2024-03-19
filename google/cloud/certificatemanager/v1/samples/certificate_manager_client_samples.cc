@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    CertificateManagerPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::certificatemanager_v1::
-                      CertificateManagerLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      CertificateManagerRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::certificatemanager_v1::
                       CertificateManagerLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

@@ -130,8 +130,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    MachineImagesPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_machine_images_v1::
-                      MachineImagesLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      MachineImagesRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_machine_images_v1::
                       MachineImagesLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

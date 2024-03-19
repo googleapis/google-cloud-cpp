@@ -134,8 +134,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    RegionSslCertificatesPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_region_ssl_certificates_v1::
-                      RegionSslCertificatesLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      RegionSslCertificatesRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_region_ssl_certificates_v1::
                       RegionSslCertificatesLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

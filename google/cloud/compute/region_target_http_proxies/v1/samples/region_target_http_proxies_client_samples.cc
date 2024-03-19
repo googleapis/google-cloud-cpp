@@ -134,8 +134,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    RegionTargetHttpProxiesPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_region_target_http_proxies_v1::
-                      RegionTargetHttpProxiesLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      RegionTargetHttpProxiesRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_region_target_http_proxies_v1::
                       RegionTargetHttpProxiesLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

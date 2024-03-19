@@ -127,9 +127,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::telcoautomation_v1::
                    TelcoAutomationPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::telcoautomation_v1::
-                      TelcoAutomationLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::telcoautomation_v1::TelcoAutomationRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::telcoautomation_v1::
                       TelcoAutomationLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

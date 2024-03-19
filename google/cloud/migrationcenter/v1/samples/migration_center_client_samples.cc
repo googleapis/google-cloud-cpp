@@ -127,9 +127,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::migrationcenter_v1::
                    MigrationCenterPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::migrationcenter_v1::
-                      MigrationCenterLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::migrationcenter_v1::MigrationCenterRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::migrationcenter_v1::
                       MigrationCenterLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

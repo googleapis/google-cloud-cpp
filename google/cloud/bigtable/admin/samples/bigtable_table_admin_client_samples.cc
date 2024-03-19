@@ -126,9 +126,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::bigtable_admin::
                    BigtableTableAdminPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::bigtable_admin::
-                      BigtableTableAdminLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::bigtable_admin::BigtableTableAdminRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::bigtable_admin::
                       BigtableTableAdminLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

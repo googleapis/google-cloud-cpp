@@ -120,8 +120,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       google::cloud::Options{}
           .set<google::cloud::talent_v4::JobServicePollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::talent_v4::JobServiceLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::talent_v4::JobServiceRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::talent_v4::JobServiceLimitedTimeRetryPolicy(
                       /*maximum_duration=*/std::chrono::minutes(45)),
                   google::cloud::ExponentialBackoffPolicy(

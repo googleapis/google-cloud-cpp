@@ -129,9 +129,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
           .set<google::cloud::redis_cluster_v1::
                    CloudRedisClusterPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
-                  google::cloud::redis_cluster_v1::
-                      CloudRedisClusterLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                  google::cloud::redis_cluster_v1::CloudRedisClusterRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::redis_cluster_v1::
                       CloudRedisClusterLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

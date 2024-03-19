@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    AccessContextManagerPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::accesscontextmanager_v1::
-                      AccessContextManagerLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      AccessContextManagerRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::accesscontextmanager_v1::
                       AccessContextManagerLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

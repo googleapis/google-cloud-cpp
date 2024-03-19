@@ -129,8 +129,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    RegionDisksPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::compute_region_disks_v1::
-                      RegionDisksLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      RegionDisksRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::compute_region_disks_v1::
                       RegionDisksLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),

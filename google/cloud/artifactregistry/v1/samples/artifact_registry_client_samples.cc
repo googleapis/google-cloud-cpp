@@ -131,8 +131,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                    ArtifactRegistryPollingPolicyOption>(
               google::cloud::GenericPollingPolicy<
                   google::cloud::artifactregistry_v1::
-                      ArtifactRegistryLimitedTimeRetryPolicy,
-                  google::cloud::ExponentialBackoffPolicy>(
+                      ArtifactRegistryRetryPolicy,
+                  google::cloud::BackoffPolicy>(
                   google::cloud::artifactregistry_v1::
                       ArtifactRegistryLimitedTimeRetryPolicy(
                           /*maximum_duration=*/std::chrono::minutes(45)),
