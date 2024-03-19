@@ -46,6 +46,7 @@ Status SampleGenerator::GenerateHeader() {
       vars("idempotency_policy_header_path"),
       "google/cloud/common_options.h",
       "google/cloud/credentials.h",
+      HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
       "google/cloud/internal/getenv.h",
       "google/cloud/testing_util/example_driver.h",
       IsExperimental() ? "google/cloud/experimental_tag.h" : "",
@@ -192,15 +193,18 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   // 10 seconds between polling requests, increasing the pause by a factor
   // of 4 until it becomes 2 minutes.
   auto options = google::cloud::Options{}
-  .set<google::cloud::$product_namespace$::$service_name$PollingPolicyOption>(
-    google::cloud::GenericPollingPolicy<>(
-     google::cloud::$product_namespace$::$service_name$LimitedTimeRetryPolicy(
-          /*maximum_duration=*/std::chrono::minutes(45)),
-      google::cloud::$product_namespace$::$service_name$ExponentialBackoffPolicy(
-          /*initial_delay=*/std::chrono::seconds(10),
-          /*maximum_delay=*/std::chrono::minutes(2),
-          /*scaling=*/4.0))
-      .clone());
+    .set<google::cloud::$product_namespace$::$service_name$PollingPolicyOption>(
+        google::cloud::GenericPollingPolicy<
+            google::cloud::$product_namespace$::$service_name$RetryPolicyOption::Type,
+            google::cloud::$product_namespace$::$service_name$BackoffPolicyOption::Type>(
+            google::cloud::$product_namespace$::$service_name$LimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(45))
+                .clone(),
+            google::cloud::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::seconds(10),
+                /*maximum_delay=*/std::chrono::minutes(2),
+                /*scaling=*/4.0).clone())
+            .clone());
   )""");
     if (HasGenerateGrpcTransport()) {
       HeaderPrint(R"""(
