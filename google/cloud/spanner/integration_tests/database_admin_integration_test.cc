@@ -266,7 +266,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
           .get();
   if (emulator_) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
-    return;
+    GTEST_SKIP();
   }
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
@@ -416,7 +416,6 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
 
 // @test Verify we can create a database with an encryption key.
 TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
-  if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
   KmsKeyName encryption_key(instance_.project_id(), location_, kKeyRing,
                             kKeyName);
   auto database = client_
@@ -425,34 +424,38 @@ TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
                       .get();
   ASSERT_STATUS_OK(database);
   EXPECT_EQ(database->name(), database_.FullName());
-  EXPECT_TRUE(database->has_encryption_config());
-  if (database->has_encryption_config()) {
-    EXPECT_EQ(database->encryption_config().kms_key_name(),
-              encryption_key.FullName());
-  }
-
-  auto get_result = client_.GetDatabase(database_);
-  ASSERT_STATUS_OK(get_result);
-  EXPECT_EQ(database->name(), get_result->name());
-  EXPECT_TRUE(get_result->has_encryption_config());
-  if (get_result->has_encryption_config()) {
-    EXPECT_EQ(get_result->encryption_config().kms_key_name(),
-              encryption_key.FullName());
-  }
-
-  // Verify that encryption config is returned via ListDatabases().
-  auto list_db = [&] {
-    for (auto const& db : client_.ListDatabases(database_.instance())) {
-      if (db && db->name() == database_.FullName()) return db;
+  if (emulator_) {
+    EXPECT_FALSE(database->has_encryption_config());
+  } else {
+    EXPECT_TRUE(database->has_encryption_config());
+    if (database->has_encryption_config()) {
+      EXPECT_EQ(database->encryption_config().kms_key_name(),
+                encryption_key.FullName());
     }
-    return StatusOr<google::spanner::admin::database::v1::Database>{
-        Status{StatusCode::kNotFound, "disappeared"}};
-  }();
-  ASSERT_THAT(list_db, IsOk());
-  EXPECT_TRUE(list_db->has_encryption_config());
-  if (list_db->has_encryption_config()) {
-    EXPECT_EQ(list_db->encryption_config().kms_key_name(),
-              encryption_key.FullName());
+
+    auto get_result = client_.GetDatabase(database_);
+    ASSERT_STATUS_OK(get_result);
+    EXPECT_EQ(database->name(), get_result->name());
+    EXPECT_TRUE(get_result->has_encryption_config());
+    if (get_result->has_encryption_config()) {
+      EXPECT_EQ(get_result->encryption_config().kms_key_name(),
+                encryption_key.FullName());
+    }
+
+    // Verify that encryption config is returned via ListDatabases().
+    auto list_db = [&] {
+      for (auto const& db : client_.ListDatabases(database_.instance())) {
+        if (db && db->name() == database_.FullName()) return db;
+      }
+      return StatusOr<google::spanner::admin::database::v1::Database>{
+          Status{StatusCode::kNotFound, "disappeared"}};
+    }();
+    ASSERT_THAT(list_db, IsOk());
+    EXPECT_TRUE(list_db->has_encryption_config());
+    if (list_db->has_encryption_config()) {
+      EXPECT_EQ(list_db->encryption_config().kms_key_name(),
+                encryption_key.FullName());
+    }
   }
 
   EXPECT_STATUS_OK(client_.DropDatabase(database_));
@@ -461,7 +464,6 @@ TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
 // @test Verify creating a database fails if a nonexistent encryption key is
 // supplied.
 TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
-  if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
   KmsKeyName nonexistent_encryption_key(instance_.project_id(), location_,
                                         kKeyRing, "ceci-n-est-pas-une-cle");
   auto database =
@@ -469,8 +471,14 @@ TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
           .CreateDatabase(database_, /*extra_statements=*/{},
                           CustomerManagedEncryption(nonexistent_encryption_key))
           .get();
-  EXPECT_THAT(database, StatusIs(StatusCode::kFailedPrecondition,
-                                 HasSubstr("KMS Key provided is not usable")));
+  if (emulator_) {
+    EXPECT_THAT(database, IsOk());
+    EXPECT_STATUS_OK(client_.DropDatabase(database_));
+  } else {
+    EXPECT_THAT(database,
+                StatusIs(StatusCode::kFailedPrecondition,
+                         HasSubstr("KMS Key provided is not usable")));
+  }
 }
 
 /// @test Verify the backwards compatibility `v1` namespace still exists.
