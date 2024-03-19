@@ -31,6 +31,7 @@
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
+#include "google/cloud/storage/internal/grpc/scale_stall_timeout.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/hash_validator.h"
@@ -38,6 +39,7 @@
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/async_streaming_read_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
 #include <memory>
 
@@ -289,6 +291,9 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
     std::shared_ptr<storage::internal::HashFunction> hash_function) {
   using StreamingRpc = google::cloud::internal::AsyncStreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
+  using StreamingRpcTimeout =
+      google::cloud::internal::AsyncStreamingReadRpcTimeout<
+          google::storage::v2::ReadObjectResponse>;
 
   auto make_rpc = [stub = stub_, request = std::move(request)](
                       CompletionQueue& cq,
@@ -297,8 +302,14 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
                       google::storage::v2::ReadObjectRequest const& proto)
       -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
     ApplyQueryParameters(*context, *options, request);
+    auto timeout = ScaleStallTimeout(
+        options->get<storage::DownloadStallTimeoutOption>(),
+        options->get<storage::DownloadStallMinimumRateOption>(),
+        google::storage::v2::ServiceConstants::MAX_READ_CHUNK_BYTES);
     auto rpc = stub->AsyncReadObject(cq, std::move(context), std::move(options),
                                      proto);
+    rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
+                                                std::move(rpc));
     auto start = rpc->Start();
     return start.then([rpc = std::move(rpc)](auto f) mutable {
       if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));

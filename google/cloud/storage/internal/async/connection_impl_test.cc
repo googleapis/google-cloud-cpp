@@ -28,6 +28,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
@@ -50,6 +51,7 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
@@ -345,8 +347,22 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
         return make_success_stream(sequencer);
       });
 
-  internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([&sequencer](auto d) {
+    auto deadline =
+        std::chrono::system_clock::now() +
+        std::chrono::duration_cast<std::chrono::system_clock::duration>(d);
+    return sequencer.PushBack("MakeRelativeTimer").then([deadline](auto f) {
+      if (f.get()) return make_status_or(deadline);
+      return StatusOr<std::chrono::system_clock::time_point>(
+          Status(StatusCode::kCancelled, "cancelled"));
+    });
+  });
+
+  auto connection =
+      MakeTestConnection(CompletionQueue(mock_cq), mock,
+                         Options{}.set<storage::DownloadStallTimeoutOption>(
+                             std::chrono::seconds(0)));
   auto pending = connection->ReadObject(
       {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
            .set_multiple_options(storage::Fields("field1,field2"),
@@ -370,6 +386,11 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
+  // The retry loop will set a timer to backoff.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "MakeRelativeTimer");
+  next.first.set_value(true);
+
   // Then simulate a successful `ReadObject()`. This returns a streaming
   // RPC that completes with `true` on `Start()`, then returns some data on the
   // first `Read()`, then an unset optional on the second `Read()` (indicating
@@ -390,6 +411,115 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
   data = reader->Read();
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  EXPECT_THAT(data.get(), VariantWith<Status>(IsOk()));
+}
+
+TEST_F(AsyncConnectionImplTest, AsyncReadObjecWithTimeout) {
+  AsyncSequencer<bool> sequencer;
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([&] {
+    auto stream = std::make_unique<MockAsyncObjectMediaStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            google::storage::v2::ReadObjectResponse response;
+            response.mutable_metadata()->set_bucket(
+                "projects/_/buckets/test-bucket");
+            response.mutable_metadata()->set_name("test-object");
+            response.mutable_metadata()->set_size(4096);
+            response.mutable_content_range()->set_start(1024);
+            response.mutable_content_range()->set_end(2048);
+            return absl::make_optional(response);
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            return absl::optional<google::storage::v2::ReadObjectResponse>();
+          });
+        });
+    EXPECT_CALL(*stream, Finish).WillOnce([&] {
+      return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
+    });
+    return std::unique_ptr<AsyncReadObjectStream>(std::move(stream));
+  });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  // We will configure the connection to use 1 second timeouts.
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(
+                            std::chrono::nanoseconds(std::chrono::seconds(1))))
+      .WillRepeatedly([&sequencer](auto d) {
+        auto deadline =
+            std::chrono::system_clock::now() +
+            std::chrono::duration_cast<std::chrono::system_clock::duration>(d);
+        return sequencer.PushBack("MakeRelativeTimer").then([deadline](auto f) {
+          if (f.get()) return make_status_or(deadline);
+          return StatusOr<std::chrono::system_clock::time_point>(
+              Status(StatusCode::kCancelled, "cancelled"));
+        });
+      });
+
+  auto connection = MakeTestConnection(
+      CompletionQueue(mock_cq), mock,
+      Options{}
+          .set<storage::DownloadStallTimeoutOption>(std::chrono::seconds(1))
+          .set<storage::DownloadStallMinimumRateOption>(2 * 1024 * 1024L));
+  auto pending = connection->ReadObject(
+      {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
+           .set_multiple_options(storage::Fields("field1,field2"),
+                                 storage::QuotaUser("test-quota-user")),
+       connection->options()});
+
+  ASSERT_TRUE(pending.is_ready());
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+
+  // First simulate a failed `ReadObject()`. This returns a streaming RPC
+  // that completes with `false` on `Start()` (i.e. never starts) and then
+  // completes with a transient error on `Finish()`. Because the timeout
+  // parameters are configured, the first thing to happen is that the timeout is
+  // set:
+  auto data = reader->Read();
+  auto timer = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  // Then the `Start()` operation is scheduled.  Either that complete first
+  // (and then cancels the timer) or the timer completes first (and cancels
+  // the streaming RPC).
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  timer.first.set_value(false); // simulate a canceled timeout
+  next.first.set_value(true);
+
+  // Then the `Read()` operation and its timer are scheduled:
+  timer = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  timer.first.set_value(false); // simulate a canceled timeout
+  next.first.set_value(true);
+
+  auto response = data.get();
+  ASSERT_TRUE(
+      absl::holds_alternative<storage_experimental::ReadPayload>(response));
+
+  // Trigger another read. Since this closes the stream, the `Read()` and
+  // `Finish()` calls must happen before the second `Read()` it is satisfied.
+  data = reader->Read();
+  timer = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  timer.first.set_value(false); // simulate a canceled timeout
   next.first.set_value(true);
 
   next = sequencer.PopFrontWithName();
