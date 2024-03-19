@@ -116,14 +116,14 @@ StatusOr<storage::ObjectAccessControl> FindDefaultObjectAccessControl(
       "cannot find entity <" + entity + "> in bucket " + response->bucket_id());
 }
 
-Status TimeoutError(std::chrono::microseconds timeout, std::string const& op) {
+Status TimeoutError(std::chrono::milliseconds timeout, std::string const& op) {
   return Status(StatusCode::kDeadlineExceeded,
                 "timeout [" + absl::FormatDuration(absl::FromChrono(timeout)) +
                     "] while waiting for " + op);
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
-HandleWriteObjectError(std::chrono::microseconds timeout,
+HandleWriteObjectError(std::chrono::milliseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
                        std::unique_ptr<GrpcStub::WriteObjectStream> writer,
                        google::cloud::Options const& options) {
@@ -140,7 +140,7 @@ HandleWriteObjectError(std::chrono::microseconds timeout,
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
-HandleUploadChunkError(std::chrono::microseconds timeout,
+HandleUploadChunkError(std::chrono::milliseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
                        std::unique_ptr<GrpcStub::WriteObjectStream> writer,
                        google::cloud::Options const& options) {
@@ -149,7 +149,7 @@ HandleUploadChunkError(std::chrono::microseconds timeout,
 }
 
 StatusOr<storage::ObjectMetadata> HandleInsertObjectMediaError(
-    std::chrono::microseconds timeout,
+    std::chrono::milliseconds timeout,
     std::function<future<bool>()> const& create_watchdog,
     std::unique_ptr<GrpcStub::WriteObjectStream> writer,
     google::cloud::Options const& options) {
@@ -161,7 +161,7 @@ StatusOr<storage::ObjectMetadata> HandleInsertObjectMediaError(
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
-CloseWriteObjectStream(std::chrono::microseconds timeout,
+CloseWriteObjectStream(std::chrono::milliseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
                        std::unique_ptr<GrpcStub::WriteObjectStream> writer,
                        google::cloud::Options const& options) {

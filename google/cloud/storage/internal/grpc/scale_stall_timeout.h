@@ -46,7 +46,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * of the public contract in the service. So we can scale the timeout based on
  * this parameter.
  */
-std::chrono::microseconds ScaleStallTimeout(std::chrono::seconds stall_duration,
+std::chrono::milliseconds ScaleStallTimeout(std::chrono::seconds stall_duration,
                                             std::size_t stall_size,
                                             std::size_t maximum_message_size);
 

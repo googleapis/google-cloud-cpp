@@ -26,26 +26,26 @@ namespace {
 using namespace std::chrono_literals;  // NOLINT
 
 TEST(ScaleStallTimeout, WithDisabledTimeout) {
-  EXPECT_EQ(ScaleStallTimeout(0s, 1'000, 1'000), 0us);
-  EXPECT_EQ(ScaleStallTimeout(0s, 1'000'000, 1'000), 0us);
-  EXPECT_EQ(ScaleStallTimeout(0s, 10'000'000, 1'000), 0us);
+  EXPECT_EQ(ScaleStallTimeout(0s, 1'000, 1'000), 0ms);
+  EXPECT_EQ(ScaleStallTimeout(0s, 1'000'000, 1'000), 0ms);
+  EXPECT_EQ(ScaleStallTimeout(0s, 10'000'000, 1'000), 0ms);
 }
 
 TEST(ScaleStallTimeout, Simple) {
-  EXPECT_EQ(ScaleStallTimeout(1s, 100'000'000, 1'000'000), 10'000us);
-  EXPECT_EQ(ScaleStallTimeout(3s, 100'000'000, 1'000'000), 30'000us);
-  EXPECT_EQ(ScaleStallTimeout(5s, 100'000'000, 1'000'000), 50'000us);
-  EXPECT_EQ(ScaleStallTimeout(10s, 100'000'000, 1'000'000), 100'000us);
+  EXPECT_EQ(ScaleStallTimeout(1s, 100'000'000, 1'000'000), 10ms);
+  EXPECT_EQ(ScaleStallTimeout(3s, 100'000'000, 1'000'000), 30ms);
+  EXPECT_EQ(ScaleStallTimeout(5s, 100'000'000, 1'000'000), 50ms);
+  EXPECT_EQ(ScaleStallTimeout(10s, 100'000'000, 1'000'000), 100ms);
 
-  EXPECT_EQ(ScaleStallTimeout(1s, 10'000'000, 1'000'000), 100'000us);
-  EXPECT_EQ(ScaleStallTimeout(1s, 1'000'000, 1'000'000), 1'000'000us);
-  EXPECT_EQ(ScaleStallTimeout(1s, 1'000, 1'000'000), 1'000'000us);
-  EXPECT_EQ(ScaleStallTimeout(1s, 1, 1'000'000), 1'000'000us);
+  EXPECT_EQ(ScaleStallTimeout(1s, 10'000'000, 1'000'000), 100ms);
+  EXPECT_EQ(ScaleStallTimeout(1s, 1'000'000, 1'000'000), 1'000ms);
+  EXPECT_EQ(ScaleStallTimeout(1s, 1'000, 1'000'000), 1'000ms);
+  EXPECT_EQ(ScaleStallTimeout(1s, 1, 1'000'000), 1'000ms);
 }
 
 TEST(ScaleStallTimeout, Unexpected) {
-  EXPECT_EQ(ScaleStallTimeout(1s, 0, 1'000'000), 1'000'000us);
-  EXPECT_EQ(ScaleStallTimeout(1s, 1'000'000, 0), 0us);
+  EXPECT_EQ(ScaleStallTimeout(1s, 0, 1'000'000), 1'000ms);
+  EXPECT_EQ(ScaleStallTimeout(1s, 1'000'000, 0), 0ms);
 }
 
 }  // namespace

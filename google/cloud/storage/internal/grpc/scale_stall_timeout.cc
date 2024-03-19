@@ -20,15 +20,15 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::chrono::microseconds ScaleStallTimeout(std::chrono::seconds stall_duration,
+std::chrono::milliseconds ScaleStallTimeout(std::chrono::seconds stall_duration,
                                             std::size_t stall_size,
                                             std::size_t maximum_message_size) {
-  using us = std::chrono::microseconds;
-  if (stall_duration == us(0)) return us(0);
+  using ms = std::chrono::milliseconds;
+  if (stall_duration == ms(0)) return ms(0);
   if (stall_size <= maximum_message_size || stall_size == 0) {
-    return us(stall_duration);
+    return ms(stall_duration);
   }
-  return us(stall_duration) * maximum_message_size / stall_size;
+  return ms(stall_duration) * maximum_message_size / stall_size;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
