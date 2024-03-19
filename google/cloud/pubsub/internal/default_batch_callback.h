@@ -32,7 +32,6 @@ class DefaultBatchCallback : public BatchCallback {
  public:
   using CallbackFunction =
       std::function<void(BatchCallback::StreamingPullResponse)>;
-
   explicit DefaultBatchCallback(
       CallbackFunction callback,
       std::shared_ptr<MessageCallback> message_callback)
