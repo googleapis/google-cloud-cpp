@@ -2,9 +2,15 @@
 
 This document describes the high-level architecture of the Google Cloud C++
 Client libraries. Its main audience are developers and contributors making
-changes and additions to these libraries, but users of the libraries may also
-find this useful. If you want to familiarize yourself with the code in the
-`google-cloud-cpp` project, you are at the right place.
+changes and additions to these libraries. If you want to familiarize yourself
+with the code in the `google-cloud-cpp` project, you are at the right place.
+
+While we expect users of the libraries may find this document useful, this
+document does not change or define the [public API](/doc/public-api.md). You can
+use this document to understand how things work, or maybe to troubleshoot
+problems. You should not depend on the implementation details described here to
+write your application. Only the public API is stable, the rest is subject to
+change without notice.
 
 ## What these libraries do
 
@@ -41,8 +47,8 @@ More specifically, the functionality offered by these libraries include:
   developers troubleshoot their code.
 - The libraries return errors using an "outcome" object: `StatusOr<T>`. Similar
   to the upcoming `std::expected<T, E>` class in C++23.
-- Application developers can convert outcome objects to exceptions without
-  much effort.
+- Application developers can convert outcome objects to exceptions without much
+  effort.
 
 ## Where is the code?
 
@@ -145,11 +151,11 @@ mocks), they are part of the public API.
 
 Typically there are three concrete versions of the `*Connection` interface:
 
-| Name         | Description                                                   |
-| ------------ | ------------------------------------------------------------- |
-| `*Impl`      | An implementation using the `*Stub` layer                     |
-| `*Tracing`   | Instrument each retry loop with an [OpenTelemetry] trace span |
-| `Mock*Connection` | An implementation using `googlemock`                     |
+| Name              | Description                                                   |
+| ----------------- | ------------------------------------------------------------- |
+| `*Impl`           | An implementation using the `*Stub` layer                     |
+| `*Tracing`        | Instrument each retry loop with an [OpenTelemetry] trace span |
+| `Mock*Connection` | An implementation using `googlemock`                          |
 
 Only `Mock*Connection` is part of the public API. It is used by application
 developers that want to test their code using a mocked behavior for the
@@ -159,9 +165,9 @@ In some cases you may find a fourth implementation, used to implement clients
 over [HTTP and gRPC Transcoding][aip/127]. This class is also not part of the
 public API.
 
-| Name         | Description                                                   |
-| ------------ | ------------------------------------------------------------- |
-| `*Rest*Impl` | An implementation using the `*Rest*Stub` layer                |
+| Name         | Description                                    |
+| ------------ | ---------------------------------------------- |
+| `*Rest*Impl` | An implementation using the `*Rest*Stub` layer |
 
 ## The `*Stub` classes
 
