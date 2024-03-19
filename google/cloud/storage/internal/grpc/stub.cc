@@ -28,6 +28,7 @@
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_read_source.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
+#include "google/cloud/storage/internal/grpc/scale_stall_timeout.h"
 #include "google/cloud/storage/internal/grpc/service_account_parser.h"
 #include "google/cloud/storage/internal/grpc/sign_blob_request_parser.h"
 #include "google/cloud/storage/internal/grpc/split_write_object_data.h"
@@ -113,14 +114,6 @@ StatusOr<storage::ObjectAccessControl> FindDefaultObjectAccessControl(
   return Status(
       StatusCode::kNotFound,
       "cannot find entity <" + entity + "> in bucket " + response->bucket_id());
-}
-
-std::chrono::milliseconds ScaleStallTimeout(std::chrono::milliseconds timeout,
-                                            std::uint32_t size,
-                                            std::uint32_t quantum) {
-  if (timeout == std::chrono::milliseconds(0)) return timeout;
-  if (quantum <= size || size == 0) return timeout;
-  return timeout * quantum / size;
 }
 
 Status TimeoutError(std::chrono::milliseconds timeout, std::string const& op) {
@@ -494,8 +487,8 @@ GrpcStub::ReadObject(rest_internal::RestContext& context,
   auto stream = stub_->ReadObject(std::move(ctx), options, *proto_request);
 
   // The default timer source is a no-op. It does not set a timer, and always
-  // returns an indication that the timer expired.  The GrpcObjectReadSource
-  // takes no action on expired timers.
+  // returns an indication that the timer was cancelled.  `GrpcObjectReadSource`
+  // takes no action on cancelled timers.
   GrpcObjectReadSource::TimerSource timer_source = [] {
     return make_ready_future(false);
   };
