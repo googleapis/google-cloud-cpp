@@ -44,6 +44,23 @@ AsyncReaderConnectionImpl::OnRead(absl::optional<ProtoPayload> r) {
   }
   auto result = ReadPayloadImpl::Make(
       StealMutableContent(*response.mutable_checksummed_data()));
+  if (response.has_object_checksums()) {
+    storage::internal::HashValues hashes;
+    auto const& checksums = response.object_checksums();
+    if (checksums.has_crc32c()) {
+      hashes =
+          Merge(std::move(hashes),
+                storage::internal::HashValues{
+                    storage_internal::Crc32cFromProto(checksums.crc32c()), {}});
+    }
+    if (!checksums.md5_hash().empty()) {
+      hashes =
+          Merge(std::move(hashes),
+                storage::internal::HashValues{
+                    {}, storage_internal::MD5FromProto(checksums.md5_hash())});
+    }
+    ReadPayloadImpl::SetObjectHashes(result, std::move(hashes));
+  }
   if (response.has_metadata()) {
     result.set_metadata(FromProto(response.metadata(), *options_));
   }

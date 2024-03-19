@@ -18,6 +18,8 @@
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/internal/async/reader_connection_factory.h"
+#include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/status_or.h"
@@ -38,8 +40,12 @@ class AsyncReaderConnectionResume
  public:
   explicit AsyncReaderConnectionResume(
       std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
+      std::shared_ptr<storage::internal::HashFunction> hash,
+      std::unique_ptr<storage::internal::HashValidator> validator,
       AsyncReaderConnectionFactory reader_factory)
       : resume_policy_(std::move(resume_policy)),
+        hash_function_(std::move(hash)),
+        hash_validator_(std::move(validator)),
         reader_factory_(std::move(reader_factory)) {}
 
   void Cancel() override;
@@ -59,6 +65,8 @@ class AsyncReaderConnectionResume
   std::shared_ptr<storage_experimental::AsyncReaderConnection> CurrentImpl();
 
   std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;
+  std::shared_ptr<storage::internal::HashFunction> hash_function_;
+  std::unique_ptr<storage::internal::HashValidator> hash_validator_;
   AsyncReaderConnectionFactory reader_factory_;
   storage::Generation generation_;
   std::int64_t received_bytes_ = 0;

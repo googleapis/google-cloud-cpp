@@ -21,6 +21,7 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/storage/testing/mock_resume_policy.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/common_options.h"
@@ -41,6 +42,7 @@ namespace {
 using ::google::cloud::storage::testing::MockAsyncBidiWriteObjectStream;
 using ::google::cloud::storage::testing::MockAsyncInsertStream;
 using ::google::cloud::storage::testing::MockAsyncObjectMediaStream;
+using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::MockResumePolicy;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -53,9 +55,11 @@ using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AllOf;
+using ::testing::ElementsAre;
 using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
@@ -395,7 +399,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
   EXPECT_THAT(data.get(), VariantWith<Status>(IsOk()));
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadChecksum) {
+TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadMessageChecksum) {
   AsyncSequencer<bool> sequencer;
   auto make_bad_checksum_stream = [&](AsyncSequencer<bool>& sequencer) {
     auto stream = std::make_unique<MockAsyncObjectMediaStream>();
@@ -471,6 +475,132 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadChecksum) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
+}
+
+TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadFullChecksum) {
+  auto constexpr kQuick = "The quick brown fox jumps over the lazy dog";
+  AsyncSequencer<bool> sequencer;
+  auto make_bad_checksum_stream = [&](AsyncSequencer<bool>& sequencer) {
+    auto stream = std::make_unique<MockAsyncObjectMediaStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            google::storage::v2::ReadObjectResponse response;
+            response.mutable_metadata()->set_bucket(
+                "projects/_/buckets/test-bucket");
+            response.mutable_metadata()->set_name("test-object");
+            response.mutable_metadata()->set_generation(12345);
+            SetMutableContent(*response.mutable_checksummed_data(),
+                              ContentType(kQuick));
+            response.mutable_checksummed_data()->set_crc32c(Crc32c(kQuick));
+            // Set the full object checksums to an intentionally incorrect
+            // value. The client should detect this error and report it at the
+            // end of the download.
+            auto full_crc32c = std::uint32_t{0};
+            full_crc32c = ExtendCrc32c(full_crc32c, kQuick);
+            full_crc32c = ExtendCrc32c(full_crc32c, kQuick);
+            response.mutable_object_checksums()->set_crc32c(full_crc32c + 1);
+            return absl::make_optional(response);
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            google::storage::v2::ReadObjectResponse response;
+            SetMutableContent(*response.mutable_checksummed_data(),
+                              ContentType(kQuick));
+            response.mutable_checksummed_data()->set_crc32c(Crc32c(kQuick));
+            return absl::make_optional(response);
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            return absl::optional<google::storage::v2::ReadObjectResponse>{};
+          });
+        });
+    EXPECT_CALL(*stream, Finish).WillOnce([&] {
+      return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
+    });
+    return std::unique_ptr<AsyncReadObjectStream>(std::move(stream));
+  };
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([&] {
+    return make_bad_checksum_stream(sequencer);
+  });
+
+  auto mock_resume_policy_factory =
+      []() -> std::unique_ptr<storage_experimental::ResumePolicy> {
+    auto policy = std::make_unique<MockResumePolicy>();
+    EXPECT_CALL(*policy, OnStartSuccess).Times(1);
+    EXPECT_CALL(*policy, OnFinish).Times(0);
+    return policy;
+  };
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(
+      pool.cq(), mock,
+      Options{}.set<storage_experimental::ResumePolicyOption>(
+          mock_resume_policy_factory));
+  auto pending = connection->ReadObject(
+      {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
+           .set_multiple_options(storage::Fields("field1,field2"),
+                                 storage::QuotaUser("test-quota-user")),
+       connection->options()});
+
+  ASSERT_TRUE(pending.is_ready());
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
+
+  // This stream starts successfully:
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(true);
+
+  // We expect two `Read()` calls with the same contents and with valid CRC32C
+  // values.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
+  auto response = data.get();
+  EXPECT_THAT(response, VariantWith<storage_experimental::ReadPayload>(ResultOf(
+                            "payload contents",
+                            [](storage_experimental::ReadPayload const& p) {
+                              return p.contents();
+                            },
+                            ElementsAre(std::string(kQuick)))));
+
+  // Trigger the second `Read()` and simulate its behavior.
+  data = reader->Read();
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
+  response = data.get();
+  EXPECT_THAT(response, VariantWith<storage_experimental::ReadPayload>(ResultOf(
+                            "payload contents",
+                            [](storage_experimental::ReadPayload const& p) {
+                              return p.contents();
+                            },
+                            ElementsAre(std::string(kQuick)))));
+
+  // The last Read() triggers the end of stream message, including a call to
+  // `Finish()`. It should detect the invalid checksum.
+  data = reader->Read();
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
+  // The stream Finish() function should be called in the background.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  response = data.get();
+  EXPECT_THAT(response,
+              VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncReadObjectMalformedRequestError) {
@@ -1627,9 +1757,11 @@ TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactory) {
         read_limit: 1000
       )pb",
       &proto_request));
+
+  auto hash_function = std::make_shared<MockHashFunction>();
   auto factory = connection.MakeReaderConnectionFactory(
       internal::MakeImmutableOptions(connection.options()), request,
-      proto_request);
+      proto_request, std::move(hash_function));
 
   // Verify the factory makes the expected request and consume the output
   verify_empty_stream(sequencer, factory(storage::Generation(), 0));
@@ -1662,9 +1794,11 @@ TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactoryPermanentError) {
         read_limit: 1000
       )pb",
       &proto_request));
+
+  auto hash_function = std::make_shared<MockHashFunction>();
   auto factory = connection.MakeReaderConnectionFactory(
       internal::MakeImmutableOptions(connection.options()), request,
-      proto_request);
+      proto_request, hash_function);
 
   // Verify the factory makes the expected request.
   auto pending = factory(storage::Generation(), 0);
@@ -1705,9 +1839,11 @@ TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactoryTooManyTransients) {
         read_limit: 1000
       )pb",
       &proto_request));
+
+  auto hash_function = std::make_shared<MockHashFunction>();
   auto factory = connection.MakeReaderConnectionFactory(
       internal::MakeImmutableOptions(connection.options()), request,
-      proto_request);
+      proto_request, hash_function);
   // Verify the factory makes the expected request.
   auto pending = factory(storage::Generation(), 0);
 

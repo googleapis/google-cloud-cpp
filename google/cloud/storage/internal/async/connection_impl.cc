@@ -33,6 +33,7 @@
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
+#include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
@@ -125,10 +126,20 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   // Get the policy factory and immediately create a policy.
   auto resume_policy =
       current->get<storage_experimental::ResumePolicyOption>()();
-  auto connection = std::make_unique<AsyncReaderConnectionResume>(
-      std::move(resume_policy),
+  // Create the hash function and validator based on the original request. Note
+  // that p.request will be moved-from, so we have to do it relatively early in
+  // this function.
+  auto hash_function =
+      std::make_shared<storage::internal::Crc32cMessageHashFunction>(
+          storage::internal::CreateHashFunction(p.request.impl_));
+  auto hash_validator = storage::internal::CreateHashValidator(p.request.impl_);
+
+  auto connection_factory =
       MakeReaderConnectionFactory(std::move(current), std::move(p.request),
-                                  *std::move(proto)));
+                                  *std::move(proto), hash_function);
+  auto connection = std::make_unique<AsyncReaderConnectionResume>(
+      std::move(resume_policy), std::move(hash_function),
+      std::move(hash_validator), std::move(connection_factory));
 
   return make_ready_future(ReturnType(std::move(connection)));
 }
@@ -274,13 +285,10 @@ AsyncConnectionImpl::RewriteObject(RewriteObjectParams p) {
 AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
     google::cloud::internal::ImmutableOptions current,
     google::cloud::storage_experimental::ReadObjectRequest request,
-    google::storage::v2::ReadObjectRequest proto_request) {
+    google::storage::v2::ReadObjectRequest proto_request,
+    std::shared_ptr<storage::internal::HashFunction> hash_function) {
   using StreamingRpc = google::cloud::internal::AsyncStreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
-
-  auto hash_function =
-      std::make_shared<storage::internal::Crc32cMessageHashFunction>(
-          storage::internal::CreateHashFunction(request.impl_));
 
   auto make_rpc = [stub = stub_, request = std::move(request)](
                       CompletionQueue& cq,
