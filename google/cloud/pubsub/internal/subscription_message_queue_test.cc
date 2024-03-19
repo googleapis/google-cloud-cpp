@@ -369,24 +369,22 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesNoKey) {
 
 /// @test Verify duplicate messages are handled correctly
 TEST(SubscriptionMessageQueueTest, DuplicateMessagesWithKey) {
-  auto mock =
-  std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown).Times(1);
   std::shared_ptr<BatchCallback> batch_callback;
   EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
     batch_callback = std::move(cb);
   });
- {
-  ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, AckMessage).Times(AtLeast(1));
-  EXPECT_CALL(*mock, BulkNack).Times(0);
- }
- 
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock, AckMessage).Times(AtLeast(1));
+    EXPECT_CALL(*mock, BulkNack).Times(0);
+  }
+
   std::unordered_map<std::string, std::vector<std::string>> received;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback,
-             message_callback)
+  EXPECT_CALL(*mock_batch_callback, message_callback)
       .WillRepeatedly([&](MessageCallback::ReceivedMessage m) {
         auto key = m.message.message().ordering_key();
         received[key].push_back(m.message.message().message_id());

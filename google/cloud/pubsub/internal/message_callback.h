@@ -22,7 +22,6 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
-#include <absl/types/any.h>
 #include <string>
 
 namespace google {
