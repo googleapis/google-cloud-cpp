@@ -724,7 +724,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadFullChecksum) {
     });
     EXPECT_CALL(*stream, Read)
         .WillOnce([&] {
-          return sequencer.PushBack("Read").then([](auto) {
+          return sequencer.PushBack("Read").then([&](auto) {
             google::storage::v2::ReadObjectResponse response;
             response.mutable_metadata()->set_bucket(
                 "projects/_/buckets/test-bucket");
@@ -744,7 +744,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadFullChecksum) {
           });
         })
         .WillOnce([&] {
-          return sequencer.PushBack("Read").then([](auto) {
+          return sequencer.PushBack("Read").then([&](auto) {
             google::storage::v2::ReadObjectResponse response;
             SetMutableContent(*response.mutable_checksummed_data(),
                               ContentType(kQuick));
