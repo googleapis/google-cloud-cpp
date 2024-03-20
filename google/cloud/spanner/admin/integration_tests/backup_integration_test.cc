@@ -41,6 +41,10 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
+using ::testing::Not;
+
 std::string const& ProjectId() {
   static std::string project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
@@ -92,7 +96,7 @@ class BackupIntegrationTest
 
 /// @test Backup related integration tests.
 TEST_F(BackupIntegrationTest, BackupRestore) {
-  if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
+  if (!RunSlowBackupTests()) GTEST_SKIP();
 
   auto instance_id = spanner_testing::PickRandomInstance(
       generator_, ProjectId(),
@@ -109,9 +113,15 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
                       .get();
   ASSERT_STATUS_OK(database);
   EXPECT_EQ(database->name(), db.FullName());
-  EXPECT_EQ(database->database_dialect(),
-            google::spanner::admin::database::v1::DatabaseDialect::
-                GOOGLE_STANDARD_SQL);
+  if (Emulator()) {
+    EXPECT_EQ(database->database_dialect(),
+              google::spanner::admin::database::v1::DatabaseDialect::
+                  DATABASE_DIALECT_UNSPECIFIED);
+  } else {
+    EXPECT_EQ(database->database_dialect(),
+              google::spanner::admin::database::v1::DatabaseDialect::
+                  GOOGLE_STANDARD_SQL);
+  }
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
 
@@ -151,16 +161,19 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
     operation->metadata().UnpackTo(&metadata);
     db_names.push_back(metadata.database());
   }
-  EXPECT_LE(1, std::count(db_names.begin(), db_names.end(), database->name()))
-      << "Database " << database->name()
-      << " not found in the backup operation list.";
+  if (Emulator()) {
+    EXPECT_THAT(db_names, Not(Contains(database->name())));
+  } else {
+    EXPECT_LE(1, std::count(db_names.begin(), db_names.end(), database->name()))
+        << "Database " << database->name()
+        << " not found in the backup operation list.";
+  }
 
   auto backup = backup_future.get();
   {
     // TODO(#8616): Remove this when we know how to deal with the issue.
-    auto matcher = testing_util::StatusIs(
-        StatusCode::kDeadlineExceeded,
-        testing::HasSubstr("terminated by polling policy"));
+    auto matcher = StatusIs(StatusCode::kDeadlineExceeded,
+                            testing::HasSubstr("terminated by polling policy"));
     testing::StringMatchResultListener listener;
     if (matcher.impl().MatchAndExplain(backup, &listener)) {
       // The backup is still in progress (and may eventually complete),
@@ -168,6 +181,11 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
       // we simply abandon them, to be cleaned up offline.
       GTEST_SKIP();
     }
+  }
+  if (Emulator()) {
+    EXPECT_THAT(backup, StatusIs(StatusCode::kUnimplemented));
+    EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db.FullName()));
+    return;
   }
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
