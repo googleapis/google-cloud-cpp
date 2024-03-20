@@ -5414,16 +5414,14 @@ void RunAll(bool emulator) {
   SampleBanner("make-replace-mutation");
   MakeReplaceMutation(client);
 
-  if (!emulator) {
-    SampleBanner("spanner_update_dml_returning");
-    UpdateUsingDmlReturning(client);
+  SampleBanner("spanner_update_dml_returning");
+  UpdateUsingDmlReturning(client);
 
-    SampleBanner("spanner_insert_dml_returning");
-    InsertUsingDmlReturning(client);
+  SampleBanner("spanner_insert_dml_returning");
+  InsertUsingDmlReturning(client);
 
-    SampleBanner("spanner_delete_dml_returning");
-    DeleteUsingDmlReturning(client);
-  }
+  SampleBanner("spanner_delete_dml_returning");
+  DeleteUsingDmlReturning(client);
 
   SampleBanner("delete-mutation-builder");
   DeleteMutationBuilder(client);
@@ -5447,10 +5445,8 @@ void RunAll(bool emulator) {
               "Customers");
   }
 
-  if (!emulator) {
-    SampleBanner("spanner_query_information_schema_database_options");
-    QueryInformationSchemaDatabaseOptions(client);
-  }
+  SampleBanner("spanner_query_information_schema_database_options");
+  QueryInformationSchemaDatabaseOptions(client);
 
   if (!emulator) {
     SampleBanner("spanner_create_table_with_foreign_key_delete_cascade");
