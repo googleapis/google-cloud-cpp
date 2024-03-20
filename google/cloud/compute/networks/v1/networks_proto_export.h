@@ -32,9 +32,9 @@
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
 #include <google/cloud/compute/v1/internal/common_034.pb.h>
 #include <google/cloud/compute/v1/internal/common_038.pb.h>
-#include <google/cloud/compute/v1/internal/common_100.pb.h>
-#include <google/cloud/compute/v1/internal/common_120.pb.h>
-#include <google/cloud/compute/v1/internal/common_133.pb.h>
+#include <google/cloud/compute/v1/internal/common_101.pb.h>
+#include <google/cloud/compute/v1/internal/common_123.pb.h>
+#include <google/cloud/compute/v1/internal/common_136.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORKS_V1_NETWORKS_PROTO_EXPORT_H

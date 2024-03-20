@@ -35,6 +35,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-service-account-snippet)
 - [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-service-account-snippet)
 - [\c compute_images_v1::ImagesClient](@ref compute_images_v1::ImagesClient-service-account-snippet)
+- [\c compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient](@ref compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient-service-account-snippet)
 - [\c compute_instance_group_managers_v1::InstanceGroupManagersClient](@ref compute_instance_group_managers_v1::InstanceGroupManagersClient-service-account-snippet)
 - [\c compute_instance_groups_v1::InstanceGroupsClient](@ref compute_instance_groups_v1::InstanceGroupsClient-service-account-snippet)
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-service-account-snippet)
@@ -93,6 +94,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_snapshots_v1::SnapshotsClient](@ref compute_snapshots_v1::SnapshotsClient-service-account-snippet)
 - [\c compute_ssl_certificates_v1::SslCertificatesClient](@ref compute_ssl_certificates_v1::SslCertificatesClient-service-account-snippet)
 - [\c compute_ssl_policies_v1::SslPoliciesClient](@ref compute_ssl_policies_v1::SslPoliciesClient-service-account-snippet)
+- [\c compute_storage_pool_types_v1::StoragePoolTypesClient](@ref compute_storage_pool_types_v1::StoragePoolTypesClient-service-account-snippet)
+- [\c compute_storage_pools_v1::StoragePoolsClient](@ref compute_storage_pools_v1::StoragePoolsClient-service-account-snippet)
 - [\c compute_subnetworks_v1::SubnetworksClient](@ref compute_subnetworks_v1::SubnetworksClient-service-account-snippet)
 - [\c compute_target_grpc_proxies_v1::TargetGrpcProxiesClient](@ref compute_target_grpc_proxies_v1::TargetGrpcProxiesClient-service-account-snippet)
 - [\c compute_target_http_proxies_v1::TargetHttpProxiesClient](@ref compute_target_http_proxies_v1::TargetHttpProxiesClient-service-account-snippet)
@@ -253,6 +256,12 @@ guide for more details.
 /*! @page compute_images_v1::ImagesClient-service-account-snippet Override compute_images_v1::ImagesClient Authentication Defaults
 
 @snippet google/cloud/compute/images/v1/samples/images_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient-service-account-snippet Override compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient Authentication Defaults
+
+@snippet google/cloud/compute/instance_group_manager_resize_requests/v1/samples/instance_group_manager_resize_requests_client_samples.cc with-service-account
 
 */
 
@@ -601,6 +610,18 @@ guide for more details.
 /*! @page compute_ssl_policies_v1::SslPoliciesClient-service-account-snippet Override compute_ssl_policies_v1::SslPoliciesClient Authentication Defaults
 
 @snippet google/cloud/compute/ssl_policies/v1/samples/ssl_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_storage_pool_types_v1::StoragePoolTypesClient-service-account-snippet Override compute_storage_pool_types_v1::StoragePoolTypesClient Authentication Defaults
+
+@snippet google/cloud/compute/storage_pool_types/v1/samples/storage_pool_types_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_storage_pools_v1::StoragePoolsClient-service-account-snippet Override compute_storage_pools_v1::StoragePoolsClient Authentication Defaults
+
+@snippet google/cloud/compute/storage_pools/v1/samples/storage_pools_client_samples.cc with-service-account
 
 */
 
