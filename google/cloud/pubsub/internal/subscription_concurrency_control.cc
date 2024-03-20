@@ -71,8 +71,7 @@ void SubscriptionConcurrencyControl::Start(
       });
 
   callback_ = std::make_shared<DefaultBatchCallback>(
-      [](BatchCallback::StreamingPullResponse r) {},
-      std::move(message_callback));
+      [](BatchCallback::StreamingPullResponse) {}, std::move(message_callback));
 
   source_->Start(callback_);
   if (total_messages() >= max_concurrency_) return;
