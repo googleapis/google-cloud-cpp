@@ -35,10 +35,9 @@ readonly COMPUTE_DISCOVERY_JSON_RELATIVE_PATH="generator/discovery/compute_publi
 io::log_h2 "Fetching discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
 curl "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
 
-REVISION=$(sed -rn 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}")
+REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}")
 readonly REVISION
-io::log_h2 "git checkout -B update_compute_discovery_circa_${REVISION}"
-git checkout -B "update_compute_discovery_circa_${REVISION}"
+io::run git checkout -B update_compute_discovery_circa_"${REVISION}"
 
 io::log_h2 "Adding updated Discovery JSON ${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
 git add "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
