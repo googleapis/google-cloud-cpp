@@ -305,7 +305,7 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
             callback_cv.notify_one();
           },
           std::make_shared<pubsub_internal::DefaultMessageCallback>(
-              [](pubsub_internal::MessageCallback::ReceivedMessage) {}));
+              [](pubsub_internal::MessageCallback::ReceivedMessage const&) {}));
 
   auto done = shutdown->Start({});
   source->Start(batch_callback);

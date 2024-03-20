@@ -32,7 +32,7 @@ void SubscriptionMessageQueue::Start(std::shared_ptr<BatchCallback> cb) {
   auto weak = std::weak_ptr<SubscriptionMessageQueue>(shared_from_this());
   source_->Start(std::make_shared<BatchCallbackWrapper>(
       std::move(cb), [weak](BatchCallback::StreamingPullResponse r) {
-        if (auto self = weak.lock()) self->OnRead(r.response);
+        if (auto self = weak.lock()) self->OnRead(std::move(r.response));
       }));
 }
 

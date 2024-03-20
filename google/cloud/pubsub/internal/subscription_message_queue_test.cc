@@ -139,7 +139,7 @@ TEST(SubscriptionMessageQueueTest, Basic) {
       std::make_shared<pubsub_testing::MockBatchCallback>();
   std::vector<google::pubsub::v1::ReceivedMessage> received;
   EXPECT_CALL(*mock_batch_callback, message_callback)
-      .WillRepeatedly([&](MessageCallback::ReceivedMessage m) {
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
         received.push_back(std::move(m.message));
       });
   auto shutdown = std::make_shared<SessionShutdownManager>();
@@ -232,7 +232,7 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, message_callback)
-      .WillRepeatedly([&](MessageCallback::ReceivedMessage m) {
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
         auto key = m.message.message().ordering_key();
         received[key].push_back(m.message.message().message_id());
       });
@@ -329,7 +329,7 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesNoKey) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, message_callback)
-      .WillRepeatedly([&](MessageCallback::ReceivedMessage m) {
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
         auto key = m.message.message().ordering_key();
         received[key].push_back(m.message.message().message_id());
       });
@@ -385,7 +385,7 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesWithKey) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, message_callback)
-      .WillRepeatedly([&](MessageCallback::ReceivedMessage m) {
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
         auto key = m.message.message().ordering_key();
         received[key].push_back(m.message.message().message_id());
       });
@@ -458,7 +458,7 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, message_callback)
-      .WillRepeatedly([&](MessageCallback::ReceivedMessage m) {
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
         background.cq().RunAsync([&, m]() {
           std::this_thread::sleep_for(std::chrono::microseconds(delay()));
           bool notify = false;
