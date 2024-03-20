@@ -42,6 +42,7 @@ add_library(
     internal/async_read_write_stream_auth.h
     internal/async_read_write_stream_impl.h
     internal/async_read_write_stream_logging.h
+    internal/async_read_write_stream_timeout.h
     internal/async_read_write_stream_tracing.h
     internal/async_retry_loop.h
     internal/async_retry_unary_rpc.h
@@ -231,6 +232,7 @@ if (BUILD_TESTING)
         internal/async_read_write_stream_auth_test.cc
         internal/async_read_write_stream_impl_test.cc
         internal/async_read_write_stream_logging_test.cc
+        internal/async_read_write_stream_timeout_test.cc
         internal/async_read_write_stream_tracing_test.cc
         internal/async_retry_loop_test.cc
         internal/async_retry_unary_rpc_test.cc
