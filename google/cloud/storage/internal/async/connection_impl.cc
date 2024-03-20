@@ -40,6 +40,7 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/async_streaming_read_rpc_timeout.h"
+#include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
 #include <memory>
 
@@ -89,6 +90,15 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::WriteObjectRequest const& proto) {
+    using StreamingRpcTimeout =
+        google::cloud::internal::AsyncStreamingWriteRpcTimeout<
+            google::storage::v2::WriteObjectRequest,
+            google::storage::v2::WriteObjectResponse>;
+    auto timeout = ScaleStallTimeout(
+        options->get<storage::TransferStallTimeoutOption>(),
+        options->get<storage::TransferStallMinimumRateOption>(),
+        google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+
     auto hash_function =
         [](storage_experimental::InsertObjectRequest const& r) {
           return storage::internal::CreateHashFunction(
@@ -102,6 +112,8 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
     ApplyRoutingHeaders(*context, params.request);
     context->AddMetadata("x-goog-gcs-idempotency-token", id);
     auto rpc = stub->AsyncWriteObject(cq, std::move(context), options);
+    rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
+                                                std::move(rpc));
     auto running = InsertObject::Call(
         std::move(rpc), hash_function(params.request), proto,
         WritePayloadImpl::GetImpl(params.payload), std::move(options));

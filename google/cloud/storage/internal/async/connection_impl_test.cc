@@ -198,8 +198,23 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
         return std::unique_ptr<AsyncWriteObjectStream>(std::move(stream));
       });
 
-  internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([&sequencer](auto d) {
+    auto deadline =
+        std::chrono::system_clock::now() +
+        std::chrono::duration_cast<std::chrono::system_clock::duration>(d);
+    return sequencer.PushBack("MakeRelativeTimer").then([deadline](auto f) {
+      if (f.get()) return make_status_or(deadline);
+      return StatusOr<std::chrono::system_clock::time_point>(
+          Status(StatusCode::kCancelled, "cancelled"));
+    });
+  });
+
+  auto connection =
+      MakeTestConnection(CompletionQueue(mock_cq), mock,
+                         // Disable transfer timeouts in this test.
+                         Options{}.set<storage::TransferStallTimeoutOption>(
+                             std::chrono::seconds(0)));
   auto pending = connection->InsertObject(
       {storage_experimental::InsertObjectRequest("test-bucket", "test-object")
            .set_multiple_options(storage::Fields("field1,field2"),
@@ -216,6 +231,11 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(false);
 
+  // The retry loop should create a timer.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "MakeRelativeTimer");
+  next.first.set_value(true);
+
   // Simulate a successful request.
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
@@ -223,6 +243,94 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  auto response = pending.get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->name(), "test-object");
+  EXPECT_EQ(response->size(), 123456);
+  EXPECT_THAT(response->self_link(), HasSubstr("test-object"));
+}
+
+TEST_F(AsyncConnectionImplTest, AsyncInsertObjectWithTimeout) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncWriteObject).WillOnce([&] {
+    auto stream = std::make_unique<MockAsyncInsertStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Write).WillOnce([&](auto const& request, auto) {
+      EXPECT_TRUE(request.has_write_object_spec());
+      auto const& resource = request.write_object_spec().resource();
+      EXPECT_THAT(resource.bucket(), "projects/_/buckets/test-bucket");
+      EXPECT_THAT(resource.name(), "test-object");
+      return sequencer.PushBack("Write");
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([&] {
+      return sequencer.PushBack("Finish").then([](auto) {
+        google::storage::v2::WriteObjectResponse response;
+        response.mutable_resource()->set_bucket(
+            "projects/_/buckets/test-bucket");
+        response.mutable_resource()->set_name("test-object");
+        response.mutable_resource()->set_size(123456);
+        return make_status_or(response);
+      });
+    });
+    EXPECT_CALL(*stream, GetRequestMetadata);
+    return std::unique_ptr<AsyncWriteObjectStream>(std::move(stream));
+  });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  // We will configure the connection to use 1 second timeouts.
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(
+                            std::chrono::nanoseconds(std::chrono::seconds(1))))
+      .WillRepeatedly([&sequencer](auto d) {
+        auto deadline =
+            std::chrono::system_clock::now() +
+            std::chrono::duration_cast<std::chrono::system_clock::duration>(d);
+        return sequencer.PushBack("MakeRelativeTimer").then([deadline](auto f) {
+          if (f.get()) return make_status_or(deadline);
+          return StatusOr<std::chrono::system_clock::time_point>(
+              Status(StatusCode::kCancelled, "cancelled"));
+        });
+      });
+
+  auto connection = MakeTestConnection(
+      CompletionQueue(mock_cq), mock,
+      // Disable transfer timeouts in this test.
+      Options{}
+          .set<storage::TransferStallTimeoutOption>(std::chrono::seconds(1))
+          .set<storage::TransferStallMinimumRateOption>(2 * 1024 * 1024L));
+  auto pending = connection->InsertObject(
+      {storage_experimental::InsertObjectRequest("test-bucket", "test-object")
+           .set_multiple_options(storage::Fields("field1,field2"),
+                                 storage::QuotaUser("test-quota-user")),
+       storage_experimental::WritePayload(),
+       /*.options=*/connection->options()});
+
+  // Because the timeout parameters are configured, the first thing to happen is
+  // that a timer is set.
+  auto timer = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  // Then the `Start()` operation is scheduled.  Either that complete first (and
+  // then cancels the timer) or the timer completes first (and cancels the
+  // streaming RPC).
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  timer.first.set_value(false);  // simulate a cancelled timer.
+  next.first.set_value(true);
+
+  timer = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  timer.first.set_value(false);  // simulate a cancelled timer.
   next.first.set_value(true);
 
   next = sequencer.PopFrontWithName();
@@ -485,20 +593,18 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectWithTimeout) {
   ASSERT_STATUS_OK(r);
   auto reader = *std::move(r);
 
-  // First simulate a failed `ReadObject()`. This returns a streaming RPC
-  // that completes with `false` on `Start()` (i.e. never starts) and then
-  // completes with a transient error on `Finish()`. Because the timeout
-  // parameters are configured, the first thing to happen is that the timeout is
-  // set.
+  // Start a read.
   auto data = reader->Read();
+  // Because the timeout parameters are configured, the first thing to happen is
+  // that a timer is set.
   auto timer = sequencer.PopFrontWithName();
   EXPECT_EQ(timer.second, "MakeRelativeTimer");
-  // Then the `Start()` operation is scheduled.  Either that complete first
-  // (and then cancels the timer) or the timer completes first (and cancels
-  // the streaming RPC).
+  // Then the `Start()` operation is scheduled.  Either that complete first (and
+  // then cancels the timer) or the timer completes first (and cancels the
+  // streaming RPC).
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
-  timer.first.set_value(false);  // simulate a canceled timeout
+  timer.first.set_value(false);  // simulate a cancelled timer.
   next.first.set_value(true);
 
   // Then the `Read()` operation and its timer are scheduled:
@@ -506,7 +612,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectWithTimeout) {
   EXPECT_EQ(timer.second, "MakeRelativeTimer");
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
-  timer.first.set_value(false);  // simulate a canceled timeout
+  timer.first.set_value(false);  // simulate a cancelled timer.
   next.first.set_value(true);
 
   auto response = data.get();
