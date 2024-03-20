@@ -38,6 +38,7 @@
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/internal/async_read_write_stream_timeout.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/async_streaming_read_rpc_timeout.h"
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
@@ -508,6 +509,10 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     std::shared_ptr<storage::internal::HashFunction> hash_function,
     std::int64_t persisted_size) {
   using StreamingRpc = AsyncWriterConnectionImpl::StreamingRpc;
+  using StreamingRpcTimeout =
+      google::cloud::internal::AsyncStreamingReadWriteRpcTimeout<
+          google::storage::v2::BidiWriteObjectRequest,
+          google::storage::v2::BidiWriteObjectResponse>;
 
   struct RequestPlaceholder {};
   auto call = [stub = stub_, configure_context = std::move(configure_context)](
@@ -517,8 +522,14 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
                   RequestPlaceholder const&)
       -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
     configure_context(*context);
+    auto timeout = ScaleStallTimeout(
+        options->get<storage::TransferStallTimeoutOption>(),
+        options->get<storage::TransferStallMinimumRateOption>(),
+        google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
     auto rpc =
         stub->AsyncBidiWriteObject(cq, std::move(context), std::move(options));
+    rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout, timeout,
+                                                std::move(rpc));
     auto start = rpc->Start();
     // TODO(coryan): I think we just call `Start()` and then send the data and
     // the metadata (if needed) on the first Write() call.
