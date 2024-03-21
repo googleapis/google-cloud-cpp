@@ -37,8 +37,6 @@ using ErrorParsingIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ErrorParsingIntegrationTest, FailureContainsErrorInfo) {
-  // TODO(#9947) - enable with new implementation once fixed.
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "any");
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
