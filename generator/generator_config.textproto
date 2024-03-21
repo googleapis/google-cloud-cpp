@@ -835,6 +835,15 @@ discovery_products {
   }
 
   rest_services {
+    service_proto_path: "google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.proto"
+    product_path: "google/cloud/compute/instance_group_manager_resize_requests/v1"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
     service_proto_path: "google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto"
     product_path: "google/cloud/compute/instance_group_managers/v1"
     initial_copyright_year: "2023"
@@ -1351,6 +1360,24 @@ discovery_products {
     service_proto_path: "google/cloud/compute/ssl_policies/v1/ssl_policies.proto"
     product_path: "google/cloud/compute/ssl_policies/v1"
     initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto"
+    product_path: "google/cloud/compute/storage_pool_types/v1"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/storage_pools/v1/storage_pools.proto"
+    product_path: "google/cloud/compute/storage_pools/v1"
+    initial_copyright_year: "2024"
     retryable_status_codes: ["kUnavailable"]
     generate_rest_transport: true
     generate_grpc_transport: false

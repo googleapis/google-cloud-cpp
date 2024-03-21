@@ -110,6 +110,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInstanceGroupManagersConnection()`.
 
+- `GOOGLE_CLOUD_CPP_INSTANCE_GROUP_MANAGER_RESIZE_REQUESTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInstanceGroupManagerResizeRequestsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_INSTANCE_TEMPLATES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInstanceTemplatesConnection()`.
@@ -329,6 +333,14 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_SSL_POLICIES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeSslPoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_STORAGE_POOLS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeStoragePoolsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_STORAGE_POOL_TYPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeStoragePoolTypesConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SUBNETWORKS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
