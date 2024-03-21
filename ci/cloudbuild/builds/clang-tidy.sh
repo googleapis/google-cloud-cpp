@@ -47,6 +47,7 @@ fi
 io::run cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
   -DCMAKE_CXX_STANDARD=14 \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
   -DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX="${enable_docfx}"
 io::run cmake --build cmake-out
