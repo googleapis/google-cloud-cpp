@@ -35,3 +35,13 @@ cc_binary(
         "@google_cloud_cpp//:experimental-storage_grpc",
     ],
 )
+
+cc_binary(
+    name = "quickstart_async",
+    srcs = [
+        "quickstart_async.cc",
+    ],
+    deps = [
+        "@google_cloud_cpp//:experimental-storage_grpc",
+    ],
+)
