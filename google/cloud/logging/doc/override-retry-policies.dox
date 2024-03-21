@@ -76,6 +76,11 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet config_service_v2_client_samples.cc custom-idempotency-policy
 
+If long running operations exist, this will override the polling 
+policies for `logging_v2::ConfigServiceV2Client`
+
+@snippet config_service_v2_client_samples.cc set-polling-policy
+
 
 Follow these links to find examples for other \c *Client classes:
 

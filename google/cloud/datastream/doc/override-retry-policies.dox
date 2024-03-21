@@ -76,6 +76,11 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet datastream_client_samples.cc custom-idempotency-policy
 
+If long running operations exist, this will override the polling 
+policies for `datastream_v1::DatastreamClient`
+
+@snippet datastream_client_samples.cc set-polling-policy
+
 
 <!-- inject-retry-snippet-end -->
 
