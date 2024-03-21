@@ -991,7 +991,8 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {
       });
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  // We will configure the connection to use 1 second timeouts.
+  // We will configure the connection to use disable timeouts, this is just used
+  // for the retry loop backoff timers.
   EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([&sequencer](auto d) {
     auto deadline =
         std::chrono::system_clock::now() +
