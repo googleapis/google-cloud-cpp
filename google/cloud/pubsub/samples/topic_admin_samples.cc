@@ -178,7 +178,7 @@ void CreateTopicWithSchemaRevisions(
 void CreateTopicWithKinesisIngestion(
     google::cloud::pubsub_admin::TopicAdminClient client,
     std::vector<std::string> const& argv) {
-  //! [pubsub_create_topic_with_kinesis_ingestion]
+  // [START pubsub_create_topic_with_kinesis_ingestion]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
@@ -205,7 +205,7 @@ void CreateTopicWithKinesisIngestion(
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
   }
-  //! [pubsub_create_topic_with_kinesis_ingestion]
+  // [END pubsub_create_topic_with_kinesis_ingestion]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
    argv.at(4), argv.at(5));
 }
@@ -278,7 +278,7 @@ void UpdateTopicSchema(google::cloud::pubsub_admin::TopicAdminClient client,
 
 void UpdateTopicType(google::cloud::pubsub_admin::TopicAdminClient client,
                      std::vector<std::string> const& argv) {
-  //! [pubsub_update_topic_type]
+  // [START pubsub_update_topic_type]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
@@ -304,7 +304,7 @@ void UpdateTopicType(google::cloud::pubsub_admin::TopicAdminClient client,
     std::cout << "The topic was successfully updated: " << topic->DebugString()
               << "\n";
   }
-  //! [pubsub_update_topic_type]
+  // END [pubsub_update_topic_type]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
    argv.at(4), argv.at(5));
 }
