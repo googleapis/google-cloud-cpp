@@ -767,9 +767,6 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
-  // TODO(#9806) - enable when gRPC implements these operations.
-  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
