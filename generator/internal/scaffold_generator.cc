@@ -728,6 +728,25 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 <!-- inject-retry-snippet-start -->
 <!-- inject-retry-snippet-end -->
 
+@section $library$-override-retry-polling-policy Configuring the polling policy
+
+The `*PollingPolicyOption` controls:
+
+- How long to retry the polling operation for until success.
+- The backoff policy for the polling requests.
+
+You can combine an existing RetryPolicy and BackoffPolicy or your own class for this option. The library also provides a
+built-in policies:
+
+- `GenericPollingPolicy<>`: create a composition of a retry and backoff policy.
+
+Note: this option only exists if a client has long running operations.
+
+@section $library$-override-retry-example Example
+
+<!-- inject-retry-snippet-start -->
+<!-- inject-retry-snippet-end -->
+
 @section $library$-override-retry-more-information More Information
 
 @see google::cloud::Options

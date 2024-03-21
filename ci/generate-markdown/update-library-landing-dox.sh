@@ -206,6 +206,11 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet $(basename "${sample_cc}") custom-idempotency-policy
 
+If long running operations exist, this will override the polling
+policies for \`${client_name}\`
+
+@snippet $(basename "${sample_cc}") set-polling-policy
+
 _EOF_
     if [[ ${#samples_cc[@]} -gt 1 ]]; then
       echo
