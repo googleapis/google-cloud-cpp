@@ -16,10 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
 
 #include "google/cloud/pubsub/internal/message_callback.h"
-#include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <string>
@@ -29,7 +26,6 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MessageCallback;
 /**
  * Define the interface to receive message batches from Cloud Pub/Sub via the
  * Streaming Pull.
@@ -45,7 +41,7 @@ class BatchCallback {
   };
 
   virtual void callback(StreamingPullResponse response) = 0;
-  virtual void message_callback(MessageCallback::ReceivedMessage message) = 0;
+  virtual void message_callback(MessageCallback::ReceivedMessage m) = 0;
   virtual void user_callback(MessageCallback::MessageAndHandler m) = 0;
 };
 

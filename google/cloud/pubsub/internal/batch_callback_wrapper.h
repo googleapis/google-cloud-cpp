@@ -42,8 +42,8 @@ class BatchCallbackWrapper : public BatchCallback {
     wrapper_(response);
   }
 
-  void message_callback(MessageCallback::ReceivedMessage message) override {
-    child_->message_callback(message);
+  void message_callback(MessageCallback::ReceivedMessage m) override {
+    child_->message_callback(m);
   }
 
   void user_callback(MessageCallback::MessageAndHandler m) override {

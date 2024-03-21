@@ -12,33 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_CALLBACK_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_CALLBACK_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NOOP_MESSAGE_CALLBACK_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NOOP_MESSAGE_CALLBACK_H
 
 #include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/version.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace pubsub_testing {
+namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A class to mock pubsub_internal::MessageCallback
+ * Noop implementation for testing.
  */
-class MockMessageCallback : public pubsub_internal::MessageCallback {
+class NoopMessageCallback : public MessageCallback {
  public:
-  ~MockMessageCallback() override = default;
-  MOCK_METHOD(void, user_callback,
-              (pubsub_internal::MessageCallback::MessageAndHandler));
-  MOCK_METHOD(void, message_callback,
-              (pubsub_internal::MessageCallback::ReceivedMessage));
+  explicit NoopMessageCallback() = default;
+  ~NoopMessageCallback() override = default;
+
+  void user_callback(MessageAndHandler) override{};
+
+  void message_callback(ReceivedMessage) override{};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_testing
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_CALLBACK_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NOOP_MESSAGE_CALLBACK_H

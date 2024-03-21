@@ -18,9 +18,6 @@
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/future.h"
-#include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <string>
 
@@ -28,8 +25,6 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-class BatchCallback;
 
 /**
  * Define the interface to receive a single message from Cloud Pub/Sub.
@@ -39,7 +34,6 @@ class MessageCallback {
   virtual ~MessageCallback() = default;
 
   struct ReceivedMessage {
-    // A received message.
     google::pubsub::v1::ReceivedMessage message;
   };
 

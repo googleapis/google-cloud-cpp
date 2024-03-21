@@ -32,9 +32,8 @@ class DefaultBatchCallback : public BatchCallback {
  public:
   using CallbackFunction =
       std::function<void(BatchCallback::StreamingPullResponse)>;
-  explicit DefaultBatchCallback(
-      CallbackFunction callback,
-      std::shared_ptr<MessageCallback> message_callback)
+  DefaultBatchCallback(CallbackFunction callback,
+                       std::shared_ptr<MessageCallback> message_callback)
       : callback_(std::move(callback)),
         message_callback_(std::move(message_callback)) {}
   ~DefaultBatchCallback() override = default;
@@ -43,11 +42,12 @@ class DefaultBatchCallback : public BatchCallback {
     callback_(std::move(response));
   };
 
-  void user_callback(MessageCallback::MessageAndHandler m) override {
-    message_callback_->user_callback(std::move(m));
-  };
   void message_callback(MessageCallback::ReceivedMessage m) override {
     message_callback_->message_callback(std::move(m));
+  };
+
+  void user_callback(MessageCallback::MessageAndHandler m) override {
+    message_callback_->user_callback(std::move(m));
   };
 
  private:

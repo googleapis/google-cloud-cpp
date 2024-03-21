@@ -17,7 +17,6 @@
 
 #include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 
 namespace google {
@@ -30,14 +29,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class DefaultMessageCallback : public MessageCallback {
  public:
-  using MessageCallback = std::function<void(ReceivedMessage)>;
   using Callback = std::function<void(
       pubsub::Message, std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>)>;
 
   explicit DefaultMessageCallback(Callback callback)
       : callback_(std::move(callback)) {}
-  explicit DefaultMessageCallback(MessageCallback message_callback)
-      : message_callback_(std::move(message_callback)) {}
   ~DefaultMessageCallback() override = default;
 
   void user_callback(MessageAndHandler m) override {
@@ -47,7 +43,6 @@ class DefaultMessageCallback : public MessageCallback {
   void message_callback(ReceivedMessage) override{};
 
  private:
-  MessageCallback message_callback_;
   Callback callback_;
 };
 

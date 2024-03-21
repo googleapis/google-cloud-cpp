@@ -143,6 +143,7 @@ add_library(
     internal/message_carrier.h
     internal/message_propagator.cc
     internal/message_propagator.h
+    internal/noop_message_callback.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
     internal/publisher_auth_decorator.cc

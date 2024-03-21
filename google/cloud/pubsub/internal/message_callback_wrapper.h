@@ -17,7 +17,6 @@
 
 #include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 
 namespace google {
@@ -28,14 +27,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MessageCallbackWrapper : public MessageCallback {
  public:
   using Callback = std::function<void(ReceivedMessage)>;
-  explicit MessageCallbackWrapper(std::shared_ptr<MessageCallback> child,
-                                  Callback wrapper)
+  MessageCallbackWrapper(std::shared_ptr<MessageCallback> child,
+                         Callback wrapper)
       : child_(std::move(child)), wrapper_(std::move(wrapper)) {}
   ~MessageCallbackWrapper() override = default;
 
   void message_callback(ReceivedMessage message) override {
-    child_->message_callback(message);
     wrapper_(message);
+    child_->message_callback(message);
   }
   void user_callback(MessageAndHandler m) override {
     child_->user_callback(std::move(m));

@@ -76,6 +76,7 @@ google_cloud_cpp_pubsub_hdrs = [
     "internal/message_callback_wrapper.h",
     "internal/message_carrier.h",
     "internal/message_propagator.h",
+    "internal/noop_message_callback.h",
     "internal/ordering_key_publisher_connection.h",
     "internal/publisher_auth_decorator.h",
     "internal/publisher_logging_decorator.h",
