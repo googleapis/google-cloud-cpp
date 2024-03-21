@@ -91,18 +91,19 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
               ElementsAre("RestStub", "StorageConnectionImpl"));
 }
 
-TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
+TEST(GrpcPluginTest, MediaConfigCreatesMetadata) {
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  // We used to support a "media" configuration where only media operations
+  // used
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client = DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("media"));
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcStub", "RestStub", "HybridStub",
-                          "StorageConnectionImpl"));
+              ElementsAre("GrpcStub", "StorageConnectionImpl"));
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
