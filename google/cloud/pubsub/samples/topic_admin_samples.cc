@@ -304,7 +304,7 @@ void UpdateTopicType(google::cloud::pubsub_admin::TopicAdminClient client,
     std::cout << "The topic was successfully updated: " << topic->DebugString()
               << "\n";
   }
-  // END [pubsub_update_topic_type]
+  // [END pubsub_update_topic_type]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
    argv.at(4), argv.at(5));
 }
