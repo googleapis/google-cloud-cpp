@@ -990,8 +990,23 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {
         return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
       });
 
-  internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  // We will configure the connection to use disable timeouts, this is just used
+  // for the retry loop backoff timers.
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([&sequencer](auto d) {
+    auto deadline =
+        std::chrono::system_clock::now() +
+        std::chrono::duration_cast<std::chrono::system_clock::duration>(d);
+    return sequencer.PushBack("MakeRelativeTimer").then([deadline](auto f) {
+      if (f.get()) return make_status_or(deadline);
+      return StatusOr<std::chrono::system_clock::time_point>(
+          Status(StatusCode::kCancelled, "cancelled"));
+    });
+  });
+  auto connection =
+      MakeTestConnection(CompletionQueue(mock_cq), mock,
+                         Options{}.set<storage::TransferStallTimeoutOption>(
+                             std::chrono::seconds(0)));
   auto pending = connection->StartUnbufferedUpload(
       {storage_experimental::ResumableUploadRequest("test-bucket",
                                                     "test-object")
@@ -1005,6 +1020,11 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {
   EXPECT_EQ(next.second, "StartResumableWrite(1)");
   next.first.set_value(true);
 
+  // The retry loop should start a backoff timer.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "MakeRelativeTimer");
+  next.first.set_value(true);
+
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "StartResumableWrite(2)");
   next.first.set_value(true);
@@ -1016,6 +1036,11 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(false);
+
+  // The retry loop should start a backoff timer.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "MakeRelativeTimer");
+  next.first.set_value(true);
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
@@ -1046,6 +1071,109 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {
   EXPECT_EQ(response->bucket(), "test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
+
+  writer.reset();
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUploadWithTimeout) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncStartResumableWrite).WillOnce([&sequencer] {
+    return sequencer.PushBack("StartResumableWrite").then([](auto) {
+      auto response = google::storage::v2::StartResumableWriteResponse{};
+      response.set_upload_id("test-upload-id");
+      return make_status_or(response);
+    });
+  });
+  EXPECT_CALL(*mock, AsyncBidiWriteObject).WillOnce([&]() {
+    auto stream = std::make_unique<MockAsyncBidiWriteObjectStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&sequencer] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Write).WillOnce([&sequencer] {
+      return sequencer.PushBack("Write");
+    });
+    EXPECT_CALL(*stream, Read).WillOnce([&sequencer] {
+      return sequencer.PushBack("Read").then([](auto) {
+        auto response = google::storage::v2::BidiWriteObjectResponse{};
+        response.mutable_resource()->set_bucket(
+            "projects/_/buckets/test-bucket");
+        response.mutable_resource()->set_name("test-object");
+        response.mutable_resource()->set_generation(123456);
+        return absl::make_optional(std::move(response));
+      });
+    });
+    EXPECT_CALL(*stream, Cancel).Times(1);
+    EXPECT_CALL(*stream, Finish).WillOnce([&sequencer] {
+      return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
+    });
+    return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
+  });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  // We will configure the connection to use 1 second timeouts.
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(
+                            std::chrono::nanoseconds(std::chrono::seconds(1))))
+      .WillRepeatedly([&sequencer](auto d) {
+        auto deadline =
+            std::chrono::system_clock::now() +
+            std::chrono::duration_cast<std::chrono::system_clock::duration>(d);
+        return sequencer.PushBack("MakeRelativeTimer").then([deadline](auto f) {
+          if (f.get()) return make_status_or(deadline);
+          return StatusOr<std::chrono::system_clock::time_point>(
+              Status(StatusCode::kCancelled, "cancelled"));
+        });
+      });
+  auto connection = MakeTestConnection(
+      CompletionQueue(mock_cq), mock,
+      Options{}
+          .set<storage::TransferStallTimeoutOption>(std::chrono::seconds(1))
+          .set<storage::TransferStallMinimumRateOption>(2 * 1024 * 1024L));
+  auto pending = connection->StartUnbufferedUpload(
+      {storage_experimental::ResumableUploadRequest("test-bucket",
+                                                    "test-object")
+           .set_multiple_options(
+               storage::WithObjectMetadata(
+                   storage::ObjectMetadata{}.set_content_type("text/plain")),
+               storage::IfGenerationMatch(123)),
+       connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "StartResumableWrite");
+  next.first.set_value(true);
+
+  auto timer = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  timer.first.set_value(false);  // simulate a cancelled timer.
+  next.first.set_value(true);
+
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto writer = *std::move(r);
+  EXPECT_EQ(writer->UploadId(), "test-upload-id");
+  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 0);
+
+  auto w2 = writer->Finalize({});
+  timer = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  timer.first.set_value(false);  // simulate a cancelled timer.
+  next.first.set_value(true);
+  timer = sequencer.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  timer.first.set_value(false);  // simulate a cancelled timer.
+  next.first.set_value(true);
+
+  auto response = w2.get();
+  ASSERT_STATUS_OK(response);
 
   writer.reset();
   next = sequencer.PopFrontWithName();
