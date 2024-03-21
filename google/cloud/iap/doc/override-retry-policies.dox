@@ -76,7 +76,7 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet identity_aware_proxy_admin_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling 
+If long running operations exist, this will override the polling
 policies for `iap_v1::IdentityAwareProxyAdminServiceClient`
 
 @snippet identity_aware_proxy_admin_client_samples.cc set-polling-policy

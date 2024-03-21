@@ -76,7 +76,7 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet security_center_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling 
+If long running operations exist, this will override the polling
 policies for `securitycenter_v1::SecurityCenterClient`
 
 @snippet security_center_client_samples.cc set-polling-policy

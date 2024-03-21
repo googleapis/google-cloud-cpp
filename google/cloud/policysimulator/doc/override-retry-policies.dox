@@ -75,7 +75,7 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet simulator_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling 
+If long running operations exist, this will override the polling
 policies for `policysimulator_v1::SimulatorClient`
 
 @snippet simulator_client_samples.cc set-polling-policy
