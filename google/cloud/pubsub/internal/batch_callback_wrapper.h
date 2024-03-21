@@ -38,9 +38,17 @@ class BatchCallbackWrapper : public BatchCallback {
   ~BatchCallbackWrapper() override = default;
 
   void callback(StreamingPullResponse response) override {
-    wrapper_(response);
     child_->callback(response);
-  };
+    wrapper_(response);
+  }
+
+  void message_callback(MessageCallback::ReceivedMessage m) override {
+    child_->message_callback(m);
+  }
+
+  void user_callback(MessageCallback::MessageAndHandler m) override {
+    child_->user_callback(std::move(m));
+  }
 
   std::shared_ptr<BatchCallback> child_;
   Callback wrapper_;

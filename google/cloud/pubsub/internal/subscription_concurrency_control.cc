@@ -14,6 +14,10 @@
 
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/internal/default_batch_callback.h"
+#include "google/cloud/pubsub/internal/message_callback_wrapper.h"
+#include "google/cloud/pubsub/options.h"
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -56,13 +60,21 @@ class AckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
 
 }  // namespace
 
-void SubscriptionConcurrencyControl::Start(Callback cb) {
+void SubscriptionConcurrencyControl::Start(
+    std::shared_ptr<MessageCallback> cb) {
   std::unique_lock<std::mutex> lk(mu_);
   if (callback_) return;
-  callback_ = std::move(cb);
-  source_->Start([w = WeakFromThis()](google::pubsub::v1::ReceivedMessage r) {
-    if (auto self = w.lock()) self->OnMessage(std::move(r));
-  });
+
+  auto message_callback = std::make_shared<MessageCallbackWrapper>(
+      std::move(cb), [w = WeakFromThis()](MessageCallback::ReceivedMessage r) {
+        if (auto self = w.lock()) self->OnMessage(std::move(r.message));
+      });
+
+  callback_ = std::make_shared<DefaultBatchCallback>(
+      [](BatchCallback::StreamingPullResponse const&) {},
+      std::move(message_callback));
+
+  source_->Start(callback_);
   if (total_messages() >= max_concurrency_) return;
   auto const read_count = max_concurrency_ - total_messages();
   messages_requested_ = read_count;
@@ -122,7 +134,8 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
     auto h = std::make_unique<AckHandlerImpl>(
         std::move(w), std::move(*m.mutable_ack_id()), subscription_,
         m.delivery_attempt());
-    callback_(FromProto(std::move(*m.mutable_message())), std::move(h));
+    callback_->user_callback(MessageCallback::MessageAndHandler{
+        FromProto(std::move(*m.mutable_message())), std::move(h)});
   });
   shutdown_manager_->FinishedOperation("callback");
 }

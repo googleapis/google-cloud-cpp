@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_MESSAGE_CALLBACK_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_MESSAGE_CALLBACK_H
 
 #include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
-#include <string>
 
 namespace google {
 namespace cloud {
@@ -27,22 +25,25 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Define the interface to receive message batches from Cloud Pub/Sub via the
- * Streaming Pull.
+ * Default implementation.
  */
-class BatchCallback {
+class DefaultMessageCallback : public MessageCallback {
  public:
-  virtual ~BatchCallback() = default;
+  using Callback = std::function<void(
+      pubsub::Message, std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>)>;
 
-  // Define the struct to store the response from Cloud Pub/Sub.
-  struct StreamingPullResponse {
-    // A batch of messages received.
-    StatusOr<google::pubsub::v1::StreamingPullResponse> response;
+  explicit DefaultMessageCallback(Callback callback)
+      : callback_(std::move(callback)) {}
+  ~DefaultMessageCallback() override = default;
+
+  void user_callback(MessageAndHandler m) override {
+    callback_(std::move(m.message), std::move(m.ack_handler));
   };
 
-  virtual void callback(StreamingPullResponse response) = 0;
-  virtual void message_callback(MessageCallback::ReceivedMessage m) = 0;
-  virtual void user_callback(MessageCallback::MessageAndHandler m) = 0;
+  void message_callback(ReceivedMessage) override{};
+
+ private:
+  Callback callback_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -50,4 +51,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_MESSAGE_CALLBACK_H

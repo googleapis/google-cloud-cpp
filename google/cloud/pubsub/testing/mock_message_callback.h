@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_BATCH_CALLBACK_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_BATCH_CALLBACK_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_CALLBACK_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_CALLBACK_H
 
-#include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/version.h"
 #include <gmock/gmock.h>
-#include <string>
 
 namespace google {
 namespace cloud {
@@ -27,13 +25,11 @@ namespace pubsub_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A class to mock pubsub_internal::BatchCallback
+ * A class to mock pubsub_internal::MessageCallback
  */
-class MockBatchCallback : public pubsub_internal::BatchCallback {
+class MockMessageCallback : public pubsub_internal::MessageCallback {
  public:
-  ~MockBatchCallback() override = default;
-  MOCK_METHOD(void, callback,
-              (pubsub_internal::BatchCallback::StreamingPullResponse));
+  ~MockMessageCallback() override = default;
   MOCK_METHOD(void, user_callback,
               (pubsub_internal::MessageCallback::MessageAndHandler));
   MOCK_METHOD(void, message_callback,
@@ -45,4 +41,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_BATCH_CALLBACK_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_CALLBACK_H

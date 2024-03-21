@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_CONCURRENCY_CONTROL_H
 
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/internal/batch_callback.h"
+#include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
 #include "google/cloud/pubsub/internal/subscription_message_source.h"
 #include "google/cloud/pubsub/message.h"
@@ -28,9 +30,6 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using Callback = std::function<void(
-    pubsub::Message, std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>)>;
 
 class SubscriptionConcurrencyControl
     : public std::enable_shared_from_this<SubscriptionConcurrencyControl> {
@@ -46,7 +45,7 @@ class SubscriptionConcurrencyControl
             std::move(subscription), max_concurrency));
   }
 
-  void Start(Callback);
+  void Start(std::shared_ptr<MessageCallback> cb);
   void Shutdown();
   future<Status> AckMessage(std::string const& ack_id);
   future<Status> NackMessage(std::string const& ack_id);
@@ -83,7 +82,7 @@ class SubscriptionConcurrencyControl
   std::size_t const max_concurrency_;
 
   std::mutex mu_;
-  Callback callback_;
+  std::shared_ptr<BatchCallback> callback_;
   std::size_t message_count_ = 0;
   std::size_t messages_requested_ = 0;
 };

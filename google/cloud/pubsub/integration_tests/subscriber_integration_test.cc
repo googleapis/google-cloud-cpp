@@ -17,6 +17,8 @@
 #include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/internal/default_batch_callback.h"
 #include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/internal/message_callback.h"
+#include "google/cloud/pubsub/internal/noop_message_callback.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
 #include "google/cloud/pubsub/publisher.h"
@@ -301,7 +303,8 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
             // This condition variable must have a lifetime longer than the
             // thread pools.
             callback_cv.notify_one();
-          });
+          },
+          std::make_shared<pubsub_internal::NoopMessageCallback>());
 
   auto done = shutdown->Start({});
   source->Start(batch_callback);

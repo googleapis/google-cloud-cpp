@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_H
 
-#include "google/cloud/pubsub/internal/message_callback.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <string>
 
@@ -27,22 +27,23 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Define the interface to receive message batches from Cloud Pub/Sub via the
- * Streaming Pull.
+ * Define the interface to receive a single message from Cloud Pub/Sub.
  */
-class BatchCallback {
+class MessageCallback {
  public:
-  virtual ~BatchCallback() = default;
+  virtual ~MessageCallback() = default;
 
-  // Define the struct to store the response from Cloud Pub/Sub.
-  struct StreamingPullResponse {
-    // A batch of messages received.
-    StatusOr<google::pubsub::v1::StreamingPullResponse> response;
+  struct ReceivedMessage {
+    google::pubsub::v1::ReceivedMessage message;
   };
 
-  virtual void callback(StreamingPullResponse response) = 0;
-  virtual void message_callback(MessageCallback::ReceivedMessage m) = 0;
-  virtual void user_callback(MessageCallback::MessageAndHandler m) = 0;
+  struct MessageAndHandler {
+    pubsub::Message message;
+    std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> ack_handler;
+  };
+
+  virtual void user_callback(MessageAndHandler m) = 0;
+  virtual void message_callback(ReceivedMessage message) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -50,4 +51,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_H

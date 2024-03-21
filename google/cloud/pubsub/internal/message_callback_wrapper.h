@@ -12,37 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_WRAPPER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_WRAPPER_H
 
 #include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Define the interface to receive message batches from Cloud Pub/Sub via the
- * Streaming Pull.
- */
-class BatchCallback {
+class MessageCallbackWrapper : public MessageCallback {
  public:
-  virtual ~BatchCallback() = default;
+  using Callback = std::function<void(ReceivedMessage)>;
+  MessageCallbackWrapper(std::shared_ptr<MessageCallback> child,
+                         Callback wrapper)
+      : child_(std::move(child)), wrapper_(std::move(wrapper)) {}
+  ~MessageCallbackWrapper() override = default;
 
-  // Define the struct to store the response from Cloud Pub/Sub.
-  struct StreamingPullResponse {
-    // A batch of messages received.
-    StatusOr<google::pubsub::v1::StreamingPullResponse> response;
-  };
+  void message_callback(ReceivedMessage message) override {
+    wrapper_(message);
+    child_->message_callback(message);
+  }
+  void user_callback(MessageAndHandler m) override {
+    child_->user_callback(std::move(m));
+  }
 
-  virtual void callback(StreamingPullResponse response) = 0;
-  virtual void message_callback(MessageCallback::ReceivedMessage m) = 0;
-  virtual void user_callback(MessageCallback::MessageAndHandler m) = 0;
+  std::shared_ptr<MessageCallback> child_;
+  Callback wrapper_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -50,4 +49,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_WRAPPER_H
