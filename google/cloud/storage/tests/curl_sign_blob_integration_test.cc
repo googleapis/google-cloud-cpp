@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -44,7 +44,7 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto encoded = Base64Encode(LoremIpsum());
+  auto encoded = google::cloud::internal::Base64Encode(LoremIpsum());
 
   SignBlobRequest request(service_account_, encoded, {});
 
@@ -58,7 +58,9 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
   EXPECT_FALSE(response->key_id.empty());
   EXPECT_FALSE(response->signed_blob.empty());
 
-  auto decoded = Base64Decode(response->signed_blob).value();
+  auto decoded =
+      google::cloud::internal::Base64DecodeToBytes(response->signed_blob)
+          .value();
   EXPECT_FALSE(decoded.empty());
 }
 

@@ -17,8 +17,8 @@
 #include "google/cloud/storage/internal/grpc/owner_parser.h"
 #include "google/cloud/storage/internal/grpc/synthetic_self_link.h"
 #include "google/cloud/storage/internal/md5hash.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/time_utils.h"
 
@@ -31,13 +31,15 @@ storage::CustomerEncryption FromProto(
     google::storage::v2::CustomerEncryption rhs) {
   storage::CustomerEncryption result;
   result.encryption_algorithm = std::move(*rhs.mutable_encryption_algorithm());
-  result.key_sha256 = storage::internal::Base64Encode(rhs.key_sha256_bytes());
+  result.key_sha256 =
+      google::cloud::internal::Base64Encode(rhs.key_sha256_bytes());
   return result;
 }
 
 StatusOr<google::storage::v2::CustomerEncryption> ToProto(
     storage::CustomerEncryption rhs) {
-  auto key_sha256 = storage::internal::Base64Decode(rhs.key_sha256);
+  auto key_sha256 =
+      google::cloud::internal::Base64DecodeToBytes(rhs.key_sha256);
   if (!key_sha256) return std::move(key_sha256).status();
   google::storage::v2::CustomerEncryption result;
   result.set_encryption_algorithm(std::move(rhs.encryption_algorithm));
@@ -48,23 +50,23 @@ StatusOr<google::storage::v2::CustomerEncryption> ToProto(
 
 std::string Crc32cFromProto(std::uint32_t v) {
   auto endian_encoded = google::cloud::internal::EncodeBigEndian(v);
-  return storage::internal::Base64Encode(endian_encoded);
+  return google::cloud::internal::Base64Encode(endian_encoded);
 }
 
 StatusOr<std::uint32_t> Crc32cToProto(std::string const& v) {
-  auto decoded = storage::internal::Base64Decode(v);
+  auto decoded = google::cloud::internal::Base64DecodeToBytes(v);
   if (!decoded) return std::move(decoded).status();
   return google::cloud::internal::DecodeBigEndian<std::uint32_t>(
       std::string(decoded->begin(), decoded->end()));
 }
 
 std::string MD5FromProto(std::string const& v) {
-  return storage::internal::Base64Encode(v);
+  return google::cloud::internal::Base64Encode(v);
 }
 
 StatusOr<std::string> MD5ToProto(std::string const& v) {
   if (v.empty()) return {};
-  auto binary = storage::internal::Base64Decode(v);
+  auto binary = google::cloud::internal::Base64DecodeToBytes(v);
   if (!binary) return std::move(binary).status();
   return std::string{binary->begin(), binary->end()};
 }

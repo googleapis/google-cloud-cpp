@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/sign_blob_request_parser.h"
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -37,7 +37,8 @@ TEST(GrpcSignBlobRequestParser, ToProto) {
       )pb",
       &expected));
 
-  auto b64encoded = storage::internal::Base64Encode("test-only-text-to-sign");
+  auto b64encoded =
+      google::cloud::internal::Base64Encode("test-only-text-to-sign");
 
   auto request = storage::internal::SignBlobRequest(
       "test-only-sa", std::move(b64encoded),
@@ -56,7 +57,7 @@ TEST(GrpcSignBlobRequestParser, FromProto) {
   auto response = FromProto(input);
   EXPECT_EQ(response.key_id, "test-only-key-id");
   EXPECT_EQ(response.signed_blob,
-            storage::internal::Base64Encode("test-only-signed-blob"));
+            google::cloud::internal::Base64Encode("test-only-signed-blob"));
 }
 
 }  // namespace

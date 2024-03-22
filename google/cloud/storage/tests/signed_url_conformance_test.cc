@@ -15,10 +15,10 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/tests/conformance_tests.pb.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
@@ -248,7 +248,8 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
       domain_named_bucket, virtual_hostname);
   ASSERT_STATUS_OK(doc_res);
   EXPECT_EQ(expected_policy, doc_res->policy);
-  auto actual_policy_vec = internal::Base64Decode(doc_res->policy);
+  auto actual_policy_vec =
+      google::cloud::internal::Base64DecodeToBytes(doc_res->policy);
   ASSERT_STATUS_OK(actual_policy_vec);
   std::string actual_policy(actual_policy_vec->begin(),
                             actual_policy_vec->end());

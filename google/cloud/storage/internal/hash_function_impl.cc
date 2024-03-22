@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
 
@@ -165,7 +165,8 @@ HashValues MD5HashFunction::Finish() {
   EVP_DigestFinal_ex(impl_.get(), reinterpret_cast<unsigned char*>(hash.data()),
                      &len);
   hash.resize(len);
-  hashes_ = HashValues{/*.crc32c=*/{}, /*.md5=*/Base64Encode(hash)};
+  hashes_ = HashValues{/*.crc32c=*/{},
+                       /*.md5=*/google::cloud::internal::Base64Encode(hash)};
   return *hashes_;
 }
 
@@ -212,7 +213,8 @@ Status Crc32cHashFunction::Update(std::int64_t offset, absl::Cord const& buffer,
 
 HashValues Crc32cHashFunction::Finish() {
   std::string const hash = google::cloud::internal::EncodeBigEndian(current_);
-  return HashValues{/*.crc32c=*/Base64Encode(hash), /*.md5=*/{}};
+  return HashValues{/*.crc32c=*/google::cloud::internal::Base64Encode(hash),
+                    /*.md5=*/{}};
 }
 
 std::string PrecomputedHashFunction::Name() const {

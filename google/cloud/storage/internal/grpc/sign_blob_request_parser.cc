@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/sign_blob_request_parser.h"
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/base64_transforms.h"
 
 namespace google {
 namespace cloud {
@@ -25,7 +25,8 @@ google::iam::credentials::v1::SignBlobRequest ToProto(
   google::iam::credentials::v1::SignBlobRequest request;
   request.set_name("projects/-/serviceAccounts/" + rhs.service_account());
   for (auto const& d : rhs.delegates()) request.add_delegates(d);
-  auto b64decoded = storage::internal::Base64Decode(rhs.base64_encoded_blob());
+  auto b64decoded =
+      google::cloud::internal::Base64DecodeToBytes(rhs.base64_encoded_blob());
   if (!b64decoded) return request;
   request.mutable_payload()->assign(b64decoded->begin(), b64decoded->end());
   return request;
@@ -35,7 +36,8 @@ storage::internal::SignBlobResponse FromProto(
     google::iam::credentials::v1::SignBlobResponse const& rhs) {
   storage::internal::SignBlobResponse response;
   response.key_id = rhs.key_id();
-  response.signed_blob = storage::internal::Base64Encode(rhs.signed_blob());
+  response.signed_blob =
+      google::cloud::internal::Base64Encode(rhs.signed_blob());
   return response;
 }
 

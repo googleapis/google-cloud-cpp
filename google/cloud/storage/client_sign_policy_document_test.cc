@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -54,7 +54,7 @@ constexpr char kJsonKeyfileContents[] = R"""({
  * base64.
  */
 std::string Dec64(std::string const& s) {
-  auto res = internal::Base64Decode(s).value();
+  auto res = google::cloud::internal::Base64DecodeToBytes(s).value();
   return std::string(res.begin(), res.end());
 };
 

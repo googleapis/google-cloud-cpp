@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/make_jwt_assertion.h"
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/openssl_util.h"
 
 namespace google {
@@ -21,6 +21,8 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+using google::cloud::internal::UrlsafeBase64Encode;
 
 StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
                                               std::string const& payload,

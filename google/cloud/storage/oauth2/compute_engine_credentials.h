@@ -18,7 +18,6 @@
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/internal/curl/request_builder.h"
 #include "google/cloud/storage/internal/http_response.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"

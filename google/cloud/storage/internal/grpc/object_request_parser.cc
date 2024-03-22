@@ -17,8 +17,8 @@
 #include "google/cloud/storage/internal/grpc/object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/time_utils.h"
@@ -38,9 +38,10 @@ Status SetCommonObjectParameters(GrpcRequest& request,
                                  StorageRequest const& req) {
   if (req.template HasOption<storage::EncryptionKey>()) {
     auto data = req.template GetOption<storage::EncryptionKey>().value();
-    auto key_bytes = storage::internal::Base64Decode(data.key);
+    auto key_bytes = google::cloud::internal::Base64DecodeToBytes(data.key);
     if (!key_bytes) return std::move(key_bytes).status();
-    auto key_sha256_bytes = storage::internal::Base64Decode(data.sha256);
+    auto key_sha256_bytes =
+        google::cloud::internal::Base64DecodeToBytes(data.sha256);
     if (!key_sha256_bytes) return std::move(key_sha256_bytes).status();
 
     request.mutable_common_object_request_params()->set_encryption_algorithm(
@@ -652,9 +653,10 @@ StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
   if (request.HasOption<storage::SourceEncryptionKey>()) {
     auto data =
         request.template GetOption<storage::SourceEncryptionKey>().value();
-    auto key_bytes = storage::internal::Base64Decode(data.key);
+    auto key_bytes = google::cloud::internal::Base64DecodeToBytes(data.key);
     if (!key_bytes) return std::move(key_bytes).status();
-    auto key_sha256_bytes = storage::internal::Base64Decode(data.sha256);
+    auto key_sha256_bytes =
+        google::cloud::internal::Base64DecodeToBytes(data.sha256);
     if (!key_sha256_bytes) return std::move(key_sha256_bytes).status();
 
     result.set_copy_source_encryption_algorithm(data.algorithm);
@@ -728,9 +730,10 @@ StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
   if (request.HasOption<storage::SourceEncryptionKey>()) {
     auto data =
         request.template GetOption<storage::SourceEncryptionKey>().value();
-    auto key_bytes = storage::internal::Base64Decode(data.key);
+    auto key_bytes = google::cloud::internal::Base64DecodeToBytes(data.key);
     if (!key_bytes) return std::move(key_bytes).status();
-    auto key_sha256_bytes = storage::internal::Base64Decode(data.sha256);
+    auto key_sha256_bytes =
+        google::cloud::internal::Base64DecodeToBytes(data.sha256);
     if (!key_sha256_bytes) return std::move(key_sha256_bytes).status();
 
     result.set_copy_source_encryption_algorithm(data.algorithm);

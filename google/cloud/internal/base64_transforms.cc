@@ -177,6 +177,18 @@ Status ValidateBase64String(std::string const& input) {
   return Base64DecodeGeneric(input, [](unsigned char) {});
 }
 
+std::string Base64Encode(std::string const& str) {
+  google::cloud::internal::Base64Encoder enc;
+  for (auto c : str) enc.PushBack(c);
+  return std::move(enc).FlushAndPad();
+}
+
+std::string Base64Encode(absl::Span<std::uint8_t const> bytes) {
+  google::cloud::internal::Base64Encoder enc;
+  for (auto c : bytes) enc.PushBack(c);
+  return std::move(enc).FlushAndPad();
+}
+
 StatusOr<std::vector<std::uint8_t>> Base64DecodeToBytes(
     std::string const& input) {
   std::vector<std::uint8_t> result;

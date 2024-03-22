@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/write_base64.h"
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include <fstream>
 
 namespace google {
@@ -23,7 +23,7 @@ namespace testing {
 void WriteBase64AsBinary(std::string const& filename, char const* data) {
   std::ofstream os(filename, std::ios::binary);
   os.exceptions(std::ios::badbit);
-  auto bytes = internal::Base64Decode(data).value();
+  auto bytes = google::cloud::internal::Base64DecodeToBytes(data).value();
   for (unsigned char c : bytes) {
     os << c;
   }

@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/connection_factory.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
@@ -367,10 +367,12 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
         GCP_ERROR_INFO());
   }
   internal::SignBlobRequest sign_request(
-      std::move(signing_email), internal::Base64Encode(string_to_sign), {});
+      std::move(signing_email),
+      google::cloud::internal::Base64Encode(string_to_sign), {});
   auto response = connection_->SignBlob(sign_request);
   if (!response) return response.status();
-  auto decoded = internal::Base64Decode(response->signed_blob);
+  auto decoded =
+      google::cloud::internal::Base64DecodeToBytes(response->signed_blob);
   if (!decoded) return std::move(decoded).status();
   return SignBlobResponseRaw{response->key_id, *std::move(decoded)};
 }
@@ -382,7 +384,8 @@ StatusOr<std::string> Client::SignUrlV2(
   if (!signed_blob) return std::move(signed_blob).status();
 
   CurlHandle curl;
-  auto encoded = internal::Base64Encode(signed_blob->signed_blob);
+  auto encoded =
+      google::cloud::internal::Base64Encode(signed_blob->signed_blob);
   std::string signature = curl.MakeEscapedString(encoded).get();
 
   std::ostringstream os;
@@ -432,7 +435,7 @@ StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
   auto signing_email = SigningEmail(signing_account);
 
   auto string_to_sign = request.StringToSign();
-  auto base64_policy = internal::Base64Encode(string_to_sign);
+  auto base64_policy = google::cloud::internal::Base64Encode(string_to_sign);
   auto signed_blob = SignBlobImpl(signing_account, base64_policy);
   if (!signed_blob) {
     return signed_blob.status();
@@ -440,7 +443,7 @@ StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
 
   return PolicyDocumentResult{
       signing_email, request.policy_document().expiration, base64_policy,
-      internal::Base64Encode(signed_blob->signed_blob)};
+      google::cloud::internal::Base64Encode(signed_blob->signed_blob)};
 }
 
 StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
@@ -452,7 +455,7 @@ StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
   auto string_to_sign = request.StringToSign();
   auto escaped = internal::PostPolicyV4Escape(string_to_sign);
   if (!escaped) return escaped.status();
-  auto base64_policy = internal::Base64Encode(*escaped);
+  auto base64_policy = google::cloud::internal::Base64Encode(*escaped);
   auto signed_blob = SignBlobImpl(signing_account, base64_policy);
   if (!signed_blob) {
     return signed_blob.status();

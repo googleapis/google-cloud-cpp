@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc/hmac_key_request_parser.h"
 #include "google/cloud/storage/internal/grpc/hmac_key_metadata_parser.h"
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/base64_transforms.h"
 
 namespace google {
 namespace cloud {
@@ -33,7 +33,8 @@ storage::internal::CreateHmacKeyResponse FromProto(
     google::storage::v2::CreateHmacKeyResponse const& response) {
   storage::internal::CreateHmacKeyResponse result;
   result.metadata = storage_internal::FromProto(response.metadata());
-  result.secret = storage::internal::Base64Encode(response.secret_key_bytes());
+  result.secret =
+      google::cloud::internal::Base64Encode(response.secret_key_bytes());
   return result;
 }
 

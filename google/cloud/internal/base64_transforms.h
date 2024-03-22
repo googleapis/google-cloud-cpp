@@ -17,6 +17,7 @@
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/types/span.h"
 #include <algorithm>
 #include <array>
 #include <cstddef>
@@ -99,8 +100,21 @@ struct Base64Decoder {
 
 Status ValidateBase64String(std::string const& input);
 
+/**
+ * Decodes a Base64-encoded string.
+ */
 StatusOr<std::vector<std::uint8_t>> Base64DecodeToBytes(
     std::string const& input);
+
+/**
+ * Encodes a string using Base64.
+ */
+std::string Base64Encode(std::string const& str);
+
+/**
+ * Encodes a byte array using Base64.
+ */
+std::string Base64Encode(absl::Span<std::uint8_t const> bytes);
 
 /**
  * Returns a Base64-encoded version of @p bytes. Using the URL- and
