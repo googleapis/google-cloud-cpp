@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -228,11 +229,21 @@ struct EnableServerRetriesOption {
 };
 
 /**
+ * An option to inject custom headers into the request.
+ *
+ * For REST endpoints, these headers are added to the HTTP headers. For gRPC
+ * endpoints, these headers are added to the `grpc::ClientContext` metadata.
+ */
+struct CustomHeadersOption {
+  using Type = std::unordered_multimap<std::string, std::string>;
+};
+
+/**
  * A list of all the common options.
  */
 using CommonOptionList =
     OptionList<EndpointOption, UserAgentProductsOption, TracingComponentsOption,
-               UserProjectOption, AuthorityOption>;
+               UserProjectOption, AuthorityOption, CustomHeadersOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

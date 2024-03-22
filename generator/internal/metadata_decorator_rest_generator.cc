@@ -400,6 +400,11 @@ void $metadata_rest_class_name$::SetMetadata(
     rest_context.AddHeader("x-server-timeout",
         ms_rep.insert(ms_rep.size() - 3, "."));
   }
+  if (options.has<google::cloud::CustomHeadersOption>()) {
+    for (auto const& h : options.get<google::cloud::CustomHeadersOption>()) {
+      rest_context.AddHeader(h.first, h.second);
+    }
+  }
 }
 )""");
 
