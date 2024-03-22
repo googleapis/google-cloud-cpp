@@ -18,6 +18,7 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 
 mapfile -t args < <(bazel::common_args)
 for repo_root in "ci/verify_current_targets" "ci/verify_deprecated_targets"; do

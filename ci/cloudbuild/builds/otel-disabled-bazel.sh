@@ -18,6 +18,7 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 
 export CC=clang
 export CXX=clang++
@@ -33,4 +34,4 @@ ignore=(
   # depends on google-cloud-cpp being built with OpenTelemetry.
   "-//google/cloud/opentelemetry/quickstart/..."
 )
-bazel test "${args[@]}" --test_tag_filters=-integration-test -- ... "${ignore[@]}"
+bazel test "${args[@]}" --test_tag_filters=-integration-test -- "${BAZEL_TARGETS[@]}" "${ignore[@]}"

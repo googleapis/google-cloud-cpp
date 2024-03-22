@@ -18,6 +18,7 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 
 rm -fr /h/protobuf && git -C /h clone -q --depth 1 https://github.com/protocolbuffers/protobuf.git
@@ -26,7 +27,7 @@ mapfile -t args < <(bazel::common_args)
 args+=(
   "--override_repository=com_google_protobuf=/h/protobuf"
 )
-bazel test "${args[@]}" --test_tag_filters=-integration-test ...
+bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 
 mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"

@@ -18,7 +18,8 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 
 mapfile -t args < <(bazel::common_args)
 args+=("--config=otel2")
-io::run bazel test "${args[@]}" --test_tag_filters=-integration-test ...
+io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"

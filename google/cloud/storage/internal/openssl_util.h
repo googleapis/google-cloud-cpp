@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/string_view.h"
 #include "absl/types/span.h"
 #include <algorithm>
 #include <cstdint>
@@ -68,14 +67,6 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
  * Decodes a Url-safe Base64-encoded string.
  */
 StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(std::string const& str);
-
-/// Compute the MD5 hash of @p payload
-std::vector<std::uint8_t> MD5Hash(absl::string_view payload);
-
-inline std::vector<std::uint8_t> MD5Hash(char const* payload) {
-  return MD5Hash(payload == nullptr ? absl::string_view{}
-                                    : absl::string_view(payload));
-}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
