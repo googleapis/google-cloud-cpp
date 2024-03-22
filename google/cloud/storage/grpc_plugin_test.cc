@@ -37,18 +37,21 @@ Options TestOptions() {
       .set<EndpointOption>("localhost:1");
 }
 
-TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
+TEST(GrpcPluginTest, MostConfigValuesCreatesGrpc) {
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto client =
-      DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("metadata"));
-  auto impl = ClientImplDetails::GetConnection(client);
-  ASSERT_THAT(impl, NotNull());
-  EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcStub", "StorageConnectionImpl"));
+  // Unless the config is set to "none" we want to create the gRPC stub.
+  for (auto const* config : {"", "metadata", "media", "anything-but-none"}) {
+    auto client =
+        DefaultGrpcClient(TestOptions().set<GrpcPluginOption>(config));
+    auto impl = ClientImplDetails::GetConnection(client);
+    ASSERT_THAT(impl, NotNull());
+    EXPECT_THAT(impl->InspectStackStructure(),
+                ElementsAre("GrpcStub", "StorageConnectionImpl"));
+  }
 }
 
 TEST(GrpcPluginTest, EnvironmentOverrides) {
@@ -89,20 +92,6 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
               ElementsAre("RestStub", "StorageConnectionImpl"));
-}
-
-TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
-  // Explicitly disable logging, which may be enabled by our CI builds.
-  auto logging =
-      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
-  auto config =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto client = DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("media"));
-  auto impl = ClientImplDetails::GetConnection(client);
-  ASSERT_THAT(impl, NotNull());
-  EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcStub", "RestStub", "HybridStub",
-                          "StorageConnectionImpl"));
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
