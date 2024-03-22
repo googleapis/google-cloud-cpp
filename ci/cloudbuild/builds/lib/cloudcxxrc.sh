@@ -38,7 +38,7 @@ function bazel::has_no_tests() {
   shift
   query_expr="$(printf '+ %s' "${BAZEL_TARGETS[@]}")"
   query_expr="tests(${query_expr:2} intersect ${target})"
-  if ! bazel query --noshow_progress "${query_expr}" | grep -q "${target}" ; then
+  if ! bazel query --noshow_progress "${query_expr}" | grep -q "${target}"; then
     return 0
   fi
   return 1
