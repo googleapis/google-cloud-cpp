@@ -18,6 +18,7 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
 source module /ci/lib/io.sh
+source module /ci/cloudbuild/builds/lib/cloudcxxrc.sh
 source module /google/cloud/spanner/ci/lib/spanner_emulator.sh
 
 if [[ $# -lt 2 ]]; then
@@ -30,6 +31,10 @@ shift
 BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
+
+if bazel::has_no_tests "//google/cloud/spanner/..."; then
+  exit 0
+fi
 
 # Run in $HOME because spanner_emulator::start creates unsightly *.log
 # files in the workspace otherwise.

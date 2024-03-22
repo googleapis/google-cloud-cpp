@@ -180,11 +180,6 @@ function integration::bazel_with_emulators() {
     production_tests_tag_filters="integration-test,-no-msan"
   fi
 
-  io::log_h2 "Running integration tests that require production access"
-  bazel "${verb}" "${args[@]}" \
-    --test_tag_filters="${production_tests_tag_filters}" \
-    "${production_integration_tests[@]}"
-
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
@@ -204,6 +199,16 @@ function integration::bazel_with_emulators() {
   io::log_h2 "Running REST integration tests (with emulator)"
   "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+
+  if [[ "${BAZEL_TARGETS[*]}" != "..." ]]; then
+    io::log_h2 "Skipping some integration tests because BAZEL_TARGETS is not the default"
+    return 0
+  fi
+
+  io::log_h2 "Running integration tests that require production access"
+  bazel "${verb}" "${args[@]}" \
+    --test_tag_filters="${production_tests_tag_filters}" \
+    "${production_integration_tests[@]}"
 
   # This test is run separately because the access token changes every time and
   # that would mess up bazel's test cache for all the other tests.

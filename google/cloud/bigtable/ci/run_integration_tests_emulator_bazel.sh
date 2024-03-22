@@ -17,6 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module /ci/cloudbuild/builds/lib/cloudcxxrc.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <bazel-program> [bazel-test-args]"
@@ -28,6 +29,10 @@ shift
 BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
+
+if bazel::has_no_tests "//google/cloud/bigtable/..." "${BAZEL_TARGETS[@]}"; then
+  exit 0
+fi
 
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"

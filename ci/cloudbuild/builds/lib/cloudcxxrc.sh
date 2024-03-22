@@ -20,7 +20,7 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_CLOUDCXXRC_SH__++ != 0)); then
   return 0
 fi # include guard
 
-# Load vuild customizations. Start with the default, then any settings for
+# Load build customizations. Start with the default, then any settings for
 # all workspaces, then the settings for the current workspace.
 #
 # Developers only need to override what changes, keep a configuration file that
@@ -32,3 +32,14 @@ fi
 if [[ -r "${PROJECT_ROOT}/.cloudcxxrc" ]]; then
   source "${PROJECT_ROOT}/.cloudcxxrc"
 fi
+
+function bazel::has_no_tests() {
+  local target=$1
+  shift
+  query_expr="$(printf '+ %s' "${BAZEL_TARGETS[@]}")"
+  query_expr="tests(${query_expr:2} intersect ${target})"
+  if ! bazel query --noshow_progress "${query_expr}" | grep -q "${target}" ; then
+    return 0
+  fi
+  return 1
+}

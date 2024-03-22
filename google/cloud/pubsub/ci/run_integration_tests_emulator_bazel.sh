@@ -17,6 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module /ci/cloudbuild/builds/lib/cloudcxxrc.sh
 source module /google/cloud/pubsub/ci/lib/pubsub_emulator.sh
 
 if [[ $# -lt 1 ]]; then
@@ -29,6 +30,10 @@ shift
 BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
+
+if bazel::has_no_tests "//google/cloud/pubsub/..."; then
+  exit 0
+fi
 
 # These can only run against production
 production_only_targets=(
