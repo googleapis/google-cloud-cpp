@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -27,7 +27,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 
-TEST(OpensslUtilTest, Base64Encode) {
+TEST(Base64, Encode) {
   // Produced input using:
   //     echo 'TG9yZ+W0gaXBz/dW1cMACg==' | openssl base64 -d | od -t x1
   std::vector<std::uint8_t> input{
@@ -38,7 +38,7 @@ TEST(OpensslUtilTest, Base64Encode) {
   EXPECT_EQ("TG9yZ-W0gaXBz_dW1cMACg", UrlsafeBase64Encode(input));
 }
 
-TEST(OpensslUtilTest, Base64Decode) {
+TEST(Base64, Decode) {
   // Produced input using:
   //     echo 'TG9yZ+W0gaXBz/dW1cMACg==' | openssl base64 -d | od -t x1
   std::vector<std::uint8_t> expected{
@@ -51,11 +51,11 @@ TEST(OpensslUtilTest, Base64Decode) {
               ElementsAreArray(expected));
 }
 
-TEST(OpensslUtilTest, Base64Failure) {
+TEST(Base64, Failure) {
   EXPECT_THAT(Base64Decode("xx"), StatusIs(StatusCode::kInvalidArgument));
 }
 
-TEST(OpensslUtilTest, Base64DecodePadding) {
+TEST(Base64, DecodePadding) {
   // Produced input using:
   // cSpell:disable
   // $ echo -n 'A' | openssl base64 -e

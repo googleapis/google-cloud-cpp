@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/well_known_headers.h"
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/internal/sha256_hash.h"
 #include <algorithm>
 #include <iomanip>

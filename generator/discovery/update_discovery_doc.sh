@@ -45,10 +45,17 @@ git add "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
 io::log_h2 "Running generate-libraries with UPDATED_DISCOVERY_DOCUMENT=compute"
 UPDATED_DISCOVERY_DOCUMENT=compute ci/cloudbuild/build.sh -t generate-libraries-pr
 
-if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
+NEW_FILES=$(git ls-files --others --exclude-standard)
+if [[ -n "${NEW_FILES}" ]]; then
   io::log_red "New resources defined in Discovery Document created new protos:"
-  git ls-files --others --exclude-standard
+  echo "${NEW_FILES}"
+  mapfile -t proto_array < <(echo "${NEW_FILES}")
   io::log_red "Add rest_services definitions to the generator_config.textproto and re-run this script."
   git add protos
+  io::log_red "Add new directories to google/cloud/compute/service_dirs.cmake"
+  for i in "${proto_array[@]}"; do
+    service_dir=$(echo "${i}" | sed -En 's/protos\/google\/cloud\/compute\/(.*\/v[[:digit:]]\/).*\.proto/\1/p')
+    echo "    \"${service_dir}\""
+  done
   exit 1
 fi
