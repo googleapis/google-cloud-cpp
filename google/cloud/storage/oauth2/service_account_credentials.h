@@ -26,7 +26,6 @@
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
-#include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"

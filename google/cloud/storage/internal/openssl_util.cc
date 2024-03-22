@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/base64_transforms.h"
-#include "google/cloud/internal/openssl_util.h"
 #ifdef _WIN32
 #include <Windows.h>
 #include <wincrypt.h>

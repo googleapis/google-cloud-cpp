@@ -14,7 +14,7 @@
 
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/base64_transforms.h"
-#include "google/cloud/internal/openssl_util.h"
+#include "google/cloud/internal/pem_signing.h"
 
 namespace google {
 namespace cloud {

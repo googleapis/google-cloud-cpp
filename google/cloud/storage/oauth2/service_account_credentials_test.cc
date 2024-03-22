@@ -20,7 +20,7 @@
 #include "google/cloud/storage/testing/write_base64.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/filesystem.h"
-#include "google/cloud/internal/openssl_util.h"
+#include "google/cloud/internal/pem_signing.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/mock_fake_clock.h"
 #include "google/cloud/testing_util/scoped_environment.h"

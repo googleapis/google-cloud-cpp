@@ -16,7 +16,7 @@
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
-#include "google/cloud/internal/openssl_util.h"
+#include "google/cloud/internal/pem_signing.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/mock_http_payload.h"

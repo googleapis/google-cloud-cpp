@@ -54,7 +54,7 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/oauth2_refreshing_credentials_wrapper.h",
     "internal/oauth2_service_account_credentials.h",
     "internal/oauth2_universe_domain.h",
-    "internal/openssl_util.h",
+    "internal/pem_signing.h",
     "internal/populate_rest_options.h",
     "internal/rest_carrier.h",
     "internal/rest_client.h",
@@ -105,7 +105,7 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/oauth2_refreshing_credentials_wrapper.cc",
     "internal/oauth2_service_account_credentials.cc",
     "internal/oauth2_universe_domain.cc",
-    "internal/openssl_util.cc",
+    "internal/openssl/pem_signing.cc",
     "internal/populate_rest_options.cc",
     "internal/rest_carrier.cc",
     "internal/rest_context.cc",
@@ -117,4 +117,5 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/tracing_rest_client.cc",
     "internal/tracing_rest_response.cc",
     "internal/unified_rest_credentials.cc",
+    "internal/win32/pem_signing.cc",
 ]

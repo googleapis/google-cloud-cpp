@@ -92,8 +92,8 @@ add_library(
     internal/oauth2_service_account_credentials.h
     internal/oauth2_universe_domain.cc
     internal/oauth2_universe_domain.h
-    internal/openssl_util.cc
-    internal/openssl_util.h
+    internal/openssl/pem_signing.cc
+    internal/pem_signing.h
     internal/populate_rest_options.cc
     internal/populate_rest_options.h
     internal/rest_carrier.cc
@@ -119,6 +119,7 @@ add_library(
     internal/tracing_rest_response.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
+    internal/win32/pem_signing.cc
     rest_options.h)
 target_link_libraries(
     google_cloud_cpp_rest_internal

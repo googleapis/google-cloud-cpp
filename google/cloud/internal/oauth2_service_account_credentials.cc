@@ -19,7 +19,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
-#include "google/cloud/internal/openssl_util.h"
+#include "google/cloud/internal/pem_signing.h"
 #include "google/cloud/internal/rest_response.h"
 #include <nlohmann/json.hpp>
 #ifdef _WIN32
