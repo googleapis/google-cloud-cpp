@@ -15,7 +15,7 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/tests/conformance_tests.pb.h"

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/hashing_options.h"
+#include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/md5hash.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/big_endian.h"
 
 namespace google {
