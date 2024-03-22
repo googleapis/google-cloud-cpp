@@ -15,13 +15,8 @@
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/crc32c.h"
-#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
-#ifdef _WIN32
-#include <Windows.h>
-#include <wincrypt.h>
-#endif  // _WIN32
 
 namespace google {
 namespace cloud {
@@ -33,33 +28,6 @@ namespace {
 using ::google::cloud::internal::InvalidArgumentError;
 using ::google::cloud::storage_internal::Crc32c;
 using ::google::cloud::storage_internal::ExtendCrc32c;
-
-#ifdef _WIN32
-MD5HashFunction::ContextPtr CreateMD5HashCtx() {
-  BCRYPT_HASH_HANDLE hHash = nullptr;
-  BCryptCreateHash(BCRYPT_MD5_ALG_HANDLE, &hHash, nullptr, 0, nullptr, 0, 0);
-  return MD5HashFunction::ContextPtr(hHash);
-}
-#else
-MD5HashFunction::ContextPtr CreateDigestCtx() {
-// The name of the function to create and delete EVP_MD_CTX objects changed
-// with OpenSSL 1.1.0.
-#if (OPENSSL_VERSION_NUMBER < 0x10100000L)  // Older than version 1.1.0.
-  return MD5HashFunction::ContextPtr(EVP_MD_CTX_create());
-#else
-  return MD5HashFunction::ContextPtr(EVP_MD_CTX_new());
-#endif
-}
-
-void DeleteDigestCtx(EVP_MD_CTX* context) {
-// The name of the function to free an EVP_MD_CTX changed in OpenSSL 1.1.0.
-#if (OPENSSL_VERSION_NUMBER < 0x10100000L)  // Older than version 1.1.0.
-  EVP_MD_CTX_destroy(context);
-#else
-  EVP_MD_CTX_free(context);
-#endif  // OPENSSL_VERSION_NUMBER >= 0x10100000L
-}
-#endif  // _WIN32
 
 template <typename Buffer>
 bool AlreadyHashed(std::int64_t offset, Buffer const& buffer,
@@ -154,61 +122,6 @@ Status MD5HashFunction::Update(std::int64_t offset, absl::Cord const& buffer,
   if (AlreadyHashed(offset, buffer, minimum_offset_)) return {};
   return InvalidArgumentError("mismatched offset", GCP_ERROR_INFO());
 }
-
-#ifdef _WIN32
-static_assert(std::is_same_v<MD5Context, BCRYPT_HASH_HANDLE>,
-              "MD5Context is not the same type as BCRYPT_HASH_HANDLE");
-
-MD5HashFunction::MD5HashFunction() : impl_(CreateMD5HashCtx()) {}
-
-void MD5HashFunction::Update(absl::string_view buffer) {
-  BCryptHashData(impl_.get(),
-                 reinterpret_cast<PUCHAR>(const_cast<char*>(buffer.data())),
-                 static_cast<ULONG>(buffer.size()), 0);
-}
-
-HashValues MD5HashFunction::Finish() {
-  if (hashes_.has_value()) return *hashes_;
-  // (8 bits per byte) * 16 bytes = 128 bits
-  std::array<std::uint8_t, 16> hash;
-  BCryptFinishHash(impl_.get(), reinterpret_cast<PUCHAR>(hash.data()),
-                   static_cast<ULONG>(hash.size()), 0);
-  hashes_ = HashValues{/*.crc32c=*/{}, /*.md5=*/Base64Encode(hash)};
-  return *hashes_;
-}
-
-void MD5HashFunction::ContextDeleter::operator()(MD5Context context) {
-  BCryptDestroyHash(context);
-}
-#else
-MD5HashFunction::MD5HashFunction() : impl_(CreateDigestCtx()) {
-  EVP_DigestInit_ex(impl_.get(), EVP_md5(), nullptr);
-}
-
-void MD5HashFunction::Update(absl::string_view buffer) {
-  EVP_DigestUpdate(impl_.get(), buffer.data(), buffer.size());
-}
-
-HashValues MD5HashFunction::Finish() {
-  if (hashes_.has_value()) return *hashes_;
-  std::vector<std::uint8_t> hash(EVP_MD_size(EVP_md5()));
-  unsigned int len = 0;
-  // Note: EVP_DigestFinal_ex() consumes an `unsigned char*` for the output
-  // array.  On some platforms (read PowerPC and ARM), the default `char` is
-  // unsigned. In those platforms it is possible that
-  // `std::uint8_t != unsigned char` and the `reinterpret_cast<>` is needed. It
-  // should be safe in any case.
-  EVP_DigestFinal_ex(impl_.get(), reinterpret_cast<unsigned char*>(hash.data()),
-                     &len);
-  hash.resize(len);
-  hashes_ = HashValues{/*.crc32c=*/{}, /*.md5=*/Base64Encode(hash)};
-  return *hashes_;
-}
-
-void MD5HashFunction::ContextDeleter::operator()(MD5Context context) {
-  DeleteDigestCtx(context);
-}
-#endif
 
 void Crc32cHashFunction::Update(absl::string_view buffer) {
   current_ = ExtendCrc32c(current_, buffer);

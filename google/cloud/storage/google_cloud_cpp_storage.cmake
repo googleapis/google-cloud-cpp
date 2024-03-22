@@ -157,6 +157,7 @@ add_library(
     internal/object_requests.h
     internal/object_write_streambuf.cc
     internal/object_write_streambuf.h
+    internal/openssl/hash_function_impl.cc
     internal/patch_builder.cc
     internal/patch_builder.h
     internal/patch_builder_details.cc
@@ -189,6 +190,7 @@ add_library(
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
     internal/well_known_parameters_impl.h
+    internal/win32/hash_function_impl.cc
     lifecycle_rule.cc
     lifecycle_rule.h
     list_buckets_reader.cc
