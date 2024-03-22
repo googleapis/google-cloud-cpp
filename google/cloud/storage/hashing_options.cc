@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/crc32c.h"
+#include "google/cloud/storage/internal/md5hash.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/big_endian.h"
 
@@ -23,7 +24,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string ComputeMD5Hash(absl::string_view payload) {
-  return internal::Base64Encode(internal::MD5Hash(payload));
+  return internal::Base64Encode(storage_internal::MD5Hash(payload));
 }
 
 std::string ComputeMD5Hash(std::string const& payload) {
