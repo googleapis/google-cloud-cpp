@@ -55,7 +55,7 @@ if [[ -n "${NEW_FILES}" ]]; then
   io::log_red "Add new directories to google/cloud/compute/service_dirs.cmake"
   for i in "${proto_array[@]}"; do
     service_dir=$(echo "${i}" | sed -En 's/protos\/google\/cloud\/compute\/(.*\/v[[:digit:]]\/).*\.proto/\1/p')
-    echo "\"${service_dir}\""
+    echo "    \"${service_dir}\""
   done
   exit 1
 fi
