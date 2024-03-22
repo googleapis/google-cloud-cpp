@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -67,6 +68,8 @@ struct UserAgentProductsOption {
  *
  * - rpc
  * - rpc-streams
+ *
+ * @ingroup options
  */
 struct TracingComponentsOption {
   using Type = std::set<std::string>;
@@ -222,9 +225,23 @@ struct ProxyOption {
  *
  * For example, the server may know it is safe to retry a non-idempotent
  * request, or safe to retry a status code that is typically a permanent error.
+ *
+ * @ingroup options
  */
 struct EnableServerRetriesOption {
   using Type = bool;
+};
+
+/**
+ * An option to inject custom headers into the request.
+ *
+ * For REST endpoints, these headers are added to the HTTP headers. For gRPC
+ * endpoints, these headers are added to the `grpc::ClientContext` metadata.
+ *
+ * @ingroup options
+ */
+struct CustomHeadersOption {
+  using Type = std::unordered_multimap<std::string, std::string>;
 };
 
 /**
@@ -232,7 +249,7 @@ struct EnableServerRetriesOption {
  */
 using CommonOptionList =
     OptionList<EndpointOption, UserAgentProductsOption, TracingComponentsOption,
-               UserProjectOption, AuthorityOption>;
+               UserProjectOption, AuthorityOption, CustomHeadersOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

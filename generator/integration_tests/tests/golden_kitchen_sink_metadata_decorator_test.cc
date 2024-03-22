@@ -45,6 +45,7 @@ using ::testing::Contains;
 using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
 class MetadataDecoratorTest : public ::testing::Test {
@@ -130,6 +131,54 @@ TEST_F(MetadataDecoratorTest, UserProject) {
     google::test::admin::database::v1::GenerateAccessTokenRequest request;
     auto status = stub.GenerateAccessToken(
         context, Options{}.set<UserProjectOption>("test-user-project"),
+        request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+}
+
+TEST_F(MetadataDecoratorTest, CustomHeaders) {
+  // We use knowledge of the implementation to assert that testing a single RPC
+  // is sufficient.
+  EXPECT_CALL(*mock_, GenerateAccessToken)
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       google::test::admin::database::v1::
+                           GenerateAccessTokenRequest const&) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, ::testing::UnorderedElementsAre(
+                                  Pair("x-goog-request-params", _),
+                                  Pair("x-goog-api-client", _)));
+        return TransientError();
+      })
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       google::test::admin::database::v1::
+                           GenerateAccessTokenRequest const&) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(Pair("x-goog-request-params", _),
+                                         Pair("x-goog-api-client", _),
+                                         Pair("header-key0", "header-value0"),
+                                         Pair("header-key1", "header-value1"),
+                                         Pair("header-key1", "header-value2")));
+        return TransientError();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_, {});
+  // First try without any CustomHeadersOption
+  {
+    grpc::ClientContext context;
+    google::test::admin::database::v1::GenerateAccessTokenRequest request;
+    auto status = stub.GenerateAccessToken(context, Options{}, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+  // Then try with a CustomHeadersOption
+  {
+    grpc::ClientContext context;
+    google::test::admin::database::v1::GenerateAccessTokenRequest request;
+    auto status = stub.GenerateAccessToken(
+        context,
+        Options{}.set<CustomHeadersOption>({{"header-key0", "header-value0"},
+                                            {"header-key1", "header-value1"},
+                                            {"header-key1", "header-value2"}}),
         request);
     EXPECT_EQ(TransientError(), status.status());
   }

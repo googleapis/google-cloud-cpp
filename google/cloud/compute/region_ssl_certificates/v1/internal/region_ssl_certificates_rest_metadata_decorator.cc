@@ -117,16 +117,17 @@ void RegionSslCertificatesRestMetadata::SetMetadata(
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());
   }
-  if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader("x-goog-quota-user",
-                           options.get<google::cloud::QuotaUserOption>());
+  if (options.has<QuotaUserOption>()) {
+    rest_context.AddHeader("x-goog-quota-user", options.get<QuotaUserOption>());
   }
-  if (options.has<google::cloud::ServerTimeoutOption>()) {
+  if (options.has<ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
-        absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-                  absl::kZeroPad4));
+        absl::Dec(options.get<ServerTimeoutOption>().count(), absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
                            ms_rep.insert(ms_rep.size() - 3, "."));
+  }
+  for (auto const& h : options.get<CustomHeadersOption>()) {
+    rest_context.AddHeader(h.first, h.second);
   }
 }
 
