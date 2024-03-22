@@ -46,16 +46,6 @@ std::string Base64Encode(std::string const& str);
 std::string Base64Encode(absl::Span<std::uint8_t const> bytes);
 
 /**
- * Signs a string with the private key from a PEM container.
- *
- * @return Returns the signature as an *unencoded* byte array. The caller
- *   might want to use `Base64Encode()` or `HexEncode()` to convert this byte
- *   array to a format more suitable for transmission over HTTP.
- */
-StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
-    std::string const& str, std::string const& pem_content);
-
-/**
  * Returns a Base64-encoded version of @p bytes. Using the URL- and
  * filesystem-safe alphabet, making these adjustments:
  * -  Replace '+' with '-'
