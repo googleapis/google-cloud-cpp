@@ -19,8 +19,8 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
-#include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/internal/rest_response.h"
+#include "google/cloud/internal/sign_using_sha256.h"
 #include <nlohmann/json.hpp>
 #include <openssl/err.h>
 #include <openssl/pem.h>

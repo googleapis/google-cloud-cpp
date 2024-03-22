@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/openssl_util.h"
+#include "google/cloud/internal/sign_using_sha256.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include <openssl/bio.h>
 #include <openssl/buffer.h>

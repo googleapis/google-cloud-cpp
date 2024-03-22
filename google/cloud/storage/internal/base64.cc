@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/internal/base64_transforms.h"
-#include "google/cloud/internal/openssl_util.h"
+#include "google/cloud/internal/sign_using_sha256.h"
 #include <memory>
 
 namespace google {

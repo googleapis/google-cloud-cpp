@@ -90,8 +90,6 @@ add_library(
     internal/oauth2_service_account_credentials.h
     internal/oauth2_universe_domain.cc
     internal/oauth2_universe_domain.h
-    internal/openssl_util.cc
-    internal/openssl_util.h
     internal/populate_rest_options.cc
     internal/populate_rest_options.h
     internal/rest_carrier.cc
@@ -109,6 +107,8 @@ add_library(
     internal/rest_response.cc
     internal/rest_response.h
     internal/rest_retry_loop.h
+    internal/sign_using_sha256.cc
+    internal/sign_using_sha256.h
     internal/tracing_http_payload.cc
     internal/tracing_http_payload.h
     internal/tracing_rest_client.cc

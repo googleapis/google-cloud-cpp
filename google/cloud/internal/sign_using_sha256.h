@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SIGN_USING_SHA256_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SIGN_USING_SHA256_H
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -41,4 +41,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SIGN_USING_SHA256_H
