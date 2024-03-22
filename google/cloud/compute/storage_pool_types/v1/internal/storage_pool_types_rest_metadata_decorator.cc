@@ -89,6 +89,11 @@ void StoragePoolTypesRestMetadata::SetMetadata(
     rest_context.AddHeader("x-server-timeout",
                            ms_rep.insert(ms_rep.size() - 3, "."));
   }
+  if (options.has<google::cloud::CustomHeadersOption>()) {
+    for (auto const& h : options.get<google::cloud::CustomHeadersOption>()) {
+      rest_context.AddHeader(h.first, h.second);
+    }
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

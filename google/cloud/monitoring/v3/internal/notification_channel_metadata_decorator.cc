@@ -158,6 +158,11 @@ void NotificationChannelServiceMetadata::SetMetadata(
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);
+  if (options.has<google::cloud::CustomHeadersOption>()) {
+    for (auto const& h : options.get<google::cloud::CustomHeadersOption>()) {
+      context.AddMetadata(h.first, h.second);
+    }
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
