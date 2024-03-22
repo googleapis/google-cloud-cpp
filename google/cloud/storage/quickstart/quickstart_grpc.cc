@@ -24,9 +24,6 @@ int main(int argc, char* argv[]) {
   }
   std::string const bucket_name = argv[1];
 
-  // Create aliases to make the code easier to read.
-  namespace gcs = ::google::cloud::storage;
-
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
   auto client = google::cloud::storage_experimental::DefaultGrpcClient();
