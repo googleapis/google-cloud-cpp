@@ -22,6 +22,13 @@
 #include <memory>
 #include <string>
 
+#ifdef _WIN32
+typedef void* MD5Context;
+#else
+#include <openssl/evp.h>
+typedef EVP_MD_CTX* MD5Context;
+#endif  // _WIN32
+
 namespace google {
 namespace cloud {
 namespace storage {
@@ -88,11 +95,14 @@ class MD5HashFunction : public HashFunction {
   HashValues Finish() override;
 
   struct ContextDeleter {
-    void operator()(void*);
+    void operator()(MD5Context);
   };
 
+  using ContextPtr =
+      std::unique_ptr<std::remove_pointer_t<MD5Context>, ContextDeleter>;
+
  private:
-  std::unique_ptr<void, ContextDeleter> impl_;
+  ContextPtr impl_;
   std::int64_t minimum_offset_ = 0;
   absl::optional<HashValues> hashes_;
 };
