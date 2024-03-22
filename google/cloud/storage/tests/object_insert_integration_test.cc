@@ -55,7 +55,9 @@ class ObjectInsertIntegrationTest
       // actually performs multiple operations against production.
       std::string const env = GetParam();
       if (UsingGrpc() && env == kP12EnvVar) {
-        // TODO(#5116): gRPC doesn't support PKCS #12 keys.
+        // gRPC does not support PKCS #12 keys, nor are we planning to support
+        // them. See https://github.com/googleapis/google-cloud-cpp/issues/5116
+        // for more details.
         GTEST_SKIP() << "Skipping because gRPC doesn't support PKCS #12 keys";
       }
       auto value = google::cloud::internal::GetEnv(env.c_str()).value_or("");
