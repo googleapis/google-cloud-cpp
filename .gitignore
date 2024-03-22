@@ -31,3 +31,6 @@ cmake-build-*/
 # `google-cloud-cpp` developers use this file to configure the development
 # workflow build.
 .cloudcxxrc
+
+# Ignore the file with user-defined CMake presets
+CMakeUserPresets.json
