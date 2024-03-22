@@ -33,6 +33,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::internal::InvalidArgumentError;
+using ::google::cloud::storage_internal::Crc32c;
 using ::google::cloud::storage_internal::ExtendCrc32c;
 
 using ContextPtr = std::unique_ptr<void, MD5HashFunction::ContextDeleter>;
@@ -278,6 +279,43 @@ Status PrecomputedHashFunction::Update(std::int64_t /*offset*/,
 }
 
 HashValues PrecomputedHashFunction::Finish() { return precomputed_hash_; }
+
+std::string Crc32cMessageHashFunction::Name() const {
+  return "crc32c-message(" + child_->Name() + ")";
+}
+
+void Crc32cMessageHashFunction::Update(absl::string_view buffer) {
+  return child_->Update(buffer);
+}
+
+Status Crc32cMessageHashFunction::Update(std::int64_t offset,
+                                         absl::string_view buffer) {
+  return child_->Update(offset, buffer);
+}
+
+Status Crc32cMessageHashFunction::Update(std::int64_t offset,
+                                         absl::string_view buffer,
+                                         std::uint32_t buffer_crc) {
+  if (Crc32c(buffer) != buffer_crc) {
+    // No need to update the child, this is an error that should stop any
+    // download.
+    return InvalidArgumentError("mismatched crc32c checksum", GCP_ERROR_INFO());
+  }
+  return child_->Update(offset, buffer, buffer_crc);
+}
+
+Status Crc32cMessageHashFunction::Update(std::int64_t offset,
+                                         absl::Cord const& buffer,
+                                         std::uint32_t buffer_crc) {
+  if (Crc32c(buffer) != buffer_crc) {
+    // No need to update the child, this is an error that should stop any
+    // download.
+    return InvalidArgumentError("mismatched crc32c checksum", GCP_ERROR_INFO());
+  }
+  return child_->Update(offset, buffer, buffer_crc);
+}
+
+HashValues Crc32cMessageHashFunction::Finish() { return child_->Finish(); }
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

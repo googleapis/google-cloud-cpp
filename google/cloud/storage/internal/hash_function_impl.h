@@ -145,6 +145,48 @@ class PrecomputedHashFunction : public HashFunction {
   HashValues precomputed_hash_;
 };
 
+/**
+ * Validates per-message CRC32C checksums and delegates the full hashing
+ * computation.
+ *
+ * When performing downloads over gRPC the payload has per-message CRC32C
+ * checksums. We want to validate these checksums as the data is downloaded. The
+ * service may also return full object checksums. We can compose the per-message
+ * checksums to compute the full object checksums and validate this against the
+ * returned values. When the download range is not a full object download we do
+ * not want to compute the range checksum because the service will not return
+ * a value, so there is nothing to compare.
+ *
+ * Composing this class with a normal `Crc32cHashFunction` works well for full
+ * downloads. This class validates each message, the `Crc32cHashFunction`
+ * composes the checksums without reading all the data again.
+ *
+ * Composing this class with `NullHashFunction` works well for partial
+ * downloads. This class validates each message, and we do not waste CPU trying
+ * to compute the checksum for the partial download.
+ */
+class Crc32cMessageHashFunction : public HashFunction {
+ public:
+  explicit Crc32cMessageHashFunction(std::unique_ptr<HashFunction> child)
+      : child_(std::move(child)) {}
+
+  Crc32cMessageHashFunction(Crc32cMessageHashFunction const&) = delete;
+  Crc32cMessageHashFunction& operator=(Crc32cMessageHashFunction const&) =
+      delete;
+
+  std::string Name() const override;
+  void Update(absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer,
+                std::uint32_t buffer_crc) override;
+  Status Update(std::int64_t offset, absl::Cord const& buffer,
+                std::uint32_t buffer_crc) override;
+  HashValues Finish() override;
+
+ private:
+  std::unique_ptr<HashFunction> child_;
+};
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

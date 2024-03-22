@@ -38,6 +38,10 @@ class AckHandlerWrapper : public pubsub::AckHandler::Impl {
   void ack() override;
   void nack() override;
   std::int32_t delivery_attempt() const override;
+  std::string ack_id() override { return impl_->ack_id(); };
+  pubsub::Subscription subscription() const override {
+    return impl_->subscription();
+  };
 
  private:
   std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> impl_;

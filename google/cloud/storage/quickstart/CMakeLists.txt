@@ -34,3 +34,7 @@ target_link_libraries(quickstart google-cloud-cpp::storage)
 add_executable(quickstart_grpc EXCLUDE_FROM_ALL quickstart_grpc.cc)
 target_link_libraries(quickstart_grpc
                       google-cloud-cpp::experimental-storage_grpc)
+
+add_executable(quickstart_async EXCLUDE_FROM_ALL quickstart_async.cc)
+target_link_libraries(quickstart_async
+                      google-cloud-cpp::experimental-storage_grpc)

@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
+#include "google/cloud/storage/internal/async/read_payload_impl.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -52,15 +55,29 @@ future<ReadResponse> AsyncReaderConnectionResume::Read(
 
 future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
   if (absl::holds_alternative<storage_experimental::ReadPayload>(r)) {
-    auto const& response = absl::get<storage_experimental::ReadPayload>(r);
+    auto response = absl::get<storage_experimental::ReadPayload>(std::move(r));
+    hash_validator_->ProcessHashValues(
+        ReadPayloadImpl::GetObjectHashes(response).value_or(
+            storage::internal::HashValues{}));
     received_bytes_ += response.size();
     if (response.metadata().has_value() && !generation_.has_value()) {
       generation_ = storage::Generation(response.metadata()->generation());
     }
-    return make_ready_future(std::move(r));
+    return make_ready_future(ReadResponse(std::move(response)));
   }
   auto const& status = absl::get<Status>(r);
-  if (status.ok() || resume_policy_->OnFinish(status) == ResumePolicy::kStop) {
+  if (status.ok()) {
+    // The download finished. Validate the hash results, if any.
+    auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
+    if (!result.is_mismatch) return make_ready_future(std::move(r));
+    return make_ready_future(ReadResponse(internal::InvalidArgumentError(
+        absl::StrCat("mismatched checksums detected at the end of the "
+                     "download, received={",
+                     FormatReceivedHashes(result), "}, computed={",
+                     FormatComputedHashes(result), "}"),
+        GCP_ERROR_INFO())));
+  }
+  if (resume_policy_->OnFinish(status) == ResumePolicy::kStop) {
     return make_ready_future(std::move(r));
   }
   return Reconnect();

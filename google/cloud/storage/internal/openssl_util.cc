@@ -45,11 +45,6 @@ std::string Base64Encode(absl::Span<std::uint8_t const> bytes) {
   return std::move(enc).FlushAndPad();
 }
 
-StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
-    std::string const& str, std::string const& pem_contents) {
-  return google::cloud::internal::SignUsingSha256(str, pem_contents);
-}
-
 StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(
     std::string const& str) {
   if (str.empty()) return std::vector<std::uint8_t>{};

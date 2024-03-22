@@ -132,6 +132,8 @@ else ()
         internal/grpc/object_request_parser.h
         internal/grpc/owner_parser.cc
         internal/grpc/owner_parser.h
+        internal/grpc/scale_stall_timeout.cc
+        internal/grpc/scale_stall_timeout.h
         internal/grpc/service_account_parser.cc
         internal/grpc/service_account_parser.h
         internal/grpc/sign_blob_request_parser.cc
@@ -142,8 +144,6 @@ else ()
         internal/grpc/stub.h
         internal/grpc/synthetic_self_link.cc
         internal/grpc/synthetic_self_link.h
-        internal/hybrid_stub.cc
-        internal/hybrid_stub.h
         internal/storage_auth_decorator.cc
         internal/storage_auth_decorator.h
         internal/storage_logging_decorator.cc
@@ -343,6 +343,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc/object_read_source_test.cc
         internal/grpc/object_request_parser_test.cc
         internal/grpc/owner_parser_test.cc
+        internal/grpc/scale_stall_timeout_test.cc
         internal/grpc/service_account_parser_test.cc
         internal/grpc/sign_blob_request_parser_test.cc
         internal/grpc/split_write_object_data_test.cc

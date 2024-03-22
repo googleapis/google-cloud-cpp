@@ -84,7 +84,8 @@ class AsyncConnectionImpl
   AsyncReaderConnectionFactory MakeReaderConnectionFactory(
       google::cloud::internal::ImmutableOptions current,
       google::cloud::storage_experimental::ReadObjectRequest request,
-      google::storage::v2::ReadObjectRequest proto_request);
+      google::storage::v2::ReadObjectRequest proto_request,
+      std::shared_ptr<storage::internal::HashFunction> hash_function);
 
  private:
   std::weak_ptr<AsyncConnectionImpl> WeakFromThis() {

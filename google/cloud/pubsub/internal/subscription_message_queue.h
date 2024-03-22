@@ -71,7 +71,7 @@ class SubscriptionMessageQueue
                                      std::move(source)));
   }
 
-  void Start(MessageCallback cb) override;
+  void Start(std::shared_ptr<BatchCallback> cb) override;
   void Shutdown() override;
   void Read(std::size_t max_callbacks) override;
   future<Status> AckMessage(std::string const& ack_id) override;
@@ -101,7 +101,7 @@ class SubscriptionMessageQueue
                          std::deque<google::pubsub::v1::ReceivedMessage>>;
 
   std::mutex mu_;
-  MessageCallback callback_;
+  std::shared_ptr<BatchCallback> callback_;
   bool shutdown_ = false;
   std::size_t available_slots_ = 0;
   std::deque<google::pubsub::v1::ReceivedMessage> runnable_messages_;

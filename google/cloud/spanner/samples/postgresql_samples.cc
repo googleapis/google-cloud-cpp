@@ -1159,7 +1159,7 @@ void SampleBanner(std::string const& name) {
   GCP_LOG(DEBUG) << "Running " << name << " sample";
 }
 
-int RunAll() {
+int RunAll(bool emulator) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
   auto const project_id =
@@ -1217,8 +1217,10 @@ int RunAll() {
     SampleBanner("spanner_postgresql_update_dml_returning");
     samples::UpdateUsingDmlReturning(client);
 
-    SampleBanner("spanner_postgresql_insert_dml_returning");
-    samples::InsertUsingDmlReturning(client);
+    if (!emulator) {
+      SampleBanner("spanner_postgresql_insert_dml_returning");
+      samples::InsertUsingDmlReturning(client);
+    }
 
     SampleBanner("spanner_postgresql_delete_dml_returning");
     samples::DeleteUsingDmlReturning(client);
@@ -1266,14 +1268,16 @@ int RunAll() {
     SampleBanner("spanner_postgresql_jsonb_query_parameter");
     samples::JsonbQueryWithParameter(client);
 
-    SampleBanner("spanner_postgresql_create_sequence");
-    samples::CreateSequence(database_admin_client, database, client);
+    if (!emulator) {
+      SampleBanner("spanner_postgresql_create_sequence");
+      samples::CreateSequence(database_admin_client, database, client);
 
-    SampleBanner("spanner_postgresql_alter_sequence");
-    samples::AlterSequence(database_admin_client, database, client);
+      SampleBanner("spanner_postgresql_alter_sequence");
+      samples::AlterSequence(database_admin_client, database, client);
 
-    SampleBanner("spanner_postgresql_drop_sequence");
-    samples::DropSequence(database_admin_client, database);
+      SampleBanner("spanner_postgresql_drop_sequence");
+      samples::DropSequence(database_admin_client, database);
+    }
   } catch (...) {
     // Try to clean up after a failure.
     samples::DropDatabase(database_admin_client, database);
@@ -1286,18 +1290,22 @@ int RunAll() {
   return 0;
 }
 
+bool AutoRun() {
+  return google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+             .value_or("") == "yes";
+}
+
+bool Emulator() {
+  return google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
+}
+
 }  // namespace
 
 int main(int ac, char* av[]) try {
-  auto const* const emulator_host = "SPANNER_EMULATOR_HOST";
-  if (google::cloud::internal::GetEnv(emulator_host).has_value()) {
-    return 0;  // emulator does not support PostgreSQL dialect
+  if (AutoRun()) {
+    return RunAll(Emulator());
   }
-  auto const* const auto_run = "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES";
-  if (google::cloud::internal::GetEnv(auto_run).value_or("") == "yes") {
-    return RunAll();
-  }
-  std::string program(ac ? (ac--, *av++) : "pg_samples");
+  std::string program(ac ? (ac--, *av++) : "postgresql_samples");
   auto extra_help =
       "\nUse \"" + program + " help\" to list the available commands.";
   if (ac == 0) {

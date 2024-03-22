@@ -25,6 +25,7 @@
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
+#include "google/cloud/universe_domain_options.h"
 #include "absl/algorithm/container.h"
 #include "absl/strings/str_split.h"
 #include <chrono>
@@ -145,6 +146,10 @@ Options HandleUniverseDomain(Options opts) {
 
 Options DefaultOptions(Options opts) {
   using ::google::cloud::internal::GetEnv;
+  auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
+  if (ud && !ud->empty()) {
+    opts.set<google::cloud::internal::UniverseDomainOption>(*std::move(ud));
+  }
 
   if (opts.has<EndpointOption>()) {
     auto const& ep = opts.get<EndpointOption>();
@@ -160,8 +165,7 @@ Options DefaultOptions(Options opts) {
   }
 
   auto const direct_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
-          .value_or("");
+      GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH").value_or("");
   if (absl::c_any_of(absl::StrSplit(direct_path, ','),
                      [](absl::string_view v) { return v == "bigtable"; })) {
     opts.set<DataEndpointOption>(
@@ -230,11 +234,6 @@ Options DefaultDataOptions(Options opts) {
   if (tracing && !tracing->empty()) {
     opts.set<OpenTelemetryTracingOption>(true);
   }
-  if (!opts.has<AuthorityOption>()) {
-    auto ep = google::cloud::internal::UniverseDomainEndpoint(
-        "bigtable.googleapis.com", opts);
-    opts.set<AuthorityOption>(std::move(ep));
-  }
   if (!opts.has<bigtable::DataRetryPolicyOption>()) {
     opts.set<bigtable::DataRetryPolicyOption>(
         bigtable::DataLimitedTimeRetryPolicy(
@@ -255,6 +254,11 @@ Options DefaultDataOptions(Options opts) {
     opts.set<EnableServerRetriesOption>(true);
   }
   opts = DefaultOptions(std::move(opts));
+  if (!opts.has<AuthorityOption>()) {
+    auto ep = google::cloud::internal::UniverseDomainEndpoint(
+        "bigtable.googleapis.com", opts);
+    opts.set<AuthorityOption>(std::move(ep));
+  }
   return opts.set<EndpointOption>(opts.get<DataEndpointOption>());
 }
 

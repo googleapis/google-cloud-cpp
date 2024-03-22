@@ -242,7 +242,9 @@ TEST_F(InstanceAdminClientRestTest, InstanceCRUDOperations) {
                                      .SetNodeCount(2)
                                      .Build())
                  .get();
-  if (!Emulator() || instance) {
+  if (Emulator()) {
+    EXPECT_THAT(instance, StatusIs(StatusCode::kInternal));
+  } else {
     EXPECT_STATUS_OK(instance);
     if (instance) {
       EXPECT_EQ(instance->display_name(), "New display name");

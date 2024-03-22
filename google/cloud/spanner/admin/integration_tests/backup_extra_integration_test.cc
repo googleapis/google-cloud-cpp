@@ -378,7 +378,7 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithFutureVersionTime) {
 
 /// @test Tests backup/restore with Customer Managed Encryption Key
 TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
-  if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
+  if (!RunSlowBackupTests()) GTEST_SKIP();
 
   auto instance_id = spanner_testing::PickRandomInstance(
       generator_, ProjectId(),
@@ -389,6 +389,10 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
   Instance in(ProjectId(), *instance_id);
 
   auto location = spanner_testing::InstanceLocation(in);
+  if (Emulator()) {
+    EXPECT_THAT(location, StatusIs(StatusCode::kUnavailable));
+    return;
+  }
   ASSERT_STATUS_OK(location);
   KmsKeyName encryption_key(in.project_id(), *location, kKeyRing, kKeyName);
 

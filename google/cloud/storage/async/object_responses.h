@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/headers_map.h"
 #include "google/cloud/storage/internal/async/read_payload_fwd.h"
+#include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
 #include "absl/strings/cord.h"
@@ -122,6 +123,8 @@ class ReadPayload {
   std::int64_t offset_ = 0;
   absl::optional<storage::ObjectMetadata> metadata_;
   storage::HeadersMap headers_;
+  // The full object checksums (aka hash values), if known.
+  absl::optional<storage::internal::HashValues> object_hash_values_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

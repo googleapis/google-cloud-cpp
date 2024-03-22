@@ -87,10 +87,6 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
     spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
   }
 
-  static bool EmulatorUnimplemented(Status const& status) {
-    return UsingEmulator() && status.code() == StatusCode::kUnimplemented;
-  }
-
   static std::unique_ptr<Client> client_;
 };
 
@@ -107,7 +103,6 @@ class PgClientIntegrationTest
   }
 
   void SetUp() override {
-    if (UsingEmulator()) return;
     auto commit_result = client_->Commit(
         Mutations{MakeDeleteMutation("Singers", KeySet::All())},
         Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE));
@@ -479,7 +474,9 @@ TEST_F(ClientIntegrationTest, CommitAtLeastOnceBatched) {
   auto commit_results = client_->CommitAtLeastOnce(std::move(mutation_groups));
   std::map<std::size_t, StatusOr<Timestamp>> results;
   for (auto& commit_result : commit_results) {
-    if (results.empty() && EmulatorUnimplemented(commit_result.status())) {
+    if (UsingEmulator()) {
+      EXPECT_THAT(commit_result, StatusIs(StatusCode::kUnimplemented));
+      EXPECT_THAT(results, IsEmpty());
       GTEST_SKIP();
     }
     ASSERT_THAT(commit_result, IsOk());
@@ -1111,10 +1108,8 @@ TEST_F(ClientIntegrationTest, AnalyzeSql) {
 
   // This returns a ExecutionPlan without executing the query.
   auto plan = client_->AnalyzeSql(std::move(txn), std::move(sql));
-  if (!EmulatorUnimplemented(plan.status())) {
-    ASSERT_STATUS_OK(plan);
-    EXPECT_GT(plan->plan_nodes_size(), 0);
-  }
+  ASSERT_STATUS_OK(plan);
+  EXPECT_GT(plan->plan_nodes_size(), 0);
 }
 
 TEST_F(ClientIntegrationTest, ProfileQuery) {
@@ -1132,7 +1127,9 @@ TEST_F(ClientIntegrationTest, ProfileQuery) {
   EXPECT_GT(stats->size(), 0);
 
   auto plan = rows.ExecutionPlan();
-  if (!UsingEmulator() || plan) {
+  if (UsingEmulator()) {
+    EXPECT_FALSE(plan);
+  } else {
     ASSERT_TRUE(plan);
     EXPECT_GT(plan->plan_nodes_size(), 0);
   }
@@ -1160,10 +1157,8 @@ TEST_F(ClientIntegrationTest, ProfileDml) {
   EXPECT_GT(stats->size(), 0);
 
   auto plan = profile_result.ExecutionPlan();
-  if (!UsingEmulator() || plan) {
-    ASSERT_TRUE(plan);
-    EXPECT_GT(plan->plan_nodes_size(), 0);
-  }
+  ASSERT_TRUE(plan);
+  EXPECT_GT(plan->plan_nodes_size(), 0);
 }
 
 /// @test Verify database_dialect is returned in information schema.
@@ -1175,11 +1170,7 @@ TEST_F(ClientIntegrationTest, DatabaseDialect) {
       )"""));
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (UsingEmulator()) {
-      EXPECT_THAT(row, AnyOf(IsOk(), StatusIs(StatusCode::kInvalidArgument)));
-    } else {
-      EXPECT_THAT(row, IsOk());
-    }
+    EXPECT_THAT(row, IsOk());
     if (!row) break;
     EXPECT_EQ("GOOGLE_STANDARD_SQL", std::get<0>(*row));
   }
@@ -1194,11 +1185,7 @@ TEST_F(PgClientIntegrationTest, DatabaseDialect) {
       )"""));
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (UsingEmulator()) {
-      EXPECT_THAT(row, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
-    } else {
-      EXPECT_THAT(row, IsOk());
-    }
+    EXPECT_THAT(row, IsOk());
     if (!row) break;
     EXPECT_EQ("POSTGRESQL", std::get<0>(*row));
   }
@@ -1206,7 +1193,6 @@ TEST_F(PgClientIntegrationTest, DatabaseDialect) {
 
 /// @test Verify use of database role to read data.
 TEST_F(ClientIntegrationTest, FineGrainedAccessControl) {
-  if (UsingEmulator()) GTEST_SKIP();
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
 
   spanner_admin::DatabaseAdminClient admin_client(
@@ -1219,6 +1205,10 @@ TEST_F(ClientIntegrationTest, FineGrainedAccessControl) {
   auto metadata =
       admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
           .get();
+  if (UsingEmulator()) {
+    EXPECT_THAT(metadata, StatusIs(StatusCode::kInternal));
+    GTEST_SKIP();
+  }
   ASSERT_STATUS_OK(metadata);
 
   // Connect to the database using the Reader role.
@@ -1245,7 +1235,6 @@ TEST_F(ClientIntegrationTest, FineGrainedAccessControl) {
 
 /// @test Verify use of database role to read data.
 TEST_F(PgClientIntegrationTest, FineGrainedAccessControl) {
-  if (UsingEmulator()) GTEST_SKIP();
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
 
   spanner_admin::DatabaseAdminClient admin_client(
@@ -1258,6 +1247,10 @@ TEST_F(PgClientIntegrationTest, FineGrainedAccessControl) {
   auto metadata =
       admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
           .get();
+  if (UsingEmulator()) {
+    EXPECT_THAT(metadata, StatusIs(StatusCode::kFailedPrecondition));
+    GTEST_SKIP();
+  }
   ASSERT_STATUS_OK(metadata);
 
   // Connect to the database using the Reader role.
@@ -1284,8 +1277,6 @@ TEST_F(PgClientIntegrationTest, FineGrainedAccessControl) {
 
 /// @test Verify "FOREIGN KEY" "ON DELETE CASCADE".
 TEST_F(ClientIntegrationTest, ForeignKeyDeleteCascade) {
-  if (UsingEmulator()) GTEST_SKIP();
-
   spanner_admin::DatabaseAdminClient admin_client(
       spanner_admin::MakeDatabaseAdminConnection());
 
@@ -1310,6 +1301,10 @@ TEST_F(ClientIntegrationTest, ForeignKeyDeleteCascade) {
       admin_client
           .UpdateDatabaseDdl(GetDatabase().FullName(), std::move(statements))
           .get();
+  if (UsingEmulator()) {
+    EXPECT_THAT(create_metadata, StatusIs(StatusCode::kUnimplemented));
+    GTEST_SKIP();
+  }
   ASSERT_STATUS_OK(create_metadata);
 
   // ALTER TABLE with ON DELETE CASCADE.
@@ -1423,8 +1418,6 @@ TEST_F(ClientIntegrationTest, ForeignKeyDeleteCascade) {
 
 /// @test Verify "FOREIGN KEY" "ON DELETE CASCADE".
 TEST_F(PgClientIntegrationTest, ForeignKeyDeleteCascade) {
-  if (UsingEmulator()) GTEST_SKIP();
-
   spanner_admin::DatabaseAdminClient admin_client(
       spanner_admin::MakeDatabaseAdminConnection());
 
@@ -1449,6 +1442,10 @@ TEST_F(PgClientIntegrationTest, ForeignKeyDeleteCascade) {
       admin_client
           .UpdateDatabaseDdl(GetDatabase().FullName(), std::move(statements))
           .get();
+  if (UsingEmulator()) {
+    EXPECT_THAT(create_metadata, StatusIs(StatusCode::kUnimplemented));
+    GTEST_SKIP();
+  }
   ASSERT_STATUS_OK(create_metadata);
 
   // ALTER TABLE with ON DELETE CASCADE.

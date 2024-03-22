@@ -14,12 +14,16 @@
 
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
 #include "google/cloud/storage/async/resume_policy.h"
+#include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/mock_hash_function.h"
+#include "google/cloud/storage/testing/mock_hash_validator.h"
+#include "google/cloud/storage/testing/mock_resume_policy.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -31,10 +35,14 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::testing::MockHashFunction;
+using ::google::cloud::storage::testing::MockHashValidator;
+using ::google::cloud::storage::testing::MockResumePolicy;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::storage_experimental::ReadPayload;
 using ::google::cloud::storage_experimental::ResumePolicy;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::AtMost;
@@ -54,13 +62,6 @@ using ReadResponse =
 using MockAsyncReaderConnectionFactory = ::testing::MockFunction<future<
     StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>(
     storage::Generation, std::int64_t)>;
-
-class MockResumePolicy : public ResumePolicy {
- public:
-  ~MockResumePolicy() override = default;
-  MOCK_METHOD(void, OnStartSuccess, (), (override));
-  MOCK_METHOD(ResumePolicy::Action, OnFinish, (Status const&), (override));
-};
 
 auto WithGeneration(std::int64_t expected) {
   return ::testing::ResultOf(
@@ -196,8 +197,10 @@ TEST(AsyncReaderConnectionResume, Resume) {
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kContinue));
 
-  AsyncReaderConnectionResume tested(std::move(resume_policy),
-                                     mock_factory.AsStdFunction());
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction());
   EXPECT_THAT(tested.Read().get(), IsInitialRead());
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(kReadSize, '2')));
@@ -215,6 +218,125 @@ TEST(AsyncReaderConnectionResume, Resume) {
               UnorderedElementsAre(Pair("hk0", "v0"), Pair("hk1", "v1")));
   EXPECT_THAT(metadata.trailers,
               UnorderedElementsAre(Pair("tk0", "v0"), Pair("tk1", "v1")));
+}
+
+TEST(AsyncReaderConnectionResume, HashValidation) {
+  auto hash_function = std::make_shared<MockHashFunction>();
+  // Normally the `AsyncReaderConnectionImpl` would call
+  // `hash_function->Update()`. Here we are mocking the `*ConnectionImpl`, so
+  // only `ProcessHashValues()` and `Finish()` get called.
+  EXPECT_CALL(*hash_function, Finish)
+      .WillOnce(Return(storage::internal::HashValues{"crc32c", "md5"}));
+
+  auto hash_validator = std::make_unique<MockHashValidator>();
+  EXPECT_CALL(*hash_validator, ProcessHashValues)
+      .WillOnce([](storage::internal::HashValues const& hv) {
+        EXPECT_EQ(hv.crc32c, "crc32c");
+        EXPECT_EQ(hv.md5, "md5");
+      })
+      .WillOnce([](storage::internal::HashValues const& hv) {
+        EXPECT_THAT(hv.crc32c, IsEmpty());
+        EXPECT_THAT(hv.md5, IsEmpty());
+      });
+  EXPECT_CALL(std::move(*hash_validator), Finish)
+      .WillOnce([](storage::internal::HashValues const&) {
+        return storage::internal::HashValidator::Result{
+            /*.received=*/{}, /*.computed=*/{}, /*.is_mismatch=*/false};
+      });
+
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call(WithGeneration(0), 0)).WillOnce([] {
+    auto mock = std::make_unique<MockReader>();
+    EXPECT_CALL(*mock, Read)
+        .WillOnce([] {
+          auto payload = ReadPayload(std::string(kReadSize, '1'));
+          ReadPayloadImpl::SetObjectHashes(
+              payload, storage::internal::HashValues{"crc32c", "md5"});
+          return make_ready_future(ReadResponse(std::move(payload)));
+        })
+        .WillOnce([] {
+          auto payload = ReadPayload(std::string(kReadSize, '2'));
+          return make_ready_future(ReadResponse(std::move(payload)));
+        })
+        .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+    return make_ready_future(make_status_or(
+        std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+            std::move(mock))));
+  });
+
+  auto resume_policy = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnFinish).Times(0);
+
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), std::move(hash_function),
+      std::move(hash_validator), mock_factory.AsStdFunction());
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<ReadPayload>(ContentsMatch(kReadSize, '1')));
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<ReadPayload>(ContentsMatch(kReadSize, '2')));
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
+}
+
+TEST(AsyncReaderConnectionResume, HashValidationWithError) {
+  auto hash_function = std::make_shared<MockHashFunction>();
+  // Normally the `AsyncReaderConnectionImpl` would call
+  // `hash_function->Update()`. Here we are mocking the `*ConnectionImpl`, so
+  // only `ProcessHashValues()` and `Finish()` get called.
+  EXPECT_CALL(*hash_function, Finish)
+      .WillOnce(Return(storage::internal::HashValues{"crc32c", "md5"}));
+
+  auto hash_validator = std::make_unique<MockHashValidator>();
+  EXPECT_CALL(*hash_validator, ProcessHashValues)
+      .WillOnce([](storage::internal::HashValues const& hv) {
+        EXPECT_EQ(hv.crc32c, "crc32c");
+        EXPECT_EQ(hv.md5, "md5");
+      })
+      .WillOnce([](storage::internal::HashValues const& hv) {
+        EXPECT_THAT(hv.crc32c, IsEmpty());
+        EXPECT_THAT(hv.md5, IsEmpty());
+      });
+  EXPECT_CALL(std::move(*hash_validator), Finish)
+      .WillOnce([](storage::internal::HashValues const&) {
+        return storage::internal::HashValidator::Result{
+            /*.received=*/{"crc32c", "md5"},
+            /*.computed=*/{"crc32c-computed", "md5-computed"},
+            /*.is_mismatch=*/true};
+      });
+
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call(WithGeneration(0), 0)).WillOnce([] {
+    auto mock = std::make_unique<MockReader>();
+    EXPECT_CALL(*mock, Read)
+        .WillOnce([] {
+          auto payload = ReadPayload(std::string(kReadSize, '1'));
+          ReadPayloadImpl::SetObjectHashes(
+              payload, storage::internal::HashValues{"crc32c", "md5"});
+          return make_ready_future(ReadResponse(std::move(payload)));
+        })
+        .WillOnce([] {
+          auto payload = ReadPayload(std::string(kReadSize, '2'));
+          return make_ready_future(ReadResponse(std::move(payload)));
+        })
+        .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+    return make_ready_future(make_status_or(
+        std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+            std::move(mock))));
+  });
+
+  auto resume_policy = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnFinish).Times(0);
+
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), std::move(hash_function),
+      std::move(hash_validator), mock_factory.AsStdFunction());
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<ReadPayload>(ContentsMatch(kReadSize, '1')));
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<ReadPayload>(ContentsMatch(kReadSize, '2')));
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
 }
 
 TEST(AsyncReaderConnectionResume, Cancel) {
@@ -235,8 +357,10 @@ TEST(AsyncReaderConnectionResume, Cancel) {
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kStop));
 
-  AsyncReaderConnectionResume tested(std::move(resume_policy),
-                                     mock_factory.AsStdFunction());
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction());
   EXPECT_NO_FATAL_FAILURE(tested.Cancel());
   EXPECT_THAT(tested.Read().get(), VariantWith<Status>(TransientError()));
   EXPECT_NO_FATAL_FAILURE(tested.Cancel());
@@ -262,8 +386,10 @@ TEST(AsyncReaderConnectionResume, GetRequestMetadata) {
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kStop));
 
-  AsyncReaderConnectionResume tested(std::move(resume_policy),
-                                     mock_factory.AsStdFunction());
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction());
   auto const m0 = tested.GetRequestMetadata();
   EXPECT_THAT(m0.headers, IsEmpty());
   EXPECT_THAT(m0.trailers, IsEmpty());
@@ -302,8 +428,10 @@ TEST(AsyncReaderConnectionResume, ResumeUpdatesOffset) {
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kContinue));
 
-  AsyncReaderConnectionResume tested(std::move(resume_policy),
-                                     mock_factory.AsStdFunction());
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction());
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(kReadSize, '1')));
   EXPECT_THAT(tested.Read().get(),
@@ -333,8 +461,10 @@ TEST(AsyncReaderConnectionResume, StopOnReconnectError) {
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kContinue));
 
-  AsyncReaderConnectionResume tested(std::move(resume_policy),
-                                     mock_factory.AsStdFunction());
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction());
   EXPECT_THAT(tested.Read().get(), IsInitialRead());
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(kReadSize, '2')));
@@ -367,8 +497,10 @@ TEST(AsyncReaderConnectionResume, StopAfterTooManyReconnects) {
       .WillOnce(Return(ResumePolicy::kContinue))
       .WillOnce(Return(ResumePolicy::kStop));
 
-  AsyncReaderConnectionResume tested(std::move(resume_policy),
-                                     mock_factory.AsStdFunction());
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), storage::internal::CreateNullHashFunction(),
+      storage::internal::CreateNullHashValidator(),
+      mock_factory.AsStdFunction());
   EXPECT_THAT(tested.Read().get(), IsInitialRead());
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(kReadSize, '2')));

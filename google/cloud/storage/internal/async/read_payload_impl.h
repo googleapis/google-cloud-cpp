@@ -17,8 +17,10 @@
 
 #include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/storage/internal/async/read_payload_fwd.h"
+#include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
+#include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
@@ -45,6 +47,18 @@ struct ReadPayloadImpl {
    */
   static storage_experimental::ReadPayload Make(std::string contents) {
     return storage_experimental::ReadPayload(std::move(contents));
+  }
+
+  /// Get the object hashes (by move) from the payload.
+  static absl::optional<storage::internal::HashValues> GetObjectHashes(
+      storage_experimental::ReadPayload& payload) {
+    return std::move(payload.object_hash_values_);
+  }
+
+  /// Set the object hashes in the payload.
+  static void SetObjectHashes(storage_experimental::ReadPayload& payload,
+                              storage::internal::HashValues hashes) {
+    payload.object_hash_values_ = std::move(hashes);
   }
 };
 

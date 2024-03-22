@@ -14,6 +14,10 @@
 
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/internal/default_batch_callback.h"
+#include "google/cloud/pubsub/internal/message_callback_wrapper.h"
+#include "google/cloud/pubsub/options.h"
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -25,9 +29,11 @@ namespace {
 class AckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
  public:
   explicit AckHandlerImpl(std::weak_ptr<SubscriptionConcurrencyControl> w,
-                          std::string ack_id, std::int32_t delivery_attempt)
+                          std::string ack_id, pubsub::Subscription subscription,
+                          std::int32_t delivery_attempt)
       : source_(std::move(w)),
         ack_id_(std::move(ack_id)),
+        subscription_(std::move(subscription)),
         delivery_attempt_(delivery_attempt) {}
   ~AckHandlerImpl() override = default;
 
@@ -42,22 +48,33 @@ class AckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
         Status(StatusCode::kFailedPrecondition, "session already shutdown"));
   }
   std::int32_t delivery_attempt() const override { return delivery_attempt_; }
+  std::string ack_id() override { return ack_id_; }
+  pubsub::Subscription subscription() const override { return subscription_; }
 
  private:
   std::weak_ptr<SubscriptionConcurrencyControl> source_;
   std::string ack_id_;
+  pubsub::Subscription subscription_;
   std::int32_t delivery_attempt_;
 };
 
 }  // namespace
 
-void SubscriptionConcurrencyControl::Start(Callback cb) {
+void SubscriptionConcurrencyControl::Start(
+    std::shared_ptr<MessageCallback> cb) {
   std::unique_lock<std::mutex> lk(mu_);
   if (callback_) return;
-  callback_ = std::move(cb);
-  source_->Start([w = WeakFromThis()](google::pubsub::v1::ReceivedMessage r) {
-    if (auto self = w.lock()) self->OnMessage(std::move(r));
-  });
+
+  auto message_callback = std::make_shared<MessageCallbackWrapper>(
+      std::move(cb), [w = WeakFromThis()](MessageCallback::ReceivedMessage r) {
+        if (auto self = w.lock()) self->OnMessage(std::move(r.message));
+      });
+
+  callback_ = std::make_shared<DefaultBatchCallback>(
+      [](BatchCallback::StreamingPullResponse const&) {},
+      std::move(message_callback));
+
+  source_->Start(callback_);
   if (total_messages() >= max_concurrency_) return;
   auto const read_count = max_concurrency_ - total_messages();
   messages_requested_ = read_count;
@@ -115,8 +132,10 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
     std::weak_ptr<SubscriptionConcurrencyControl> w) {
   shutdown_manager_->StartOperation(__func__, "handler", [&] {
     auto h = std::make_unique<AckHandlerImpl>(
-        std::move(w), std::move(*m.mutable_ack_id()), m.delivery_attempt());
-    callback_(FromProto(std::move(*m.mutable_message())), std::move(h));
+        std::move(w), std::move(*m.mutable_ack_id()), subscription_,
+        m.delivery_attempt());
+    callback_->user_callback(MessageCallback::MessageAndHandler{
+        FromProto(std::move(*m.mutable_message())), std::move(h)});
   });
   shutdown_manager_->FinishedOperation("callback");
 }

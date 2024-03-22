@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
+#include "google/cloud/pubsub/internal/batch_callback.h"
+#include "google/cloud/pubsub/testing/mock_batch_callback.h"
 #include "google/cloud/pubsub/testing/mock_subscription_batch_source.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -116,8 +118,8 @@ class SubscriptionMessageQueueOrderingTest
 TEST(SubscriptionMessageQueueTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown).Times(1);
-  BatchCallback batch_callback;
-  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
     batch_callback = std::move(cb);
   });
 
@@ -133,20 +135,22 @@ TEST(SubscriptionMessageQueueTest, Basic) {
   ASSERT_FALSE(messages.empty());
   auto const response = AsPullResponse(messages);
 
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
   std::vector<google::pubsub::v1::ReceivedMessage> received;
-  auto handler = [&received](google::pubsub::v1::ReceivedMessage m) {
-    received.push_back(std::move(m));
-  };
-
+  EXPECT_CALL(*mock_batch_callback, message_callback)
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
+        received.push_back(std::move(m.message));
+      });
   auto shutdown = std::make_shared<SessionShutdownManager>();
   shutdown->Start({});
   auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
-  uut->Start(handler);
+  uut->Start(mock_batch_callback);
 
   uut->Read(1);
   EXPECT_THAT(received, ElementsAre());
 
-  batch_callback(response);
+  batch_callback->callback(BatchCallback::StreamingPullResponse{response});
   uut->Read(1);
 
   EXPECT_THAT(received, ElementsAre(IsProtoEqual(messages[0]),
@@ -162,8 +166,8 @@ TEST(SubscriptionMessageQueueTest, Basic) {
 TEST(SubscriptionMessageQueueTest, NackOnSessionShutdown) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown);
-  BatchCallback batch_callback;
-  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
     batch_callback = std::move(cb);
   });
 
@@ -173,39 +177,40 @@ TEST(SubscriptionMessageQueueTest, NackOnSessionShutdown) {
         return make_ready_future(Status{});
       });
 
-  ::testing::MockFunction<void(google::pubsub::v1::ReceivedMessage const&)>
-      mock_handler;
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
 
   auto const response = AsPullResponse(GenerateMessages());
   EXPECT_FALSE(response.received_messages().empty());
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
   auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
-  uut->Start(mock_handler.AsStdFunction());
+  uut->Start(mock_batch_callback);
   uut->Read(1);
   shutdown->MarkAsShutdown("test", {});
-  batch_callback(response);
+
+  batch_callback->callback(BatchCallback::StreamingPullResponse{response});
   uut->Shutdown();
 }
 
 /// @test Verify that receiving an error triggers the right shutdown.
 TEST(SubscriptionMessageQueueTest, HandleError) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
-  BatchCallback batch_callback;
-  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
     batch_callback = std::move(cb);
   });
 
-  ::testing::MockFunction<void(google::pubsub::v1::ReceivedMessage const&)>
-      mock_handler;
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
   auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
   auto done = shutdown->Start({});
-  uut->Start(mock_handler.AsStdFunction());
+  uut->Start(mock_batch_callback);
   uut->Read(1);
   auto const expected = Status{StatusCode::kPermissionDenied, "uh-oh"};
-  batch_callback(expected);
+  batch_callback->callback(BatchCallback::StreamingPullResponse{expected});
 
   EXPECT_EQ(done.get(), expected);
 }
@@ -214,8 +219,8 @@ TEST(SubscriptionMessageQueueTest, HandleError) {
 TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown).Times(1);
-  BatchCallback batch_callback;
-  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
     batch_callback = std::move(cb);
   });
 
@@ -224,22 +229,28 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   EXPECT_CALL(*mock, BulkNack).Times(0);
 
   std::unordered_map<std::string, std::vector<std::string>> received;
-  auto handler = [&received](google::pubsub::v1::ReceivedMessage const& m) {
-    auto key = m.message().ordering_key();
-    received[key].push_back(m.message().message_id());
-  };
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, message_callback)
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
+        auto key = m.message.message().ordering_key();
+        received[key].push_back(m.message.message().message_id());
+      });
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
   shutdown->Start({});
   // Create the queue and allow it to push 5 messages
   auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
-  uut->Start(handler);
+  uut->Start(mock_batch_callback);
   uut->Read(5);
 
   // Generate some messages, expecting only one for each key.
-  batch_callback(AsPullResponse(GenerateOrderKeyMessages("k0", 0, 3)));
-  batch_callback(AsPullResponse(GenerateOrderKeyMessages("k1", 0, 3)));
-  batch_callback(AsPullResponse(GenerateOrderKeyMessages({}, 0, 3)));
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
+      AsPullResponse(GenerateOrderKeyMessages("k0", 0, 3))});
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
+      AsPullResponse(GenerateOrderKeyMessages("k1", 0, 3))});
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
+      AsPullResponse(GenerateOrderKeyMessages({}, 0, 3))});
 
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000000"));
   EXPECT_THAT(received["k1"], ElementsAre("id-k1-000000"));
@@ -268,7 +279,9 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   EXPECT_THAT(received[{}], IsEmpty());
 
   received.clear();  // keep expectations shorter
-  batch_callback(AsPullResponse(GenerateOrderKeyMessages({}, 3, 2)));
+
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
+      AsPullResponse(GenerateOrderKeyMessages({}, 3, 2))});
   uut->AckMessage("ack-k0-000001");
   uut->AckMessage("ack-k1-000001");
   uut->Read(2);
@@ -286,7 +299,8 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   EXPECT_THAT(received["k1"], IsEmpty());
   EXPECT_THAT(received[{}], IsEmpty());
 
-  batch_callback(AsPullResponse(GenerateOrderKeyMessages({}, 5, 5)));
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
+      AsPullResponse(GenerateOrderKeyMessages({}, 5, 5))});
   EXPECT_THAT(received[{}],
               ElementsAre("id--000005", "id--000006", "id--000007",
                           "id--000008", "id--000009"));
@@ -298,36 +312,42 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
 TEST(SubscriptionMessageQueueTest, DuplicateMessagesNoKey) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown).Times(1);
-  BatchCallback batch_callback;
-  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
     batch_callback = std::move(cb);
   });
-
-  ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, AckMessage("ack--000000")).Times(1);
-  EXPECT_CALL(*mock, NackMessage("ack--000001")).Times(1);
-  EXPECT_CALL(*mock, AckMessage("ack--000000")).Times(1);
-  EXPECT_CALL(*mock, AckMessage("ack--000001")).Times(1);
-  EXPECT_CALL(*mock, BulkNack).Times(0);
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock, AckMessage("ack--000000")).Times(1);
+    EXPECT_CALL(*mock, NackMessage("ack--000001")).Times(1);
+    EXPECT_CALL(*mock, AckMessage("ack--000000")).Times(1);
+    EXPECT_CALL(*mock, AckMessage("ack--000001")).Times(1);
+    EXPECT_CALL(*mock, BulkNack).Times(0);
+  }
 
   std::unordered_map<std::string, std::vector<std::string>> received;
-  auto handler = [&received](google::pubsub::v1::ReceivedMessage const& m) {
-    auto key = m.message().ordering_key();
-    received[key].push_back(m.message().message_id());
-  };
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, message_callback)
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
+        auto key = m.message.message().ordering_key();
+        received[key].push_back(m.message.message().message_id());
+      });
 
+  EXPECT_CALL(*mock_batch_callback, callback).Times(AtLeast(3));
   auto shutdown = std::make_shared<SessionShutdownManager>();
   shutdown->Start({});
   // Create the queue and allow it to push 5 messages
   auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
-  uut->Start(handler);
+  uut->Start(mock_batch_callback);
   uut->Read(4);
 
   // Generate some messages, expecting only one for each key.
   auto const response = AsPullResponse(GenerateOrderKeyMessages({}, 0, 2));
-  batch_callback(response);
-  batch_callback(response);
-  batch_callback(AsPullResponse(GenerateOrderKeyMessages({}, 2, 4)));
+  batch_callback->callback(BatchCallback::StreamingPullResponse{response});
+  batch_callback->callback(BatchCallback::StreamingPullResponse{response});
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
+      AsPullResponse(GenerateOrderKeyMessages({}, 2, 4))});
 
   EXPECT_THAT(received[{}], ElementsAre("id--000000", "id--000001",
                                         "id--000000", "id--000001"));
@@ -351,31 +371,38 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesNoKey) {
 TEST(SubscriptionMessageQueueTest, DuplicateMessagesWithKey) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown).Times(1);
-  BatchCallback batch_callback;
-  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
     batch_callback = std::move(cb);
   });
-
-  ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, AckMessage).Times(AtLeast(1));
-  EXPECT_CALL(*mock, BulkNack).Times(0);
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock, AckMessage).Times(AtLeast(1));
+    EXPECT_CALL(*mock, BulkNack).Times(0);
+  }
 
   std::unordered_map<std::string, std::vector<std::string>> received;
-  auto handler = [&received](google::pubsub::v1::ReceivedMessage const& m) {
-    auto key = m.message().ordering_key();
-    received[key].push_back(m.message().message_id());
-  };
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, message_callback)
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
+        auto key = m.message.message().ordering_key();
+        received[key].push_back(m.message.message().message_id());
+      });
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
   shutdown->Start({});
   // Create the queue and allow it to push 5 messages
   auto uut = SubscriptionMessageQueue::Create(shutdown, mock);
-  uut->Start(handler);
+  uut->Start(mock_batch_callback);
   uut->Read(8);
 
   // Generate some messages, expecting only one for each key.
-  batch_callback(AsPullResponse(GenerateOrderKeyMessages("k0", 0, 1)));
-  batch_callback(AsPullResponse(GenerateOrderKeyMessages("k0", 0, 3)));
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
+      AsPullResponse(GenerateOrderKeyMessages("k0", 0, 1))});
+
+  batch_callback->callback(BatchCallback::StreamingPullResponse{
+      AsPullResponse(GenerateOrderKeyMessages("k0", 0, 3))});
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000000"));
 
   received.clear();  // keep expectations shorter
@@ -401,8 +428,8 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
 
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
   EXPECT_CALL(*mock, Shutdown).Times(1);
-  BatchCallback batch_callback;
-  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
     batch_callback = std::move(cb);
   });
 
@@ -426,26 +453,29 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
 
   std::condition_variable cv;
   std::int64_t received_count = 0;
-  std::unordered_map<std::string, std::vector<std::string>> received;
 
-  auto handler = [&](google::pubsub::v1::ReceivedMessage const& m) {
-    background.cq().RunAsync([&, m]() {
-      std::this_thread::sleep_for(std::chrono::microseconds(delay()));
-      bool notify = false;
-      {
-        std::lock_guard<std::mutex> lk(mu);
-        received[m.message().ordering_key()].push_back(
-            m.message().message_id());
-        notify = (++received_count >= message_count);
-      }
-      if (notify) cv.notify_one();
-      uut->AckMessage(m.ack_id());
-      uut->Read(1);
-    });
-  };
+  std::unordered_map<std::string, std::vector<std::string>> received;
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, message_callback)
+      .WillRepeatedly([&](MessageCallback::ReceivedMessage const& m) {
+        background.cq().RunAsync([&, m]() {
+          std::this_thread::sleep_for(std::chrono::microseconds(delay()));
+          bool notify = false;
+          {
+            std::lock_guard<std::mutex> lk(mu);
+            received[m.message.message().ordering_key()].push_back(
+                m.message.message().message_id());
+            notify = (++received_count >= message_count);
+          }
+          if (notify) cv.notify_one();
+          uut->AckMessage(m.message.ack_id());
+          uut->Read(1);
+        });
+      });
 
   auto constexpr kMaxCallbacks = 128;
-  uut->Start(handler);
+  uut->Start(mock_batch_callback);
   uut->Read(kMaxCallbacks);
 
   using SeedType = std::seed_seq::result_type;
@@ -455,7 +485,8 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
     using random = std::uniform_int_distribution<int>;
     for (int i = 0; i < count;) {
       auto step = random(0, count - i)(gen);
-      batch_callback(AsPullResponse(GenerateOrderKeyMessages(key, i, step)));
+      batch_callback->callback(BatchCallback::StreamingPullResponse{
+          AsPullResponse(GenerateOrderKeyMessages(key, i, step))});
       i += step;
       std::this_thread::sleep_for(
           std::chrono::microseconds(random(0, 50)(gen)));

@@ -401,15 +401,28 @@ TEST_F(ClientOptionsTest, IncorporatesUniverseDomain) {
   EXPECT_EQ(o.get<IamEndpointOption>(), "https://iamcredentials.my-ud.net/v1");
 }
 
+TEST_F(ClientOptionsTest, IncorporatesUniverseDomainEnvVar) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
+  auto o = internal::DefaultOptions(
+      oauth2::CreateAnonymousCredentials(),
+      Options{}.set<google::cloud::internal::UniverseDomainOption>(
+          "ud-option.net"));
+  EXPECT_EQ(o.get<RestEndpointOption>(), "https://storage.ud-env-var.net");
+  EXPECT_EQ(o.get<IamEndpointOption>(),
+            "https://iamcredentials.ud-env-var.net/v1");
+}
+
 TEST_F(ClientOptionsTest, CustomEndpointOverridesUniverseDomain) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
   auto o = internal::DefaultOptions(
       oauth2::CreateAnonymousCredentials(),
       Options{}
           .set<RestEndpointOption>("https://custom-storage.googleapis.com")
           .set<IamEndpointOption>(
               "https://custom-iamcredentials.googleapis.com/v1")
-          .set<google::cloud::internal::UniverseDomainOption>(
-              "ignored-ud.net"));
+          .set<google::cloud::internal::UniverseDomainOption>("ud-option.net"));
   EXPECT_EQ(o.get<RestEndpointOption>(),
             "https://custom-storage.googleapis.com");
   EXPECT_EQ(o.get<IamEndpointOption>(),

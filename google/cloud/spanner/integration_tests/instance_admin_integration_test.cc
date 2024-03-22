@@ -144,7 +144,7 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 
 /// @test Verify the basic CRUD operations for instances work.
 TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
-  if (!Emulator() && !RunSlowInstanceTests()) {
+  if (!RunSlowInstanceTests()) {
     GTEST_SKIP() << "skipping slow instance tests; set "
                  << "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance"
                  << " to override";
@@ -186,7 +186,9 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
                                      .SetNodeCount(2)
                                      .Build())
                  .get();
-  if (!Emulator() || instance) {
+  if (Emulator()) {
+    EXPECT_THAT(instance, StatusIs(StatusCode::kUnimplemented));
+  } else {
     EXPECT_STATUS_OK(instance);
     if (instance) {
       EXPECT_EQ(instance->display_name(), "New display name");
@@ -228,8 +230,8 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
   ASSERT_FALSE(in.instance_id().empty());
 
   auto actual_policy = client_.GetIamPolicy(in);
-  if (Emulator() &&
-      actual_policy.status().code() == StatusCode::kUnimplemented) {
+  if (Emulator()) {
+    EXPECT_THAT(actual_policy, StatusIs(StatusCode::kUnimplemented));
     GTEST_SKIP() << "emulator does not support IAM policies";
   }
   ASSERT_STATUS_OK(actual_policy);

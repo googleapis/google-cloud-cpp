@@ -116,25 +116,28 @@ TEST(DefaultOptionsGrpc, DefaultEndpoints) {
 }
 
 TEST(DefaultOptionsGrpc, EndpointOptionsOverrideDefaults) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
   auto options = DefaultOptionsGrpc(
       Options{}
           .set<EndpointOption>("from-option")
           .set<AuthorityOption>("host-from-option")
-          .set<internal::UniverseDomainOption>("ignored-ud"));
+          .set<internal::UniverseDomainOption>("ud-option.net"));
   EXPECT_EQ(options.get<EndpointOption>(), "from-option");
   EXPECT_EQ(options.get<AuthorityOption>(), "host-from-option");
 }
 
 TEST(DefaultOptionsGrpc, EnvVarsOverrideOptionsAndDefaults) {
   ScopedEnvironment e("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",
-                      "from-env");
+                      "from-testbench-env");
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
 
-  auto options =
-      DefaultOptionsGrpc(Options{}
-                             .set<EndpointOption>("from-option")
-                             .set<internal::UniverseDomainOption>("my-ud.net"));
-  EXPECT_EQ(options.get<EndpointOption>(), "from-env");
-  EXPECT_EQ(options.get<AuthorityOption>(), "storage.my-ud.net");
+  auto options = DefaultOptionsGrpc(
+      Options{}
+          .set<EndpointOption>("from-ep-option")
+          .set<internal::UniverseDomainOption>("ud-option.net"));
+  EXPECT_EQ(options.get<EndpointOption>(), "from-testbench-env");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.ud-env-var.net");
 }
 
 TEST(DefaultOptionsGrpc, IncorporatesUniverseDomain) {
@@ -142,6 +145,15 @@ TEST(DefaultOptionsGrpc, IncorporatesUniverseDomain) {
       Options{}.set<internal::UniverseDomainOption>("my-ud.net"));
   EXPECT_EQ(options.get<EndpointOption>(), "storage.my-ud.net");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.my-ud.net");
+}
+
+TEST(DefaultOptionsGrpc, IncorporatesUniverseDomainEnvVar) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
+  auto options = DefaultOptionsGrpc(
+      Options{}.set<internal::UniverseDomainOption>("ud-option.net"));
+  EXPECT_EQ(options.get<EndpointOption>(), "storage.ud-env-var.net");
+  EXPECT_EQ(options.get<AuthorityOption>(), "storage.ud-env-var.net");
 }
 
 TEST(DefaultOptionsGrpc, DefaultOptionsUploadBuffer) {

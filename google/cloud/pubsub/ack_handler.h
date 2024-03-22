@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ACK_HANDLER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ACK_HANDLER_H
 
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status.h"
 #include <cstdint>
@@ -97,6 +98,16 @@ class AckHandler {
     virtual void nack() {}
     /// The implementation for `AckHandler::delivery_attempt()`
     virtual std::int32_t delivery_attempt() const { return 0; }
+    /// Returns the ack id for the handler. There is no corresponding public
+    /// interface to access the ack id in `AckHandler`. This is for internal
+    /// use only.
+    virtual std::string ack_id() { return ""; }
+    /// Returns the subscription for the handler. There is no corresponding
+    /// public interface to access the subscription id in `AckHandler`. This
+    /// is for internal use only.
+    virtual pubsub::Subscription subscription() const {
+      return pubsub::Subscription{};
+    }
   };
 
   /**

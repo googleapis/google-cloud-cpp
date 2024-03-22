@@ -42,3 +42,6 @@ GCS_GRPC_LIBS       := $(shell pkg-config $(GCS_GRPC_DEPS) --libs-only-l)
 
 $(BIN)/quickstart_grpc: quickstart_grpc.cc
 	$(CXXLD) $(CXXFLAGS) $(GCS_GRPC_CXXFLAGS) $(GCS_GRPC_CXXLDFLAGS) -o $@ $^ $(GCS_GRPC_LIBS)
+
+$(BIN)/quickstart_async: quickstart_async.cc
+	$(CXXLD) $(CXXFLAGS) $(GCS_GRPC_CXXFLAGS) $(GCS_GRPC_CXXLDFLAGS) -o $@ $^ $(GCS_GRPC_LIBS)

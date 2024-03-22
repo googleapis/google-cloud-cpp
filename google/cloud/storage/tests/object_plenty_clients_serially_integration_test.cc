@@ -20,7 +20,6 @@
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <sys/types.h>
 #include <algorithm>
 #include <cstddef>
 #include <cstring>
@@ -54,8 +53,6 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
-
-  // Create an iostream to read the object back.
 
   // Track the number of open files to ensure every client creates the same
   // number of file descriptors and none are leaked.

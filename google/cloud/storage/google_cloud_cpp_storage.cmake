@@ -389,8 +389,10 @@ if (BUILD_TESTING)
         testing/mock_client.h
         testing/mock_generic_stub.h
         testing/mock_hash_function.h
+        testing/mock_hash_validator.h
         testing/mock_http_request.cc
         testing/mock_http_request.h
+        testing/mock_resume_policy.h
         testing/mock_storage_stub.h
         testing/object_integration_test.cc
         testing/object_integration_test.h
