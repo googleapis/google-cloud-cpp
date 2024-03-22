@@ -324,36 +324,21 @@ install(
 google_cloud_cpp_install_headers(google_cloud_cpp_storage
                                  include/google/cloud/storage)
 
-# Cannot use google_cloud_cpp_add_pkgconfig() for this library. There is a
-# horrible hack here, adding -lcrc32c to the 'Libs:` entry. We should be adding
-# this library to the `Requires:` line, but it does not create pkg-config
-# modules.
-set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides C++ APIs to access Google Cloud Storage.")
-string(JOIN " " GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage"
-       "-lcrc32c")
-string(
-    JOIN
-    " "
-    GOOGLE_CLOUD_CPP_PC_REQUIRES
+google_cloud_cpp_add_pkgconfig(
+    "storage"
+    "The Google Cloud Storage C++ Client Library"
+    "Provides C++ APIs to access Google Cloud Storage."
     "google_cloud_cpp_common"
     "google_cloud_cpp_rest_internal"
-    "libcurl openssl"
+    "libcurl"
     "absl_cord"
     "absl_strings"
     "absl_str_format"
     "absl_time"
-    "absl_variant")
-
-# Create and install the pkg-config files.
-google_cloud_cpp_set_pkgconfig_paths()
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_storage.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+    "absl_variant"
+    NON_WIN32_REQUIRES openssl
+    LIBS crc32c
+    WIN32_LIBS ws2_32 bcrypt)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

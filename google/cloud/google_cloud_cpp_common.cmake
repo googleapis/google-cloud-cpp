@@ -186,7 +186,6 @@ if (WIN32)
     target_compile_definitions(google_cloud_cpp_common PRIVATE WIN32_LEAN_AND_MEAN)
     target_link_libraries(google_cloud_cpp_common PUBLIC bcrypt)
 else ()
-    set(OPENSSL_PKGCONFIG_MAYBE openssl)
     target_link_libraries(google_cloud_cpp_common PUBLIC OpenSSL::Crypto)
 endif ()
 
@@ -257,8 +256,9 @@ google_cloud_cpp_add_pkgconfig(
     "absl_time"
     "absl_time_zone"
     "absl_variant"
-    "${OPENSSL_PKGCONFIG_MAYBE}"
-    "${GOOGLE_CLOUD_CPP_OPENTELEMETRY_API}")
+    "${GOOGLE_CLOUD_CPP_OPENTELEMETRY_API}"
+    NON_WIN32_REQUIRES openssl
+    WIN32_LIBS bcrypt)
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "google_cloud_cpp_common-config.cmake" @ONLY)
