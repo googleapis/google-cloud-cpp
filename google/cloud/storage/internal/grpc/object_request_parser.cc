@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
+#include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/grpc/bucket_name.h"
 #include "google/cloud/storage/internal/grpc/object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_status.h"

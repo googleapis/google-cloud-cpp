@@ -69,6 +69,8 @@ add_library(
     internal/access_control_common_parser.h
     internal/access_token_credentials.cc
     internal/access_token_credentials.h
+    internal/base64.cc
+    internal/base64.h
     internal/binary_data_as_debug_string.h
     internal/bucket_access_control_parser.cc
     internal/bucket_access_control_parser.h
@@ -153,8 +155,6 @@ add_library(
     internal/object_requests.h
     internal/object_write_streambuf.cc
     internal/object_write_streambuf.h
-    internal/openssl_util.cc
-    internal/openssl_util.h
     internal/patch_builder.cc
     internal/patch_builder.h
     internal/patch_builder_details.cc
@@ -457,6 +457,7 @@ if (BUILD_TESTING)
         internal/access_control_common_parser_test.cc
         internal/access_control_common_test.cc
         internal/access_token_credentials_test.cc
+        internal/base64_test.cc
         internal/bucket_acl_requests_test.cc
         internal/bucket_requests_test.cc
         internal/complex_option_test.cc
@@ -491,7 +492,6 @@ if (BUILD_TESTING)
         internal/object_read_streambuf_test.cc
         internal/object_requests_test.cc
         internal/object_write_streambuf_test.cc
-        internal/openssl_util_test.cc
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
         internal/request_project_id_test.cc

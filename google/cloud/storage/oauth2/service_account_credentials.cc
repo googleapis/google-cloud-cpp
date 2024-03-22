@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/storage/client_options.h"
+#include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/make_jwt_assertion.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
