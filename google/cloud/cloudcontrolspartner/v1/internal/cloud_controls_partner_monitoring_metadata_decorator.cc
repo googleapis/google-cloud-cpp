@@ -81,10 +81,8 @@ void CloudControlsPartnerMonitoringMetadata::SetMetadata(
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);
-  if (options.has<google::cloud::CustomHeadersOption>()) {
-    for (auto const& h : options.get<google::cloud::CustomHeadersOption>()) {
-      context.AddMetadata(h.first, h.second);
-    }
+  for (auto const& h : options.get<CustomHeadersOption>()) {
+    context.AddMetadata(h.first, h.second);
   }
 }
 
