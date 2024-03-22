@@ -33,36 +33,29 @@ namespace {
 static_assert(std::is_same<std::uint8_t, unsigned char>::value,
               "When `std::uint8_t` exists it must be `unsigned char`");
 
-#ifdef _WIN32
 template <typename T>
 Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
                           std::size_t count) {
   Sha256Type hash;
+#ifdef _WIN32
   BCryptHash(BCRYPT_HMAC_SHA256_ALG_HANDLE,
              reinterpret_cast<PUCHAR>(const_cast<T*>(key.data())),
              static_cast<ULONG>(key.size()), const_cast<PUCHAR>(data),
              static_cast<ULONG>(count), hash.data(),
              static_cast<ULONG>(hash.size()));
-  return hash;
-}
 #else
-static_assert(EVP_MAX_MD_SIZE >= Sha256Type().size(),
-              "EVP_MAX_MD_SIZE is too small");
-template <typename T>
-Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
-                          std::size_t count) {
+  static_assert(EVP_MAX_MD_SIZE >= Sha256Type().size(),
+                "EVP_MAX_MD_SIZE is too small");
   std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
-  Sha256Type hash;
 
   unsigned int size = 0;
   HMAC(EVP_sha256(), key.data(), static_cast<unsigned int>(key.size()), data,
        count, digest.data(), &size);
   std::copy_n(digest.begin(), std::min<std::size_t>(size, hash.size()),
               hash.begin());
+#endif
   return hash;
 }
-#endif
-
 }  // namespace
 
 Sha256Type Sha256Hmac(std::string const& key, absl::Span<char const> data) {
