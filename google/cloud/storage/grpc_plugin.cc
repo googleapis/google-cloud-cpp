@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/internal/getenv.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
   if (config == "none") {
     return google::cloud::storage::Client(std::move(opts));
   }
-  opts = google::cloud::storage_internal::DefaultOptionsGrpc(opts);
+  opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
   auto stub = std::make_unique<storage_internal::GrpcStub>(opts);
   return storage::internal::ClientImplDetails::CreateWithoutDecorations(
       MakeStorageConnection(std::move(opts), std::move(stub)));
