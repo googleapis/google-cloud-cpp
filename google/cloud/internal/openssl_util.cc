@@ -14,8 +14,10 @@
 
 #include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/make_status.h"
 #ifdef _WIN32
 #include "google/cloud/internal/sha256_hash.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
 #include <type_traits>
 #include <Ntstatus.h>
@@ -41,7 +43,7 @@ namespace internal {
 
 namespace {
 #ifdef _WIN32
-std::string CaptureWin32Errors() {
+std::string FormatWin32Errors(absl::string_view prefix) {
   auto last_error = GetLastError();
   LPSTR message_buffer_raw = nullptr;
   auto size = FormatMessageA(
@@ -51,8 +53,8 @@ std::string CaptureWin32Errors() {
       (LPSTR)&message_buffer_raw, 0, nullptr);
   std::unique_ptr<char, decltype(&LocalFree)> message_buffer(message_buffer_raw,
                                                              &LocalFree);
-  return std::string(message_buffer.get(), size) + " (error code " +
-         std::to_string(last_error) + ")";
+  return absl::StrCat(prefix, absl::string_view(message_buffer.get(), size),
+                      " (error code ", last_error, ")");
 }
 
 StatusOr<std::vector<BYTE>> DecodePem(std::string const& pem_contents) {
@@ -60,10 +62,11 @@ StatusOr<std::vector<BYTE>> DecodePem(std::string const& pem_contents) {
   if (!CryptStringToBinaryA(
           pem_contents.c_str(), static_cast<DWORD>(pem_contents.size()),
           CRYPT_STRING_BASE64HEADER, nullptr, &buffer_size, nullptr, nullptr)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - could not parse PEM to "
-                  "get private key: " +
-                      CaptureWin32Errors());
+    return InvalidArgumentError(
+        FormatWin32Errors(
+            "Invalid ServiceAccountCredentials - could not parse PEM to "
+            "get private key: "),
+        GCP_ERROR_INFO());
   }
   std::vector<BYTE> buffer(buffer_size);
   CryptStringToBinaryA(
@@ -81,20 +84,21 @@ StatusOr<std::vector<BYTE>> GetCngPrivateKeyBlobFromPkcsBuffer(
           pkcs8_buffer.data(), static_cast<DWORD>(pkcs8_buffer.size()),
           CRYPT_DECODE_NOCOPY_FLAG | CRYPT_DECODE_ALLOC_FLAG, nullptr,
           &private_key_info_raw, &private_key_info_size)) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Invalid ServiceAccountCredentials - could not parse PKCS#8 to "
-        "get private key: " +
-            CaptureWin32Errors());
+    return InvalidArgumentError(
+        FormatWin32Errors(
+            "Invalid ServiceAccountCredentials - could not parse PKCS#8 to "
+            "get private key: "),
+        GCP_ERROR_INFO());
   }
   std::unique_ptr<CRYPT_PRIVATE_KEY_INFO, decltype(&LocalFree)>
       private_key_info(private_key_info_raw, &LocalFree);
   if (absl::string_view(private_key_info->Algorithm.pszObjId) !=
       szOID_RSA_RSA) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Invalid ServiceAccountCredentials - not an RSA key, algorithm is: " +
-            std::string(private_key_info->Algorithm.pszObjId));
+    return InvalidArgumentError(
+        absl::StrCat("Invalid ServiceAccountCredentials - not an RSA key, "
+                     "algorithm is: ",
+                     absl::string_view(private_key_info->Algorithm.pszObjId)),
+        GCP_ERROR_INFO());
   }
   DWORD rsa_blob_size;
   if (!CryptDecodeObjectEx(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING,
@@ -102,10 +106,10 @@ StatusOr<std::vector<BYTE>> GetCngPrivateKeyBlobFromPkcsBuffer(
                            private_key_info->PrivateKey.pbData,
                            private_key_info->PrivateKey.cbData, 0, nullptr,
                            nullptr, &rsa_blob_size)) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Invalid ServiceAccountCredentials - could not decode RSA key: " +
-            CaptureWin32Errors());
+    return InvalidArgumentError(
+        FormatWin32Errors(
+            "Invalid ServiceAccountCredentials - could not decode RSA key: "),
+        GCP_ERROR_INFO());
   }
   std::vector<BYTE> rsa_blob(rsa_blob_size);
   CryptDecodeObjectEx(
@@ -123,10 +127,10 @@ CreateRsaBCryptKey(std::vector<BYTE> buffer) {
                           BCRYPT_RSAPRIVATE_BLOB, &key_handle, buffer.data(),
                           static_cast<DWORD>(buffer.size()),
                           0) != STATUS_SUCCESS) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Invalid ServiceAccountCredentials - could not import RSA key: " +
-            CaptureWin32Errors());
+    return InvalidArgumentError(
+        FormatWin32Errors(
+            "Invalid ServiceAccountCredentials - could not import RSA key: "),
+        GCP_ERROR_INFO());
   }
   return std::unique_ptr<std::remove_pointer_t<BCRYPT_KEY_HANDLE>,
                          decltype(&BCryptDestroyKey)>(key_handle,
@@ -141,9 +145,10 @@ StatusOr<std::vector<std::uint8_t>> SignSha256Digest(BCRYPT_KEY_HANDLE key,
   if (BCryptSignHash(key, &padding_info, const_cast<PUCHAR>(digest.data()),
                      static_cast<DWORD>(digest.size()), nullptr, 0,
                      &signature_size, BCRYPT_PAD_PKCS1) != STATUS_SUCCESS) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - could not sign blob: " +
-                      CaptureWin32Errors());
+    return InvalidArgumentError(
+        FormatWin32Errors(
+            "Invalid ServiceAccountCredentials - could not sign blob: "),
+        GCP_ERROR_INFO());
   }
   std::vector<std::uint8_t> signature(signature_size);
   BCryptSignHash(key, &padding_info, const_cast<PUCHAR>(digest.data()),
@@ -200,13 +205,13 @@ std::string CaptureSslErrors() {
 StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
     std::string const& str, std::string const& pem_contents) {
   auto pem_buffer = DecodePem(pem_contents);
-  if (!pem_buffer) return pem_buffer.status();
+  if (!pem_buffer) return std::move(pem_buffer).status();
 
   auto rsa_blob = GetCngPrivateKeyBlobFromPkcsBuffer(std::move(*pem_buffer));
-  if (!rsa_blob) return rsa_blob.status();
+  if (!rsa_blob) return std::move(rsa_blob).status();
 
   auto key = CreateRsaBCryptKey(std::move(*rsa_blob));
-  if (!key) return key.status();
+  if (!key) return std::move(key).status();
 
   auto hash = Sha256Hash(str);
 
