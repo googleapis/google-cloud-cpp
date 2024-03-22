@@ -59,7 +59,6 @@ readonly PRODUCTION_ONLY_BASE=(
 for base in "${PRODUCTION_ONLY_BASE[@]}"; do
   production_only_targets+=(
     "${base}-default"
-    "${base}-grpc-media"
     "${base}-grpc-metadata"
   )
 done
