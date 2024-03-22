@@ -17,6 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module /ci/cloudbuild/builds/lib/cloudcxxrc.sh
 source module /ci/lib/run_gcs_httpbin_emulator_utils.sh
 
 if [[ $# -lt 1 ]]; then
@@ -32,6 +33,10 @@ shift
 
 bazel_test_args=()
 excluded_targets=()
+
+if bazel::has_no_tests "//google/cloud/storage/..."; then
+  exit 0
+fi
 
 # Separate caller-provided excluded targets (starting with "-//..."), so that
 # we can make sure those appear on the command line after `--`.

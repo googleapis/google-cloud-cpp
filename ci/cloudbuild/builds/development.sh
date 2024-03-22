@@ -20,24 +20,12 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
 source module ci/cloudbuild/builds/lib/integration.sh
+source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
 export CTCACHE_DIR=~/.cache/ctcache
-
-# Load the build configuration. Start with the default, then any settings for
-# all workspaces, then the settings for the current workspace.
-#
-# Developers only need to override what changes, keep a configuration file that
-# applies to all their builds, and have some workspaces with custom settings.
-source module ci/etc/cloudcxxrc
-if [[ -r "${HOME}/.cloudcxxrc" ]]; then
-  source "${HOME}/.cloudcxxrc"
-fi
-if [[ -r "${PROJECT_ROOT}/.cloudcxxrc" ]]; then
-  source "${PROJECT_ROOT}/.cloudcxxrc"
-fi
 
 # Always remove the CMakeCache because it may be invalidated by `cloudcxxrc`
 # changes.

@@ -18,6 +18,7 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=gcc
@@ -50,7 +51,7 @@ args+=("--instrument_test_targets")
 #     https://github.com/bazelbuild/bazel/issues/3236
 args+=("--sandbox_tmpfs_path=/tmp")
 io::log_h2 "Running coverage on non-integration tests."
-bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
+bazel coverage "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 
 GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
 mapfile -t integration_args < <(integration::bazel_args)
