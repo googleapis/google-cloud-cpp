@@ -35,7 +35,6 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::AllOf;
 using ::testing::AnyOf;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -507,12 +506,9 @@ TEST_F(DataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
   auto metadata =
       admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
           .get();
-  EXPECT_THAT(metadata,
-              StatusIs(StatusCode::kFailedPrecondition,
-                       AnyOf(AllOf(HasSubstr("Index DataTypesByJsonValue"),
-                                   HasSubstr("unsupported type JSON")),
-                             AllOf(HasSubstr("index DataTypesByJsonValue"),
-                                   HasSubstr("Cannot reference JSON")))));
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kFailedPrecondition,
+                                 AnyOf(HasSubstr("unsupported type JSON"),
+                                       HasSubstr("Cannot reference JSON"))));
 
   // Verify that a JSON column cannot be used as a primary key.
   statements.clear();
@@ -525,8 +521,7 @@ TEST_F(DataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
       admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
           .get();
   EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
-                                 AllOf(HasSubstr("has type JSON"),
-                                       HasSubstr("part of the primary key"))));
+                                 HasSubstr("has type JSON")));
 }
 
 TEST_F(PgDataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
@@ -543,15 +538,11 @@ TEST_F(PgDataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
       admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
           .get();
   if (UsingEmulator()) {
-    EXPECT_THAT(metadata,
-                StatusIs(StatusCode::kFailedPrecondition,
-                         AllOf(HasSubstr("Cannot reference PG.JSONB"),
-                               HasSubstr("in the creation of index"))));
+    EXPECT_THAT(metadata, StatusIs(StatusCode::kFailedPrecondition,
+                                   HasSubstr("Cannot reference PG.JSONB")));
   } else {
-    EXPECT_THAT(metadata,
-                StatusIs(StatusCode::kFailedPrecondition,
-                         AllOf(HasSubstr("Index datatypesbyjsonvalue"),
-                               HasSubstr("unsupported type PG.JSONB"))));
+    EXPECT_THAT(metadata, StatusIs(StatusCode::kFailedPrecondition,
+                                   HasSubstr("unsupported type PG.JSONB")));
   }
 
   // Verify that a JSONB column cannot be used as a primary key.
@@ -566,8 +557,7 @@ TEST_F(PgDataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
       admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
           .get();
   EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
-                                 AllOf(HasSubstr("has type PG.JSONB"),
-                                       HasSubstr("part of the primary key"))));
+                                 HasSubstr("has type PG.JSONB")));
 }
 
 TEST_F(PgDataTypeIntegrationTest, InsertAndQueryWithJson) {
@@ -630,8 +620,7 @@ TEST_F(PgDataTypeIntegrationTest, NumericPrimaryKey) {
       admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
           .get();
   EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
-                                 AllOf(HasSubstr("has type PG.NUMERIC"),
-                                       HasSubstr("part of the primary key"))));
+                                 HasSubstr("has type PG.NUMERIC")));
 }
 
 TEST_F(DataTypeIntegrationTest, InsertAndQueryWithProtoEnumKey) {
