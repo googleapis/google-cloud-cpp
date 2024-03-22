@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/make_jwt_assertion.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/openssl_util.h"
 
 namespace google {
 namespace cloud {
@@ -26,7 +27,8 @@ StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
                                               std::string const& pem_contents) {
   auto const body =
       UrlsafeBase64Encode(header) + '.' + UrlsafeBase64Encode(payload);
-  auto pem_signature = internal::SignStringWithPem(body, pem_contents);
+  auto pem_signature =
+      google::cloud::internal::SignUsingSha256(body, pem_contents);
   if (!pem_signature) return std::move(pem_signature).status();
   return body + '.' + UrlsafeBase64Encode(*pem_signature);
 }
