@@ -84,7 +84,6 @@ excluded_targets+=(
   # and some CMake magic. It is also skipped against production, so most Bazel
   # builds run it but it is a no-op.
   "-//google/cloud/storage/tests:error_injection_integration_test-default"
-  "-//google/cloud/storage/tests:error_injection_integration_test-grpc-media"
   "-//google/cloud/storage/tests:error_injection_integration_test-grpc-metadata"
 )
 for target in "${production_only_targets[@]}"; do
