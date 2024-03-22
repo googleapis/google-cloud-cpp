@@ -122,6 +122,7 @@ add_library(
     internal/unified_rest_credentials.h
     internal/win32/oauth2_service_account_credentials.cc
     internal/win32/pem_signing.cc
+    internal/win32/win32_helpers.h
     rest_options.h)
 target_link_libraries(
     google_cloud_cpp_rest_internal

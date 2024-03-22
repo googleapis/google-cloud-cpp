@@ -69,6 +69,7 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/tracing_rest_client.h",
     "internal/tracing_rest_response.h",
     "internal/unified_rest_credentials.h",
+    "internal/win32/win32_helpers.h",
     "rest_options.h",
 ]
 

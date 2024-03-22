@@ -14,9 +14,9 @@
 
 #ifdef _WIN32
 #include "google/cloud/internal/pem_signing.h"
-#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/sha256_hash.h"
+#include "google/cloud/internal/win32/win32_helpers.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
 #include <array>
@@ -32,20 +32,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace {
-std::string FormatWin32Errors(absl::string_view prefix) {
-  auto last_error = GetLastError();
-  LPSTR message_buffer_raw = nullptr;
-  auto size = FormatMessageA(
-      FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM |
-          FORMAT_MESSAGE_IGNORE_INSERTS,
-      nullptr, last_error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-      (LPSTR)&message_buffer_raw, 0, nullptr);
-  std::unique_ptr<char, decltype(&LocalFree)> message_buffer(message_buffer_raw,
-                                                             &LocalFree);
-  return absl::StrCat(prefix, absl::string_view(message_buffer.get(), size),
-                      " (error code ", last_error, ")");
-}
-
 StatusOr<std::vector<BYTE>> DecodePem(std::string const& pem_contents) {
   DWORD buffer_size = 0;
   if (!CryptStringToBinaryA(

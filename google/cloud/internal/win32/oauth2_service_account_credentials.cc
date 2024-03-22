@@ -14,6 +14,8 @@
 
 #ifdef _WIN32
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/win32/win32_helpers.h"
 #include <fstream>
 #include <type_traits>
 #include <vector>
@@ -25,6 +27,9 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::internal::FormatWin32Errors;
+using ::google::cloud::internal::InvalidArgumentError;
+
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source) {
   // Read the PKCS#12 file into memory.
@@ -32,25 +37,12 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   {
     std::ifstream file(source, std::ios::binary);
     if (!file.is_open()) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Cannot open PKCS#12 file (" + source + ")");
+      return InvalidArgumentError(
+          absl::StrCat("Cannot open PKCS#12 file (", source, ")"),
+          GCP_ERROR_INFO());
     }
     data.assign(std::istreambuf_iterator<char>{file}, {});
   }
-
-  auto capture_win32_errors = []() {
-    auto last_error = GetLastError();
-    LPSTR message_buffer_raw = nullptr;
-    auto size = FormatMessageA(
-        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM |
-            FORMAT_MESSAGE_IGNORE_INSERTS,
-        nullptr, last_error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        (LPSTR)&message_buffer_raw, 0, nullptr);
-    std::unique_ptr<char, decltype(&LocalFree)> message_buffer(
-        message_buffer_raw, &LocalFree);
-    return std::string(message_buffer.get(), size) + " (error code " +
-           std::to_string(last_error) + ")";
-  };
 
   // Import the PKCS#12 file into a certificate store.
   HCERTSTORE certstore_raw = [data = std::move(data)]() mutable {
@@ -59,10 +51,9 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     return PFXImportCertStore(&dataBlob, L"notasecret", CRYPT_EXPORTABLE);
   }();
   if (certstore_raw == nullptr) {
-    auto last_error = GetLastError();
-    std::string msg = "Cannot parse PKCS#12 file (" + source + "): ";
-    msg += capture_win32_errors();
-    return Status(StatusCode::kInvalidArgument, msg);
+    return InvalidArgumentError(
+        FormatWin32Errors("Cannot parse PKCS#12 file (", source, "): "),
+        GCP_ERROR_INFO());
   }
   auto close_certstore = [](HCERTSTORE certstore) {
     CertCloseStore(certstore, 0);
@@ -75,8 +66,9 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
       certstore.get(), X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, 0,
       CERT_FIND_ANY, nullptr, nullptr);
   if (cert_raw == nullptr) {
-    return Status(StatusCode::kInvalidArgument,
-                  "No certificate found in PKCS#12 file (" + source + ")");
+    return InvalidArgumentError(
+        absl::StrCat("No certificate found in PKCS#12 file (", source, ")"),
+        GCP_ERROR_INFO());
   }
   std::unique_ptr<std::remove_pointer_t<decltype(cert_raw)>,
                   decltype(&CertFreeCertificateContext)>
@@ -96,10 +88,11 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   // Validate the service account ID.
   if (service_account_id.find_first_not_of("0123456789") != std::string::npos ||
       service_account_id.empty()) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Invalid PKCS#12 file (" + source +
-            "): service account id missing or not not formatted correctly");
+    return InvalidArgumentError(
+        absl::StrCat(
+            "Invalid PKCS#12 file (", source,
+            "): service account id missing or not not formatted correctly"),
+        GCP_ERROR_INFO());
   }
 
   // Get a provider that has the private key of the certificate.
@@ -109,9 +102,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   if (!CryptAcquireCertificatePrivateKey(cert.get(), CRYPT_ACQUIRE_SILENT_FLAG,
                                          nullptr, &prov_raw, &pdwKeySpec,
                                          &pfCallerFreeProvOrNCryptKey)) {
-    std::string msg = "No private key found in PKCS#12 file (" + source + "): ";
-    msg += capture_win32_errors();
-    return Status(StatusCode::kInvalidArgument, msg);
+    return InvalidArgumentError(
+        FormatWin32Errors("No private key found in PKCS#12 file (", source,
+                          "): "),
+        GCP_ERROR_INFO());
   }
   auto close_prov = [](void* prov) {
     // According to documentation of CryptAcquireCertificatePrivateKey,
@@ -125,9 +119,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   // Get the private key from the provider.
   HCRYPTKEY pkey_raw;
   if (!CryptGetUserKey(prov_raw, pdwKeySpec, &pkey_raw)) {
-    std::string msg = "No private key found in PKCS#12 file (" + source + "): ";
-    msg += capture_win32_errors();
-    return Status(StatusCode::kInvalidArgument, msg);
+    return InvalidArgumentError(
+        FormatWin32Errors("No private key found in PKCS#12 file (", source,
+                          "): "),
+        GCP_ERROR_INFO());
   }
   auto close_pkey = [](void* pkey) {
     CryptDestroyKey(reinterpret_cast<HCRYPTKEY>(pkey));
@@ -139,10 +134,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   DWORD exported_key_length;
   if (!CryptExportKey(reinterpret_cast<HCRYPTKEY>(pkey.get()), 0,
                       PRIVATEKEYBLOB, 0, nullptr, &exported_key_length)) {
-    std::string msg =
-        "Could not export private key from PKCS#12 file (" + source + "): ";
-    msg += capture_win32_errors();
-    return Status(StatusCode::kInvalidArgument, msg);
+    return InvalidArgumentError(
+        FormatWin32Errors("Could not export private key from PKCS#12 file (",
+                          source, "): "),
+        GCP_ERROR_INFO());
   }
   std::vector<char> exported_key(exported_key_length);
   CryptExportKey(reinterpret_cast<HCRYPTKEY>(pkey.get()), 0, PRIVATEKEYBLOB, 0,
@@ -154,10 +149,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   if (!CryptEncodeObjectEx(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING,
                            PKCS_RSA_PRIVATE_KEY, exported_key.data(), 0,
                            nullptr, nullptr, &pkcs1_encoded_length)) {
-    std::string msg =
-        "Could not encode private key from PKCS#12 file (" + source + "): ";
-    msg += capture_win32_errors();
-    return Status(StatusCode::kInvalidArgument, msg);
+    return InvalidArgumentError(
+        FormatWin32Errors("Could not encode private key from PKCS#12 file (",
+                          source, "): "),
+        GCP_ERROR_INFO());
   }
   std::vector<BYTE> pkcs1_encoded(pkcs1_encoded_length);
   CryptEncodeObjectEx(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING,
@@ -177,10 +172,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   if (!CryptEncodeObjectEx(X509_ASN_ENCODING, PKCS_PRIVATE_KEY_INFO,
                            &private_key_info, 0, nullptr, nullptr,
                            &pkcs8_encoded_length)) {
-    std::string msg =
-        "Could not encode private key from PKCS#12 file (" + source + "): ";
-    msg += capture_win32_errors();
-    return Status(StatusCode::kInvalidArgument, msg);
+    return InvalidArgumentError(
+        FormatWin32Errors("Could not encode private key from PKCS#12 file (",
+                          source, "): "),
+        GCP_ERROR_INFO());
   }
   std::vector<BYTE> pkcs8_encoded(pkcs8_encoded_length);
   CryptEncodeObjectEx(X509_ASN_ENCODING, PKCS_PRIVATE_KEY_INFO,
@@ -192,11 +187,11 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   if (!CryptBinaryToStringA(pkcs8_encoded.data(), pkcs8_encoded_length,
                             CRYPT_STRING_BASE64 | CRYPT_STRING_NOCR, nullptr,
                             &base64_length)) {
-    std::string msg =
-        "Could not base64 encode private key from PKCS#12 file (" + source +
-        "): ";
-    msg += capture_win32_errors();
-    return Status(StatusCode::kInvalidArgument, msg);
+    return InvalidArgumentError(
+        FormatWin32Errors(
+            "Could not base64 encode private key from PKCS#12 file (", source,
+            "): "),
+        GCP_ERROR_INFO());
   }
   std::string private_key = "-----BEGIN PRIVATE KEY-----\n";
   // Enlarge the string and directly write the base64 data into it.
