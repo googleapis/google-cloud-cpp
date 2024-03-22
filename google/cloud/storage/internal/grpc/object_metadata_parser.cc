@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/grpc/object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc/owner_parser.h"
 #include "google/cloud/storage/internal/grpc/synthetic_self_link.h"
+#include "google/cloud/storage/internal/md5hash.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/big_endian.h"
@@ -69,7 +70,7 @@ StatusOr<std::string> MD5ToProto(std::string const& v) {
 }
 
 std::string ComputeMD5Hash(absl::string_view payload) {
-  auto b = storage::internal::MD5Hash(payload);
+  auto b = MD5Hash(payload);
   return std::string{b.begin(), b.end()};
 }
 
