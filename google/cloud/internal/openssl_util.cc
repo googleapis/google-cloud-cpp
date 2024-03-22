@@ -17,9 +17,9 @@
 #ifdef _WIN32
 #include "google/cloud/internal/sha256_hash.h"
 #include "absl/strings/string_view.h"
+#include <type_traits>
 #include <Ntstatus.h>
 #include <Windows.h>
-#include <type_traits>
 #include <wincrypt.h>
 #else
 #include <openssl/bio.h>

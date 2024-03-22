@@ -23,10 +23,10 @@
 #include "google/cloud/internal/rest_response.h"
 #include <nlohmann/json.hpp>
 #ifdef _WIN32
-#include <Windows.h>
 #include <fstream>
 #include <type_traits>
 #include <vector>
+#include <Windows.h>
 #include <wincrypt.h>
 #else
 #include <openssl/err.h>
