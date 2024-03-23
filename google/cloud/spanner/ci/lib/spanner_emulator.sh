@@ -64,18 +64,12 @@ function spanner_emulator::internal::read_http_emulator_port() {
 }
 
 # Starts the cloud spanner emulator. On success, exports the
-# SPANNER_EMULATOR_HOST environment variable containing the host:port where the
-# emulator is listening.
+# SPANNER_EMULATOR_HOST and SPANNER_EMULATOR_REST_HOST environment
+# variables containing the host:port where the emulator is listening.
 function spanner_emulator::start() {
-  io::log "Launching Cloud Spanner emulator in the background"
   if [[ -z "${CLOUD_SDK_LOCATION:-}" ]]; then
     echo 1>&2 "You must set CLOUD_SDK_LOCATION to find the emulator"
     return 1
-  fi
-
-  local emulator_port=0
-  if [[ $# -ge 1 ]]; then
-    emulator_port=$1
   fi
 
   # We cannot use `gcloud beta emulators spanner start` because there is no way
@@ -85,9 +79,18 @@ function spanner_emulator::start() {
     echo 1>&2 "The Cloud Spanner emulator does not seem to be installed, aborting"
     return 1
   fi
+  readonly SPANNER_HTTP_EMULATOR_CMD="${CLOUD_SDK_LOCATION}/bin/cloud_spanner_emulator/gateway_main"
+  if [[ ! -x "${SPANNER_HTTP_EMULATOR_CMD}" ]]; then
+    echo 1>&2 "The Cloud Spanner HTTP emulator does not seem to be installed, aborting"
+    return 1
+  fi
 
-  # The tests typically run in a Docker container, where the ports are largely
-  # free; when using in manual tests, you can set SPANNER_EMULATOR_HOST.
+  io::log "Launching Cloud Spanner emulator in the background"
+  local emulator_port=0
+  if [[ $# -ge 1 ]]; then
+    emulator_port=$1
+  fi
+
   rm -f emulator.log
   "${SPANNER_EMULATOR_CMD}" --host_port "localhost:${emulator_port}" >emulator.log 2>&1 </dev/null &
   SPANNER_EMULATOR_PID=$!
@@ -103,14 +106,10 @@ function spanner_emulator::start() {
   export SPANNER_EMULATOR_HOST="localhost:${emulator_port}"
   io::log "Spanner emulator started at ${SPANNER_EMULATOR_HOST}"
 
-  # Repeat the process to launch the emulator with HTTP support. We launch a separate process
-  # as existing tests fail if we try and use gateway_main for both gRPC and REST.
-  readonly SPANNER_HTTP_EMULATOR_CMD="${CLOUD_SDK_LOCATION}/bin/cloud_spanner_emulator/gateway_main"
-  if [[ ! -x "${SPANNER_HTTP_EMULATOR_CMD}" ]]; then
-    echo 1>&2 "The Cloud Spanner HTTP emulator does not seem to be installed, aborting"
-    return 1
-  fi
-
+  # Repeat the process to launch the emulator with HTTP support. We launch a
+  # separate process as existing tests fail if we try and use gateway_main
+  # for both gRPC and REST.
+  io::log "Launching Cloud Spanner HTTP emulator in the background"
   local http_emulator_port=$((emulator_port + 1))
   if [[ $# -ge 2 ]]; then
     http_emulator_port=$2
@@ -120,8 +119,6 @@ function spanner_emulator::start() {
     grpc_emulator_port=$3
   fi
 
-  # The tests typically run in a Docker container, where the ports are largely
-  # free; when using in manual tests, you can set SPANNER_EMULATOR_REST_HOST.
   rm -f http_emulator.log
   "${SPANNER_HTTP_EMULATOR_CMD}" --hostname "localhost" \
     --grpc_port "${grpc_emulator_port}" --http_port "${http_emulator_port}" \
