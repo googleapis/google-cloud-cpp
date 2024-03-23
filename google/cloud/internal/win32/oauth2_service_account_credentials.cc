@@ -193,23 +193,23 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
             "): "),
         GCP_ERROR_INFO());
   }
-  std::string private_key = "-----BEGIN PRIVATE KEY-----\n";
-  // Enlarge the string and directly write the base64 data into it.
-  private_key.resize(private_key.size() + base64_length);
+  std::vector<char> private_key(base64_length);
   CryptBinaryToStringA(pkcs8_encoded.data(), pkcs8_encoded_length,
                        CRYPT_STRING_BASE64 | CRYPT_STRING_NOCR,
-                       &*(private_key.end() - base64_length), &base64_length);
+                       private_key.data(), &base64_length);
   private_key.pop_back();  // remove the null terminator
-  private_key += "-----END PRIVATE KEY-----\n";
 
-  return ServiceAccountCredentialsInfo{std::move(service_account_id),
-                                       kP12PrivateKeyIdMarker,
-                                       std::move(private_key),
-                                       GoogleOAuthRefreshEndpoint(),
-                                       /*scopes=*/{},
-                                       /*subject=*/{},
-                                       /*enable_self_signed_jwt=*/false,
-                                       /*universe_domain=*/{}};
+  return ServiceAccountCredentialsInfo{
+      std::move(service_account_id),
+      kP12PrivateKeyIdMarker,
+      absl::StrCat("-----BEGIN PRIVATE KEY-----\n",
+                   absl::string_view(private_key.data(), private_key.size()),
+                   "-----END PRIVATE KEY-----\n"),
+      GoogleOAuthRefreshEndpoint(),
+      /*scopes=*/{},
+      /*subject=*/{},
+      /*enable_self_signed_jwt=*/false,
+      /*universe_domain=*/{}};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
