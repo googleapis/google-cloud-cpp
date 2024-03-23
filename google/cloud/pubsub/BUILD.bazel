@@ -38,6 +38,7 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
+        "@com_google_absl//absl/types:any"
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
         # Do not sort: grpc++ must come last
         "@com_github_grpc_grpc//:grpc++",

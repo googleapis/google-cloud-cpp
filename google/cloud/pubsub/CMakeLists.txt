@@ -337,7 +337,8 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
     "google_cloud_cpp_pubsub_protos"
-    "absl_str_format")
+    "absl_str_format"
+    "absl_any")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -518,6 +519,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
                     google-cloud-cpp::pubsub_mocks
                     google-cloud-cpp::pubsub
                     absl::str_format
+                    absl::any
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest)
