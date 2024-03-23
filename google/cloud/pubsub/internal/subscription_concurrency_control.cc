@@ -16,9 +16,11 @@
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/default_batch_callback.h"
 #include "google/cloud/pubsub/internal/message_callback_wrapper.h"
+#include "google/cloud/pubsub/internal/tracing_batch_callback.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
 
 namespace google {
 namespace cloud {
@@ -73,6 +75,11 @@ void SubscriptionConcurrencyControl::Start(
   callback_ = std::make_shared<DefaultBatchCallback>(
       [](BatchCallback::StreamingPullResponse const&) {},
       std::move(message_callback));
+  auto const& current = internal::CurrentOptions();
+  if (current.get<OpenTelemetryTracingOption>()) {
+    callback_ = MakeTracingBatchCallback(
+        std::move(callback_), current.get<pubsub::SubscriptionOption>());
+  }
 
   source_->Start(callback_);
   if (total_messages() >= max_concurrency_) return;

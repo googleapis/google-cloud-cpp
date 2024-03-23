@@ -38,6 +38,7 @@ class MockBatchCallback : public pubsub_internal::BatchCallback {
               (pubsub_internal::MessageCallback::MessageAndHandler));
   MOCK_METHOD(void, message_callback,
               (pubsub_internal::MessageCallback::ReceivedMessage));
+  MOCK_METHOD(void, EndMessage, (std::string const&, std::string const&));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
