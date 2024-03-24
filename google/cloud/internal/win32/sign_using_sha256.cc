@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #ifdef _WIN32
-#include "google/cloud/internal/pem_signing.h"
+#include "google/cloud/internal/sign_using_sha256.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/internal/win32/win32_helpers.h"
