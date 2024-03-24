@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #ifdef _WIN32
-#include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/internal/parse_service_account_p12_file.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/win32/win32_helpers.h"
 #include "absl/types/span.h"
@@ -49,6 +49,9 @@ struct CertContextDeleter {
 using UniqueCertContext =
     std::unique_ptr<std::remove_pointer_t<PCCERT_CONTEXT>, CertContextDeleter>;
 
+/// A subclass of `std::unique_ptr` that has a get() method that returns a
+/// native integer type. This is needed because some Windows API handles are
+/// declared as native integers instead of pointers.
 template <typename T, typename Deleter>
 class UniquePtrReinterpretProxy : private std::unique_ptr<void, Deleter> {
   static_assert(sizeof(T) == sizeof(void*),
@@ -129,8 +132,8 @@ std::string GetCertificateCommonName(PCCERT_CONTEXT cert) {
   return result;
 }
 
-StatusOr<UniqueCryptKey> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
-                                                  std::string const& source) {
+StatusOr<std::vector<char>> ExportCertificatePrivateKey(
+    PCCERT_CONTEXT cert, std::string const& source) {
   // Get a provider that has the private key of the certificate.
   HCRYPTPROV prov_raw;
   DWORD pdwKeySpec;
@@ -146,6 +149,8 @@ StatusOr<UniqueCryptKey> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
   // According to documentation of CryptAcquireCertificatePrivateKey,
   // pfCallerFreeProvOrNCryptKey will always be true in our case so
   // we don't need to check it.
+  // The provider must outlive the HCRYPTKEY, so calling CryptGetUserKey
+  // and CryptExportKey must be done in the same function.
   UniqueCryptProv prov(prov_raw);
 
   // Get the private key from the provider.
@@ -156,13 +161,9 @@ StatusOr<UniqueCryptKey> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
                           "): "),
         GCP_ERROR_INFO());
   }
-  return UniqueCryptKey(pkey_raw);
-}
-
-StatusOr<std::vector<char>> ExportKey(HCRYPTKEY pkey,
-                                      std::string const& source) {
+  UniqueCryptKey pkey(pkey_raw);
   DWORD exported_key_length;
-  if (!CryptExportKey(pkey, 0, PRIVATEKEYBLOB, 0, nullptr,
+  if (!CryptExportKey(pkey.get(), 0, PRIVATEKEYBLOB, 0, nullptr,
                       &exported_key_length)) {
     return InvalidArgumentError(
         FormatWin32Errors("Could not export private key from PKCS#12 file (",
@@ -173,7 +174,7 @@ StatusOr<std::vector<char>> ExportKey(HCRYPTKEY pkey,
   // We don't have to check again for errors; we already did in the previous
   // call to get the buffer size. Same with calls to CryptEncodeObjectEx and
   // CryptBinaryToStringA below.
-  CryptExportKey(pkey, 0, PRIVATEKEYBLOB, 0,
+  CryptExportKey(pkey.get(), 0, PRIVATEKEYBLOB, 0,
                  reinterpret_cast<BYTE*>(exported_key.data()),
                  &exported_key_length);
   return exported_key;
@@ -268,12 +269,8 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
         GCP_ERROR_INFO());
   }
 
-  // Get the private key from the certificate.
-  auto pkey = GetCertificatePrivateKey(cert->get(), source);
-  if (!pkey) return std::move(pkey).status();
-
-  // Export the private key to a blob.
-  auto exported_key = ExportKey(pkey->get(), source);
+  // Export the private key from the certificate to a blob.
+  auto exported_key = ExportCertificatePrivateKey(cert->get(), source);
   if (!exported_key) return std::move(exported_key).status();
 
   // Encode the blob to PKCS#1 format.

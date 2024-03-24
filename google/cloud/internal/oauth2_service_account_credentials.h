@@ -61,10 +61,6 @@ struct ServiceAccountCredentialsInfo {
 /// OAuth2.
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info);
 
-/// Parses the contents of a P12 keyfile into a ServiceAccountCredentialsInfo.
-StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
-    std::string const& source);
-
 /// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,

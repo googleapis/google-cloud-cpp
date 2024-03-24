@@ -92,8 +92,9 @@ add_library(
     internal/oauth2_service_account_credentials.h
     internal/oauth2_universe_domain.cc
     internal/oauth2_universe_domain.h
-    internal/openssl/oauth2_service_account_credentials.cc
+    internal/openssl/parse_service_account_p12_file.cc
     internal/openssl/sign_using_sha256.cc
+    internal/parse_service_account_p12_file.h
     internal/populate_rest_options.cc
     internal/populate_rest_options.h
     internal/rest_carrier.cc
@@ -120,7 +121,7 @@ add_library(
     internal/tracing_rest_response.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
-    internal/win32/oauth2_service_account_credentials.cc
+    internal/win32/parse_service_account_p12_file.cc
     internal/win32/sign_using_sha256.cc
     internal/win32/win32_helpers.cc
     internal/win32/win32_helpers.h

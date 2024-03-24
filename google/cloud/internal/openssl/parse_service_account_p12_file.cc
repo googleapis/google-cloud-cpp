@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #ifndef _WIN32
-#include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/internal/parse_service_account_p12_file.h"
 #include <openssl/err.h>
 #include <openssl/pem.h>
 #include <openssl/pkcs12.h>
