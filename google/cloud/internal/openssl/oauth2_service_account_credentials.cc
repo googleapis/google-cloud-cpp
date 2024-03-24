@@ -121,7 +121,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   std::string private_key(buf_mem->data, buf_mem->length);
 
   return ServiceAccountCredentialsInfo{std::move(service_account_id),
-                                       kP12PrivateKeyIdMarker,
+                                       P12PrivateKeyIdMarker(),
                                        std::move(private_key),
                                        GoogleOAuthRefreshEndpoint(),
                                        /*scopes=*/{},

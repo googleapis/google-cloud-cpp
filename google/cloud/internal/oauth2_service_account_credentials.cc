@@ -238,7 +238,7 @@ bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
       info.universe_domain != GoogleDefaultUniverseDomain()) {
     return false;
   }
-  if (info.private_key_id == kP12PrivateKeyIdMarker ||
+  if (info.private_key_id == P12PrivateKeyIdMarker() ||
       !info.enable_self_signed_jwt) {
     return true;
   }

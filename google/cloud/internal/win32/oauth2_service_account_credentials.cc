@@ -201,7 +201,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
 
   return ServiceAccountCredentialsInfo{
       std::move(service_account_id),
-      kP12PrivateKeyIdMarker,
+      P12PrivateKeyIdMarker(),
       absl::StrCat("-----BEGIN PRIVATE KEY-----\n",
                    absl::string_view(private_key.data(), private_key.size()),
                    "-----END PRIVATE KEY-----\n"),
