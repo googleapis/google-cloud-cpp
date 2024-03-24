@@ -14,7 +14,7 @@
 
 #ifdef _WIN32
 #include "google/cloud/storage/internal/hash_function_impl.h"
-#include "google/cloud/storage/internal/base64.h"
+#include <type_traits>
 #include <Windows.h>
 #include <wincrypt.h>
 
@@ -24,36 +24,43 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
-MD5HashFunction::ContextPtr CreateMD5HashCtx() {
+struct ContextDeleter {
+  void operator()(BCRYPT_HASH_HANDLE h) const { BCryptDestroyHash(h); }
+};
+
+using ContextPtr =
+    std::unique_ptr<std::remove_pointer_t<BCRYPT_HASH_HANDLE>, ContextDeleter>;
+
+ContextPtr CreateMD5HashCtx() {
   BCRYPT_HASH_HANDLE hHash = nullptr;
   BCryptCreateHash(BCRYPT_MD5_ALG_HANDLE, &hHash, nullptr, 0, nullptr, 0, 0);
-  return MD5HashFunction::ContextPtr(hHash);
+  return ContextPtr(hHash);
 }
+
+class BCryptMD5HashFunction : public MD5HashFunction {
+ public:
+  BCryptMD5HashFunction() : impl_(CreateMD5HashCtx()) {}
+
+  void Update(absl::string_view buffer) override {
+    BCryptHashData(impl_.get(),
+                   reinterpret_cast<PUCHAR>(const_cast<char*>(buffer.data())),
+                   static_cast<ULONG>(buffer.size()), 0);
+  }
+
+  Hash FinishImpl() override {
+    MD5HashFunction::Hash hash;
+    BCryptFinishHash(impl_.get(), reinterpret_cast<PUCHAR>(hash.data()),
+                     static_cast<ULONG>(hash.size()), 0);
+    return hash;
+  }
+
+ private:
+  ContextPtr impl_;
+};
 }  // namespace
 
-static_assert(std::is_same_v<MD5Context, BCRYPT_HASH_HANDLE>,
-              "MD5Context is not the same type as BCRYPT_HASH_HANDLE");
-
-MD5HashFunction::MD5HashFunction() : impl_(CreateMD5HashCtx()) {}
-
-void MD5HashFunction::Update(absl::string_view buffer) {
-  BCryptHashData(impl_.get(),
-                 reinterpret_cast<PUCHAR>(const_cast<char*>(buffer.data())),
-                 static_cast<ULONG>(buffer.size()), 0);
-}
-
-HashValues MD5HashFunction::Finish() {
-  if (hashes_.has_value()) return *hashes_;
-  // (8 bits per byte) * 16 bytes = 128 bits
-  std::array<std::uint8_t, 16> hash;
-  BCryptFinishHash(impl_.get(), reinterpret_cast<PUCHAR>(hash.data()),
-                   static_cast<ULONG>(hash.size()), 0);
-  hashes_ = HashValues{/*.crc32c=*/{}, /*.md5=*/Base64Encode(hash)};
-  return *hashes_;
-}
-
-void MD5HashFunction::ContextDeleter::operator()(MD5Context context) {
-  BCryptDestroyHash(context);
+std::unique_ptr<MD5HashFunction> MD5HashFunction::Create() {
+  return std::make_unique<BCryptMD5HashFunction>();
 }
 
 }  // namespace internal

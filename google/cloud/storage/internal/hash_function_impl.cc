@@ -123,6 +123,13 @@ Status MD5HashFunction::Update(std::int64_t offset, absl::Cord const& buffer,
   return InvalidArgumentError("mismatched offset", GCP_ERROR_INFO());
 }
 
+HashValues MD5HashFunction::Finish() {
+  if (hashes_.has_value()) return *hashes_;
+  Hash hash = FinishImpl();
+  hashes_ = HashValues{/*.crc32c=*/{}, /*.md5=*/Base64Encode(hash)};
+  return *hashes_;
+}
+
 void Crc32cHashFunction::Update(absl::string_view buffer) {
   current_ = ExtendCrc32c(current_, buffer);
 }

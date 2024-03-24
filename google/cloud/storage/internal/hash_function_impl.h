@@ -22,13 +22,6 @@
 #include <memory>
 #include <string>
 
-#ifdef _WIN32
-typedef void* MD5Context;
-#else
-#include <openssl/evp.h>
-typedef EVP_MD_CTX* MD5Context;
-#endif  // _WIN32
-
 namespace google {
 namespace cloud {
 namespace storage {
@@ -80,13 +73,15 @@ class CompositeFunction : public HashFunction {
  */
 class MD5HashFunction : public HashFunction {
  public:
-  MD5HashFunction();
+  MD5HashFunction() = default;
 
   MD5HashFunction(MD5HashFunction const&) = delete;
   MD5HashFunction& operator=(MD5HashFunction const&) = delete;
 
+  static std::unique_ptr<MD5HashFunction> Create();
+
   std::string Name() const override { return "md5"; }
-  void Update(absl::string_view buffer) override;
+  virtual void Update(absl::string_view buffer) = 0;
   Status Update(std::int64_t offset, absl::string_view buffer) override;
   Status Update(std::int64_t offset, absl::string_view buffer,
                 std::uint32_t buffer_crc) override;
@@ -94,15 +89,12 @@ class MD5HashFunction : public HashFunction {
                 std::uint32_t buffer_crc) override;
   HashValues Finish() override;
 
-  struct ContextDeleter {
-    void operator()(MD5Context);
-  };
-
-  using ContextPtr =
-      std::unique_ptr<std::remove_pointer_t<MD5Context>, ContextDeleter>;
+ protected:
+  // (8 bits per byte) * 16 bytes = 128 bits
+  using Hash = std::array<std::uint8_t, 16>;
+  virtual Hash FinishImpl() = 0;
 
  private:
-  ContextPtr impl_;
   std::int64_t minimum_offset_ = 0;
   absl::optional<HashValues> hashes_;
 };
