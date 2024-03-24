@@ -17,16 +17,18 @@
 
 #ifdef _WIN32
 #include "google/cloud/version.h"
+#include "absl/functional/function_ref.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
-#include <algorithm>
-#include <iterator>
-#include <Windows.h>
+#include <string>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+std::string FormatWin32ErrorsImpl(
+    absl::FunctionRef<std::string(absl::string_view, unsigned long)>);
 
 /**
  * Formats the last Win32 error into a human-readable string.
@@ -36,18 +38,10 @@ namespace internal {
  */
 template <typename... AV>
 std::string FormatWin32Errors(AV&&... prefixes) {
-  auto last_error = GetLastError();
-  LPSTR message_buffer_raw = nullptr;
-  auto size = FormatMessageA(
-      FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM |
-          FORMAT_MESSAGE_IGNORE_INSERTS,
-      nullptr, last_error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-      (LPSTR)&message_buffer_raw, 0, nullptr);
-  std::unique_ptr<char, decltype(&LocalFree)> message_buffer(message_buffer_raw,
-                                                             &LocalFree);
-  return absl::StrCat(std::forward<AV>(prefixes)...,
-                      absl::string_view(message_buffer.get(), size),
-                      " (error code ", last_error, ")");
+  return FormatWin32ErrorsImpl([&](absl::string_view msg, unsigned long ec) {
+    return absl::StrCat(std::forward<AV>(prefixes)..., msg, " (error code ", ec,
+                        ")");
+  });
 }
 
 }  // namespace internal

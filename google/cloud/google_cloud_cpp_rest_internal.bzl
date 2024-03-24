@@ -121,4 +121,5 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/unified_rest_credentials.cc",
     "internal/win32/oauth2_service_account_credentials.cc",
     "internal/win32/pem_signing.cc",
+    "internal/win32/win32_helpers.cc",
 ]
