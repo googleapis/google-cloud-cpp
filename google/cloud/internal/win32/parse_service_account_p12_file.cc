@@ -132,14 +132,13 @@ std::string GetCertificateCommonName(PCCERT_CONTEXT cert) {
   return result;
 }
 
-StatusOr<std::vector<char>> ExportCertificatePrivateKey(
-    PCCERT_CONTEXT cert, std::string const& source) {
-  // Get a provider that has the private key of the certificate.
+StatusOr<UniqueCryptProv> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
+                                                   DWORD& dwKeySpec,
+                                                   std::string const& source) {
   HCRYPTPROV prov_raw;
-  DWORD pdwKeySpec;
   BOOL pfCallerFreeProvOrNCryptKey;
   if (!CryptAcquireCertificatePrivateKey(cert, CRYPT_ACQUIRE_SILENT_FLAG,
-                                         nullptr, &prov_raw, &pdwKeySpec,
+                                         nullptr, &prov_raw, &dwKeySpec,
                                          &pfCallerFreeProvOrNCryptKey)) {
     return InvalidArgumentError(
         FormatWin32Errors("No private key found in PKCS#12 file (", source,
@@ -149,21 +148,25 @@ StatusOr<std::vector<char>> ExportCertificatePrivateKey(
   // According to documentation of CryptAcquireCertificatePrivateKey,
   // pfCallerFreeProvOrNCryptKey will always be true in our case so
   // we don't need to check it.
-  // The provider must outlive the HCRYPTKEY, so calling CryptGetUserKey
-  // and CryptExportKey must be done in the same function.
-  UniqueCryptProv prov(prov_raw);
+  return UniqueCryptProv(prov_raw);
+}
 
-  // Get the private key from the provider.
+StatusOr<UniqueCryptKey> GetKeyFromProvider(HCRYPTPROV prov, DWORD dwKeySpec,
+                                            std::string const& source) {
   HCRYPTKEY pkey_raw;
-  if (!CryptGetUserKey(prov.get(), pdwKeySpec, &pkey_raw)) {
+  if (!CryptGetUserKey(prov, dwKeySpec, &pkey_raw)) {
     return InvalidArgumentError(
         FormatWin32Errors("No private key found in PKCS#12 file (", source,
                           "): "),
         GCP_ERROR_INFO());
   }
-  UniqueCryptKey pkey(pkey_raw);
+  return UniqueCryptKey(pkey_raw);
+}
+
+StatusOr<std::vector<char>> ExportPrivateKey(HCRYPTKEY pkey,
+                                             std::string const& source) {
   DWORD exported_key_length;
-  if (!CryptExportKey(pkey.get(), 0, PRIVATEKEYBLOB, 0, nullptr,
+  if (!CryptExportKey(pkey, 0, PRIVATEKEYBLOB, 0, nullptr,
                       &exported_key_length)) {
     return InvalidArgumentError(
         FormatWin32Errors("Could not export private key from PKCS#12 file (",
@@ -174,7 +177,7 @@ StatusOr<std::vector<char>> ExportCertificatePrivateKey(
   // We don't have to check again for errors; we already did in the previous
   // call to get the buffer size. Same with calls to CryptEncodeObjectEx and
   // CryptBinaryToStringA below.
-  CryptExportKey(pkey.get(), 0, PRIVATEKEYBLOB, 0,
+  CryptExportKey(pkey, 0, PRIVATEKEYBLOB, 0,
                  reinterpret_cast<BYTE*>(exported_key.data()),
                  &exported_key_length);
   return exported_key;
@@ -269,8 +272,18 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
         GCP_ERROR_INFO());
   }
 
+  // Get a provider that has the private key of the certificate.
+  // Make sure that the provider outlives the HCRYPTKEY.
+  DWORD dwKeySpec;
+  auto prov = GetCertificatePrivateKey(cert->get(), dwKeySpec, source);
+  if (!prov) return std::move(prov).status();
+
+  // Get the private key from the provider.
+  auto pkey = GetKeyFromProvider(prov->get(), dwKeySpec, source);
+  if (!pkey) return std::move(pkey).status();
+
   // Export the private key from the certificate to a blob.
-  auto exported_key = ExportCertificatePrivateKey(cert->get(), source);
+  auto exported_key = ExportPrivateKey(pkey->get(), source);
   if (!exported_key) return std::move(exported_key).status();
 
   // Encode the blob to PKCS#1 format.
