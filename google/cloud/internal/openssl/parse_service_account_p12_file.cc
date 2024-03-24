@@ -18,6 +18,7 @@
 #include <openssl/pem.h>
 #include <openssl/pkcs12.h>
 #include <array>
+#include <cstring>
 
 namespace google {
 namespace cloud {
