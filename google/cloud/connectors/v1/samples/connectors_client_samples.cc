@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: connectors_v1::ConnectorsClient
+// lro-marker: true
 // clang-format on
 namespace {
 

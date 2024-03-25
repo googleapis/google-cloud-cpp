@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: vpcaccess_v1::VpcAccessServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

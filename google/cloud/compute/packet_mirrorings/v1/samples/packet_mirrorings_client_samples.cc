@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_packet_mirrorings_v1::PacketMirroringsClient
+// lro-marker: true
 // clang-format on
 namespace {
 

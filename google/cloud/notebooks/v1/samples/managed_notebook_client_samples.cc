@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: notebooks_v1::ManagedNotebookServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

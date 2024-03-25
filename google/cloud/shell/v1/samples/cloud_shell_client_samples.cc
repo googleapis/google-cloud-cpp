@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: shell_v1::CloudShellServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

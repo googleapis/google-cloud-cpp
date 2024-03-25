@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: assuredworkloads_v1::AssuredWorkloadsServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

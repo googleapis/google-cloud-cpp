@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: video_stitcher_v1::VideoStitcherServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

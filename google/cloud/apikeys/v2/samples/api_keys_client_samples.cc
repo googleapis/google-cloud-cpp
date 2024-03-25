@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: apikeys_v2::ApiKeysClient
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_target_instances_v1::TargetInstancesClient
+// lro-marker: true
 // clang-format on
 namespace {
 

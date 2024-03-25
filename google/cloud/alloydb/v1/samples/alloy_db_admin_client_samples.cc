@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: alloydb_v1::AlloyDBAdminClient
+// lro-marker: true
 // clang-format on
 namespace {
 

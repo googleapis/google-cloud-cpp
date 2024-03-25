@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: memcache_v1::CloudMemcacheClient
+// lro-marker: true
 // clang-format on
 namespace {
 

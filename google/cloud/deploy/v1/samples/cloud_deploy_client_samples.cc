@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: deploy_v1::CloudDeployClient
+// lro-marker: true
 // clang-format on
 namespace {
 

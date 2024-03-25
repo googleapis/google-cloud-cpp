@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_networks_v1::NetworksClient
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_backend_services_v1::BackendServicesClient
+// lro-marker: true
 // clang-format on
 namespace {
 

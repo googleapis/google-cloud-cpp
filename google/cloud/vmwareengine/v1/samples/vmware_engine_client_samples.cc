@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: vmwareengine_v1::VmwareEngineClient
+// lro-marker: true
 // clang-format on
 namespace {
 

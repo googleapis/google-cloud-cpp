@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: networkservices_v1::NetworkServicesClient
+// lro-marker: true
 // clang-format on
 namespace {
 

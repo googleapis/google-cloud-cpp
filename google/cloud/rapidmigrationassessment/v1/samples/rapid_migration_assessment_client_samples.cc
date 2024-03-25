@@ -32,6 +32,7 @@
 
 // clang-format off
 // main-dox-marker: rapidmigrationassessment_v1::RapidMigrationAssessmentClient
+// lro-marker: true
 // clang-format on
 namespace {
 

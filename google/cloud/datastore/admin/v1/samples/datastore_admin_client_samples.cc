@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: datastore_admin_v1::DatastoreAdminClient
+// lro-marker: true
 // clang-format on
 namespace {
 

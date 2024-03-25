@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: migrationcenter_v1::MigrationCenterClient
+// lro-marker: true
 // clang-format on
 namespace {
 

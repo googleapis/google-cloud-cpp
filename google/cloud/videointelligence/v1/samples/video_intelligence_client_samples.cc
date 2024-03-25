@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: videointelligence_v1::VideoIntelligenceServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

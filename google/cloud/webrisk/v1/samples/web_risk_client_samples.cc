@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: webrisk_v1::WebRiskServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

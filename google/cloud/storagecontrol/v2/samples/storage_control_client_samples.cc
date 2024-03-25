@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: storagecontrol_v2::StorageControlClient
+// lro-marker: true
 // clang-format on
 namespace {
 

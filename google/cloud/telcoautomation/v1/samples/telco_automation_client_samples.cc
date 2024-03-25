@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: telcoautomation_v1::TelcoAutomationClient
+// lro-marker: true
 // clang-format on
 namespace {
 

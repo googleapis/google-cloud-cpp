@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: dialogflow_es::DocumentsClient
+// lro-marker: true
 // clang-format on
 namespace {
 
