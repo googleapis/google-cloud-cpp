@@ -55,7 +55,12 @@ Status SampleGenerator::GenerateHeader() {
 
   HeaderPrint(R"""(
 // clang-format off
-// main-dox-marker: $product_namespace$::$client_class_name$
+// main-dox-marker: $product_namespace$::$client_class_name$)""");
+  if (HasLongrunningMethod()) {
+    HeaderPrint(R"""(
+// has-lro-marker: true)""");
+  }
+    HeaderPrint(R"""(
 // clang-format on
 namespace {
 
@@ -69,24 +74,24 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client = google::cloud::$product_namespace$::$client_class_name$()""");
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
-  if (HasGenerateGrpcTransport()) {
-    HeaderPrint(R"""(
+    if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+    if (HasGenerateGrpcTransport()) {
+      HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$()""");
-  } else {
-    HeaderPrint(R"""(
+    } else {
+      HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
-  }
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-      HeaderPrint(R"""("unused", )""");
-      break;
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-    default:
-      break;
-  }
-  HeaderPrint(R"""(options));
+    }
+    if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT:
+        HeaderPrint(R"""("unused", )""");
+        break;
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      default:
+        break;
+    }
+    HeaderPrint(R"""(options));
   //! [set-client-endpoint]
 }
 
@@ -117,25 +122,25 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
           /*initial_delay=*/std::chrono::milliseconds(200),
           /*maximum_delay=*/std::chrono::seconds(45),
           /*scaling=*/2.0).clone());)""");
-  if (HasGenerateGrpcTransport()) {
-    HeaderPrint(R"""(
+    if (HasGenerateGrpcTransport()) {
+      HeaderPrint(R"""(
   auto connection = google::cloud::$product_namespace$::Make$connection_class_name$()""");
-  } else {
-    HeaderPrint(R"""(
+    } else {
+      HeaderPrint(R"""(
   auto connection = google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
-  }
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{}, ");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-      HeaderPrint(R"""("location-unused-in-this-example", )""");
-      break;
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-    default:
-      break;
-  }
-  HeaderPrint(R"""(options);)""");
-  if (IsExperimental()) {
-    HeaderPrint(R"""(
+    }
+    if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{}, ");
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT:
+        HeaderPrint(R"""("location-unused-in-this-example", )""");
+        break;
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      default:
+        break;
+    }
+    HeaderPrint(R"""(options);)""");
+    if (IsExperimental()) {
+      HeaderPrint(R"""(
 
   // c1 and c2 share the same retry policies
   auto c1 = google::cloud::$product_namespace$::$client_class_name$(
@@ -157,8 +162,8 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   //! [set-retry-policy]
 }
 )""");
-  } else
-    HeaderPrint(R"""(
+    } else
+      HeaderPrint(R"""(
 
   // c1 and c2 share the same retry policies
   auto c1 = google::cloud::$product_namespace$::$client_class_name$(connection);
@@ -178,8 +183,8 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
 }
 )""");
 
-  if (HasLongrunningMethod()) {
-    HeaderPrint(R"""(
+    if (HasLongrunningMethod()) {
+      HeaderPrint(R"""(
 void SetPollingPolicy(std::vector<std::string> const& argv) {
   if (!argv.empty()) {
     throw google::cloud::testing_util::Usage{"set-client-policy-policy"};
@@ -206,25 +211,25 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
                 /*scaling=*/4.0).clone())
             .clone());
   )""");
-    if (HasGenerateGrpcTransport()) {
-      HeaderPrint(R"""(
+      if (HasGenerateGrpcTransport()) {
+        HeaderPrint(R"""(
   auto connection = google::cloud::$product_namespace$::Make$connection_class_name$()""");
-    } else {
-      HeaderPrint(R"""(
+      } else {
+        HeaderPrint(R"""(
   auto connection = google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
-    }
-    if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{}, ");
-    switch (endpoint_location_style) {
-      case ServiceConfiguration::LOCATION_DEPENDENT:
-        HeaderPrint(R"""("location-unused-in-this-example", )""");
-        break;
-      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      default:
-        break;
-    }
-    HeaderPrint(R"""(options);)""");
-    if (IsExperimental()) {
-      HeaderPrint(R"""(
+      }
+      if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{}, ");
+      switch (endpoint_location_style) {
+        case ServiceConfiguration::LOCATION_DEPENDENT:
+          HeaderPrint(R"""("location-unused-in-this-example", )""");
+          break;
+        case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+        default:
+          break;
+      }
+      HeaderPrint(R"""(options);)""");
+      if (IsExperimental()) {
+        HeaderPrint(R"""(
 
   // c1 and c2 share the same polling policies.
   auto c1 = google::cloud::$product_namespace$::$client_class_name$(
@@ -234,8 +239,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   //! [set-polling-policy]
 }
 )""");
-    } else
-      HeaderPrint(R"""(
+      } else
+        HeaderPrint(R"""(
 
   // c1 and c2 share the same polling policies.
   auto c1 = google::cloud::$product_namespace$::$client_class_name$(connection);
@@ -243,8 +248,8 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   //! [set-polling-policy]
 }
 )""");
-  }
-  HeaderPrint(R"""(
+    }
+    HeaderPrint(R"""(
 void WithServiceAccount(std::vector<std::string> const& argv) {
   if (argv.size() != 1 || argv[0] == "--help") {
     throw google::cloud::testing_util::Usage{"with-service-account <keyfile>"};
@@ -258,24 +263,24 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::$product_namespace$::$client_class_name$()""");
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
-  if (HasGenerateGrpcTransport()) {
-    HeaderPrint(R"""(
+    if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+    if (HasGenerateGrpcTransport()) {
+      HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$()""");
-  } else {
-    HeaderPrint(R"""(
+    } else {
+      HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
-  }
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-      HeaderPrint(R"""("us-west1" /* regional service region */, )""");
-      break;
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-    default:
-      break;
-  }
-  HeaderPrint(R"""(options));
+    }
+    if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT:
+        HeaderPrint(R"""("us-west1" /* regional service region */, )""");
+        break;
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      default:
+        break;
+    }
+    HeaderPrint(R"""(options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -297,13 +302,13 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
   SetRetryPolicy({});
  )""");
-  if (HasLongrunningMethod()) {
-    HeaderPrint(R"""(
+    if (HasLongrunningMethod()) {
+      HeaderPrint(R"""(
   std::cout << "\nRunning SetPollingPolicy() example" << std::endl;
   SetPollingPolicy({});
 )""");
-  }
-  HeaderPrint(R"""(
+    }
+    HeaderPrint(R"""(
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
 }
@@ -315,19 +320,19 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"set-client-endpoint", SetClientEndpoint},
       {"set-retry-policy", SetRetryPolicy},
   )""");
-  if (HasLongrunningMethod()) {
-    HeaderPrint(R"""(      {"set-polling-policy", SetPollingPolicy},
+    if (HasLongrunningMethod()) {
+      HeaderPrint(R"""(      {"set-polling-policy", SetPollingPolicy},
     )""");
-  }
-  HeaderPrint(R"""(      {"with-service-account", WithServiceAccount},
+    }
+    HeaderPrint(R"""(      {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
 }
 )""");
 
-  return {};
-}
+    return {};
+  }
 
 }  // namespace generator_internal
 }  // namespace cloud
