@@ -2577,6 +2577,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/networkservices/v1/dep.proto"
+  product_path: "google/cloud/networkservices/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Notebooks
 service {
   service_proto_path: "google/cloud/notebooks/v1/managed_service.proto"
