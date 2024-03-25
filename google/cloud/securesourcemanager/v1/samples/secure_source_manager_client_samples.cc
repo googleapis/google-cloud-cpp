@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: securesourcemanager_v1::SecureSourceManagerClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

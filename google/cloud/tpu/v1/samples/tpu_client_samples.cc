@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: tpu_v1::TpuClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

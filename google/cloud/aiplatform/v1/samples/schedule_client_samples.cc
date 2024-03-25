@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: aiplatform_v1::ScheduleServiceClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

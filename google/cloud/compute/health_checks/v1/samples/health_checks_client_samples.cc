@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_health_checks_v1::HealthChecksClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_vpn_gateways_v1::VpnGatewaysClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

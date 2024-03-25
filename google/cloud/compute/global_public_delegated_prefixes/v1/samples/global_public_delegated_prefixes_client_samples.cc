@@ -32,7 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

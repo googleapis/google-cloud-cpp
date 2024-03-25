@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: monitoring_metricsscope_v1::MetricsScopesClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

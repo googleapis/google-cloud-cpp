@@ -32,7 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -32,7 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

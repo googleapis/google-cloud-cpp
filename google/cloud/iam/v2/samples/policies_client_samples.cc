@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: iam_v2::PoliciesClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

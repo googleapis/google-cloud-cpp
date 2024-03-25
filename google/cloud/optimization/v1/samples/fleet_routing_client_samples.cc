@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: optimization_v1::FleetRoutingClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

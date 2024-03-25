@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: metastore_v1::DataprocMetastoreFederationClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

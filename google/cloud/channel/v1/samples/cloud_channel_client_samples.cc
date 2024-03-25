@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: channel_v1::CloudChannelServiceClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

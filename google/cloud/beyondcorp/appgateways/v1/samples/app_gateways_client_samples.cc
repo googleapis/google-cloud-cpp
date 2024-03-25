@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: beyondcorp_appgateways_v1::AppGatewaysServiceClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

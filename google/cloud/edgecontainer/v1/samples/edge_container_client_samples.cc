@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: edgecontainer_v1::EdgeContainerClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

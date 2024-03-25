@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: networkmanagement_v1::ReachabilityServiceClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

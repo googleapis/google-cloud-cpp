@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: resourcemanager_v3::TagHoldsClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

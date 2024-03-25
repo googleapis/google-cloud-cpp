@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: contactcenterinsights_v1::ContactCenterInsightsClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

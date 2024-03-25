@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_security_policies_v1::SecurityPoliciesClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

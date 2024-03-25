@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: golden_v1::GoldenThingAdminClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

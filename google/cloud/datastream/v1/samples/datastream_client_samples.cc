@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: datastream_v1::DatastreamClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

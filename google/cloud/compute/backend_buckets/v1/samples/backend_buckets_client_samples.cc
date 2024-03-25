@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_backend_buckets_v1::BackendBucketsClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

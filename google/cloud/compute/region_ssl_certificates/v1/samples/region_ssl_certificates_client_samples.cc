@@ -32,7 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_region_ssl_certificates_v1::RegionSslCertificatesClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: beyondcorp_appconnectors_v1::AppConnectorsServiceClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

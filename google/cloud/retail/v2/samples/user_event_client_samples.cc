@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: retail_v2::UserEventServiceClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

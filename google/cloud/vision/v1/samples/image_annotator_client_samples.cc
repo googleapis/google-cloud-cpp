@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: vision_v1::ImageAnnotatorClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

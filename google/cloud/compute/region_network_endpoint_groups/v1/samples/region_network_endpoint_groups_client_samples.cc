@@ -32,7 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

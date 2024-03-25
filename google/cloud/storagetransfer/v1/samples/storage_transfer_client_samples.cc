@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: storagetransfer_v1::StorageTransferServiceClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

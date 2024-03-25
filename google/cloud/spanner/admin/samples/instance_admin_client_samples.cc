@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: spanner_admin::InstanceAdminClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -32,7 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_interconnect_attachments_v1::InterconnectAttachmentsClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_ssl_certificates_v1::SslCertificatesClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

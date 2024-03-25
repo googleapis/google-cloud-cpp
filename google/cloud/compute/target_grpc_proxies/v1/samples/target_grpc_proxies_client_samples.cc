@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_target_grpc_proxies_v1::TargetGrpcProxiesClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

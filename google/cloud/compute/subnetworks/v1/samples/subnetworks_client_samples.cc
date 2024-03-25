@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_subnetworks_v1::SubnetworksClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

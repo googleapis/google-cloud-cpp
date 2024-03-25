@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_projects_v1::ProjectsClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

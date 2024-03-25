@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: accesscontextmanager_v1::AccessContextManagerClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

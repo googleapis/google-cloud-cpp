@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_routers_v1::RoutersClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

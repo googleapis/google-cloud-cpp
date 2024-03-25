@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: datacatalog_lineage_v1::LineageClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

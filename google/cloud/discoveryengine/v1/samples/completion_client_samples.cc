@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: discoveryengine_v1::CompletionServiceClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

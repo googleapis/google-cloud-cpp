@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: securitycenter_v1::SecurityCenterClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

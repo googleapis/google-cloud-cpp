@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_region_disks_v1::RegionDisksClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

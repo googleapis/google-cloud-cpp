@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: appengine_v1::DomainMappingsClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 

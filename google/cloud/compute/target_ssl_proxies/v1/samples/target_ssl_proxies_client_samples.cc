@@ -31,7 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_target_ssl_proxies_v1::TargetSslProxiesClient
-// has-lro-marker: true
+// lro-marker: true
 // clang-format on
 namespace {
 
