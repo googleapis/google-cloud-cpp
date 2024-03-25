@@ -58,7 +58,7 @@ Status SampleGenerator::GenerateHeader() {
 // main-dox-marker: $product_namespace$::$client_class_name$)""");
   if (HasLongrunningMethod()) {
     HeaderPrint(R"""(
-// has-lro-marker: true)""");
+// lro-marker: true)""");
   }
   HeaderPrint(R"""(
 // clang-format on
