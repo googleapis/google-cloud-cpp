@@ -211,6 +211,7 @@ _EOF_
 
     if [[ "${lro_clients[${sample_cc}]}" == "true" ]]; then
       cat <<_EOF_
+
 This will override the polling policies for \`${client_name}\`
 
 @snippet $(basename "${sample_cc}") set-polling-policy
