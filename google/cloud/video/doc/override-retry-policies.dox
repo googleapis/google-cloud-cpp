@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet livestream_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `video_livestream_v1::LivestreamServiceClient`
-
-@snippet livestream_client_samples.cc set-polling-policy
-
-
 Follow these links to find examples for other \c *Client classes:
 
 - [\c video_livestream_v1::LivestreamServiceClient](@ref video_livestream_v1::LivestreamServiceClient-retry-snippet)

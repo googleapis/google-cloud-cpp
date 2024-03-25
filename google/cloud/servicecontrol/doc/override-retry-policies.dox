@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet quota_controller_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `servicecontrol_v1::QuotaControllerClient`
-
-@snippet quota_controller_client_samples.cc set-polling-policy
-
-
 Follow these links to find examples for other \c *Client classes:
 
 - [\c servicecontrol_v1::QuotaControllerClient](@ref servicecontrol_v1::QuotaControllerClient-retry-snippet)

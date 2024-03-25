@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet tpu_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `tpu_v1::TpuClient`
-
-@snippet tpu_client_samples.cc set-polling-policy
-
-
 Follow these links to find examples for other \c *Client classes:
 
 - [\c tpu_v1::TpuClient](@ref tpu_v1::TpuClient-retry-snippet)

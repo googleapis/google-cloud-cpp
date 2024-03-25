@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet essential_contacts_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `essentialcontacts_v1::EssentialContactsServiceClient`
-
-@snippet essential_contacts_client_samples.cc set-polling-policy
-
-
 <!-- inject-retry-snippet-end -->
 
 @section essentialcontacts-override-retry-more-information More Information

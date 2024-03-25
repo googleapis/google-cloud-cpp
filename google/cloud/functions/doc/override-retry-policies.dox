@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet cloud_functions_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `functions_v1::CloudFunctionsServiceClient`
-
-@snippet cloud_functions_client_samples.cc set-polling-policy
-
-
 Follow these links to find examples for other \c *Client classes:
 
 - [\c functions_v1::CloudFunctionsServiceClient](@ref functions_v1::CloudFunctionsServiceClient-retry-snippet)

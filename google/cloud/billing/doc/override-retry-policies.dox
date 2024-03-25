@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet budget_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `billing_budgets_v1::BudgetServiceClient`
-
-@snippet budget_client_samples.cc set-polling-policy
-
-
 Follow these links to find examples for other \c *Client classes:
 
 - [\c billing_budgets_v1::BudgetServiceClient](@ref billing_budgets_v1::BudgetServiceClient-retry-snippet)

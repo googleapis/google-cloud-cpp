@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet api_gateway_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `apigateway_v1::ApiGatewayServiceClient`
-
-@snippet api_gateway_client_samples.cc set-polling-policy
-
-
 <!-- inject-retry-snippet-end -->
 
 @section apigateway-override-retry-more-information More Information

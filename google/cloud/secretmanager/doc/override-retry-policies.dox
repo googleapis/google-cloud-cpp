@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet secret_manager_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `secretmanager_v1::SecretManagerServiceClient`
-
-@snippet secret_manager_client_samples.cc set-polling-policy
-
-
 <!-- inject-retry-snippet-end -->
 
 @section secretmanager-override-retry-more-information More Information

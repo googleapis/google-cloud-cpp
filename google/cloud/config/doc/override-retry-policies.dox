@@ -75,12 +75,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet config_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `config_v1::ConfigClient`
-
-@snippet config_client_samples.cc set-polling-policy
-
-
 <!-- inject-retry-snippet-end -->
 
 @section config-override-retry-more-information More Information

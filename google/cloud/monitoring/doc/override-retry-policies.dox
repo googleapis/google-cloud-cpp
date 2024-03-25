@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet dashboards_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `monitoring_dashboard_v1::DashboardsServiceClient`
-
-@snippet dashboards_client_samples.cc set-polling-policy
-
-
 Follow these links to find examples for other \c *Client classes:
 
 - [\c monitoring_dashboard_v1::DashboardsServiceClient](@ref monitoring_dashboard_v1::DashboardsServiceClient-retry-snippet)

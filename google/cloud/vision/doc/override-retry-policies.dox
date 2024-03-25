@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet image_annotator_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `vision_v1::ImageAnnotatorClient`
-
-@snippet image_annotator_client_samples.cc set-polling-policy
-
-
 Follow these links to find examples for other \c *Client classes:
 
 - [\c vision_v1::ImageAnnotatorClient](@ref vision_v1::ImageAnnotatorClient-retry-snippet)

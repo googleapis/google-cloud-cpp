@@ -76,12 +76,6 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet data_fusion_client_samples.cc custom-idempotency-policy
 
-If long running operations exist, this will override the polling
-policies for `datafusion_v1::DataFusionClient`
-
-@snippet data_fusion_client_samples.cc set-polling-policy
-
-
 <!-- inject-retry-snippet-end -->
 
 @section datafusion-override-retry-more-information More Information
