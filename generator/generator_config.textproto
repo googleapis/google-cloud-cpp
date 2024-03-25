@@ -1676,6 +1676,13 @@ service {
 
 # Dataplex
 service {
+  service_proto_path: "google/cloud/dataplex/v1/catalog.proto"
+  product_path: "google/cloud/dataplex/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/dataplex/v1/content.proto"
   product_path: "google/cloud/dataplex/v1"
   forwarding_product_path: "google/cloud/dataplex"

@@ -16,7 +16,9 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### Updated Libraries
 
-- [Network Services API](/google/cloud/networkservices/README.md) - new 
+- [Cloud Dataplex API](/google/cloud/dataplex/README.md) - new
+  `CatalogServiceClient`
+- [Network Services API](/google/cloud/networkservices/README.md) - new
   `DepServiceClient`
 
 ## v2.22.0 - 2024-03
