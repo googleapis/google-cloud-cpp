@@ -56,12 +56,12 @@ licenses(["notice"])  # Apache 2.0
     hdrs = [":" + service.replace("/v1/", "_hdrs")],
     visibility = ["//:__pkg__"],
     deps = [
-        "//protos/google/cloud/compute:" + service.replace("/v1/", "") + "_cc_proto",
         "//:common",
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
         "//protos:system_includes",
+        "//protos/google/cloud/compute:cc_proto",
     ],
 ) for service in operation_service_dirs]
 
@@ -76,17 +76,19 @@ licenses(["notice"])  # Apache 2.0
         ":google_cloud_cpp_compute_global_organization_operations",
         ":google_cloud_cpp_compute_region_operations",
         ":google_cloud_cpp_compute_zone_operations",
-        "//protos/google/cloud/compute:" + service.replace("/v1/", "") + "_cc_proto",
         "//:common",
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
         "//protos:system_includes",
+        "//protos/google/cloud/compute:cc_proto",
     ],
 ) for service in service_dirs]
 
 [cc_test(
-    name = sample.replace("/", "_").replace(".cc", ""),
+    # Sample names include the name of the client, which is unique. Removing
+    # the directory saves enough characters to stay within the MSVC limitations.
+    name = sample[sample.rfind("/") + 1:].replace(".cc", ""),
     srcs = [sample],
     tags = ["integration-test"],
     deps = [
