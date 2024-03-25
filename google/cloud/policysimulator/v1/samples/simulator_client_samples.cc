@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: policysimulator_v1::SimulatorClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

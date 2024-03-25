@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: gkehub_v1::GkeHubClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

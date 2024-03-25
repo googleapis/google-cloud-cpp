@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: discoveryengine_v1::SchemaServiceClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

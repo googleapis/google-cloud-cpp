@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_machine_images_v1::MachineImagesClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: apigateway_v1::ApiGatewayServiceClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

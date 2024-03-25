@@ -32,6 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_global_forwarding_rules_v1::GlobalForwardingRulesClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

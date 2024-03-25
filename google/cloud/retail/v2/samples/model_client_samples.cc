@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: retail_v2::ModelServiceClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

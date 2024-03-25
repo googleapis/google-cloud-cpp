@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_instance_groups_v1::InstanceGroupsClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

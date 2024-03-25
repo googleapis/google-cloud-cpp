@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_global_addresses_v1::GlobalAddressesClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

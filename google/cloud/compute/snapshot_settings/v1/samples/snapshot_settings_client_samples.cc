@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_snapshot_settings_v1::SnapshotSettingsClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

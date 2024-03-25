@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_storage_pools_v1::StoragePoolsClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

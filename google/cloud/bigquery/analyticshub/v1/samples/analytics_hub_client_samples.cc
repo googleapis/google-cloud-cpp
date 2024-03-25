@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: bigquery_analyticshub_v1::AnalyticsHubServiceClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

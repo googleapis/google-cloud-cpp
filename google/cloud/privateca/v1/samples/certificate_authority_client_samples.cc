@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: privateca_v1::CertificateAuthorityServiceClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

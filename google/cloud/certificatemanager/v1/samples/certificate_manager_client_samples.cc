@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: certificatemanager_v1::CertificateManagerClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

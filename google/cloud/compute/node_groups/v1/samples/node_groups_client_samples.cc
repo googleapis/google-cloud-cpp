@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_node_groups_v1::NodeGroupsClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

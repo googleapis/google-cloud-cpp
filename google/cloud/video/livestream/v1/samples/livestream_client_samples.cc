@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: video_livestream_v1::LivestreamServiceClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

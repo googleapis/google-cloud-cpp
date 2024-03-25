@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: eventarc_v1::EventarcClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

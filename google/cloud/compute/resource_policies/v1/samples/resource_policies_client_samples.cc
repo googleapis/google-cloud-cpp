@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_resource_policies_v1::ResourcePoliciesClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

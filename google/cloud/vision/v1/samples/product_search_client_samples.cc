@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: vision_v1::ProductSearchClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

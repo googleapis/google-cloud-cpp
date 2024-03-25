@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: gkebackup_v1::BackupForGKEClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

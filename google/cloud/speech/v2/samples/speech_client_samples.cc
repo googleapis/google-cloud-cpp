@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: speech_v2::SpeechClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

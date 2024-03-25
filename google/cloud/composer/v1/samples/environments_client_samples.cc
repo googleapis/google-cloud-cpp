@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: composer_v1::EnvironmentsClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_forwarding_rules_v1::ForwardingRulesClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

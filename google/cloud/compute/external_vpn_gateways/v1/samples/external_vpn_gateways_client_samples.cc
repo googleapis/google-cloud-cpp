@@ -32,6 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

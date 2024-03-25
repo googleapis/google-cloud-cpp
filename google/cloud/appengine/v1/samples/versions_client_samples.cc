@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: appengine_v1::VersionsClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

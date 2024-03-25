@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: networkconnectivity_v1::HubServiceClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

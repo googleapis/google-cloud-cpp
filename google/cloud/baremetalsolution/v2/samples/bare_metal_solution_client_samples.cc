@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: baremetalsolution_v2::BareMetalSolutionClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_target_http_proxies_v1::TargetHttpProxiesClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

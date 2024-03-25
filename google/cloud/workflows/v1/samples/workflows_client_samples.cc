@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: workflows_v1::WorkflowsClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

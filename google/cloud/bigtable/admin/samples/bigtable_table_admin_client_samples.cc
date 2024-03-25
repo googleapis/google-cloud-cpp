@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: bigtable_admin::BigtableTableAdminClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

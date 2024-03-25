@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_node_templates_v1::NodeTemplatesClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_vpn_tunnels_v1::VpnTunnelsClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

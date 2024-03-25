@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: datamigration_v1::DataMigrationServiceClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

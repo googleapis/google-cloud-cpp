@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: dataproc_v1::ClusterControllerClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

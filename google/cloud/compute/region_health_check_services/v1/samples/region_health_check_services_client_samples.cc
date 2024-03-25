@@ -32,6 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_region_health_check_services_v1::RegionHealthCheckServicesClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

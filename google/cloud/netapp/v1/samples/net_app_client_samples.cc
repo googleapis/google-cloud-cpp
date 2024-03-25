@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: netapp_v1::NetAppClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

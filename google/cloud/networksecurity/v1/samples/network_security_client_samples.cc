@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: networksecurity_v1::NetworkSecurityClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

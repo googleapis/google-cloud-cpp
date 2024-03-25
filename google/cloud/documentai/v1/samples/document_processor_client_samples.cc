@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: documentai_v1::DocumentProcessorServiceClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

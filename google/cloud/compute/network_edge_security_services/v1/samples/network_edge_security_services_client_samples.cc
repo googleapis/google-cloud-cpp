@@ -32,6 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

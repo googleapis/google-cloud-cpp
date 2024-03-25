@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: datafusion_v1::DataFusionClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

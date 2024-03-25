@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: redis_cluster_v1::CloudRedisClusterClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: vmmigration_v1::VmMigrationClient
+// has-lro-marker: true
 // clang-format on
 namespace {
 
