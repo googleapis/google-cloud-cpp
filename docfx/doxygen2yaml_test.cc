@@ -1079,6 +1079,44 @@ items:
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2Yaml, NamespaceMemberRefid) {
+  auto constexpr kXml = R"xml(<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+    <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.7" xml:lang="en-US">
+      <compounddef id="namespacegoogle_1_1cloud" kind="namespace" language="C++">
+      <compoundname>google::cloud</compoundname>
+        <member refid="group__terminate_1gacc215b41a0bf17a7ea762fd5bb205348" kind="typedef"><name>TerminateHandler</name></member>
+      </compounddef>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: namespacegoogle_1_1cloud
+    name: "google::cloud"
+    id: namespacegoogle_1_1cloud
+    parent: test-only-parent-id
+    type: namespace
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        namespace google::cloud { ... };
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='namespacegoogle_1_1cloud']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  TestPre(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ctx.library_root = "google/cloud";
+  ASSERT_TRUE(AppendIfNamespace(yaml, ctx, selected.node()));
+  TestPost(yaml);
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2Yaml, Class) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
