@@ -131,6 +131,25 @@ class CertificateManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteCertificateIssuanceConfig(
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request);
+
+  virtual google::cloud::Idempotency ListTrustConfigs(
+      google::cloud::certificatemanager::v1::ListTrustConfigsRequest request);
+
+  virtual google::cloud::Idempotency GetTrustConfig(
+      google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateTrustConfig(
+      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateTrustConfig(
+      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteTrustConfig(
+      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+          request);
 };
 
 std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy>

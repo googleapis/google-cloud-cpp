@@ -61,6 +61,13 @@ class EdgeContainerTracingStub : public EdgeContainerStub {
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpgradeCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -72,6 +79,12 @@ class EdgeContainerTracingStub : public EdgeContainerStub {
   GenerateAccessToken(
       grpc::ClientContext& context, Options const& options,
       google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
+          request) override;
+
+  StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+  GenerateOfflineCredential(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
           request) override;
 
   StatusOr<google::cloud::edgecontainer::v1::ListNodePoolsResponse>
@@ -139,6 +152,11 @@ class EdgeContainerTracingStub : public EdgeContainerStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request) override;
+
+  StatusOr<google::cloud::edgecontainer::v1::ServerConfig> GetServerConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::edgecontainer::v1::GetServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

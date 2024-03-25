@@ -328,6 +328,32 @@ ConfigLogging::ExportPreviewResult(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::config::v1::ListTerraformVersionsResponse>
+ConfigLogging::ListTerraformVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListTerraformVersionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::ListTerraformVersionsRequest const&
+                 request) {
+        return child_->ListTerraformVersions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+ConfigLogging::GetTerraformVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetTerraformVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::GetTerraformVersionRequest const&
+                 request) {
+        return child_->GetTerraformVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

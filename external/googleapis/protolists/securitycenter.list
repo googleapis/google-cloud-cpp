@@ -35,6 +35,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:security_health_analytics_custom_config.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:security_health_analytics_custom_module.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:security_marks.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:security_posture.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:securitycenter_service.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:source.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:vulnerability.proto

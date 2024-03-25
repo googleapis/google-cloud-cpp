@@ -333,6 +333,66 @@ CertificateManagerMetadata::AsyncDeleteCertificateIssuanceConfig(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::cloud::certificatemanager::v1::ListTrustConfigsResponse>
+CertificateManagerMetadata::ListTrustConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::certificatemanager::v1::ListTrustConfigsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListTrustConfigs(context, options, request);
+}
+
+StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerMetadata::GetTrustConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetTrustConfig(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CertificateManagerMetadata::AsyncCreateTrustConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateTrustConfig(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CertificateManagerMetadata::AsyncUpdateTrustConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("trust_config.name=",
+                           internal::UrlEncode(request.trust_config().name())));
+  return child_->AsyncUpdateTrustConfig(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CertificateManagerMetadata::AsyncDeleteTrustConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteTrustConfig(cq, std::move(context),
+                                        std::move(options), request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

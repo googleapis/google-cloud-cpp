@@ -67,6 +67,10 @@ class EdgeContainerConnectionImpl
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteCluster(google::cloud::edgecontainer::v1::DeleteClusterRequest const&
                     request) override;
@@ -74,6 +78,11 @@ class EdgeContainerConnectionImpl
   StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
+          request) override;
+
+  StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+  GenerateOfflineCredential(
+      google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
           request) override;
 
   StreamRange<google::cloud::edgecontainer::v1::NodePool> ListNodePools(
@@ -119,6 +128,10 @@ class EdgeContainerConnectionImpl
   DeleteVpnConnection(
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request) override;
+
+  StatusOr<google::cloud::edgecontainer::v1::ServerConfig> GetServerConfig(
+      google::cloud::edgecontainer::v1::GetServerConfigRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
