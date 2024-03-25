@@ -68,22 +68,17 @@ list(APPEND DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/samples"
      "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 include(GoogleCloudCppDoxygen)
 
-foreach (dir IN LISTS service_dirs operation_service_dirs)
-    string(REPLACE "/v1/" "" short_dir "${dir}")
-    list(APPEND compute_proto_lib_targets "compute_${short_dir}_protos")
-endforeach ()
-
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
     "${PROJECT_BINARY_DIR}/protos/google/cloud/compute")
 google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
-                                 ${compute_proto_lib_targets})
+                                 "compute_protos")
 
 foreach (dir IN LISTS operation_service_dirs)
     string(REPLACE "/v1/" "" short_dir "${dir}")
     compute_service_library(
         ${dir} compute_${short_dir} DEPS
         google-cloud-cpp::rest_protobuf_internal
-        google-cloud-cpp::compute_${short_dir}_protos)
+        google-cloud-cpp::compute_protos)
     list(APPEND compute_operation_lib_targets "compute_${short_dir}")
 endforeach ()
 
@@ -93,7 +88,7 @@ foreach (dir IN LISTS service_dirs)
         ${dir}
         compute_${short_dir}
         DEPS
-        google-cloud-cpp::compute_${short_dir}_protos
+        google-cloud-cpp::compute_protos
         google-cloud-cpp::compute_global_operations
         google-cloud-cpp::compute_global_organization_operations
         google-cloud-cpp::compute_region_operations
@@ -214,7 +209,7 @@ foreach (dir IN LISTS operation_service_dirs)
         "google_cloud_cpp_rest_protobuf_internal"
         "google_cloud_cpp_grpc_utils"
         "google_cloud_cpp_common"
-        "google_cloud_cpp_compute_${short_dir}_protos")
+        "google_cloud_cpp_compute_protos")
 endforeach ()
 
 foreach (dir IN LISTS service_dirs)
@@ -228,7 +223,7 @@ foreach (dir IN LISTS service_dirs)
         "google_cloud_cpp_compute_global_organization_operations"
         "google_cloud_cpp_compute_region_operations"
         "google_cloud_cpp_compute_zone_operations"
-        "google_cloud_cpp_compute_${short_dir}_protos")
+        "google_cloud_cpp_compute_protos")
 endforeach ()
 
 set(compute_pc_modules ${compute_lib_targets})

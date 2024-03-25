@@ -29,61 +29,40 @@ filegroup(
     srcs = glob(["v1/internal/*.proto"]),
 )
 
+# Service proto files
+[[
+    filegroup(
+        name = service.replace("/v1/", "_proto_srcs"),
+        srcs = glob([service + "*.proto"]),
+    ),
+] for service in service_dirs + operation_service_dirs]
+
 proto_library(
-    name = "internal_proto",
-    srcs = [":internal_protos"],
+    name = "proto",
+    srcs = [":internal_protos"] + [":" + service.replace("/v1/", "_proto_srcs") for service in service_dirs + operation_service_dirs],
     strip_import_prefix = "/protos",
     visibility = [
         "//:__pkg__",
         "//google/cloud/compute:__pkg__",
     ],
     deps = [
+        "@com_google_googleapis//google/api:annotations_proto",
+        "@com_google_googleapis//google/api:client_proto",
+        "@com_google_googleapis//google/api:field_behavior_proto",
+        "@com_google_googleapis//google/api:http_proto",
+        "@com_google_googleapis//google/api:resource_proto",
+        "@com_google_googleapis//google/api:routing_proto",
         "@com_google_googleapis//google/cloud:extended_operations_proto",
         "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:empty_proto",
     ],
 )
 
 cc_proto_library(
-    name = "internal_cc_proto",
+    name = "cc_proto",
     visibility = [
         "//:__pkg__",
         "//google/cloud/compute:__pkg__",
     ],
-    deps = [":internal_proto"],
+    deps = [":proto"],
 )
-
-# Service proto targets
-[[
-    filegroup(
-        name = service.replace("/v1/", "_proto_srcs"),
-        srcs = glob([service + "*.proto"]),
-    ),
-    proto_library(
-        name = service.replace("/v1/", "_proto"),
-        srcs = [":" + service.replace("/v1/", "_proto_srcs")],
-        strip_import_prefix = "/protos",
-        visibility = [
-            "//:__pkg__",
-            "//google/cloud/compute:__pkg__",
-        ],
-        deps = [
-            ":internal_proto",
-            "@com_google_googleapis//google/api:annotations_proto",
-            "@com_google_googleapis//google/api:client_proto",
-            "@com_google_googleapis//google/api:field_behavior_proto",
-            "@com_google_googleapis//google/api:http_proto",
-            "@com_google_googleapis//google/api:resource_proto",
-            "@com_google_googleapis//google/api:routing_proto",
-            "@com_google_googleapis//google/cloud:extended_operations_proto",
-            "@com_google_protobuf//:empty_proto",
-        ],
-    ),
-    cc_proto_library(
-        name = service.replace("/v1/", "_cc_proto"),
-        visibility = [
-            "//:__pkg__",
-            "//google/cloud/compute:__pkg__",
-        ],
-        deps = [":" + service.replace("/v1/", "_proto")],
-    ),
-] for service in service_dirs + operation_service_dirs]

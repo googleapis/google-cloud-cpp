@@ -15,40 +15,6 @@
 # ~~~
 
 # Defines a compute proto library and installs the .proto and .pb.h files.
-function (compute_proto_library dir library)
-    cmake_parse_arguments(_opt "" "" "DEPS" ${ARGN})
-    file(
-        GLOB proto_files
-        LIST_DIRECTORIES false
-        RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.proto")
-    list(SORT proto_files)
-    google_cloud_cpp_proto_library(
-        "${library}" "${proto_files}" PROTO_PATH_DIRECTORIES
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
-        "${PROJECT_SOURCE_DIR}/protos")
-    set_target_properties(${library} PROPERTIES OUTPUT_NAME
-                                                "google_cloud_cpp_${library}")
-    add_library(google-cloud-cpp::${library} ALIAS ${library})
-    set_target_properties(
-        ${library}
-        PROPERTIES EXPORT_NAME google-cloud-cpp::${library}
-                   VERSION "${PROJECT_VERSION}"
-                   SOVERSION "${PROJECT_VERSION_MAJOR}")
-    target_link_libraries(${library} PUBLIC ${_opt_DEPS})
-    # Some files are too big for the MSVC defaults.
-    if (MSVC)
-        target_compile_options("${library}" PRIVATE "/bigobj")
-    endif ()
-    google_cloud_cpp_install_proto_library_protos(
-        "${library}" "${PROJECT_SOURCE_DIR}/protos")
-    google_cloud_cpp_install_proto_library_headers("${library}")
-
-    # In some configs we need to only generate the protocol definitions from
-    # `*.proto` files. We achieve this by having this target depend on all proto
-    # libraries. It has to be defined at the top level of the project.
-    add_dependencies(google-cloud-cpp-protos ${library})
-    add_dependencies("${library}" googleapis_download)
-endfunction ()
 
 include(${PROJECT_SOURCE_DIR}/google/cloud/compute/service_dirs.cmake)
 
@@ -58,15 +24,39 @@ google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protodeps(
     deps "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
 
-compute_proto_library("v1/internal/" "compute_internal_protos" DEPS "${deps}")
+set(proto_globs "v1/internal/" "${service_dirs}" "${operation_service_dirs}")
+list(TRANSFORM proto_globs APPEND "*.proto")
+file(
+    GLOB proto_files
+    LIST_DIRECTORIES false
+    RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" ${proto_globs})
+list(SORT proto_files)
+google_cloud_cpp_proto_library(
+    compute_protos "${proto_files}" PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
+    "${PROJECT_SOURCE_DIR}/protos")
+set_target_properties(compute_protos
+                      PROPERTIES OUTPUT_NAME "google_cloud_cpp_compute_protos")
+add_library(google-cloud-cpp::compute_protos ALIAS compute_protos)
+set_target_properties(
+    compute_protos
+    PROPERTIES EXPORT_NAME google-cloud-cpp::compute_protos
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
+target_link_libraries(compute_protos PUBLIC ${deps})
+# Some files are too big for the MSVC defaults.
+if (MSVC)
+    target_compile_options(compute_protos PRIVATE "/bigobj")
+endif ()
+google_cloud_cpp_install_proto_library_protos(compute_protos
+                                              "${PROJECT_SOURCE_DIR}/protos")
+google_cloud_cpp_install_proto_library_headers(compute_protos)
 
-foreach (dir IN LISTS service_dirs operation_service_dirs)
-    string(REPLACE "/v1/" "" short_dir "${dir}")
-    compute_proto_library(
-        ${dir} "compute_${short_dir}_protos" PROTO_FILES
-        "${${short_dir}_proto_files}" DEPS compute_internal_protos)
-    list(APPEND compute_proto_lib_targets "compute_${short_dir}_protos")
-endforeach ()
+# In some configs we need to only generate the protocol definitions from
+# `*.proto` files. We achieve this by having this target depend on all proto
+# libraries. It has to be defined at the top level of the project.
+add_dependencies(google-cloud-cpp-protos compute_protos)
+add_dependencies(compute_protos googleapis_download)
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
@@ -80,7 +70,7 @@ install(
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS ${compute_proto_lib_targets} compute_internal_protos
+    TARGETS compute_protos
     EXPORT google_cloud_cpp_compute_protos-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -107,19 +97,11 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_add_pkgconfig(
-    "compute_internal_protos" "The Cloud Compute API C++ Client Library"
-    "Provides C++ APIs to use the Cloud Compute API." WITH_SHORT_TARGET
-    "google_cloud_cpp_cloud_extended_operations_protos")
-
-foreach (dir IN LISTS service_dirs operation_service_dirs)
-    string(REPLACE "/v1/" "" short_dir "${dir}")
-    google_cloud_cpp_add_pkgconfig(
-        "compute_${short_dir}_protos"
-        "The Cloud Compute API C++ Client Library"
-        "Provides C++ APIs to use the Cloud Compute API."
-        WITH_SHORT_TARGET
-        "google_cloud_cpp_compute_internal_protos"
-        "google_cloud_cpp_api_annotations_protos"
-        "google_cloud_cpp_api_client_protos"
-        "google_cloud_cpp_api_field_behavior_protos")
-endforeach ()
+    "compute_protos"
+    "The Cloud Compute API C++ Client Library"
+    "Provides C++ APIs to use the Cloud Compute API."
+    WITH_SHORT_TARGET
+    "google_cloud_cpp_cloud_extended_operations_protos"
+    "google_cloud_cpp_api_annotations_protos"
+    "google_cloud_cpp_api_client_protos"
+    "google_cloud_cpp_api_field_behavior_protos")
