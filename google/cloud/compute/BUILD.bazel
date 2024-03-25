@@ -86,7 +86,9 @@ licenses(["notice"])  # Apache 2.0
 ) for service in service_dirs]
 
 [cc_test(
-    name = sample.replace("/", "_").replace(".cc", ""),
+    # Sample names include the name of the client, which is unique. Removing
+    # the directory saves enough characters to stay within the MSVC limitations.
+    name = sample[sample.rfind("/") + 1:].replace(".cc", ""),
     srcs = [sample],
     tags = ["integration-test"],
     deps = [
