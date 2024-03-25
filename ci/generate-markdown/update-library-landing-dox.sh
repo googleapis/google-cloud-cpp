@@ -87,8 +87,10 @@ EOT
 IFS= mapfile -d $'\0' -t samples_cc < <(git ls-files -z -- "${LIB}/*samples/*_client_samples.cc")
 
 declare -A clients
+declare -A lro_clients
 for sample in "${samples_cc[@]}"; do
   clients[$sample]="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample}")"
+  lro_clients[$sample]="$(sed -n '/has-lro-marker: true/!{s/.*/false/;p;q;}' "${sample}")"
 done
 
 (
@@ -205,13 +207,16 @@ For example, this will override the retry policies for \`${client_name}\`:
 This assumes you have created a custom idempotency policy. Such as:
 
 @snippet $(basename "${sample_cc}") custom-idempotency-policy
+_EOF_
 
-If long running operations exist, this will override the polling
-policies for \`${client_name}\`
+    if [[ "${lro_clients[${sample_cc}]}" == "true" ]]; then
+      cat <<_EOF_
+This will override the polling policies for \`${client_name}\`
 
 @snippet $(basename "${sample_cc}") set-polling-policy
 
 _EOF_
+    fi
     if [[ ${#samples_cc[@]} -gt 1 ]]; then
       echo
       echo "Follow these links to find examples for other \\c *Client classes:"
