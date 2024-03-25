@@ -79,9 +79,21 @@ class PipelineServiceTracingConnection
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
       override;
 
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request) override;
+
   Status CancelPipelineJob(
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request)
       override;
+
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::PipelineServiceConnection> child_;

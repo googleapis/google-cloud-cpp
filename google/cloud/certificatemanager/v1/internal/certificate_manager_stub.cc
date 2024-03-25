@@ -454,6 +454,95 @@ DefaultCertificateManagerStub::AsyncDeleteCertificateIssuanceConfig(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::certificatemanager::v1::ListTrustConfigsResponse>
+DefaultCertificateManagerStub::ListTrustConfigs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::certificatemanager::v1::ListTrustConfigsRequest const&
+        request) {
+  google::cloud::certificatemanager::v1::ListTrustConfigsResponse response;
+  auto status = grpc_stub_->ListTrustConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
+DefaultCertificateManagerStub::GetTrustConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
+        request) {
+  google::cloud::certificatemanager::v1::TrustConfig response;
+  auto status = grpc_stub_->GetTrustConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCertificateManagerStub::AsyncCreateTrustConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::certificatemanager::v1::CreateTrustConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateTrustConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCertificateManagerStub::AsyncUpdateTrustConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateTrustConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCertificateManagerStub::AsyncDeleteTrustConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteTrustConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

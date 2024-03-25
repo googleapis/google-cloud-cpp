@@ -189,6 +189,26 @@ PipelineServiceClient::DeletePipelineJob(
   return connection_->DeletePipelineJob(request);
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+PipelineServiceClient::BatchDeletePipelineJobs(
+    std::string const& parent, std::vector<std::string> const& names,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->BatchDeletePipelineJobs(request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+PipelineServiceClient::BatchDeletePipelineJobs(
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchDeletePipelineJobs(request);
+}
+
 Status PipelineServiceClient::CancelPipelineJob(std::string const& name,
                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -202,6 +222,26 @@ Status PipelineServiceClient::CancelPipelineJob(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelPipelineJob(request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+PipelineServiceClient::BatchCancelPipelineJobs(
+    std::string const& parent, std::vector<std::string> const& names,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->BatchCancelPipelineJobs(request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+PipelineServiceClient::BatchCancelPipelineJobs(
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCancelPipelineJobs(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

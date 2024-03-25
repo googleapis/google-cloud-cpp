@@ -123,12 +123,34 @@ PipelineServiceTracingConnection::DeletePipelineJob(
   return internal::EndSpan(std::move(span), child_->DeletePipelineJob(request));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+PipelineServiceTracingConnection::BatchDeletePipelineJobs(
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PipelineServiceConnection::BatchDeletePipelineJobs");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeletePipelineJobs(request));
+}
+
 Status PipelineServiceTracingConnection::CancelPipelineJob(
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::CancelPipelineJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelPipelineJob(request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+PipelineServiceTracingConnection::BatchCancelPipelineJobs(
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PipelineServiceConnection::BatchCancelPipelineJobs");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCancelPipelineJobs(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

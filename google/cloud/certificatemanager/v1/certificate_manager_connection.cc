@@ -231,6 +231,44 @@ CertificateManagerConnection::DeleteCertificateIssuanceConfig(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerConnection::ListTrustConfigs(
+    google::cloud::certificatemanager::v1::
+        ListTrustConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::certificatemanager::v1::TrustConfig>>();
+}
+
+StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerConnection::GetTrustConfig(
+    google::cloud::certificatemanager::v1::GetTrustConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerConnection::CreateTrustConfig(
+    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerConnection::UpdateTrustConfig(
+    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerConnection::DeleteTrustConfig(
+    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<CertificateManagerConnection> MakeCertificateManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

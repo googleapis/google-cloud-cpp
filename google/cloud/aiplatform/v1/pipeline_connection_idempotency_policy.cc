@@ -79,8 +79,18 @@ Idempotency PipelineServiceConnectionIdempotencyPolicy::DeletePipelineJob(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency PipelineServiceConnectionIdempotencyPolicy::BatchDeletePipelineJobs(
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency PipelineServiceConnectionIdempotencyPolicy::CancelPipelineJob(
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency PipelineServiceConnectionIdempotencyPolicy::BatchCancelPipelineJobs(
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

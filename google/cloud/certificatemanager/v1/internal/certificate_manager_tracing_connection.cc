@@ -317,6 +317,58 @@ CertificateManagerTracingConnection::DeleteCertificateIssuanceConfig(
                            child_->DeleteCertificateIssuanceConfig(request));
 }
 
+StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerTracingConnection::ListTrustConfigs(
+    google::cloud::certificatemanager::v1::ListTrustConfigsRequest request) {
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::ListTrustConfigs");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListTrustConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::certificatemanager::v1::TrustConfig>(std::move(span),
+                                                          std::move(sr));
+}
+
+StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerTracingConnection::GetTrustConfig(
+    google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::GetTrustConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTrustConfig(request));
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerTracingConnection::CreateTrustConfig(
+    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::CreateTrustConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateTrustConfig(request));
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerTracingConnection::UpdateTrustConfig(
+    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::UpdateTrustConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateTrustConfig(request));
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerTracingConnection::DeleteTrustConfig(
+    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::DeleteTrustConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteTrustConfig(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<certificatemanager_v1::CertificateManagerConnection>

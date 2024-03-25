@@ -139,6 +139,16 @@ Idempotency ConfigConnectionIdempotencyPolicy::ExportPreviewResult(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ConfigConnectionIdempotencyPolicy::ListTerraformVersions(
+    google::cloud::config::v1::ListTerraformVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfigConnectionIdempotencyPolicy::GetTerraformVersion(
+    google::cloud::config::v1::GetTerraformVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ConfigConnectionIdempotencyPolicy>
 MakeDefaultConfigConnectionIdempotencyPolicy() {
   return std::make_unique<ConfigConnectionIdempotencyPolicy>();

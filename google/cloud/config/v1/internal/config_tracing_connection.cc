@@ -219,6 +219,27 @@ ConfigTracingConnection::ExportPreviewResult(
   return internal::EndSpan(*span, child_->ExportPreviewResult(request));
 }
 
+StreamRange<google::cloud::config::v1::TerraformVersion>
+ConfigTracingConnection::ListTerraformVersions(
+    google::cloud::config::v1::ListTerraformVersionsRequest request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::ListTerraformVersions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListTerraformVersions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::config::v1::TerraformVersion>(std::move(span),
+                                                   std::move(sr));
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+ConfigTracingConnection::GetTerraformVersion(
+    google::cloud::config::v1::GetTerraformVersionRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::GetTerraformVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTerraformVersion(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<config_v1::ConfigConnection> MakeConfigTracingConnection(

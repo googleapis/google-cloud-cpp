@@ -299,6 +299,30 @@ ConfigTracingStub::ExportPreviewResult(
       context, *span, child_->ExportPreviewResult(context, options, request));
 }
 
+StatusOr<google::cloud::config::v1::ListTerraformVersionsResponse>
+ConfigTracingStub::ListTerraformVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListTerraformVersionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "ListTerraformVersions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListTerraformVersions(context, options, request));
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+ConfigTracingStub::GetTerraformVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetTerraformVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "GetTerraformVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetTerraformVersion(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
