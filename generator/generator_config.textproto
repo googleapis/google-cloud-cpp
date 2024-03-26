@@ -3432,6 +3432,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/texttospeech/v1/cloud_tts_lrs.proto"
+  product_path: "google/cloud/texttospeech/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Timeseries Insights
 service {
   service_proto_path: "google/cloud/timeseriesinsights/v1/timeseries_insights.proto"

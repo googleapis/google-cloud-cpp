@@ -20,6 +20,8 @@ the APIs in these libraries are stable, and are ready for production use.
   `CatalogServiceClient`
 - [Network Services API](/google/cloud/networkservices/README.md) - new
   `DepServiceClient`
+- [Cloud Text-to-Speech API](/google/cloud/texttospeech/README.md) - new
+  `TextToSpeechLongAudioSynthesizeClient`
 
 ## v2.22.0 - 2024-03
 

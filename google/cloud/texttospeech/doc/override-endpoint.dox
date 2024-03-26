@@ -11,6 +11,11 @@ For example, this will override the default endpoint for `texttospeech_v1::TextT
 
 @snippet text_to_speech_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c texttospeech_v1::TextToSpeechClient](@ref texttospeech_v1::TextToSpeechClient-endpoint-snippet)
+- [\c texttospeech_v1::TextToSpeechLongAudioSynthesizeClient](@ref texttospeech_v1::TextToSpeechLongAudioSynthesizeClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
@@ -20,6 +25,12 @@ For example, this will override the default endpoint for `texttospeech_v1::TextT
 /*! @page texttospeech_v1::TextToSpeechClient-endpoint-snippet Override texttospeech_v1::TextToSpeechClient Endpoint Configuration
 
 @snippet google/cloud/texttospeech/v1/samples/text_to_speech_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page texttospeech_v1::TextToSpeechLongAudioSynthesizeClient-endpoint-snippet Override texttospeech_v1::TextToSpeechLongAudioSynthesizeClient Endpoint Configuration
+
+@snippet google/cloud/texttospeech/v1/samples/text_to_speech_long_audio_synthesize_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->

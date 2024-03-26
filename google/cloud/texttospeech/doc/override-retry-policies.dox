@@ -77,6 +77,11 @@ This assumes you have created a custom idempotency policy. Such as:
 @snippet text_to_speech_client_samples.cc custom-idempotency-policy
 
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c texttospeech_v1::TextToSpeechClient](@ref texttospeech_v1::TextToSpeechClient-retry-snippet)
+- [\c texttospeech_v1::TextToSpeechLongAudioSynthesizeClient](@ref texttospeech_v1::TextToSpeechLongAudioSynthesizeClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section texttospeech-override-retry-more-information More Information
@@ -100,6 +105,18 @@ This shows how to override the retry policies for texttospeech_v1::TextToSpeechC
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/texttospeech/v1/samples/text_to_speech_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page texttospeech_v1::TextToSpeechLongAudioSynthesizeClient-retry-snippet Override texttospeech_v1::TextToSpeechLongAudioSynthesizeClient Retry Policies
+
+This shows how to override the retry policies for texttospeech_v1::TextToSpeechLongAudioSynthesizeClient:
+
+@snippet google/cloud/texttospeech/v1/samples/text_to_speech_long_audio_synthesize_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/texttospeech/v1/samples/text_to_speech_long_audio_synthesize_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->

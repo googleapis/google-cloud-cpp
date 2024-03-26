@@ -14,6 +14,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "texttospeech.googleapis.com")
   used by `MakeTextToSpeechConnection()`.
 
+- `GOOGLE_CLOUD_CPP_TEXT_TO_SPEECH_LONG_AUDIO_SYNTHESIZE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "texttospeech.googleapis.com")
+  used by `MakeTextToSpeechLongAudioSynthesizeConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption
