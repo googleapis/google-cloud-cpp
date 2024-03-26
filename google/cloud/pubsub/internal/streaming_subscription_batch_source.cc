@@ -109,7 +109,7 @@ future<Status> StreamingSubscriptionBatchSource::AckMessage(
           return stub
               ->AsyncAcknowledge(cq, std::move(context), std::move(options),
                                  request)
-              .then([cb = cb, ack_id](auto f) {
+              .then([cb, ack_id](auto f) {
                 auto result = f.get();
                 cb->EndMessage(ack_id, "gl-cpp.ack_end");
                 return result;

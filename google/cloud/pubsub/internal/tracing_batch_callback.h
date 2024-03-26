@@ -17,6 +17,8 @@
 
 #include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/subscription.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

@@ -55,19 +55,18 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
   return span;
 }
 
-}  // namespace
-
 /**
  * Tracing batch callback implementation.
  * */
 class TracingBatchCallback : public BatchCallback {
  public:
-  explicit TracingBatchCallback(std::shared_ptr<BatchCallback> child,
-                                pubsub::Subscription const& subscription)
+  TracingBatchCallback(std::shared_ptr<BatchCallback> child,
+                       pubsub::Subscription subscription)
       : child_(std::move(child)),
         subscription_(std::move(subscription)),
         propagator_(std::make_shared<
                     opentelemetry::trace::propagation::HttpTraceContext>()) {}
+
   ~TracingBatchCallback() override {
     std::lock_guard<std::mutex> lk(mu_);
     // End all outstanding subscribe spans.
@@ -108,7 +107,7 @@ class TracingBatchCallback : public BatchCallback {
     if (subscribe_span != subscribe_span_by_ack_id_.end()) {
       subscribe_span->second->AddEvent(event);
       subscribe_span->second->End();
-      subscribe_span_by_ack_id_.erase(ack_id);
+      subscribe_span_by_ack_id_.erase(subscribe_span);
     }
   }
 
@@ -122,6 +121,8 @@ class TracingBatchCallback : public BatchCallback {
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       subscribe_span_by_ack_id_;  // ABSL_GUARDED_BY(mu_)
 };
+
+}  // namespace
 
 std::shared_ptr<BatchCallback> MakeTracingBatchCallback(
     std::shared_ptr<BatchCallback> batch_callback,
