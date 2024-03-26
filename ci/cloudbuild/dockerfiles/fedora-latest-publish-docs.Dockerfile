@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:38
+FROM fedora:39
 ARG NCPU=4
 ARG ARCH=amd64
 
 # Install the minimum development tools needed to compile `google-cloud-cpp`.
 RUN dnf makecache && \
     dnf install -y clang cmake diffutils findutils gcc-c++ git \
-        make ninja-build patch python3 python3-devel \
+        jq make ninja-build patch python3 python3-devel \
         python-pip tar unzip which zip
 
 # Then install the development packages for `google-cloud-cpp` dependencies.
@@ -30,6 +30,7 @@ RUN dnf makecache && \
         google-crc32c-devel \
         grpc-devel \
         gtest-devel \
+        json-devel \
         libcurl-devel \
         openssl-devel \
         protobuf-devel \
@@ -45,23 +46,10 @@ RUN dnf makecache && dnf install -y libxslt doxygen
 # the container's /etc/passwd file.
 RUN echo 'root:' | chpasswd
 
-WORKDIR /var/tmp/build/json
-RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=yes \
-      -DBUILD_TESTING=OFF \
-      -DJSON_BuildTests=OFF \
-      -G Ninja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
-    ldconfig
-
 WORKDIR /var/tmp/build/
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.14.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_CXX_STANDARD=14 \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
         -DBUILD_SHARED_LIBS=ON \
@@ -83,3 +71,13 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.7.7/sccac
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
+
+# Install the Google Cloud CLI (formerly Google Cloud SDK).
+COPY . /var/tmp/ci
+WORKDIR /var/tmp/downloads
+# The Google Cloud CLI requires Python <= 3.10, Fedora defaults to 3.12.
+RUN dnf makecache && dnf install -y python3.10
+ENV CLOUDSDK_PYTHON=python3.10
+RUN /var/tmp/ci/install-cloud-sdk.sh
+ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
+ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
