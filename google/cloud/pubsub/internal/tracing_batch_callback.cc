@@ -42,7 +42,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
         propagator) {
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kConsumer;
-  auto m = pubsub_internal::FromProto(std::move(message.message()));
+  auto m = pubsub_internal::FromProto(message.message());
   auto context = ExtractTraceContext(m, *propagator);
   auto producer_span_context =
       opentelemetry::trace::GetSpan(context)->GetContext();
