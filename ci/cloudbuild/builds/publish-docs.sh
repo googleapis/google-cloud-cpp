@@ -82,28 +82,6 @@ if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
   exit 0
 fi
 
-# To protect against supply chain attacks we need to use `--require-hashes` in
-# `pip install` commands.  Googlers may want to see b/242562806 for more
-# details.
-#
-#    venv="$(mktemp -d)"
-#    python3 -m venv "${venv}/requirements"
-#    source "${venv}/requirements/bin/activate"
-#    pip install gcp-docuploader
-#    pip freeze >ci/etc/docuploader-requirements.in
-#    pip install --require-hashes -r ci/etc/pip-tooling-requirements.txt
-#    pip-compile --generate-hashes ci/etc/docuploader-requirements.in
-#
-io::log_h2 "Installing the docuploader package"
-python3 -m venv "${HOME}/.venv/docuploader"
-source "${HOME}/.venv/docuploader/bin/activate"
-python3 -m pip install --upgrade --quiet --disable-pip-version-check \
-  --no-warn-script-location --require-hashes -r ci/etc/docuploader-requirements.txt
-
-# For docuploader to work
-export LC_ALL=C.UTF-8
-export LANG=C.UTF-8
-
 # Stage documentation in DocFX format for processing. go/cloud-rad for details.
 function stage_docfx() {
   local feature="$1"
@@ -123,9 +101,10 @@ function stage_docfx() {
     return 0
   fi
 
-  if env -C "${path}" python3 -m docuploader upload \
-    --staging-bucket "${bucket}" \
-    --destination-prefix docfx . >>"${log}" 2>&1 </dev/null; then
+  version="$(jq -r .version < "${path}/docs.metadata.json")"
+  tar -C "${path}" -zcf /tmp/cpp-${feature}-${version}.tar.gz . >>"${log}" 2>&1
+  export TIMEFORMAT="${feature} completed in %0lR"
+  if time ci/retry-command.sh 3 120 gcloud storage cp "/tmp/cpp-${feature}-${version}.tar.gz" "gs://${bucket}" >>"${log}" 2>&1; then
     echo "SUCCESS" >>"${log}"
   fi
 }
@@ -141,8 +120,7 @@ io::log "bucket:  gs://${docfx_bucket}"
 uploaded=(common)
 uploaded+=("${FEATURE_LIST[@]}")
 echo "${uploaded[@]}" | xargs -P "$(nproc)" -n 1 \
-  bash -c "TIMEFORMAT=\"\${0} completed in %0lR\";
-           time ci/retry-command.sh 3 120 stage_docfx \"\${0}\" \"${docfx_bucket}\" cmake-out \"cmake-out/\${0}.docfx.log\""
+  bash -c "stage_docfx \"\${0}\" \"${docfx_bucket}\" cmake-out \"cmake-out/\${0}.docfx.log\""
 
 errors=0
 for feature in "${uploaded[@]}"; do
