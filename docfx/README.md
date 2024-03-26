@@ -38,11 +38,12 @@ git clone https://github.com/microsoft/vcpkg.git $HOME/vcpkg
 
 ```
 cd google-cloud-cpp
-cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
-PUBLISH=$PWD/build-out/fedora-latest-cmake-publish-docs/cmake-out/google/cloud
-cmake --build .build/ --target docfx/all \
+cmake -GNinja -S . -B build-out/.docfx -DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX=ON \
+    --toolchain $HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+PUBLISH=$PWD/build-out/fedora-latest-publish-docs/publish-docs/__default__/cmake-out/google/cloud
+cmake --build build-out/.docfx --target docfx/all \
   && rm -f $HOME/doc-pipeline/testdata/cpp/* \
-  && env -C $HOME/doc-pipeline/testdata/cpp $PWD/.build/docfx/doxygen2docfx $PUBLISH/xml/cloud.doxygen.xml cloud 2.9.0
+  && env -C $HOME/doc-pipeline/testdata/cpp $PWD/build-out/.docfx/docfx/doxygen2docfx $PUBLISH/xml/cloud.doxygen.xml cloud 2.9.0
 ```
 
 ### Run the DocFX pipeline over the generated files
@@ -85,3 +86,14 @@ env -C $HOME/doc-pipeline \
     TRAMPOLINE_IMAGE=gcr.io/cloud-devrel-kokoro-resources/docfx \
     TRAMPOLINE_DOCKERFILE=docfx/Dockerfile ci/trampoline_v2.sh
 ```
+
+## Detecting Doxygen schema changes
+
+From time to time we update Doxygen and that may result in schema changes.
+Detecting these changes may be useful to design the corresponding changes to the
+`doxygen2docfx` tool.
+
+The schema definition can be found in the [Doxygen GitHub Repository]. Look for
+[xml/compound.xsd](https://github.com/doxygen/doxygen/blob/master/templates/xml/compound.xsd)
+
+[doxygen github repository]: https://github.com/doxygen/doxygen
