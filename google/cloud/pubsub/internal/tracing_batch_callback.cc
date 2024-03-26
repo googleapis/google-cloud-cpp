@@ -40,7 +40,6 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
     std::shared_ptr<
         opentelemetry::context::propagation::TextMapPropagator> const&
         propagator) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kConsumer;
   auto m = pubsub_internal::FromProto(std::move(message.message()));
@@ -69,7 +68,7 @@ class TracingBatchCallback : public BatchCallback {
         subscription_(std::move(subscription)),
         propagator_(std::make_shared<
                     opentelemetry::trace::propagation::HttpTraceContext>()) {}
-  ~TracingBatchCallback() {
+  ~TracingBatchCallback() override {
     std::lock_guard<std::mutex> lk(mu_);
     // End all outstanding subscribe spans.
     for (auto const& kv : subscribe_span_by_ack_id_) {
