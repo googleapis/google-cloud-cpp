@@ -188,19 +188,19 @@ future<Status> StreamingSubscriptionBatchSource::BulkNack(
   }
 
   std::vector<future<Status>> pending(requests.size());
-  std::transform(
-      requests.begin(), requests.end(), pending.begin(),
-      [this](auto const& request) {
-        std::string const ack_id = *requests.front().ack_ids().begin();
-        return stub_
-            ->AsyncModifyAckDeadline(
-                cq_, std::make_shared<grpc::ClientContext>(), options_, request)
-            .then([cb = callback_, ack_id](auto f) {
-              auto result = f.get();
-              cb->EndMessage(ack_id, "gl-cpp.nack_end");
-              return result;
-            });
-      });
+  std::transform(requests.begin(), requests.end(), pending.begin(),
+                 [this](auto const& request) {
+                   std::string const ack_id = *request.ack_ids().begin();
+                   return stub_
+                       ->AsyncModifyAckDeadline(
+                           cq_, std::make_shared<grpc::ClientContext>(),
+                           options_, request)
+                       .then([cb = callback_, ack_id](auto f) {
+                         auto result = f.get();
+                         cb->EndMessage(ack_id, "gl-cpp.nack_end");
+                         return result;
+                       });
+                 });
   return Reduce(std::move(pending));
 }
 
