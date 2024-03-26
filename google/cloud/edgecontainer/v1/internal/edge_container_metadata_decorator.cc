@@ -86,6 +86,18 @@ EdgeContainerMetadata::AsyncUpdateCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+EdgeContainerMetadata::AsyncUpgradeCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncUpgradeCluster(cq, std::move(context), std::move(options),
+                                     request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -105,6 +117,16 @@ EdgeContainerMetadata::GenerateAccessToken(
   SetMetadata(context, options,
               absl::StrCat("cluster=", internal::UrlEncode(request.cluster())));
   return child_->GenerateAccessToken(context, options, request);
+}
+
+StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+EdgeContainerMetadata::GenerateOfflineCredential(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("cluster=", internal::UrlEncode(request.cluster())));
+  return child_->GenerateOfflineCredential(context, options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListNodePoolsResponse>
@@ -223,6 +245,15 @@ EdgeContainerMetadata::AsyncDeleteVpnConnection(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteVpnConnection(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
+EdgeContainerMetadata::GetServerConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgecontainer::v1::GetServerConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetServerConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

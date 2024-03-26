@@ -161,6 +161,30 @@ class CertificateManagerTracingConnection
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request) override;
 
+  StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
+  ListTrustConfigs(
+      google::cloud::certificatemanager::v1::ListTrustConfigsRequest request)
+      override;
+
+  StatusOr<google::cloud::certificatemanager::v1::TrustConfig> GetTrustConfig(
+      google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+  CreateTrustConfig(
+      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+  UpdateTrustConfig(
+      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+  DeleteTrustConfig(
+      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+          request) override;
+
  private:
   std::shared_ptr<certificatemanager_v1::CertificateManagerConnection> child_;
 };

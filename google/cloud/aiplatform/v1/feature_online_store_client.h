@@ -176,8 +176,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L221}
-  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L264}
+  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L226}
+  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L269}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>

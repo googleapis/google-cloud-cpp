@@ -223,6 +223,41 @@ class MockCertificateManagerConnection
       (google::cloud::certificatemanager::v1::
            DeleteCertificateIssuanceConfigRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::certificatemanager::v1::TrustConfig>),
+      ListTrustConfigs,
+      (google::cloud::certificatemanager::v1::ListTrustConfigsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::certificatemanager::v1::TrustConfig>,
+      GetTrustConfig,
+      (google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
+      CreateTrustConfig,
+      (google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
+      UpdateTrustConfig,
+      (google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
+      DeleteTrustConfig,
+      (google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

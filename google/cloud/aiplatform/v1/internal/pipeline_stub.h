@@ -92,9 +92,25 @@ class PipelineServiceStub {
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchDeletePipelineJobs(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request) = 0;
+
   virtual Status CancelPipelineJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchCancelPipelineJobs(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -171,10 +187,24 @@ class DefaultPipelineServiceStub : public PipelineServiceStub {
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncBatchDeletePipelineJobs(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request) override;
+
   Status CancelPipelineJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncBatchCancelPipelineJobs(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

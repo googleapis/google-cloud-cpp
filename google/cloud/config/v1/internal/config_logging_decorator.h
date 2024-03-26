@@ -148,6 +148,17 @@ class ConfigLogging : public ConfigStub {
       google::cloud::config::v1::ExportPreviewResultRequest const& request)
       override;
 
+  StatusOr<google::cloud::config::v1::ListTerraformVersionsResponse>
+  ListTerraformVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::ListTerraformVersionsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::config::v1::TerraformVersion> GetTerraformVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::GetTerraformVersionRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

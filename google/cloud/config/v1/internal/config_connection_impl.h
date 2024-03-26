@@ -123,6 +123,14 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
       google::cloud::config::v1::ExportPreviewResultRequest const& request)
       override;
 
+  StreamRange<google::cloud::config::v1::TerraformVersion>
+  ListTerraformVersions(
+      google::cloud::config::v1::ListTerraformVersionsRequest request) override;
+
+  StatusOr<google::cloud::config::v1::TerraformVersion> GetTerraformVersion(
+      google::cloud::config::v1::GetTerraformVersionRequest const& request)
+      override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<config_v1_internal::ConfigStub> stub_;

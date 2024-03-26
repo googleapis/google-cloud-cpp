@@ -289,6 +289,24 @@ ConfigAuth::ExportPreviewResult(
   return child_->ExportPreviewResult(context, options, request);
 }
 
+StatusOr<google::cloud::config::v1::ListTerraformVersionsResponse>
+ConfigAuth::ListTerraformVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListTerraformVersionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListTerraformVersions(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+ConfigAuth::GetTerraformVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetTerraformVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetTerraformVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

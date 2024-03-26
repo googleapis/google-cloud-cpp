@@ -99,9 +99,25 @@ PipelineServiceConnection::DeletePipelineJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+PipelineServiceConnection::BatchDeletePipelineJobs(
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 Status PipelineServiceConnection::CancelPipelineJob(
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+PipelineServiceConnection::BatchCancelPipelineJobs(
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<PipelineServiceConnection> MakePipelineServiceConnection(

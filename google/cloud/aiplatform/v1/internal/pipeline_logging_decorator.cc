@@ -165,6 +165,27 @@ PipelineServiceLogging::AsyncDeletePipelineJob(
       tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+PipelineServiceLogging::AsyncBatchDeletePipelineJobs(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+              request) {
+        return child_->AsyncBatchDeletePipelineJobs(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
 Status PipelineServiceLogging::CancelPipelineJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
@@ -175,6 +196,27 @@ Status PipelineServiceLogging::CancelPipelineJob(
         return child_->CancelPipelineJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+PipelineServiceLogging::AsyncBatchCancelPipelineJobs(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+              request) {
+        return child_->AsyncBatchCancelPipelineJobs(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

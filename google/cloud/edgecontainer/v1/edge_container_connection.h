@@ -199,6 +199,10 @@ class EdgeContainerConnection {
   UpdateCluster(
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request);
 
+  virtual future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+  UpgradeCluster(
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request);
+
   virtual future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteCluster(
       google::cloud::edgecontainer::v1::DeleteClusterRequest const& request);
@@ -207,6 +211,12 @@ class EdgeContainerConnection {
       google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
+          request);
+
+  virtual StatusOr<
+      google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+  GenerateOfflineCredential(
+      google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
           request);
 
   virtual StreamRange<google::cloud::edgecontainer::v1::NodePool> ListNodePools(
@@ -250,6 +260,10 @@ class EdgeContainerConnection {
   DeleteVpnConnection(
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request);
+
+  virtual StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
+  GetServerConfig(
+      google::cloud::edgecontainer::v1::GetServerConfigRequest const& request);
 };
 
 /**
