@@ -50,6 +50,8 @@ class DefaultBatchCallback : public BatchCallback {
     message_callback_->user_callback(std::move(m));
   };
 
+  void EndMessage(std::string const&, std::string const&) override {}
+
  private:
   CallbackFunction callback_;
   std::shared_ptr<MessageCallback> message_callback_;

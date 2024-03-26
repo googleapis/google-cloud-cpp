@@ -222,6 +222,8 @@ add_library(
     internal/subscription_message_source.h
     internal/subscription_session.cc
     internal/subscription_session.h
+    internal/tracing_batch_callback.cc
+    internal/tracing_batch_callback.h
     internal/tracing_batch_sink.cc
     internal/tracing_batch_sink.h
     internal/tracing_helpers.cc
@@ -477,6 +479,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscription_lease_management_test.cc
         internal/subscription_message_queue_test.cc
         internal/subscription_session_test.cc
+        internal/tracing_batch_callback_test.cc
         internal/tracing_batch_sink_test.cc
         internal/tracing_helpers_test.cc
         internal/tracing_pull_ack_handler_test.cc
