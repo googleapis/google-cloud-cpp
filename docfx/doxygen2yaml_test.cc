@@ -1080,7 +1080,8 @@ items:
 }
 
 TEST(Doxygen2Yaml, NamespaceMemberRefid) {
-  auto constexpr kXml = R"xml(<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+  auto constexpr kXml =
+      R"xml(<?xml version='1.0' encoding='UTF-8' standalone='no'?>
     <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.7" xml:lang="en-US">
       <compounddef id="namespacegoogle_1_1cloud" kind="namespace" language="C++">
       <compoundname>google::cloud</compoundname>
