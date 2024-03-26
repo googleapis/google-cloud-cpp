@@ -72,8 +72,7 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.7.7/sccac
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
 
-# Install the Cloud SDK and some of the emulators. We use the emulators to run
-# integration tests for the client libraries.
+# Install the Google Cloud CLI (formerly Google Cloud SDK).
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
 # The Google Cloud CLI requires Python <= 3.10, Fedora defaults to 3.12.
