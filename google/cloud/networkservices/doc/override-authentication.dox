@@ -9,7 +9,12 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet network_services_client_samples.cc with-service-account
+@snippet dep_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c networkservices_v1::DepServiceClient](@ref networkservices_v1::DepServiceClient-service-account-snippet)
+- [\c networkservices_v1::NetworkServicesClient](@ref networkservices_v1::NetworkServicesClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -26,6 +31,12 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page networkservices_v1::DepServiceClient-service-account-snippet Override networkservices_v1::DepServiceClient Authentication Defaults
+
+@snippet google/cloud/networkservices/v1/samples/dep_client_samples.cc with-service-account
+
+*/
 
 /*! @page networkservices_v1::NetworkServicesClient-service-account-snippet Override networkservices_v1::NetworkServicesClient Authentication Defaults
 
