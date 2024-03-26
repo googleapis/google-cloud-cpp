@@ -75,6 +75,10 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet rapid_migration_assessment_client_samples.cc custom-idempotency-policy
 
+This will override the polling policies for `rapidmigrationassessment_v1::RapidMigrationAssessmentClient`
+
+@snippet rapid_migration_assessment_client_samples.cc set-polling-policy
+
 
 <!-- inject-retry-snippet-end -->
 

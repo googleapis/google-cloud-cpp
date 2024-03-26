@@ -75,6 +75,10 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet datastore_admin_client_samples.cc custom-idempotency-policy
 
+This will override the polling policies for `datastore_admin_v1::DatastoreAdminClient`
+
+@snippet datastore_admin_client_samples.cc set-polling-policy
+
 
 Follow these links to find examples for other \c *Client classes:
 
