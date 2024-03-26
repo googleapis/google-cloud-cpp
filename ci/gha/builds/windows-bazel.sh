@@ -17,6 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
+# Define the os::* functions used in bazel.sh
 source module ci/gha/builds/lib/windows.sh
 source module ci/gha/builds/lib/bazel.sh
 
@@ -27,8 +28,6 @@ mapfile -t args < <(bazel::common_args)
 mapfile -t test_args < <(bazel::test_args)
 mapfile -t msvc_args < <(bazel::msvc_args)
 test_args+=("${msvc_args[@]}")
-# Do not run the integration tests
-test_args+=(--test_tag_filters=-integration-test)
 if [[ $# -gt 1 ]]; then
   test_args+=("--compilation_mode=${1}")
   shift
@@ -43,7 +42,22 @@ export BAZEL_VC="${VCINSTALLDIR}"
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 time {
-  # Always run //google/cloud:status_test in case the list of targets has
-  # no unit tests.
-  io::run bazelisk "${args[@]}" test "${test_args[@]}" -- //...
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" --test_tag_filters=-integration-test -- //...
 }
+
+TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
+if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
+  time {
+    # gRPC requires a local roots.pem on Windows
+    #   https://github.com/grpc/grpc/issues/16571
+    curl -fsSL -o "${HOME}/roots.pem" https://pki.google.com/roots.pem
+
+    io::run bazelisk "${args[@]}" test "${test_args[@]}" \
+      --test_tag_filters=integration-test-gha \
+      --test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="${GHA_TEST_BUCKET}" \
+      --test_env=GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${HOME}/roots.pem" \
+      --test_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
+      --test_env=HOME="${HOME}" \
+      //google/cloud/storage/tests/...
+  }
+fi
