@@ -77,7 +77,7 @@ BatchCallback::StreamingPullResponse MakeResponse(int n) {
     auto proto_message = ToProto(message);
     proto_message.set_message_id("id-" + std::to_string(i));
 
-    auto *m = r.add_received_messages();
+    auto* m = r.add_received_messages();
     *m->mutable_message() = proto_message;
     m->set_ack_id("ack-id-" + std::to_string(i));
   }
