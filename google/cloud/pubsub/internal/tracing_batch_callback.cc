@@ -57,7 +57,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
 
 /**
  * Tracing batch callback implementation.
- **/
+ */
 class TracingBatchCallback : public BatchCallback {
  public:
   TracingBatchCallback(std::shared_ptr<BatchCallback> child,
