@@ -75,6 +75,10 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet storage_control_client_samples.cc custom-idempotency-policy
 
+This will override the polling policies for `storagecontrol_v2::StorageControlClient`
+
+@snippet storage_control_client_samples.cc set-polling-policy
+
 
 <!-- inject-retry-snippet-end -->
 
