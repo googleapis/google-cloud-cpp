@@ -39,7 +39,8 @@ class MockBatchCallback : public pubsub_internal::BatchCallback {
   MOCK_METHOD(void, message_callback,
               (pubsub_internal::MessageCallback::ReceivedMessage));
   MOCK_METHOD(void, EndMessage, (std::string const&, std::string const&));
-};
+  MOCK_METHOD(void, AddEvent, (std::string const&, std::string const&));
+  };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_testing

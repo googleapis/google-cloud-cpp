@@ -105,8 +105,19 @@ class TracingBatchCallback : public BatchCallback {
     // Use the ack_id to find the subscribe span and end it.
     auto subscribe_span = subscribe_span_by_ack_id_.find(ack_id);
     if (subscribe_span != subscribe_span_by_ack_id_.end()) {
+      std::cerr << event << "\n";
       subscribe_span->second->AddEvent(event);
       subscribe_span->second->End();
+      subscribe_span_by_ack_id_.erase(subscribe_span);
+    }
+  }
+
+  void AddEvent(std::string const& ack_id, std::string const& event) override {
+    std::lock_guard<std::mutex> lk(mu_);
+    // Use the ack_id to find the subscribe span and add an event to it.
+    auto subscribe_span = subscribe_span_by_ack_id_.find(ack_id);
+    if (subscribe_span != subscribe_span_by_ack_id_.end()) {
+      subscribe_span->second->AddEvent(event);
       subscribe_span_by_ack_id_.erase(subscribe_span);
     }
   }

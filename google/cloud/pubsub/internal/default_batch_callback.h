@@ -51,6 +51,8 @@ class DefaultBatchCallback : public BatchCallback {
   };
 
   void EndMessage(std::string const&, std::string const&) override {}
+  
+  void AddEvent(std::string const&, std::string const&) override {}
 
  private:
   CallbackFunction callback_;

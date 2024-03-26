@@ -46,6 +46,9 @@ class BatchCallback {
 
   virtual void EndMessage(std::string const& ack_id,
                           std::string const& event) = 0;
+
+  virtual void AddEvent(std::string const& ack_id,
+                        std::string const& event) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

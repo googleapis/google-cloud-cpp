@@ -55,6 +55,8 @@ class BatchCallbackWrapper : public BatchCallback {
     child_->EndMessage(ack_id, event);
   };
 
+  void AddEvent(std::string const&, std::string const&) override {};
+
   std::shared_ptr<BatchCallback> child_;
   Callback wrapper_;
 };
