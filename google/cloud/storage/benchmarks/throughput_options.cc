@@ -107,9 +107,9 @@ google::cloud::StatusOr<ThroughputOptions> ValidateParsedOptions(
     return google::cloud::Status{code, std::move(os).str()};
   };
 
-  if (options.region.empty()) {
+  if (options.bucket.empty()) {
     std::ostringstream os;
-    os << "Missing value for --region option\n" << usage << "\n";
+    os << "Missing value for --bucket option\n" << usage << "\n";
     return make_status(os);
   }
 
@@ -240,14 +240,10 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&wants_help](std::string const&) { wants_help = true; }},
       {"--description", "print benchmark description",
        [&wants_description](std::string const&) { wants_description = true; }},
-      {"--project-id", "use the given project id for the benchmark",
-       [&options](std::string const& val) { options.project_id = val; }},
+      {"--bucket", "use the given bucket for the benchmark",
+       [&options](std::string const& val) { options.bucket = val; }},
       {"--labels", "user-defined labels to tag the results",
        [&options](std::string const& val) { options.labels = val; }},
-      {"--region", "use the given region for the benchmark",
-       [&options](std::string const& val) { options.region = val; }},
-      {"--bucket-prefix", "use this prefix when creating the bucket",
-       [&options](std::string const& val) { options.bucket_prefix = val; }},
       {"--thread-count", "set the number of threads in the benchmark",
        [&options](std::string const& val) {
          options.thread_count = std::stoi(val);
@@ -479,7 +475,7 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     return options;
   }
 
-  if (unparsed.size() > 2) {
+  if (unparsed.size() >= 2) {
     std::ostringstream os;
     os << "Unknown arguments or options:\n";
     for (auto const& a : unparsed) {
@@ -487,15 +483,6 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     }
     os << usage << "\n";
     return Status{StatusCode::kInvalidArgument, os.str()};
-  }
-  if (unparsed.size() == 2) {
-    if (absl::StartsWith(unparsed[1], "--")) {
-      std::ostringstream os;
-      os << "Unknown option or invalid region name: " << unparsed[1];
-      os << usage << "\n";
-      return Status{StatusCode::kInvalidArgument, os.str()};
-    }
-    options.region = unparsed[1];
   }
   return ValidateParsedOptions(usage, options);
 }

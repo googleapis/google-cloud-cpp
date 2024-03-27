@@ -109,8 +109,7 @@ using ResultHandler =
 
 gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options);
 
-void RunThread(ThroughputOptions const& ThroughputOptions,
-               std::string const& bucket_name, int thread_id,
+void RunThread(ThroughputOptions const& ThroughputOptions, int thread_id,
                ResultHandler const& handler,
                gcs_bm::ClientProvider const& provider);
 
@@ -126,16 +125,6 @@ int main(int argc, char* argv[]) {
   }
   if (options->exit_after_parse) return 0;
 
-  auto client_options =
-      google::cloud::Options{options->client_options}.set<gcs::ProjectIdOption>(
-          options->project_id);
-  client_options = google::cloud::internal::MergeOptions(
-      options->rest_options, std::move(client_options));
-  auto client = gcs::Client(client_options);
-
-  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto bucket_name =
-      gcs::testing::MakeRandomBucketName(generator, options->bucket_prefix);
   std::string notes = google::cloud::storage::version_string() + ";" +
                       google::cloud::internal::compiler() + ";" +
                       google::cloud::internal::compiler_flags();
@@ -176,10 +165,9 @@ int main(int argc, char* argv[]) {
         std::cout << "\n# " << name << " Quantum: " << quantum;
       };
 
-  std::cout << "# Start time: " << gcs_bm::CurrentTime()      //
-            << "\n# Labels: " << options->labels              //
-            << "\n# Running test on bucket: " << bucket_name  //
-            << "\n# Region: " << options->region              //
+  std::cout << "# Start time: " << gcs_bm::CurrentTime()          //
+            << "\n# Labels: " << options->labels                  //
+            << "\n# Running test on bucket: " << options->bucket  //
             << "\n# Duration: "
             << absl::FormatDuration(absl::FromChrono(options->duration))
             << "\n# Thread Count: " << options->thread_count
@@ -224,19 +212,6 @@ int main(int argc, char* argv[]) {
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
 
-  auto meta =
-      client.CreateBucket(bucket_name,
-                          gcs::BucketMetadata()
-                              .set_storage_class(gcs::storage_class::Standard())
-                              .set_location(options->region),
-                          gcs::PredefinedAcl::ProjectPrivate(),
-                          gcs::PredefinedDefaultObjectAcl::ProjectPrivate(),
-                          gcs::Projection("full"));
-  if (!meta) {
-    std::cerr << "Error creating bucket: " << meta.status() << "\n";
-    return 1;
-  }
-
   // Serialize output to `std::cout`.
   std::mutex mu;
   auto handler = [&mu](ThroughputOptions const& options,
@@ -252,17 +227,11 @@ int main(int argc, char* argv[]) {
   gcs_bm::PrintThroughputResultHeader(std::cout);
   std::vector<std::future<void>> tasks;
   for (int i = 0; i != options->thread_count; ++i) {
-    tasks.emplace_back(std::async(std::launch::async, RunThread, *options,
-                                  bucket_name, i, handler, provider));
+    tasks.emplace_back(std::async(std::launch::async, RunThread, *options, i,
+                                  handler, provider));
   }
   for (auto& f : tasks) f.get();
 
-  gcs_bm::DeleteAllObjects(client, bucket_name, options->thread_count);
-  auto status = client.DeleteBucket(bucket_name);
-  if (!status.ok()) {
-    std::cerr << "# Error deleting bucket, status=" << status << "\n";
-    return 1;
-  }
   std::cout << "# DONE\n" << std::flush;
 
   return 0;
@@ -287,8 +256,7 @@ gcs_bm::ClientProvider PerTransport(gcs_bm::ClientProvider const& provider) {
 
 gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
   return [=](ExperimentTransport t) {
-    auto opts = google::cloud::Options{options.client_options}
-                    .set<gcs::ProjectIdOption>(options.project_id);
+    auto opts = options.client_options;
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     namespace gcs_ex = ::google::cloud::storage_experimental;
     if (t == ExperimentTransport::kDirectPath) {
@@ -318,8 +286,8 @@ gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
   return provider;
 }
 
-void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
-               int thread_id, ResultHandler const& handler,
+void RunThread(ThroughputOptions const& options, int thread_id,
+               ResultHandler const& handler,
                gcs_bm::ClientProvider const& provider) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
@@ -413,7 +381,7 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
 
     auto& uploader = uploaders[uploader_generator(generator)];
     auto upload_result = uploader->Run(
-        bucket_name, object_name,
+        options.bucket, object_name,
         gcs_bm::ThroughputExperimentConfig{
             gcs_bm::kOpWrite, object_size, write_buffer_size, enable_crc,
             enable_md5, /*read_range=*/absl::nullopt});
@@ -424,13 +392,13 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
 
     auto& downloader = downloaders[downloader_generator(generator)];
     for (auto op : {gcs_bm::kOpRead0, gcs_bm::kOpRead1, gcs_bm::kOpRead2}) {
-      handler(options, downloader->Run(bucket_name, object_name,
+      handler(options, downloader->Run(options.bucket, object_name,
                                        gcs_bm::ThroughputExperimentConfig{
                                            op, object_size, read_buffer_size,
                                            enable_crc, enable_md5, range}));
     }
     auto client = provider(ExperimentTransport::kJson);
-    (void)client.DeleteObject(bucket_name, object_name);
+    (void)client.DeleteObject(options.bucket, object_name);
     // If needed, pace the benchmark so each thread generates only so many
     // samples each second.
     auto const pace = start + options.minimum_sample_delay;
@@ -443,21 +411,19 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
   using ::google::cloud::internal::GetEnv;
   using ::google::cloud::internal::Sample;
 
-  for (auto const& var :
-       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {
-    auto const value = GetEnv(var).value_or("");
-    if (!value.empty()) continue;
+  auto const bucket_name =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
+  if (bucket_name.empty()) {
     std::ostringstream os;
-    os << "The environment variable " << var << " is not set or empty";
+    os << "The GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME environment variable "
+          "is not set or empty";
     return google::cloud::Status(google::cloud::StatusCode::kUnknown,
                                  std::move(os).str());
   }
   return gcs_bm::ParseThroughputOptions(
       {
           argv0,
-          "--project-id=" + GetEnv("GOOGLE_CLOUD_PROJECT").value(),
-          "--region=" +
-              GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID").value(),
+          "--bucket=" + bucket_name,
           "--thread-count=1",
           "--minimum-object-size=16KiB",
           "--maximum-object-size=32KiB",
