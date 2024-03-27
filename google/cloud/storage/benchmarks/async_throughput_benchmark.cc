@@ -293,11 +293,6 @@ auto MakeClientConfigs(Configuration const& cfg) {
   return r;
 }
 
-auto MapTransport(std::string_view transport) {
-  if (transport == "GRPC") return std::string("metadata");
-  return std::string("none");
-}
-
 auto MapPath(std::string_view path) {
   if (path == "CP") return std::string("storage.googleapis.com");
   return std::string("google-c2p:///storage.googleapis.com");
@@ -318,19 +313,23 @@ auto MakeAsyncClients(Configuration const& cfg,
   return result;
 }
 
+auto MakeClient(ClientConfig const& cc, int background_threads) {
+  if (cc.transport == "GRPC") {
+    return gcs::MakeGrpcClient(
+        g::Options{}
+            .set<g::GrpcBackgroundThreadPoolSizeOption>(background_threads)
+            .set<g::EndpointOption>(MapPath(cc.path)));
+  }
+  return gcs::Client(g::Options{}.set<g::EndpointOption>(MapPath(cc.path)));
+}
+
 auto MakeSyncClients(Configuration const& cfg,
                      std::set<ClientConfig> const& clients,
                      int background_threads) {
   std::map<ClientConfig, gcs::Client> result;
   for (auto const& cc : clients) {
     if (cc.client != kSyncClientName) continue;
-    result.emplace(
-        cc,
-        gcs::MakeGrpcClient(
-            g::Options{}
-                .set<g::GrpcBackgroundThreadPoolSizeOption>(background_threads)
-                .set<gcs::GrpcPluginOption>(MapTransport(cc.transport))
-                .set<g::EndpointOption>(MapPath(cc.path))));
+    result.emplace(cc, MakeClient(cc, background_threads));
   }
   return result;
 }

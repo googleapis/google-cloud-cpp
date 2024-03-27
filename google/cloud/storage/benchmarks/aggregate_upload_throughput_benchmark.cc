@@ -115,8 +115,7 @@ gcs::Client MakeClient(AggregateUploadThroughputOptions const& options) {
                   .set<gcs::UploadBufferSizeOption>(256 * gcs_bm::kKiB);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (options.api == "GRPC") {
-    return gcs::MakeGrpcClient(
-        std::move(opts).set<gcs::GrpcPluginOption>("media"));
+    return gcs::MakeGrpcClient(std::move(opts));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   return gcs::Client(std::move(opts));

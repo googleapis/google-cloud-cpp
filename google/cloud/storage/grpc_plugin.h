@@ -25,23 +25,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Configure the GCS+gRPC plugin.
- *
- * - "none": use REST, disables gRPC.
- * - "metadata": use gRPC for all operations.
- *
- * @warning At present, GCS gRPC is GA with Allowlist. To access this API,
- *   kindly contact the Google Cloud Storage gRPC team at
- *   gcs-grpc-contact@google.com with a list of GCS buckets you would like to
- *   Allowlist. Please note that while the **service** is GA (with Allowlist),
- *   the client library features remain experimental and subject to change
- *   without notice.
- */
-struct GrpcPluginOption {
-  using Type = std::string;
-};
-
-/**
  * Create a `google::cloud::storage::Client` object configured to use gRPC.
  *
  * @param opts the configuration parameters for the Client.
@@ -70,9 +53,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @deprecated Please use `google::cloud::storage::GrpcPluginOption`.
  */
-using GrpcPluginOption
-    [[deprecated("use ::google::cloud::storage::GrpcPluginOption instead")]] =
-        ::google::cloud::storage::GrpcPluginOption;
+/**
+ * Configure the GCS+gRPC plugin.
+ *
+ * - "none": use REST, disables gRPC.
+ * - "metadata": use gRPC for all operations.
+ *
+ * @warning At present, GCS gRPC is GA with Allowlist. To access this API,
+ *   kindly contact the Google Cloud Storage gRPC team at
+ *   gcs-grpc-contact@google.com with a list of GCS buckets you would like to
+ *   Allowlist. Please note that while the **service** is GA (with Allowlist),
+ *   the client library features remain experimental and subject to change
+ *   without notice.
+ *
+ * @deprecated use `google::cloud::storage::Client()` to create JSON-based
+ *     clients and `google::cloud::storage::MakeGrpcClient()` to create
+ *     gRPC-based clients. If you need to pick one dynamically a simple
+ *     `if()` statement or ternary expression can do the job.
+ */
+struct [[deprecated(
+    "use storage::Client() or storage::MakeGrpcClient()")]] GrpcPluginOption {
+  using Type = std::string;
+};
 
 /**
  * Create a `google::cloud::storage::Client` object configured to use gRPC.

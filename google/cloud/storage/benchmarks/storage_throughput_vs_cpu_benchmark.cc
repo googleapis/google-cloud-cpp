@@ -261,13 +261,11 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
     if (t == ExperimentTransport::kDirectPath) {
       opts = google::cloud::internal::MergeOptions(options.direct_path_options,
                                                    std::move(opts));
-      opts.set<gcs::GrpcPluginOption>("media");
       return gcs::MakeGrpcClient(std::move(opts));
     }
     if (t == ExperimentTransport::kGrpc) {
       opts = google::cloud::internal::MergeOptions(options.grpc_options,
                                                    std::move(opts));
-      opts.set<gcs::GrpcPluginOption>("media");
       return gcs::MakeGrpcClient(std::move(opts));
     }
 #else

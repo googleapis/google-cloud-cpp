@@ -35,7 +35,7 @@ the library. Intended for testing only.
 `GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG=...`: configuration for the REST
 protocol, but currently unused.
 
-`GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=...`: used with
+`GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=...`: this is deprecated.used with
 `google::cloud::storage::MakeGrpcClient()` to configure
 configure the gRPC protocol. Setting this to `media` enables gRPC for just
 media operations (reading and writing data), while setting this to `metadata`
