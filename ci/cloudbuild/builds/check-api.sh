@@ -67,13 +67,14 @@ function check_abi() {
 
   local shortlib="${library#google_cloud_cpp_}"
   local public_headers="${prefix}/include/google/cloud/${shortlib}"
-  # These are special and share their header location.
   if [[ "${shortlib}" == "common" || "${shortlib}" == "grpc_utils" || "${shortlib}" == "oauth2" ]]; then
+    # These are special and share their header location.
     public_headers="${prefix}/include/google/cloud"
-  fi
-
-  # Compute libs are also special as their headers are in subdirectories.
-  if [[ "${shortlib}" =~ "compute" ]]; then
+  elif [[ "${shortlib}" == "storage_grpc" ]]; then
+    # `storage_grpc`` uses the same header location as `storage`
+    public_headers="${prefix}/include/google/cloud/storage"
+  elif [[ "${shortlib}" =~ "compute" ]]; then
+    # Compute libs are also special as their headers are in subdirectories.
     local computelib="${library#google_cloud_cpp_compute_}"
     public_headers="${prefix}/include/google/cloud/compute/${computelib}"
   fi
