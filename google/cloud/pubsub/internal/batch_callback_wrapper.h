@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Tracing implementation.
- * */
+ */
 class BatchCallbackWrapper : public BatchCallback {
  public:
   using Callback = std::function<void(StreamingPullResponse)>;
@@ -50,13 +50,14 @@ class BatchCallbackWrapper : public BatchCallback {
     child_->user_callback(std::move(m));
   }
 
+  void AddEvent(std::string const&, std::string const&) override {}
+
   void EndMessage(std::string const& ack_id,
                   std::string const& event) override {
     child_->EndMessage(ack_id, event);
-  };
+  }
 
-  void AddEvent(std::string const&, std::string const&) override {};
-
+ private:
   std::shared_ptr<BatchCallback> child_;
   Callback wrapper_;
 };

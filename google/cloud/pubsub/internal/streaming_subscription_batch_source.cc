@@ -237,7 +237,6 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
           }
           return result;
         });
-    ;
   }
 }
 
