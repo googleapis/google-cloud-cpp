@@ -201,7 +201,7 @@ future<Status> StreamingSubscriptionBatchSource::BulkNack(
                            options_, request)
                        .then([cb = callback_, ack_id](auto f) {
                          auto result = f.get();
-                             cb->NackEnd(ack_id);
+                         cb->NackEnd(ack_id);
                          return result;
                        });
                  });

@@ -133,7 +133,7 @@ class TracingBatchCallback : public BatchCallback {
   }
 
  private:
-  void AddEvent(std::string const& ack_id, std::string const& event)  {
+  void AddEvent(std::string const& ack_id, std::string const& event) {
     std::lock_guard<std::mutex> lk(mu_);
     // Use the ack_id to find the subscribe span and add an event to it.
     auto subscribe_span = subscribe_span_by_ack_id_.find(ack_id);
