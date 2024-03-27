@@ -99,13 +99,25 @@ class TracingBatchCallback : public BatchCallback {
     child_->user_callback(std::move(m));
   }
 
-  void AddEvent(std::string const& ack_id, std::string const& event) override {
-    std::lock_guard<std::mutex> lk(mu_);
-    // Use the ack_id to find the subscribe span and add an event to it.
-    auto subscribe_span = subscribe_span_by_ack_id_.find(ack_id);
-    if (subscribe_span != subscribe_span_by_ack_id_.end()) {
-      subscribe_span->second->AddEvent(event);
-    }
+  void AckStart(std::string const& ack_id) override {
+    AddEvent(ack_id, "gl-cpp.ack_start");
+  }
+  void AckEnd(std::string const& ack_id) override {
+    AddEvent(ack_id, "gl-cpp.ack_end");
+  }
+
+  void NackStart(std::string const& ack_id) override {
+    AddEvent(ack_id, "gl-cpp.nack_start");
+  }
+  void NackEnd(std::string const& ack_id) override {
+    AddEvent(ack_id, "gl-cpp.nack_end");
+  }
+
+  void ModackStart(std::string const& ack_id) override {
+    AddEvent(ack_id, "gl-cpp.modack_start");
+  }
+  void ModackEnd(std::string const& ack_id) override {
+    AddEvent(ack_id, "gl-cpp.modack_end");
   }
 
   void EndMessage(std::string const& ack_id,
@@ -121,6 +133,15 @@ class TracingBatchCallback : public BatchCallback {
   }
 
  private:
+  void AddEvent(std::string const& ack_id, std::string const& event)  {
+    std::lock_guard<std::mutex> lk(mu_);
+    // Use the ack_id to find the subscribe span and add an event to it.
+    auto subscribe_span = subscribe_span_by_ack_id_.find(ack_id);
+    if (subscribe_span != subscribe_span_by_ack_id_.end()) {
+      subscribe_span->second->AddEvent(event);
+    }
+  }
+
   std::shared_ptr<BatchCallback> child_;
   pubsub::Subscription subscription_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

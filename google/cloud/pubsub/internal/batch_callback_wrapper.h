@@ -50,7 +50,20 @@ class BatchCallbackWrapper : public BatchCallback {
     child_->user_callback(std::move(m));
   }
 
-  void AddEvent(std::string const&, std::string const&) override {}
+  void AckStart(std::string const& ack_id) override { child_->AckStart(ack_id); }
+  void AckEnd(std::string const& ack_id) override { child_->AckEnd(ack_id); }
+
+  void NackStart(std::string const& ack_id) override {
+    child_->NackStart(ack_id);
+  }
+  void NackEnd(std::string const& ack_id) override { child_->NackEnd(ack_id); }
+
+  void ModackStart(std::string const& ack_id) override {
+    child_->ModackStart(ack_id);
+  }
+  void ModackEnd(std::string const& ack_id) override {
+    child_->ModackEnd(ack_id);
+  }
 
   void EndMessage(std::string const& ack_id,
                   std::string const& event) override {

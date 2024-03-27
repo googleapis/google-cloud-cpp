@@ -142,14 +142,14 @@ TEST(TracingBatchCallback, StartAndEndMultipleMessage) {
                             SpanHasEvents(EventNamed("test-event-2")))));
 }
 
-TEST(TracingBatchCallback, AddEvent) {
+TEST(TracingBatchCallback, AckStart) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
   auto batch_callback = MakeTestBatchCallback(std::move(mock));
 
   batch_callback->callback(MakeResponse(1));
-  batch_callback->AddEvent("ack-id-0", "test-added-event");
+  batch_callback->AckStart("ack-id-0");
   batch_callback->EndMessage("ack-id-0", "test-event");
 
   auto spans = span_catcher->GetSpans();
@@ -157,24 +157,94 @@ TEST(TracingBatchCallback, AddEvent) {
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
                             SpanNamed("test-sub subscribe"),
                             SpanHasEvents(EventNamed("test-event"),
-                                          EventNamed("test-added-event")))));
+                                          EventNamed("gl-cpp.ack_start")))));
 }
 
-TEST(TracingBatchCallback, DoesNotAddEvent) {
+TEST(TracingBatchCallback, AckEnd) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
   auto batch_callback = MakeTestBatchCallback(std::move(mock));
 
   batch_callback->callback(MakeResponse(1));
-  batch_callback->AddEvent("ack-id-10", "test-added-event");
+  batch_callback->AckEnd("ack-id-0");
   batch_callback->EndMessage("ack-id-0", "test-event");
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
                             SpanNamed("test-sub subscribe"),
-                            SpanHasEvents(EventNamed("test-event")))));
+                            SpanHasEvents(EventNamed("test-event"),
+                                          EventNamed("gl-cpp.ack_end")))));
+}
+
+TEST(TracingBatchCallback, NackStart) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->NackStart("ack-id-0");
+  batch_callback->EndMessage("ack-id-0", "test-event");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+                            SpanNamed("test-sub subscribe"),
+                            SpanHasEvents(EventNamed("test-event"),
+                                          EventNamed("gl-cpp.nack_start")))));
+}
+TEST(TracingBatchCallback, NackEnd) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->NackEnd("ack-id-0");
+  batch_callback->EndMessage("ack-id-0", "test-event");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+                            SpanNamed("test-sub subscribe"),
+                            SpanHasEvents(EventNamed("test-event"),
+                                          EventNamed("gl-cpp.nack_end")))));
+}
+TEST(TracingBatchCallback, ModackStart) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->ModackStart("ack-id-0");
+  batch_callback->EndMessage("ack-id-0", "test-event");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+                            SpanNamed("test-sub subscribe"),
+                            SpanHasEvents(EventNamed("test-event"),
+                                          EventNamed("gl-cpp.modack_start")))));
+}
+TEST(TracingBatchCallback, ModackEnd) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->ModackEnd("ack-id-0");
+  batch_callback->EndMessage("ack-id-0", "test-event");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+                            SpanNamed("test-sub subscribe"),
+                            SpanHasEvents(EventNamed("test-event"),
+                                          EventNamed("gl-cpp.modack_end")))));
 }
 
 }  // namespace

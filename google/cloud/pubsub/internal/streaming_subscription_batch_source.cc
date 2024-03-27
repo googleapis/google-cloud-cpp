@@ -93,7 +93,7 @@ void StreamingSubscriptionBatchSource::Shutdown() {
 
 future<Status> StreamingSubscriptionBatchSource::AckMessage(
     std::string const& ack_id) {
-  callback_->AddEvent(ack_id, "gl-cpp.ack_start");
+  callback_->AckStart(ack_id);
   google::pubsub::v1::AcknowledgeRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
@@ -112,7 +112,7 @@ future<Status> StreamingSubscriptionBatchSource::AckMessage(
                                  request)
               .then([cb, ack_id](auto f) {
                 auto result = f.get();
-                cb->EndMessage(ack_id, "gl-cpp.ack_end");
+                cb->AckEnd(ack_id);
                 return result;
               });
         },
@@ -124,14 +124,14 @@ future<Status> StreamingSubscriptionBatchSource::AckMessage(
                          request)
       .then([cb = callback_, ack_id](auto f) {
         auto result = f.get();
-        cb->EndMessage(ack_id, "gl-cpp.ack_end");
+        cb->AckEnd(ack_id);
         return result;
       });
 }
 
 future<Status> StreamingSubscriptionBatchSource::NackMessage(
     std::string const& ack_id) {
-  callback_->AddEvent(ack_id, "gl-cpp.nack_start");
+  callback_->NackStart(ack_id);
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
@@ -151,7 +151,7 @@ future<Status> StreamingSubscriptionBatchSource::NackMessage(
                                        std::move(options), request)
               .then([cb = callback, ack_id](auto f) {
                 auto result = f.get();
-                cb->EndMessage(ack_id, "gl-cpp.nack_end");
+                cb->NackEnd(ack_id);
                 return result;
               });
         },
@@ -163,7 +163,7 @@ future<Status> StreamingSubscriptionBatchSource::NackMessage(
                                options_, request)
       .then([cb = callback_, ack_id](auto f) {
         auto result = f.get();
-        cb->EndMessage(ack_id, "gl-cpp.nack_end");
+        cb->NackEnd(ack_id);
         return result;
       });
 }
@@ -179,13 +179,13 @@ future<Status> StreamingSubscriptionBatchSource::BulkNack(
       SplitModifyAckDeadline(std::move(request), kMaxAckIdsPerMessage);
   if (requests.size() == 1) {
     std::string const ack_id = *requests.front().ack_ids().begin();
-    callback_->AddEvent(ack_id, "gl-cpp.nack_start");
+    callback_->NackStart(ack_id);
     return stub_
         ->AsyncModifyAckDeadline(cq_, std::make_shared<grpc::ClientContext>(),
                                  options_, requests.front())
         .then([cb = callback_, ack_id](auto f) {
           auto result = f.get();
-          cb->EndMessage(ack_id, "gl-cpp.nack_end");
+          cb->NackEnd(ack_id);
           return result;
         });
   }
@@ -194,14 +194,14 @@ future<Status> StreamingSubscriptionBatchSource::BulkNack(
   std::transform(requests.begin(), requests.end(), pending.begin(),
                  [this](auto const& request) {
                    std::string const ack_id = *request.ack_ids().begin();
-                   callback_->AddEvent(ack_id, "gl-cpp.nack_start");
+                   callback_->NackStart(ack_id);
                    return stub_
                        ->AsyncModifyAckDeadline(
                            cq_, std::make_shared<grpc::ClientContext>(),
                            options_, request)
                        .then([cb = callback_, ack_id](auto f) {
                          auto result = f.get();
-                         cb->EndMessage(ack_id, "gl-cpp.nack_end");
+                             cb->NackEnd(ack_id);
                          return result;
                        });
                  });
@@ -215,7 +215,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   request.set_ack_deadline_seconds(
       static_cast<std::int32_t>(extension.count()));
   for (auto& a : ack_ids) {
-    callback_->AddEvent(a, "gl-cpp.modack_start");
+    callback_->ModackStart(a);
     request.add_ack_ids(std::move(a));
   }
   std::unique_lock<std::mutex> lk(mu_);
@@ -233,7 +233,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
         .then([cb = callback_, r](auto f) {
           auto result = f.get();
           for (auto const& ack_id : r.ack_ids()) {
-            cb->AddEvent(ack_id, "gl-cpp.modack_end");
+            cb->ModackEnd(ack_id);
           }
           return result;
         });
