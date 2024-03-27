@@ -290,18 +290,17 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
     auto opts = google::cloud::Options{options.client_options}
                     .set<gcs::ProjectIdOption>(options.project_id);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    namespace gcs_ex = ::google::cloud::storage_experimental;
     if (t == ExperimentTransport::kDirectPath) {
       opts = google::cloud::internal::MergeOptions(options.direct_path_options,
                                                    std::move(opts));
-      opts.set<gcs_ex::GrpcPluginOption>("media");
-      return gcs_ex::DefaultGrpcClient(std::move(opts));
+      opts.set<gcs::GrpcPluginOption>("media");
+      return gcs::MakeGrpcClient(std::move(opts));
     }
     if (t == ExperimentTransport::kGrpc) {
       opts = google::cloud::internal::MergeOptions(options.grpc_options,
                                                    std::move(opts));
-      opts.set<gcs_ex::GrpcPluginOption>("media");
-      return gcs_ex::DefaultGrpcClient(std::move(opts));
+      opts.set<gcs::GrpcPluginOption>("media");
+      return gcs::MakeGrpcClient(std::move(opts));
     }
 #else
     (void)t;  // disable unused parameter warning

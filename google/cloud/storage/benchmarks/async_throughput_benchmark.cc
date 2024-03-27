@@ -310,12 +310,10 @@ auto MakeAsyncClients(Configuration const& cfg,
   for (auto const& cc : clients) {
     if (cc.client != kAsyncClientName) continue;
     result.emplace(
-        cc,
-        gcs_ex::AsyncClient(
-            g::Options()
-                .set<g::GrpcBackgroundThreadPoolSizeOption>(background_threads)
-                .set<gcs_ex::GrpcPluginOption>(MapTransport(cc.transport))
-                .set<g::EndpointOption>(MapPath(cc.path))));
+        cc, gcs_ex::AsyncClient(g::Options()
+                                    .set<g::GrpcBackgroundThreadPoolSizeOption>(
+                                        background_threads)
+                                    .set<g::EndpointOption>(MapPath(cc.path))));
   }
   return result;
 }
@@ -328,10 +326,10 @@ auto MakeSyncClients(Configuration const& cfg,
     if (cc.client != kSyncClientName) continue;
     result.emplace(
         cc,
-        gcs_ex::DefaultGrpcClient(
+        gcs::MakeGrpcClient(
             g::Options{}
                 .set<g::GrpcBackgroundThreadPoolSizeOption>(background_threads)
-                .set<gcs_ex::GrpcPluginOption>(MapTransport(cc.transport))
+                .set<gcs::GrpcPluginOption>(MapTransport(cc.transport))
                 .set<g::EndpointOption>(MapPath(cc.path))));
   }
   return result;

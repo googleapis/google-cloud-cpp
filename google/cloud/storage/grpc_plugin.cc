@@ -22,10 +22,10 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-google::cloud::storage::Client DefaultGrpcClient(Options opts) {
+google::cloud::storage::Client MakeGrpcClient(Options opts) {
   using ::google::cloud::internal::GetEnv;
   auto const config = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
                           .value_or(opts.get<GrpcPluginOption>());
@@ -39,6 +39,6 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
