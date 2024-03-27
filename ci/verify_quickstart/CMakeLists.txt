@@ -100,13 +100,9 @@ function (add_make_quickstart_target feature library target)
 endfunction ()
 
 foreach (feature IN LISTS FEATURES)
-    if (("${feature}" STREQUAL "storage_grpc") # TODO(#13857) - remove backwards
-                                               # compatibility shims
-        OR ("${feature}" STREQUAL "experimental-storage_grpc"))
-        add_cmake_quickstart_target("${feature}" storage quickstart_grpc
-                                    quickstart_async)
-        add_make_quickstart_target("${feature}" storage quickstart_grpc
-                                   quickstart_async)
+    if ("${feature}" STREQUAL "storage_grpc")
+        add_cmake_quickstart_target("${feature}" storage quickstart_grpc)
+        add_make_quickstart_target("${feature}" storage quickstart_grpc)
         continue()
     endif ()
     # In vcpkg we cannot use `_` in the name of a feature. We replace that with

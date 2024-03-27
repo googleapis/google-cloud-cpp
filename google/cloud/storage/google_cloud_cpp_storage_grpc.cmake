@@ -20,7 +20,7 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     add_library(google_cloud_cpp_storage_grpc INTERFACE)
     set_target_properties(
         google_cloud_cpp_storage_grpc
-        PROPERTIES EXPORT_NAME "google-cloud-cpp:storage_grpc")
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_grpc")
     if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
         target_compile_definitions(
             google_cloud_cpp_storage_grpc
@@ -201,7 +201,7 @@ add_library(google-cloud-cpp::storage_grpc ALIAS google_cloud_cpp_storage_grpc)
 add_library(google_cloud_cpp_experimental_storage_grpc INTERFACE)
 set_target_properties(
     google_cloud_cpp_experimental_storage_grpc
-    PROPERTIES EXPORT_NAME "google-cloud-cpp:experimental-storage_grpc")
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage_grpc")
 target_link_libraries(google_cloud_cpp_experimental_storage_grpc
                       INTERFACE google-cloud-cpp::storage_grpc)
 add_library(google-cloud-cpp::experimental-storage_grpc ALIAS
@@ -254,7 +254,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
                           INTERFACE google-cloud-cpp::storage_grpc GTest::gmock)
     set_target_properties(
         google_cloud_cpp_storage_grpc_mocks
-        PROPERTIES EXPORT_NAME "google-cloud-cpp:storage_grpc_mocks")
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_grpc_mocks")
     target_include_directories(
         google_cloud_cpp_storage_grpc_mocks
         INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

@@ -37,7 +37,7 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     "storagecontrol")
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
-)
+                                          "storage_grpc")
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sort
@@ -489,7 +489,7 @@ function (google_cloud_cpp_define_legacy_feature_options)
     mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
 
     set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT OFF)
-    if ((experimental-storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    if ((storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         # TODO(#13857) - remove backwards compatibility shims
         OR (experimental-storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
         set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT ON)

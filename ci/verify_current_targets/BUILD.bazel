@@ -26,6 +26,7 @@ CURRENT_TARGETS = [
     ":spanner",
     ":storage",
     ":storage_grpc",
+    ":storage_grpc_mocks",
 ]
 
 [cc_test(
