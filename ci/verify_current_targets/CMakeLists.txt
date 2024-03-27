@@ -40,7 +40,7 @@ set(ga_libraries
 # Define experimental libraries. The only difference is the name of the CMake
 # targets.
 set(experimental_libraries # cmake-format: sort
-                           bigquery_rest storage_grpc_mocks)
+                           bigquery_rest)
 
 # CMake can use pkg-config to find dependencies. We recommend using CMake
 # targets, but we want to verify our pkg-config files remain usable and
@@ -59,7 +59,7 @@ foreach (library ${common_libraries} ${ga_libraries} ${experimental_libraries})
     find_package("google_cloud_cpp_${library}" REQUIRED)
 endforeach ()
 
-foreach (library ${common_libraries} ${ga_libraries})
+foreach (library ${common_libraries} ${ga_libraries} storage_grpc)
     add_test_case(test_cmake_${library} google-cloud-cpp::${library})
 endforeach ()
 

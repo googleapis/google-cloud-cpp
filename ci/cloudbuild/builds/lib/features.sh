@@ -62,7 +62,6 @@ function features::libraries() {
 function features::_internal_extra() {
   local list=(
     experimental-bigquery_rest
-    experimental-storage_grpc
     opentelemetry
   )
   printf "%s\n" "${list[@]}"
