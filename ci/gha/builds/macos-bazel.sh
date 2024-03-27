@@ -26,8 +26,9 @@ source module ci/lib/io.sh
 
 mapfile -t args < <(bazel::common_args)
 mapfile -t test_args < <(bazel::test_args)
-TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
+mapfile -t integration_test_args < <(bazel::integration_test_args)
 
+TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 io::log_h1 "Starting Build"
 time {
   io::run bazelisk "${args[@]}" test "${test_args[@]}" --test_tag_filters=-integration-test //...
@@ -36,11 +37,7 @@ time {
 TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
 if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
   time {
-    io::run bazelisk "${args[@]}" test "${test_args[@]}" \
-      --test_tag_filters=integration-test-gha \
-      --test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="${GHA_TEST_BUCKET}" \
-      --test_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
-      --test_env=HOME="${HOME}" \
+    io::run bazelisk "${args[@]}" test "${test_args[@]}" "${integration_test_args[@]}" \
       //google/cloud/storage/tests/...
   }
 fi

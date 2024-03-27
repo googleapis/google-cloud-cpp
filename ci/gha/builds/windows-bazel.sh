@@ -32,6 +32,7 @@ if [[ $# -gt 1 ]]; then
   test_args+=("--compilation_mode=${1}")
   shift
 fi
+mapfile -t integration_test_args < <(bazel::integration_test_args)
 
 if [[ -z "${VCINSTALLDIR}" ]]; then
   echo "ERROR: Missing VCINSTALLDIR, this is needed to configure Bazel+MSVC"
@@ -52,12 +53,8 @@ if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
     #   https://github.com/grpc/grpc/issues/16571
     curl -fsSL -o "${HOME}/roots.pem" https://pki.google.com/roots.pem
 
-    io::run bazelisk "${args[@]}" test "${test_args[@]}" \
-      --test_tag_filters=integration-test-gha \
-      --test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="${GHA_TEST_BUCKET}" \
+    io::run bazelisk "${args[@]}" test "${test_args[@]}" "${integration_test_args[@]}" \
       --test_env=GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${HOME}/roots.pem" \
-      --test_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
-      --test_env=HOME="${HOME}" \
       //google/cloud/storage/tests/...
   }
 fi

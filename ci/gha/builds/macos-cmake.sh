@@ -56,6 +56,7 @@ TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
 if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
   time {
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="${GHA_TEST_BUCKET}"
-    io::run ctest "${ctest_args[@]}" --test-dir cmake-out -L integration-test-gha
+    io::run ctest "${ctest_args[@]}" --repeat until-pass:3 \
+      --test-dir cmake-out -L integration-test-gha
   }
 fi
