@@ -77,12 +77,12 @@ uses:
 
 ```{.cmake}
 add_executable(quickstart_grpc quickstart_grpc.cc)
-target_link_libraries(quickstart_grpc google-cloud-cpp::experimental-storage_grpc)
+target_link_libraries(quickstart_grpc google-cloud-cpp::storage_grpc)
 ```
 
 If you are using Bazel to compile your application, then you need to change
 the dependencies from `@google_cloud_cpp//:storage`
-to `@google_cloud_cpp//:experimental-storage_grpc`.
+to `@google_cloud_cpp//:storage_grpc`.
 For example, our `grpc/quickstart uses:
 
 ```{.py}
@@ -92,7 +92,7 @@ cc_binary(
         "quickstart_grpc.cc",
     ],
     deps = [
-        "@google_cloud_cpp//:experimental-storage_grpc",
+        "@google_cloud_cpp//:storage_grpc",
     ],
 )
 ```

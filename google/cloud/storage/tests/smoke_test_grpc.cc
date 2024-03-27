@@ -35,9 +35,8 @@ TEST(SmokeTest, Grpc) {
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
   if (bucket_name.empty()) GTEST_SKIP();
 
-  auto client = google::cloud::storage_experimental::DefaultGrpcClient(
-      google::cloud::Options{}.set<storage_experimental::GrpcPluginOption>(
-          "metadata"));
+  auto client = MakeGrpcClient(
+      google::cloud::Options{}.set<GrpcPluginOption>("metadata"));
   auto gen = google::cloud::internal::MakeDefaultPRNG();
   auto object_name = google::cloud::storage::testing::MakeRandomObjectName(gen);
 

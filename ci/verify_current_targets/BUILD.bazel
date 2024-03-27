@@ -25,7 +25,7 @@ CURRENT_TARGETS = [
     ":pubsub",
     ":spanner",
     ":storage",
-    ":experimental-storage_grpc",
+    ":storage_grpc",
 ]
 
 [cc_test(

@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  auto client = google::cloud::storage_experimental::DefaultGrpcClient();
+  auto client = google::cloud::storage::MakeGrpcClient();
 
   auto writer = client.WriteObject(bucket_name, "quickstart-grpc.txt");
   writer << "Hello World!";
