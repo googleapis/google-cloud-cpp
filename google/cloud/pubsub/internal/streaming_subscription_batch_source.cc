@@ -232,7 +232,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
                                  options_, r)
         .then([cb = callback_, r](auto f) {
           auto result = f.get();
-          for (auto ack_id : r.ack_ids()) {
+          for (auto const& ack_id : r.ack_ids()) {
             cb->AddEvent(ack_id, "gl-cpp.modack_end");
           }
           return result;
