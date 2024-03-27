@@ -147,16 +147,17 @@ TEST(TracingBatchCallback, AddEvent) {
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
   auto batch_callback = MakeTestBatchCallback(std::move(mock));
-  {
-    batch_callback->callback(MakeResponse(1));
-    batch_callback->AddEvent("ack-id-0", "test-added-event");
-  }
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->AddEvent("ack-id-0", "test-added-event");
+  batch_callback->EndMessage("ack-id-0", "test-event");
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
                             SpanNamed("test-sub subscribe"),
-                            SpanHasEvents(EventNamed("test-added-event")))));
+                            SpanHasEvents(EventNamed("test-event"),
+                                          EventNamed("test-added-event")))));
 }
 
 TEST(TracingBatchCallback, DoesNotAddEvent) {
