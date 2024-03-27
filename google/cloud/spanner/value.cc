@@ -134,6 +134,9 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
       return os
              << spanner_internal::FromProto(t, v).get<std::int64_t>().value();
 
+    case google::spanner::v1::TypeCode::FLOAT32:
+      return os << spanner_internal::FromProto(t, v).get<float>().value();
+
     case google::spanner::v1::TypeCode::FLOAT64:
       return os << spanner_internal::FromProto(t, v).get<double>().value();
 
@@ -244,6 +247,10 @@ bool Value::TypeProtoIs(std::int64_t, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::INT64;
 }
 
+bool Value::TypeProtoIs(float, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::FLOAT32;
+}
+
 bool Value::TypeProtoIs(double, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::FLOAT64;
 }
@@ -314,6 +321,12 @@ google::spanner::v1::Type Value::MakeTypeProto(bool) {
 google::spanner::v1::Type Value::MakeTypeProto(std::int64_t) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::INT64);
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(float) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::FLOAT32);
   return t;
 }
 
@@ -411,6 +424,18 @@ google::protobuf::Value Value::MakeValueProto(bool b) {
 google::protobuf::Value Value::MakeValueProto(std::int64_t i) {
   google::protobuf::Value v;
   v.set_string_value(std::to_string(i));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(float f) {
+  google::protobuf::Value v;
+  if (std::isnan(f)) {
+    v.set_string_value("NaN");
+  } else if (std::isinf(f)) {
+    v.set_string_value(f < 0 ? "-Infinity" : "Infinity");
+  } else {
+    v.set_number_value(f);  // widening
+  }
   return v;
 }
 
@@ -533,6 +558,22 @@ StatusOr<std::int64_t> Value::GetValue(std::int64_t,
     return Status(StatusCode::kUnknown, "Trailing data: \"" + s + "\"");
   }
   return x;
+}
+
+StatusOr<float> Value::GetValue(float, google::protobuf::Value const& pv,
+                                google::spanner::v1::Type const&) {
+  if (pv.kind_case() == google::protobuf::Value::kNumberValue) {
+    return static_cast<float>(pv.number_value());  // narrowing
+  }
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing FLOAT32");
+  }
+  std::string const& s = pv.string_value();
+  auto const inf = std::numeric_limits<float>::infinity();
+  if (s == "-Infinity") return -inf;
+  if (s == "Infinity") return inf;
+  if (s == "NaN") return std::nanf("");
+  return Status(StatusCode::kUnknown, "bad FLOAT32 data: \"" + s + "\"");
 }
 
 StatusOr<double> Value::GetValue(double, google::protobuf::Value const& pv,

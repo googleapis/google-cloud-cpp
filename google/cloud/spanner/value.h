@@ -65,6 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * ------------ | ------------
  * BOOL         | `bool`
  * INT64        | `std::int64_t`
+ * FLOAT32      | `float`
  * FLOAT64      | `double`
  * STRING       | `std::string`
  * BYTES        | `google::cloud::spanner::Bytes`
@@ -193,6 +194,8 @@ class Value {
   explicit Value(bool v) : Value(PrivateConstructor{}, v) {}
   /// @copydoc Value(bool)
   explicit Value(std::int64_t v) : Value(PrivateConstructor{}, v) {}
+  /// @copydoc Value(bool)
+  explicit Value(float v) : Value(PrivateConstructor{}, v) {}
   /// @copydoc Value(bool)
   explicit Value(double v) : Value(PrivateConstructor{}, v) {}
   /// @copydoc Value(bool)
@@ -378,6 +381,7 @@ class Value {
   // by the given `Type` proto.
   static bool TypeProtoIs(bool, google::spanner::v1::Type const&);
   static bool TypeProtoIs(std::int64_t, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(float, google::spanner::v1::Type const&);
   static bool TypeProtoIs(double, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Timestamp, google::spanner::v1::Type const&);
   static bool TypeProtoIs(CommitTimestamp, google::spanner::v1::Type const&);
@@ -443,6 +447,7 @@ class Value {
   // argument type is the tag, the argument value is ignored.
   static google::spanner::v1::Type MakeTypeProto(bool);
   static google::spanner::v1::Type MakeTypeProto(std::int64_t);
+  static google::spanner::v1::Type MakeTypeProto(float);
   static google::spanner::v1::Type MakeTypeProto(double);
   static google::spanner::v1::Type MakeTypeProto(std::string const&);
   static google::spanner::v1::Type MakeTypeProto(Bytes const&);
@@ -521,6 +526,7 @@ class Value {
   // https://github.com/googleapis/googleapis/blob/master/google/spanner/v1/type.proto
   static google::protobuf::Value MakeValueProto(bool b);
   static google::protobuf::Value MakeValueProto(std::int64_t i);
+  static google::protobuf::Value MakeValueProto(float f);
   static google::protobuf::Value MakeValueProto(double d);
   static google::protobuf::Value MakeValueProto(std::string s);
   static google::protobuf::Value MakeValueProto(Bytes b);
@@ -590,6 +596,8 @@ class Value {
   static StatusOr<std::int64_t> GetValue(std::int64_t,
                                          google::protobuf::Value const&,
                                          google::spanner::v1::Type const&);
+  static StatusOr<float> GetValue(float, google::protobuf::Value const&,
+                                  google::spanner::v1::Type const&);
   static StatusOr<double> GetValue(double, google::protobuf::Value const&,
                                    google::spanner::v1::Type const&);
   static StatusOr<std::string> GetValue(std::string const&,

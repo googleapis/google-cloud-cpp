@@ -156,6 +156,18 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(v);
   }
 
+  // Note: We skip testing the NaN case here because NaN always compares not
+  // equal, even with itself. So NaN is handled in a separate test.
+  auto const inff = std::numeric_limits<float>::infinity();
+  for (auto x : {-inff, -1.0F, -0.5F, 0.0F, 0.5F, 1.0F, inff}) {
+    SCOPED_TRACE("Testing: float " + std::to_string(x));
+    TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<float>(5, x));
+    std::vector<absl::optional<float>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
+  }
+
   for (auto const& x :
        std::vector<std::string>{"", "f", "foo", "12345678901234567"}) {
     SCOPED_TRACE("Testing: std::string " + std::string(x));
@@ -467,6 +479,9 @@ TEST(Value, ConstructionFromLiterals) {
   Value v_int64(42);
   EXPECT_EQ(42, *v_int64.get<std::int64_t>());
 
+  Value v_float64(1.5);
+  EXPECT_EQ(1.5, *v_float64.get<double>());
+
   Value v_string("hello");
   EXPECT_EQ("hello", *v_string.get<std::string>());
 
@@ -518,6 +533,7 @@ TEST(Value, MixingTypes) {
 TEST(Value, SpannerArray) {
   using ArrayInt64 = std::vector<std::int64_t>;
   using ArrayDouble = std::vector<double>;
+  using ArrayFloat = std::vector<float>;
 
   ArrayInt64 const empty = {};
   Value const ve(empty);
@@ -541,6 +557,14 @@ TEST(Value, SpannerArray) {
   ASSERT_STATUS_OK(vd.get<ArrayDouble>());
   EXPECT_EQ(ad, *vd.get<ArrayDouble>());
 
+  ArrayFloat const af = {1.0, 2.0, 3.0};
+  Value const vf(af);
+  EXPECT_EQ(vf, vf);
+  EXPECT_NE(vi, vf);
+  EXPECT_THAT(vf.get<ArrayInt64>(), Not(IsOk()));
+  ASSERT_STATUS_OK(vf.get<ArrayFloat>());
+  EXPECT_EQ(af, *vf.get<ArrayFloat>());
+
   Value const null_vi = MakeNullValue<ArrayInt64>();
   EXPECT_EQ(null_vi, null_vi);
   EXPECT_NE(null_vi, vi);
@@ -555,6 +579,14 @@ TEST(Value, SpannerArray) {
   EXPECT_NE(null_vd, vi);
   EXPECT_THAT(null_vd.get<ArrayDouble>(), Not(IsOk()));
   EXPECT_THAT(null_vd.get<ArrayInt64>(), Not(IsOk()));
+
+  Value const null_vf = MakeNullValue<ArrayFloat>();
+  EXPECT_EQ(null_vf, null_vf);
+  EXPECT_NE(null_vf, null_vi);
+  EXPECT_NE(null_vf, vf);
+  EXPECT_NE(null_vf, vi);
+  EXPECT_THAT(null_vf.get<ArrayFloat>(), Not(IsOk()));
+  EXPECT_THAT(null_vf.get<ArrayInt64>(), Not(IsOk()));
 }
 
 TEST(Value, SpannerStruct) {
@@ -726,6 +758,39 @@ TEST(Value, ProtoConversionFloat64) {
   // (for easy sorting), so spanner::Value behaves the same way.
   EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
   EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
+  EXPECT_EQ("NaN", p.second.string_value());
+}
+
+TEST(Value, ProtoConversionFloat32) {
+  for (auto x : {-1.0F, -0.5F, 0.0F, 0.5F, 1.0F}) {
+    Value const v(x);
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT32, p.first.code());
+    EXPECT_EQ(x, p.second.number_value());
+  }
+
+  // Tests special cases
+  auto const inf = std::numeric_limits<float>::infinity();
+  Value v(inf);
+  auto p = spanner_internal::ToProto(v);
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+  EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT32, p.first.code());
+  EXPECT_EQ("Infinity", p.second.string_value());
+
+  v = Value(-inf);
+  p = spanner_internal::ToProto(v);
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+  EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT32, p.first.code());
+  EXPECT_EQ("-Infinity", p.second.string_value());
+
+  auto const nan = std::nanf("NaN");
+  v = Value(nan);
+  p = spanner_internal::ToProto(v);
+  // Note: Unlike IEEE 754, Spanner NaN values are considered equal
+  // (for easy sorting), so spanner::Value behaves the same way.
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+  EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT32, p.first.code());
   EXPECT_EQ("NaN", p.second.string_value());
 }
 
@@ -931,6 +996,12 @@ void SetProtoKind(Value& v, double x) {
   v = spanner_internal::FromProto(p.first, p.second);
 }
 
+void SetProtoKind(Value& v, float x) {
+  auto p = spanner_internal::ToProto(v);
+  p.second.set_number_value(x);
+  v = spanner_internal::FromProto(p.first, p.second);
+}
+
 void SetProtoKind(Value& v, char const* x) {
   auto p = spanner_internal::ToProto(v);
   p.second.set_string_value(x);
@@ -960,6 +1031,9 @@ TEST(Value, GetBadBool) {
   SetProtoKind(v, 0.0);
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 
+  SetProtoKind(v, 0.0F);
+  EXPECT_THAT(v.get<bool>(), Not(IsOk()));
+
   SetProtoKind(v, "hello");
   EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 }
@@ -977,6 +1051,21 @@ TEST(Value, GetBadDouble) {
 
   SetProtoKind(v, "bad string");
   EXPECT_THAT(v.get<double>(), Not(IsOk()));
+}
+
+TEST(Value, GetBadFloat) {
+  Value v(0.0F);
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<float>(), Not(IsOk()));
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_THAT(v.get<float>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<float>(), Not(IsOk()));
+
+  SetProtoKind(v, "bad string");
+  EXPECT_THAT(v.get<float>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadString) {
@@ -1051,6 +1140,9 @@ TEST(Value, GetBadNumeric) {
   EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0F);
   EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, "");
@@ -1296,6 +1388,7 @@ TEST(Value, OutputStream) {
   };
 
   auto const inf = std::numeric_limits<double>::infinity();
+  auto const inff = std::numeric_limits<float>::infinity();
   auto const singer =
       MakeSinger(1, "1817-05-25", "French", testing::Genre::FOLK);
 
@@ -1316,6 +1409,10 @@ TEST(Value, OutputStream) {
       {Value(42.0), "42.00", float4},
       {Value(inf), "inf", normal},
       {Value(-inf), "-inf", normal},
+      {Value(42.0F), "42", normal},
+      {Value(42.0F), "42.00", float4},
+      {Value(inff), "inf", normal},
+      {Value(-inff), "-inf", normal},
       {Value(""), "", normal},
       {Value("foo"), "foo", normal},
       {Value("NULL"), "NULL", normal},
@@ -1353,6 +1450,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<bool>(), "NULL", normal},
       {MakeNullValue<std::int64_t>(), "NULL", normal},
       {MakeNullValue<double>(), "NULL", normal},
+      {MakeNullValue<float>(), "NULL", normal},
       {MakeNullValue<std::string>(), "NULL", normal},
       {MakeNullValue<Bytes>(), "NULL", normal},
       {MakeNullValue<Json>(), "NULL", normal},
@@ -1371,6 +1469,8 @@ TEST(Value, OutputStream) {
       {Value(std::vector<std::int64_t>{10, 11}), "[a, b]", hex},
       {Value(std::vector<double>{1.0, 2.0}), "[1, 2]", normal},
       {Value(std::vector<double>{1.0, 2.0}), "[1.000, 2.000]", float4},
+      {Value(std::vector<float>{1.0F, 2.0F}), "[1, 2]", normal},
+      {Value(std::vector<float>{1.0F, 2.0F}), "[1.000, 2.000]", float4},
       {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
       {Value(std::vector<Bytes>{2}), R"([B"", B""])", normal},
       {Value(std::vector<Json>{2}), R"([null, null])", normal},
@@ -1396,6 +1496,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<bool>>(), "NULL", normal},
       {MakeNullValue<std::vector<std::int64_t>>(), "NULL", normal},
       {MakeNullValue<std::vector<double>>(), "NULL", normal},
+      {MakeNullValue<std::vector<float>>(), "NULL", normal},
       {MakeNullValue<std::vector<std::string>>(), "NULL", normal},
       {MakeNullValue<std::vector<Bytes>>(), "NULL", normal},
       {MakeNullValue<std::vector<Json>>(), "NULL", normal},
@@ -1443,7 +1544,7 @@ TEST(Value, OutputStream) {
       // Tests null structs
       {MakeNullValue<std::tuple<bool>>(), "NULL", normal},
       {MakeNullValue<std::tuple<bool, std::int64_t>>(), "NULL", normal},
-      {MakeNullValue<std::tuple<bool, std::string>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<float, std::string>>(), "NULL", normal},
       {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
       {MakeNullValue<std::tuple<Numeric, absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::tuple<Json, std::vector<bool>>>(), "NULL", normal},
@@ -1461,6 +1562,12 @@ TEST(Value, OutputStream) {
   std::stringstream ss;
   ss << Value(std::nan(""));
   EXPECT_THAT(ss.str(), HasSubstr("nan"));
+
+  // `float std::nanf("")` is a special case because the output conversion
+  // is implementation defined. So, we just look for a "nan" substring.
+  std::stringstream ssf;
+  ssf << Value(std::nanf(""));
+  EXPECT_THAT(ssf.str(), HasSubstr("nan"));
 }
 
 // Ensures that the following expressions produce the same output.
@@ -1493,6 +1600,13 @@ TEST(Value, OutputStreamMatchesT) {
   StreamMatchesValueStream(std::nan("NaN"));
   StreamMatchesValueStream(std::numeric_limits<double>::infinity());
   StreamMatchesValueStream(-std::numeric_limits<double>::infinity());
+
+  // float
+  StreamMatchesValueStream(0.0F);
+  StreamMatchesValueStream(3.14F);
+  StreamMatchesValueStream(std::nanf("NaN"));
+  StreamMatchesValueStream(std::numeric_limits<float>::infinity());
+  StreamMatchesValueStream(-std::numeric_limits<float>::infinity());
 
   // std::string
   StreamMatchesValueStream("");
