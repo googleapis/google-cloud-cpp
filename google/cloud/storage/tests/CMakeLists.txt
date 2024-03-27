@@ -65,6 +65,9 @@ set(storage_client_integration_tests
     slow_reader_chunk_integration_test.cc
     slow_reader_stream_integration_test.cc
     small_reads_integration_test.cc
+    smoke_test_async.cc
+    smoke_test_grpc.cc
+    smoke_test_rest.cc
     storage_include_test.cc
     thread_integration_test.cc
     tracing_integration_test.cc)
@@ -116,6 +119,14 @@ foreach (fname IN LISTS storage_client_integration_tests)
         ${target} PROPERTIES LABELS
                              "integration-test;integration-test-emulator")
     google_cloud_cpp_add_common_options(${target})
+endforeach ()
+foreach (target IN ITEMS storage_smoke_test_async storage_smoke_test_grpc
+                         storage_smoke_test_rest)
+    set_tests_properties(
+        ${target}
+        PROPERTIES
+            LABELS
+            "integration-test;integration-test-emulator;integration-test-gha")
 endforeach ()
 
 # We just know that these tests need to be run against production.

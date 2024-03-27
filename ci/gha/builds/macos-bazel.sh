@@ -17,19 +17,27 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module ci/gha/builds/lib/bazel.sh
 source module ci/gha/builds/lib/macos.sh
+# Define the os::* functions used in bazel.sh
+source module ci/gha/builds/lib/bazel.sh
 source module ci/lib/io.sh
 
 # Usage: macos-bazel.sh
 
 mapfile -t args < <(bazel::common_args)
 mapfile -t test_args < <(bazel::test_args)
-# Do not run the integration tests
-test_args+=(--test_tag_filters=-integration-test)
-TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
+mapfile -t integration_test_args < <(bazel::integration_test_args)
 
+TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 io::log_h1 "Starting Build"
 time {
-  io::run bazelisk "${args[@]}" test "${test_args[@]}" //...
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" --test_tag_filters=-integration-test //...
 }
+
+TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
+if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
+  time {
+    io::run bazelisk "${args[@]}" test "${test_args[@]}" "${integration_test_args[@]}" \
+      //google/cloud/storage/tests/...
+  }
+fi
