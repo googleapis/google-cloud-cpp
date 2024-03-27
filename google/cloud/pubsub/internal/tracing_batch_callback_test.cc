@@ -146,7 +146,6 @@ TEST(TracingBatchCallback, SubscribeAttributes) {
 }
 
 TEST(TracingBatchCallback, SubscribeAttributesForOrderingKey) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
