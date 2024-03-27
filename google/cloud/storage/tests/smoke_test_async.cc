@@ -40,8 +40,10 @@ TEST(SmokeTest, Grpc) {
   auto gen = google::cloud::internal::MakeDefaultPRNG();
   auto object_name = google::cloud::storage::testing::MakeRandomObjectName(gen);
 
-  auto insert =
-      client.InsertObject(bucket_name, object_name, "Hello World!").get();
+  auto insert = client
+                    .InsertObject(bucket_name, object_name, "Hello World!",
+                                  storage::IfGenerationMatch(0))
+                    .get();
   ASSERT_STATUS_OK(insert);
   auto metadata = *insert;
 

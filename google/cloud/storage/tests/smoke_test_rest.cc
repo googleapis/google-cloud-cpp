@@ -36,7 +36,8 @@ TEST(SmokeTest, Rest) {
   auto gen = google::cloud::internal::MakeDefaultPRNG();
   auto object_name = google::cloud::storage::testing::MakeRandomObjectName(gen);
 
-  auto writer = client.WriteObject(bucket_name, object_name);
+  auto writer =
+      client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
   writer << "Hello World!";
   writer.Close();
   ASSERT_STATUS_OK(writer.metadata());
