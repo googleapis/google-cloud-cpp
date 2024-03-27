@@ -154,6 +154,23 @@ bool_flag(
 )
 
 cc_library(
+    name = "storage_grpc",
+    hdrs = ["//google/cloud/storage:public_grpc_hdrs"],
+    deps = [
+        "//google/cloud/storage:google_cloud_cpp_storage_grpc",
+    ],
+)
+
+cc_library(
+    name = "storage_grpc_mocks",
+    testonly = True,
+    hdrs = ["//google/cloud/storage:grpc_mocks_hdrs"],
+    deps = [
+        "//google/cloud/storage:google_cloud_cpp_storage_grpc_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-storage_grpc",
     hdrs = ["//google/cloud/storage:public_grpc_hdrs"],
     deps = [

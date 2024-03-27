@@ -20,6 +20,9 @@ the APIs in these libraries are stable, and are ready for production use.
   `CatalogServiceClient`
 - [Network Services API](/google/cloud/networkservices/README.md) - new
   `DepServiceClient`
+- [Google Cloud Storage](/google/cloud/storage/README.md) - the gRPC plugin is
+  now GA. The [Using the gRPC plugin][storage-grpc] guide describe this feature
+  in more detail.
 
 ## v2.22.0 - 2024-03
 
@@ -1443,3 +1446,4 @@ case it elicits some feedback that requires changes.
 [product-launch-stages]: https://cloud.google.com/products/#product-launch-stages
 [resource-manager-tags]: https://cloud.google.com/resource-manager/docs/tags/tags-overview
 [speech-model-adaptation]: https://cloud.google.com/speech-to-text/docs/adaptation-model
+[storage-grpc]: https://cloud.google.com/cpp/docs/reference/storage/latest/storage-grpc

@@ -315,7 +315,7 @@ auto MakeAsyncClients(Configuration const& cfg,
 
 auto MakeClient(ClientConfig const& cc, int background_threads) {
   if (cc.transport == "GRPC") {
-    return google::cloud::storage_experimental::DefaultGrpcClient(
+    return gcs::MakeGrpcClient(
         g::Options{}
             .set<g::GrpcBackgroundThreadPoolSizeOption>(background_threads)
             .set<g::EndpointOption>(MapPath(cc.path)));

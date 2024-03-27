@@ -121,10 +121,7 @@ class Iteration {
 gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
   auto opts = options.client_options;
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  namespace gcs_ex = ::google::cloud::storage_experimental;
-  if (options.api == "GRPC") {
-    return gcs_ex::DefaultGrpcClient(std::move(opts));
-  }
+  if (options.api == "GRPC") return gcs::MakeGrpcClient();
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   return gcs::Client(std::move(opts));
 }

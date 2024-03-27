@@ -101,12 +101,12 @@ function quickstart::run_gcs_grpc_quickstart() {
   io::log_h2 "Running quickstart for GCS+gRPC"
 
   io::log "[ CMake ]"
-  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-storage"
+  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-storage_grpc"
   "${cmake_bin_dir}/quickstart_grpc" "${run_args[@]}"
 
   echo
   io::log "[ Make ]"
-  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/makefile-storage"
+  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/makefile-storage_grpc"
   LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" \
     "${makefile_bin_dir}/quickstart_grpc" "${run_args[@]}"
 }

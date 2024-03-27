@@ -85,7 +85,7 @@ cc_binary(
     tags = ["manual"],
     deps = [
         ":storage_benchmarks",
-        "//:experimental-storage_grpc",
+        "//:storage_grpc",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 )

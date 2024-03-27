@@ -21,12 +21,30 @@
 
 namespace google {
 namespace cloud {
+namespace storage {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
- * Contains experimental features for the GCS C++ Client Library.
+ * Create a `google::cloud::storage::Client` object configured to use gRPC.
  *
- * @warning The types, functions, aliases, and objects in this namespace are
- *   subject to change without notice.
+ * @param opts the configuration parameters for the Client.
+ *
+ * @warning At present, GCS gRPC is GA with Allowlist. To access this API,
+ *   kindly contact the Google Cloud Storage gRPC team at
+ *   gcs-grpc-contact@google.com with a list of GCS buckets you would like to
+ *   Allowlist. Please note that while the **service** is GA (with Allowlist),
+ *   the client library features remain experimental and subject to change
+ *   without notice.
+ *
+ * @par Example
+ * @snippet storage_grpc_samples.cc grpc-read-write
  */
+google::cloud::storage::Client MakeGrpcClient(Options opts = {});
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage
+
+// TODO(#13857) - remove the backwards compatibility shims.
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -46,19 +64,14 @@ struct [[deprecated(
 /**
  * Create a `google::cloud::storage::Client` object configured to use gRPC.
  *
- * @param opts the configuration parameters for the Client.
- *
- * @warning At present, GCS gRPC is GA with Allowlist. To access this API,
- *   kindly contact the Google Cloud Storage gRPC team at
- *   gcs-grpc-contact@google.com with a list of GCS buckets you would like to
- *   Allowlist. Please note that while the **service** is GA (with Allowlist),
- *   the client library features remain experimental and subject to change
- *   without notice.
- *
- * @par Example
- * @snippet storage_grpc_samples.cc grpc-read-write
+ * @deprecated Please use `google::cloud::storage::MakeGrpcClient`.
  */
-google::cloud::storage::Client DefaultGrpcClient(Options opts = {});
+[[deprecated(
+    "use ::google::cloud::storage::MakeGrpcClient() instead")]] inline google::
+    cloud::storage::Client
+    DefaultGrpcClient(Options opts = {}) {
+  return ::google::cloud::storage::MakeGrpcClient(std::move(opts));
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental

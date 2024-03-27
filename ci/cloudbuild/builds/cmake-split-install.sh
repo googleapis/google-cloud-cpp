@@ -50,7 +50,7 @@ io::log_h2 "Building and installing popular libraries"
 mapfile -t core_cmake_args < <(cmake::common_args cmake-out/popular-libraries)
 io::run cmake "${core_cmake_args[@]}" "${install_args[@]}" \
   -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
-  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable,pubsub,spanner,storage,iam,policytroubleshooter" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable,pubsub,spanner,storage,storage_grpc,.iam,policytroubleshooter" \
   -DGOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON=ON
 io::run cmake --build cmake-out/popular-libraries
 io::run cmake --install cmake-out/popular-libraries --prefix "${INSTALL_PREFIX}"
@@ -71,13 +71,13 @@ mapfile -t feature_cmake_args < <(cmake::common_args cmake-out/features)
 io::run cmake "${feature_cmake_args[@]}" "${install_args[@]}" \
   -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
   -DGOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON=ON \
-  -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__,-bigtable,-pubsub,-storage,-spanner,-iam,-policytroubleshooter,-compute"
+  -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__,-bigtable,-pubsub,-storage,-storage_grpc,-spanner,-iam,-policytroubleshooter,-compute"
 io::run cmake --build cmake-out/features
 io::run cmake --install cmake-out/features --prefix "${INSTALL_PREFIX}"
 
 # Tests the installed artifacts by building all the quickstarts.
 # shellcheck disable=SC2046
-mapfile -t feature_list < <(cmake -P cmake/print-ga-features.cmake 2>&1)
+mapfile -t feature_list < <(cmake -P cmake/print-ga-features.cmake 2>&1 | grep -v storage_grpc)
 FEATURES=$(printf ";%s" "${feature_list[@]}")
 FEATURES="${FEATURES:1}"
 io::run cmake -G Ninja \

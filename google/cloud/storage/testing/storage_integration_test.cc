@@ -105,7 +105,7 @@ StorageIntegrationTest::MakeIntegrationTestClient(
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (UseGrpcForMedia() || UseGrpcForMetadata()) {
-    return storage_experimental::DefaultGrpcClient(std::move(opts));
+    return MakeGrpcClient(std::move(opts));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 

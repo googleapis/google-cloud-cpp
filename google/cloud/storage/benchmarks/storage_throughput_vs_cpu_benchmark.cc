@@ -258,16 +258,15 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
   return [=](ExperimentTransport t) {
     auto opts = options.client_options;
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    namespace gcs_ex = ::google::cloud::storage_experimental;
     if (t == ExperimentTransport::kDirectPath) {
       opts = google::cloud::internal::MergeOptions(options.direct_path_options,
                                                    std::move(opts));
-      return gcs_ex::DefaultGrpcClient(std::move(opts));
+      return gcs::MakeGrpcClient(std::move(opts));
     }
     if (t == ExperimentTransport::kGrpc) {
       opts = google::cloud::internal::MergeOptions(options.grpc_options,
                                                    std::move(opts));
-      return gcs_ex::DefaultGrpcClient(std::move(opts));
+      return gcs::MakeGrpcClient(std::move(opts));
     }
 #else
     (void)t;  // disable unused parameter warning

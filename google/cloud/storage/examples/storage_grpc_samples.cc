@@ -36,7 +36,7 @@ void GrpcReadWrite(std::string const& bucket_name) {
   auto constexpr kText = R"""(Hello World!)""";
 
   //! [grpc-default-client]
-  auto client = google::cloud::storage_experimental::DefaultGrpcClient();
+  auto client = gcs::MakeGrpcClient();
   //! [grpc-default-client]
 
   auto object = client.InsertObject(bucket_name, "lorem.txt", kText);
@@ -59,7 +59,7 @@ void GrpcReadWrite(std::string const& bucket_name) {
 void GrpcClientWithDP() {
   namespace g = ::google::cloud;
 
-  auto client = google::cloud::storage_experimental::DefaultGrpcClient(
+  auto client = google::cloud::storage::MakeGrpcClient(
       g::Options{}.set<g::EndpointOption>(
           "google-c2p:///storage.googleapis.com"));
   // Use `client` as usual.
@@ -69,8 +69,8 @@ void GrpcClientWithDP() {
 //! [grpc-client-with-project]
 void GrpcClientWithProject(std::string project_id) {
   namespace gcs = ::google::cloud::storage;
-  auto client = google::cloud::storage_experimental::DefaultGrpcClient(
-      google::cloud::Options{}.set<gcs::ProjectIdOption>(
+  auto client =
+      gcs::MakeGrpcClient(google::cloud::Options{}.set<gcs::ProjectIdOption>(
           std::move(project_id)));
   std::cout << "Successfully created a gcs::Client configured to use gRPC\n";
 }
@@ -112,11 +112,11 @@ void GrpcReportTransportCommand(std::vector<std::string> argv) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     namespace g = ::google::cloud;
     if (argv[0] == "GRPC") {
-      return google::cloud::storage_experimental::DefaultGrpcClient();
+      return google::cloud::storage::MakeGrpcClient();
     }
     if (argv[0] == "DP") {
       // Some documentation calls this `DirectPath`
-      return google::cloud::storage_experimental::DefaultGrpcClient(
+      return google::cloud::storage::MakeGrpcClient(
           g::Options{}.set<g::EndpointOption>(
               "google-c2p:///storage.googleapis.com"));
     }
