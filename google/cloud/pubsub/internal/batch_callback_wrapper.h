@@ -67,11 +67,6 @@ class BatchCallbackWrapper : public BatchCallback {
     child_->ModackEnd(ack_id);
   }
 
-  void EndMessage(std::string const& ack_id,
-                  std::string const& event) override {
-    child_->EndMessage(ack_id, event);
-  }
-
  private:
   std::shared_ptr<BatchCallback> child_;
   Callback wrapper_;
