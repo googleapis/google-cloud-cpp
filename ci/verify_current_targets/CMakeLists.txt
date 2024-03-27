@@ -35,12 +35,14 @@ set(ga_libraries
     pubsub_mocks
     spanner
     spanner_mocks
-    storage)
+    storage
+    storage_grpc
+    storage_grpc_mocks)
 
 # Define experimental libraries. The only difference is the name of the CMake
 # targets.
 set(experimental_libraries # cmake-format: sort
-                           bigquery_rest storage_grpc storage_grpc_mocks)
+                           bigquery_rest)
 
 # CMake can use pkg-config to find dependencies. We recommend using CMake
 # targets, but we want to verify our pkg-config files remain usable and
