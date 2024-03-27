@@ -35,7 +35,7 @@ class Span {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   void SetSpan(
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span) {
-    span_ = span;
+    span_ = std::move(span);
   }
 
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> GetSpan() {

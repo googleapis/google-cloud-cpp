@@ -44,8 +44,8 @@ using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::IsEmpty;
-using ::testing::SizeIs;
 using ::testing::Return;
+using ::testing::SizeIs;
 
 pubsub::Subscription const kTestSubscription =
     pubsub::Subscription("test-project", "test-subscription");
