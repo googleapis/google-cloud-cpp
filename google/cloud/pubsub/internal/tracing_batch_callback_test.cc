@@ -38,6 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsConsumer;
@@ -101,6 +103,84 @@ TEST(TracingBatchCallback, StartAndEndMessage) {
                             SpanHasEvents(EventNamed("gl-cpp.ack_end")))));
 }
 
+TEST(TracingBatchCallback, SubscribeAttributes) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->AckEnd("ack-id-0");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-sub subscribe"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kMessagingSystem, "gcp_pubsub")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-sub subscribe"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 "gcp.project_id", "test-project")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-sub subscribe"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kMessagingOperation, "subscribe")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-sub subscribe"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kMessagingMessageId, "id-0")))));
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanNamed("test-sub subscribe"),
+                     SpanHasAttributes(OTelAttribute<std::string>(
+                         "messaging.gcp_pubsub.message.ack_id", "ack-id-0")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-sub subscribe"),
+                             SpanHasAttributes(OTelAttribute<int64_t>(
+                                 "messaging.message.envelope.size", 101)))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-sub subscribe"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::kMessagingDestinationName, "test-sub")))));
+}
+
+TEST(TracingBatchCallback, SubscribeAttributesForOrderingKey) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator = std::make_shared<
+          opentelemetry::trace::propagation::HttpTraceContext>();
+  BatchCallback::StreamingPullResponse response;
+  google::pubsub::v1::StreamingPullResponse r;
+  auto span = MakeTestSpan();
+  opentelemetry::trace::Scope scope(span);
+  auto message =
+      pubsub::MessageBuilder().SetOrderingKey("ordering-key-0").Build();
+  InjectTraceContext(message, *propagator);
+  span->End();
+  auto proto_message = ToProto(message);
+  proto_message.set_message_id("id-0");
+
+  auto* m = r.add_received_messages();
+  *m->mutable_message() = proto_message;
+  m->set_ack_id("ack-id-0");
+  response.response = std::move(r);
+
+  batch_callback->callback(response);
+  batch_callback->AckEnd("ack-id-0");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-sub subscribe"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 "messaging.gcp_pubsub.message.ordering_key",
+                                 "ordering-key-0")))));
+}
+
 TEST(TracingBatchCallback, VerifyDestructorEndsAllSpans) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
@@ -144,7 +224,7 @@ TEST(TracingBatchCallback, StartAndEndMultipleMessage) {
                             SpanHasEvents(EventNamed("gl-cpp.ack_end")))));
 }
 
-TEST(TracingBatchCallback, AckEnd) {
+TEST(TracingBatchCallback, Ack) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
@@ -180,7 +260,7 @@ TEST(TracingBatchCallback, Nack) {
                                           EventNamed("gl-cpp.nack_end")))));
 }
 
-TEST(TracingBatchCallback, ModackEnd) {
+TEST(TracingBatchCallback, Modack) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
