@@ -43,7 +43,7 @@ TEST(GrpcPluginTest, DefaultCreatesGrpc) {
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto client = MakeGrpcClient();
+  auto client = MakeGrpcClient(TestOptions());
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
