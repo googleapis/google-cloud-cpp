@@ -42,6 +42,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
+using ::testing::IsEmpty;
 using ::testing::Return;
 
 pubsub::Subscription const kTestSubscription =
