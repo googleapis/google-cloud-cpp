@@ -9,10 +9,11 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet content_client_samples.cc with-service-account
+@snippet catalog_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c dataplex_v1::CatalogServiceClient](@ref dataplex_v1::CatalogServiceClient-service-account-snippet)
 - [\c dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-service-account-snippet)
 - [\c dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-service-account-snippet)
 - [\c dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-service-account-snippet)
@@ -32,6 +33,12 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page dataplex_v1::CatalogServiceClient-service-account-snippet Override dataplex_v1::CatalogServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/catalog_client_samples.cc with-service-account
+
+*/
 
 /*! @page dataplex_v1::ContentServiceClient-service-account-snippet Override dataplex_v1::ContentServiceClient Authentication Defaults
 

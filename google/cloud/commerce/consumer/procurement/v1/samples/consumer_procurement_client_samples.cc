@@ -32,6 +32,7 @@
 
 // clang-format off
 // main-dox-marker: commerce_consumer_procurement_v1::ConsumerProcurementServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

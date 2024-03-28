@@ -158,6 +158,27 @@ DefaultPipelineServiceStub::AsyncDeletePipelineJob(
       request, std::move(context));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultPipelineServiceStub::AsyncBatchDeletePipelineJobs(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBatchDeletePipelineJobs(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 Status DefaultPipelineServiceStub::CancelPipelineJob(
     grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
@@ -167,6 +188,27 @@ Status DefaultPipelineServiceStub::CancelPipelineJob(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return google::cloud::Status();
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultPipelineServiceStub::AsyncBatchCancelPipelineJobs(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBatchCancelPipelineJobs(context, request, cq);
+      },
+      request, std::move(context));
 }
 
 future<StatusOr<google::longrunning::Operation>>

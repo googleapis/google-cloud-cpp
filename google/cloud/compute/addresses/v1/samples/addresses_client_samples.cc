@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_addresses_v1::AddressesClient
+// lro-marker: true
 // clang-format on
 namespace {
 

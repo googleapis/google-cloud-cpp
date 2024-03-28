@@ -76,6 +76,10 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet agents_client_samples.cc custom-idempotency-policy
 
+This will override the polling policies for `dialogflow_es::AgentsClient`
+
+@snippet agents_client_samples.cc set-polling-policy
+
 
 Follow these links to find examples for other \c *Client classes:
 

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: dataplex_v1::DataplexServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

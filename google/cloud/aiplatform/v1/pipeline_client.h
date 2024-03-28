@@ -110,7 +110,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L176}
+  /// [google.cloud.aiplatform.v1.CreateTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L219}
   /// [google.cloud.aiplatform.v1.TrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L42}
   ///
   // clang-format on
@@ -144,7 +144,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L176}
+  /// [google.cloud.aiplatform.v1.CreateTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L219}
   /// [google.cloud.aiplatform.v1.TrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L42}
   ///
   // clang-format on
@@ -174,7 +174,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L193}
+  /// [google.cloud.aiplatform.v1.GetTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L236}
   /// [google.cloud.aiplatform.v1.TrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L42}
   ///
   // clang-format on
@@ -204,7 +204,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L193}
+  /// [google.cloud.aiplatform.v1.GetTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L236}
   /// [google.cloud.aiplatform.v1.TrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L42}
   ///
   // clang-format on
@@ -240,7 +240,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTrainingPipelinesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L207}
+  /// [google.cloud.aiplatform.v1.ListTrainingPipelinesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L250}
   /// [google.cloud.aiplatform.v1.TrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L42}
   ///
   // clang-format on
@@ -279,7 +279,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTrainingPipelinesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L207}
+  /// [google.cloud.aiplatform.v1.ListTrainingPipelinesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L250}
   /// [google.cloud.aiplatform.v1.TrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L42}
   ///
   // clang-format on
@@ -316,7 +316,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L269}
+  /// [google.cloud.aiplatform.v1.DeleteTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -353,7 +353,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L269}
+  /// [google.cloud.aiplatform.v1.DeleteTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -393,7 +393,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CancelTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L283}
+  /// [google.cloud.aiplatform.v1.CancelTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L326}
   /// [google.cloud.aiplatform.v1.PipelineService.GetTrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L58}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L127}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L123}
@@ -436,7 +436,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CancelTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L283}
+  /// [google.cloud.aiplatform.v1.CancelTrainingPipelineRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L326}
   /// [google.cloud.aiplatform.v1.PipelineService.GetTrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L58}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L127}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L123}
@@ -474,7 +474,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreatePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L297}
+  /// [google.cloud.aiplatform.v1.CreatePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L340}
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
   ///
   // clang-format on
@@ -506,7 +506,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreatePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L297}
+  /// [google.cloud.aiplatform.v1.CreatePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L340}
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
   ///
   // clang-format on
@@ -534,7 +534,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L321}
+  /// [google.cloud.aiplatform.v1.GetPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L364}
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
   ///
   // clang-format on
@@ -564,7 +564,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L321}
+  /// [google.cloud.aiplatform.v1.GetPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L364}
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
   ///
   // clang-format on
@@ -600,7 +600,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListPipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L335}
+  /// [google.cloud.aiplatform.v1.ListPipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L378}
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
   ///
   // clang-format on
@@ -639,7 +639,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListPipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L335}
+  /// [google.cloud.aiplatform.v1.ListPipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L378}
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L45}
   ///
   // clang-format on
@@ -675,7 +675,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeletePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L426}
+  /// [google.cloud.aiplatform.v1.DeletePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L469}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -712,12 +712,97 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeletePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L426}
+  /// [google.cloud.aiplatform.v1.DeletePipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L469}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeletePipelineJob(
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Batch deletes PipelineJobs
+  /// The Operation is atomic. If it fails, none of the PipelineJobs are deleted.
+  /// If it succeeds, all of the PipelineJobs are deleted.
+  ///
+  /// @param parent  Required. The name of the PipelineJobs' parent resource.
+  ///  Format: `projects/{project}/locations/{location}`
+  /// @param names  Required. The names of the PipelineJobs to delete.
+  ///  A maximum of 32 PipelineJobs can be deleted in a batch.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/pipelineJobs/{pipelineJob}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.BatchDeletePipelineJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.BatchDeletePipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L483}
+  /// [google.cloud.aiplatform.v1.BatchDeletePipelineJobsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L507}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(std::string const& parent,
+                          std::vector<std::string> const& names,
+                          Options opts = {});
+
+  // clang-format off
+  ///
+  /// Batch deletes PipelineJobs
+  /// The Operation is atomic. If it fails, none of the PipelineJobs are deleted.
+  /// If it succeeds, all of the PipelineJobs are deleted.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.BatchDeletePipelineJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.BatchDeletePipelineJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.BatchDeletePipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L483}
+  /// [google.cloud.aiplatform.v1.BatchDeletePipelineJobsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L507}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -750,7 +835,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CancelPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L440}
+  /// [google.cloud.aiplatform.v1.CancelPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L514}
   /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L141}
   /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L134}
   /// [google.cloud.aiplatform.v1.PipelineService.GetPipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L122}
@@ -792,7 +877,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CancelPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L440}
+  /// [google.cloud.aiplatform.v1.CancelPipelineJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L514}
   /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L141}
   /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L134}
   /// [google.cloud.aiplatform.v1.PipelineService.GetPipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L122}
@@ -801,6 +886,99 @@ class PipelineServiceClient {
   // clang-format on
   Status CancelPipelineJob(
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Batch cancel PipelineJobs.
+  /// Firstly the server will check if all the jobs are in non-terminal states,
+  /// and skip the jobs that are already terminated.
+  /// If the operation failed, none of the pipeline jobs are cancelled.
+  /// The server will poll the states of all the pipeline jobs periodically
+  /// to check the cancellation status.
+  /// This operation will return an LRO.
+  ///
+  /// @param parent  Required. The name of the PipelineJobs' parent resource.
+  ///  Format: `projects/{project}/locations/{location}`
+  /// @param names  Required. The names of the PipelineJobs to cancel.
+  ///  A maximum of 32 PipelineJobs can be cancelled in a batch.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/pipelineJobs/{pipelineJob}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.BatchCancelPipelineJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.BatchCancelPipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L528}
+  /// [google.cloud.aiplatform.v1.BatchCancelPipelineJobsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L552}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(std::string const& parent,
+                          std::vector<std::string> const& names,
+                          Options opts = {});
+
+  // clang-format off
+  ///
+  /// Batch cancel PipelineJobs.
+  /// Firstly the server will check if all the jobs are in non-terminal states,
+  /// and skip the jobs that are already terminated.
+  /// If the operation failed, none of the pipeline jobs are cancelled.
+  /// The server will poll the states of all the pipeline jobs periodically
+  /// to check the cancellation status.
+  /// This operation will return an LRO.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.BatchCancelPipelineJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.BatchCancelPipelineJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.BatchCancelPipelineJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L528}
+  /// [google.cloud.aiplatform.v1.BatchCancelPipelineJobsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L552}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request,
       Options opts = {});
 
  private:

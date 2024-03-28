@@ -77,7 +77,7 @@ TRIGGER_TYPE='pr' ci/cloudbuild/build.sh \
 banner "Creating commits"
 git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" \
   ${PIPERORIGIN_REVID:+-m "${PIPERORIGIN_REVID}"} \
-  bazel/google_cloud_cpp_deps.bzl cmake/GoogleapisConfig.cmake
+  bazel/workspace0.bzl cmake/GoogleapisConfig.cmake
 if ! git diff --quiet external/googleapis/protodeps \
   external/googleapis/protolists; then
   git commit -m"Update the protodeps/protolists" \

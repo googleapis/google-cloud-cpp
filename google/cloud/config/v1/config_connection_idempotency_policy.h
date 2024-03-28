@@ -99,6 +99,12 @@ class ConfigConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ExportPreviewResult(
       google::cloud::config::v1::ExportPreviewResultRequest const& request);
+
+  virtual google::cloud::Idempotency ListTerraformVersions(
+      google::cloud::config::v1::ListTerraformVersionsRequest request);
+
+  virtual google::cloud::Idempotency GetTerraformVersion(
+      google::cloud::config::v1::GetTerraformVersionRequest const& request);
 };
 
 std::unique_ptr<ConfigConnectionIdempotencyPolicy>

@@ -32,6 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_instance_group_managers_v1::InstanceGroupManagersClient
+// lro-marker: true
 // clang-format on
 namespace {
 

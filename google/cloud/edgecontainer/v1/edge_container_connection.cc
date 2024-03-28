@@ -68,6 +68,14 @@ EdgeContainerConnection::UpdateCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerConnection::UpgradeCluster(
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerConnection::DeleteCluster(
     google::cloud::edgecontainer::v1::DeleteClusterRequest const&) {
@@ -79,6 +87,12 @@ EdgeContainerConnection::DeleteCluster(
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
 EdgeContainerConnection::GenerateAccessToken(
     google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+EdgeContainerConnection::GenerateOfflineCredential(
+    google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -162,6 +176,12 @@ EdgeContainerConnection::DeleteVpnConnection(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
+EdgeContainerConnection::GetServerConfig(
+    google::cloud::edgecontainer::v1::GetServerConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<EdgeContainerConnection> MakeEdgeContainerConnection(

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: run_v2::ServicesClient
+// lro-marker: true
 // clang-format on
 namespace {
 

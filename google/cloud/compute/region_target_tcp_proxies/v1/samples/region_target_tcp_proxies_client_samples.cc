@@ -32,6 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient
+// lro-marker: true
 // clang-format on
 namespace {
 

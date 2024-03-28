@@ -101,8 +101,24 @@ class MockPipelineServiceConnection
       (override));
 
   MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
+      BatchDeletePipelineJobs,
+      (google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       Status, CancelPipelineJob,
       (google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>,
+      BatchCancelPipelineJobs,
+      (google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+           request),
       (override));
 };
 

@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: ids_v1::IDSClient
+// lro-marker: true
 // clang-format on
 namespace {
 

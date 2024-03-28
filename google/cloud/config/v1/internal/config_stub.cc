@@ -323,6 +323,30 @@ DefaultConfigStub::ExportPreviewResult(
   return response;
 }
 
+StatusOr<google::cloud::config::v1::ListTerraformVersionsResponse>
+DefaultConfigStub::ListTerraformVersions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::ListTerraformVersionsRequest const& request) {
+  google::cloud::config::v1::ListTerraformVersionsResponse response;
+  auto status = grpc_stub_->ListTerraformVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+DefaultConfigStub::GetTerraformVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::GetTerraformVersionRequest const& request) {
+  google::cloud::config::v1::TerraformVersion response;
+  auto status = grpc_stub_->GetTerraformVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

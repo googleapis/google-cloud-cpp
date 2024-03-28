@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_target_pools_v1::TargetPoolsClient
+// lro-marker: true
 // clang-format on
 namespace {
 

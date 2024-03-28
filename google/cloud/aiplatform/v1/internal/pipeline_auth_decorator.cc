@@ -137,12 +137,54 @@ PipelineServiceAuth::AsyncDeletePipelineJob(
       });
 }
 
+future<StatusOr<google::longrunning::Operation>>
+PipelineServiceAuth::AsyncBatchDeletePipelineJobs(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncBatchDeletePipelineJobs(cq, *std::move(context),
+                                                   std::move(options), request);
+      });
+}
+
 Status PipelineServiceAuth::CancelPipelineJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelPipelineJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+PipelineServiceAuth::AsyncBatchCancelPipelineJobs(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncBatchCancelPipelineJobs(cq, *std::move(context),
+                                                   std::move(options), request);
+      });
 }
 
 future<StatusOr<google::longrunning::Operation>>

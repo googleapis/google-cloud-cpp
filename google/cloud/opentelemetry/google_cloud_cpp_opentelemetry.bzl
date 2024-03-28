@@ -21,6 +21,7 @@ google_cloud_cpp_opentelemetry_hdrs = [
     "internal/monitored_resource.h",
     "internal/recordable.h",
     "internal/resource_detector_impl.h",
+    "monitoring_exporter.h",
     "resource_detector.h",
     "trace_exporter.h",
 ]
@@ -30,6 +31,7 @@ google_cloud_cpp_opentelemetry_srcs = [
     "internal/monitored_resource.cc",
     "internal/recordable.cc",
     "internal/resource_detector_impl.cc",
+    "monitoring_exporter.cc",
     "resource_detector.cc",
     "trace_exporter.cc",
 ]

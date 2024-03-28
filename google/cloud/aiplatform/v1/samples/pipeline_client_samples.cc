@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: aiplatform_v1::PipelineServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

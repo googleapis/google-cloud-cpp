@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_interconnects_v1::InterconnectsClient
+// lro-marker: true
 // clang-format on
 namespace {
 

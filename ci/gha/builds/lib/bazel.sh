@@ -76,6 +76,18 @@ function bazel::msvc_args() {
   printf "%s\n" "${args[@]}"
 }
 
+# Outputs a list of args to use with integration tests
+function bazel::integration_test_args() {
+  local args=(
+    --flaky_test_attempts=3
+    --test_tag_filters=integration-test-gha
+    --test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="${GHA_TEST_BUCKET:-}"
+    --test_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS:-}"
+    --test_env=HOME="${HOME:-}"
+  )
+  printf "%s\n" "${args[@]}"
+}
+
 # Bazel downloads all the dependencies of a project, as well as a number of
 # development tools during startup. In automated builds these downloads fail
 # from time to time due to transient network problems. Running `bazel fetch` at

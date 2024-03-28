@@ -252,6 +252,14 @@ class ConfigConnection {
   virtual StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
   ExportPreviewResult(
       google::cloud::config::v1::ExportPreviewResultRequest const& request);
+
+  virtual StreamRange<google::cloud::config::v1::TerraformVersion>
+  ListTerraformVersions(
+      google::cloud::config::v1::ListTerraformVersionsRequest request);
+
+  virtual StatusOr<google::cloud::config::v1::TerraformVersion>
+  GetTerraformVersion(
+      google::cloud::config::v1::GetTerraformVersionRequest const& request);
 };
 
 /**

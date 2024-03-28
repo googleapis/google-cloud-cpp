@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_region_ssl_policies_v1::RegionSslPoliciesClient
+// lro-marker: true
 // clang-format on
 namespace {
 

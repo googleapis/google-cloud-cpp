@@ -226,8 +226,20 @@ class PipelineServiceConnection {
   DeletePipelineJob(
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
 
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request);
+
   virtual Status CancelPipelineJob(
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request);
 };
 
 /**

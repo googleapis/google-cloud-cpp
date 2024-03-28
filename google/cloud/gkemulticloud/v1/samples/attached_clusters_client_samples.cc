@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: gkemulticloud_v1::AttachedClustersClient
+// lro-marker: true
 // clang-format on
 namespace {
 

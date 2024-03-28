@@ -90,6 +90,26 @@ EdgeContainerAuth::AsyncUpdateCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+EdgeContainerAuth::AsyncUpgradeCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpgradeCluster(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 EdgeContainerAuth::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -117,6 +137,16 @@ EdgeContainerAuth::GenerateAccessToken(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateAccessToken(context, options, request);
+}
+
+StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+EdgeContainerAuth::GenerateOfflineCredential(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateOfflineCredential(context, options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListNodePoolsResponse>
@@ -274,6 +304,15 @@ EdgeContainerAuth::AsyncDeleteVpnConnection(
         return child->AsyncDeleteVpnConnection(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
+EdgeContainerAuth::GetServerConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgecontainer::v1::GetServerConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetServerConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

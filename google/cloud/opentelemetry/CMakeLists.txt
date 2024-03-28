@@ -24,11 +24,13 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "otel_internal")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart"
                          "${CMAKE_CURRENT_SOURCE_DIR}/samples")
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/monitoring"
     "${PROJECT_BINARY_DIR}/google/cloud/trace")
 
 include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("opentelemetry" DEPENDS cloud-docs
-                                 google-cloud-cpp::trace)
+google_cloud_cpp_doxygen_targets(
+    "opentelemetry" DEPENDS cloud-docs google-cloud-cpp::monitoring
+    google-cloud-cpp::trace)
 
 add_library(
     google_cloud_cpp_opentelemetry # cmake-format: sort
@@ -40,13 +42,16 @@ add_library(
     internal/recordable.h
     internal/resource_detector_impl.cc
     internal/resource_detector_impl.h
+    monitoring_exporter.cc
+    monitoring_exporter.h
     resource_detector.cc
     resource_detector.h
     trace_exporter.cc
     trace_exporter.h)
 target_link_libraries(
     google_cloud_cpp_opentelemetry
-    PUBLIC google-cloud-cpp::rest_internal google-cloud-cpp::trace
+    PUBLIC google-cloud-cpp::rest_internal google-cloud-cpp::monitoring
+           google-cloud-cpp::trace opentelemetry-cpp::metrics
            opentelemetry-cpp::trace)
 google_cloud_cpp_add_common_options(google_cloud_cpp_opentelemetry)
 target_include_directories(
@@ -89,6 +94,7 @@ google_cloud_cpp_add_pkgconfig(
     "OpenTelemetry Exporters for Google Cloud"
     "Provides exporters for sending telemetry to Google Cloud services."
     "google_cloud_cpp_rest_internal"
+    "google_cloud_cpp_monitoring"
     "google_cloud_cpp_trace"
     "opentelemetry_resources"
     "opentelemetry_trace")
@@ -116,8 +122,11 @@ add_subdirectory(integration_tests)
 
 set(opentelemetry_unit_tests
     # cmake-format: sort
-    internal/monitored_resource_test.cc internal/recordable_test.cc
-    internal/resource_detector_impl_test.cc trace_exporter_test.cc)
+    internal/monitored_resource_test.cc
+    internal/recordable_test.cc
+    internal/resource_detector_impl_test.cc
+    monitoring_exporter_test.cc
+    trace_exporter_test.cc)
 
 export_list_to_bazel("opentelemetry_unit_tests.bzl" "opentelemetry_unit_tests"
                      YEAR "2023")
@@ -134,6 +143,7 @@ foreach (fname ${opentelemetry_unit_tests})
                 google_cloud_cpp_testing_grpc
                 google_cloud_cpp_testing_rest
                 google-cloud-cpp::opentelemetry
+                google_cloud_cpp_monitoring_mocks
                 google_cloud_cpp_trace_mocks
                 GTest::gmock_main
                 GTest::gmock

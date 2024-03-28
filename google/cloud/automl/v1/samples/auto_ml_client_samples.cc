@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: automl_v1::AutoMlClient
+// lro-marker: true
 // clang-format on
 namespace {
 

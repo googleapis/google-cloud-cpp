@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_autoscalers_v1::AutoscalersClient
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -14,13 +14,13 @@
 
 #include "google/cloud/pubsub/internal/tracing_pull_lease_manager.h"
 #include "google/cloud/pubsub/internal/pull_lease_manager.h"
+#include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/pubsub/internal/tracing_helpers.h"
-#include "opentelemetry/trace/semantic_conventions.h"
+#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>

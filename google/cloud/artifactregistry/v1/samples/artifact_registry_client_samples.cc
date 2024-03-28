@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: artifactregistry_v1::ArtifactRegistryClient
+// lro-marker: true
 // clang-format on
 namespace {
 

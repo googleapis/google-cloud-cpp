@@ -505,6 +505,100 @@ CertificateManagerClient::DeleteCertificateIssuanceConfig(
   return connection_->DeleteCertificateIssuanceConfig(request);
 }
 
+StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerClient::ListTrustConfigs(std::string const& parent,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::certificatemanager::v1::ListTrustConfigsRequest request;
+  request.set_parent(parent);
+  return connection_->ListTrustConfigs(request);
+}
+
+StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerClient::ListTrustConfigs(
+    google::cloud::certificatemanager::v1::ListTrustConfigsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListTrustConfigs(std::move(request));
+}
+
+StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerClient::GetTrustConfig(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::certificatemanager::v1::GetTrustConfigRequest request;
+  request.set_name(name);
+  return connection_->GetTrustConfig(request);
+}
+
+StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerClient::GetTrustConfig(
+    google::cloud::certificatemanager::v1::GetTrustConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetTrustConfig(request);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerClient::CreateTrustConfig(
+    std::string const& parent,
+    google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
+    std::string const& trust_config_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::certificatemanager::v1::CreateTrustConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_trust_config() = trust_config;
+  request.set_trust_config_id(trust_config_id);
+  return connection_->CreateTrustConfig(request);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerClient::CreateTrustConfig(
+    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateTrustConfig(request);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerClient::UpdateTrustConfig(
+    google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::certificatemanager::v1::UpdateTrustConfigRequest request;
+  *request.mutable_trust_config() = trust_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateTrustConfig(request);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerClient::UpdateTrustConfig(
+    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTrustConfig(request);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerClient::DeleteTrustConfig(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::certificatemanager::v1::DeleteTrustConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteTrustConfig(request);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerClient::DeleteTrustConfig(
+    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTrustConfig(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_v1
 }  // namespace cloud

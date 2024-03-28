@@ -67,8 +67,6 @@ fi
 
 TIMEFORMAT="==> 🕑 CMake build done in %R seconds"
 time {
-  # Always run //google/cloud:status_test in case the list of targets has
-  # no unit tests.
   io::run cmake --build "${CMAKE_OUT}"
 }
 
@@ -76,3 +74,16 @@ TIMEFORMAT="==> 🕑 CMake test done in %R seconds"
 time {
   io::run ctest "${ctest_args[@]}" --test-dir "${CMAKE_OUT}" -LE integration-test
 }
+
+TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
+if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
+  time {
+    # gRPC requires a local roots.pem on Windows
+    #   https://github.com/grpc/grpc/issues/16571
+    curl -fsSL -o "${HOME}/roots.pem" https://pki.google.com/roots.pem
+    export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${HOME}/roots.pem"
+
+    export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="${GHA_TEST_BUCKET}"
+    io::run ctest "${ctest_args[@]}" --test-dir "${CMAKE_OUT}" -L integration-test-gha
+  }
+fi

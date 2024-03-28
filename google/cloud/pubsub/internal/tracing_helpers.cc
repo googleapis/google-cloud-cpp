@@ -17,8 +17,8 @@
 #include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "opentelemetry/trace/context.h"
-#include "opentelemetry/trace/span_startoptions.h"
+#include <opentelemetry/trace/context.h>
+#include <opentelemetry/trace/span_startoptions.h>
 #include <string>
 
 namespace google {

@@ -55,7 +55,12 @@ Status SampleGenerator::GenerateHeader() {
 
   HeaderPrint(R"""(
 // clang-format off
-// main-dox-marker: $product_namespace$::$client_class_name$
+// main-dox-marker: $product_namespace$::$client_class_name$)""");
+  if (HasLongrunningMethod()) {
+    HeaderPrint(R"""(
+// lro-marker: true)""");
+  }
+  HeaderPrint(R"""(
 // clang-format on
 namespace {
 

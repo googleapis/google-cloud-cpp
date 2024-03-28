@@ -179,6 +179,20 @@ ConfigConnection::ExportPreviewResult(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::config::v1::TerraformVersion>
+ConfigConnection::ListTerraformVersions(
+    google::cloud::config::v1::
+        ListTerraformVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::config::v1::TerraformVersion>>();
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+ConfigConnection::GetTerraformVersion(
+    google::cloud::config::v1::GetTerraformVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ConfigConnection> MakeConfigConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,

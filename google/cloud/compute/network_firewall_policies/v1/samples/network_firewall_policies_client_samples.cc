@@ -32,6 +32,7 @@
 
 // clang-format off
 // main-dox-marker: compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient
+// lro-marker: true
 // clang-format on
 namespace {
 
