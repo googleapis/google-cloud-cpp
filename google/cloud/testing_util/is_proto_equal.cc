@@ -31,6 +31,38 @@ absl::optional<std::string> CompareProtos(
   return delta;
 }
 
+absl::optional<std::string> CompareProtosApproximately(
+    google::protobuf::Message const& arg,
+    google::protobuf::Message const& value) {
+  std::string delta;
+  google::protobuf::util::DefaultFieldComparator comparator;
+  comparator.set_float_comparison(
+      google::protobuf::util::SimpleFieldComparator::APPROXIMATE);
+  // Keep the comparator's default fraction and margin.
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.set_field_comparator(&comparator);
+  differencer.ReportDifferencesToString(&delta);
+  auto const result = differencer.Compare(arg, value);
+  if (result) return {};
+  return delta;
+}
+
+absl::optional<std::string> CompareProtosApproximately(
+    google::protobuf::Message const& arg,
+    google::protobuf::Message const& value, double fraction, double margin) {
+  std::string delta;
+  google::protobuf::util::DefaultFieldComparator comparator;
+  comparator.set_float_comparison(
+      google::protobuf::util::SimpleFieldComparator::APPROXIMATE);
+  comparator.SetDefaultFractionAndMargin(fraction, margin);
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.set_field_comparator(&comparator);
+  differencer.ReportDifferencesToString(&delta);
+  auto const result = differencer.Compare(arg, value);
+  if (result) return {};
+  return delta;
+}
+
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

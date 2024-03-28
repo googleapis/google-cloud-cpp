@@ -38,6 +38,37 @@ MATCHER_P(IsProtoEqual, value, "Checks whether protos are equal") {
   return !delta.has_value();
 }
 
+// Compares float and double fields approximately, using the default
+// google::protobuf::MessageDifferencer tolerances.
+absl::optional<std::string> CompareProtosApproximately(
+    google::protobuf::Message const& arg,
+    google::protobuf::Message const& value);
+
+MATCHER_P(IsProtoApproximatelyEqual, value,
+          "Checks whether protos are approximately equal") {
+  absl::optional<std::string> delta = CompareProtosApproximately(arg, value);
+  if (delta.has_value()) {
+    *result_listener << "\n" << *delta;
+  }
+  return !delta.has_value();
+}
+
+// Compares float and double fields approximately, using the given
+// @p fraction and @p margin.
+absl::optional<std::string> CompareProtosApproximately(
+    google::protobuf::Message const& arg,
+    google::protobuf::Message const& value, double fraction, double margin);
+
+MATCHER_P3(IsProtoApproximatelyEqual, value, fraction, margin,
+           "Checks whether protos are approximately equal") {
+  absl::optional<std::string> delta =
+      CompareProtosApproximately(arg, value, fraction, margin);
+  if (delta.has_value()) {
+    *result_listener << "\n" << *delta;
+  }
+  return !delta.has_value();
+}
+
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
