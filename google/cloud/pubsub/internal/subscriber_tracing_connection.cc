@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscriber_tracing_connection.h"
+#include "google/cloud/pubsub/internal/message_propagator.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/opentelemetry.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/pubsub/internal/message_propagator.h"
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/semantic_conventions.h>
