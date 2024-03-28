@@ -114,35 +114,20 @@ TEST(TracingBatchCallback, SubscribeAttributes) {
   batch_callback->AckEnd("ack-id-0");
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-sub subscribe"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingSystem, "gcp_pubsub")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-sub subscribe"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 "gcp.project_id", "test-project")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-sub subscribe"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "subscribe")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-sub subscribe"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingMessageId, "id-0")))));
   EXPECT_THAT(
       spans,
-      Contains(AllOf(SpanNamed("test-sub subscribe"),
-                     SpanHasAttributes(OTelAttribute<std::string>(
-                         "messaging.gcp_pubsub.message.ack_id", "ack-id-0")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-sub subscribe"),
-                             SpanHasAttributes(OTelAttribute<int64_t>(
-                                 "messaging.message.envelope.size", 101)))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-sub subscribe"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingDestinationName, "test-sub")))));
+      Contains(AllOf(
+          SpanNamed("test-sub subscribe"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>("gcp.project_id", "test-project"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "subscribe"),
+              OTelAttribute<std::string>(sc::kMessagingMessageId, "id-0"),
+              OTelAttribute<std::string>("messaging.gcp_pubsub.message.ack_id",
+                                         "ack-id-0"),
+              OTelAttribute<int64_t>("messaging.message.envelope.size", 101),
+              OTelAttribute<std::string>(sc::kMessagingDestinationName,
+                                         "test-sub")))));
 }
 
 TEST(TracingBatchCallback, SubscribeAttributesForOrderingKey) {
