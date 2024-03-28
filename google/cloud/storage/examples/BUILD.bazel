@@ -68,9 +68,9 @@ cc_library(
     deps = [
         ":storage_examples_common",
         "//:common",
-        "//:experimental-storage_grpc",
-        "//:experimental-storage_grpc_mocks",
         "//:storage",
+        "//:storage_grpc",
+        "//:storage_grpc_mocks",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
@@ -87,8 +87,8 @@ cc_library(
     deps = [
         ":storage_examples_common",
         "//:common",
-        "//:experimental-storage_grpc",
         "//:storage",
+        "//:storage_grpc",
     ],
 ) for test in storage_grpc_examples]
 
@@ -102,8 +102,8 @@ cc_test(
     deps = [
         ":storage_examples_common",
         "//:common",
-        "//:experimental-storage_grpc",
         "//:opentelemetry",
         "//:storage",
+        "//:storage_grpc",
     ],
 )

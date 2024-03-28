@@ -67,13 +67,14 @@ function check_abi() {
 
   local shortlib="${library#google_cloud_cpp_}"
   local public_headers="${prefix}/include/google/cloud/${shortlib}"
-  # These are special and share their header location.
   if [[ "${shortlib}" == "common" || "${shortlib}" == "grpc_utils" || "${shortlib}" == "oauth2" ]]; then
+    # These are special and share their header location.
     public_headers="${prefix}/include/google/cloud"
-  fi
-
-  # Compute libs are also special as their headers are in subdirectories.
-  if [[ "${shortlib}" =~ "compute" ]]; then
+  elif [[ "${shortlib}" == "storage_grpc" ]]; then
+    # `storage_grpc`` uses the same header location as `storage`
+    public_headers="${prefix}/include/google/cloud/storage"
+  elif [[ "${shortlib}" =~ "compute" ]]; then
+    # Compute libs are also special as their headers are in subdirectories.
     local computelib="${library#google_cloud_cpp_compute_}"
     public_headers="${prefix}/include/google/cloud/compute/${computelib}"
   fi
@@ -103,7 +104,12 @@ function check_abi() {
     -search-debuginfo /usr
   )
   abi-dumper "${dump_options[@]}" >/dev/null 2>&1 |
-    grep -v "ERROR: missed type id" || true
+    grep -v "ERROR: missed type id" >cmake-out/${library}.dump.log
+  if [[ $? -ne 0 ]]; then
+    echo "DEBUG DEBUG ERROR in abi-dump"
+    cat cmake-out/${library}.dump.log
+    echo "DEBUG DEBUG ERROR in abi-dump"
+  fi
 
   local project_dir="${project_root}/ci/abi-dumps"
   local expected_dump_file="${library}.expected.abi.dump"

@@ -30,7 +30,9 @@ TRANSITION_LIBRARIES = GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
 
 GA_LIBRARIES = GOOGLE_CLOUD_CPP_GA_LIBRARIES
 
-NO_MOCK_LIBRARIES = ["oauth2"]
+AD_HOC_LIBRARIES = ["storage_grpc"]
+
+NO_MOCK_LIBRARIES = ["oauth2"] + AD_HOC_LIBRARIES
 
 [cc_library(
     name = "experimental-{library}".format(library = library),
@@ -44,7 +46,7 @@ NO_MOCK_LIBRARIES = ["oauth2"]
             library = library,
         ),
     ],
-) for library in EXPERIMENTAL_LIBRARIES]
+) for library in EXPERIMENTAL_LIBRARIES if library not in AD_HOC_LIBRARIES]
 
 [cc_library(
     name = "experimental-{library}_mocks".format(library = library),
@@ -75,7 +77,7 @@ NO_MOCK_LIBRARIES = ["oauth2"]
             library = library,
         ),
     ],
-) for library in TRANSITION_LIBRARIES]
+) for library in TRANSITION_LIBRARIES if library not in AD_HOC_LIBRARIES]
 
 [cc_library(
     name = "experimental-{library}_mocks".format(library = library),
@@ -106,7 +108,7 @@ NO_MOCK_LIBRARIES = ["oauth2"]
             library = library,
         ),
     ],
-) for library in GA_LIBRARIES + TRANSITION_LIBRARIES]
+) for library in GA_LIBRARIES + TRANSITION_LIBRARIES if library not in AD_HOC_LIBRARIES]
 
 [cc_library(
     name = "{library}_mocks".format(library = library),
@@ -149,6 +151,23 @@ bool_flag(
     name = "enable-ctype-cord-workaround",
     build_setting_default = False,
     visibility = ["//:__subpackages__"],
+)
+
+cc_library(
+    name = "storage_grpc",
+    hdrs = ["//google/cloud/storage:public_grpc_hdrs"],
+    deps = [
+        "//google/cloud/storage:google_cloud_cpp_storage_grpc",
+    ],
+)
+
+cc_library(
+    name = "storage_grpc_mocks",
+    testonly = True,
+    hdrs = ["//google/cloud/storage:grpc_mocks_hdrs"],
+    deps = [
+        "//google/cloud/storage:google_cloud_cpp_storage_grpc_mocks",
+    ],
 )
 
 cc_library(

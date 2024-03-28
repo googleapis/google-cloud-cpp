@@ -32,7 +32,7 @@ cc_binary(
         "quickstart_grpc.cc",
     ],
     deps = [
-        "@google_cloud_cpp//:experimental-storage_grpc",
+        "@google_cloud_cpp//:storage_grpc",
     ],
 )
 
@@ -42,6 +42,6 @@ cc_binary(
         "quickstart_async.cc",
     ],
     deps = [
-        "@google_cloud_cpp//:experimental-storage_grpc",
+        "@google_cloud_cpp//:storage_grpc",
     ],
 )
