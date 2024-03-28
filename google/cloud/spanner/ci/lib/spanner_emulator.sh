@@ -104,7 +104,7 @@ function spanner_emulator::start() {
   fi
 
   export SPANNER_EMULATOR_HOST="localhost:${emulator_port}"
-  io::log "Spanner emulator started at ${SPANNER_EMULATOR_HOST}"
+  io::log_green "Spanner emulator started at ${SPANNER_EMULATOR_HOST}"
 
   # Repeat the process to launch the emulator with HTTP support. We launch a
   # separate process as existing tests fail if we try and use gateway_main
@@ -135,7 +135,7 @@ function spanner_emulator::start() {
 
   # Using https:// results in SSL errors.
   export SPANNER_EMULATOR_REST_HOST="http://localhost:${http_emulator_port}"
-  io::log "Spanner HTTP emulator started at ${SPANNER_EMULATOR_REST_HOST}"
+  io::log_green "Spanner HTTP emulator started at ${SPANNER_EMULATOR_REST_HOST}"
 }
 
 # Kills the running emulator.
