@@ -434,7 +434,9 @@ google::protobuf::Value Value::MakeValueProto(float f) {
   } else if (std::isinf(f)) {
     v.set_string_value(f < 0 ? "-Infinity" : "Infinity");
   } else {
-    v.set_number_value(f);  // widening
+    // A widening conversion (i.e., a floating-point promotion), but
+    // that's OK as the standard guarantees that the value is unchanged.
+    v.set_number_value(f);
   }
   return v;
 }
@@ -563,7 +565,12 @@ StatusOr<std::int64_t> Value::GetValue(std::int64_t,
 StatusOr<float> Value::GetValue(float, google::protobuf::Value const& pv,
                                 google::spanner::v1::Type const&) {
   if (pv.kind_case() == google::protobuf::Value::kNumberValue) {
-    return static_cast<float>(pv.number_value());  // narrowing
+    // A narrowing conversion, but that's OK.  If the value originated
+    // as a float, then the conversion through double is required to
+    // produce the same value (and we already assume that a double value
+    // if preserved over the wire).  If the value originated as a double
+    // then we're simply doing the requested narrowing.
+    return static_cast<float>(pv.number_value());
   }
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing FLOAT32");

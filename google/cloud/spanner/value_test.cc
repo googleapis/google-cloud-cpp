@@ -146,6 +146,7 @@ TEST(Value, BasicSemantics) {
 
   // Note: We skip testing the NaN case here because NaN always compares not
   // equal, even with itself. So NaN is handled in a separate test.
+  static_assert(std::numeric_limits<double>::has_infinity, "");
   auto const inf = std::numeric_limits<double>::infinity();
   for (auto x : {-inf, -1.0, -0.5, 0.0, 0.5, 1.0, inf}) {
     SCOPED_TRACE("Testing: double " + std::to_string(x));
@@ -158,6 +159,7 @@ TEST(Value, BasicSemantics) {
 
   // Note: We skip testing the NaN case here because NaN always compares not
   // equal, even with itself. So NaN is handled in a separate test.
+  static_assert(std::numeric_limits<float>::has_infinity, "");
   auto const inff = std::numeric_limits<float>::infinity();
   for (auto x : {-inff, -1.0F, -0.5F, 0.0F, 0.5F, 1.0F, inff}) {
     SCOPED_TRACE("Testing: float " + std::to_string(x));
