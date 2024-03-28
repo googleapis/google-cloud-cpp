@@ -27,7 +27,39 @@ absl::optional<std::string> CompareProtos(
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
   auto const result = differencer.Compare(arg, value);
-  if (result) return {};
+  if (result) return absl::nullopt;
+  return delta;
+}
+
+absl::optional<std::string> CompareProtosApproximately(
+    google::protobuf::Message const& arg,
+    google::protobuf::Message const& value) {
+  std::string delta;
+  google::protobuf::util::DefaultFieldComparator comparator;
+  comparator.set_float_comparison(
+      google::protobuf::util::DefaultFieldComparator::APPROXIMATE);
+  // Keep the comparator's default fraction and margin.
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.set_field_comparator(&comparator);
+  differencer.ReportDifferencesToString(&delta);
+  auto const result = differencer.Compare(arg, value);
+  if (result) return absl::nullopt;
+  return delta;
+}
+
+absl::optional<std::string> CompareProtosApproximately(
+    google::protobuf::Message const& arg,
+    google::protobuf::Message const& value, double fraction, double margin) {
+  std::string delta;
+  google::protobuf::util::DefaultFieldComparator comparator;
+  comparator.set_float_comparison(
+      google::protobuf::util::DefaultFieldComparator::APPROXIMATE);
+  comparator.SetDefaultFractionAndMargin(fraction, margin);
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.set_field_comparator(&comparator);
+  differencer.ReportDifferencesToString(&delta);
+  auto const result = differencer.Compare(arg, value);
+  if (result) return absl::nullopt;
   return delta;
 }
 
