@@ -101,6 +101,11 @@ StatusOr<UniqueCertStore> OpenP12File(std::string const& source) {
           GCP_ERROR_INFO());
     }
   }
+  // DWORD is 32-bits big while size_t can have a size of 64 bits.
+  // Both types are unsigned, which means that casting will not be
+  // undefined behavior if the size is > 4GB. Such huge p12 files
+  // should not practically exist, and if encountered the OS will
+  // get a truncated view of them, and fail to read them.
   CRYPT_DATA_BLOB dataBlob = {static_cast<DWORD>(data.size()), data.data()};
   // Import the PKCS#12 file into a certificate store.
   HCERTSTORE certstore_raw =
