@@ -49,21 +49,22 @@ struct CertContextDeleter {
 using UniqueCertContext =
     std::unique_ptr<std::remove_pointer_t<PCCERT_CONTEXT>, CertContextDeleter>;
 
-/// A subclass of `std::unique_ptr` that has a get() method that returns a
+/// A wrapper around `std::unique_ptr` that has a get() method that returns a
 /// native integer type. This is needed because some Windows API handles are
 /// declared as native integers instead of pointers.
 template <typename T, typename Deleter>
-class UniquePtrReinterpretProxy : private std::unique_ptr<void, Deleter> {
+class UniquePtrReinterpretProxy {
   static_assert(sizeof(T) == sizeof(void*),
                 "T must be the same size as a pointer");
 
  public:
   explicit UniquePtrReinterpretProxy(T ptr)
-      : std::unique_ptr<void, Deleter>(reinterpret_cast<void*>(ptr), {}) {}
+      : ptr_(reinterpret_cast<void*>(ptr), {}) {}
 
-  T get() const {
-    return reinterpret_cast<T>(this->std::unique_ptr<void, Deleter>::get());
-  }
+  T get() const { return reinterpret_cast<T>(ptr_.get()); }
+
+ private:
+  std::unique_ptr<void, Deleter> ptr_;
 };
 
 struct HCryptProvDeleter {
