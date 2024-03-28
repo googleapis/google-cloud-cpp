@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SPAN_H
 
 #include "google/cloud/pubsub/version.h"
-#include <memory>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -27,7 +27,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Span class stores an open telemetery span which can only be accessed by code
+ * Span class stores an OpenTelemetery span which can only be accessed by code
  * compiled with GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY.
  */
 class Span {

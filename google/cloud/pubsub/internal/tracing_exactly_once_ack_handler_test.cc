@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,6 +42,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
+using ::testing::ElementsAre;
+using ::testing::IsEmpty;
 using ::testing::Return;
 using ::testing::SizeIs;
 
@@ -49,20 +51,14 @@ pubsub::Subscription const kTestSubscription =
     pubsub::Subscription("test-project", "test-subscription");
 auto constexpr kTestAckId = "test-ack-id";
 
-opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeTestSpan() {
-  return internal::GetTracer(internal::CurrentOptions())
-      ->StartSpan("test-subscription subscribe");
-}
-
 std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>
 MakeTestExactlyOnceAckHandler(
     std::unique_ptr<MockExactlyOnceAckHandlerImpl> mock) {
   EXPECT_CALL(*mock, delivery_attempt()).WillRepeatedly(Return(42));
   EXPECT_CALL(*mock, ack_id()).WillRepeatedly(Return(kTestAckId));
   EXPECT_CALL(*mock, subscription()).WillRepeatedly(Return(kTestSubscription));
-  auto span = MakeTestSpan();
-  opentelemetry::trace::Scope scope(span);
-  span->End();
+  auto span =
+      internal::GetTracer(Options{})->StartSpan("test-subscription subscribe");
   Span span_holder;
   span_holder.SetSpan(span);
   return MakeTracingExactlyOnceAckHandler(std::move(mock), span_holder);
@@ -75,10 +71,10 @@ TEST(TracingExactlyOnceAckHandlerTest, AckSuccess) {
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   auto handler = MakeTestExactlyOnceAckHandler(std::move(mock));
 
-  EXPECT_THAT(std::move(handler)->ack().get(), StatusIs(StatusCode::kOk));
+  EXPECT_STATUS_OK(std::move(handler)->ack().get());
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, Contains(AllOf(
+  EXPECT_THAT(spans, ElementsAre(AllOf(
                          SpanHasInstrumentationScope(), SpanKindIsInternal(),
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                          SpanNamed("test-subscription ack"))));
@@ -97,10 +93,10 @@ TEST(TracingExactlyOnceAckHandlerTest, AckError) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
-                     SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-                     SpanNamed("test-subscription ack"))));
+      spans, ElementsAre(
+                 AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                       SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+                       SpanNamed("test-subscription ack"))));
 }
 
 TEST(TracingAckHandlerTest, AckAttributes) {
@@ -114,32 +110,20 @@ TEST(TracingAckHandlerTest, AckAttributes) {
   EXPECT_THAT(std::move(handler)->ack().get(), StatusIs(StatusCode::kOk));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription ack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingSystem, "gcp_pubsub")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription ack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 "gcp.project_id", "test-project")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription ack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "settle")))));
-  EXPECT_THAT(spans, Contains(AllOf(
-                         SpanNamed("test-subscription ack"),
-                         SpanHasAttributes(OTelAttribute<std::string>(
-                             sc::kCodeFunction, "pubsub::AckHandler::ack")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(
-                  SpanNamed("test-subscription ack"),
-                  SpanHasAttributes(OTelAttribute<std::int32_t>(
-                      "messaging.gcp_pubsub.message.delivery_attempt", 42)))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(
-                  SpanNamed("test-subscription ack"),
-                  SpanHasAttributes(OTelAttribute<std::string>(
-                      sc::kMessagingDestinationName, "test-subscription")))));
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("test-subscription ack"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>("gcp.project_id", "test-project"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "settle"),
+              OTelAttribute<std::string>(sc::kCodeFunction,
+                                         "pubsub::AckHandler::ack"),
+              OTelAttribute<std::int32_t>(
+                  "messaging.gcp_pubsub.message.delivery_attempt", 42),
+              OTelAttribute<std::string>(sc::kMessagingDestinationName,
+                                         "test-subscription")))));
 }
 
 TEST(TracingExactlyOnceAckHandlerTest, NackSuccess) {
@@ -149,7 +133,7 @@ TEST(TracingExactlyOnceAckHandlerTest, NackSuccess) {
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   auto handler = MakeTestExactlyOnceAckHandler(std::move(mock));
 
-  EXPECT_THAT(std::move(handler)->nack().get(), StatusIs(StatusCode::kOk));
+  EXPECT_STATUS_OK(std::move(handler)->nack().get());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Contains(AllOf(
@@ -188,71 +172,44 @@ TEST(TracingAckHandlerTest, NackAttributes) {
   EXPECT_THAT(std::move(handler)->nack().get(), StatusIs(StatusCode::kOk));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription nack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingSystem, "gcp_pubsub")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription nack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 "gcp.project_id", "test-project")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription nack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "settle")))));
-  EXPECT_THAT(spans, Contains(AllOf(
-                         SpanNamed("test-subscription nack"),
-                         SpanHasAttributes(OTelAttribute<std::string>(
-                             sc::kCodeFunction, "pubsub::AckHandler::nack")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(
-                  SpanNamed("test-subscription nack"),
-                  SpanHasAttributes(OTelAttribute<std::int32_t>(
-                      "messaging.gcp_pubsub.message.delivery_attempt", 42)))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(
-                  SpanNamed("test-subscription nack"),
-                  SpanHasAttributes(OTelAttribute<std::string>(
-                      sc::kMessagingDestinationName, "test-subscription")))));
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("test-subscription nack"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>("gcp.project_id", "test-project"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "settle"),
+              OTelAttribute<std::string>(sc::kCodeFunction,
+                                         "pubsub::AckHandler::nack"),
+              OTelAttribute<std::int32_t>(
+                  "messaging.gcp_pubsub.message.delivery_attempt", 42),
+              OTelAttribute<std::string>(sc::kMessagingDestinationName,
+                                         "test-subscription")))));
 }
 
-TEST(TracingAckHandlerTest, DeliveryAttemptNoSpans) {
-  auto span_catcher = InstallSpanCatcher();
+TEST(TracingAckHandlerTest, DeliveryAttempt) {
   auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
-  auto handler = MakeTestExactlyOnceAckHandler(std::move(mock));
+  EXPECT_CALL(*mock, delivery_attempt()).WillOnce(Return(42));
+  auto handler = MakeTracingExactlyOnceAckHandler(std::move(mock), {});
 
   EXPECT_EQ(42, handler->delivery_attempt());
-
-  auto spans = span_catcher->GetSpans();
-  // The span we created in `MakeTestExactlyOnceAckHandler`.
-  EXPECT_THAT(spans, SizeIs(1));
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription subscribe"))));
 }
 
-TEST(TracingAckHandlerTest, AckIdNoSpans) {
-  auto span_catcher = InstallSpanCatcher();
+TEST(TracingAckHandlerTest, AckId) {
   auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
-  auto handler = MakeTestExactlyOnceAckHandler(std::move(mock));
+  EXPECT_CALL(*mock, ack_id()).WillOnce(Return(kTestAckId));
+  auto handler = MakeTracingExactlyOnceAckHandler(std::move(mock), {});
 
   EXPECT_EQ(kTestAckId, handler->ack_id());
-
-  auto spans = span_catcher->GetSpans();
-  // The span we created in `MakeTestExactlyOnceAckHandler`.
-  EXPECT_THAT(spans, SizeIs(1));
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription subscribe"))));
 }
 
-TEST(TracingAckHandlerTest, SubscriptionNoSpans) {
-  auto span_catcher = InstallSpanCatcher();
+TEST(TracingAckHandlerTest, Subscription) {
   auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
-  auto handler = MakeTestExactlyOnceAckHandler(std::move(mock));
+  EXPECT_CALL(*mock, subscription()).WillOnce(Return(kTestSubscription));
+  auto handler = MakeTracingExactlyOnceAckHandler(std::move(mock), {});
 
   EXPECT_EQ(kTestSubscription, handler->subscription());
-
-  auto spans = span_catcher->GetSpans();
-  // The span we created in `MakeTestExactlyOnceAckHandler`.
-  EXPECT_THAT(spans, SizeIs(1));
-  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription subscribe"))));
 }
 
 }  // namespace

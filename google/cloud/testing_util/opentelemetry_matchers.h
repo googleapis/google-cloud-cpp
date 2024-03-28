@@ -130,7 +130,7 @@ MATCHER(SpanKindIsClient,
 }
 
 MATCHER(SpanKindIsInternal,
-        "has kind: " + ToString(opentelemetry::trace::SpanKind::kClient)) {
+        "has kind: " + ToString(opentelemetry::trace::SpanKind::kInternal)) {
   auto const& kind = arg->GetSpanKind();
   *result_listener << "has kind: " << ToString(kind);
   return kind == opentelemetry::trace::SpanKind::kInternal;
