@@ -18,7 +18,7 @@
 #include "google/cloud/pubsub/version.h"
 #include <memory>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "opentelemetry/trace/span.h"
+#include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
