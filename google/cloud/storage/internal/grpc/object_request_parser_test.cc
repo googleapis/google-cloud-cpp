@@ -77,20 +77,21 @@ auto constexpr kAlt = "How vexingly quick daft zebras jump!";
 //   metadata. We leave those undefined here too.
 google::storage::v2::Object ExpectedFullObjectMetadata() {
   // The fields are sorted as they appear in the .proto file.
-  auto constexpr kProto = R"pb(
-    # storage_class: "REGIONAL" ## set only where applicable
-    content_encoding: "test-content-encoding"
-    content_disposition: "test-content-disposition"
-    cache_control: "test-cache-control"
-    acl: { role: "test-role1" entity: "test-entity1" }
-    acl: { role: "test-role2" entity: "test-entity2" }
-    content_language: "test-content-language"
-    content_type: "test-content-type"
-    temporary_hold: true
-    metadata: { key: "test-metadata-key1" value: "test-value1" }
-    metadata: { key: "test-metadata-key2" value: "test-value2" }
-    event_based_hold: true
-    custom_time { seconds: 1643126687 nanos: 123000000 }
+  auto constexpr kProto =
+      R"pb(
+           # storage_class: "REGIONAL" ## set only where applicable
+           content_encoding: "test-content-encoding"
+           content_disposition: "test-content-disposition"
+           cache_control: "test-cache-control"
+           acl: { role: "test-role1" entity: "test-entity1" }
+           acl: { role: "test-role2" entity: "test-entity2" }
+           content_language: "test-content-language"
+           content_type: "test-content-type"
+           temporary_hold: true
+           metadata: { key: "test-metadata-key1" value: "test-value1" }
+           metadata: { key: "test-metadata-key2" value: "test-value2" }
+           event_based_hold: true
+           custom_time { seconds: 1643126687 nanos: 123000000 }
   )pb";
   google::storage::v2::Object proto;
   if (TextFormat::ParseFromString(kProto, &proto)) return proto;
@@ -124,10 +125,11 @@ google::storage::v2::CommonObjectRequestParams
 ExpectedCommonObjectRequestParams() {
   // To get the magic values use:
   //  /bin/echo -n "01234567" | sha256sum
-  auto constexpr kProto = R"pb(
-    encryption_algorithm: "AES256"
-    encryption_key_bytes: "01234567"
-    encryption_key_sha256_bytes: "\x92\x45\x92\xb9\xb1\x03\xf1\x4f\x83\x3f\xaa\xfb\x67\xf4\x80\x69\x1f\x01\x98\x8a\xa4\x57\xc0\x06\x17\x69\xf5\x8c\xd4\x73\x11\xbc"
+  auto constexpr kProto =
+      R"pb(
+           encryption_algorithm: "AES256"
+           encryption_key_bytes: "01234567"
+           encryption_key_sha256_bytes: "\x92\x45\x92\xb9\xb1\x03\xf1\x4f\x83\x3f\xaa\xfb\x67\xf4\x80\x69\x1f\x01\x98\x8a\xa4\x57\xc0\x06\x17\x69\xf5\x8c\xd4\x73\x11\xbc"
   )pb";
   google::storage::v2::CommonObjectRequestParams proto;
   if (TextFormat::ParseFromString(kProto, &proto)) return proto;
@@ -136,22 +138,23 @@ ExpectedCommonObjectRequestParams() {
 }
 
 TEST(GrpcObjectRequestParser, ComposeObjectRequestAllOptions) {
-  auto constexpr kTextProto = R"pb(
-    source_objects { name: "source-object-1" }
-    source_objects {
-      name: "source-object-2"
-      generation: 27
-      object_preconditions { if_generation_match: 28 }
-    }
-    source_objects { name: "source-object-3" generation: 37 }
-    source_objects {
-      name: "source-object-4"
-      object_preconditions { if_generation_match: 48 }
-    }
-    destination_predefined_acl: "projectPrivate"
-    if_generation_match: 1
-    if_metageneration_match: 3
-    kms_key: "test-only-kms-key"
+  auto constexpr kTextProto =
+      R"pb(
+           source_objects { name: "source-object-1" }
+           source_objects {
+             name: "source-object-2"
+             generation: 27
+             object_preconditions { if_generation_match: 28 }
+           }
+           source_objects { name: "source-object-3" generation: 37 }
+           source_objects {
+             name: "source-object-4"
+             object_preconditions { if_generation_match: 48 }
+           }
+           destination_predefined_acl: "projectPrivate"
+           if_generation_match: 1
+           if_metageneration_match: 3
+           kms_key: "test-only-kms-key"
   )pb";
   google::storage::v2::ComposeObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -192,13 +195,13 @@ TEST(GrpcObjectRequestParser, DeleteObjectAllFields) {
   google::storage::v2::DeleteObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        generation: 7
-        if_generation_match: 1
-        if_generation_not_match: 2
-        if_metageneration_match: 3
-        if_metageneration_not_match: 4
+           bucket: "projects/_/buckets/test-bucket"
+           object: "test-object"
+           generation: 7
+           if_generation_match: 1
+           if_generation_not_match: 2
+           if_metageneration_match: 3
+           if_metageneration_not_match: 4
       )pb",
       &expected));
 
@@ -218,7 +221,7 @@ TEST(GrpcObjectRequestParser, GetObjectMetadata) {
   google::storage::v2::GetObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+           bucket: "projects/_/buckets/test-bucket" object: "test-object"
       )pb",
       &expected));
 
@@ -232,15 +235,15 @@ TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
   google::storage::v2::GetObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        generation: 7
-        if_generation_match: 1
-        if_generation_not_match: 2
-        if_metageneration_match: 3
-        if_metageneration_not_match: 4
-        read_mask { paths: "*" }
-        soft_deleted: true
+           bucket: "projects/_/buckets/test-bucket"
+           object: "test-object"
+           generation: 7
+           if_generation_match: 1
+           if_generation_not_match: 2
+           if_metageneration_match: 3
+           if_metageneration_not_match: 4
+           read_mask { paths: "*" }
+           soft_deleted: true
       )pb",
       &expected));
 
@@ -260,7 +263,7 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestSimple) {
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+           bucket: "projects/_/buckets/test-bucket" object: "test-object"
       )pb",
       &expected));
 
@@ -274,15 +277,15 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestAllFields) {
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        generation: 7
-        read_offset: 2000
-        read_limit: 1000
-        if_generation_match: 1
-        if_generation_not_match: 2
-        if_metageneration_match: 3
-        if_metageneration_not_match: 4
+           bucket: "projects/_/buckets/test-bucket"
+           object: "test-object"
+           generation: 7
+           read_offset: 2000
+           read_limit: 1000
+           if_generation_match: 1
+           if_generation_not_match: 2
+           if_metageneration_match: 3
+           if_metageneration_not_match: 4
       )pb",
       &expected));
   *expected.mutable_common_object_request_params() =
@@ -307,9 +310,9 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLast) {
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        read_offset: -2000
+           bucket: "projects/_/buckets/test-bucket"
+           object: "test-object"
+           read_offset: -2000
       )pb",
       &expected));
 
@@ -324,7 +327,7 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLastZero) {
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+           bucket: "projects/_/buckets/test-bucket" object: "test-object"
       )pb",
       &expected));
 
@@ -340,7 +343,7 @@ TEST(GrpcObjectRequestParser,
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+           bucket: "projects/_/buckets/test-bucket" object: "test-object"
       )pb",
       &expected));
 
@@ -356,7 +359,7 @@ TEST(GrpcObjectRequestParser,
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+           bucket: "projects/_/buckets/test-bucket" object: "test-object"
       )pb",
       &expected));
 
@@ -369,12 +372,12 @@ TEST(GrpcObjectRequestParser,
 
 TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
   auto constexpr kTextProto = R"pb(
-    predefined_acl: "projectPrivate"
-    if_generation_match: 1
-    if_generation_not_match: 2
-    if_metageneration_match: 3
-    if_metageneration_not_match: 4
-    update_mask {}
+                                   predefined_acl: "projectPrivate"
+                                   if_generation_match: 1
+                                   if_generation_not_match: 2
+                                   if_metageneration_match: 3
+                                   if_metageneration_not_match: 4
+                                   update_mask {}
   )pb";
   google::storage::v2::UpdateObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -435,8 +438,11 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
 
 TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
   auto constexpr kTextProto = R"pb(
-    object { bucket: "projects/_/buckets/bucket-name" name: "object-name" }
-    update_mask {}
+                                   object {
+                                     bucket: "projects/_/buckets/bucket-name"
+                                     name: "object-name"
+                                   }
+                                   update_mask {}
   )pb";
   google::storage::v2::UpdateObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -472,12 +478,12 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
 
 TEST(GrpcObjectRequestParser, PatchObjectRequestMetadata) {
   auto constexpr kTextProto = R"pb(
-    object {
-      bucket: "projects/_/buckets/bucket-name"
-      name: "object-name"
-      metadata { key: "key0" value: "v0" }
-    }
-    update_mask {}
+                                   object {
+                                     bucket: "projects/_/buckets/bucket-name"
+                                     name: "object-name"
+                                     metadata { key: "key0" value: "v0" }
+                                   }
+                                   update_mask {}
   )pb";
   google::storage::v2::UpdateObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -501,8 +507,11 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestMetadata) {
 
 TEST(GrpcObjectRequestParser, PatchObjectRequestResetMetadata) {
   auto constexpr kTextProto = R"pb(
-    object { bucket: "projects/_/buckets/bucket-name" name: "object-name" }
-    update_mask {}
+                                   object {
+                                     bucket: "projects/_/buckets/bucket-name"
+                                     name: "object-name"
+                                   }
+                                   update_mask {}
   )pb";
   google::storage::v2::UpdateObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -523,12 +532,12 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestResetMetadata) {
 
 TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
   auto constexpr kTextProto = R"pb(
-    predefined_acl: "projectPrivate"
-    if_generation_match: 1
-    if_generation_not_match: 2
-    if_metageneration_match: 3
-    if_metageneration_not_match: 4
-    update_mask {}
+                                   predefined_acl: "projectPrivate"
+                                   if_generation_match: 1
+                                   if_generation_not_match: 2
+                                   if_metageneration_match: 3
+                                   if_metageneration_not_match: 4
+                                   update_mask {}
   )pb";
   google::storage::v2::UpdateObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -570,12 +579,12 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestSimple) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        write_object_spec: {
-          resource: {
-            bucket: "projects/_/buckets/test-bucket-name"
-            name: "test-object-name"
-          }
-        }
+           write_object_spec: {
+             resource: {
+               bucket: "projects/_/buckets/test-bucket-name"
+               name: "test-object-name"
+             }
+           }
       )pb",
       &expected));
 
@@ -604,7 +613,7 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
             r.set_option(storage::DisableCrc32cChecksum(true));
           },
           R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6")pb",
+               md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6")pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
@@ -612,8 +621,8 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
             r.set_option(storage::DisableCrc32cChecksum(false));
           },
           R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x4ad67f80)pb",
+               md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+               crc32c: 0x4ad67f80)pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
@@ -622,8 +631,8 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
                 storage::ComputeCrc32cChecksum(kText)));
           },
           R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x22620404)pb",
+               md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+               crc32c: 0x22620404)pb",
       },
 
       {
@@ -632,7 +641,7 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
             r.set_option(storage::DisableCrc32cChecksum(true));
           },
           R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21")pb",
+               md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21")pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
@@ -640,8 +649,8 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
             r.set_option(storage::DisableCrc32cChecksum(false));
           },
           R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
-            crc32c: 0x4ad67f80)pb",
+               md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
+               crc32c: 0x4ad67f80)pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
@@ -650,8 +659,8 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
                 storage::ComputeCrc32cChecksum(kText)));
           },
           R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
-            crc32c: 0x22620404)pb",
+               md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
+               crc32c: 0x22620404)pb",
       },
 
       {
@@ -668,7 +677,7 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
             r.set_option(storage::DisableCrc32cChecksum(false));
           },
           R"pb(
-            crc32c: 0x4ad67f80)pb",
+               crc32c: 0x4ad67f80)pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
@@ -677,7 +686,7 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
                 storage::ComputeCrc32cChecksum(kText)));
           },
           R"pb(
-            crc32c: 0x22620404)pb",
+               crc32c: 0x22620404)pb",
       },
   };
   for (auto const& test : cases) {
@@ -702,25 +711,26 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
 }
 
 TEST(GrpcObjectRequestParser, InsertObjectMediaRequestAllOptions) {
-  auto constexpr kTextProto = R"pb(
-    write_object_spec {
-      resource: {
-        bucket: "projects/_/buckets/test-bucket-name"
-        name: "test-object-name"
-        content_type: "test-content-type"
-        content_encoding: "test-content-encoding"
-        # Should not be set, the proto file says these values should
-        # not be included in the upload
-        #     crc32c:
-        #     md5_hash:
-        kms_key: "test-kms-key-name"
-      }
-      predefined_acl: "private"
-      if_generation_match: 0
-      if_generation_not_match: 7
-      if_metageneration_match: 42
-      if_metageneration_not_match: 84
-    })pb";
+  auto constexpr kTextProto =
+      R"pb(
+           write_object_spec {
+             resource: {
+               bucket: "projects/_/buckets/test-bucket-name"
+               name: "test-object-name"
+               content_type: "test-content-type"
+               content_encoding: "test-content-encoding"
+               # Should not be set, the proto file says these values should
+               # not be included in the upload
+               #     crc32c:
+               #     md5_hash:
+               kms_key: "test-kms-key-name"
+             }
+             predefined_acl: "private"
+             if_generation_match: 0
+             if_generation_not_match: 7
+             if_metageneration_match: 42
+             if_metageneration_not_match: 84
+           })pb";
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
   *expected.mutable_common_object_request_params() =
@@ -770,12 +780,12 @@ TEST(GrpcObjectRequestParser, InsertObjectRequestSimple) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        write_object_spec: {
-          resource: {
-            bucket: "projects/_/buckets/test-bucket-name"
-            name: "test-object-name"
-          }
-        }
+           write_object_spec: {
+             resource: {
+               bucket: "projects/_/buckets/test-bucket-name"
+               name: "test-object-name"
+             }
+           }
       )pb",
       &expected));
 
@@ -786,25 +796,26 @@ TEST(GrpcObjectRequestParser, InsertObjectRequestSimple) {
 }
 
 TEST(GrpcObjectRequestParser, InsertObjectRequestAllOptions) {
-  auto constexpr kTextProto = R"pb(
-    write_object_spec {
-      resource: {
-        bucket: "projects/_/buckets/test-bucket-name"
-        name: "test-object-name"
-        content_type: "test-content-type"
-        content_encoding: "test-content-encoding"
-        # Should not be set, the proto file says these values should
-        # not be included in the upload
-        #     crc32c:
-        #     md5_hash:
-        kms_key: "test-kms-key-name"
-      }
-      predefined_acl: "private"
-      if_generation_match: 0
-      if_generation_not_match: 7
-      if_metageneration_match: 42
-      if_metageneration_not_match: 84
-    })pb";
+  auto constexpr kTextProto =
+      R"pb(
+           write_object_spec {
+             resource: {
+               bucket: "projects/_/buckets/test-bucket-name"
+               name: "test-object-name"
+               content_type: "test-content-type"
+               content_encoding: "test-content-encoding"
+               # Should not be set, the proto file says these values should
+               # not be included in the upload
+               #     crc32c:
+               #     md5_hash:
+               kms_key: "test-kms-key-name"
+             }
+             predefined_acl: "private"
+             if_generation_match: 0
+             if_generation_not_match: 7
+             if_metageneration_match: 42
+             if_metageneration_not_match: 84
+           })pb";
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
   *expected.mutable_common_object_request_params() =
@@ -852,7 +863,7 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseSimple) {
   google::storage::v2::WriteObjectResponse input;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        persisted_size: 123456
+           persisted_size: 123456
       )pb",
       &input));
 
@@ -865,11 +876,11 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseWithResource) {
   google::storage::v2::WriteObjectResponse input;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        resource {
-          name: "test-object-name"
-          bucket: "projects/_/buckets/test-bucket-name"
-          size: 123456
-        })pb",
+           resource {
+             name: "test-object-name"
+             bucket: "projects/_/buckets/test-bucket-name"
+             size: 123456
+           })pb",
       &input));
 
   auto const actual = FromProto(
@@ -889,7 +900,7 @@ TEST(GrpcObjectRequestParser, ListObjectsRequest) {
   google::storage::v2::ListObjectsRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        parent: "projects/_/buckets/test-bucket"
+           parent: "projects/_/buckets/test-bucket"
       )pb",
       &expected));
 
@@ -903,18 +914,18 @@ TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
   google::storage::v2::ListObjectsRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        parent: "projects/_/buckets/test-bucket"
-        page_size: 10
-        page_token: "test-only-invalid"
-        delimiter: "/"
-        include_trailing_delimiter: true
-        prefix: "test/prefix"
-        versions: true
-        lexicographic_start: "test/prefix/a"
-        lexicographic_end: "test/prefix/abc"
-        match_glob: "**/*.cc"
-        soft_deleted: true
-        include_folders_as_prefixes: true
+           parent: "projects/_/buckets/test-bucket"
+           page_size: 10
+           page_token: "test-only-invalid"
+           delimiter: "/"
+           include_trailing_delimiter: true
+           prefix: "test/prefix"
+           versions: true
+           lexicographic_start: "test/prefix/a"
+           lexicographic_end: "test/prefix/abc"
+           match_glob: "**/*.cc"
+           soft_deleted: true
+           include_folders_as_prefixes: true
       )pb",
       &expected));
 
@@ -937,11 +948,11 @@ TEST(GrpcObjectRequestParser, ListObjectsResponse) {
   google::storage::v2::ListObjectsResponse response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        objects { bucket: "projects/_/buckets/test-bucket" name: "object1" }
-        objects { bucket: "projects/_/buckets/test-bucket" name: "object2" }
-        prefixes: "prefix1/"
-        prefixes: "prefix2/"
-        next_page_token: "test-only-invalid-token"
+           objects { bucket: "projects/_/buckets/test-bucket" name: "object1" }
+           objects { bucket: "projects/_/buckets/test-bucket" name: "object2" }
+           prefixes: "prefix1/"
+           prefixes: "prefix2/"
+           next_page_token: "test-only-invalid-token"
       )pb",
       &response));
 
@@ -957,27 +968,29 @@ TEST(GrpcObjectRequestParser, ListObjectsResponse) {
 }
 
 TEST(GrpcObjectRequestParser, RewriteObjectRequestAllOptions) {
-  auto constexpr kTextProto = R"pb(
-    destination_bucket: "projects/_/buckets/destination-bucket"
-    destination_name: "destination-object"
-    source_bucket: "projects/_/buckets/source-bucket"
-    source_object: "source-object"
-    source_generation: 7
-    rewrite_token: "test-only-rewrite-token"
-    destination_predefined_acl: "projectPrivate"
-    if_generation_match: 1
-    if_generation_not_match: 2
-    if_metageneration_match: 3
-    if_metageneration_not_match: 4
-    if_source_generation_match: 5
-    if_source_generation_not_match: 6
-    if_source_metageneration_match: 7
-    if_source_metageneration_not_match: 8
-    max_bytes_rewritten_per_call: 123456
-    copy_source_encryption_algorithm: "AES256"
-    copy_source_encryption_key_bytes: "ABCDEFGH"
-    # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic string
-    copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
+  auto constexpr kTextProto =
+      R"pb(
+           destination_bucket: "projects/_/buckets/destination-bucket"
+           destination_name: "destination-object"
+           source_bucket: "projects/_/buckets/source-bucket"
+           source_object: "source-object"
+           source_generation: 7
+           rewrite_token: "test-only-rewrite-token"
+           destination_predefined_acl: "projectPrivate"
+           if_generation_match: 1
+           if_generation_not_match: 2
+           if_metageneration_match: 3
+           if_metageneration_not_match: 4
+           if_source_generation_match: 5
+           if_source_generation_not_match: 6
+           if_source_metageneration_match: 7
+           if_source_metageneration_not_match: 8
+           max_bytes_rewritten_per_call: 123456
+           copy_source_encryption_algorithm: "AES256"
+           copy_source_encryption_key_bytes: "ABCDEFGH"
+           # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic
+           # string
+           copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
   )pb";
   google::storage::v2::RewriteObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -1018,26 +1031,27 @@ TEST(GrpcObjectRequestParser, RewriteObjectRequestNoDestination) {
   google::storage::v2::RewriteObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        destination_bucket: "projects/_/buckets/destination-bucket"
-        destination_name: "destination-object"
-        source_bucket: "projects/_/buckets/source-bucket"
-        source_object: "source-object"
-        source_generation: 7
-        rewrite_token: "test-only-rewrite-token"
-        destination_predefined_acl: "projectPrivate"
-        if_generation_match: 1
-        if_generation_not_match: 2
-        if_metageneration_match: 3
-        if_metageneration_not_match: 4
-        if_source_generation_match: 5
-        if_source_generation_not_match: 6
-        if_source_metageneration_match: 7
-        if_source_metageneration_not_match: 8
-        max_bytes_rewritten_per_call: 123456
-        copy_source_encryption_algorithm: "AES256"
-        copy_source_encryption_key_bytes: "ABCDEFGH"
-        # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic string
-        copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
+           destination_bucket: "projects/_/buckets/destination-bucket"
+           destination_name: "destination-object"
+           source_bucket: "projects/_/buckets/source-bucket"
+           source_object: "source-object"
+           source_generation: 7
+           rewrite_token: "test-only-rewrite-token"
+           destination_predefined_acl: "projectPrivate"
+           if_generation_match: 1
+           if_generation_not_match: 2
+           if_metageneration_match: 3
+           if_metageneration_not_match: 4
+           if_source_generation_match: 5
+           if_source_generation_not_match: 6
+           if_source_metageneration_match: 7
+           if_source_metageneration_not_match: 8
+           max_bytes_rewritten_per_call: 123456
+           copy_source_encryption_algorithm: "AES256"
+           copy_source_encryption_key_bytes: "ABCDEFGH"
+           # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic
+           # string
+           copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
       )pb",
       &expected));
   *expected.mutable_common_object_request_params() =
@@ -1069,14 +1083,14 @@ TEST(GrpcObjectRequestParser, RewriteObjectResponse) {
   google::storage::v2::RewriteResponse input;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        total_bytes_rewritten: 123456
-        object_size: 1234560
-        done: false
-        rewrite_token: "test-only-token"
-        resource {
-          bucket: "projects/_/buckets/bucket-name"
-          name: "object-name"
-        }
+           total_bytes_rewritten: 123456
+           object_size: 1234560
+           done: false
+           rewrite_token: "test-only-token"
+           resource {
+             bucket: "projects/_/buckets/bucket-name"
+             name: "object-name"
+           }
       )pb",
       &input));
 
@@ -1090,25 +1104,27 @@ TEST(GrpcObjectRequestParser, RewriteObjectResponse) {
 }
 
 TEST(GrpcObjectRequestParser, CopyObjectRequestAllOptions) {
-  auto constexpr kTextProto = R"pb(
-    destination_bucket: "projects/_/buckets/destination-bucket"
-    destination_name: "destination-object"
-    source_bucket: "projects/_/buckets/source-bucket"
-    source_object: "source-object"
-    source_generation: 7
-    destination_predefined_acl: "projectPrivate"
-    if_generation_match: 1
-    if_generation_not_match: 2
-    if_metageneration_match: 3
-    if_metageneration_not_match: 4
-    if_source_generation_match: 5
-    if_source_generation_not_match: 6
-    if_source_metageneration_match: 7
-    if_source_metageneration_not_match: 8
-    copy_source_encryption_algorithm: "AES256"
-    copy_source_encryption_key_bytes: "ABCDEFGH"
-    # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic string
-    copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
+  auto constexpr kTextProto =
+      R"pb(
+           destination_bucket: "projects/_/buckets/destination-bucket"
+           destination_name: "destination-object"
+           source_bucket: "projects/_/buckets/source-bucket"
+           source_object: "source-object"
+           source_generation: 7
+           destination_predefined_acl: "projectPrivate"
+           if_generation_match: 1
+           if_generation_not_match: 2
+           if_metageneration_match: 3
+           if_metageneration_not_match: 4
+           if_source_generation_match: 5
+           if_source_generation_not_match: 6
+           if_source_metageneration_match: 7
+           if_source_metageneration_not_match: 8
+           copy_source_encryption_algorithm: "AES256"
+           copy_source_encryption_key_bytes: "ABCDEFGH"
+           # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic
+           # string
+           copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
   )pb";
   google::storage::v2::RewriteObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -1147,24 +1163,25 @@ TEST(GrpcObjectRequestParser, CopyObjectRequestNoDestination) {
   google::storage::v2::RewriteObjectRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        destination_bucket: "projects/_/buckets/destination-bucket"
-        destination_name: "destination-object"
-        source_bucket: "projects/_/buckets/source-bucket"
-        source_object: "source-object"
-        source_generation: 7
-        destination_predefined_acl: "projectPrivate"
-        if_generation_match: 1
-        if_generation_not_match: 2
-        if_metageneration_match: 3
-        if_metageneration_not_match: 4
-        if_source_generation_match: 5
-        if_source_generation_not_match: 6
-        if_source_metageneration_match: 7
-        if_source_metageneration_not_match: 8
-        copy_source_encryption_algorithm: "AES256"
-        copy_source_encryption_key_bytes: "ABCDEFGH"
-        # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic string
-        copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
+           destination_bucket: "projects/_/buckets/destination-bucket"
+           destination_name: "destination-object"
+           source_bucket: "projects/_/buckets/source-bucket"
+           source_object: "source-object"
+           source_generation: 7
+           destination_predefined_acl: "projectPrivate"
+           if_generation_match: 1
+           if_generation_not_match: 2
+           if_metageneration_match: 3
+           if_metageneration_not_match: 4
+           if_source_generation_match: 5
+           if_source_generation_not_match: 6
+           if_source_metageneration_match: 7
+           if_source_metageneration_not_match: 8
+           copy_source_encryption_algorithm: "AES256"
+           copy_source_encryption_key_bytes: "ABCDEFGH"
+           # Used `/bin/echo -n "ABCDEFGH" | sha256sum` to create this magic
+           # string
+           copy_source_encryption_key_sha256_bytes: "\x9a\xc2\x19\x7d\x92\x58\x25\x7b\x1a\xe8\x46\x3e\x42\x14\xe4\xcd\x0a\x57\x8b\xc1\x51\x7f\x24\x15\x92\x8b\x91\xbe\x42\x83\xfc\x48"
       )pb",
       &expected));
   *expected.mutable_common_object_request_params() =
@@ -1212,24 +1229,24 @@ TEST(GrpcObjectRequestParser, ResumableUploadRequestAllFields) {
   google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        write_object_spec: {
-          resource: {
-            name: "test-object"
-            bucket: "projects/_/buckets/test-bucket"
-            content_encoding: "test-content-encoding"
-            content_type: "test-content-type"
-            # Should not be set, the proto file says these values should
-            # not be included in the upload
-            #     crc32c:
-            #     md5_hash:
-            kms_key: "test-kms-key-name"
-          }
-          predefined_acl: "private"
-          if_generation_match: 0
-          if_generation_not_match: 7
-          if_metageneration_match: 42
-          if_metageneration_not_match: 84
-        }
+           write_object_spec: {
+             resource: {
+               name: "test-object"
+               bucket: "projects/_/buckets/test-bucket"
+               content_encoding: "test-content-encoding"
+               content_type: "test-content-type"
+               # Should not be set, the proto file says these values should
+               # not be included in the upload
+               #     crc32c:
+               #     md5_hash:
+               kms_key: "test-kms-key-name"
+             }
+             predefined_acl: "private"
+             if_generation_match: 0
+             if_generation_not_match: 7
+             if_metageneration_match: 42
+             if_metageneration_not_match: 84
+           }
       )pb",
       &expected));
   *expected.mutable_common_object_request_params() =
@@ -1296,7 +1313,7 @@ TEST(GrpcObjectRequestParser, QueryResumableUploadRequestSimple) {
   google::storage::v2::QueryWriteStatusRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        upload_id: "test-upload-id"
+           upload_id: "test-upload-id"
       )pb",
       &expected));
 
@@ -1310,7 +1327,7 @@ TEST(GrpcObjectRequestParser, QueryResumableUploadResponseSimple) {
   google::storage::v2::QueryWriteStatusResponse input;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        persisted_size: 123456
+           persisted_size: 123456
       )pb",
       &input));
 
@@ -1323,11 +1340,11 @@ TEST(GrpcObjectRequestParser, QueryResumableUploadResponseWithResource) {
   google::storage::v2::QueryWriteStatusResponse input;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        resource {
-          name: "test-object-name"
-          bucket: "projects/_/buckets/test-bucket-name"
-          size: 123456
-        })pb",
+           resource {
+             name: "test-object-name"
+             bucket: "projects/_/buckets/test-bucket-name"
+             size: 123456
+           })pb",
       &input));
 
   auto const actual = FromProto(input, Options{});
@@ -1342,7 +1359,7 @@ TEST(GrpcObjectRequestParser, DeleteResumableUploadRequest) {
   google::storage::v2::CancelResumableWriteRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        upload_id: "test-upload-id"
+           upload_id: "test-upload-id"
       )pb",
       &expected));
 
@@ -1387,32 +1404,32 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeUploadChunkRequest) {
                      storage::ComputeMD5Hash(kText)},
           [&]() { return make_hasher(false, false); },
           R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x22620404)pb",
+               md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+               crc32c: 0x22620404)pb",
       },
       {
           HashValues{storage::ComputeCrc32cChecksum(kText),
                      storage::ComputeMD5Hash(kText)},
           [&]() { return make_hasher(false, true); },
           R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x22620404)pb",
+               md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+               crc32c: 0x22620404)pb",
       },
       {
           HashValues{storage::ComputeCrc32cChecksum(kText),
                      storage::ComputeMD5Hash(kText)},
           [&]() { return make_hasher(true, false); },
           R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x22620404)pb",
+               md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+               crc32c: 0x22620404)pb",
       },
       {
           HashValues{storage::ComputeCrc32cChecksum(kText),
                      storage::ComputeMD5Hash(kText)},
           [&]() { return make_hasher(true, true); },
           R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x22620404)pb",
+               md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+               crc32c: 0x22620404)pb",
       },
 
       // In these tests we assume no hashes are provided by the application, and
@@ -1426,20 +1443,20 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeUploadChunkRequest) {
           HashValues{},
           [&]() { return make_hasher(false, true); },
           R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21")pb",
+               md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21")pb",
       },
       {
           HashValues{},
           [&]() { return make_hasher(true, false); },
           R"pb(
-            crc32c: 0x4ad67f80)pb",
+               crc32c: 0x4ad67f80)pb",
       },
       {
           HashValues{},
           [&]() { return make_hasher(true, true); },
           R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
-            crc32c: 0x4ad67f80)pb",
+               md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
+               crc32c: 0x4ad67f80)pb",
       },
   };
   for (auto const& test : cases) {
