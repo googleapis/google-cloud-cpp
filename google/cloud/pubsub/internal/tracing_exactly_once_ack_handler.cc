@@ -51,12 +51,19 @@ class TracingExactlyOnceAckHandler
     opentelemetry::trace::StartSpanOptions options = RootStartSpanOptions();
 
     options.kind = opentelemetry::trace::SpanKind::kInternal;
-    TracingAttributes attributes =
-        MakeSharedAttributes(ack_id(), subscription());
-    attributes.emplace_back(
-        std::make_pair(sc::kCodeFunction, "pubsub::AckHandler::ack"));
-    auto span = internal::MakeSpan(subscription().subscription_id() + " ack",
-                                   attributes, options);
+    auto span = internal::MakeSpan(
+        subscription().subscription_id() + " ack",
+        {{sc::kCodeFunction, "pubsub::AckHandler::ack"},
+         {sc::kMessagingSystem, "gcp_pubsub"},
+         {"messaging.gcp_pubsub.message.ack_id", ack_id()},
+         {"messaging.gcp_pubsub.subscription.template",
+          subscription().FullName()},
+         {"gcp.project_id", subscription().project_id()},
+         {sc::kMessagingDestinationName, subscription().subscription_id()},
+         {"messaging.gcp_pubsub.message.delivery_attempt",
+          static_cast<int32_t>(delivery_attempt())},
+         {sc::kMessagingOperation, "settle"}},
+        options);
 
     auto scope = internal::OTelScope(span);
     return internal::EndSpan(std::move(span), child_->ack());
@@ -68,12 +75,19 @@ class TracingExactlyOnceAckHandler
     opentelemetry::trace::StartSpanOptions options = RootStartSpanOptions();
 
     options.kind = opentelemetry::trace::SpanKind::kInternal;
-    TracingAttributes attributes =
-        MakeSharedAttributes(ack_id(), subscription());
-    attributes.emplace_back(
-        std::make_pair(sc::kCodeFunction, "pubsub::AckHandler::nack"));
-    auto span = internal::MakeSpan(subscription().subscription_id() + " nack",
-                                   attributes, options);
+    auto span = internal::MakeSpan(
+        subscription().subscription_id() + " nack",
+        {{sc::kCodeFunction, "pubsub::AckHandler::nack"},
+         {sc::kMessagingSystem, "gcp_pubsub"},
+         {"messaging.gcp_pubsub.message.ack_id", ack_id()},
+         {"messaging.gcp_pubsub.subscription.template",
+          subscription().FullName()},
+         {"gcp.project_id", subscription().project_id()},
+         {sc::kMessagingDestinationName, subscription().subscription_id()},
+         {"messaging.gcp_pubsub.message.delivery_attempt",
+          static_cast<int32_t>(delivery_attempt())},
+         {sc::kMessagingOperation, "settle"}},
+        options);
 
     auto scope = internal::OTelScope(span);
     return internal::EndSpan(std::move(span), child_->nack());
@@ -90,21 +104,6 @@ class TracingExactlyOnceAckHandler
   }
 
  private:
-  TracingAttributes MakeSharedAttributes(
-      std::string const& ack_id,
-      pubsub::Subscription const subscription) const {
-    namespace sc = opentelemetry::trace::SemanticConventions;
-    return TracingAttributes{
-        {sc::kMessagingSystem, "gcp_pubsub"},
-        {"messaging.gcp_pubsub.message.ack_id", ack_id},
-        {"messaging.gcp_pubsub.subscription.template", subscription.FullName()},
-        {"gcp.project_id", subscription.project_id()},
-        {sc::kMessagingDestinationName, subscription.subscription_id()},
-        {"messaging.gcp_pubsub.message.delivery_attempt",
-         static_cast<int32_t>(delivery_attempt())},
-        {sc::kMessagingOperation, "settle"}};
-  }
-
   std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> child_;
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> subscribe_span_;
 };
