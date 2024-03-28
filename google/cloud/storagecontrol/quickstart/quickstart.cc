@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [all]
+//! [all] [START storage_control_quickstart_sample]
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
 #include <iostream>
 
@@ -37,4 +37,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
-//! [all]
+//! [all] [END storage_control_quickstart_sample]
