@@ -48,7 +48,7 @@ RUN dnf makecache && \
 WORKDIR /var/tmp/build/pkgconf
 RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
+    ./configure --prefix=/usr --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
     make install && \
     ldconfig && cd /var/tmp && rm -fr build
