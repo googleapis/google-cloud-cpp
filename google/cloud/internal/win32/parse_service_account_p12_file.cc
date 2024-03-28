@@ -85,7 +85,7 @@ using UniqueCryptKey = UniquePtrReinterpretProxy<HCRYPTKEY, HCryptKeyDeleter>;
 
 StatusOr<UniqueCertStore> OpenP12File(std::string const& source) {
   // Read the PKCS#12 file into memory.
-  std::vector<char> data;
+  std::vector<BYTE> data;
   {
     std::ifstream file(source, std::ios::binary);
     if (!file.is_open()) {
@@ -95,8 +95,7 @@ StatusOr<UniqueCertStore> OpenP12File(std::string const& source) {
     }
     data.assign(std::istreambuf_iterator<char>{file}, {});
   }
-  CRYPT_DATA_BLOB dataBlob = {static_cast<DWORD>(data.size()),
-                              reinterpret_cast<BYTE*>(data.data())};
+  CRYPT_DATA_BLOB dataBlob = {static_cast<DWORD>(data.size()), data.data()};
   // Import the PKCS#12 file into a certificate store.
   HCERTSTORE certstore_raw =
       PFXImportCertStore(&dataBlob, L"notasecret", CRYPT_EXPORTABLE);
@@ -163,7 +162,7 @@ StatusOr<UniqueCryptKey> GetKeyFromProvider(HCRYPTPROV prov, DWORD dwKeySpec,
   return UniqueCryptKey(pkey_raw);
 }
 
-StatusOr<std::vector<char>> ExportPrivateKey(HCRYPTKEY pkey,
+StatusOr<std::vector<BYTE>> ExportPrivateKey(HCRYPTKEY pkey,
                                              std::string const& source) {
   DWORD exported_key_length;
   if (!CryptExportKey(pkey, 0, PRIVATEKEYBLOB, 0, nullptr,
@@ -173,18 +172,17 @@ StatusOr<std::vector<char>> ExportPrivateKey(HCRYPTKEY pkey,
                           source, "): "),
         GCP_ERROR_INFO());
   }
-  std::vector<char> exported_key(exported_key_length);
+  std::vector<BYTE> exported_key(exported_key_length);
   // We don't have to check again for errors; we already did in the previous
   // call to get the buffer size. Same with calls to CryptEncodeObjectEx and
   // CryptBinaryToStringA below.
-  CryptExportKey(pkey, 0, PRIVATEKEYBLOB, 0,
-                 reinterpret_cast<BYTE*>(exported_key.data()),
+  CryptExportKey(pkey, 0, PRIVATEKEYBLOB, 0, exported_key.data(),
                  &exported_key_length);
   return exported_key;
 }
 
 StatusOr<std::vector<BYTE>> EncodeRsaPrivateKey(
-    absl::Span<char const> exported_key, std::string const& source) {
+    absl::Span<BYTE const> exported_key, std::string const& source) {
   // Encode the blob to PKCS#1 format.
   DWORD pkcs1_encoded_length;
   if (!CryptEncodeObjectEx(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING,
