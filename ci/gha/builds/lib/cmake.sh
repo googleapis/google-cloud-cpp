@@ -65,9 +65,6 @@ function cmake::vcpkg_args() {
   local args
   args=(
     -DCMAKE_TOOLCHAIN_FILE="${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-    # The version of vcpkg we are using ships with Protobuf v21.x, the
-    # workarounds are required until v23.x.
-    -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON
   )
   printf "%s\n" "${args[@]}"
 }

@@ -21,20 +21,51 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     set_target_properties(
         google_cloud_cpp_storage_grpc
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage_grpc")
-    if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
-        target_compile_definitions(
-            google_cloud_cpp_storage_grpc
-            INTERFACE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
-    endif ()
     add_library(google_cloud_cpp_storage_protos INTERFACE)
     add_library(google-cloud-cpp::storage_protos ALIAS
                 google_cloud_cpp_storage_protos)
     set_target_properties(
         google_cloud_cpp_storage_protos
         PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_protos")
+
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND
+        [==[Unused, as GCS+gRPC is not enabled.
+
+    More details at
+
+    https://github.com/googleapis/google-cloud-cpp/blob/main/doc/ctype-cord-workarounds.md
+    ]==]
+        OFF)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
 else ()
     include(GoogleCloudCppLibrary)
     google_cloud_cpp_add_library_protos(storage)
+
+    set(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT ON)
+    # Protobuf versions are ... complicated.  Protobuf used to call itself
+    # 3.21.*, 3.20.*, 3.19.*, etc. Then it starts calling itself 22.*, 23.*,
+    # etc. This may change in the future:
+    #
+    # https://github.com/protocolbuffers/protobuf/issues/13103
+    #
+    # Guessing the new version scheme is tempting, but probably unwise.
+    #
+    # In any case, `ctype=CORD` is supported starting in 23.x.
+    if (Protobuf_VERSION VERSION_GREATER "23.x")
+        set(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT OFF)
+    endif ()
+    message(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT=
+            ${GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT})
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND
+        [==[Enable the workarounds for [ctype = CORD] when using Protobuf < v23.
+    More details at
+
+    https://github.com/googleapis/google-cloud-cpp/blob/main/doc/ctype-cord-workarounds.md
+    ]==]
+        ${GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT})
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
 
     add_library(
         google_cloud_cpp_storage_grpc # cmake-format: sort

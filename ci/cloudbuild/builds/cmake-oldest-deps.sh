@@ -38,8 +38,7 @@ cmake -GNinja -S . -B cmake-out/build \
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_root}/scripts/buildsystems/vcpkg.cmake" \
   "-DVCPKG_MANIFEST_DIR=ci/etc/oldest-deps" \
   "-DVCPKG_FEATURE_FLAGS=versions,manifest" \
-  "-DGOOGLE_CLOUD_CPP_ENABLE=${ENABLED_FEATURES}" \
-  "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON"
+  "-DGOOGLE_CLOUD_CPP_ENABLE=${ENABLED_FEATURES}"
 
 io::log_h2 "Building"
 cmake --build cmake-out/build
