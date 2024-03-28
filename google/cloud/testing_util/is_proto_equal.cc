@@ -37,7 +37,7 @@ absl::optional<std::string> CompareProtosApproximately(
   std::string delta;
   google::protobuf::util::DefaultFieldComparator comparator;
   comparator.set_float_comparison(
-      google::protobuf::util::SimpleFieldComparator::APPROXIMATE);
+      google::protobuf::util::DefaultFieldComparator::APPROXIMATE);
   // Keep the comparator's default fraction and margin.
   google::protobuf::util::MessageDifferencer differencer;
   differencer.set_field_comparator(&comparator);
@@ -53,7 +53,7 @@ absl::optional<std::string> CompareProtosApproximately(
   std::string delta;
   google::protobuf::util::DefaultFieldComparator comparator;
   comparator.set_float_comparison(
-      google::protobuf::util::SimpleFieldComparator::APPROXIMATE);
+      google::protobuf::util::DefaultFieldComparator::APPROXIMATE);
   comparator.SetDefaultFractionAndMargin(fraction, margin);
   google::protobuf::util::MessageDifferencer differencer;
   differencer.set_field_comparator(&comparator);
