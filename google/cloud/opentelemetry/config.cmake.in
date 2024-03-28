@@ -14,6 +14,7 @@
 
 include(CMakeFindDependencyMacro)
 find_dependency(google_cloud_cpp_rest_internal)
+find_dependency(google_cloud_cpp_monitoring)
 find_dependency(google_cloud_cpp_trace)
 find_dependency(opentelemetry-cpp)
 
