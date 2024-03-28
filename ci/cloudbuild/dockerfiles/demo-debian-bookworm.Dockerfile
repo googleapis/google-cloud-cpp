@@ -55,7 +55,7 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     make -j ${NCPU:-4} && \
     make install && \
     ldconfig && cd /var/tmp && rm -fr build
-ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig/
+ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
 # ```
 
 # #### crc32c
