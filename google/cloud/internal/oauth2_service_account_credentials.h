@@ -31,9 +31,7 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-inline char const* P12PrivateKeyIdMarker() {
-  return "--unknown--";
-}
+inline char const* P12PrivateKeyIdMarker() { return "--unknown--"; }
 
 /**
  * Overrides the token uri provided by the service account credentials key
