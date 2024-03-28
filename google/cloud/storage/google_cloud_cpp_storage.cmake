@@ -269,7 +269,8 @@ target_link_libraries(
            CURL::libcurl
            Threads::Threads)
 if (WIN32)
-    target_compile_definitions(google_cloud_cpp_storage PRIVATE WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0A00)
+    target_compile_definitions(google_cloud_cpp_storage
+                               PRIVATE WIN32_LEAN_AND_MEAN)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
     target_link_libraries(google_cloud_cpp_storage PUBLIC ws2_32 bcrypt)
@@ -338,9 +339,13 @@ google_cloud_cpp_add_pkgconfig(
     "absl_str_format"
     "absl_time"
     "absl_variant"
-    NON_WIN32_REQUIRES openssl
-    LIBS crc32c
-    WIN32_LIBS ws2_32 bcrypt)
+    NON_WIN32_REQUIRES
+    openssl
+    LIBS
+    crc32c
+    WIN32_LIBS
+    ws2_32
+    bcrypt)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

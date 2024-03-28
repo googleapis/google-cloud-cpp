@@ -131,12 +131,15 @@ target_link_libraries(
     PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
            nlohmann_json::nlohmann_json)
 if (WIN32)
-    target_compile_definitions(google_cloud_cpp_rest_internal PRIVATE WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0A00)
+    target_compile_definitions(google_cloud_cpp_rest_internal
+                               PRIVATE WIN32_LEAN_AND_MEAN)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
-    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32 bcrypt crypt32)
+    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32 bcrypt
+                                                                crypt32)
 else ()
-    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC OpenSSL::SSL OpenSSL::Crypto)
+    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC OpenSSL::SSL
+                                                                OpenSSL::Crypto)
 endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_rest_internal)
 target_include_directories(
@@ -176,12 +179,17 @@ google_cloud_cpp_install_headers(google_cloud_cpp_rest_internal
                                  include/google/cloud)
 
 google_cloud_cpp_add_pkgconfig(
-    rest_internal "REST library for the Google Cloud C++ Client Library"
+    rest_internal
+    "REST library for the Google Cloud C++ Client Library"
     "Provides REST Transport for the Google Cloud C++ Client Library."
     "google_cloud_cpp_common"
     "libcurl"
-    NON_WIN32_REQUIRES openssl
-    WIN32_LIBS ws2_32 bcrypt crypt32)
+    NON_WIN32_REQUIRES
+    openssl
+    WIN32_LIBS
+    ws2_32
+    bcrypt
+    crypt32)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
