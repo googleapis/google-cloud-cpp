@@ -40,6 +40,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
     std::shared_ptr<
         opentelemetry::context::propagation::TextMapPropagator> const&
         propagator) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kConsumer;
   auto m = pubsub_internal::FromProto(message.message());
@@ -50,8 +51,23 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
     options.parent = producer_span_context;
   }
 
-  auto span = internal::MakeSpan(subscription.subscription_id() + " subscribe",
-                                 options);
+  auto span = internal::MakeSpan(
+      subscription.subscription_id() + " subscribe",
+      {{sc::kMessagingSystem, "gcp_pubsub"},
+       {sc::kMessagingOperation, "subscribe"},
+       {"gcp.project_id", subscription.project_id()},
+       {sc::kMessagingDestinationName, subscription.subscription_id()},
+       {sc::kMessagingMessageId, m.message_id()},
+       {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope."
+                                              "size",
+        static_cast<std::int64_t>(MessageSize(m))},
+       {"messaging.gcp_pubsub.message.ack_id", message.ack_id()}},
+      options);
+
+  if (!message.message().ordering_key().empty()) {
+    span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
+                       message.message().ordering_key());
+  }
   return span;
 }
 
