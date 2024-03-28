@@ -51,7 +51,7 @@ RUN apt-get update && \
 WORKDIR /var/tmp/build/pkgconf
 RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-system-libdir=/lib:/usr/lib --with-system-includedir=/usr/include && \
+    ./configure --prefix=/usr --with-system-libdir=/lib:/usr/lib --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
     make install && \
     ldconfig && cd /var/tmp && rm -fr build

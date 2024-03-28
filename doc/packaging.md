@@ -289,7 +289,7 @@ may want to use a recent version of the standard `pkg-config` binary. If not,
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
 curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
+    ./configure --prefix=/usr --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
@@ -853,7 +853,7 @@ may want to use a recent version of the standard `pkg-config` binary. If not,
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
 curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-system-libdir=/lib:/usr/lib --with-system-includedir=/usr/include && \
+    ./configure --prefix=/usr --with-system-libdir=/lib:/usr/lib --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
@@ -1306,7 +1306,7 @@ may want to use a recent version of the standard `pkg-config` binary. If not,
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
 curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
+    ./configure --prefix=/usr --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
@@ -1520,7 +1520,7 @@ may want to use a recent version of the standard `pkg-config` binary. If not,
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
 curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
+    ./configure --prefix=/usr --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
@@ -1752,7 +1752,7 @@ newer. If not, `sudo yum install pkgconfig` should work instead.
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
 curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
+    ./configure --prefix=/usr --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig && cd /var/tmp && rm -fr build
