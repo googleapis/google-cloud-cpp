@@ -81,7 +81,7 @@ class MD5HashFunction : public HashFunction {
   static std::unique_ptr<MD5HashFunction> Create();
 
   std::string Name() const override { return "md5"; }
-  virtual void Update(absl::string_view buffer) override = 0;
+  void Update(absl::string_view buffer) override = 0;
   Status Update(std::int64_t offset, absl::string_view buffer) override;
   Status Update(std::int64_t offset, absl::string_view buffer,
                 std::uint32_t buffer_crc) override;
