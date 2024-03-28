@@ -104,7 +104,12 @@ function check_abi() {
     -search-debuginfo /usr
   )
   abi-dumper "${dump_options[@]}" >/dev/null 2>&1 |
-    grep -v "ERROR: missed type id" || true
+    grep -v "ERROR: missed type id" >cmake-out/${library}.dump.log
+  if [[ $? -ne 0 ]]; then
+    echo "DEBUG DEBUG ERROR in abi-dump"
+    cat cmake-out/${library}.dump.log
+    echo "DEBUG DEBUG ERROR in abi-dump"
+  fi
 
   local project_dir="${project_root}/ci/abi-dumps"
   local expected_dump_file="${library}.expected.abi.dump"
