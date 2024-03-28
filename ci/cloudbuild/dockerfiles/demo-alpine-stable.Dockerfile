@@ -36,10 +36,10 @@ RUN apk update && \
 WORKDIR /var/tmp/build/pkgconf
 RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
+    ./configure --prefix=/usr && \
     make -j ${NCPU:-4} && \
     make install && \
-    ldconfig && cd /var/tmp && rm -fr build
+    cd /var/tmp && rm -fr build
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
@@ -47,7 +47,7 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 # set the search path.
 
 # ```bash
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 # ```
 
 # #### Dependencies
