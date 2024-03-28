@@ -247,6 +247,7 @@ StatusOr<std::vector<char>> Base64Encode(absl::Span<BYTE const> blob,
   private_key.pop_back();  // remove the null terminator
   return private_key;
 }
+
 }  // namespace
 
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
