@@ -31,6 +31,8 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+inline char const* P12PrivateKeyIdMarker() { return "--unknown--"; }
+
 /**
  * Overrides the token uri provided by the service account credentials key
  * file.
@@ -56,10 +58,6 @@ struct ServiceAccountCredentialsInfo {
 /// Indicates whether or not to use a self-signed JWT or issue a request to
 /// OAuth2.
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info);
-
-/// Parses the contents of a P12 keyfile into a ServiceAccountCredentialsInfo.
-StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
-    std::string const& source);
 
 /// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(

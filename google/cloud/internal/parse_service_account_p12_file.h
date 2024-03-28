@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,33 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_SERVICE_ACCOUNT_P12_FILE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_SERVICE_ACCOUNT_P12_FILE_H
 
+#include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <cstdint>
 #include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
+namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-/**
- * Signs a string with the private key from a PEM container.
- *
- * @return Returns the signature as an *unencoded* byte array. The caller
- *   might want to use `Base64Encode()` or `HexEncode()` to convert this byte
- *   array to a format more suitable for transmission over HTTP.
- */
-StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
-    std::string const& str, std::string const& pem_contents);
+/// Parses the contents of a P12 keyfile into a ServiceAccountCredentialsInfo.
+StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
+    std::string const& source);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace oauth2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_SERVICE_ACCOUNT_P12_FILE_H

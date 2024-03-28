@@ -13,7 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/internal/sha256_hash.h"
+#ifdef _WIN32
+#include <Windows.h>
+#include <wincrypt.h>
+#else
 #include <openssl/evp.h>
+#endif  // _WIN32
 #include <algorithm>
 
 namespace google {
@@ -23,14 +28,21 @@ namespace internal {
 
 namespace {
 Sha256Type Sha256Hash(void const* data, std::size_t count) {
-  std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
   Sha256Type hash;
+#ifdef _WIN32
+  BCryptHash(BCRYPT_SHA256_ALG_HANDLE, nullptr, 0,
+             static_cast<PUCHAR>(const_cast<void*>(data)),
+             static_cast<ULONG>(count), hash.data(),
+             static_cast<ULONG>(hash.size()));
+#else
+  std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
   static_assert(EVP_MAX_MD_SIZE >= hash.size(), "EVP_MAX_MD_SIZE is too small");
 
   unsigned int size = 0;
   EVP_Digest(data, count, digest.data(), &size, EVP_sha256(), nullptr);
   std::copy_n(digest.begin(), std::min<std::size_t>(size, hash.size()),
               hash.begin());
+#endif  // _WIN32
   return hash;
 }
 }  // namespace

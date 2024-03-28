@@ -76,6 +76,19 @@ cc_library(
         ],
         "//conditions:default": [],
     }),
+    linkopts = select({
+        "@platforms//os:windows": [
+            "-DEFAULTLIB:bcrypt.lib",
+        ],
+        "//conditions:default": [],
+    }),
+    local_defines = select({
+        "@platforms//os:windows": [
+            "WIN32_LEAN_AND_MEAN",
+            "_WIN32_WINNT=0x0A00",
+        ],
+        "//conditions:default": [],
+    }),
     target_compatible_with = select(
         {
             ":enable_opentelemetry_valid": [],
@@ -99,7 +112,6 @@ to your build command, or set this value in your `.bazelrc` file(s).
         "//:__pkg__",
     ],
     deps = [
-        "@boringssl//:crypto",
         "@com_google_absl//absl/base",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/strings",
@@ -113,6 +125,11 @@ to your build command, or set this value in your `.bazelrc` file(s).
             "@io_opentelemetry_cpp//api",
         ],
         "//conditions:default": [],
+    }) + select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "@boringssl//:crypto",
+        ],
     }),
 )
 
@@ -265,24 +282,34 @@ cc_library(
     name = "google_cloud_cpp_rest_internal",
     srcs = google_cloud_cpp_rest_internal_srcs,
     hdrs = google_cloud_cpp_rest_internal_hdrs,
-    # These are needed to use the BoringSSL libraries, and should be set in
-    # any downstream dependency too.
-    defines = select({
+    linkopts = select({
+        "@platforms//os:windows": [
+            "-DEFAULTLIB:bcrypt.lib",
+            "-DEFAULTLIB:crypt32.lib",
+        ],
+        "//conditions:default": [],
+    }),
+    local_defines = select({
         "@platforms//os:windows": [
             "WIN32_LEAN_AND_MEAN",
+            "_WIN32_WINNT=0x0A00",
         ],
         "//conditions:default": [],
     }),
     visibility = ["//:__subpackages__"],
     deps = [
         ":google_cloud_cpp_common",
-        "@boringssl//:crypto",
-        "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/types:span",
-    ],
+    ] + select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "@boringssl//:crypto",
+            "@boringssl//:ssl",
+        ],
+    }),
 )
 
 [cc_test(

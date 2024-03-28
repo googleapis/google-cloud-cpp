@@ -24,10 +24,9 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-# These are needed to use the BoringSSL libraries, and should be set in any
-# downstream dependency too.
 GOOGLE_CLOUD_STORAGE_WIN_DEFINES = [
     "WIN32_LEAN_AND_MEAN",
+    "_WIN32_WINNT=0x0A00",
 ]
 
 config_setting(
@@ -46,10 +45,11 @@ cc_library(
     srcs = google_cloud_cpp_storage_grpc_srcs,
     hdrs = google_cloud_cpp_storage_grpc_hdrs,
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"] + select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
-        "//conditions:default": [],
-    }) + select({
         ":ctype_cord_workaround_enabled": ["GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND"],
+        "//conditions:default": [],
+    }),
+    local_defines = select({
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }),
     visibility = [
@@ -59,8 +59,6 @@ cc_library(
     deps = [
         ":google_cloud_cpp_storage",
         "//:grpc_utils",
-        "@boringssl//:crypto",
-        "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
         "@com_github_nlohmann_json//:nlohmann_json",
@@ -105,7 +103,13 @@ cc_library(
     name = "google_cloud_cpp_storage",
     srcs = google_cloud_cpp_storage_srcs,
     hdrs = google_cloud_cpp_storage_hdrs,
-    defines = select({
+    linkopts = select({
+        "@platforms//os:windows": [
+            "-DEFAULTLIB:bcrypt.lib",
+        ],
+        "//conditions:default": [],
+    }),
+    local_defines = select({
         "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }),
@@ -116,8 +120,6 @@ cc_library(
     deps = [
         "//:common",
         "//google/cloud:google_cloud_cpp_rest_internal",
-        "@boringssl//:crypto",
-        "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
         "@com_github_nlohmann_json//:nlohmann_json",
@@ -126,7 +128,13 @@ cc_library(
         "@com_google_absl//absl/time",
         "@com_google_absl//absl/types:span",
         "@com_google_absl//absl/types:variant",
-    ],
+    ] + select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "@boringssl//:crypto",
+            "@boringssl//:ssl",
+        ],
+    }),
 )
 
 filegroup(
@@ -165,8 +173,6 @@ cc_library(
         "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@boringssl//:crypto",
-        "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_google_googletest//:gtest_main",
     ],
@@ -184,11 +190,15 @@ cc_library(
         ":storage_client_testing",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@boringssl//:crypto",
-        "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_google_googletest//:gtest_main",
-    ],
+    ] + select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "@boringssl//:crypto",
+            "@boringssl//:ssl",
+        ],
+    }),
 ) for test in storage_client_unit_tests]
 
 [cc_test(
@@ -205,8 +215,6 @@ cc_library(
         "//:mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@boringssl//:crypto",
-        "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",

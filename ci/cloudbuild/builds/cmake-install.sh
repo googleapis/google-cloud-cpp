@@ -94,6 +94,7 @@ expected_dirs+=(
   ./include/google/cloud/gkehub/v1/multiclusteringress
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
+  ./include/google/cloud/internal/win32
   # no RPC services in google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging/v1

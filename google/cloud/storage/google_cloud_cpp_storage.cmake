@@ -15,7 +15,9 @@
 # ~~~
 
 find_package(CURL REQUIRED)
-find_package(OpenSSL REQUIRED)
+if (NOT WIN32)
+    find_package(OpenSSL REQUIRED)
+endif ()
 
 # the client library
 add_library(
@@ -155,6 +157,7 @@ add_library(
     internal/object_requests.h
     internal/object_write_streambuf.cc
     internal/object_write_streambuf.h
+    internal/openssl/hash_function_impl.cc
     internal/patch_builder.cc
     internal/patch_builder.h
     internal/patch_builder_details.cc
@@ -187,6 +190,7 @@ add_library(
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
     internal/well_known_parameters_impl.h
+    internal/win32/hash_function_impl.cc
     lifecycle_rule.cc
     lifecycle_rule.h
     list_buckets_reader.cc
@@ -263,12 +267,15 @@ target_link_libraries(
            nlohmann_json::nlohmann_json
            Crc32c::crc32c
            CURL::libcurl
-           Threads::Threads
-           OpenSSL::Crypto)
+           Threads::Threads)
 if (WIN32)
+    target_compile_definitions(google_cloud_cpp_storage
+                               PRIVATE WIN32_LEAN_AND_MEAN)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
-    target_link_libraries(google_cloud_cpp_storage PUBLIC ws2_32)
+    target_link_libraries(google_cloud_cpp_storage PUBLIC ws2_32 bcrypt)
+else ()
+    target_link_libraries(google_cloud_cpp_storage PUBLIC OpenSSL::Crypto)
 endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_storage)
 target_include_directories(
@@ -320,36 +327,25 @@ install(
 google_cloud_cpp_install_headers(google_cloud_cpp_storage
                                  include/google/cloud/storage)
 
-# Cannot use google_cloud_cpp_add_pkgconfig() for this library. There is a
-# horrible hack here, adding -lcrc32c to the 'Libs:` entry. We should be adding
-# this library to the `Requires:` line, but it does not create pkg-config
-# modules.
-set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides C++ APIs to access Google Cloud Storage.")
-string(JOIN " " GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage"
-       "-lcrc32c")
-string(
-    JOIN
-    " "
-    GOOGLE_CLOUD_CPP_PC_REQUIRES
+google_cloud_cpp_add_pkgconfig(
+    "storage"
+    "The Google Cloud Storage C++ Client Library"
+    "Provides C++ APIs to access Google Cloud Storage."
     "google_cloud_cpp_common"
     "google_cloud_cpp_rest_internal"
-    "libcurl openssl"
+    "libcurl"
     "absl_cord"
     "absl_strings"
     "absl_str_format"
     "absl_time"
-    "absl_variant")
-
-# Create and install the pkg-config files.
-google_cloud_cpp_set_pkgconfig_paths()
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_storage.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+    "absl_variant"
+    NON_WIN32_REQUIRES
+    openssl
+    LIBS
+    crc32c
+    WIN32_LIBS
+    ws2_32
+    bcrypt)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

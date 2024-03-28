@@ -19,7 +19,9 @@ find_dependency(absl)
 find_dependency(CURL)
 find_dependency(Crc32c)
 find_dependency(nlohmann_json)
-find_dependency(OpenSSL)
+if (NOT WIN32)
+    find_dependency(OpenSSL)
+endif ()
 find_dependency(ZLIB)
 
 # Some versions of FindCURL do not define CURL::libcurl, so we define it ourselves.

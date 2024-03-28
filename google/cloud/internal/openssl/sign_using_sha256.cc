@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/openssl_util.h"
+#ifndef _WIN32
+#include "google/cloud/internal/sign_using_sha256.h"
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/make_status.h"
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
 #include <openssl/err.h>
@@ -154,3 +156,4 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
+#endif

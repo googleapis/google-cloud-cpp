@@ -13,9 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/md5hash.h"
-#include <openssl/evp.h>
 #include <algorithm>
 #include <array>
+#ifdef _WIN32
+#include <Windows.h>
+#include <wincrypt.h>
+#else
+#include <openssl/evp.h>
+#endif  // _WIN32
 
 namespace google {
 namespace cloud {
@@ -23,6 +28,14 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
+#ifdef _WIN32
+  std::vector<unsigned char> digest(16);
+  BCryptHash(BCRYPT_MD5_ALG_HANDLE, nullptr, 0,
+             reinterpret_cast<PUCHAR>(const_cast<char*>(payload.data())),
+             static_cast<ULONG>(payload.size()), digest.data(),
+             static_cast<ULONG>(digest.size()));
+  return digest;
+#else
   std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
 
   unsigned int size = 0;
@@ -30,6 +43,7 @@ std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
              nullptr);
   return std::vector<std::uint8_t>{digest.begin(),
                                    std::next(digest.begin(), size)};
+#endif  // _WIN32
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

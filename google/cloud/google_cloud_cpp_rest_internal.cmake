@@ -16,7 +16,9 @@
 
 include(IncludeNlohmannJson)
 find_package(CURL REQUIRED)
-find_package(OpenSSL REQUIRED)
+if (NOT WIN32)
+    find_package(OpenSSL REQUIRED)
+endif ()
 
 # the library
 add_library(
@@ -90,8 +92,9 @@ add_library(
     internal/oauth2_service_account_credentials.h
     internal/oauth2_universe_domain.cc
     internal/oauth2_universe_domain.h
-    internal/openssl_util.cc
-    internal/openssl_util.h
+    internal/openssl/parse_service_account_p12_file.cc
+    internal/openssl/sign_using_sha256.cc
+    internal/parse_service_account_p12_file.h
     internal/populate_rest_options.cc
     internal/populate_rest_options.h
     internal/rest_carrier.cc
@@ -109,6 +112,7 @@ add_library(
     internal/rest_response.cc
     internal/rest_response.h
     internal/rest_retry_loop.h
+    internal/sign_using_sha256.h
     internal/tracing_http_payload.cc
     internal/tracing_http_payload.h
     internal/tracing_rest_client.cc
@@ -117,15 +121,25 @@ add_library(
     internal/tracing_rest_response.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
+    internal/win32/parse_service_account_p12_file.cc
+    internal/win32/sign_using_sha256.cc
+    internal/win32/win32_helpers.cc
+    internal/win32/win32_helpers.h
     rest_options.h)
 target_link_libraries(
     google_cloud_cpp_rest_internal
     PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
-           nlohmann_json::nlohmann_json OpenSSL::SSL OpenSSL::Crypto)
+           nlohmann_json::nlohmann_json)
 if (WIN32)
+    target_compile_definitions(google_cloud_cpp_rest_internal
+                               PRIVATE WIN32_LEAN_AND_MEAN)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
-    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32)
+    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32 bcrypt
+                                                                crypt32)
+else ()
+    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC OpenSSL::SSL
+                                                                OpenSSL::Crypto)
 endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_rest_internal)
 target_include_directories(
@@ -165,9 +179,17 @@ google_cloud_cpp_install_headers(google_cloud_cpp_rest_internal
                                  include/google/cloud)
 
 google_cloud_cpp_add_pkgconfig(
-    rest_internal "REST library for the Google Cloud C++ Client Library"
+    rest_internal
+    "REST library for the Google Cloud C++ Client Library"
     "Provides REST Transport for the Google Cloud C++ Client Library."
-    "google_cloud_cpp_common" "libcurl" "openssl")
+    "google_cloud_cpp_common"
+    "libcurl"
+    NON_WIN32_REQUIRES
+    openssl
+    WIN32_LIBS
+    ws2_32
+    bcrypt
+    crypt32)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

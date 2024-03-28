@@ -19,10 +19,9 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/internal/parse_service_account_p12_file.h"
+#include "google/cloud/internal/sign_using_sha256.h"
 #include <nlohmann/json.hpp>
-#include <openssl/err.h>
-#include <openssl/pem.h>
-#include <openssl/pkcs12.h>
 #include <array>
 #include <cstdio>
 
