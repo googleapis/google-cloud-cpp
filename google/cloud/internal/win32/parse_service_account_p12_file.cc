@@ -95,6 +95,11 @@ StatusOr<UniqueCertStore> OpenP12File(std::string const& source) {
           GCP_ERROR_INFO());
     }
     data.assign(std::istreambuf_iterator<char>{file}, {});
+    if (file.bad()) {
+      return InvalidArgumentError(
+          absl::StrCat("Cannot read PKCS#12 file (", source, ")"),
+          GCP_ERROR_INFO());
+    }
   }
   CRYPT_DATA_BLOB dataBlob = {static_cast<DWORD>(data.size()), data.data()};
   // Import the PKCS#12 file into a certificate store.
