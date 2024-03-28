@@ -27,7 +27,7 @@ absl::optional<std::string> CompareProtos(
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);
   auto const result = differencer.Compare(arg, value);
-  if (result) return {};
+  if (result) return absl::nullopt;
   return delta;
 }
 
@@ -43,7 +43,7 @@ absl::optional<std::string> CompareProtosApproximately(
   differencer.set_field_comparator(&comparator);
   differencer.ReportDifferencesToString(&delta);
   auto const result = differencer.Compare(arg, value);
-  if (result) return {};
+  if (result) return absl::nullopt;
   return delta;
 }
 
@@ -59,7 +59,7 @@ absl::optional<std::string> CompareProtosApproximately(
   differencer.set_field_comparator(&comparator);
   differencer.ReportDifferencesToString(&delta);
   auto const result = differencer.Compare(arg, value);
-  if (result) return {};
+  if (result) return absl::nullopt;
   return delta;
 }
 
