@@ -166,10 +166,10 @@ https://github.com/googleapis/google-cloud-cpp/issues/7052
 mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
 curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
+    ./configure --prefix=/usr && \
     make -j ${NCPU:-4} && \
 sudo make install && \
-sudo ldconfig && cd /var/tmp && rm -fr build
+    cd /var/tmp && rm -fr build
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
@@ -177,7 +177,7 @@ default, pkgconf does not search in these directories. We need to explicitly set
 the search path.
 
 ```bash
-export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 ```
 
 #### Dependencies
