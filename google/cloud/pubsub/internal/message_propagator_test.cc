@@ -20,10 +20,10 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
-#include "opentelemetry/context/propagation/text_map_propagator.h"
-#include "opentelemetry/trace/scope.h"
 #include <gmock/gmock.h>
+#include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
+#include <opentelemetry/trace/scope.h>
 
 namespace google {
 namespace cloud {
