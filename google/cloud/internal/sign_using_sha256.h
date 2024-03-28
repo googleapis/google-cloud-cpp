@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,26 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/make_jwt_assertion.h"
-#include "google/cloud/internal/base64_transforms.h"
-#include "google/cloud/internal/sign_using_sha256.h"
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SIGN_USING_SHA256_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SIGN_USING_SHA256_H
+
+#include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
+#include <cstdint>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
-                                              std::string const& payload,
-                                              std::string const& pem_contents) {
-  auto const body =
-      UrlsafeBase64Encode(header) + '.' + UrlsafeBase64Encode(payload);
-  auto pem_signature = internal::SignUsingSha256(body, pem_contents);
-  if (!pem_signature) return std::move(pem_signature).status();
-  return body + '.' + UrlsafeBase64Encode(*pem_signature);
-}
+/**
+ * Signs a string with the private key from a PEM container.
+ *
+ * @return Returns the signature as an *unencoded* byte array. The caller
+ *   might want to use `Base64Encode()` or `HexEncode()` to convert this byte
+ *   array to a format more suitable for transmission over HTTP.
+ */
+StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
+    std::string const& str, std::string const& pem_contents);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SIGN_USING_SHA256_H

@@ -24,6 +24,10 @@
       "host": true
     },
     "grpc",
+    {
+      "name": "openssl",
+      "platform": "!windows"
+    },
     "protobuf",
     "nlohmann-json",
     "benchmark",

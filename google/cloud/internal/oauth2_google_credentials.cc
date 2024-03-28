@@ -22,6 +22,7 @@
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 #include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/internal/parse_service_account_p12_file.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <nlohmann/json.hpp>
 #include <fstream>

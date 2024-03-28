@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef _WIN32
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include <gmock/gmock.h>
@@ -42,3 +43,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
+#endif  // _WIN32

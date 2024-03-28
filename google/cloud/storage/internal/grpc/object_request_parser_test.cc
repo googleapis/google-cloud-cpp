@@ -1365,11 +1365,10 @@ TEST(GrpcObjectRequestParser, MaybeFinalizeUploadChunkRequest) {
                         bool with_md5) -> std::shared_ptr<HashFunction> {
     if (with_crc32c && with_md5) {
       return std::make_shared<CompositeFunction>(
-          std::make_unique<Crc32cHashFunction>(),
-          std::make_unique<MD5HashFunction>());
+          std::make_unique<Crc32cHashFunction>(), MD5HashFunction::Create());
     }
     if (with_crc32c) return std::make_shared<Crc32cHashFunction>();
-    if (with_md5) return std::make_shared<MD5HashFunction>();
+    if (with_md5) return MD5HashFunction::Create();
     return std::make_shared<NullHashFunction>();
   };
 

@@ -42,7 +42,7 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     md5 = std::make_unique<PrecomputedHashFunction>(
         HashValues{/*.crc32c=*/{}, /*.md5=*/std::move(md5_v)});
   } else if (!md5_disabled.value_or(false)) {
-    md5 = std::make_unique<MD5HashFunction>();
+    md5 = MD5HashFunction::Create();
   }
 
   if (!crc32c && !md5) return std::make_unique<NullHashFunction>();
@@ -67,10 +67,9 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     return std::make_unique<NullHashFunction>();
   }
   if (disable_md5) return std::make_unique<Crc32cHashFunction>();
-  if (disable_crc32c) return std::make_unique<MD5HashFunction>();
+  if (disable_crc32c) return MD5HashFunction::Create();
   return std::make_unique<CompositeFunction>(
-      std::make_unique<Crc32cHashFunction>(),
-      std::make_unique<MD5HashFunction>());
+      std::make_unique<Crc32cHashFunction>(), MD5HashFunction::Create());
 }
 
 std::unique_ptr<HashFunction> CreateHashFunction(

@@ -75,6 +75,17 @@ cc_library(
             "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
         ],
         "//conditions:default": [],
+    }) + select({
+        "@platforms//os:windows": [
+            "WIN32_LEAN_AND_MEAN",
+        ],
+        "//conditions:default": [],
+    }),
+    linkopts = select({
+        "@platforms//os:windows": [
+            "-DEFAULTLIB:bcrypt.lib",
+        ],
+        "//conditions:default": [],
     }),
     target_compatible_with = select(
         {
@@ -99,7 +110,6 @@ to your build command, or set this value in your `.bazelrc` file(s).
         "//:__pkg__",
     ],
     deps = [
-        "@boringssl//:crypto",
         "@com_google_absl//absl/base",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/strings",
@@ -113,6 +123,11 @@ to your build command, or set this value in your `.bazelrc` file(s).
             "@io_opentelemetry_cpp//api",
         ],
         "//conditions:default": [],
+    }) + select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "@boringssl//:crypto",
+        ],
     }),
 )
 
@@ -273,16 +288,27 @@ cc_library(
         ],
         "//conditions:default": [],
     }),
+    linkopts = select({
+        "@platforms//os:windows": [
+            "-DEFAULTLIB:bcrypt.lib",
+            "-DEFAULTLIB:crypt32.lib",
+        ],
+        "//conditions:default": [],
+    }),
     visibility = ["//:__subpackages__"],
     deps = [
         ":google_cloud_cpp_common",
-        "@boringssl//:crypto",
-        "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/types:span",
-    ],
+    ] + select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "@boringssl//:crypto",
+            "@boringssl//:ssl",
+        ],
+    }),
 )
 
 [cc_test(

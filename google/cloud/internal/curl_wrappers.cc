@@ -20,8 +20,10 @@
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
+#ifndef _WIN32
 #include <openssl/crypto.h>
 #include <openssl/opensslv.h>
+#endif
 #include <algorithm>
 #include <cctype>
 #include <csignal>
@@ -40,6 +42,9 @@ namespace {
 // LibreSSL calls itself OpenSSL > 2.0, but it really is based on SSL 1.0.2
 // and requires locks.
 #define GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS 1
+#elif defined(_WIN32)
+// We don't use OpenSSL on Windows.
+#define GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS 0
 #elif OPENSSL_VERSION_NUMBER < 0x10100000L  // Older than version 1.1.0
 // Before 1.1.0 OpenSSL requires locks to be used by multiple threads.
 #define GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS 1
