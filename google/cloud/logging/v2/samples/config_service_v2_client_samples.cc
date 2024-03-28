@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: logging_v2::ConfigServiceV2Client
+// lro-marker: true
 // clang-format on
 namespace {
 

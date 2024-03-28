@@ -611,6 +611,57 @@ ConfigConnectionImpl::ExportPreviewResult(
       *current, request, __func__);
 }
 
+StreamRange<google::cloud::config::v1::TerraformVersion>
+ConfigConnectionImpl::ListTerraformVersions(
+    google::cloud::config::v1::ListTerraformVersionsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListTerraformVersions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::config::v1::TerraformVersion>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<config_v1::ConfigRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::config::v1::ListTerraformVersionsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::config::v1::ListTerraformVersionsRequest const&
+                    request) {
+              return stub->ListTerraformVersions(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::config::v1::ListTerraformVersionsResponse r) {
+        std::vector<google::cloud::config::v1::TerraformVersion> result(
+            r.terraform_versions().size());
+        auto& messages = *r.mutable_terraform_versions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+ConfigConnectionImpl::GetTerraformVersion(
+    google::cloud::config::v1::GetTerraformVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTerraformVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::GetTerraformVersionRequest const&
+                 request) {
+        return stub_->GetTerraformVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace config_v1_internal
 }  // namespace cloud

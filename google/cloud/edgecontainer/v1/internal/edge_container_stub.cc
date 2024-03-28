@@ -94,6 +94,25 @@ DefaultEdgeContainerStub::AsyncUpdateCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultEdgeContainerStub::AsyncUpgradeCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::edgecontainer::v1::UpgradeClusterRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpgradeCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -119,6 +138,20 @@ DefaultEdgeContainerStub::GenerateAccessToken(
         request) {
   google::cloud::edgecontainer::v1::GenerateAccessTokenResponse response;
   auto status = grpc_stub_->GenerateAccessToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+DefaultEdgeContainerStub::GenerateOfflineCredential(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
+        request) {
+  google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse response;
+  auto status =
+      grpc_stub_->GenerateOfflineCredential(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -293,6 +326,18 @@ DefaultEdgeContainerStub::AsyncDeleteVpnConnection(
         return grpc_stub_->AsyncDeleteVpnConnection(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
+DefaultEdgeContainerStub::GetServerConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::edgecontainer::v1::GetServerConfigRequest const& request) {
+  google::cloud::edgecontainer::v1::ServerConfig response;
+  auto status = grpc_stub_->GetServerConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -19,9 +19,9 @@
 
 #include "google/cloud/pubsub/pull_ack_handler.h"
 #include "google/cloud/pubsub/version.h"
-#include "opentelemetry/trace/context.h"
-#include "opentelemetry/trace/span.h"
-#include "opentelemetry/trace/span_startoptions.h"
+#include <opentelemetry/trace/context.h>
+#include <opentelemetry/trace/span.h>
+#include <opentelemetry/trace/span_startoptions.h>
 #include <string>
 
 namespace google {

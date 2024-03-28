@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: domains_v1::DomainsClient
+// lro-marker: true
 // clang-format on
 namespace {
 

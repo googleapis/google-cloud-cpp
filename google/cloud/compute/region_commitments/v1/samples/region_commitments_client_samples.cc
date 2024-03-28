@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_region_commitments_v1::RegionCommitmentsClient
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -111,8 +111,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.Assessment]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L597}
-  /// [google.cloud.recaptchaenterprise.v1.CreateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L228}
+  /// [google.cloud.recaptchaenterprise.v1.Assessment]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L598}
+  /// [google.cloud.recaptchaenterprise.v1.CreateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L229}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Assessment> CreateAssessment(
@@ -143,8 +143,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.Assessment]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L597}
-  /// [google.cloud.recaptchaenterprise.v1.CreateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L228}
+  /// [google.cloud.recaptchaenterprise.v1.Assessment]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L598}
+  /// [google.cloud.recaptchaenterprise.v1.CreateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L229}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Assessment> CreateAssessment(
@@ -175,8 +175,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.AnnotateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L362}
-  /// [google.cloud.recaptchaenterprise.v1.AnnotateAssessmentResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L485}
+  /// [google.cloud.recaptchaenterprise.v1.AnnotateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L363}
+  /// [google.cloud.recaptchaenterprise.v1.AnnotateAssessmentResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L486}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
@@ -209,8 +209,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.AnnotateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L362}
-  /// [google.cloud.recaptchaenterprise.v1.AnnotateAssessmentResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L485}
+  /// [google.cloud.recaptchaenterprise.v1.AnnotateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L363}
+  /// [google.cloud.recaptchaenterprise.v1.AnnotateAssessmentResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L486}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
@@ -239,8 +239,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.CreateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1121}
-  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1389}
+  /// [google.cloud.recaptchaenterprise.v1.CreateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1127}
+  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1397}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> CreateKey(
@@ -271,8 +271,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.CreateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1121}
-  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1389}
+  /// [google.cloud.recaptchaenterprise.v1.CreateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1127}
+  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1397}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> CreateKey(
@@ -307,8 +307,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1389}
-  /// [google.cloud.recaptchaenterprise.v1.ListKeysRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1136}
+  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1397}
+  /// [google.cloud.recaptchaenterprise.v1.ListKeysRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1142}
   ///
   // clang-format on
   StreamRange<google::cloud::recaptchaenterprise::v1::Key> ListKeys(
@@ -346,8 +346,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1389}
-  /// [google.cloud.recaptchaenterprise.v1.ListKeysRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1136}
+  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1397}
+  /// [google.cloud.recaptchaenterprise.v1.ListKeysRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1142}
   ///
   // clang-format on
   StreamRange<google::cloud::recaptchaenterprise::v1::Key> ListKeys(
@@ -375,8 +375,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1166}
-  /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1379}
+  /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1172}
+  /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1387}
   ///
   // clang-format on
   StatusOr<
@@ -408,8 +408,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1166}
-  /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1379}
+  /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1172}
+  /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1387}
   ///
   // clang-format on
   StatusOr<
@@ -437,8 +437,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.GetKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1178}
-  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1389}
+  /// [google.cloud.recaptchaenterprise.v1.GetKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1184}
+  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1397}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> GetKey(
@@ -467,8 +467,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.GetKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1178}
-  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1389}
+  /// [google.cloud.recaptchaenterprise.v1.GetKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1184}
+  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1397}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> GetKey(
@@ -495,8 +495,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1389}
-  /// [google.cloud.recaptchaenterprise.v1.UpdateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1190}
+  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1397}
+  /// [google.cloud.recaptchaenterprise.v1.UpdateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1196}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> UpdateKey(
@@ -526,8 +526,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1389}
-  /// [google.cloud.recaptchaenterprise.v1.UpdateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1190}
+  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1397}
+  /// [google.cloud.recaptchaenterprise.v1.UpdateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1196}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> UpdateKey(
@@ -551,7 +551,7 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.DeleteKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1201}
+  /// [google.cloud.recaptchaenterprise.v1.DeleteKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1207}
   ///
   // clang-format on
   Status DeleteKey(std::string const& name, Options opts = {});
@@ -577,7 +577,7 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.DeleteKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1201}
+  /// [google.cloud.recaptchaenterprise.v1.DeleteKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1207}
   ///
   // clang-format on
   Status DeleteKey(
@@ -612,8 +612,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1389}
-  /// [google.cloud.recaptchaenterprise.v1.MigrateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1317}
+  /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1397}
+  /// [google.cloud.recaptchaenterprise.v1.MigrateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1323}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Key> MigrateKey(
@@ -640,8 +640,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.GetMetricsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1339}
-  /// [google.cloud.recaptchaenterprise.v1.Metrics]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1351}
+  /// [google.cloud.recaptchaenterprise.v1.GetMetricsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1345}
+  /// [google.cloud.recaptchaenterprise.v1.Metrics]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1357}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
@@ -671,8 +671,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.GetMetricsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1339}
-  /// [google.cloud.recaptchaenterprise.v1.Metrics]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1351}
+  /// [google.cloud.recaptchaenterprise.v1.GetMetricsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1345}
+  /// [google.cloud.recaptchaenterprise.v1.Metrics]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1357}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
@@ -701,8 +701,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.CreateFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1213}
-  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1693}
+  /// [google.cloud.recaptchaenterprise.v1.CreateFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1219}
+  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1703}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
@@ -737,8 +737,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.CreateFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1213}
-  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1693}
+  /// [google.cloud.recaptchaenterprise.v1.CreateFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1219}
+  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1703}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
@@ -775,8 +775,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1693}
-  /// [google.cloud.recaptchaenterprise.v1.ListFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1228}
+  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1703}
+  /// [google.cloud.recaptchaenterprise.v1.ListFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1234}
   ///
   // clang-format on
   StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
@@ -814,8 +814,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1693}
-  /// [google.cloud.recaptchaenterprise.v1.ListFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1228}
+  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1703}
+  /// [google.cloud.recaptchaenterprise.v1.ListFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1234}
   ///
   // clang-format on
   StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
@@ -843,8 +843,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1693}
-  /// [google.cloud.recaptchaenterprise.v1.GetFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1258}
+  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1703}
+  /// [google.cloud.recaptchaenterprise.v1.GetFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1264}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
@@ -873,8 +873,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1693}
-  /// [google.cloud.recaptchaenterprise.v1.GetFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1258}
+  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1703}
+  /// [google.cloud.recaptchaenterprise.v1.GetFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1264}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
@@ -903,8 +903,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1693}
-  /// [google.cloud.recaptchaenterprise.v1.UpdateFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1270}
+  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1703}
+  /// [google.cloud.recaptchaenterprise.v1.UpdateFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1276}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
@@ -936,8 +936,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1693}
-  /// [google.cloud.recaptchaenterprise.v1.UpdateFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1270}
+  /// [google.cloud.recaptchaenterprise.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1703}
+  /// [google.cloud.recaptchaenterprise.v1.UpdateFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1276}
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
@@ -963,7 +963,7 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.DeleteFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1281}
+  /// [google.cloud.recaptchaenterprise.v1.DeleteFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1287}
   ///
   // clang-format on
   Status DeleteFirewallPolicy(std::string const& name, Options opts = {});
@@ -989,7 +989,7 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.DeleteFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1281}
+  /// [google.cloud.recaptchaenterprise.v1.DeleteFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1287}
   ///
   // clang-format on
   Status DeleteFirewallPolicy(
@@ -1018,8 +1018,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1293}
-  /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1314}
+  /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1299}
+  /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1320}
   ///
   // clang-format on
   StatusOr<
@@ -1051,8 +1051,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1293}
-  /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1314}
+  /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1299}
+  /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1320}
   ///
   // clang-format on
   StatusOr<
@@ -1089,8 +1089,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.ListRelatedAccountGroupsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1770}
-  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroup]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1885}
+  /// [google.cloud.recaptchaenterprise.v1.ListRelatedAccountGroupsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1782}
+  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroup]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1896}
   ///
   // clang-format on
   StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
@@ -1128,8 +1128,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.ListRelatedAccountGroupsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1770}
-  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroup]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1885}
+  /// [google.cloud.recaptchaenterprise.v1.ListRelatedAccountGroupsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1782}
+  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroup]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1896}
   ///
   // clang-format on
   StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
@@ -1166,8 +1166,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.ListRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1735}
-  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1856}
+  /// [google.cloud.recaptchaenterprise.v1.ListRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1747}
+  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1868}
   ///
   // clang-format on
   StreamRange<
@@ -1207,8 +1207,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.ListRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1735}
-  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1856}
+  /// [google.cloud.recaptchaenterprise.v1.ListRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1747}
+  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1868}
   ///
   // clang-format on
   StreamRange<
@@ -1252,8 +1252,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1856}
-  /// [google.cloud.recaptchaenterprise.v1.SearchRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1805}
+  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1868}
+  /// [google.cloud.recaptchaenterprise.v1.SearchRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1817}
   ///
   // clang-format on
   StreamRange<
@@ -1294,8 +1294,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1856}
-  /// [google.cloud.recaptchaenterprise.v1.SearchRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1805}
+  /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1868}
+  /// [google.cloud.recaptchaenterprise.v1.SearchRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1817}
   ///
   // clang-format on
   StreamRange<

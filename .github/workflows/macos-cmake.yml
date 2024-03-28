@@ -128,3 +128,4 @@ jobs:
       SCCACHE_GCS_RW_MODE: READ_WRITE
       SCCACHE_IGNORE_SERVER_IO_ERROR: 1
       VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/${{ matrix.os }},readwrite
+      GHA_TEST_BUCKET: "gcs-grpc-team-cloud-cpp-testing-bucket"

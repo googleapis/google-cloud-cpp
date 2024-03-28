@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: apphub_v1::AppHubClient
+// lro-marker: true
 // clang-format on
 namespace {
 

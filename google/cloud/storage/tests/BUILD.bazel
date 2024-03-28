@@ -54,7 +54,7 @@ VARIATIONS = {
     tags = [
         "integration-test",
         "integration-test-" + v_label,
-    ],
+    ] + (["integration-test-gha"] if test.startswith("smoke_test") else []),
     deps = [
         ":storage_conformance_tests_cc_proto",
         "//:common",

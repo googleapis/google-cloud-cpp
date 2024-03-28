@@ -150,6 +150,22 @@ PipelineServiceTracingStub::AsyncDeletePipelineJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+PipelineServiceTracingStub::AsyncBatchDeletePipelineJobs(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PipelineService", "BatchDeletePipelineJobs");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncBatchDeletePipelineJobs(cq, context, std::move(options),
+                                                request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 Status PipelineServiceTracingStub::CancelPipelineJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
@@ -159,6 +175,22 @@ Status PipelineServiceTracingStub::CancelPipelineJob(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->CancelPipelineJob(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+PipelineServiceTracingStub::AsyncBatchCancelPipelineJobs(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PipelineService", "BatchCancelPipelineJobs");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncBatchCancelPipelineJobs(cq, context, std::move(options),
+                                                request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>

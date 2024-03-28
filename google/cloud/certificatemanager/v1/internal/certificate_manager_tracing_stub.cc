@@ -415,6 +415,85 @@ CertificateManagerTracingStub::AsyncDeleteCertificateIssuanceConfig(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::cloud::certificatemanager::v1::ListTrustConfigsResponse>
+CertificateManagerTracingStub::ListTrustConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::certificatemanager::v1::ListTrustConfigsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.certificatemanager.v1.CertificateManager",
+      "ListTrustConfigs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListTrustConfigs(context, options, request));
+}
+
+StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
+CertificateManagerTracingStub::GetTrustConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.certificatemanager.v1.CertificateManager",
+      "GetTrustConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetTrustConfig(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CertificateManagerTracingStub::AsyncCreateTrustConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.certificatemanager.v1.CertificateManager",
+      "CreateTrustConfig");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateTrustConfig(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CertificateManagerTracingStub::AsyncUpdateTrustConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.certificatemanager.v1.CertificateManager",
+      "UpdateTrustConfig");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateTrustConfig(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CertificateManagerTracingStub::AsyncDeleteTrustConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.certificatemanager.v1.CertificateManager",
+      "DeleteTrustConfig");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteTrustConfig(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

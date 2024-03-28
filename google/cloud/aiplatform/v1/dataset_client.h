@@ -613,7 +613,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L441}
-  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
@@ -653,7 +653,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L441}
-  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
@@ -754,7 +754,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L481}
   ///
   // clang-format on
@@ -784,7 +784,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L481}
   ///
   // clang-format on
@@ -821,7 +821,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   /// [google.cloud.aiplatform.v1.ListDatasetVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L498}
   ///
   // clang-format on
@@ -860,7 +860,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   /// [google.cloud.aiplatform.v1.ListDatasetVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L498}
   ///
   // clang-format on
@@ -896,7 +896,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   /// [google.cloud.aiplatform.v1.RestoreDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L539}
   ///
   // clang-format on
@@ -933,7 +933,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L32}
+  /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   /// [google.cloud.aiplatform.v1.RestoreDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L539}
   ///
   // clang-format on

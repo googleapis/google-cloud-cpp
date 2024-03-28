@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_region_url_maps_v1::RegionUrlMapsClient
+// lro-marker: true
 // clang-format on
 namespace {
 

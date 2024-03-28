@@ -10,6 +10,10 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_CATALOG_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataplex.googleapis.com")
+  used by `MakeCatalogServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_CONTENT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "dataplex.googleapis.com")
   used by `MakeContentServiceConnection()`.

@@ -145,6 +145,17 @@ class MockConfigConnection : public config_v1::ConfigConnection {
       ExportPreviewResult,
       (google::cloud::config::v1::ExportPreviewResultRequest const& request),
       (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::config::v1::TerraformVersion>),
+              ListTerraformVersions,
+              (google::cloud::config::v1::ListTerraformVersionsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::config::v1::TerraformVersion>,
+      GetTerraformVersion,
+      (google::cloud::config::v1::GetTerraformVersionRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

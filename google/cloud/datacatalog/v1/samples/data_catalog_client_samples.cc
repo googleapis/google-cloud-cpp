@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: datacatalog_v1::DataCatalogClient
+// lro-marker: true
 // clang-format on
 namespace {
 

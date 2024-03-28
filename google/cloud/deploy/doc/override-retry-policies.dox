@@ -76,6 +76,10 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet cloud_deploy_client_samples.cc custom-idempotency-policy
 
+This will override the polling policies for `deploy_v1::CloudDeployClient`
+
+@snippet cloud_deploy_client_samples.cc set-polling-policy
+
 
 <!-- inject-retry-snippet-end -->
 

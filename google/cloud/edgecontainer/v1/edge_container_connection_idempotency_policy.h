@@ -49,11 +49,18 @@ class EdgeContainerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateCluster(
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request);
 
+  virtual google::cloud::Idempotency UpgradeCluster(
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request);
+
   virtual google::cloud::Idempotency DeleteCluster(
       google::cloud::edgecontainer::v1::DeleteClusterRequest const& request);
 
   virtual google::cloud::Idempotency GenerateAccessToken(
       google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GenerateOfflineCredential(
+      google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
           request);
 
   virtual google::cloud::Idempotency ListNodePools(
@@ -90,6 +97,9 @@ class EdgeContainerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteVpnConnection(
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request);
+
+  virtual google::cloud::Idempotency GetServerConfig(
+      google::cloud::edgecontainer::v1::GetServerConfigRequest const& request);
 };
 
 std::unique_ptr<EdgeContainerConnectionIdempotencyPolicy>

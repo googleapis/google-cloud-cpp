@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: golden_v1::RequestIdServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

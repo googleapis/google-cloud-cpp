@@ -203,6 +203,9 @@ void SecureSourceManagerMetadata::SetMetadata(grpc::ClientContext& context,
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);
+  for (auto const& h : options.get<CustomHeadersOption>()) {
+    context.AddMetadata(h.first, h.second);
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

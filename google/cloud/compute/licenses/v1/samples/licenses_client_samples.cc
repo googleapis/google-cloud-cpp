@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_licenses_v1::LicensesClient
+// lro-marker: true
 // clang-format on
 namespace {
 

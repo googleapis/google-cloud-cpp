@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::golden_v1_internal::MockGoldenKitchenSinkRestStub;
 using ::testing::AnyOf;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 
 Status TransientError() {
@@ -103,6 +104,31 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitApiClientHeader) {
   rest_internal::RestContext context;
   google::test::admin::database::v1::GenerateAccessTokenRequest request;
   auto status = stub.GenerateAccessToken(context, Options{}, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
+TEST(KitchenSinkRestMetadataDecoratorTest, CustomHeaders) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, GenerateAccessToken)
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
+                   google::test::admin::database::v1::
+                       GenerateAccessTokenRequest const&) {
+        EXPECT_THAT(context.GetHeader("header-key0"),
+                    ElementsAre("header-value0"));
+        EXPECT_THAT(context.GetHeader("header-key1"),
+                    ElementsAre("header-value1", "header-value2"));
+        return TransientError();
+      });
+
+  GoldenKitchenSinkRestMetadata stub(mock);
+  rest_internal::RestContext context;
+  google::test::admin::database::v1::GenerateAccessTokenRequest request;
+  auto status = stub.GenerateAccessToken(
+      context,
+      Options{}.set<CustomHeadersOption>({{"header-key0", "header-value0"},
+                                          {"header-key1", "header-value1"},
+                                          {"header-key1", "header-value2"}}),
+      request);
   EXPECT_EQ(TransientError(), status.status());
 }
 

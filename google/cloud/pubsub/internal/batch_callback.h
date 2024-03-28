@@ -43,6 +43,15 @@ class BatchCallback {
   virtual void callback(StreamingPullResponse response) = 0;
   virtual void message_callback(MessageCallback::ReceivedMessage m) = 0;
   virtual void user_callback(MessageCallback::MessageAndHandler m) = 0;
+
+  virtual void AckStart(std::string const& ack_id) = 0;
+  virtual void AckEnd(std::string const& ack_id) = 0;
+
+  virtual void NackStart(std::string const& ack_id) = 0;
+  virtual void NackEnd(std::string const& ack_id) = 0;
+
+  virtual void ModackStart(std::string const& ack_id) = 0;
+  virtual void ModackEnd(std::string const& ack_id) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

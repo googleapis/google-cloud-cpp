@@ -10,6 +10,10 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_DEP_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networkservices.googleapis.com")
+  used by `MakeDepServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_NETWORK_SERVICES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "networkservices.googleapis.com")
   used by `MakeNetworkServicesConnection()`.

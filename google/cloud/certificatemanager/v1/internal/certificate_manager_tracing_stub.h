@@ -202,6 +202,38 @@ class CertificateManagerTracingStub : public CertificateManagerStub {
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request) override;
 
+  StatusOr<google::cloud::certificatemanager::v1::ListTrustConfigsResponse>
+  ListTrustConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::certificatemanager::v1::ListTrustConfigsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::certificatemanager::v1::TrustConfig> GetTrustConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateTrustConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateTrustConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteTrustConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

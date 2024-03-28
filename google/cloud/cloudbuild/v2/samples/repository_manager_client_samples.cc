@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: cloudbuild_v2::RepositoryManagerClient
+// lro-marker: true
 // clang-format on
 namespace {
 

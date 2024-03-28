@@ -196,6 +196,46 @@ EdgeContainerConnectionImpl::UpdateCluster(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerConnectionImpl::UpgradeCluster(
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpgradeCluster(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::edgecontainer::v1::Cluster>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::edgecontainer::v1::UpgradeClusterRequest const&
+              request) {
+        return stub->AsyncUpgradeCluster(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::edgecontainer::v1::Cluster>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerConnectionImpl::DeleteCluster(
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
@@ -248,6 +288,22 @@ EdgeContainerConnectionImpl::GenerateAccessToken(
              google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
                  request) {
         return stub_->GenerateAccessToken(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+EdgeContainerConnectionImpl::GenerateOfflineCredential(
+    google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateOfflineCredential(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::
+                 GenerateOfflineCredentialRequest const& request) {
+        return stub_->GenerateOfflineCredential(context, options, request);
       },
       *current, request, __func__);
 }
@@ -600,6 +656,21 @@ EdgeContainerConnectionImpl::DeleteVpnConnection(
           google::cloud::edgecontainer::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
+EdgeContainerConnectionImpl::GetServerConfig(
+    google::cloud::edgecontainer::v1::GetServerConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetServerConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::GetServerConfigRequest const&
+                 request) {
+        return stub_->GetServerConfig(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -181,6 +181,31 @@ CertificateManagerConnectionIdempotencyPolicy::DeleteCertificateIssuanceConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CertificateManagerConnectionIdempotencyPolicy::ListTrustConfigs(
+    google::cloud::certificatemanager::v1::ListTrustConfigsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CertificateManagerConnectionIdempotencyPolicy::GetTrustConfig(
+    google::cloud::certificatemanager::v1::GetTrustConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CertificateManagerConnectionIdempotencyPolicy::CreateTrustConfig(
+    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CertificateManagerConnectionIdempotencyPolicy::UpdateTrustConfig(
+    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CertificateManagerConnectionIdempotencyPolicy::DeleteTrustConfig(
+    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy>
 MakeDefaultCertificateManagerConnectionIdempotencyPolicy() {
   return std::make_unique<CertificateManagerConnectionIdempotencyPolicy>();

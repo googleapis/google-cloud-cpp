@@ -223,8 +223,8 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
   fi
 
   if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
-    # Prints information about the machine and compiler. In manual builds this
-    # information is almost never useful.
+    # Prints information about the machine, compiler, and gcloud.
+    # In manual builds this information is almost never useful.
     io::log_h1 "Machine Info"
     printf "%10s %s\n" "host:" "$(date -u --rfc-3339=seconds)"
     printf "%10s %s\n" "google:" "$(date -ud "$(google_time)" --rfc-3339=seconds)"
@@ -236,6 +236,10 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
     printf "%10s %s\n" "gcc:" "$(gcc --version 2>&1 | head -1)"
     printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
     printf "%10s %s\n" "cc:" "$(cc --version 2>&1 | head -1)"
+    if type gcloud >/dev/null 2>&1; then
+      io::log_h1 "gcloud Versions"
+      gcloud --version
+    fi
   fi
 
   io::log_h1 "Starting local build: ${BUILD_FLAG}"

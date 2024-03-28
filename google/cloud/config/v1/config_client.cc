@@ -342,6 +342,38 @@ ConfigClient::ExportPreviewResult(
   return connection_->ExportPreviewResult(request);
 }
 
+StreamRange<google::cloud::config::v1::TerraformVersion>
+ConfigClient::ListTerraformVersions(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::ListTerraformVersionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListTerraformVersions(request);
+}
+
+StreamRange<google::cloud::config::v1::TerraformVersion>
+ConfigClient::ListTerraformVersions(
+    google::cloud::config::v1::ListTerraformVersionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListTerraformVersions(std::move(request));
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+ConfigClient::GetTerraformVersion(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::GetTerraformVersionRequest request;
+  request.set_name(name);
+  return connection_->GetTerraformVersion(request);
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+ConfigClient::GetTerraformVersion(
+    google::cloud::config::v1::GetTerraformVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetTerraformVersion(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace config_v1
 }  // namespace cloud

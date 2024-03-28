@@ -91,9 +91,21 @@ class PipelineServiceConnectionImpl
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
       override;
 
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request) override;
+
   Status CancelPipelineJob(
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request)
       override;
+
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

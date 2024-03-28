@@ -76,6 +76,10 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet managed_identities_client_samples.cc custom-idempotency-policy
 
+This will override the polling policies for `managedidentities_v1::ManagedIdentitiesServiceClient`
+
+@snippet managed_identities_client_samples.cc set-polling-policy
+
 
 <!-- inject-retry-snippet-end -->
 

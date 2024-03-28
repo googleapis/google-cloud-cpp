@@ -72,6 +72,15 @@ EdgeContainerTracingConnection::UpdateCluster(
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerTracingConnection::UpgradeCluster(
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::UpgradeCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpgradeCluster(request));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerTracingConnection::DeleteCluster(
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
@@ -89,6 +98,16 @@ EdgeContainerTracingConnection::GenerateAccessToken(
       "edgecontainer_v1::EdgeContainerConnection::GenerateAccessToken");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GenerateAccessToken(request));
+}
+
+StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+EdgeContainerTracingConnection::GenerateOfflineCredential(
+    google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::GenerateOfflineCredential");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateOfflineCredential(request));
 }
 
 StreamRange<google::cloud::edgecontainer::v1::NodePool>
@@ -201,6 +220,15 @@ EdgeContainerTracingConnection::DeleteVpnConnection(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteVpnConnection(request));
+}
+
+StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
+EdgeContainerTracingConnection::GetServerConfig(
+    google::cloud::edgecontainer::v1::GetServerConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::GetServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetServerConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

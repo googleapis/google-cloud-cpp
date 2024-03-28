@@ -50,6 +50,15 @@ class DefaultBatchCallback : public BatchCallback {
     message_callback_->user_callback(std::move(m));
   };
 
+  void AckStart(std::string const&) override {}
+  void AckEnd(std::string const&) override {}
+
+  void NackStart(std::string const&) override {}
+  void NackEnd(std::string const&) override {}
+
+  void ModackStart(std::string const&) override {}
+  void ModackEnd(std::string const&) override {}
+
  private:
   CallbackFunction callback_;
   std::shared_ptr<MessageCallback> message_callback_;

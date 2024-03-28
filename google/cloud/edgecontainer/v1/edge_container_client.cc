@@ -104,6 +104,27 @@ EdgeContainerClient::UpdateCluster(
   return connection_->UpdateCluster(request);
 }
 
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerClient::UpgradeCluster(
+    std::string const& name, std::string const& target_version,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest::Schedule schedule,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::edgecontainer::v1::UpgradeClusterRequest request;
+  request.set_name(name);
+  request.set_target_version(target_version);
+  request.set_schedule(schedule);
+  return connection_->UpgradeCluster(request);
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerClient::UpgradeCluster(
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpgradeCluster(request);
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerClient::DeleteCluster(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -135,6 +156,24 @@ EdgeContainerClient::GenerateAccessToken(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateAccessToken(request);
+}
+
+StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+EdgeContainerClient::GenerateOfflineCredential(std::string const& cluster,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest request;
+  request.set_cluster(cluster);
+  return connection_->GenerateOfflineCredential(request);
+}
+
+StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+EdgeContainerClient::GenerateOfflineCredential(
+    google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateOfflineCredential(request);
 }
 
 StreamRange<google::cloud::edgecontainer::v1::NodePool>
@@ -326,6 +365,22 @@ EdgeContainerClient::DeleteVpnConnection(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVpnConnection(request);
+}
+
+StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
+EdgeContainerClient::GetServerConfig(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::edgecontainer::v1::GetServerConfigRequest request;
+  request.set_name(name);
+  return connection_->GetServerConfig(request);
+}
+
+StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
+EdgeContainerClient::GetServerConfig(
+    google::cloud::edgecontainer::v1::GetServerConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetServerConfig(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

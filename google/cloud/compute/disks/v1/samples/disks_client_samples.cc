@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: compute_disks_v1::DisksClient
+// lro-marker: true
 // clang-format on
 namespace {
 

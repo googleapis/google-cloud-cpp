@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: edgenetwork_v1::EdgeNetworkClient
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -32,9 +32,7 @@ using ::testing::UnorderedElementsAre;
 TEST(ThroughputOptions, Basic) {
   auto options = ParseThroughputOptions({
       "self-test",
-      "--project-id=test-project",
-      "--region=test-region",
-      "--bucket-prefix=custom-prefix",
+      "--bucket=test-bucket",
       "--thread-count=42",
       "--grpc-channel-count=8",
       "--direct-path-channel-count=2",
@@ -76,9 +74,7 @@ TEST(ThroughputOptions, Basic) {
       "--labels=job:foo,task:bar",
   });
   ASSERT_STATUS_OK(options);
-  EXPECT_EQ("test-project", options->project_id);
-  EXPECT_EQ("test-region", options->region);
-  EXPECT_EQ("custom-prefix", options->bucket_prefix);
+  EXPECT_EQ("test-bucket", options->bucket);
   EXPECT_EQ(42, options->thread_count);
   EXPECT_EQ(16 * kKiB, options->minimum_object_size);
   EXPECT_EQ(32 * kKiB, options->maximum_object_size);
@@ -133,56 +129,56 @@ TEST(ThroughputOptions, Description) {
 
 TEST(ThroughputOptions, ParseCrc32c) {
   EXPECT_FALSE(
-      ParseThroughputOptions({"self-test", "--region=r", "--enabled-crc32c="}));
+      ParseThroughputOptions({"self-test", "--bucket=b", "--enabled-crc32c="}));
   auto options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-crc32c=enabled"});
+      {"self-test", "--bucket=b", "--enabled-crc32c=enabled"});
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(options->enabled_crc32c, ElementsAre(true));
   options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-crc32c=disabled"});
+      {"self-test", "--bucket=b", "--enabled-crc32c=disabled"});
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(options->enabled_crc32c, ElementsAre(false));
   options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-crc32c=random"});
+      {"self-test", "--bucket=b", "--enabled-crc32c=random"});
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(options->enabled_crc32c, UnorderedElementsAre(false, true));
 }
 
 TEST(ThroughputOptions, MD5) {
   EXPECT_FALSE(
-      ParseThroughputOptions({"self-test", "--region=r", "--enabled-md5="}));
+      ParseThroughputOptions({"self-test", "--bucket=b", "--enabled-md5="}));
   auto options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-md5=enabled"});
+      {"self-test", "--bucket=b", "--enabled-md5=enabled"});
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(options->enabled_md5, ElementsAre(true));
   options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-md5=disabled"});
+      {"self-test", "--bucket=b", "--enabled-md5=disabled"});
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(options->enabled_md5, ElementsAre(false));
   options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-md5=random"});
+      {"self-test", "--bucket=b", "--enabled-md5=random"});
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(options->enabled_md5, UnorderedElementsAre(false, true));
 }
 
 TEST(ThroughputOptions, Libraries) {
   EXPECT_FALSE(
-      ParseThroughputOptions({"self-test", "--region=r", "--enabled-libs="}));
+      ParseThroughputOptions({"self-test", "--bucket=b", "--enabled-libs="}));
   EXPECT_FALSE(ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-libs=CppClient,Raw,INVALID"}));
+      {"self-test", "--bucket=b", "--enabled-libs=CppClient,Raw,INVALID"}));
   auto options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-libs=CppClient,Raw"});
+      {"self-test", "--bucket=b", "--enabled-libs=CppClient,Raw"});
   EXPECT_THAT(options->libs, UnorderedElementsAre(ExperimentLibrary::kCppClient,
                                                   ExperimentLibrary::kRaw));
 }
 
 TEST(ThroughputOptions, Transports) {
   EXPECT_FALSE(ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-transports="}));
+      {"self-test", "--bucket=b", "--enabled-transports="}));
   EXPECT_FALSE(ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-transports=Grpc,INVALID"}));
+      {"self-test", "--bucket=b", "--enabled-transports=Grpc,INVALID"}));
   auto options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-transports=Grpc,Json,DirectPath"});
+      {"self-test", "--bucket=b", "--enabled-transports=Grpc,Json,DirectPath"});
   EXPECT_THAT(options->transports,
               UnorderedElementsAre(ExperimentTransport::kGrpc,
                                    ExperimentTransport::kDirectPath,
@@ -191,19 +187,19 @@ TEST(ThroughputOptions, Transports) {
 
 TEST(ThroughputOptions, UploadFunctions) {
   EXPECT_FALSE(ParseThroughputOptions(
-      {"self-test", "--region=r", "--upload-functions="}));
+      {"self-test", "--bucket=b", "--upload-functions="}));
   EXPECT_FALSE(ParseThroughputOptions(
-      {"self-test", "--region=r", "--upload-functions=InsertObject,Invalid"}));
+      {"self-test", "--bucket=b", "--upload-functions=InsertObject,Invalid"}));
   auto options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--upload-functions=InsertObject"});
+      {"self-test", "--bucket=b", "--upload-functions=InsertObject"});
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(options->upload_functions, UnorderedElementsAre("InsertObject"));
   options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--upload-functions=WriteObject"});
+      {"self-test", "--bucket=b", "--upload-functions=WriteObject"});
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(options->upload_functions, UnorderedElementsAre("WriteObject"));
   options =
-      ParseThroughputOptions({"self-test", "--region=r",
+      ParseThroughputOptions({"self-test", "--bucket=b",
                               "--upload-functions=WriteObject,InsertObject"});
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(options->upload_functions,
@@ -213,7 +209,7 @@ TEST(ThroughputOptions, UploadFunctions) {
 TEST(ThroughputOptions, Readoffset) {
   auto options = ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-offset=0",
       "--maximum-read-offset=2MiB",
       "--read-offset-quantum=128KiB",
@@ -227,7 +223,7 @@ TEST(ThroughputOptions, Readoffset) {
 TEST(ThroughputOptions, ReadSize) {
   auto options = ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-size=0",
       "--maximum-read-size=2MiB",
       "--read-size-quantum=128KiB",
@@ -244,129 +240,129 @@ TEST(ThroughputOptions, Validate) {
   EXPECT_FALSE(ParseThroughputOptions({"self-test", "--unknown-option"}));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-object-size=8",
       "--maximum-object-size=4",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--grpc-channel-count=-1",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--direct-path-channel-count=-1",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-write-buffer-size=8",
       "--maximum-write-buffer-size=4",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-write-buffer-size=4",
       "--maximum-write-buffer-size=8",
       "--write-buffer-quantum=5",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-buffer-size=8",
       "--maximum-read-buffer-size=4",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-buffer-size=4",
       "--maximum-read-buffer-size=8",
       "--read-buffer-quantum=5",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-sample-count=8",
       "--maximum-sample-count=4",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--thread-count=0",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--thread-count=-2",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-sample-delay=-2ms",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-sample-delay=-1ms",
   }));
 
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-offset=8",
       "--maximum-read-offset=4",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-offset=4",
       "--maximum-read-offset=8",
       "--read-offset-quantum=5",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-offset=4",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--maximum-read-offset=4",
   }));
 
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-size=8",
       "--maximum-read-size=4",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-size=4",
       "--maximum-read-size=8",
       "--read-size-quantum=5",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--minimum-read-size=8",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--maximum-read-size=8",
   }));
 
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--grpc-background-threads=0",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
-      "--region=r",
+      "--bucket=b",
       "--grpc-background-threads=-1",
   }));
 }

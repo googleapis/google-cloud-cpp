@@ -31,6 +31,7 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
+- [\c dataplex_v1::CatalogServiceClient](@ref google::cloud::dataplex_v1::CatalogServiceClient)
 - [\c dataplex_v1::ContentServiceClient](@ref google::cloud::dataplex_v1::ContentServiceClient)
 - [\c dataplex_v1::DataplexServiceClient](@ref google::cloud::dataplex_v1::DataplexServiceClient)
 - [\c dataplex_v1::MetadataServiceClient](@ref google::cloud::dataplex_v1::MetadataServiceClient)

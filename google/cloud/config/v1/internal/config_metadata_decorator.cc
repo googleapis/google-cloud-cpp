@@ -247,6 +247,24 @@ ConfigMetadata::ExportPreviewResult(
   return child_->ExportPreviewResult(context, options, request);
 }
 
+StatusOr<google::cloud::config::v1::ListTerraformVersionsResponse>
+ConfigMetadata::ListTerraformVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListTerraformVersionsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListTerraformVersions(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::TerraformVersion>
+ConfigMetadata::GetTerraformVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetTerraformVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetTerraformVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -289,6 +307,9 @@ void ConfigMetadata::SetMetadata(grpc::ClientContext& context,
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);
+  for (auto const& h : options.get<CustomHeadersOption>()) {
+    context.AddMetadata(h.first, h.second);
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

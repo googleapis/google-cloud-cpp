@@ -115,8 +115,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
-  /// [google.cloud.edgecontainer.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L241}
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L288}
   ///
   // clang-format on
   StreamRange<google::cloud::edgecontainer::v1::Cluster> ListClusters(
@@ -154,8 +154,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
-  /// [google.cloud.edgecontainer.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L241}
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L288}
   ///
   // clang-format on
   StreamRange<google::cloud::edgecontainer::v1::Cluster> ListClusters(
@@ -180,8 +180,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
-  /// [google.cloud.edgecontainer.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L277}
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L324}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::Cluster> GetCluster(
@@ -210,8 +210,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
-  /// [google.cloud.edgecontainer.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L277}
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L324}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::Cluster> GetCluster(
@@ -245,8 +245,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
-  /// [google.cloud.edgecontainer.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L288}
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L335}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
@@ -284,8 +284,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
-  /// [google.cloud.edgecontainer.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L288}
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L335}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
@@ -322,8 +322,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
-  /// [google.cloud.edgecontainer.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L310}
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L357}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
@@ -360,12 +360,87 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
-  /// [google.cloud.edgecontainer.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L310}
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L357}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Upgrades a single cluster.
+  ///
+  /// @param name  Required. The resource name of the cluster.
+  /// @param target_version  Required. The version the cluster is going to be upgraded to.
+  /// @param schedule  The schedule for the upgrade.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.edgecontainer.v1.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.UpgradeClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L375}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
+      std::string const& name, std::string const& target_version,
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest::Schedule
+          schedule,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Upgrades a single cluster.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.edgecontainer.v1.UpgradeClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.edgecontainer.v1.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.edgecontainer.v1.Cluster]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L53}
+  /// [google.cloud.edgecontainer.v1.UpgradeClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L375}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -393,8 +468,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L328}
-  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L214}
+  /// [google.cloud.edgecontainer.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L408}
+  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -430,8 +505,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L328}
-  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L214}
+  /// [google.cloud.edgecontainer.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L408}
+  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -457,8 +532,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L344}
-  /// [google.cloud.edgecontainer.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L355}
+  /// [google.cloud.edgecontainer.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L424}
+  /// [google.cloud.edgecontainer.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L435}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -487,13 +562,71 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L344}
-  /// [google.cloud.edgecontainer.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L355}
+  /// [google.cloud.edgecontainer.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L424}
+  /// [google.cloud.edgecontainer.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L435}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Generates an offline credential for a Cluster.
+  ///
+  /// @param cluster  Required. The resource name of the cluster.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.edgecontainer.v1.GenerateOfflineCredentialResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.edgecontainer.v1.GenerateOfflineCredentialRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L445}
+  /// [google.cloud.edgecontainer.v1.GenerateOfflineCredentialResponse]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L456}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+  GenerateOfflineCredential(std::string const& cluster, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Generates an offline credential for a Cluster.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.edgecontainer.v1.GenerateOfflineCredentialRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.edgecontainer.v1.GenerateOfflineCredentialResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.edgecontainer.v1.GenerateOfflineCredentialRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L445}
+  /// [google.cloud.edgecontainer.v1.GenerateOfflineCredentialResponse]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L456}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+  GenerateOfflineCredential(
+      google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
           request,
       Options opts = {});
 
@@ -524,8 +657,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.ListNodePoolsRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L364}
-  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
+  /// [google.cloud.edgecontainer.v1.ListNodePoolsRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L472}
+  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L450}
   ///
   // clang-format on
   StreamRange<google::cloud::edgecontainer::v1::NodePool> ListNodePools(
@@ -563,8 +696,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.ListNodePoolsRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L364}
-  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
+  /// [google.cloud.edgecontainer.v1.ListNodePoolsRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L472}
+  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L450}
   ///
   // clang-format on
   StreamRange<google::cloud::edgecontainer::v1::NodePool> ListNodePools(
@@ -589,8 +722,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.GetNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L399}
-  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
+  /// [google.cloud.edgecontainer.v1.GetNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L507}
+  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L450}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::NodePool> GetNodePool(
@@ -619,8 +752,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.GetNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L399}
-  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
+  /// [google.cloud.edgecontainer.v1.GetNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L507}
+  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L450}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::NodePool> GetNodePool(
@@ -654,8 +787,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.CreateNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L410}
-  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
+  /// [google.cloud.edgecontainer.v1.CreateNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L518}
+  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
@@ -693,8 +826,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.CreateNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L410}
-  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
+  /// [google.cloud.edgecontainer.v1.CreateNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L518}
+  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
@@ -731,8 +864,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
-  /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L432}
+  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L450}
+  /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L540}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
@@ -769,8 +902,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
-  /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L432}
+  /// [google.cloud.edgecontainer.v1.NodePool]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L450}
+  /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L540}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
@@ -802,8 +935,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.DeleteNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L450}
-  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L214}
+  /// [google.cloud.edgecontainer.v1.DeleteNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L558}
+  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -839,8 +972,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.DeleteNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L450}
-  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L214}
+  /// [google.cloud.edgecontainer.v1.DeleteNodePoolRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L558}
+  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -875,8 +1008,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.ListMachinesRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L466}
-  /// [google.cloud.edgecontainer.v1.Machine]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L226}
+  /// [google.cloud.edgecontainer.v1.ListMachinesRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L574}
+  /// [google.cloud.edgecontainer.v1.Machine]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L543}
   ///
   // clang-format on
   StreamRange<google::cloud::edgecontainer::v1::Machine> ListMachines(
@@ -914,8 +1047,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.ListMachinesRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L466}
-  /// [google.cloud.edgecontainer.v1.Machine]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L226}
+  /// [google.cloud.edgecontainer.v1.ListMachinesRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L574}
+  /// [google.cloud.edgecontainer.v1.Machine]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L543}
   ///
   // clang-format on
   StreamRange<google::cloud::edgecontainer::v1::Machine> ListMachines(
@@ -940,8 +1073,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.GetMachineRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L501}
-  /// [google.cloud.edgecontainer.v1.Machine]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L226}
+  /// [google.cloud.edgecontainer.v1.GetMachineRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L609}
+  /// [google.cloud.edgecontainer.v1.Machine]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L543}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::Machine> GetMachine(
@@ -970,8 +1103,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.GetMachineRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L501}
-  /// [google.cloud.edgecontainer.v1.Machine]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L226}
+  /// [google.cloud.edgecontainer.v1.GetMachineRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L609}
+  /// [google.cloud.edgecontainer.v1.Machine]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L543}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::Machine> GetMachine(
@@ -982,7 +1115,8 @@ class EdgeContainerClient {
   ///
   /// Lists VPN connections in a given project and location.
   ///
-  /// @param parent  Required. The parent location, which owns this collection of VPN connections.
+  /// @param parent  Required. The parent location, which owns this collection of VPN
+  ///  connections.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1005,8 +1139,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.ListVpnConnectionsRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L512}
-  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
+  /// [google.cloud.edgecontainer.v1.ListVpnConnectionsRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L620}
+  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L590}
   ///
   // clang-format on
   StreamRange<google::cloud::edgecontainer::v1::VpnConnection>
@@ -1044,8 +1178,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.ListVpnConnectionsRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L512}
-  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
+  /// [google.cloud.edgecontainer.v1.ListVpnConnectionsRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L620}
+  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L590}
   ///
   // clang-format on
   StreamRange<google::cloud::edgecontainer::v1::VpnConnection>
@@ -1071,8 +1205,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.GetVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L547}
-  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
+  /// [google.cloud.edgecontainer.v1.GetVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L656}
+  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L590}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::VpnConnection> GetVpnConnection(
@@ -1101,8 +1235,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.GetVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L547}
-  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
+  /// [google.cloud.edgecontainer.v1.GetVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L656}
+  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L590}
   ///
   // clang-format on
   StatusOr<google::cloud::edgecontainer::v1::VpnConnection> GetVpnConnection(
@@ -1136,8 +1270,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.CreateVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L558}
-  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
+  /// [google.cloud.edgecontainer.v1.CreateVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L667}
+  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L590}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
@@ -1176,8 +1310,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.CreateVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L558}
-  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L264}
+  /// [google.cloud.edgecontainer.v1.CreateVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L667}
+  /// [google.cloud.edgecontainer.v1.VpnConnection]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L590}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
@@ -1211,8 +1345,8 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.DeleteVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L580}
-  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L214}
+  /// [google.cloud.edgecontainer.v1.DeleteVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L689}
+  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -1248,14 +1382,71 @@ class EdgeContainerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.edgecontainer.v1.DeleteVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L580}
-  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L214}
+  /// [google.cloud.edgecontainer.v1.DeleteVpnConnectionRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L689}
+  /// [google.cloud.edgecontainer.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteVpnConnection(
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the server config.
+  ///
+  /// @param name  Required. The name (project and location) of the server config to get,
+  ///  specified in the format `projects/*/locations/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.edgecontainer.v1.ServerConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.edgecontainer.v1.GetServerConfigRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L705}
+  /// [google.cloud.edgecontainer.v1.ServerConfig]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L794}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::edgecontainer::v1::ServerConfig> GetServerConfig(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the server config.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.edgecontainer.v1.GetServerConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.edgecontainer.v1.ServerConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.edgecontainer.v1.GetServerConfigRequest]: @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L705}
+  /// [google.cloud.edgecontainer.v1.ServerConfig]: @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L794}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::edgecontainer::v1::ServerConfig> GetServerConfig(
+      google::cloud::edgecontainer::v1::GetServerConfigRequest const& request,
       Options opts = {});
 
  private:

@@ -13,15 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/tracing_pull_ack_handler.h"
+#include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/pubsub/internal/tracing_helpers.h"
-#include "opentelemetry/context/runtime_context.h"
-#include "opentelemetry/trace/context.h"
-#include "opentelemetry/trace/semantic_conventions.h"
-#include "opentelemetry/trace/span.h"
+#include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/trace/context.h>
+#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <cstdint>
 #include <memory>

@@ -54,6 +54,11 @@ Idempotency EdgeContainerConnectionIdempotencyPolicy::UpdateCluster(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EdgeContainerConnectionIdempotencyPolicy::UpgradeCluster(
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency EdgeContainerConnectionIdempotencyPolicy::DeleteCluster(
     google::cloud::edgecontainer::v1::DeleteClusterRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -61,6 +66,11 @@ Idempotency EdgeContainerConnectionIdempotencyPolicy::DeleteCluster(
 
 Idempotency EdgeContainerConnectionIdempotencyPolicy::GenerateAccessToken(
     google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EdgeContainerConnectionIdempotencyPolicy::GenerateOfflineCredential(
+    google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -117,6 +127,11 @@ Idempotency EdgeContainerConnectionIdempotencyPolicy::CreateVpnConnection(
 Idempotency EdgeContainerConnectionIdempotencyPolicy::DeleteVpnConnection(
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency EdgeContainerConnectionIdempotencyPolicy::GetServerConfig(
+    google::cloud::edgecontainer::v1::GetServerConfigRequest const&) {
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<EdgeContainerConnectionIdempotencyPolicy>

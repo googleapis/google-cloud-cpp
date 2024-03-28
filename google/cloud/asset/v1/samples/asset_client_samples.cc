@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: asset_v1::AssetServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

@@ -67,8 +67,16 @@ class PipelineServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeletePipelineJob(
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
 
+  virtual google::cloud::Idempotency BatchDeletePipelineJobs(
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request);
+
   virtual google::cloud::Idempotency CancelPipelineJob(
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request);
+
+  virtual google::cloud::Idempotency BatchCancelPipelineJobs(
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request);
 };
 
 std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy>

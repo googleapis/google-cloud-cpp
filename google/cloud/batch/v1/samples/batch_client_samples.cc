@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: batch_v1::BatchServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

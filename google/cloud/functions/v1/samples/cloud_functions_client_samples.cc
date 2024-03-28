@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: functions_v1::CloudFunctionsServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

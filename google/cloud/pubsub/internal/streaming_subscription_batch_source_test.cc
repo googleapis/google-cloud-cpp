@@ -574,6 +574,12 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, callback).Times(1);
+  EXPECT_CALL(*mock_batch_callback, AckStart).Times(2);
+  EXPECT_CALL(*mock_batch_callback, AckEnd).Times(2);
+  EXPECT_CALL(*mock_batch_callback, NackStart).Times(2);
+  EXPECT_CALL(*mock_batch_callback, NackEnd).Times(2);
+  EXPECT_CALL(*mock_batch_callback, ModackStart).Times(1);
+  EXPECT_CALL(*mock_batch_callback, ModackEnd).Times(1);
   uut->Start(mock_batch_callback);
   success_stream.WaitForAction().set_value(true);  // Start()
   success_stream.WaitForAction().set_value(true);  // Write()
@@ -1050,6 +1056,10 @@ TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, callback).Times(1);
+  EXPECT_CALL(*mock_batch_callback, AckStart).Times(1);
+  EXPECT_CALL(*mock_batch_callback, AckEnd).Times(3);
+  EXPECT_CALL(*mock_batch_callback, NackStart).Times(1);
+  EXPECT_CALL(*mock_batch_callback, NackEnd).Times(3);
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);
@@ -1119,6 +1129,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, callback).Times(1);
+  EXPECT_CALL(*mock_batch_callback, ModackStart).Times(2);
+  EXPECT_CALL(*mock_batch_callback, ModackEnd).Times(0);
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);
@@ -1270,6 +1282,8 @@ TEST(StreamingSubscriptionBatchSourceTest, BulkNackMultipleRequests) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, callback).Times(AtLeast(1));
+  EXPECT_CALL(*mock_batch_callback, NackStart).Times(3);
+  EXPECT_CALL(*mock_batch_callback, NackEnd).Times(3);
   uut->Start(mock_batch_callback);
   std::vector<std::string> nacks;
   for (auto& ids : groups) {
@@ -1330,6 +1344,8 @@ void CheckExtendLeasesMultipleRequests(bool enable_exactly_once) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, callback).Times(AtLeast(1));
+  EXPECT_CALL(*mock_batch_callback, ModackStart).Times(AtLeast(1));
+  EXPECT_CALL(*mock_batch_callback, ModackEnd).Times(AtLeast(0));
   uut->Start(mock_batch_callback);
 
   std::vector<std::string> acks;

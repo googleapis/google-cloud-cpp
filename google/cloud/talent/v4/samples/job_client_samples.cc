@@ -31,6 +31,7 @@
 
 // clang-format off
 // main-dox-marker: talent_v4::JobServiceClient
+// lro-marker: true
 // clang-format on
 namespace {
 

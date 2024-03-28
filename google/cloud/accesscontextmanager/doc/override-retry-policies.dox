@@ -76,6 +76,10 @@ This assumes you have created a custom idempotency policy. Such as:
 
 @snippet access_context_manager_client_samples.cc custom-idempotency-policy
 
+This will override the polling policies for `accesscontextmanager_v1::AccessContextManagerClient`
+
+@snippet access_context_manager_client_samples.cc set-polling-policy
+
 
 <!-- inject-retry-snippet-end -->
 
