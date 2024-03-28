@@ -25,8 +25,8 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "opentelemetry/context/propagation/text_map_propagator.h"
-#include "opentelemetry/trace/scope.h"
+#include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/trace/scope.h>
 #include <gmock/gmock.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/semantic_conventions.h>
@@ -181,7 +181,7 @@ TEST(TracingBatchCallback, Nack) {
 }
 
 TEST(TracingBatchCallback, ModackEnd) {
-  auto span_catcher = InstallSpanCatcher();
+*  auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
   auto batch_callback = MakeTestBatchCallback(std::move(mock));

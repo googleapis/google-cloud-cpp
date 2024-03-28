@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "opentelemetry/context/propagation/text_map_propagator.h"
-#include "opentelemetry/trace/propagation/http_trace_context.h"
+#include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <gmock/gmock.h>
 #include <opentelemetry/trace/semantic_conventions.h>
 

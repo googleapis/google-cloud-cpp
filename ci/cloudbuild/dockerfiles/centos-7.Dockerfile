@@ -170,7 +170,7 @@ RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.3.tar.gz | \
 WORKDIR /var/tmp/build/
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.14.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    sed -i 's/Stack &GetStack()/Stack \&GetStack() __attribute__((noinline, noclone))/' "api/include/opentelemetry/context/runtime_context.h" && \
+    sed -i 's/Stack &GetStack()/Stack \&GetStack() __attribute__((noinline, noclone))/' "api/include/opentelemetry/context/runtime_context.h> && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
         -DCMAKE_BUILD_TYPE=Release \

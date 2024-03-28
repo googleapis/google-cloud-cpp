@@ -19,8 +19,8 @@
 
 #include "google/cloud/pubsub/internal/message_carrier.h"
 #include "google/cloud/pubsub/message.h"
-#include "opentelemetry/context/context.h"
-#include "opentelemetry/context/propagation/text_map_propagator.h"
+#include <opentelemetry/context/context.h>
+#include <opentelemetry/context/propagation/text_map_propagator.h>
 
 namespace google {
 namespace cloud {

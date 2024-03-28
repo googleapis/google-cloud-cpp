@@ -20,8 +20,8 @@
 #include "google/cloud/status.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/pubsub/internal/tracing_helpers.h"
-#include "opentelemetry/trace/semantic_conventions.h"
-#include "opentelemetry/trace/span.h"
+#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
 #include <string>
