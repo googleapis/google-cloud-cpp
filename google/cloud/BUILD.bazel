@@ -75,15 +75,17 @@ cc_library(
             "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
         ],
         "//conditions:default": [],
-    }) + select({
-        "@platforms//os:windows": [
-            "WIN32_LEAN_AND_MEAN",
-        ],
-        "//conditions:default": [],
     }),
     linkopts = select({
         "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",
+        ],
+        "//conditions:default": [],
+    }),
+    local_defines = select({
+        "@platforms//os:windows": [
+            "WIN32_LEAN_AND_MEAN",
+            "_WIN32_WINNT=0x0A00",
         ],
         "//conditions:default": [],
     }),
@@ -280,18 +282,17 @@ cc_library(
     name = "google_cloud_cpp_rest_internal",
     srcs = google_cloud_cpp_rest_internal_srcs,
     hdrs = google_cloud_cpp_rest_internal_hdrs,
-    # These are needed to use the BoringSSL libraries, and should be set in
-    # any downstream dependency too.
-    defines = select({
-        "@platforms//os:windows": [
-            "WIN32_LEAN_AND_MEAN",
-        ],
-        "//conditions:default": [],
-    }),
     linkopts = select({
         "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",
             "-DEFAULTLIB:crypt32.lib",
+        ],
+        "//conditions:default": [],
+    }),
+    local_defines = select({
+        "@platforms//os:windows": [
+            "WIN32_LEAN_AND_MEAN",
+            "_WIN32_WINNT=0x0A00",
         ],
         "//conditions:default": [],
     }),

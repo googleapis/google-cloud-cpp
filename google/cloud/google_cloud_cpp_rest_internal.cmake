@@ -131,7 +131,7 @@ target_link_libraries(
     PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
            nlohmann_json::nlohmann_json)
 if (WIN32)
-    target_compile_definitions(google_cloud_cpp_rest_internal PRIVATE WIN32_LEAN_AND_MEAN)
+    target_compile_definitions(google_cloud_cpp_rest_internal PRIVATE WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0A00)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
     target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32 bcrypt crypt32)

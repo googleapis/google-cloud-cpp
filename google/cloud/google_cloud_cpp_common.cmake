@@ -183,7 +183,7 @@ target_link_libraries(
            absl::variant
            Threads::Threads)
 if (WIN32)
-    target_compile_definitions(google_cloud_cpp_common PRIVATE WIN32_LEAN_AND_MEAN)
+    target_compile_definitions(google_cloud_cpp_common PRIVATE WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0A00)
     target_link_libraries(google_cloud_cpp_common PUBLIC bcrypt)
 else ()
     target_link_libraries(google_cloud_cpp_common PUBLIC OpenSSL::Crypto)
