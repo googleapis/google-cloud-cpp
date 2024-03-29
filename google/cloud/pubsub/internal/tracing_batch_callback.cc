@@ -39,7 +39,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
     pubsub::Subscription const& subscription,
     std::shared_ptr<
         opentelemetry::context::propagation::TextMapPropagator> const&
-        propagator) {
+        propagator,
+    bool exactly_once_delivery_enabled) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kConsumer;
@@ -61,7 +62,9 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
        {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope."
                                               "size",
         static_cast<std::int64_t>(MessageSize(m))},
-       {"messaging.gcp_pubsub.message.ack_id", message.ack_id()}},
+       {"messaging.gcp_pubsub.message.ack_id", message.ack_id()},
+       {"messaging.gcp_pubsub.subscription.exactly_once_delivery",
+        exactly_once_delivery_enabled}},
       options);
 
   if (!message.message().ordering_key().empty()) {
@@ -95,8 +98,14 @@ class TracingBatchCallback : public BatchCallback {
   void callback(BatchCallback::StreamingPullResponse response) override {
     if (response.response) {
       for (auto const& message : response.response->received_messages()) {
-        auto subscribe_span =
-            StartSubscribeSpan(message, subscription_, propagator_);
+        auto exactly_once_delivery_enabled = false;
+        if (response.response->has_subscription_properties()) {
+          exactly_once_delivery_enabled =
+              response.response->subscription_properties()
+                  .exactly_once_delivery_enabled();
+        }
+        auto subscribe_span = StartSubscribeSpan(
+            message, subscription_, propagator_, exactly_once_delivery_enabled);
         auto scope = internal::OTelScope(subscribe_span);
         {
           std::lock_guard<std::mutex> lk(mu_);
