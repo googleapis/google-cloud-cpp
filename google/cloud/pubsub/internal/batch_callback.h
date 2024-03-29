@@ -48,6 +48,9 @@ class BatchCallback {
   virtual void message_callback(ReceivedMessage m) = 0;
   virtual void user_callback(MessageCallback::MessageAndHandler m) = 0;
 
+  virtual void StartConcurrencyControl(std::string const& ack_id) = 0;
+  virtual void EndConcurrencyControl(std::string const& ack_id) = 0;
+
   virtual void AckStart(std::string const& ack_id) = 0;
   virtual void AckEnd(std::string const& ack_id) = 0;
 

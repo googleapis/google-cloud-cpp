@@ -88,11 +88,13 @@ class TracingBatchCallback : public BatchCallback {
 
   ~TracingBatchCallback() override {
     std::lock_guard<std::mutex> lk(mu_);
-    // End all outstanding subscribe spans.
-    for (auto const& kv : subscribe_span_by_ack_id_) {
-      kv.second->End();
+    // End all outstanding spans.
+    for (auto const& kv : spans_by_ack_id_) {
+      if (kv.second.subscribe_span) kv.second.subscribe_span->End();
+      if (kv.second.concurrency_control_span)
+        kv.second.concurrency_control_span->End();
     }
-    subscribe_span_by_ack_id_.clear();
+    spans_by_ack_id_.clear();
   }
 
   void callback(BatchCallback::StreamingPullResponse response) override {
@@ -109,7 +111,7 @@ class TracingBatchCallback : public BatchCallback {
         auto scope = internal::OTelScope(subscribe_span);
         {
           std::lock_guard<std::mutex> lk(mu_);
-          subscribe_span_by_ack_id_[message.ack_id()] = subscribe_span;
+          spans_by_ack_id_[message.ack_id()].subscribe_span = subscribe_span;
         }
       }
     }
@@ -150,13 +152,48 @@ class TracingBatchCallback : public BatchCallback {
   }
 
  private:
+  struct MessageSpans {
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> subscribe_span;
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
+        concurrency_control_span;
+  };
+
+  void StartConcurrencyControl(std::string const& ack_id) override {
+    namespace sc = opentelemetry::trace::SemanticConventions;
+    std::lock_guard<std::mutex> lk(mu_);
+    auto spans = spans_by_ack_id_.find(ack_id);
+    if (spans != spans_by_ack_id_.end()) {
+      auto subscribe_span = spans->second.subscribe_span;
+      if (subscribe_span) {
+        opentelemetry::trace::StartSpanOptions options;
+        options.parent = subscribe_span->GetContext();
+        auto span =
+            internal::MakeSpan("subscriber concurrency control",
+                               {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
+        auto scope = internal::OTelScope(span);
+        spans->second.concurrency_control_span = span;
+      }
+    }
+  }
+
+  void EndConcurrencyControl(std::string const& ack_id) override {
+    std::lock_guard<std::mutex> lk(mu_);
+    auto spans = spans_by_ack_id_.find(ack_id);
+    if (spans != spans_by_ack_id_.end()) {
+      auto concurrency_control_span = spans->second.concurrency_control_span;
+      if (concurrency_control_span) {
+        concurrency_control_span->End();
+      }
+    }
+  }
+
   void AddEvent(std::string const& ack_id, std::string const& event,
                 bool end_event = false) {
     std::lock_guard<std::mutex> lk(mu_);
     // Use the ack_id to find the subscribe span and add an event to it.
-    auto subscribe_span = subscribe_span_by_ack_id_.find(ack_id);
-    if (subscribe_span != subscribe_span_by_ack_id_.end()) {
-      subscribe_span->second->AddEvent(event);
+    auto spans = spans_by_ack_id_.find(ack_id);
+    if (spans != spans_by_ack_id_.end()) {
+      spans->second.subscribe_span->AddEvent(event);
       if (event == "gl-cpp.ack_end") {
         subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
                                              "ack");
@@ -168,8 +205,8 @@ class TracingBatchCallback : public BatchCallback {
                                              "expired");
       }
       if (end_event) {
-        subscribe_span->second->End();
-        subscribe_span_by_ack_id_.erase(subscribe_span);
+        spans->second.subscribe_span->End();
+        spans_by_ack_id_.erase(spans);
       }
     }
   }
@@ -179,10 +216,8 @@ class TracingBatchCallback : public BatchCallback {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
   std::mutex mu_;
-  std::unordered_map<
-      std::string,
-      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      subscribe_span_by_ack_id_;  // ABSL_GUARDED_BY(mu_)
+  std::unordered_map<std::string, MessageSpans>
+      spans_by_ack_id_;  // ABSL_GUARDED_BY(mu_)
 };
 
 }  // namespace
