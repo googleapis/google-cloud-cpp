@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/schema_client.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "absl/time/time.h"
 #include <string>
 #include <vector>
 
