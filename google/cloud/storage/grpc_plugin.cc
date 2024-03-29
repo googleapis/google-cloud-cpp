@@ -24,14 +24,23 @@ namespace google {
 namespace cloud {
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+// TODO(#13857) - stop using storage_experimental::GrpcPluginOption
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+bool UseRest(Options const& options) {
+  using ::google::cloud::internal::GetEnv;
+  auto const config =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
+          .value_or(options.get<storage_experimental::GrpcPluginOption>());
+  return config == "none";
+}
+#include "google/cloud/internal/diagnostics_pop.inc"
+
+}  // namespace
 
 google::cloud::storage::Client DefaultGrpcClient(Options opts) {
-  using ::google::cloud::internal::GetEnv;
-  auto const config = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
-                          .value_or(opts.get<GrpcPluginOption>());
-  if (config == "none") {
-    return google::cloud::storage::Client(std::move(opts));
-  }
+  if (UseRest(opts)) return google::cloud::storage::Client(std::move(opts));
   opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
   auto stub = std::make_unique<storage_internal::GrpcStub>(opts);
   return storage::internal::ClientImplDetails::CreateWithoutDecorations(
