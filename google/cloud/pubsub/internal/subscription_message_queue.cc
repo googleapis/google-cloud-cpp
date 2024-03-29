@@ -149,7 +149,7 @@ void SubscriptionMessageQueue::DrainQueue(std::unique_lock<std::mutex> lk) {
     // Don't hold a lock during the callback, as the callee may call `Read()`
     // or something similar.
     lk.unlock();
-    callback_->message_callback(MessageCallback::ReceivedMessage{std::move(m)});
+    callback_->message_callback(BatchCallback::ReceivedMessage{std::move(m)});
     lk.lock();
   }
 }

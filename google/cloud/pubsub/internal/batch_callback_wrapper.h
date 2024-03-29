@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_WRAPPER_H
 
 #include "google/cloud/pubsub/internal/batch_callback.h"
+#include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
@@ -31,10 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BatchCallbackWrapper : public BatchCallback {
  public:
   using Callback = std::function<void(StreamingPullResponse)>;
+  using MessageCallback = std::function<void(ReceivedMessage)>;
 
   explicit BatchCallbackWrapper(std::shared_ptr<BatchCallback> child,
                                 Callback wrapper)
       : child_(std::move(child)), wrapper_(std::move(wrapper)) {}
+  explicit BatchCallbackWrapper(std::shared_ptr<BatchCallback> child,
+                                MessageCallback wrapper)
+      : child_(std::move(child)), message_wrapper_(std::move(wrapper)) {}
   ~BatchCallbackWrapper() override = default;
 
   void callback(StreamingPullResponse response) override {
@@ -42,11 +47,13 @@ class BatchCallbackWrapper : public BatchCallback {
     wrapper_(response);
   }
 
-  void message_callback(MessageCallback::ReceivedMessage m) override {
+  void message_callback(ReceivedMessage m) override {
     child_->message_callback(m);
+    message_wrapper_(m);
   }
 
-  void user_callback(MessageCallback::MessageAndHandler m) override {
+  void user_callback(
+      pubsub_internal::MessageCallback::MessageAndHandler m) override {
     child_->user_callback(std::move(m));
   }
 
@@ -69,6 +76,7 @@ class BatchCallbackWrapper : public BatchCallback {
 
  private:
   std::shared_ptr<BatchCallback> child_;
+  MessageCallback message_wrapper_;
   Callback wrapper_;
 };
 

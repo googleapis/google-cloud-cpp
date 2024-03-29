@@ -14,8 +14,8 @@
 
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/internal/batch_callback_wrapper.h"
 #include "google/cloud/pubsub/internal/default_batch_callback.h"
-#include "google/cloud/pubsub/internal/message_callback_wrapper.h"
 #include "google/cloud/pubsub/internal/tracing_batch_callback.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -62,19 +62,15 @@ class AckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
 
 }  // namespace
 
-void SubscriptionConcurrencyControl::Start(
-    std::shared_ptr<MessageCallback> cb) {
+void SubscriptionConcurrencyControl::Start(std::shared_ptr<BatchCallback> cb) {
   std::unique_lock<std::mutex> lk(mu_);
   if (callback_) return;
 
-  auto message_callback = std::make_shared<MessageCallbackWrapper>(
-      std::move(cb), [w = WeakFromThis()](MessageCallback::ReceivedMessage r) {
+  callback_ = std::make_shared<BatchCallbackWrapper>(
+      std::move(cb), [w = WeakFromThis()](BatchCallback::ReceivedMessage r) {
         if (auto self = w.lock()) self->OnMessage(std::move(r.message));
       });
 
-  callback_ = std::make_shared<DefaultBatchCallback>(
-      [](BatchCallback::StreamingPullResponse const&) {},
-      std::move(message_callback));
   auto const& current = internal::CurrentOptions();
   if (current.get<OpenTelemetryTracingOption>()) {
     callback_ = MakeTracingBatchCallback(

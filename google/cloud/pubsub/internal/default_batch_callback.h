@@ -40,15 +40,13 @@ class DefaultBatchCallback : public BatchCallback {
 
   void callback(StreamingPullResponse response) override {
     callback_(std::move(response));
-  };
+  }
 
-  void message_callback(MessageCallback::ReceivedMessage m) override {
-    message_callback_->message_callback(std::move(m));
-  };
+  void message_callback(ReceivedMessage m) override {}
 
   void user_callback(MessageCallback::MessageAndHandler m) override {
     message_callback_->user_callback(std::move(m));
-  };
+  }
 
   void AckStart(std::string const&) override {}
   void AckEnd(std::string const&) override {}

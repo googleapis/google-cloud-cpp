@@ -138,7 +138,6 @@ add_library(
     internal/flow_controlled_publisher_tracing_connection.cc
     internal/flow_controlled_publisher_tracing_connection.h
     internal/message_callback.h
-    internal/message_callback_wrapper.h
     internal/message_carrier.cc
     internal/message_carrier.h
     internal/message_propagator.cc
