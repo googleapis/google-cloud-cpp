@@ -215,7 +215,7 @@ StatusOr<std::vector<BYTE>> EncodeRsaPkcs8PrivateKey(
     absl::Span<BYTE const> pkcs1_encoded, std::string const& source) {
   CRYPT_PRIVATE_KEY_INFO private_key_info;
   private_key_info.Version = 0;
-  private_key_info.Algorithm.pszObjId = szOID_RSA_RSA;
+  private_key_info.Algorithm.pszObjId = const_cast<LPSTR>(szOID_RSA_RSA);
   private_key_info.Algorithm.Parameters.cbData = 0;
   private_key_info.Algorithm.Parameters.pbData = nullptr;
   private_key_info.PrivateKey.cbData = static_cast<DWORD>(pkcs1_encoded.size());
