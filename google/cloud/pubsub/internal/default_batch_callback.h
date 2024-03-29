@@ -59,7 +59,7 @@ class DefaultBatchCallback : public BatchCallback {
   void ModackStart(std::string const&) override {}
   void ModackEnd(std::string const&) override {}
 
-  void ExpireMessage(std::string const& ack_id) override {}
+  void ExpireMessage(std::string const&) override {}
 
  private:
   CallbackFunction callback_;
