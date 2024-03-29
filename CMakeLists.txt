@@ -191,6 +191,7 @@ google_cloud_cpp_define_legacy_feature_options()
 google_cloud_cpp_apply_legacy_feature_options()
 google_cloud_cpp_enable_deps()
 google_cloud_cpp_enable_cleanup()
+google_cloud_cpp_define_dependent_legacy_feature_options()
 
 # Building this target results in all protobufs being compiled.
 add_custom_target(google-cloud-cpp-protos)
