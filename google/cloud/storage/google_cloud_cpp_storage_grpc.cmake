@@ -52,7 +52,7 @@ else ()
     # Guessing the new version scheme is tempting, but probably unwise.
     #
     # In any case, `ctype=CORD` is supported starting in 23.x.
-    if (Protobuf_VERSION VERSION_GREATER "23.x")
+    if (Protobuf_VERSION VERSION_GREATER_EQUAL "23")
         set(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT OFF)
     endif ()
     message(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT=
