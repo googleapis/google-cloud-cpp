@@ -137,7 +137,7 @@ class TracingBatchCallback : public BatchCallback {
   }
 
   void ExpireMessage(std::string const& ack_id) override {
-    AddEvent(ack_id, "gl-cpp.expired", true);
+    AddEvent(ack_id, "gl-cpp.expired");
   }
 
  private:
@@ -148,17 +148,17 @@ class TracingBatchCallback : public BatchCallback {
     auto subscribe_span = subscribe_span_by_ack_id_.find(ack_id);
     if (subscribe_span != subscribe_span_by_ack_id_.end()) {
       subscribe_span->second->AddEvent(event);
+      if (event == "gl-cpp.ack_end") {
+        subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
+                                             "ack");
+      } else if (event == "gl-cpp.nack_end") {
+        subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
+                                             "nack");
+      } else if ("gl-cpp.expired") {
+        subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
+                                             "expired");
+      }
       if (end_event) {
-        if (event == "gl-cpp.ack_end") {
-          subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
-                                               "ack");
-        } else if (event == "gl-cpp.nack_end") {
-          subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
-                                               "nack");
-        } else {
-          subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
-                                               "expired");
-        }
         subscribe_span->second->End();
         subscribe_span_by_ack_id_.erase(subscribe_span);
       }

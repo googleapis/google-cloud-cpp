@@ -272,10 +272,13 @@ TEST(TracingBatchCallback, Expire) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
-  auto batch_callback = MakeTestBatchCallback(std::move(mock));
 
-  batch_callback->callback(MakeResponse(1));
-  batch_callback->ExpireMessage("ack-id-0");
+  // This needs to be in its own scope so the span is ended.
+  {
+    auto batch_callback = MakeTestBatchCallback(std::move(mock));
+    batch_callback->callback(MakeResponse(1));
+    batch_callback->ExpireMessage("ack-id-0");
+  }
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -284,6 +287,25 @@ TEST(TracingBatchCallback, Expire) {
                             SpanHasAttributes(OTelAttribute<std::string>(
                                 "messaging.gcp_pubsub.result", "expired")),
                             SpanHasEvents(EventNamed("gl-cpp.expired")))));
+}
+
+TEST(TracingBatchCallback, ExpireThenNack) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->ExpireMessage("ack-id-0");
+  batch_callback->NackEnd("ack-id-0");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+                            SpanNamed("test-sub subscribe"),
+                            SpanHasAttributes(OTelAttribute<std::string>(
+                                "messaging.gcp_pubsub.result", "nack")),
+                            SpanHasEvents(EventNamed("gl-cpp.nack_end")))));
 }
 
 }  // namespace
