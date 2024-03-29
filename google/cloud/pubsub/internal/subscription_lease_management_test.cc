@@ -228,6 +228,58 @@ TEST(SubscriptionLeaseManagementTest, UsesDeadlineExtension) {
   EXPECT_THAT(done.get(), IsOk());
 }
 
+TEST(SubscriptionLeaseManagementTest, ExpiredMessage) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
+    batch_callback = std::move(cb);
+  });
+
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
+  EXPECT_CALL(*mock_batch_callback, ExpireMessage).Times(2);
+
+  auto constexpr kTestDeadline = std::chrono::seconds(1);
+  {
+    ::testing::InSequence sequence;
+    // We expect this message to be acked.
+    EXPECT_CALL(*mock, AckMessage("ack-0-1")).WillOnce(SimpleAckNack);
+    // Then all unhandled messages are nacked on shutdown.
+    EXPECT_CALL(*mock, BulkNack(UnorderedElementsAre("ack-0-2", "ack-0-0")))
+        .WillOnce([](std::vector<std::string> const&) {
+          return make_ready_future(Status{});
+        });
+    EXPECT_CALL(*mock, Shutdown).Times(1);
+  }
+
+  auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
+  CompletionQueue cq(fake_cq);
+
+  auto shutdown_manager = std::make_shared<SessionShutdownManager>();
+  auto uut = SubscriptionLeaseManagement::Create(
+      cq, shutdown_manager, mock, kTestDeadline, std::chrono::seconds(600));
+
+  auto done = shutdown_manager->Start({});
+  uut->Start(mock_batch_callback);
+  batch_callback->callback(
+      BatchCallback::StreamingPullResponse{GenerateMessages("0-", 3)});
+  ASSERT_EQ(1U, fake_cq->size());
+
+  // Ack one of the messages and then fire the timer. The expectations set above
+  // will verify that only the remaining messages have their lease extended.
+  uut->AckMessage("ack-0-1");
+  fake_cq->SimulateCompletion(true);
+  ASSERT_EQ(1U, fake_cq->size());
+
+  shutdown_manager->MarkAsShutdown(__func__, Status{});
+  uut->Shutdown();
+
+  fake_cq->SimulateCompletion(false);
+  ASSERT_EQ(0U, fake_cq->size());
+  EXPECT_THAT(done.get(), IsOk());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
