@@ -55,10 +55,8 @@ MakeTestExactlyOnceAckHandler(
   EXPECT_CALL(*mock, delivery_attempt()).WillRepeatedly(Return(42));
   EXPECT_CALL(*mock, ack_id()).WillRepeatedly(Return(kTestAckId));
   EXPECT_CALL(*mock, subscription()).WillRepeatedly(Return(kTestSubscription));
-  auto span =
-      internal::GetTracer(Options{})->StartSpan("test-subscription subscribe");
   Span span_holder;
-  span_holder.SetSpan(span);
+  span_holder.span = internal::MakeSpan("test-subscription subscribe");
   return MakeTracingExactlyOnceAckHandler(std::move(mock), span_holder);
 }
 

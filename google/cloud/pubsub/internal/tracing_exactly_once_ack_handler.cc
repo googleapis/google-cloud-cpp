@@ -35,6 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+namespace {
+
 class TracingExactlyOnceAckHandler
     : public pubsub::ExactlyOnceAckHandler::Impl {
  public:
@@ -49,17 +51,16 @@ class TracingExactlyOnceAckHandler
     subscribe_span_->AddEvent("gl-cpp.message_ack");
     namespace sc = opentelemetry::trace::SemanticConventions;
     opentelemetry::trace::StartSpanOptions options = RootStartSpanOptions();
-
     options.kind = opentelemetry::trace::SpanKind::kInternal;
+    auto sub = subscription();
     auto span = internal::MakeSpan(
-        subscription().subscription_id() + " ack",
+        sub.subscription_id() + " ack",
         {{sc::kCodeFunction, "pubsub::AckHandler::ack"},
          {sc::kMessagingSystem, "gcp_pubsub"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id()},
-         {"messaging.gcp_pubsub.subscription.template",
-          subscription().FullName()},
-         {"gcp.project_id", subscription().project_id()},
-         {sc::kMessagingDestinationName, subscription().subscription_id()},
+         {"messaging.gcp_pubsub.subscription.template", sub.FullName()},
+         {"gcp.project_id", sub.project_id()},
+         {sc::kMessagingDestinationName, sub.subscription_id()},
          {"messaging.gcp_pubsub.message.delivery_attempt",
           static_cast<int32_t>(delivery_attempt())},
          {sc::kMessagingOperation, "settle"}},
@@ -73,17 +74,16 @@ class TracingExactlyOnceAckHandler
     subscribe_span_->AddEvent("gl-cpp.message_nack");
     namespace sc = opentelemetry::trace::SemanticConventions;
     opentelemetry::trace::StartSpanOptions options = RootStartSpanOptions();
-
     options.kind = opentelemetry::trace::SpanKind::kInternal;
+    auto sub = subscription();
     auto span = internal::MakeSpan(
-        subscription().subscription_id() + " nack",
+        sub.subscription_id() + " nack",
         {{sc::kCodeFunction, "pubsub::AckHandler::nack"},
          {sc::kMessagingSystem, "gcp_pubsub"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id()},
-         {"messaging.gcp_pubsub.subscription.template",
-          subscription().FullName()},
-         {"gcp.project_id", subscription().project_id()},
-         {sc::kMessagingDestinationName, subscription().subscription_id()},
+         {"messaging.gcp_pubsub.subscription.template", sub.FullName()},
+         {"gcp.project_id", sub.project_id()},
+         {sc::kMessagingDestinationName, sub.subscription_id()},
          {"messaging.gcp_pubsub.message.delivery_attempt",
           static_cast<int32_t>(delivery_attempt())},
          {sc::kMessagingOperation, "settle"}},
@@ -108,11 +108,13 @@ class TracingExactlyOnceAckHandler
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> subscribe_span_;
 };
 
+}  // namespace
+
 std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>
 MakeTracingExactlyOnceAckHandler(
     std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> handler, Span span) {
   return std::make_unique<TracingExactlyOnceAckHandler>(std::move(handler),
-                                                        span.GetSpan());
+                                                        span.span);
 }
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
