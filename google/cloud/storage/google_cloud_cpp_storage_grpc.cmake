@@ -406,6 +406,10 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
     foreach (fname ${storage_client_grpc_unit_tests})
         google_cloud_cpp_add_executable(target "storage" "${fname}")
+        if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+            target_compile_definitions(
+                ${target} PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+        endif ()
         target_link_libraries(
             ${target}
             PRIVATE storage_client_testing

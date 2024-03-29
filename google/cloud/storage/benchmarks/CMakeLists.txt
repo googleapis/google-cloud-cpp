@@ -45,6 +45,11 @@ target_link_libraries(
            google-cloud-cpp::storage_protos
            CURL::libcurl)
 google_cloud_cpp_add_common_options(storage_benchmarks)
+if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+    target_compile_definitions(
+        storage_benchmarks
+        PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+endif ()
 
 include(CreateBazelConfig)
 create_bazel_config(storage_benchmarks YEAR 2019)

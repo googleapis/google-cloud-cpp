@@ -32,6 +32,7 @@ GOOGLE_CLOUD_STORAGE_WIN_DEFINES = [
 config_setting(
     name = "ctype_cord_workaround_enabled",
     flag_values = {"//:enable-ctype-cord-workaround": "true"},
+    visibility = ["//:__pkg__"],
 )
 
 filegroup(
@@ -207,6 +208,13 @@ cc_library(
     linkopts = select({
         "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
+    }),
+    local_defines = select({
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
+        "//conditions:default": [],
+    }) + select({
+        ":ctype_cord_workaround_enabled": ["GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND"],
+        "//conditions:default": [],
     }),
     deps = [
         ":google_cloud_cpp_storage",

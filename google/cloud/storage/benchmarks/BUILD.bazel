@@ -25,6 +25,10 @@ cc_library(
     testonly = True,
     srcs = storage_benchmarks_srcs,
     hdrs = storage_benchmarks_hdrs,
+    local_defines = select({
+        "//google/cloud/storage:ctype_cord_workaround_enabled": ["GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND"],
+        "//conditions:default": [],
+    }),
     deps = [
         "//:common",
         "//:grpc_utils",
