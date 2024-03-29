@@ -22,9 +22,9 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 #include <cstdint>
+#include <limits>
 #include <sstream>
 #include <string>
 #include <tuple>
@@ -38,6 +38,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsProtoApproximatelyEqual;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::HasSubstr;
@@ -84,8 +85,35 @@ TEST(MutationsTest, InsertSimple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(MutationsTest, InsertFloat32) {
+  auto builder = InsertMutationBuilder("table-name", {"col1", "col2"})
+                     .EmplaceRow(1, 3.14F);
+  Mutation insert = builder.Build();
+  Mutation moved = std::move(builder).Build();
+  EXPECT_EQ(insert, moved);
+
+  auto actual = std::move(insert).as_proto();
+  auto constexpr kText = R"pb(
+    insert: {
+      table: "table-name"
+      columns: "col1"
+      columns: "col2"
+      values {
+        values { string_value: "1" }
+        values { number_value: 3.14 }
+      }
+    }
+  )pb";
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
+
+  // Compare number_value using the (larger) float epsilon.
+  EXPECT_THAT(actual, IsProtoApproximatelyEqual(
+                          expected, std::numeric_limits<float>::epsilon(),
+                          std::numeric_limits<float>::epsilon()));
+}
+
 TEST(MutationsTest, InsertComplex) {
-  Mutation empty;
   auto builder = InsertMutationBuilder("table-name", {"col1", "col2", "col3"})
                      .AddRow({Value(42), Value("foo"), Value(false)})
                      .EmplaceRow(absl::optional<std::int64_t>(), "bar",
@@ -146,7 +174,6 @@ TEST(MutationsTest, UpdateSimple) {
 }
 
 TEST(MutationsTest, UpdateComplex) {
-  Mutation empty;
   auto builder = UpdateMutationBuilder("table-name", {"col_a", "col_b"})
                      .AddRow({Value(std::vector<std::string>{}), Value(7.0)})
                      .EmplaceRow(std::vector<std::string>{"a", "b"},
@@ -209,7 +236,6 @@ TEST(MutationsTest, InsertOrUpdateSimple) {
 }
 
 TEST(MutationsTest, InsertOrUpdateComplex) {
-  Mutation empty;
   auto builder = InsertOrUpdateMutationBuilder("table-name", {"col_a", "col_b"})
                      .AddRow({Value(std::make_tuple("a", 7.0))})
                      .EmplaceRow(std::make_tuple("b", 8.0));
@@ -274,7 +300,6 @@ TEST(MutationsTest, ReplaceSimple) {
 }
 
 TEST(MutationsTest, ReplaceComplex) {
-  Mutation empty;
   auto builder = ReplaceMutationBuilder("table-name", {"col_a", "col_b"})
                      .EmplaceRow("a", 7.0)
                      .AddRow({Value("b"), Value(8.0)});

@@ -302,6 +302,23 @@ TEST(RowStreamIterator, ForLoop) {
   EXPECT_EQ(product, 30);
 }
 
+TEST(RowStreamIterator, RangeForLoopFloat32) {
+  std::vector<Row> rows;
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(2.1F)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(3.2F)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(5.4F)}}));
+
+  RowRange range(MakeRowStreamIteratorSource(rows));
+  float sum = 0;
+  for (auto const& row : range) {
+    ASSERT_STATUS_OK(row);
+    auto num = row->get<float>("num");
+    ASSERT_STATUS_OK(num);
+    sum += *num;
+  }
+  EXPECT_FLOAT_EQ(sum, 10.7F);
+}
+
 TEST(RowStreamIterator, RangeForLoop) {
   std::vector<Row> rows;
   rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(2)}}));
