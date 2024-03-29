@@ -85,6 +85,7 @@ struct CommandLineArgs {
   bool experimental_scaffold;
   bool update_ci;
   bool generate_discovery_protos;
+  bool disable_parallel_write;
 };
 
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>

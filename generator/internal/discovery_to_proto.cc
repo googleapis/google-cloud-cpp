@@ -645,12 +645,12 @@ Status GenerateProtosFromDiscoveryDoc(
   }
 
   if (disable_parallel_write) {
-    for (auto f : files->first) {
+    for (auto const& f : files->first) {
       auto s = f.WriteFile(document_properties, *types);
       if (!s.ok()) return s;
     }
 
-    for (auto f : files->second) {
+    for (auto const& f : files->second) {
       auto s = f.WriteFile();
       if (!s.ok()) return s;
     }
