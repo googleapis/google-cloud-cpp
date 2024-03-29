@@ -509,7 +509,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseSimpleP12) {
   if (info.status().code() == StatusCode::kInvalidArgument) {
     if (absl::StrContains(info.status().message(), "error:0308010C")) {
       // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
-      GTEST_SKIP();
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
     }
 #if _WIN32
     // On Windows, the OS may not have the necessary providers to support
@@ -518,7 +518,7 @@ TEST_F(ServiceAccountCredentialsTest, ParseSimpleP12) {
     auto const& metadata = info.status().error_info().metadata();
     auto const l = metadata.find("gcloud-cpp.source.function");
     if (l != metadata.end() && l->second == "GetCertificatePrivateKey") {
-      GTEST_SKIP();
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
     }
 #endif  // _WIN32
   }
@@ -576,7 +576,7 @@ TEST_F(ServiceAccountCredentialsTest, CreateFromP12ValidFile) {
   if (actual.status().code() == StatusCode::kInvalidArgument) {
     if (absl::StrContains(actual.status().message(), "error:0308010C")) {
       // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
-      GTEST_SKIP();
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
     }
 #if _WIN32
     // On Windows, the OS may not have the necessary providers to support
@@ -585,7 +585,7 @@ TEST_F(ServiceAccountCredentialsTest, CreateFromP12ValidFile) {
     auto const& metadata = actual.status().error_info().metadata();
     auto const l = metadata.find("gcloud-cpp.source.function");
     if (l != metadata.end() && l->second == "GetCertificatePrivateKey") {
-      GTEST_SKIP();
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
     }
 #endif  // _WIN32
   }

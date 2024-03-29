@@ -533,7 +533,7 @@ TEST_F(GoogleCredentialsTest, LoadP12Credentials) {
   if (creds.status().code() == StatusCode::kInvalidArgument) {
     if (absl::StrContains(creds.status().message(), "error:0308010C")) {
       // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
-      GTEST_SKIP();
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
     }
 #if _WIN32
     // On Windows, the OS may not have the necessary providers to support
@@ -542,7 +542,7 @@ TEST_F(GoogleCredentialsTest, LoadP12Credentials) {
     auto const& metadata = creds.status().error_info().metadata();
     auto const l = metadata.find("gcloud-cpp.source.function");
     if (l != metadata.end() && l->second == "GetCertificatePrivateKey") {
-      GTEST_SKIP();
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
     }
 #endif  // _WIN32
   }
