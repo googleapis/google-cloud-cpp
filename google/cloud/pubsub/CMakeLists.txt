@@ -192,6 +192,7 @@ add_library(
     internal/sequential_batch_sink.h
     internal/session_shutdown_manager.cc
     internal/session_shutdown_manager.h
+    internal/span.h
     internal/streaming_subscription_batch_source.cc
     internal/streaming_subscription_batch_source.h
     internal/subscriber_auth_decorator.cc
@@ -226,6 +227,8 @@ add_library(
     internal/tracing_batch_callback.h
     internal/tracing_batch_sink.cc
     internal/tracing_batch_sink.h
+    internal/tracing_exactly_once_ack_handler.cc
+    internal/tracing_exactly_once_ack_handler.h
     internal/tracing_helpers.cc
     internal/tracing_helpers.h
     internal/tracing_pull_ack_handler.cc
@@ -423,6 +426,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         testing/fake_streaming_pull.h
         testing/mock_batch_callback.h
         testing/mock_batch_sink.h
+        testing/mock_exactly_once_ack_handler_impl.h
         testing/mock_message_callback.h
         testing/mock_publisher_stub.h
         testing/mock_pull_lease_manager.h
@@ -481,6 +485,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscription_session_test.cc
         internal/tracing_batch_callback_test.cc
         internal/tracing_batch_sink_test.cc
+        internal/tracing_exactly_once_ack_handler_test.cc
         internal/tracing_helpers_test.cc
         internal/tracing_pull_ack_handler_test.cc
         internal/tracing_pull_lease_manager_test.cc
