@@ -32,7 +32,7 @@ GOOGLE_CLOUD_STORAGE_WIN_DEFINES = [
 config_setting(
     name = "ctype_cord_workaround_enabled",
     flag_values = {"//:enable-ctype-cord-workaround": "true"},
-    visibility = ["//:__pkg__"],
+    visibility = [":__subpackages__"],
 )
 
 filegroup(
