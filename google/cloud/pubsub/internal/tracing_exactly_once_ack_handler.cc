@@ -112,7 +112,8 @@ class TracingExactlyOnceAckHandler
 
 std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>
 MakeTracingExactlyOnceAckHandler(
-    std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> handler, Span span) {
+    std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> handler,
+    Span const& span) {
   return std::make_unique<TracingExactlyOnceAckHandler>(std::move(handler),
                                                         span.span);
 }
@@ -121,7 +122,7 @@ MakeTracingExactlyOnceAckHandler(
 
 std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>
 MakeTracingExactlyOnceAckHandler(
-    std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> handler, Span) {
+    std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> handler, Span const&) {
   return handler;
 }
 

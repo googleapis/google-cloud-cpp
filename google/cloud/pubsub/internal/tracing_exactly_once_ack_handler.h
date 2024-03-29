@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl>
 MakeTracingExactlyOnceAckHandler(
     std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> handler,
-    Span subscribe_span);
+    Span const& subscribe_span);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
