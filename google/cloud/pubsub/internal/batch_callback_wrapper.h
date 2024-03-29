@@ -74,6 +74,10 @@ class BatchCallbackWrapper : public BatchCallback {
     child_->ModackEnd(ack_id);
   }
 
+  void ExpireMessage(std::string const& ack_id) override {
+    child_->ExpireMessage(ack_id);
+  }
+
  private:
   std::shared_ptr<BatchCallback> child_;
   MessageCallback message_wrapper_;
