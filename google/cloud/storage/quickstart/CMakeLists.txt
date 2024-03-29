@@ -31,6 +31,12 @@ endif ()
 add_executable(quickstart quickstart.cc)
 target_link_libraries(quickstart google-cloud-cpp::storage)
 
+find_package(google_cloud_cpp_storage_grpc CONFIG)
+if (NOT google_cloud_cpp_storage_grpc_FOUND)
+    message("GCS+gRPC plugin is disabled, skipping its quickstarts")
+    return()
+endif ()
+
 add_executable(quickstart_grpc EXCLUDE_FROM_ALL quickstart_grpc.cc)
 target_link_libraries(quickstart_grpc
                       google-cloud-cpp::experimental-storage_grpc)

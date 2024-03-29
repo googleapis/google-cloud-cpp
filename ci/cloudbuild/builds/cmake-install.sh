@@ -154,6 +154,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_opentelemetry
   ./lib64/cmake/google_cloud_cpp_rest_internal
   ./lib64/cmake/google_cloud_cpp_rest_protobuf_internal
+  ./lib64/cmake/google_cloud_cpp_storage_grpc
   ./lib64/cmake/google_cloud_cpp_storage_grpc_mocks
   ./lib64/pkgconfig
 )

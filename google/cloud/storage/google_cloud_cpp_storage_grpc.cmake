@@ -243,8 +243,28 @@ google_cloud_cpp_add_pkgconfig(
     "openssl")
 
 install(
+    EXPORT storage_grpc-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage_grpc"
+    COMPONENT google_cloud_cpp_development)
+
+# Create and install the CMake configuration files.
+configure_file("config-grpc.cmake.in"
+               "google_cloud_cpp_storage_grpc-config.cmake" @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_storage_grpc-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage_grpc-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage_grpc-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage_grpc"
+    COMPONENT google_cloud_cpp_development)
+
+install(
     TARGETS google_cloud_cpp_storage_grpc google_cloud_cpp_storage_protos
-    EXPORT storage-targets
+    EXPORT storage_grpc-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
