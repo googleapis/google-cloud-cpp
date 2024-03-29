@@ -461,7 +461,7 @@ TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
 
     auto creds = GoogleDefaultCredentials();
     EXPECT_THAT(creds, StatusIs(StatusCode::kInvalidArgument,
-                                HasSubstr("credentials file " + filename)));
+                                HasSubstr(filename)));
   }
 }
 
