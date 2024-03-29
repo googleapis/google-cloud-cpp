@@ -92,9 +92,9 @@ class SubscriptionLeaseManagement
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
   std::chrono::seconds const max_deadline_time_;
   std::chrono::seconds const max_deadline_extension_;
+  std::shared_ptr<BatchCallback> callback_;
 
   std::mutex mu_;
-
   // A collection of message ack_ids to maintain the message leases.
   struct LeaseStatus {
     std::chrono::system_clock::time_point estimated_server_deadline;
