@@ -45,7 +45,7 @@ target_link_libraries(
            google-cloud-cpp::storage_protos
            CURL::libcurl)
 google_cloud_cpp_add_common_options(storage_benchmarks)
-if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+if (Protobuf_VERSION VERSION_LESS "23.x")
     target_compile_definitions(
         storage_benchmarks
         PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
