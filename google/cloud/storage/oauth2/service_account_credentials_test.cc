@@ -504,16 +504,28 @@ TEST_F(ServiceAccountCredentialsTest, ParseSimpleP12) {
   WriteBase64AsBinary(filename, kP12KeyFileContents);
 
   auto info = ParseServiceAccountP12File(filename);
-  if (info.status().code() == StatusCode::kInvalidArgument &&
-      absl::StrContains(info.status().message(), "error:0308010C")) {
-    // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
-    GTEST_SKIP();
+  EXPECT_EQ(0, std::remove(filename.c_str()));
+
+  if (info.status().code() == StatusCode::kInvalidArgument) {
+    if (absl::StrContains(info.status().message(), "error:0308010C")) {
+      // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
+    }
+#if _WIN32
+    // On Windows, the OS may not have the necessary providers to support
+    // PKCS#12. Unfortunately the error message is not as unambiguous, so we use
+    // the function that fails instead.
+    auto const& metadata = info.status().error_info().metadata();
+    auto const l = metadata.find("gcloud-cpp.source.function");
+    if (l != metadata.end() && l->second == "GetCertificatePrivateKey") {
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
+    }
+#endif  // _WIN32
   }
   ASSERT_STATUS_OK(info);
 
   EXPECT_EQ(kP12ServiceAccountId, info->client_email);
   EXPECT_FALSE(info->private_key.empty());
-  EXPECT_EQ(0, std::remove(filename.c_str()));
 
   ServiceAccountCredentials<> credentials(*info);
 
@@ -559,14 +571,25 @@ TEST_F(ServiceAccountCredentialsTest, CreateFromP12ValidFile) {
   WriteBase64AsBinary(filename, kP12KeyFileContents);
 
   auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
-  if (actual.status().code() == StatusCode::kInvalidArgument &&
-      absl::StrContains(actual.status().message(), "error:0308010C")) {
-    // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
-    GTEST_SKIP();
+  EXPECT_EQ(0, std::remove(filename.c_str()));
+
+  if (actual.status().code() == StatusCode::kInvalidArgument) {
+    if (absl::StrContains(actual.status().message(), "error:0308010C")) {
+      // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
+    }
+#if _WIN32
+    // On Windows, the OS may not have the necessary providers to support
+    // PKCS#12. Unfortunately the error message is not as unambiguous, so we use
+    // the function that fails instead.
+    auto const& metadata = actual.status().error_info().metadata();
+    auto const l = metadata.find("gcloud-cpp.source.function");
+    if (l != metadata.end() && l->second == "GetCertificatePrivateKey") {
+      GTEST_SKIP() << "PKCS#12 support unavailable, skipping test";
+    }
+#endif  // _WIN32
   }
   EXPECT_STATUS_OK(actual);
-
-  EXPECT_EQ(0, std::remove(filename.c_str()));
 }
 
 /// @test Verify we can obtain JWT assertion components given the info parsed
