@@ -167,6 +167,100 @@ TEST_F(DataTypeIntegrationTest, WriteReadFloat64NaN) {
                           [](double d) { return std::isnan(d); }, true))));
 }
 
+TEST_F(DataTypeIntegrationTest, WriteReadFloat32) {
+  std::vector<float> const data = {
+      -std::numeric_limits<float>::infinity(),
+      std::numeric_limits<float>::lowest(),
+      std::numeric_limits<float>::min(),
+      -123.456F,
+      -123,
+      -42.42F,
+      -42,
+      -1.5,
+      -1,
+      -0.5,
+      0,
+      0.5,
+      1,
+      1.5,
+      42,
+      42.42F,
+      123,
+      123.456F,
+      std::numeric_limits<float>::max(),
+      std::numeric_limits<float>::infinity(),
+  };
+  auto result = WriteReadData(*client_, data, "Float32Value");
+  if (UsingEmulator()) {
+    EXPECT_THAT(result, StatusIs(StatusCode::kNotFound));
+  } else {
+    ASSERT_STATUS_OK(result);
+    EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  }
+}
+
+TEST_F(PgDataTypeIntegrationTest, WriteReadFloat32) {
+  std::vector<float> const data = {
+      -std::numeric_limits<float>::infinity(),
+      std::numeric_limits<float>::lowest(),
+      std::numeric_limits<float>::min(),
+      -123.456F,
+      -123,
+      -42.42F,
+      -42,
+      -1.5,
+      -1,
+      -0.5,
+      0,
+      0.5,
+      1,
+      1.5,
+      42,
+      42.42F,
+      123,
+      123.456F,
+      std::numeric_limits<float>::max(),
+      std::numeric_limits<float>::infinity(),
+  };
+  auto result = WriteReadData(*client_, data, "Float32Value");
+  if (UsingEmulator()) {
+    EXPECT_THAT(result, StatusIs(StatusCode::kNotFound));
+  } else {
+    ASSERT_STATUS_OK(result);
+    EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  }
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadFloat32NaN) {
+  // Since NaN is not equal to anything, including itself, we need to handle
+  // NaN separately from other Float32 values.
+  std::vector<float> const data = {
+      std::numeric_limits<float>::quiet_NaN(),
+  };
+  auto result = WriteReadData(*client_, data, "Float32Value");
+  if (UsingEmulator()) {
+    EXPECT_THAT(result, StatusIs(StatusCode::kNotFound));
+  } else {
+    EXPECT_THAT(result, IsOkAndHolds(ElementsAre(ResultOf(
+                            [](float d) { return std::isnan(d); }, true))));
+  }
+}
+
+TEST_F(PgDataTypeIntegrationTest, WriteReadFloat32NaN) {
+  // Since NaN is not equal to anything, including itself, we need to handle
+  // NaN separately from other Float32 values.
+  std::vector<float> const data = {
+      std::numeric_limits<float>::quiet_NaN(),
+  };
+  auto result = WriteReadData(*client_, data, "Float32Value");
+  if (UsingEmulator()) {
+    EXPECT_THAT(result, StatusIs(StatusCode::kNotFound));
+  } else {
+    EXPECT_THAT(result, IsOkAndHolds(ElementsAre(ResultOf(
+                            [](float d) { return std::isnan(d); }, true))));
+  }
+}
+
 TEST_F(DataTypeIntegrationTest, WriteReadString) {
   std::vector<std::string> const data = {
       "",
@@ -351,6 +445,20 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayFloat64) {
   };
   auto result = WriteReadData(*client_, data, "ArrayFloat64Value");
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayFloat32) {
+  std::vector<std::vector<float>> const data = {
+      std::vector<float>{},
+      std::vector<float>{-0.5},
+      std::vector<float>{-0.5, 0.5, 1.5},
+  };
+  auto result = WriteReadData(*client_, data, "ArrayFloat32Value");
+  if (UsingEmulator()) {
+    EXPECT_THAT(result, StatusIs(StatusCode::kNotFound));
+  } else {
+    EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+  }
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayString) {

@@ -122,6 +122,7 @@ cc_library(
         ":singer_cc_proto",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],
 )
