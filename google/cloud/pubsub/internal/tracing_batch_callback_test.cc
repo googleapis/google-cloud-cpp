@@ -141,7 +141,6 @@ TEST(TracingBatchCallback, SubscribeAttributesForOrderingKey) {
   BatchCallback::StreamingPullResponse response;
   google::pubsub::v1::StreamingPullResponse r;
   auto span = MakeTestSpan();
-  opentelemetry::trace::Scope scope(span);
   auto message =
       pubsub::MessageBuilder().SetOrderingKey("ordering-key-0").Build();
   InjectTraceContext(message, *propagator);
@@ -163,6 +162,41 @@ TEST(TracingBatchCallback, SubscribeAttributesForOrderingKey) {
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  "messaging.gcp_pubsub.message.ordering_key",
                                  "ordering-key-0")))));
+}
+
+TEST(TracingBatchCallback, SubscribeAttributesForExactlyOnce) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator = std::make_shared<
+          opentelemetry::trace::propagation::HttpTraceContext>();
+  BatchCallback::StreamingPullResponse response;
+  google::pubsub::v1::StreamingPullResponse r;
+  auto span = MakeTestSpan();
+  auto message = pubsub::MessageBuilder().Build();
+  InjectTraceContext(message, *propagator);
+  span->End();
+  auto proto_message = ToProto(message);
+  proto_message.set_message_id("id-0");
+
+  auto* m = r.add_received_messages();
+  r.mutable_subscription_properties()->set_exactly_once_delivery_enabled(true);
+  *m->mutable_message() = proto_message;
+  m->set_ack_id("ack-id-0");
+  response.response = std::move(r);
+
+  batch_callback->callback(response);
+  batch_callback->AckEnd("ack-id-0");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Contains(AllOf(
+                  SpanNamed("test-sub subscribe"),
+                  SpanHasAttributes(OTelAttribute<bool>(
+                      "messaging.gcp_pubsub.subscription.exactly_once_delivery",
+                      true)))));
 }
 
 TEST(TracingBatchCallback, VerifyDestructorEndsAllSpans) {
