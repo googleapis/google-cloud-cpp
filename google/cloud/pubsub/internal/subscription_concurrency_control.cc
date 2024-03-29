@@ -122,6 +122,7 @@ void SubscriptionConcurrencyControl::MessageHandled() {
 
 void SubscriptionConcurrencyControl::OnMessage(
     google::pubsub::v1::ReceivedMessage m) {
+  callback_->StartConcurrencyControl(m.ack_id());
   std::unique_lock<std::mutex> lk(mu_);
   if (messages_requested_ > 0) --messages_requested_;
   ++message_count_;
@@ -138,6 +139,7 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
     google::pubsub::v1::ReceivedMessage m,
     std::weak_ptr<SubscriptionConcurrencyControl> w) {
   shutdown_manager_->StartOperation(__func__, "handler", [&] {
+    callback_->EndConcurrencyControl(m.ack_id());
     auto h = std::make_unique<AckHandlerImpl>(
         std::move(w), std::move(*m.mutable_ack_id()), subscription_,
         m.delivery_attempt());

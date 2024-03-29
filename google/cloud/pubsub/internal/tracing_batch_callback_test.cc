@@ -43,6 +43,7 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsConsumer;
+using ::google::cloud::testing_util::SpanKindIsInternal;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::Contains;
@@ -163,6 +164,26 @@ TEST(TracingBatchCallback, SubscribeAttributesForOrderingKey) {
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  "messaging.gcp_pubsub.message.ordering_key",
                                  "ordering-key-0")))));
+}
+
+TEST(TracingBatchCallback, StartAndEndConcurrencyControlSpan) {
+  namespace sc = opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->StartConcurrencyControl("ack-id-0");
+  batch_callback->EndConcurrencyControl("ack-id-0");
+  batch_callback->AckEnd("ack-id-0");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                            SpanNamed("subscriber concurrency control"),
+                            SpanHasAttributes(OTelAttribute<std::string>(
+                                sc::kMessagingSystem, "gcp_pubsub")))));
 }
 
 TEST(TracingBatchCallback, VerifyDestructorEndsAllSpans) {

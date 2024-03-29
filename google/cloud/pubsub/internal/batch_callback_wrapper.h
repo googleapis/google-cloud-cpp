@@ -50,6 +50,13 @@ class BatchCallbackWrapper : public BatchCallback {
     child_->user_callback(std::move(m));
   }
 
+  void StartConcurrencyControl(std::string const& ack_id) override {
+    child_->StartConcurrencyControl(ack_id);
+  }
+  void EndConcurrencyControl(std::string const& ack_id) override {
+    child_->EndConcurrencyControl(ack_id);
+  }
+
   void AckStart(std::string const& ack_id) override {
     child_->AckStart(ack_id);
   }
