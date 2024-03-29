@@ -349,13 +349,7 @@ google_cloud_cpp_add_pkgconfig(
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-    configure_file("config-grpc.cmake.in"
-                   "google_cloud_cpp_storage-config.cmake" @ONLY)
-else ()
-    configure_file("config.cmake.in" "google_cloud_cpp_storage-config.cmake"
-                   @ONLY)
-endif ()
+configure_file("config.cmake.in" "google_cloud_cpp_storage-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_storage-config-version.cmake"
     VERSION ${PROJECT_VERSION}

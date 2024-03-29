@@ -13,17 +13,10 @@
 # limitations under the License.
 
 include(CMakeFindDependencyMacro)
+find_dependency(google_cloud_cpp_storage)
 find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_grpc_utils)
-find_dependency(google_cloud_cpp_rest_internal)
-find_dependency(google_cloud_cpp_common)
 find_dependency(absl)
-find_dependency(CURL)
 find_dependency(Crc32c)
-find_dependency(nlohmann_json)
-if (NOT WIN32)
-    find_dependency(OpenSSL)
-endif ()
-find_dependency(ZLIB)
 
-include("${CMAKE_CURRENT_LIST_DIR}/storage-targets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/storage_grpc-targets.cmake")
