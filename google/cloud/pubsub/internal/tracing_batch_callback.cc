@@ -154,7 +154,7 @@ class TracingBatchCallback : public BatchCallback {
       } else if (event == "gl-cpp.nack_end") {
         subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
                                              "nack");
-      } else if ("gl-cpp.expired") {
+      } else if (event == "gl-cpp.expired") {
         subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
                                              "expired");
       }
