@@ -94,7 +94,7 @@ class SubscriptionLeaseManagement
   std::chrono::seconds const max_deadline_extension_;
 
   std::mutex mu_;
-
+  std::shared_ptr<BatchCallback> callback_;
   // A collection of message ack_ids to maintain the message leases.
   struct LeaseStatus {
     std::chrono::system_clock::time_point estimated_server_deadline;

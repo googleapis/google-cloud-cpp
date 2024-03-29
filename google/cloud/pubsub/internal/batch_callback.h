@@ -52,6 +52,8 @@ class BatchCallback {
 
   virtual void ModackStart(std::string const& ack_id) = 0;
   virtual void ModackEnd(std::string const& ack_id) = 0;
+
+  virtual void ExpireMessage(std::string const& ack_id) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

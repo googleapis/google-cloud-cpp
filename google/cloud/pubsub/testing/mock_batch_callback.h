@@ -44,6 +44,7 @@ class MockBatchCallback : public pubsub_internal::BatchCallback {
   MOCK_METHOD(void, NackEnd, (std::string const&));
   MOCK_METHOD(void, ModackStart, (std::string const&));
   MOCK_METHOD(void, ModackEnd, (std::string const&));
+  MOCK_METHOD(void, ExpireMessage, (std::string const&));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
