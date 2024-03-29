@@ -172,8 +172,6 @@ TEST(TracingBatchCallback, SubscribeAttributesForExactlyOnce) {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator = std::make_shared<
           opentelemetry::trace::propagation::HttpTraceContext>();
-  BatchCallback::StreamingPullResponse response;
-  google::pubsub::v1::StreamingPullResponse r;
   auto span = MakeTestSpan();
   auto message = pubsub::MessageBuilder().Build();
   InjectTraceContext(message, *propagator);
@@ -181,10 +179,12 @@ TEST(TracingBatchCallback, SubscribeAttributesForExactlyOnce) {
   auto proto_message = ToProto(message);
   proto_message.set_message_id("id-0");
 
-  auto* m = r.add_received_messages();
+  google::pubsub::v1::StreamingPullResponse r;
   r.mutable_subscription_properties()->set_exactly_once_delivery_enabled(true);
+  auto* m = r.add_received_messages();
   *m->mutable_message() = proto_message;
   m->set_ack_id("ack-id-0");
+  BatchCallback::StreamingPullResponse response;
   response.response = std::move(r);
 
   batch_callback->callback(response);
