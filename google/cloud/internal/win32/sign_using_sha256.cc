@@ -23,8 +23,8 @@
 #include <memory>
 #include <type_traits>
 #include <vector>
-#include <Ntstatus.h>
 #include <Windows.h>
+#include <ntstatus.h>
 #include <wincrypt.h>
 
 namespace google {
