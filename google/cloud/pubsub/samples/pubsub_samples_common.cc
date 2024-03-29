@@ -19,7 +19,6 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/project.h"
 #include "absl/strings/match.h"
-#include "absl/time/time.h"
 #include <fstream>
 #include <sstream>
 
