@@ -192,17 +192,15 @@ else ()
     target_link_libraries(
         google_cloud_cpp_storage_grpc
         PUBLIC google-cloud-cpp::storage
+               google-cloud-cpp::storage_protos
                google-cloud-cpp::grpc_utils
                google-cloud-cpp::common
-               google-cloud-cpp::storage_protos
                nlohmann_json::nlohmann_json
                gRPC::grpc++
-               protobuf::libprotobuf
+               absl::optional
                absl::strings
-               Crc32c::crc32c
-               CURL::libcurl
-               Threads::Threads
-               OpenSSL::Crypto)
+               absl::time
+               Threads::Threads)
     google_cloud_cpp_add_common_options(google_cloud_cpp_storage_grpc)
     target_include_directories(
         google_cloud_cpp_storage_grpc
@@ -234,13 +232,13 @@ google_cloud_cpp_add_pkgconfig(
     "The GCS (Google Cloud Storage) gRPC plugin"
     "An extension to the GCS C++ client library using gRPC for transport."
     "google_cloud_cpp_storage"
-    "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_storage_protos"
-    "google_cloud_cpp_rpc_status_protos"
-    "google_cloud_cpp_rpc_error_details_protos"
+    "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
-    "libcurl"
-    "openssl")
+    "grpc++"
+    "absl_optional"
+    "absl_strings"
+    "absl_time")
 
 install(
     EXPORT storage_grpc-targets
