@@ -213,7 +213,7 @@ else ()
     if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
         target_compile_definitions(
             google_cloud_cpp_storage_grpc
-            PUBLIC GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+            PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
     endif ()
     set_target_properties(
         google_cloud_cpp_storage_grpc
@@ -406,6 +406,10 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
     foreach (fname ${storage_client_grpc_unit_tests})
         google_cloud_cpp_add_executable(target "storage" "${fname}")
+        if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+            target_compile_definitions(
+                ${target} PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+        endif ()
         target_link_libraries(
             ${target}
             PRIVATE storage_client_testing
