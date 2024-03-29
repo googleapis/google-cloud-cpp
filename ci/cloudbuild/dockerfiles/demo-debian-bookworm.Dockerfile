@@ -48,14 +48,14 @@ RUN apt-get update && \
 # not, `dnf install pkgconfig` should work.
 
 # ```bash
-WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+WORKDIR /var/tmp/build/pkgconf
+RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --prefix=/usr --with-system-libdir=/lib:/usr/lib --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
     make install && \
-    ldconfig
-ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig/
+    ldconfig && cd /var/tmp && rm -fr build
+ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
 # ```
 
 # #### crc32c

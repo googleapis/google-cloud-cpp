@@ -66,13 +66,13 @@ RUN echo 'root:' | chpasswd
 # Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
 # you may want to use a recent version of the standard `pkg-config` binary. If
 # not, `dnf install pkgconfig` should work.
-WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+WORKDIR /var/tmp/build/pkgconf
+RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --prefix=/usr --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
     make install && \
-    ldconfig
+    ldconfig && cd /var/tmp && rm -fr build
 
 # The following steps will install libraries and tools in `/usr/local`. By
 # default, pkg-config does not search in these directories. Note how this build

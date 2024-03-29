@@ -45,13 +45,13 @@ RUN dnf makecache && \
 # not, `dnf install pkgconfig` should work.
 
 # ```bash
-WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+WORKDIR /var/tmp/build/pkgconf
+RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
+    ./configure --prefix=/usr --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
     make install && \
-    ldconfig
+    ldconfig && cd /var/tmp && rm -fr build
 # ```
 
 # Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting
@@ -63,7 +63,8 @@ RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
-# default, pkg-config does not search in these directories.
+# default, pkgconf does not search in these directories. We need to explicitly
+# set the search path.
 
 # ```bash
 ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
