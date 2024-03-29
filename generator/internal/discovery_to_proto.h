@@ -93,7 +93,7 @@ Status GenerateProtosFromDiscoveryDoc(
     nlohmann::json const& discovery_doc, std::string const& discovery_doc_url,
     std::string const& protobuf_proto_path,
     std::string const& googleapis_proto_path, std::string const& output_path,
-    std::string const& export_output_path,
+    std::string const& export_output_path, bool disable_parallel_write = true,
     std::set<std::string> operation_services = {});
 
 // Recurses through the json accumulating the values of any $ref fields

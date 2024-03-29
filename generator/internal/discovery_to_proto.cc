@@ -573,7 +573,7 @@ Status GenerateProtosFromDiscoveryDoc(
     nlohmann::json const& discovery_doc, std::string const& discovery_doc_url,
     std::string const& protobuf_proto_path,
     std::string const& googleapis_proto_path, std::string const& output_path,
-    std::string const& export_output_path,
+    std::string const& export_output_path, bool disable_parallel_write,
     std::set<std::string> operation_services) {
   auto default_hostname = DefaultHostFromRootUrl(discovery_doc);
   if (!default_hostname) return std::move(default_hostname).status();
@@ -644,38 +644,50 @@ Status GenerateProtosFromDiscoveryDoc(
     (void)descriptor_pool.FindFileByName(f.relative_proto_path());
   }
 
-  std::vector<std::future<google::cloud::Status>> tasks;
-  tasks.reserve(files->first.size());
-  for (auto f : files->first) {
-    tasks.push_back(std::async(
-        std::launch::async,
-        [](DiscoveryFile const& f,
-           DiscoveryDocumentProperties const& document_properties,
-           std::map<std::string, DiscoveryTypeVertex> const& types) {
-          return f.WriteFile(document_properties, types);
-        },
-        std::move(f), document_properties, *types));
-  }
-
-  for (auto f : files->second) {
-    tasks.push_back(std::async(
-        std::launch::async,
-        [](DiscoveryProtoExportFile const& f) { return f.WriteFile(); },
-        std::move(f)));
-  }
-
-  bool file_write_error = false;
-  for (auto& t : tasks) {
-    auto result = t.get();
-    if (!result.ok()) {
-      GCP_LOG(ERROR) << result;
-      file_write_error = true;
+  if (disable_parallel_write) {
+    for (auto f : files->first) {
+      auto s = f.WriteFile(document_properties, *types);
+      if (!s.ok()) return s;
     }
-  }
 
-  if (file_write_error) {
-    return internal::InternalError(
-        "Error encountered writing file. Check log for additional details.");
+    for (auto f : files->second) {
+      auto s = f.WriteFile();
+      if (!s.ok()) return s;
+    }
+  } else {
+    std::vector<std::future<google::cloud::Status>> tasks;
+    tasks.reserve(files->first.size());
+    for (auto f : files->first) {
+      tasks.push_back(std::async(
+          std::launch::async,
+          [](DiscoveryFile const& f,
+             DiscoveryDocumentProperties const& document_properties,
+             std::map<std::string, DiscoveryTypeVertex> const& types) {
+            return f.WriteFile(document_properties, types);
+          },
+          std::move(f), document_properties, *types));
+    }
+
+    for (auto f : files->second) {
+      tasks.push_back(std::async(
+          std::launch::async,
+          [](DiscoveryProtoExportFile const& f) { return f.WriteFile(); },
+          std::move(f)));
+    }
+
+    bool file_write_error = false;
+    for (auto& t : tasks) {
+      auto result = t.get();
+      if (!result.ok()) {
+        GCP_LOG(ERROR) << result;
+        file_write_error = true;
+      }
+    }
+
+    if (file_write_error) {
+      return internal::InternalError(
+          "Error encountered writing file. Check log for additional details.");
+    }
   }
 
   return {};
