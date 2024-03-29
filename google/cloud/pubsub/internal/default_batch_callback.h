@@ -42,7 +42,7 @@ class DefaultBatchCallback : public BatchCallback {
     callback_(std::move(response));
   }
 
-  void message_callback(ReceivedMessage m) override {}
+  void message_callback(ReceivedMessage) override {}
 
   void user_callback(MessageCallback::MessageAndHandler m) override {
     message_callback_->user_callback(std::move(m));
