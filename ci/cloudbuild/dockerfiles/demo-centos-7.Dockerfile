@@ -67,6 +67,7 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     ./configure --prefix=/usr --with-system-libdir=/lib64:/usr/lib64 --with-system-includedir=/usr/include && \
     make -j ${NCPU:-4} && \
     make install && \
+    ln -f /usr/bin/pkgconf /usr/bin/pkg-config && \
     ldconfig && cd /var/tmp && rm -fr build
 # ```
 
