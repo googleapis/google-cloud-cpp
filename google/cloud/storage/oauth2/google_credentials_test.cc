@@ -460,8 +460,8 @@ TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
     ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
     auto creds = GoogleDefaultCredentials();
-    EXPECT_THAT(creds, StatusIs(StatusCode::kInvalidArgument,
-                                HasSubstr(filename)));
+    EXPECT_THAT(creds,
+                StatusIs(StatusCode::kInvalidArgument, HasSubstr(filename)));
   }
 }
 
