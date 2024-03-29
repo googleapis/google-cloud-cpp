@@ -38,7 +38,6 @@ namespace {
 using ::google::cloud::testing_util::FormatSize;
 using ::google::cloud::testing_util::Timer;
 namespace gcs = ::google::cloud::storage;
-namespace gcs_ex = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::AggregateDownloadThroughputOptions;
 using gcs_bm::FormatBandwidthGbPerSecond;
@@ -124,8 +123,7 @@ gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   namespace gcs_ex = ::google::cloud::storage_experimental;
   if (options.api == "GRPC") {
-    return gcs_ex::DefaultGrpcClient(
-        std::move(opts).set<gcs_ex::GrpcPluginOption>("media"));
+    return gcs_ex::DefaultGrpcClient(std::move(opts));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   return gcs::Client(std::move(opts));
@@ -381,8 +379,6 @@ void PrintResults(AggregateDownloadThroughputOptions const& options,
     return v;
   };
   auto const labels = clean_csv_field(options.labels);
-  auto const grpc_plugin_config =
-      clean_csv_field(options.client_options.get<gcs_ex::GrpcPluginOption>());
   auto const* client_per_thread = options.client_per_thread ? "true" : "false";
   // Print the results after each iteration. Makes it possible to interrupt
   // the benchmark in the middle and still get some data.

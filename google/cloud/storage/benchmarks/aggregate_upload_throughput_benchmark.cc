@@ -116,8 +116,7 @@ gcs::Client MakeClient(AggregateUploadThroughputOptions const& options) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   namespace gcs_ex = ::google::cloud::storage_experimental;
   if (options.api == "GRPC") {
-    return gcs_ex::DefaultGrpcClient(
-        std::move(opts).set<gcs_ex::GrpcPluginOption>("media"));
+    return gcs_ex::DefaultGrpcClient(std::move(opts));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   return gcs::Client(std::move(opts));
