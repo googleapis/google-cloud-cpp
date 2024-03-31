@@ -2102,7 +2102,13 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
   EXPECT_CALL(*mock, BeginTransaction)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce(Return(MakeTestTransaction()));
+      .WillOnce(
+          [](grpc::ClientContext&, Options const&,
+             google::spanner::v1::BeginTransactionRequest const& request) {
+            EXPECT_TRUE(request.options().has_partitioned_dml());
+            EXPECT_FALSE(request.options().exclude_txn_from_change_streams());
+            return MakeTestTransaction();
+          });
   auto constexpr kTextResponse = R"pb(
     metadata: {}
     stats: { row_count_lower_bound: 42 }
@@ -2117,6 +2123,40 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto result = conn->ExecutePartitionedDml(
+      {spanner::SqlStatement("DELETE * FROM Table"),
+       spanner::QueryOptions().set_request_tag("tag")});
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(result->row_count_lower_bound, 42);
+}
+
+TEST(ConnectionImplTest, ExecutePartitionedDmlExcludeFromChangeStreams) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce(
+          [](grpc::ClientContext&, Options const&,
+             google::spanner::v1::BeginTransactionRequest const& request) {
+            EXPECT_TRUE(request.options().has_partitioned_dml());
+            EXPECT_TRUE(request.options().exclude_txn_from_change_streams());
+            return MakeTestTransaction();
+          });
+  auto constexpr kTextResponse = R"pb(
+    metadata: {}
+    stats: { row_count_lower_bound: 42 }
+  )pb";
+  EXPECT_CALL(*mock,
+              ExecuteStreamingSql(
+                  _, _, AllOf(HasRequestTag("tag"), HasTransactionTag(""))))
+      .WillOnce(Return(ByMove(MakeReader<PartialResultSet>({kTextResponse}))));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(
+      MakeLimitedTimeOptions()
+          .set<spanner::ExcludeTransactionFromChangeStreamsOption>(true));
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("DELETE * FROM Table"),
        spanner::QueryOptions().set_request_tag("tag")});
@@ -2513,8 +2553,14 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
                               "placeholder_database_id");
   EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  google::spanner::v1::Transaction txn = MakeTestTransaction();
-  EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(txn));
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce(
+          [](grpc::ClientContext&, Options const&,
+             google::spanner::v1::BeginTransactionRequest const& request) {
+            EXPECT_TRUE(request.options().has_read_write());
+            EXPECT_FALSE(request.options().exclude_txn_from_change_streams());
+            return MakeTestTransaction();
+          });
   EXPECT_CALL(*mock, Commit(_, _,
                             AllOf(HasSession("test-session-name"),
                                   HasReturnStats(true))))
@@ -2531,6 +2577,37 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
   ASSERT_STATUS_OK(commit);
   ASSERT_TRUE(commit->commit_stats.has_value());
   EXPECT_EQ(42, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, CommitSuccessExcludeFromChangeStreams) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction)
+      .WillOnce(
+          [](grpc::ClientContext&, Options const&,
+             google::spanner::v1::BeginTransactionRequest const& request) {
+            EXPECT_TRUE(request.options().has_read_write());
+            EXPECT_TRUE(request.options().exclude_txn_from_change_streams());
+            return MakeTestTransaction();
+          });
+  EXPECT_CALL(*mock, Commit(_, _, HasSession("test-session-name")))
+      .WillOnce(Return(MakeCommitResponse(
+          spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+              .value())));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(
+      MakeLimitedTimeOptions()
+          .set<spanner::ExcludeTransactionFromChangeStreamsOption>(true));
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(), {}});
+  EXPECT_THAT(
+      commit,
+      IsOkAndHolds(Field(
+          &spanner::CommitResult::commit_timestamp,
+          Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)).value()))));
 }
 
 TEST(ConnectionImplTest, CommitSuccessWithMaxCommitDelay) {
@@ -2640,6 +2717,7 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
             request.mutation_groups(),
             ElementsAre(IsProtoEqual(BatchWriteRequest::MutationGroup()),
                         IsProtoEqual(BatchWriteRequest::MutationGroup())));
+        EXPECT_FALSE(request.exclude_txn_from_change_streams());
         return MakeReader<BatchWriteResponse>(
             {}, Status(StatusCode::kUnavailable, "try-again in BatchWrite"));
       })
@@ -2654,6 +2732,7 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatched) {
             request.mutation_groups(),
             ElementsAre(IsProtoEqual(BatchWriteRequest::MutationGroup()),
                         IsProtoEqual(BatchWriteRequest::MutationGroup())));
+        EXPECT_FALSE(request.exclude_txn_from_change_streams());
         // A single `BatchWriteResponse` that covers all two mutation groups.
         return MakeReader<BatchWriteResponse>({
             R"pb(
@@ -2691,6 +2770,7 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatchedSessionNotFound) {
                    BatchWriteRequest const& request) {
         EXPECT_EQ("test-session-name-1", request.session());
         EXPECT_THAT(request.mutation_groups(), IsEmpty());
+        EXPECT_FALSE(request.exclude_txn_from_change_streams());
         return MakeReader<BatchWriteResponse>(
             {}, SessionNotFoundError(request.session()));
       })
@@ -2698,6 +2778,7 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatchedSessionNotFound) {
                     BatchWriteRequest const& request) {
         EXPECT_EQ("test-session-name-2", request.session());
         EXPECT_THAT(request.mutation_groups(), IsEmpty());
+        EXPECT_FALSE(request.exclude_txn_from_change_streams());
         return MakeReader<BatchWriteResponse>(
             {R"pb(status {}
                   commit_timestamp { seconds: 123 })pb"});
@@ -2729,6 +2810,52 @@ TEST(ConnectionImplTest, CommitAtLeastOnceBatchedSessionNotFound) {
                   Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)))))));
     EXPECT_EQ(++it, commit_results.end());
   }
+}
+
+TEST(ConnectionImplTest, CommitAtLeastOnceBatchedExcludeFromChangeStreams) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  using BatchWriteRequest = google::spanner::v1::BatchWriteRequest;
+  EXPECT_CALL(*mock, BatchWrite)
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&, Options const&,
+                    BatchWriteRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_EQ(google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED,
+                  request.request_options().priority());
+        EXPECT_THAT(request.request_options().request_tag(), IsEmpty());
+        EXPECT_THAT(request.request_options().transaction_tag(), IsEmpty());
+        EXPECT_THAT(
+            request.mutation_groups(),
+            ElementsAre(IsProtoEqual(BatchWriteRequest::MutationGroup()),
+                        IsProtoEqual(BatchWriteRequest::MutationGroup())));
+        EXPECT_TRUE(request.exclude_txn_from_change_streams());
+        // A single `BatchWriteResponse` that covers all two mutation groups.
+        return MakeReader<BatchWriteResponse>({
+            R"pb(
+              indexes: 0
+              indexes: 1
+              status {}
+              commit_timestamp { seconds: 123 }
+            )pb"});
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(
+      MakeLimitedTimeOptions()
+          .set<spanner::ExcludeTransactionFromChangeStreamsOption>(true));
+  auto commit_results = conn->BatchWrite(
+      {{spanner::Mutations{}, spanner::Mutations{}}, Options{}});
+  auto it = commit_results.begin();
+  ASSERT_NE(it, commit_results.end());
+  EXPECT_THAT(
+      *it, IsOkAndHolds(AllOf(
+               Field(&spanner::BatchedCommitResult::indexes, ElementsAre(0, 1)),
+               Field(&spanner::BatchedCommitResult::commit_timestamp,
+                     Eq(spanner::MakeTimestamp(absl::FromUnixSeconds(123)))))));
+  EXPECT_EQ(++it, commit_results.end());
 }
 
 TEST(ConnectionImplTest, RollbackCreateSessionFailure) {

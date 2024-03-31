@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/transaction_impl.h"
+#include "google/cloud/spanner/options.h"
 #include <google/protobuf/duration.pb.h>
 
 namespace google {
@@ -44,6 +45,10 @@ google::spanner::v1::TransactionOptions MakeOpts(
     google::spanner::v1::TransactionOptions_ReadWrite rw_opts) {
   google::spanner::v1::TransactionOptions opts;
   *opts.mutable_read_write() = std::move(rw_opts);
+  auto const& current = internal::CurrentOptions();
+  if (current.get<ExcludeTransactionFromChangeStreamsOption>()) {
+    opts.set_exclude_txn_from_change_streams(true);
+  }
   return opts;
 }
 

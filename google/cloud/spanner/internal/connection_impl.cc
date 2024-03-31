@@ -167,6 +167,10 @@ google::spanner::v1::TransactionOptions PartitionedDmlTransactionOptions() {
   google::spanner::v1::TransactionOptions options;
   *options.mutable_partitioned_dml() =
       google::spanner::v1::TransactionOptions_PartitionedDml();
+  auto const& current = internal::CurrentOptions();
+  if (current.get<spanner::ExcludeTransactionFromChangeStreamsOption>()) {
+    options.set_exclude_txn_from_change_streams(true);
+  }
   return options;
 }
 
@@ -1287,6 +1291,10 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWriteImpl(
     for (auto& m : mutations) {
       *group->add_mutations() = std::move(m).as_proto();
     }
+  }
+  auto const& current = internal::CurrentOptions();
+  if (current.get<spanner::ExcludeTransactionFromChangeStreamsOption>()) {
+    request.set_exclude_txn_from_change_streams(true);
   }
 
   auto stub = session_pool_->GetStub(*session);
