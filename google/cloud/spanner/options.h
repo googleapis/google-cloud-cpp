@@ -352,6 +352,23 @@ struct TransactionTagOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to control when transaction mutations
+ * will not be recorded in change streams that track columns modified by the
+ * transaction.
+ *
+ * The mutations will NOT be recorded when this option is true AND the change
+ * stream has the `allow_txn_exclusion` DDL option set.
+ *
+ * May only be specified for read-write transactions, ExecutePartitionedDml(),
+ * and the mutation-groups overload of CommitAtLeastOnce().
+ *
+ * @ingroup spanner-options
+ */
+struct ExcludeTransactionFromChangeStreamsOption {
+  using Type = bool;
+};
+
+/**
  * Option for `google::cloud::Options` to return additional statistics
  * about the committed transaction in a `spanner::CommitResult`.
  *
