@@ -29,6 +29,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::MigrationServiceClient](@ref aiplatform_v1::MigrationServiceClient-service-account-snippet)
 - [\c aiplatform_v1::ModelServiceClient](@ref aiplatform_v1::ModelServiceClient-service-account-snippet)
 - [\c aiplatform_v1::ModelGardenServiceClient](@ref aiplatform_v1::ModelGardenServiceClient-service-account-snippet)
+- [\c aiplatform_v1::NotebookServiceClient](@ref aiplatform_v1::NotebookServiceClient-service-account-snippet)
+- [\c aiplatform_v1::PersistentResourceServiceClient](@ref aiplatform_v1::PersistentResourceServiceClient-service-account-snippet)
 - [\c aiplatform_v1::PipelineServiceClient](@ref aiplatform_v1::PipelineServiceClient-service-account-snippet)
 - [\c aiplatform_v1::PredictionServiceClient](@ref aiplatform_v1::PredictionServiceClient-service-account-snippet)
 - [\c aiplatform_v1::ScheduleServiceClient](@ref aiplatform_v1::ScheduleServiceClient-service-account-snippet)
@@ -145,6 +147,18 @@ guide for more details.
 /*! @page aiplatform_v1::ModelGardenServiceClient-service-account-snippet Override aiplatform_v1::ModelGardenServiceClient Authentication Defaults
 
 @snippet google/cloud/aiplatform/v1/samples/model_garden_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::NotebookServiceClient-service-account-snippet Override aiplatform_v1::NotebookServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/notebook_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::PersistentResourceServiceClient-service-account-snippet Override aiplatform_v1::PersistentResourceServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/persistent_resource_client_samples.cc with-service-account
 
 */
 

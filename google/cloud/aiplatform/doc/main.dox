@@ -48,6 +48,8 @@ application.
 - [\c aiplatform_v1::MigrationServiceClient](@ref google::cloud::aiplatform_v1::MigrationServiceClient)
 - [\c aiplatform_v1::ModelServiceClient](@ref google::cloud::aiplatform_v1::ModelServiceClient)
 - [\c aiplatform_v1::ModelGardenServiceClient](@ref google::cloud::aiplatform_v1::ModelGardenServiceClient)
+- [\c aiplatform_v1::NotebookServiceClient](@ref google::cloud::aiplatform_v1::NotebookServiceClient)
+- [\c aiplatform_v1::PersistentResourceServiceClient](@ref google::cloud::aiplatform_v1::PersistentResourceServiceClient)
 - [\c aiplatform_v1::PipelineServiceClient](@ref google::cloud::aiplatform_v1::PipelineServiceClient)
 - [\c aiplatform_v1::PredictionServiceClient](@ref google::cloud::aiplatform_v1::PredictionServiceClient)
 - [\c aiplatform_v1::ScheduleServiceClient](@ref google::cloud::aiplatform_v1::ScheduleServiceClient)
