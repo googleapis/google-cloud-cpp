@@ -69,6 +69,31 @@ Idempotency StorageControlConnectionIdempotencyPolicy::GetStorageLayout(
   return Idempotency::kIdempotent;
 }
 
+Idempotency StorageControlConnectionIdempotencyPolicy::CreateManagedFolder(
+    google::storage::control::v2::CreateManagedFolderRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::DeleteManagedFolder(
+    google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::GetManagedFolder(
+    google::storage::control::v2::GetManagedFolderRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::ListManagedFolders(
+    google::storage::control::v2::ListManagedFoldersRequest
+        request) {  // NOLINT
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
 MakeDefaultStorageControlConnectionIdempotencyPolicy() {
   return std::make_unique<StorageControlConnectionIdempotencyPolicy>();

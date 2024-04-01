@@ -154,6 +154,11 @@ Idempotency BackupForGKEConnectionIdempotencyPolicy::GetVolumeRestore(
   return Idempotency::kIdempotent;
 }
 
+Idempotency BackupForGKEConnectionIdempotencyPolicy::GetBackupIndexDownloadUrl(
+    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<BackupForGKEConnectionIdempotencyPolicy>
 MakeDefaultBackupForGKEConnectionIdempotencyPolicy() {
   return std::make_unique<BackupForGKEConnectionIdempotencyPolicy>();

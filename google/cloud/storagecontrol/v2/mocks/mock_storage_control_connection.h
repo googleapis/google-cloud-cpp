@@ -74,6 +74,27 @@ class MockStorageControlConnection
       StatusOr<google::storage::control::v2::StorageLayout>, GetStorageLayout,
       (google::storage::control::v2::GetStorageLayoutRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::storage::control::v2::ManagedFolder>,
+      CreateManagedFolder,
+      (google::storage::control::v2::CreateManagedFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteManagedFolder,
+      (google::storage::control::v2::DeleteManagedFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::storage::control::v2::ManagedFolder>, GetManagedFolder,
+      (google::storage::control::v2::GetManagedFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::storage::control::v2::ManagedFolder>),
+              ListManagedFolders,
+              (google::storage::control::v2::ListManagedFoldersRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

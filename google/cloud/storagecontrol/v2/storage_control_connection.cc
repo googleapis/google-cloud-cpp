@@ -77,6 +77,31 @@ StorageControlConnection::GetStorageLayout(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlConnection::CreateManagedFolder(
+    google::storage::control::v2::CreateManagedFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status StorageControlConnection::DeleteManagedFolder(
+    google::storage::control::v2::DeleteManagedFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlConnection::GetManagedFolder(
+    google::storage::control::v2::GetManagedFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::storage::control::v2::ManagedFolder>
+StorageControlConnection::ListManagedFolders(
+    google::storage::control::v2::
+        ListManagedFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::storage::control::v2::ManagedFolder>>();
+}
+
 std::shared_ptr<StorageControlConnection> MakeStorageControlConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

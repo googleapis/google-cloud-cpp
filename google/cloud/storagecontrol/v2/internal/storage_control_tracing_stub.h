@@ -66,6 +66,27 @@ class StorageControlTracingStub : public StorageControlStub {
       google::storage::control::v2::GetStorageLayoutRequest const& request)
       override;
 
+  StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::CreateManagedFolderRequest const& request)
+      override;
+
+  Status DeleteManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::DeleteManagedFolderRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetManagedFolderRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
+  ListManagedFolders(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ListManagedFoldersRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

@@ -93,6 +93,41 @@ StorageControlAuth::GetStorageLayout(
   return child_->GetStorageLayout(context, options, request);
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlAuth::CreateManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::CreateManagedFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateManagedFolder(context, options, request);
+}
+
+Status StorageControlAuth::DeleteManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteManagedFolder(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlAuth::GetManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetManagedFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetManagedFolder(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
+StorageControlAuth::ListManagedFolders(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListManagedFoldersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListManagedFolders(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

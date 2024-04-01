@@ -140,6 +140,11 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request)
       override;
 
+  StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+  GetBackupIndexDownloadUrl(
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gkebackup_v1_internal::BackupForGKEStub> stub_;

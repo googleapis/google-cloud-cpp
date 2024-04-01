@@ -268,6 +268,12 @@ class BackupForGKEConnection {
   virtual StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
   GetVolumeRestore(
       google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+  GetBackupIndexDownloadUrl(
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request);
 };
 
 /**

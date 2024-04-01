@@ -176,6 +176,13 @@ class BackupForGKEStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request) = 0;
 
+  virtual StatusOr<
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+  GetBackupIndexDownloadUrl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -340,6 +347,12 @@ class DefaultBackupForGKEStub : public BackupForGKEStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request)
       override;
+
+  StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+  GetBackupIndexDownloadUrl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

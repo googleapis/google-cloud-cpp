@@ -445,6 +445,24 @@ BackupForGKEClient::GetVolumeRestore(
   return connection_->GetVolumeRestore(request);
 }
 
+StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+BackupForGKEClient::GetBackupIndexDownloadUrl(std::string const& backup,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest request;
+  request.set_backup(backup);
+  return connection_->GetBackupIndexDownloadUrl(request);
+}
+
+StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+BackupForGKEClient::GetBackupIndexDownloadUrl(
+    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBackupIndexDownloadUrl(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkebackup_v1
 }  // namespace cloud

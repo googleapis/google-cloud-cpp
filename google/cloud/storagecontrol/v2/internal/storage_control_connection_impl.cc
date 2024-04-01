@@ -215,6 +215,97 @@ StorageControlConnectionImpl::GetStorageLayout(
       *current, request_copy, __func__);
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlConnectionImpl::CreateManagedFolder(
+    google::storage::control::v2::CreateManagedFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateManagedFolder(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::CreateManagedFolderRequest const&
+                 request) {
+        return stub_->CreateManagedFolder(context, options, request);
+      },
+      *current, request_copy, __func__);
+}
+
+Status StorageControlConnectionImpl::DeleteManagedFolder(
+    google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteManagedFolder(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::DeleteManagedFolderRequest const&
+                 request) {
+        return stub_->DeleteManagedFolder(context, options, request);
+      },
+      *current, request_copy, __func__);
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlConnectionImpl::GetManagedFolder(
+    google::storage::control::v2::GetManagedFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetManagedFolder(request_copy),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::GetManagedFolderRequest const&
+                 request) {
+        return stub_->GetManagedFolder(context, options, request);
+      },
+      *current, request_copy, __func__);
+}
+
+StreamRange<google::storage::control::v2::ManagedFolder>
+StorageControlConnectionImpl::ListManagedFolders(
+    google::storage::control::v2::ListManagedFoldersRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListManagedFolders(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::storage::control::v2::ManagedFolder>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::storage::control::v2::ListManagedFoldersRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::storage::control::v2::ListManagedFoldersRequest const&
+                    request) {
+              return stub->ListManagedFolders(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::storage::control::v2::ListManagedFoldersResponse r) {
+        std::vector<google::storage::control::v2::ManagedFolder> result(
+            r.managed_folders().size());
+        auto& messages = *r.mutable_managed_folders();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud

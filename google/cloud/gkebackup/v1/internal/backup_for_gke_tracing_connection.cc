@@ -264,6 +264,16 @@ BackupForGKETracingConnection::GetVolumeRestore(
   return internal::EndSpan(*span, child_->GetVolumeRestore(request));
 }
 
+StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+BackupForGKETracingConnection::GetBackupIndexDownloadUrl(
+    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkebackup_v1::BackupForGKEConnection::GetBackupIndexDownloadUrl");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackupIndexDownloadUrl(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<gkebackup_v1::BackupForGKEConnection>

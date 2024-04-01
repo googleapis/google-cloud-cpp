@@ -108,6 +108,10 @@ class BackupForGKEConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GetVolumeRestore(
       google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request);
+
+  virtual google::cloud::Idempotency GetBackupIndexDownloadUrl(
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request);
 };
 
 std::unique_ptr<BackupForGKEConnectionIdempotencyPolicy>

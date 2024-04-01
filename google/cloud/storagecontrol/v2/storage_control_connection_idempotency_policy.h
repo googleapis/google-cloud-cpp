@@ -54,6 +54,18 @@ class StorageControlConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GetStorageLayout(
       google::storage::control::v2::GetStorageLayoutRequest const& request);
+
+  virtual google::cloud::Idempotency CreateManagedFolder(
+      google::storage::control::v2::CreateManagedFolderRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteManagedFolder(
+      google::storage::control::v2::DeleteManagedFolderRequest const& request);
+
+  virtual google::cloud::Idempotency GetManagedFolder(
+      google::storage::control::v2::GetManagedFolderRequest const& request);
+
+  virtual google::cloud::Idempotency ListManagedFolders(
+      google::storage::control::v2::ListManagedFoldersRequest request);
 };
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>

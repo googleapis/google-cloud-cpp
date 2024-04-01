@@ -349,6 +349,20 @@ BackupForGKETracingStub::GetVolumeRestore(
                            child_->GetVolumeRestore(context, options, request));
 }
 
+StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+BackupForGKETracingStub::GetBackupIndexDownloadUrl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
+                                     "GetBackupIndexDownloadUrl");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetBackupIndexDownloadUrl(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKETracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
