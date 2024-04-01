@@ -25,6 +25,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:log_entry.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:mitre_attack.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:mute_config.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:notebook.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:notification_config.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:notification_message.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:org_policy.proto
