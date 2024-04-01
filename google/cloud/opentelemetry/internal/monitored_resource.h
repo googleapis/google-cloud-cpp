@@ -25,6 +25,9 @@ namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::string AsString(
+    opentelemetry::sdk::common::OwnedAttributeValue const& attribute);
+
 /*
  * A struct representing a Google Cloud monitored resource.
  *
