@@ -88,6 +88,44 @@ StorageControlTracingConnection::GetStorageLayout(
   return internal::EndSpan(*span, child_->GetStorageLayout(request));
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlTracingConnection::CreateManagedFolder(
+    google::storage::control::v2::CreateManagedFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::CreateManagedFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateManagedFolder(request));
+}
+
+Status StorageControlTracingConnection::DeleteManagedFolder(
+    google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::DeleteManagedFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteManagedFolder(request));
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlTracingConnection::GetManagedFolder(
+    google::storage::control::v2::GetManagedFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::GetManagedFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetManagedFolder(request));
+}
+
+StreamRange<google::storage::control::v2::ManagedFolder>
+StorageControlTracingConnection::ListManagedFolders(
+    google::storage::control::v2::ListManagedFoldersRequest request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::ListManagedFolders");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListManagedFolders(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::storage::control::v2::ManagedFolder>(std::move(span),
+                                                   std::move(sr));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<storagecontrol_v2::StorageControlConnection>

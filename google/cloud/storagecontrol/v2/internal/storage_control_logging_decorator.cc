@@ -110,6 +110,57 @@ StorageControlLogging::GetStorageLayout(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlLogging::CreateManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::CreateManagedFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::CreateManagedFolderRequest const&
+                 request) {
+        return child_->CreateManagedFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status StorageControlLogging::DeleteManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::DeleteManagedFolderRequest const&
+                 request) {
+        return child_->DeleteManagedFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlLogging::GetManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetManagedFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::GetManagedFolderRequest const&
+                 request) {
+        return child_->GetManagedFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
+StorageControlLogging::ListManagedFolders(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListManagedFoldersRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::ListManagedFoldersRequest const&
+                 request) {
+        return child_->ListManagedFolders(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

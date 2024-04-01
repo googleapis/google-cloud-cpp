@@ -109,6 +109,57 @@ StorageControlTracingStub::GetStorageLayout(
                            child_->GetStorageLayout(context, options, request));
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlTracingStub::CreateManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::CreateManagedFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "CreateManagedFolder");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateManagedFolder(context, options, request));
+}
+
+Status StorageControlTracingStub::DeleteManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "DeleteManagedFolder");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteManagedFolder(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlTracingStub::GetManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetManagedFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "GetManagedFolder");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetManagedFolder(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
+StorageControlTracingStub::ListManagedFolders(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListManagedFoldersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "ListManagedFolders");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListManagedFolders(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

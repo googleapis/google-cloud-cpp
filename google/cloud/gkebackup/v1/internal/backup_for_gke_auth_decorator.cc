@@ -377,6 +377,16 @@ BackupForGKEAuth::GetVolumeRestore(
   return child_->GetVolumeRestore(context, options, request);
 }
 
+StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+BackupForGKEAuth::GetBackupIndexDownloadUrl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBackupIndexDownloadUrl(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

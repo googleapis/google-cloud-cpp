@@ -66,6 +66,28 @@ class StorageControlStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::GetStorageLayoutRequest const& request) = 0;
 
+  virtual StatusOr<google::storage::control::v2::ManagedFolder>
+  CreateManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::CreateManagedFolderRequest const&
+          request) = 0;
+
+  virtual Status DeleteManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::DeleteManagedFolderRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::storage::control::v2::ManagedFolder>
+  GetManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetManagedFolderRequest const& request) = 0;
+
+  virtual StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
+  ListManagedFolders(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ListManagedFoldersRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -116,6 +138,27 @@ class DefaultStorageControlStub : public StorageControlStub {
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
       grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::GetStorageLayoutRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::CreateManagedFolderRequest const& request)
+      override;
+
+  Status DeleteManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::DeleteManagedFolderRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetManagedFolderRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
+  ListManagedFolders(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ListManagedFoldersRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

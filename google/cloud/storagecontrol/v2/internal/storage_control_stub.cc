@@ -108,6 +108,53 @@ DefaultStorageControlStub::GetStorageLayout(
   return response;
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+DefaultStorageControlStub::CreateManagedFolder(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::CreateManagedFolderRequest const& request) {
+  google::storage::control::v2::ManagedFolder response;
+  auto status = grpc_stub_->CreateManagedFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultStorageControlStub::DeleteManagedFolder(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteManagedFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+DefaultStorageControlStub::GetManagedFolder(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::GetManagedFolderRequest const& request) {
+  google::storage::control::v2::ManagedFolder response;
+  auto status = grpc_stub_->GetManagedFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
+DefaultStorageControlStub::ListManagedFolders(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::ListManagedFoldersRequest const& request) {
+  google::storage::control::v2::ListManagedFoldersResponse response;
+  auto status = grpc_stub_->ListManagedFolders(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageControlStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -211,6 +211,21 @@ class StorageControlConnection {
   virtual StatusOr<google::storage::control::v2::StorageLayout>
   GetStorageLayout(
       google::storage::control::v2::GetStorageLayoutRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::ManagedFolder>
+  CreateManagedFolder(
+      google::storage::control::v2::CreateManagedFolderRequest const& request);
+
+  virtual Status DeleteManagedFolder(
+      google::storage::control::v2::DeleteManagedFolderRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::ManagedFolder>
+  GetManagedFolder(
+      google::storage::control::v2::GetManagedFolderRequest const& request);
+
+  virtual StreamRange<google::storage::control::v2::ManagedFolder>
+  ListManagedFolders(
+      google::storage::control::v2::ListManagedFoldersRequest request);
 };
 
 /**

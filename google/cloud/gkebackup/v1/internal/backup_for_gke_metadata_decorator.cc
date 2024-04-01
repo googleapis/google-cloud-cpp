@@ -297,6 +297,16 @@ BackupForGKEMetadata::GetVolumeRestore(
   return child_->GetVolumeRestore(context, options, request);
 }
 
+StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+BackupForGKEMetadata::GetBackupIndexDownloadUrl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("backup=", internal::UrlEncode(request.backup())));
+  return child_->GetBackupIndexDownloadUrl(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

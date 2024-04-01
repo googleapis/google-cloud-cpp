@@ -408,6 +408,21 @@ BackupForGKELogging::GetVolumeRestore(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+BackupForGKELogging::GetBackupIndexDownloadUrl(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+              request) {
+        return child_->GetBackupIndexDownloadUrl(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKELogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

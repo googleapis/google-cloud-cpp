@@ -129,6 +129,11 @@ class BackupForGKETracingConnection
       google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request)
       override;
 
+  StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+  GetBackupIndexDownloadUrl(
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request) override;
+
  private:
   std::shared_ptr<gkebackup_v1::BackupForGKEConnection> child_;
 };

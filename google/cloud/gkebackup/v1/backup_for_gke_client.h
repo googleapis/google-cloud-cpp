@@ -123,8 +123,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L350}
+  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
+  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L359}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
@@ -162,8 +162,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L350}
+  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
+  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L359}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
@@ -198,8 +198,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L375}
+  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
+  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L384}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
@@ -237,8 +237,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L375}
+  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
+  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L384}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
@@ -264,8 +264,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L425}
+  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
+  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L434}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
@@ -294,8 +294,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L425}
+  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
+  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L434}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
@@ -308,7 +308,7 @@ class BackupForGKEClient {
   ///
   /// @param backup_plan  Required. A new version of the BackupPlan resource that contains updated
   ///  fields. This may be sparsely populated if an `update_mask` is provided.
-  /// @param update_mask  This is used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. This is used to specify the fields to be overwritten in the
   ///  BackupPlan targeted for update. The values for each of these
   ///  updated fields will be taken from the `backup_plan` provided
   ///  with this request. Field names are relative to the root of the resource
@@ -337,8 +337,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L437}
+  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
+  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L446}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
@@ -375,8 +375,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L437}
+  /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L37}
+  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L446}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
@@ -409,8 +409,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L455}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
+  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L465}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -446,8 +446,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L455}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
+  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L465}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -461,8 +461,8 @@ class BackupForGKEClient {
   ///
   /// @param parent  Required. The BackupPlan within which to create the Backup.
   ///  Format: `projects/*/locations/*/backupPlans/*`
-  /// @param backup  The Backup resource to create.
-  /// @param backup_id  The client-provided short name for the Backup resource.
+  /// @param backup  Optional. The Backup resource to create.
+  /// @param backup_id  Optional. The client-provided short name for the Backup resource.
   ///  This name must:
   ///  @n
   ///  - be between 1 and 63 characters long (inclusive)
@@ -490,8 +490,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L472}
+  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
+  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L482}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
@@ -529,8 +529,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L472}
+  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
+  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L482}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
@@ -565,8 +565,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L497}
+  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
+  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L507}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
@@ -604,8 +604,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L497}
+  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
+  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L507}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
@@ -631,8 +631,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L543}
+  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
+  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L553}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
@@ -661,8 +661,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L543}
+  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
+  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L553}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
@@ -675,7 +675,7 @@ class BackupForGKEClient {
   ///
   /// @param backup  Required. A new version of the Backup resource that contains updated
   ///  fields. This may be sparsely populated if an `update_mask` is provided.
-  /// @param update_mask  This is used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. This is used to specify the fields to be overwritten in the
   ///  Backup targeted for update. The values for each of these
   ///  updated fields will be taken from the `backup_plan` provided
   ///  with this request. Field names are relative to the root of the resource.
@@ -703,8 +703,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L555}
+  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
+  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L565}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
@@ -741,8 +741,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L555}
+  /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L36}
+  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L565}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
@@ -775,8 +775,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L572}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
+  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L583}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -812,8 +812,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L572}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
+  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L583}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -848,8 +848,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L594}
-  /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L36}
+  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L605}
+  /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::VolumeBackup> ListVolumeBackups(
@@ -887,8 +887,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L594}
-  /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L36}
+  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L605}
+  /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::VolumeBackup> ListVolumeBackups(
@@ -914,8 +914,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L641}
-  /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L36}
+  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L652}
+  /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::VolumeBackup> GetVolumeBackup(
@@ -944,8 +944,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L641}
-  /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L36}
+  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L652}
+  /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::VolumeBackup> GetVolumeBackup(
@@ -987,8 +987,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L653}
-  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
+  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L664}
+  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> CreateRestorePlan(
@@ -1026,8 +1026,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L653}
-  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
+  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L664}
+  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> CreateRestorePlan(
@@ -1062,8 +1062,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L678}
-  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
+  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L689}
+  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::RestorePlan> ListRestorePlans(
@@ -1101,8 +1101,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L678}
-  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
+  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L689}
+  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::RestorePlan> ListRestorePlans(
@@ -1128,8 +1128,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L728}
-  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
+  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L739}
+  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::RestorePlan> GetRestorePlan(
@@ -1158,8 +1158,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L728}
-  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
+  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L739}
+  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::RestorePlan> GetRestorePlan(
@@ -1172,7 +1172,7 @@ class BackupForGKEClient {
   ///
   /// @param restore_plan  Required. A new version of the RestorePlan resource that contains updated
   ///  fields. This may be sparsely populated if an `update_mask` is provided.
-  /// @param update_mask  This is used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. This is used to specify the fields to be overwritten in the
   ///  RestorePlan targeted for update. The values for each of these
   ///  updated fields will be taken from the `restore_plan` provided
   ///  with this request. Field names are relative to the root of the resource.
@@ -1200,8 +1200,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
-  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L740}
+  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
+  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L751}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
@@ -1238,8 +1238,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
-  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L740}
+  /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
+  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L751}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
@@ -1272,8 +1272,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L757}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
+  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L769}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1309,8 +1309,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L757}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
+  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L769}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1353,8 +1353,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L779}
-  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
+  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L791}
+  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
@@ -1392,8 +1392,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L779}
-  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
+  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L791}
+  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
@@ -1428,8 +1428,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L804}
-  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
+  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L816}
+  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::Restore> ListRestores(
@@ -1467,8 +1467,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L804}
-  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
+  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L816}
+  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::Restore> ListRestores(
@@ -1494,8 +1494,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L853}
-  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
+  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L865}
+  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::Restore> GetRestore(
@@ -1524,8 +1524,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L853}
-  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
+  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L865}
+  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::Restore> GetRestore(
@@ -1538,7 +1538,7 @@ class BackupForGKEClient {
   ///
   /// @param restore  Required. A new version of the Restore resource that contains updated
   ///  fields. This may be sparsely populated if an `update_mask` is provided.
-  /// @param update_mask  This is used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. This is used to specify the fields to be overwritten in the
   ///  Restore targeted for update. The values for each of these
   ///  updated fields will be taken from the `restore` provided
   ///  with this request. Field names are relative to the root of the resource.
@@ -1566,8 +1566,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
-  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L865}
+  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
+  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L877}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
@@ -1604,8 +1604,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
-  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L865}
+  /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
+  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L877}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
@@ -1638,8 +1638,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L882}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
+  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L895}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1675,8 +1675,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L882}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
+  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L895}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1712,8 +1712,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L904}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L143}
+  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L917}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::VolumeRestore> ListVolumeRestores(
@@ -1751,8 +1751,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L904}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L143}
+  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L917}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::VolumeRestore> ListVolumeRestores(
@@ -1778,8 +1778,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L951}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L143}
+  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L964}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
@@ -1808,12 +1808,72 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L951}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L143}
+  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L964}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
       google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the link to the backupIndex.
+  ///
+  /// @param backup  Required. Full name of Backup resource.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/backupPlans/{backup_plan}/backups/{backup}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L976}
+  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlResponse]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L989}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+  GetBackupIndexDownloadUrl(std::string const& backup, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve the link to the backupIndex.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L976}
+  /// [google.cloud.gkebackup.v1.GetBackupIndexDownloadUrlResponse]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L989}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+  GetBackupIndexDownloadUrl(
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request,
       Options opts = {});
 
  private:

@@ -133,6 +133,75 @@ StorageControlClient::GetStorageLayout(
   return connection_->GetStorageLayout(request);
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlClient::CreateManagedFolder(
+    std::string const& parent,
+    google::storage::control::v2::ManagedFolder const& managed_folder,
+    std::string const& managed_folder_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::CreateManagedFolderRequest request;
+  request.set_parent(parent);
+  *request.mutable_managed_folder() = managed_folder;
+  request.set_managed_folder_id(managed_folder_id);
+  return connection_->CreateManagedFolder(request);
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlClient::CreateManagedFolder(
+    google::storage::control::v2::CreateManagedFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateManagedFolder(request);
+}
+
+Status StorageControlClient::DeleteManagedFolder(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::DeleteManagedFolderRequest request;
+  request.set_name(name);
+  return connection_->DeleteManagedFolder(request);
+}
+
+Status StorageControlClient::DeleteManagedFolder(
+    google::storage::control::v2::DeleteManagedFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteManagedFolder(request);
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlClient::GetManagedFolder(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::GetManagedFolderRequest request;
+  request.set_name(name);
+  return connection_->GetManagedFolder(request);
+}
+
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlClient::GetManagedFolder(
+    google::storage::control::v2::GetManagedFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetManagedFolder(request);
+}
+
+StreamRange<google::storage::control::v2::ManagedFolder>
+StorageControlClient::ListManagedFolders(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ListManagedFoldersRequest request;
+  request.set_parent(parent);
+  return connection_->ListManagedFolders(request);
+}
+
+StreamRange<google::storage::control::v2::ManagedFolder>
+StorageControlClient::ListManagedFolders(
+    google::storage::control::v2::ListManagedFoldersRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListManagedFolders(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2
 }  // namespace cloud

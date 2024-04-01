@@ -365,7 +365,7 @@ class EndpointServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Endpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L37}
-  /// [google.cloud.aiplatform.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L274}
+  /// [google.cloud.aiplatform.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L273}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
@@ -397,7 +397,7 @@ class EndpointServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Endpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L37}
-  /// [google.cloud.aiplatform.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L274}
+  /// [google.cloud.aiplatform.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L273}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
@@ -431,7 +431,7 @@ class EndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L286}
+  /// [google.cloud.aiplatform.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L285}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -468,7 +468,7 @@ class EndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L286}
+  /// [google.cloud.aiplatform.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L285}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -522,8 +522,8 @@ class EndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeployModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L300}
-  /// [google.cloud.aiplatform.v1.DeployModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L336}
+  /// [google.cloud.aiplatform.v1.DeployModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L299}
+  /// [google.cloud.aiplatform.v1.DeployModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L335}
   /// [google.cloud.aiplatform.v1.Endpoint.traffic_split]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L72}
   /// [google.cloud.aiplatform.v1.EndpointService.UpdateEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L75}
   ///
@@ -565,8 +565,8 @@ class EndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeployModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L300}
-  /// [google.cloud.aiplatform.v1.DeployModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L336}
+  /// [google.cloud.aiplatform.v1.DeployModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L299}
+  /// [google.cloud.aiplatform.v1.DeployModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L335}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
@@ -610,8 +610,8 @@ class EndpointServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Endpoint.traffic_split]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L72}
-  /// [google.cloud.aiplatform.v1.UndeployModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L350}
-  /// [google.cloud.aiplatform.v1.UndeployModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L376}
+  /// [google.cloud.aiplatform.v1.UndeployModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L349}
+  /// [google.cloud.aiplatform.v1.UndeployModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L375}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
@@ -651,8 +651,8 @@ class EndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.UndeployModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L350}
-  /// [google.cloud.aiplatform.v1.UndeployModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L376}
+  /// [google.cloud.aiplatform.v1.UndeployModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L349}
+  /// [google.cloud.aiplatform.v1.UndeployModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L375}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
@@ -707,8 +707,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.AutomaticResources]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L129}
   /// [google.cloud.aiplatform.v1.DedicatedResources]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L63}
   /// [google.cloud.aiplatform.v1.DedicatedResources.autoscaling_metric_specs]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L122}
-  /// [google.cloud.aiplatform.v1.MutateDeployedModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L387}
-  /// [google.cloud.aiplatform.v1.MutateDeployedModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L420}
+  /// [google.cloud.aiplatform.v1.MutateDeployedModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L386}
+  /// [google.cloud.aiplatform.v1.MutateDeployedModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L419}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
@@ -751,8 +751,8 @@ class EndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.MutateDeployedModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L387}
-  /// [google.cloud.aiplatform.v1.MutateDeployedModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L420}
+  /// [google.cloud.aiplatform.v1.MutateDeployedModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L386}
+  /// [google.cloud.aiplatform.v1.MutateDeployedModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L419}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>

@@ -74,6 +74,21 @@ class StorageControlConnectionImpl
       google::storage::control::v2::GetStorageLayoutRequest const& request)
       override;
 
+  StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
+      google::storage::control::v2::CreateManagedFolderRequest const& request)
+      override;
+
+  Status DeleteManagedFolder(
+      google::storage::control::v2::DeleteManagedFolderRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
+      google::storage::control::v2::GetManagedFolderRequest const& request)
+      override;
+
+  StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
+      google::storage::control::v2::ListManagedFoldersRequest request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<storagecontrol_v2_internal::StorageControlStub> stub_;

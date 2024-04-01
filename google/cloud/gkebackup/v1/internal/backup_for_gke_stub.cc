@@ -397,6 +397,20 @@ DefaultBackupForGKEStub::GetVolumeRestore(
   return response;
 }
 
+StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+DefaultBackupForGKEStub::GetBackupIndexDownloadUrl(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+        request) {
+  google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse response;
+  auto status =
+      grpc_stub_->GetBackupIndexDownloadUrl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupForGKEStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
