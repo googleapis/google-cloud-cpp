@@ -94,6 +94,7 @@ Status GenerateProtosFromDiscoveryDoc(
     std::string const& protobuf_proto_path,
     std::string const& googleapis_proto_path, std::string const& output_path,
     std::string const& export_output_path,
+    bool enable_parallel_write_for_discovery_protos = false,
     std::set<std::string> operation_services = {});
 
 // Recurses through the json accumulating the values of any $ref fields
