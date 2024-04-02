@@ -16,6 +16,8 @@
 #include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/ack_handler_wrapper.h"
+#include "google/cloud/pubsub/internal/batch_callback.h"
+#include "google/cloud/pubsub/internal/default_batch_callback.h"
 #include "google/cloud/pubsub/internal/default_message_callback.h"
 #include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
@@ -38,7 +40,7 @@ class SubscriptionSessionImpl
       Options const& opts, CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
-      std::shared_ptr<MessageCallback> callback) {
+      std::shared_ptr<BatchCallback> callback) {
     auto queue =
         SubscriptionMessageQueue::Create(shutdown_manager, std::move(source));
     auto concurrency_control = SubscriptionConcurrencyControl::Create(
@@ -82,8 +84,12 @@ class SubscriptionSessionImpl
                   std::move(h), m.message_id());
               cb(std::move(m), pubsub::AckHandler(std::move(wrapper)));
             });
+
     return Create(opts, std::move(cq), std::move(shutdown_manager),
-                  std::move(source), std::move(callback));
+                  std::move(source),
+                  std::make_shared<DefaultBatchCallback>(
+                      [](BatchCallback::StreamingPullResponse const&) {},
+                      std::move(callback)));
   }
 
   static future<Status> Create(
@@ -99,7 +105,10 @@ class SubscriptionSessionImpl
               cb(std::move(m), pubsub::ExactlyOnceAckHandler(std::move(h)));
             });
     return Create(opts, std::move(cq), std::move(shutdown_manager),
-                  std::move(source), std::move(callback));
+                  std::move(source),
+                  std::make_shared<DefaultBatchCallback>(
+                      [](BatchCallback::StreamingPullResponse const&) {},
+                      std::move(callback)));
   }
 
   SubscriptionSessionImpl(

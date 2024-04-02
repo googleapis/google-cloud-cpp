@@ -32,8 +32,6 @@ class MockMessageCallback : public pubsub_internal::MessageCallback {
   ~MockMessageCallback() override = default;
   MOCK_METHOD(void, user_callback,
               (pubsub_internal::MessageCallback::MessageAndHandler));
-  MOCK_METHOD(void, message_callback,
-              (pubsub_internal::MessageCallback::ReceivedMessage));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

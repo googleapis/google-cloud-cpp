@@ -40,8 +40,12 @@ class BatchCallback {
     StatusOr<google::pubsub::v1::StreamingPullResponse> response;
   };
 
+  struct ReceivedMessage {
+    google::pubsub::v1::ReceivedMessage message;
+  };
+
   virtual void callback(StreamingPullResponse response) = 0;
-  virtual void message_callback(MessageCallback::ReceivedMessage m) = 0;
+  virtual void message_callback(ReceivedMessage m) = 0;
   virtual void user_callback(MessageCallback::MessageAndHandler m) = 0;
 
   virtual void AckStart(std::string const& ack_id) = 0;

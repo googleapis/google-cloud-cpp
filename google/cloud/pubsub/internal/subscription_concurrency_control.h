@@ -17,7 +17,6 @@
 
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/batch_callback.h"
-#include "google/cloud/pubsub/internal/message_callback.h"
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
 #include "google/cloud/pubsub/internal/subscription_message_source.h"
 #include "google/cloud/pubsub/message.h"
@@ -45,7 +44,7 @@ class SubscriptionConcurrencyControl
             std::move(subscription), max_concurrency));
   }
 
-  void Start(std::shared_ptr<MessageCallback> cb);
+  void Start(std::shared_ptr<BatchCallback> cb);
   void Shutdown();
   future<Status> AckMessage(std::string const& ack_id);
   future<Status> NackMessage(std::string const& ack_id);

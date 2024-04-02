@@ -40,8 +40,6 @@ class DefaultMessageCallback : public MessageCallback {
     callback_(std::move(m.message), std::move(m.ack_handler));
   };
 
-  void message_callback(ReceivedMessage) override{};
-
  private:
   Callback callback_;
 };

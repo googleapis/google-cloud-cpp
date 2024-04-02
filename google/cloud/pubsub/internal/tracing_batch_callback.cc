@@ -116,7 +116,7 @@ class TracingBatchCallback : public BatchCallback {
     child_->callback(std::move(response));
   };
 
-  void message_callback(MessageCallback::ReceivedMessage m) override {
+  void message_callback(ReceivedMessage m) override {
     child_->message_callback(std::move(m));
   }
 

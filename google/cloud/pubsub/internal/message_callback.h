@@ -33,17 +33,12 @@ class MessageCallback {
  public:
   virtual ~MessageCallback() = default;
 
-  struct ReceivedMessage {
-    google::pubsub::v1::ReceivedMessage message;
-  };
-
   struct MessageAndHandler {
     pubsub::Message message;
     std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> ack_handler;
   };
 
   virtual void user_callback(MessageAndHandler m) = 0;
-  virtual void message_callback(ReceivedMessage message) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

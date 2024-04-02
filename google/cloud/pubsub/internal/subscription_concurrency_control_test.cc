@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/subscription_session.h"
-#include "google/cloud/pubsub/testing/mock_message_callback.h"
+#include "google/cloud/pubsub/testing/mock_batch_callback.h"
 #include "google/cloud/pubsub/testing/mock_subscription_message_source.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/log.h"
@@ -63,7 +63,7 @@ class SubscriptionConcurrencyControlTest : public ::testing::Test {
       auto m = std::move(messages_.front());
       messages_.pop_front();
       lk.unlock();
-      cb->message_callback(MessageCallback::ReceivedMessage{std::move(m)});
+      cb->message_callback(BatchCallback::ReceivedMessage{std::move(m)});
       lk.lock();
     }
   }
@@ -122,9 +122,9 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageLifecycle) {
   std::mutex queue_mu;
   std::condition_variable queue_cv;
   std::deque<Handler> ack_handlers;
-  auto mock_message_callback =
-      std::make_shared<pubsub_testing::MockMessageCallback>();
-  EXPECT_CALL(*mock_message_callback, user_callback)
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         std::lock_guard<std::mutex> lk(queue_mu);
         ack_handlers.push_back(std::move(m.ack_handler));
@@ -140,7 +140,7 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageLifecycle) {
   };
 
   auto done = shutdown->Start({});
-  uut->Start(mock_message_callback);
+  uut->Start(mock_batch_callback);
 
   auto h = pull_next();
   h->ack();
@@ -214,9 +214,9 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
   std::mutex callback_mu;
   std::condition_variable callback_cv;
   std::deque<Handler> ack_handlers;
-  auto mock_message_callback =
-      std::make_shared<pubsub_testing::MockMessageCallback>();
-  EXPECT_CALL(*mock_message_callback, user_callback)
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         std::lock_guard<std::mutex> lk(callback_mu);
         ack_handlers.push_back(std::move(m.ack_handler));
@@ -235,7 +235,7 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
   };
 
   auto done = shutdown->Start({});
-  uut->Start(mock_message_callback);
+  uut->Start(mock_batch_callback);
 
   wait_n(4);
   for (int i = 0; i != 2; ++i) pull_next()->ack();
@@ -313,9 +313,9 @@ TEST_F(SubscriptionConcurrencyControlTest,
     handler_cv.notify_one();
     std::move(wrapper).ack();
   };
-  auto mock_message_callback =
-      std::make_shared<pubsub_testing::MockMessageCallback>();
-  EXPECT_CALL(*mock_message_callback, user_callback)
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         {
           std::lock_guard<std::mutex> lk(handler_mu);
@@ -329,7 +329,7 @@ TEST_F(SubscriptionConcurrencyControlTest,
       });
 
   auto done = shutdown->Start({});
-  uut->Start(mock_message_callback);
+  uut->Start(mock_batch_callback);
 
   {
     std::unique_lock<std::mutex> lk(handler_mu);
@@ -378,9 +378,9 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
   std::mutex callback_mu;
   std::condition_variable callback_cv;
   int message_counter = 0;
-  auto mock_message_callback =
-      std::make_shared<pubsub_testing::MockMessageCallback>();
-  EXPECT_CALL(*mock_message_callback, user_callback)
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         pubsub_internal::ExactlyOnceAckHandler wrapper(
             std::move(m.ack_handler));
@@ -407,7 +407,7 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
     });
 
     auto f = shutdown->Start(std::move(p));
-    uut->Start(std::move(mock_message_callback));
+    uut->Start(std::move(mock_batch_callback));
     return f;
   }();
 
@@ -451,9 +451,9 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
   std::mutex callback_mu;
   std::condition_variable callback_cv;
   int message_counter = 0;
-  auto mock_message_callback =
-      std::make_shared<pubsub_testing::MockMessageCallback>();
-  EXPECT_CALL(*mock_message_callback, user_callback)
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         m.ack_handler->ack();
         // Sleep after the `ack()` call to more easily reproduce #5148
@@ -477,7 +477,7 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
     });
 
     auto f = shutdown->Start(std::move(p));
-    uut->Start(std::move(mock_message_callback));
+    uut->Start(std::move(mock_batch_callback));
     return f;
   }();
 
@@ -528,9 +528,9 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
   std::mutex callback_mu;
   std::condition_variable callback_cv;
   std::vector<std::pair<pubsub::Message, Handler>> messages;
-  auto mock_message_callback =
-      std::make_shared<pubsub_testing::MockMessageCallback>();
-  EXPECT_CALL(*mock_message_callback, user_callback)
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         std::lock_guard<std::mutex> lk(callback_mu);
         messages.emplace_back(std::move(m.message), std::move(m.ack_handler));
@@ -542,7 +542,7 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
   };
 
   auto done = shutdown->Start({});
-  uut->Start(mock_message_callback);
+  uut->Start(mock_batch_callback);
   wait_message_count(5);
 
   // We only push 5 messages so after this no more messages will show up.
