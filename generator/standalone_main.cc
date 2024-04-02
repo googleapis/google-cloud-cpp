@@ -59,7 +59,7 @@ ABSL_FLAG(bool, check_parameter_comment_substitutions, false,
           "Check that the built-in parameter comment substitutions applied.");
 ABSL_FLAG(bool, generate_discovery_protos, false,
           "Generate only .proto files, no C++ code.");
-ABSL_FLAG(bool, enable_parallel_write_for_discovery_protos, false,
+ABSL_FLAG(bool, enable_parallel_write_for_discovery_protos, true,
           "Enable parallelized file writing for discovery protos. This allows "
           "for readable logs.");
 namespace {
