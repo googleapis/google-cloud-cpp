@@ -80,8 +80,8 @@ class BatchCallbackWrapper : public BatchCallback {
 
  private:
   std::shared_ptr<BatchCallback> child_;
-  MessageCallback message_wrapper_ = [](ReceivedMessage) {};
-  Callback wrapper_ = [](StreamingPullResponse) {};
+  MessageCallback message_wrapper_ = [](ReceivedMessage const&) {};
+  Callback wrapper_ = [](StreamingPullResponse const&) {};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
