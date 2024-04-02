@@ -554,6 +554,14 @@ TEST_F(SubscriberIntegrationTest, BlockingPull) {
   EXPECT_THAT(ids, IsEmpty());
 }
 
+TEST_F(SubscriberIntegrationTest, TracingEnabledPublishStreamingPullAck) {
+  auto publisher = Publisher(MakePublisherConnection(topic_));
+  auto subscriber = Subscriber(MakeSubscriberConnection(
+      subscription_,
+      google::cloud::Options{}.set<OpenTelemetryTracingOption>(true)));
+  ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
+}
+
 TEST_F(SubscriberIntegrationTest, TracingEnabledBlockingPull) {
   auto publisher = Publisher(MakePublisherConnection(topic_));
   auto subscriber = Subscriber(MakeSubscriberConnection(
