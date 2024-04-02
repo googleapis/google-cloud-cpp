@@ -990,8 +990,9 @@ TEST(GenerateProtosFromDiscoveryDocTest, MissingDocumentProperty) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result =
-      GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(
+      document_json, "", "", "", "", "",
+      /*enable_parallel_write_for_discovery_protos=*/false);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Missing one or more document properties")));
@@ -1007,8 +1008,9 @@ TEST(GenerateProtosFromDiscoveryDocTest, ExtractTypesFromSchemaFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result =
-      GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(
+      document_json, "", "", "", "", "",
+      /*enable_parallel_write_for_discovery_protos=*/false);
   EXPECT_THAT(
       result,
       StatusIs(
@@ -1032,8 +1034,9 @@ TEST(GenerateProtosFromDiscoveryDocTest, EmptyResourcesFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result =
-      GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(
+      document_json, "", "", "", "", "",
+      /*enable_parallel_write_for_discovery_protos=*/false);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("No resources found in Discovery Document")));
@@ -1067,8 +1070,9 @@ TEST(GenerateProtosFromDiscoveryDocTest, ProcessRequestResponseFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result =
-      GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(
+      document_json, "", "", "", "", "",
+      /*enable_parallel_write_for_discovery_protos=*/false);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Response name=baz not found in types")));
