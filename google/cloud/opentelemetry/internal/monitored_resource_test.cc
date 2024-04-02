@@ -49,6 +49,8 @@ TEST(AsString, VectorsAreJoined) {
     opentelemetry::sdk::common::OwnedAttributeValue value;
     std::string result;
   };
+
+  std::vector<std::string> const v = {"value1", "value2"};
   std::vector<TestCase> cases = {
       {std::vector<bool>{{true, false}}, "[true, false]"},
       {std::vector<int32_t>{{1, 2}}, "[1, 2]"},
@@ -57,8 +59,7 @@ TEST(AsString, VectorsAreJoined) {
       {std::vector<uint64_t>{{7, 8}}, "[7, 8]"},
       {std::vector<uint8_t>{{9, 10}}, "[9, 10]"},
       {std::vector<double>{{1.1, 2.2}}, "[1.1, 2.2]"},
-      {std::vector<std::string>{{std::string{"value1"}, std::string{"value2"}}},
-       "[value1, value2]"},
+      {v, "[value1, value2]"},
   };
 
   for (auto const& c : cases) {
