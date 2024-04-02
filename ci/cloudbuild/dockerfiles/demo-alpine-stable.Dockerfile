@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine:3.16
+FROM alpine:3.19
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
@@ -53,33 +53,13 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 # #### Dependencies
 
 # The versions of Abseil, Protobuf, gRPC, OpenSSL, and nlohmann-json included
-# with Alpine >= 3.16 meet `google-cloud-cpp`'s requirements. We can simply
+# with Alpine >= 3.19 meet `google-cloud-cpp`'s requirements. We can simply
 # install the development packages
 
 # ```bash
 RUN apk update && \
-    apk add abseil-cpp-dev c-ares-dev curl-dev grpc-dev \
+    apk add abseil-cpp-dev crc32c-dev c-ares-dev curl-dev grpc-dev \
         protobuf-dev nlohmann-json openssl-dev re2-dev
-# ```
-
-# #### crc32c
-
-# The project depends on the Crc32c library, we need to compile this from
-# source:
-
-# ```bash
-WORKDIR /var/tmp/build/crc32c
-RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -DCRC32C_BUILD_TESTS=OFF \
-        -DCRC32C_BUILD_BENCHMARKS=OFF \
-        -DCRC32C_USE_GLOG=OFF \
-        -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4}
 # ```
 
 # #### opentelemetry-cpp
@@ -107,6 +87,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.14
 
 ## [DONE packaging.md]
 
+# Speed up the CI builds using sccache.
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.7.7/sccache-v0.7.7-x86_64-unknown-linux-musl.tar.gz | \
     tar -zxf - --strip-components=1 && \

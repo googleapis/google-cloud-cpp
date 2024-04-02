@@ -183,32 +183,13 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 #### Dependencies
 
 The versions of Abseil, Protobuf, gRPC, OpenSSL, and nlohmann-json included with
-Alpine >= 3.16 meet `google-cloud-cpp`'s requirements. We can simply install the
+Alpine >= 3.19 meet `google-cloud-cpp`'s requirements. We can simply install the
 development packages
 
 ```bash
 apk update && \
-    apk add abseil-cpp-dev c-ares-dev curl-dev grpc-dev \
+    apk add abseil-cpp-dev crc32c-dev c-ares-dev curl-dev grpc-dev \
         protobuf-dev nlohmann-json openssl-dev re2-dev
-```
-
-#### crc32c
-
-The project depends on the Crc32c library, we need to compile this from source:
-
-```bash
-mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -DCRC32C_BUILD_TESTS=OFF \
-        -DCRC32C_BUILD_BENCHMARKS=OFF \
-        -DCRC32C_USE_GLOG=OFF \
-        -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 ```
 
 #### opentelemetry-cpp
