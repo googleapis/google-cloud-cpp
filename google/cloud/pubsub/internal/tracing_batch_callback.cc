@@ -180,7 +180,8 @@ class TracingBatchCallback : public BatchCallback {
     std::lock_guard<std::mutex> lk(mu_);
     auto spans = spans_by_ack_id_.find(ack_id);
     if (spans != spans_by_ack_id_.end()) {
-      auto concurrency_control_span = std::move(spans->second.concurrency_control_span);
+      auto concurrency_control_span =
+          std::move(spans->second.concurrency_control_span);
       if (concurrency_control_span) {
         concurrency_control_span->End();
       }
@@ -193,19 +194,17 @@ class TracingBatchCallback : public BatchCallback {
     // Use the ack_id to find the subscribe span and add an event to it.
     auto spans = spans_by_ack_id_.find(ack_id);
     if (spans != spans_by_ack_id_.end()) {
-      spans->second.subscribe_span->AddEvent(event);
+      auto subscribe_span = spans->second.subscribe_span;
+      subscribe_span->AddEvent(event);
       if (event == "gl-cpp.ack_end") {
-        subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
-                                             "ack");
+        subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "ack");
       } else if (event == "gl-cpp.nack_end") {
-        subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
-                                             "nack");
+        subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "nack");
       } else if (event == "gl-cpp.expired") {
-        subscribe_span->second->SetAttribute("messaging.gcp_pubsub.result",
-                                             "expired");
+        subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "expired");
       }
       if (end_event) {
-        spans->second.subscribe_span->End();
+        subscribe_span->End();
         spans_by_ack_id_.erase(spans);
       }
     }
