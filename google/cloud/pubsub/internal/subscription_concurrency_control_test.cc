@@ -124,6 +124,8 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageLifecycle) {
   std::deque<Handler> ack_handlers;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, StartConcurrencyControl).Times(5);
+  EXPECT_CALL(*mock_batch_callback, EndConcurrencyControl).Times(5);
   EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         std::lock_guard<std::mutex> lk(queue_mu);
@@ -216,6 +218,8 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
   std::deque<Handler> ack_handlers;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, StartConcurrencyControl).Times(16);
+  EXPECT_CALL(*mock_batch_callback, EndConcurrencyControl).Times(16);
   EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         std::lock_guard<std::mutex> lk(callback_mu);
@@ -315,6 +319,10 @@ TEST_F(SubscriptionConcurrencyControlTest,
   };
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, StartConcurrencyControl)
+      .Times(AtLeast(kCallbackCount));
+  EXPECT_CALL(*mock_batch_callback, EndConcurrencyControl)
+      .Times(AtLeast(kCallbackCount));
   EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         {
@@ -380,6 +388,10 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
   int message_counter = 0;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, StartConcurrencyControl)
+      .Times(AtLeast(kTestDoneThreshold));
+  EXPECT_CALL(*mock_batch_callback, EndConcurrencyControl)
+      .Times(AtLeast(kTestDoneThreshold));
   EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         pubsub_internal::ExactlyOnceAckHandler wrapper(
@@ -453,6 +465,10 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
   int message_counter = 0;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, StartConcurrencyControl)
+      .Times(AtLeast(kTestDoneThreshold));
+  EXPECT_CALL(*mock_batch_callback, EndConcurrencyControl)
+      .Times(AtLeast(kTestDoneThreshold));
   EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         m.ack_handler->ack();
@@ -509,6 +525,7 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
     };
     EXPECT_CALL(*source, Read(10)).WillOnce(push_messages);
   }
+
   EXPECT_CALL(*source, AckMessage)
       .Times(5)
       .WillRepeatedly(
@@ -530,6 +547,8 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
   std::vector<std::pair<pubsub::Message, Handler>> messages;
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, StartConcurrencyControl).Times(5);
+  EXPECT_CALL(*mock_batch_callback, EndConcurrencyControl).Times(5);
   EXPECT_CALL(*mock_batch_callback, user_callback)
       .WillRepeatedly([&](MessageCallback::MessageAndHandler m) {
         std::lock_guard<std::mutex> lk(callback_mu);

@@ -48,6 +48,9 @@ class DefaultBatchCallback : public BatchCallback {
     message_callback_->user_callback(std::move(m));
   }
 
+  void StartConcurrencyControl(std::string const&) override {}
+  void EndConcurrencyControl(std::string const&) override {}
+
   void AckStart(std::string const&) override {}
   void AckEnd(std::string const&) override {}
 
