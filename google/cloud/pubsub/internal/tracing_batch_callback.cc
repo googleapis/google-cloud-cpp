@@ -180,7 +180,7 @@ class TracingBatchCallback : public BatchCallback {
     std::lock_guard<std::mutex> lk(mu_);
     auto spans = spans_by_ack_id_.find(ack_id);
     if (spans != spans_by_ack_id_.end()) {
-      auto concurrency_control_span = spans->second.concurrency_control_span;
+      auto concurrency_control_span = std::move(spans->second.concurrency_control_span);
       if (concurrency_control_span) {
         concurrency_control_span->End();
       }
