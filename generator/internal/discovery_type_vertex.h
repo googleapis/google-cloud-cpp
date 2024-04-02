@@ -117,6 +117,10 @@ class DiscoveryTypeVertex {
       std::string const& package_name, nlohmann::json const& json,
       int indent_level) const;
 
+  // Formats the description field of the json into proto message fields.
+  static std::string FormatMessageDescription(nlohmann::json const& field,
+                                              int indent_level);
+
   // Formats any field options as indicated by the field_json.
   static std::string FormatFieldOptions(std::string const& field_name,
                                         std::string const& json_field_name,

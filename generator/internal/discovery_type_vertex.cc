@@ -15,6 +15,7 @@
 #include "generator/internal/discovery_type_vertex.h"
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
@@ -39,34 +40,6 @@ absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
   if (type == "integer") return j.value("format", "int32");
   if (type == "number") return j.value("format", "float");
   return absl::nullopt;
-}
-
-std::string FormatMessageDescription(nlohmann::json const& field,
-                                     int indent_level) {
-  std::string description;
-  if (field.contains("description")) {
-    description = absl::StrCat(
-        FormatCommentBlock(std::string(field["description"]), indent_level),
-        "\n");
-  }
-
-  auto enum_field = field.value("enum", nlohmann::json{});
-  if (!enum_field.empty()) {
-    auto enum_descriptions = field.value("enumDescriptions", nlohmann::json{});
-    std::vector<std::pair<std::string, std::string>> enum_comments;
-    for (nlohmann::json::size_type i = 0; i < enum_field.size(); ++i) {
-      if (i < enum_descriptions.size()) {
-        enum_comments.emplace_back(std::string(enum_field[i]),
-                                   std::string(enum_descriptions[i]));
-      } else {
-        enum_comments.emplace_back(std::string(enum_field[i]), "");
-      }
-    }
-    absl::StrAppend(&description,
-                    FormatCommentKeyValueList(enum_comments, indent_level),
-                    "\n");
-  }
-  return description;
 }
 
 }  // namespace
@@ -384,6 +357,38 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
   }
 
   return message_properties;
+}
+
+std::string DiscoveryTypeVertex::FormatMessageDescription(
+    nlohmann::json const& field, int indent_level) {
+  std::string description;
+  if (field.contains("description")) {
+    auto sanitized_description = std::string(field["description"]);
+    // If there are any $ in the description, we want to replace it with two $$
+    // because protobuf will interpret it as message substitution.
+    absl::StrReplaceAll({{"$", "$$"}}, &sanitized_description);
+    description = absl::StrCat(
+        FormatCommentBlock(std::string(sanitized_description), indent_level),
+        "\n");
+  }
+
+  auto enum_field = field.value("enum", nlohmann::json{});
+  if (!enum_field.empty()) {
+    auto enum_descriptions = field.value("enumDescriptions", nlohmann::json{});
+    std::vector<std::pair<std::string, std::string>> enum_comments;
+    for (nlohmann::json::size_type i = 0; i < enum_field.size(); ++i) {
+      if (i < enum_descriptions.size()) {
+        enum_comments.emplace_back(std::string(enum_field[i]),
+                                   std::string(enum_descriptions[i]));
+      } else {
+        enum_comments.emplace_back(std::string(enum_field[i]), "");
+      }
+    }
+    absl::StrAppend(&description,
+                    FormatCommentKeyValueList(enum_comments, indent_level),
+                    "\n");
+  }
+  return description;
 }
 
 std::string DiscoveryTypeVertex::FormatFieldOptions(
