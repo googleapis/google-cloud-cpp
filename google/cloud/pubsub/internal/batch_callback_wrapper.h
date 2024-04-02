@@ -20,7 +20,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
-
+#include <absl/types/optional.h>
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
@@ -80,8 +80,8 @@ class BatchCallbackWrapper : public BatchCallback {
 
  private:
   std::shared_ptr<BatchCallback> child_;
-  MessageCallback message_wrapper_;
-  Callback wrapper_;
+  MessageCallback message_wrapper_ = [](ReceivedMessage) {};
+  Callback wrapper_ = [](StreamingPullResponse) {};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
