@@ -27,6 +27,46 @@ namespace sc = opentelemetry::sdk::resource::SemanticConventions;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
+TEST(AsString, Simple) {
+  struct TestCase {
+    opentelemetry::sdk::common::OwnedAttributeValue value;
+    std::string result;
+  };
+  std::vector<TestCase> cases = {
+      {true, "true"},       {false, "false"},
+      {int32_t{1}, "1"},    {uint32_t{2}, "2"},
+      {int64_t{3}, "3"},    {uint64_t{4}, "4"},
+      {double{5.6}, "5.6"}, {std::string{"value"}, "value"},
+  };
+
+  for (auto const& c : cases) {
+    EXPECT_EQ(c.result, AsString(c.value));
+  }
+}
+
+TEST(AsString, VectorsAreJoined) {
+  struct TestCase {
+    opentelemetry::sdk::common::OwnedAttributeValue value;
+    std::string result;
+  };
+
+  std::vector<std::string> const v = {"value1", "value2"};
+  std::vector<TestCase> cases = {
+      {std::vector<bool>{{true, false}}, "[true, false]"},
+      {std::vector<int32_t>{{1, 2}}, "[1, 2]"},
+      {std::vector<uint32_t>{{3, 4}}, "[3, 4]"},
+      {std::vector<int64_t>{{5, 6}}, "[5, 6]"},
+      {std::vector<uint64_t>{{7, 8}}, "[7, 8]"},
+      {std::vector<uint8_t>{{9, 10}}, "[9, 10]"},
+      {std::vector<double>{{1.1, 2.2}}, "[1.1, 2.2]"},
+      {v, "[value1, value2]"},
+  };
+
+  for (auto const& c : cases) {
+    EXPECT_EQ(c.result, AsString(c.value));
+  }
+}
+
 TEST(MonitoredResource, GceInstance) {
   auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
       {sc::kCloudPlatform, "gcp_compute_engine"},

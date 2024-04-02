@@ -13,12 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include "absl/types/variant.h"
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <numeric>
 #include <unordered_map>
 
 namespace google {
@@ -29,15 +32,22 @@ namespace {
 
 namespace sc = opentelemetry::sdk::resource::SemanticConventions;
 
-std::string AsString(
-    opentelemetry::sdk::common::OwnedAttributeValue attribute) {
-  if (absl::holds_alternative<std::string>(attribute)) {
-    return absl::get<std::string>(attribute);
+struct AsStringVisitor {
+  template <typename T>
+  std::string operator()(std::vector<T> const& v) const {
+    return absl::StrCat("[",
+                        absl::StrJoin(v, ", ",
+                                      [this](std::string* out, T const& v) {
+                                        out->append(this->operator()(v));
+                                      }),
+                        "]");
   }
-  // TODO(#11775) - convert other attribute types to strings
-  // Note that our resource detector only uses string attributes.
-  return {};
-}
+  template <typename T>
+  std::string operator()(T const& v) const {
+    return absl::StrCat(v);
+  }
+  std::string operator()(bool const& v) const { return v ? "true" : "false"; }
+};
 
 struct OTelKeyMatch {
   std::vector<std::string> otel_keys;
@@ -207,6 +217,11 @@ MonitoredResourceProvider MakeProvider(
 }
 
 }  // namespace
+
+std::string AsString(
+    opentelemetry::sdk::common::OwnedAttributeValue const& attribute) {
+  return absl::visit(AsStringVisitor{}, attribute);
+}
 
 MonitoredResource ToMonitoredResource(
     opentelemetry::sdk::resource::ResourceAttributes const& attributes) {
