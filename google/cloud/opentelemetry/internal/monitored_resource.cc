@@ -35,13 +35,10 @@ namespace sc = opentelemetry::sdk::resource::SemanticConventions;
 struct AsStringVisitor {
   template <typename T>
   std::string operator()(std::vector<T> const& v) const {
-    return absl::StrCat("[", absl::StrJoin(v, ", "), "]");
-  }
-  std::string operator()(std::vector<bool> const& v) const {
     return absl::StrCat("[",
                         absl::StrJoin(v, ", ",
-                                      [](std::string* out, bool v) {
-                                        out->append(v ? "true" : "false");
+                                      [this](std::string* out, T const& v) {
+                                        out->append(this->operator()(v));
                                       }),
                         "]");
   }
