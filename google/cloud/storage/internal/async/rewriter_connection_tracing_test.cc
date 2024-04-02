@@ -32,7 +32,6 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::storage_experimental::RewriteObjectResponse;
 using ::google::cloud::storage_mocks::MockAsyncRewriterConnection;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::EventNamed;
@@ -47,10 +46,11 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::google::storage::v2::RewriteResponse;
 using ::testing::IsEmpty;
 
 auto PermanentError() {
-  return StatusOr<RewriteObjectResponse>(
+  return StatusOr<RewriteResponse>(
       storage::testing::canonical_errors::PermanentError());
 }
 
@@ -75,8 +75,11 @@ TEST(RewriterTracingConnection, Basic) {
         return sequencer.PushBack("Iterate(2)").then([](auto) {
           EXPECT_FALSE(ThereIsAnActiveSpan());
           EXPECT_FALSE(OTelContextCaptured());
-          return make_status_or(
-              RewriteObjectResponse{1000, 3000, "test-token", absl::nullopt});
+          RewriteResponse response;
+          response.set_total_bytes_rewritten(1000);
+          response.set_object_size(3000);
+          response.set_rewrite_token("test-token");
+          return make_status_or(std::move(response));
         });
       })
       .WillOnce([&] {
@@ -85,9 +88,11 @@ TEST(RewriterTracingConnection, Basic) {
         return sequencer.PushBack("Iterate(3)").then([](auto) {
           EXPECT_FALSE(ThereIsAnActiveSpan());
           EXPECT_FALSE(OTelContextCaptured());
-          return make_status_or(
-              RewriteObjectResponse{3000, 3000, std::string{},
-                                    storage::ObjectMetadata().set_size(3000)});
+          RewriteResponse response;
+          response.set_total_bytes_rewritten(3000);
+          response.set_object_size(3000);
+          response.mutable_resource()->set_size(3000);
+          return make_status_or(std::move(response));
         });
       });
 
@@ -100,19 +105,19 @@ TEST(RewriterTracingConnection, Basic) {
   auto r2 = actual->Iterate();
   sequencer.PopFront().set_value();
   auto partial = r2.get();
-  EXPECT_EQ(partial->total_bytes_rewritten, 1000);
-  EXPECT_EQ(partial->object_size, 3000);
-  EXPECT_EQ(partial->rewrite_token, "test-token");
-  EXPECT_FALSE(partial->metadata.has_value());
+  EXPECT_EQ(partial->total_bytes_rewritten(), 1000);
+  EXPECT_EQ(partial->object_size(), 3000);
+  EXPECT_EQ(partial->rewrite_token(), "test-token");
+  EXPECT_FALSE(partial->has_resource());
 
   auto r3 = actual->Iterate();
   sequencer.PopFront().set_value();
   auto result = r3.get();
-  EXPECT_EQ(result->total_bytes_rewritten, 3000);
-  EXPECT_EQ(result->object_size, 3000);
-  EXPECT_THAT(result->rewrite_token, IsEmpty());
-  ASSERT_TRUE(result->metadata.has_value());
-  EXPECT_EQ(result->metadata->size(), 3000);
+  EXPECT_EQ(result->total_bytes_rewritten(), 3000);
+  EXPECT_EQ(result->object_size(), 3000);
+  EXPECT_THAT(result->rewrite_token(), IsEmpty());
+  ASSERT_TRUE(result->has_resource());
+  EXPECT_EQ(result->resource().size(), 3000);
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,

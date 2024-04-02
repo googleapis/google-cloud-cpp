@@ -22,6 +22,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
+#include <google/storage/v2/storage.pb.h>
 #include <memory>
 #include <string>
 
@@ -170,7 +171,7 @@ class AsyncConnection {
   struct RewriteObjectParams {
     /// The source and destination bucket and object names. Including
     /// pre-conditions on the object and other optional parameters.
-    RewriteObjectRequest request;
+    google::storage::v2::RewriteObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
     Options options;

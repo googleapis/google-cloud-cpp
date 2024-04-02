@@ -28,10 +28,9 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_mocks::MockAsyncRewriterConnection;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::storage::v2::RewriteResponse;
 using ::testing::AllOf;
-using ::testing::Field;
 using ::testing::IsEmpty;
-using ::testing::Optional;
 using ::testing::Pair;
 using ::testing::ResultOf;
 
@@ -39,48 +38,85 @@ TEST(AsyncRewriter, Basic) {
   auto mock = std::make_shared<MockAsyncRewriterConnection>();
   EXPECT_CALL(*mock, Iterate)
       .WillOnce([] {
-        return make_ready_future(make_status_or(RewriteObjectResponse{
-            1000, 3000, "test-rewrite-token", absl::nullopt}));
+        RewriteResponse response;
+        response.set_total_bytes_rewritten(1000);
+        response.set_object_size(3000);
+        response.set_rewrite_token("test-rewrite-token");
+        return make_ready_future(make_status_or(std::move(response)));
       })
       .WillOnce([] {
-        return make_ready_future(make_status_or(RewriteObjectResponse{
-            3000, 3000, "", storage::ObjectMetadata().set_size(3000)}));
+        RewriteResponse response;
+        response.set_total_bytes_rewritten(3000);
+        response.set_object_size(3000);
+        response.mutable_resource()->set_size(3000);
+        return make_ready_future(make_status_or(std::move(response)));
       });
 
   AsyncRewriter rewriter(mock);
   auto i1 =
       rewriter.Iterate(storage_internal::MakeAsyncToken(mock.get())).get();
   EXPECT_THAT(
-      i1, IsOkAndHolds(Pair(
-              AllOf(Field(&RewriteObjectResponse::total_bytes_rewritten, 1000),
-                    Field(&RewriteObjectResponse::object_size, 3000),
-                    Field(&RewriteObjectResponse::rewrite_token,
-                          "test-rewrite-token"),
-                    Field(&RewriteObjectResponse::metadata, absl::nullopt)),
-              ResultOf(
-                  "token is valid", [](auto const& t) { return t.valid(); },
-                  true))));
+      i1,
+      IsOkAndHolds(Pair(
+          AllOf(ResultOf(
+                    "total bytes",
+                    [](RewriteResponse const& v) {
+                      return v.total_bytes_rewritten();
+                    },
+                    1000),
+                ResultOf(
+                    "size",
+                    [](RewriteResponse const& v) { return v.object_size(); },
+                    3000),
+                ResultOf(
+                    "token",
+                    [](RewriteResponse const& v) { return v.rewrite_token(); },
+                    "test-rewrite-token"),
+                ResultOf(
+                    "has resource",
+                    [](RewriteResponse const& v) { return v.has_resource(); },
+                    false)),
+          ResultOf(
+              "token is valid", [](auto const& t) { return t.valid(); },
+              true))));
 
   auto i2 =
       rewriter.Iterate(storage_internal::MakeAsyncToken(mock.get())).get();
   EXPECT_THAT(
-      i2, IsOkAndHolds(Pair(
-              AllOf(Field(&RewriteObjectResponse::total_bytes_rewritten, 3000),
-                    Field(&RewriteObjectResponse::object_size, 3000),
-                    Field(&RewriteObjectResponse::rewrite_token, IsEmpty()),
-                    Field(&RewriteObjectResponse::metadata,
-                          Optional(ResultOf(
-                              "object metadata size field",
-                              [](auto const& m) { return m.size(); }, 3000)))),
+      i2,
+      IsOkAndHolds(Pair(
+          AllOf(
               ResultOf(
-                  "token is valid", [](auto const& t) { return t.valid(); },
-                  false))));
+                  "total bytes",
+                  [](RewriteResponse const& v) {
+                    return v.total_bytes_rewritten();
+                  },
+                  3000),
+              ResultOf(
+                  "size",
+                  [](RewriteResponse const& v) { return v.object_size(); },
+                  3000),
+              ResultOf(
+                  "token",
+                  [](RewriteResponse const& v) { return v.rewrite_token(); },
+                  IsEmpty()),
+              ResultOf(
+                  "has resource",
+                  [](RewriteResponse const& v) { return v.has_resource(); },
+                  true),
+              ResultOf(
+                  "metadata.size",
+                  [](RewriteResponse const& v) { return v.resource().size(); },
+                  3000)),
+          ResultOf(
+              "token is valid", [](auto const& t) { return t.valid(); },
+              false))));
 }
 
 TEST(AsyncRewriter, WithError) {
   auto mock = std::make_shared<MockAsyncRewriterConnection>();
   EXPECT_CALL(*mock, Iterate).WillOnce([] {
-    return make_ready_future(StatusOr<RewriteObjectResponse>(PermanentError()));
+    return make_ready_future(StatusOr<RewriteResponse>(PermanentError()));
   });
 
   AsyncRewriter rewriter(mock);

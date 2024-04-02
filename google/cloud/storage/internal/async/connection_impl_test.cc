@@ -59,7 +59,6 @@ using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
-using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::ResultOf;
@@ -1967,8 +1966,8 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObjectTooManyTransients) {
 // For RewriteObject just validate the basic functionality. The tests for
 // `RewriterConnectionImpl` are the important ones.
 TEST_F(AsyncConnectionImplTest, RewriteObject) {
-  using ::google::cloud::storage_experimental::RewriteObjectRequest;
-  using ::google::cloud::storage_experimental::RewriteObjectResponse;
+  using ::google::storage::v2::RewriteObjectRequest;
+  using ::google::storage::v2::RewriteResponse;
 
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
@@ -1991,15 +1990,22 @@ TEST_F(AsyncConnectionImplTest, RewriteObject) {
 
   auto match_progress = [](int rewritten, int size) {
     return AllOf(
-        Field(&RewriteObjectResponse::total_bytes_rewritten, rewritten),
-        Field(&RewriteObjectResponse::object_size, size),
-        Field(&RewriteObjectResponse::rewrite_token, "test-rewrite-token"));
+        ResultOf(
+            "total bytes",
+            [](RewriteResponse const& v) { return v.total_bytes_rewritten(); },
+            rewritten),
+        ResultOf(
+            "size", [](RewriteResponse const& v) { return v.object_size(); },
+            size),
+        ResultOf(
+            "token", [](RewriteResponse const& v) { return v.rewrite_token(); },
+            "test-rewrite-token"));
   };
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
   auto rewriter = connection->RewriteObject(
-      {RewriteObjectRequest(), connection->options()});
+      {RewriteObjectRequest{}, connection->options()});
 
   auto r1 = rewriter->Iterate();
   auto next = sequencer.PopFrontWithName();

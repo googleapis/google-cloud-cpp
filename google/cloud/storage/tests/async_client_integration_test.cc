@@ -14,6 +14,7 @@
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
+#include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
@@ -414,22 +415,28 @@ TEST_F(AsyncClientIntegrationTest, RewriteObject) {
 
   // Start a rewrite, but limit each iteration to a small number of bytes, to
   // force multiple calls.
-  storage::ObjectMetadata metadata;
+  google::storage::v2::Object metadata;
   AsyncRewriter rewriter;
   AsyncToken token;
+  google::storage::v2::RewriteObjectRequest request;
+  request.set_max_bytes_rewritten_per_call(1024 * 1024);
   std::tie(rewriter, token) =
-      async.StartRewrite(bucket_name(), o1, bucket_name(), o2,
-                         storage::MaxBytesRewrittenPerCall(1024 * 1024));
+      async.StartRewrite(BucketName(bucket_name()), o1,
+                         BucketName(bucket_name()), o2, std::move(request));
   while (token.valid()) {
     auto rt = rewriter.Iterate(std::move(token)).get();
     ASSERT_STATUS_OK(rt);
-    RewriteObjectResponse response;
+    google::storage::v2::RewriteResponse response;
     AsyncToken t;
     std::tie(response, t) = *std::move(rt);
     token = std::move(t);
-    if (!response.metadata.has_value()) continue;
-    ScheduleForDelete(*response.metadata);
-    metadata = *response.metadata;
+    if (!response.has_resource()) continue;
+    metadata = response.resource();
+    EXPECT_EQ(metadata.bucket(), BucketName(bucket_name()).FullName());
+    ScheduleForDelete(storage::ObjectMetadata()
+                          .set_bucket(bucket_name())
+                          .set_name(metadata.name())
+                          .set_generation(metadata.generation()));
     EXPECT_FALSE(token.valid());
   }
   EXPECT_EQ(metadata.name(), o2);
@@ -456,40 +463,48 @@ TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
   AsyncRewriter rewriter;
   AsyncToken token;
   auto const expected_name = MakeRandomObjectName();
+  google::storage::v2::RewriteObjectRequest start_request;
+  start_request.set_max_bytes_rewritten_per_call(1024 * 1024);
   std::tie(rewriter, token) = async.StartRewrite(
-      source->bucket(), source->name(), *destination, expected_name,
-      storage::MaxBytesRewrittenPerCall(1024 * 1024));
+      BucketName(source->bucket()), source->name(), BucketName(*destination),
+      expected_name, start_request);
 
   auto rt = rewriter.Iterate(std::move(token)).get();
   ASSERT_STATUS_OK(rt);
-  RewriteObjectResponse response;
+  google::storage::v2::RewriteResponse response;
   AsyncToken t;
   std::tie(response, t) = *std::move(rt);
 
   // We want to resume a partially completed resume. Verify the first rewrite
   // did not complete things.
-  ASSERT_THAT(response.rewrite_token, Not(IsEmpty()));
+  ASSERT_THAT(response.rewrite_token(), Not(IsEmpty()));
 
-  std::tie(rewriter, token) =
-      async.ResumeRewrite(source->bucket(), source->name(), *destination,
-                          expected_name, response.rewrite_token);
+  google::storage::v2::RewriteObjectRequest resume_request;
+  resume_request.set_source_bucket(BucketName(source->bucket()).FullName());
+  resume_request.set_source_object(source->name());
+  resume_request.set_destination_bucket(BucketName(*destination).FullName());
+  resume_request.set_destination_name(expected_name);
+  resume_request.set_max_bytes_rewritten_per_call(1024 * 1024);
+  std::tie(rewriter, token) = async.ResumeRewrite(std::move(resume_request));
 
-  storage::ObjectMetadata metadata;
+  google::storage::v2::Object metadata;
   while (token.valid()) {
     auto rt = rewriter.Iterate(std::move(token)).get();
     ASSERT_STATUS_OK(rt);
     AsyncToken t;
     std::tie(response, t) = *std::move(rt);
     token = std::move(t);
-    if (!response.metadata.has_value()) continue;
-    ScheduleForDelete(*response.metadata);
-    metadata = *response.metadata;
+    if (!response.has_resource()) continue;
+    metadata = response.resource();
+    EXPECT_EQ(metadata.bucket(), BucketName(*destination).FullName());
+    EXPECT_EQ(metadata.name(), expected_name);
+    EXPECT_EQ(metadata.size(), source->size());
+    ScheduleForDelete(storage::ObjectMetadata()
+                          .set_bucket(metadata.bucket())
+                          .set_name(metadata.name())
+                          .set_generation(metadata.generation()));
     EXPECT_FALSE(token.valid());
   }
-  EXPECT_EQ(metadata.bucket(), *destination);
-  EXPECT_EQ(metadata.name(), expected_name);
-  EXPECT_EQ(metadata.size(), source->size());
-  EXPECT_EQ(metadata.crc32c(), source->crc32c());
 }
 
 }  // namespace

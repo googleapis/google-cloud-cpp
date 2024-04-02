@@ -23,6 +23,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/storage/v2/storage.pb.h>
 #include <memory>
 
 namespace google {
@@ -34,27 +35,25 @@ class RewriterConnectionImpl
     : public storage_experimental::AsyncRewriterConnection,
       public std::enable_shared_from_this<RewriterConnectionImpl> {
  public:
-  RewriterConnectionImpl(
-      CompletionQueue cq, std::shared_ptr<StorageStub> stub,
-      google::cloud::internal::ImmutableOptions current,
-      google::cloud::storage::internal::RewriteObjectRequest request);
+  RewriterConnectionImpl(CompletionQueue cq, std::shared_ptr<StorageStub> stub,
+                         google::cloud::internal::ImmutableOptions current,
+                         google::storage::v2::RewriteObjectRequest request);
   ~RewriterConnectionImpl() override = default;
 
-  future<StatusOr<storage_experimental::RewriteObjectResponse>> Iterate()
-      override;
+  future<StatusOr<google::storage::v2::RewriteResponse>> Iterate() override;
 
  private:
   std::weak_ptr<RewriterConnectionImpl> WeakFromThis() {
     return shared_from_this();
   }
 
-  StatusOr<storage_experimental::RewriteObjectResponse> OnRewrite(
+  StatusOr<google::storage::v2::RewriteResponse> OnRewrite(
       StatusOr<google::storage::v2::RewriteResponse> response);
 
   CompletionQueue cq_;
   std::shared_ptr<StorageStub> stub_;
   google::cloud::internal::ImmutableOptions current_;
-  google::cloud::storage::internal::RewriteObjectRequest request_;
+  google::storage::v2::RewriteObjectRequest request_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

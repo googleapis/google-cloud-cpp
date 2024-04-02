@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/rewriter_connection_impl.h"
+#include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
@@ -25,7 +26,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-StatusOr<storage_experimental::RewriteObjectResponse> CannotLockSelf(
+StatusOr<google::storage::v2::RewriteResponse> CannotLockSelf(
     internal::ErrorInfoBuilder eib) {
   return internal::CancelledError("cannot lock self", std::move(eib));
 }
@@ -35,62 +36,41 @@ StatusOr<storage_experimental::RewriteObjectResponse> CannotLockSelf(
 RewriterConnectionImpl::RewriterConnectionImpl(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub,
     google::cloud::internal::ImmutableOptions current,
-    storage::internal::RewriteObjectRequest request)
+    google::storage::v2::RewriteObjectRequest request)
     : cq_(std::move(cq)),
       stub_(std::move(stub)),
       current_(std::move(current)),
       request_(std::move(request)) {}
 
-future<StatusOr<storage_experimental::RewriteObjectResponse>>
+future<StatusOr<google::storage::v2::RewriteResponse>>
 RewriterConnectionImpl::Iterate() {
-  auto proto = ToProto(request_);
-  if (!proto) {
-    return make_ready_future(
-        StatusOr<storage_experimental::RewriteObjectResponse>(
-            std::move(proto).status()));
-  }
-
-  auto const idempotency =
-      current_->get<storage::IdempotencyPolicyOption>()->clone()->IsIdempotent(
-          request_)
-          ? Idempotency::kIdempotent
-          : Idempotency::kNonIdempotent;
-  auto call = [stub = stub_, request = request_](
-                  CompletionQueue& cq,
-                  std::shared_ptr<grpc::ClientContext> context,
-                  google::cloud::internal::ImmutableOptions options,
-                  google::storage::v2::RewriteObjectRequest const& proto) {
-    ApplyQueryParameters(*context, *options, request);
-    return stub->AsyncRewriteObject(cq, std::move(context), std::move(options),
-                                    proto);
-  };
-
+  auto policy =
+      current_->get<storage_experimental::IdempotencyPolicyOption>()();
   return google::cloud::internal::AsyncRetryLoop(
              current_->get<storage::RetryPolicyOption>()->clone(),
              current_->get<storage::BackoffPolicyOption>()->clone(),
-             idempotency, cq_, std::move(call), current_, *std::move(proto),
-             __func__)
+             policy->RewriteObject(request_), cq_,
+             [stub = stub_](
+                 CompletionQueue& cq,
+                 std::shared_ptr<grpc::ClientContext> context,
+                 google::cloud::internal::ImmutableOptions options,
+                 google::storage::v2::RewriteObjectRequest const& proto) {
+               return stub->AsyncRewriteObject(cq, std::move(context),
+                                               std::move(options), proto);
+             },
+             current_, request_, __func__)
       .then([w = WeakFromThis()](auto f) {
         if (auto self = w.lock()) return self->OnRewrite(f.get());
         return CannotLockSelf(GCP_ERROR_INFO());
       });
 }
 
-StatusOr<storage_experimental::RewriteObjectResponse>
+StatusOr<google::storage::v2::RewriteResponse>
 RewriterConnectionImpl::OnRewrite(
     StatusOr<google::storage::v2::RewriteResponse> response) {
   if (!response) return std::move(response).status();
   request_.set_rewrite_token(response->rewrite_token());
-  auto r = storage_experimental::RewriteObjectResponse{
-      response->total_bytes_rewritten(),
-      response->object_size(),
-      response->rewrite_token(),
-      /*.metadata=*/absl::nullopt,
-  };
-  if (response->has_resource()) {
-    r.metadata = FromProto(response->resource(), *current_);
-  }
-  return r;
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
