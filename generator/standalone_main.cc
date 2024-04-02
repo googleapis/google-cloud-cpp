@@ -59,8 +59,9 @@ ABSL_FLAG(bool, check_parameter_comment_substitutions, false,
           "Check that the built-in parameter comment substitutions applied.");
 ABSL_FLAG(bool, generate_discovery_protos, false,
           "Generate only .proto files, no C++ code.");
-ABSL_FLAG(bool, disable_parallel_write, false,
-          "Disable parallelized file writing. This allows for readable logs.");
+ABSL_FLAG(bool, enable_parallel_write_for_discovery_protos, false,
+          "Enable parallelized file writing for discovery protos. This allows "
+          "for readable logs.");
 namespace {
 
 using ::google::cloud::generator_internal::GenerateMetadata;
@@ -85,7 +86,7 @@ struct CommandLineArgs {
   bool experimental_scaffold;
   bool update_ci;
   bool generate_discovery_protos;
-  bool disable_parallel_write;
+  bool enable_parallel_write_for_discovery_protos;
 };
 
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
@@ -205,7 +206,7 @@ google::cloud::Status GenerateProtosForRestProducts(
             generator_args.protobuf_proto_path,
             generator_args.googleapis_proto_path, generator_args.output_path,
             generator_args.export_output_path,
-            generator_args.disable_parallel_write,
+            generator_args.enable_parallel_write_for_discovery_protos,
             std::set<std::string>(p.operation_services().begin(),
                                   p.operation_services().end()));
     if (!status.ok()) return status;
@@ -427,19 +428,20 @@ int main(int argc, char** argv) {
         << "; you'll need to recompile everything for that to work";
   }
 
-  CommandLineArgs const args{absl::GetFlag(FLAGS_config_file),
-                             absl::GetFlag(FLAGS_protobuf_proto_path),
-                             absl::GetFlag(FLAGS_googleapis_proto_path),
-                             absl::GetFlag(FLAGS_golden_proto_path),
-                             absl::GetFlag(FLAGS_discovery_proto_path),
-                             absl::GetFlag(FLAGS_output_path),
-                             absl::GetFlag(FLAGS_export_output_path),
-                             absl::GetFlag(FLAGS_scaffold_templates_path),
-                             absl::GetFlag(FLAGS_scaffold),
-                             absl::GetFlag(FLAGS_experimental_scaffold),
-                             absl::GetFlag(FLAGS_update_ci),
-                             absl::GetFlag(FLAGS_generate_discovery_protos),
-                             absl::GetFlag(FLAGS_disable_parallel_write)};
+  CommandLineArgs const args{
+      absl::GetFlag(FLAGS_config_file),
+      absl::GetFlag(FLAGS_protobuf_proto_path),
+      absl::GetFlag(FLAGS_googleapis_proto_path),
+      absl::GetFlag(FLAGS_golden_proto_path),
+      absl::GetFlag(FLAGS_discovery_proto_path),
+      absl::GetFlag(FLAGS_output_path),
+      absl::GetFlag(FLAGS_export_output_path),
+      absl::GetFlag(FLAGS_scaffold_templates_path),
+      absl::GetFlag(FLAGS_scaffold),
+      absl::GetFlag(FLAGS_experimental_scaffold),
+      absl::GetFlag(FLAGS_update_ci),
+      absl::GetFlag(FLAGS_generate_discovery_protos),
+      absl::GetFlag(FLAGS_enable_parallel_write_for_discovery_protos)};
 
   GCP_LOG(INFO) << "proto_path = " << args.protobuf_proto_path << "\n";
   GCP_LOG(INFO) << "googleapis_path = " << args.googleapis_proto_path << "\n";
