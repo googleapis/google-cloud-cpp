@@ -29,6 +29,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::MigrationServiceClient](@ref aiplatform_v1::MigrationServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::ModelServiceClient](@ref aiplatform_v1::ModelServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::ModelGardenServiceClient](@ref aiplatform_v1::ModelGardenServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::NotebookServiceClient](@ref aiplatform_v1::NotebookServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::PersistentResourceServiceClient](@ref aiplatform_v1::PersistentResourceServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::PipelineServiceClient](@ref aiplatform_v1::PipelineServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::PredictionServiceClient](@ref aiplatform_v1::PredictionServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::ScheduleServiceClient](@ref aiplatform_v1::ScheduleServiceClient-endpoint-snippet)
@@ -135,6 +137,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page aiplatform_v1::ModelGardenServiceClient-endpoint-snippet Override aiplatform_v1::ModelGardenServiceClient Endpoint Configuration
 
 @snippet google/cloud/aiplatform/v1/samples/model_garden_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::NotebookServiceClient-endpoint-snippet Override aiplatform_v1::NotebookServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/notebook_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::PersistentResourceServiceClient-endpoint-snippet Override aiplatform_v1::PersistentResourceServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/persistent_resource_client_samples.cc set-client-endpoint
 
 */
 

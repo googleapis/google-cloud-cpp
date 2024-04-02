@@ -20,6 +20,8 @@ the APIs in these libraries are stable, and are ready for production use.
   `CatalogServiceClient`
 - [Network Services API](/google/cloud/networkservices/README.md) - new
   `DepServiceClient`
+- [AI Platform API](/google/cloud/aiplatform/README.md) - new
+  `NotebookServiceClient` and `PersistentResourceServiceClient`
 
 ## v2.22.0 - 2024-03
 

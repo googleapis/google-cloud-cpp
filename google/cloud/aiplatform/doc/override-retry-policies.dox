@@ -99,6 +99,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::MigrationServiceClient](@ref aiplatform_v1::MigrationServiceClient-retry-snippet)
 - [\c aiplatform_v1::ModelServiceClient](@ref aiplatform_v1::ModelServiceClient-retry-snippet)
 - [\c aiplatform_v1::ModelGardenServiceClient](@ref aiplatform_v1::ModelGardenServiceClient-retry-snippet)
+- [\c aiplatform_v1::NotebookServiceClient](@ref aiplatform_v1::NotebookServiceClient-retry-snippet)
+- [\c aiplatform_v1::PersistentResourceServiceClient](@ref aiplatform_v1::PersistentResourceServiceClient-retry-snippet)
 - [\c aiplatform_v1::PipelineServiceClient](@ref aiplatform_v1::PipelineServiceClient-retry-snippet)
 - [\c aiplatform_v1::PredictionServiceClient](@ref aiplatform_v1::PredictionServiceClient-retry-snippet)
 - [\c aiplatform_v1::ScheduleServiceClient](@ref aiplatform_v1::ScheduleServiceClient-retry-snippet)
@@ -309,6 +311,30 @@ This shows how to override the retry policies for aiplatform_v1::ModelGardenServ
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/aiplatform/v1/samples/model_garden_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::NotebookServiceClient-retry-snippet Override aiplatform_v1::NotebookServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::NotebookServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/notebook_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/notebook_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::PersistentResourceServiceClient-retry-snippet Override aiplatform_v1::PersistentResourceServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::PersistentResourceServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/persistent_resource_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/persistent_resource_client_samples.cc custom-idempotency-policy
 
 */
 

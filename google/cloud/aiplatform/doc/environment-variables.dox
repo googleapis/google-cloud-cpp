@@ -74,6 +74,14 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeModelServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_NOTEBOOK_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
+  used by `MakeNotebookServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PERSISTENT_RESOURCE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
+  used by `MakePersistentResourceServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_PIPELINE_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakePipelineServiceConnection()`.
