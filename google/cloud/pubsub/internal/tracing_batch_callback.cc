@@ -126,6 +126,35 @@ class TracingBatchCallback : public BatchCallback {
     child_->user_callback(std::move(m));
   }
 
+  void StartConcurrencyControl(std::string const& ack_id) override {
+    namespace sc = opentelemetry::trace::SemanticConventions;
+    std::lock_guard<std::mutex> lk(mu_);
+    auto spans = spans_by_ack_id_.find(ack_id);
+    if (spans != spans_by_ack_id_.end()) {
+      auto subscribe_span = spans->second.subscribe_span;
+      if (subscribe_span) {
+        opentelemetry::trace::StartSpanOptions options;
+        options.parent = subscribe_span->GetContext();
+        auto span =
+            internal::MakeSpan("subscriber concurrency control",
+                               {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
+        spans->second.concurrency_control_span = std::move(span);
+      }
+    }
+  }
+
+  void EndConcurrencyControl(std::string const& ack_id) override {
+    std::lock_guard<std::mutex> lk(mu_);
+    auto spans = spans_by_ack_id_.find(ack_id);
+    if (spans != spans_by_ack_id_.end()) {
+      auto concurrency_control_span =
+          std::move(spans->second.concurrency_control_span);
+      if (concurrency_control_span) {
+        concurrency_control_span->End();
+      }
+    }
+  }
+
   void AckStart(std::string const& ack_id) override {
     AddEvent(ack_id, "gl-cpp.ack_start");
   }
@@ -157,36 +186,6 @@ class TracingBatchCallback : public BatchCallback {
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
         concurrency_control_span;
   };
-
-  void StartConcurrencyControl(std::string const& ack_id) override {
-    namespace sc = opentelemetry::trace::SemanticConventions;
-    std::lock_guard<std::mutex> lk(mu_);
-    auto spans = spans_by_ack_id_.find(ack_id);
-    if (spans != spans_by_ack_id_.end()) {
-      auto subscribe_span = spans->second.subscribe_span;
-      if (subscribe_span) {
-        opentelemetry::trace::StartSpanOptions options;
-        options.parent = subscribe_span->GetContext();
-        auto span =
-            internal::MakeSpan("subscriber concurrency control",
-                               {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
-        auto scope = internal::OTelScope(span);
-        spans->second.concurrency_control_span = std::move(span);
-      }
-    }
-  }
-
-  void EndConcurrencyControl(std::string const& ack_id) override {
-    std::lock_guard<std::mutex> lk(mu_);
-    auto spans = spans_by_ack_id_.find(ack_id);
-    if (spans != spans_by_ack_id_.end()) {
-      auto concurrency_control_span =
-          std::move(spans->second.concurrency_control_span);
-      if (concurrency_control_span) {
-        concurrency_control_span->End();
-      }
-    }
-  }
 
   void AddEvent(std::string const& ack_id, std::string const& event,
                 bool end_event = false) {
