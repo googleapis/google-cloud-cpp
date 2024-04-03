@@ -36,9 +36,9 @@ google::api::Metric ToMetric(
     auto key = kv.first;
     // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)".
     if (key.empty()) continue;
-    if (!std::isalpha(key[0])) {
+    if (!std::isalpha(key[0]) && key[0] != '_') {
       GCP_LOG(INFO) << "Dropping metric label which does not start with "
-                       "[A-Za-z]: "
+                       "[A-Za-z_]: "
                     << key;
       continue;
     }

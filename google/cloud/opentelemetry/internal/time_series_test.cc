@@ -32,13 +32,13 @@ TEST(ToMetric, Simple) {
   md.instrument_descriptor.name_ = "test";
 
   opentelemetry::sdk::metrics::PointAttributes attributes = {
-      {"key1", "value1"}, {"key2", "value2"}};
+      {"key1", "value1"}, {"_key2", "value2"}};
 
   auto metric = ToMetric(md, attributes);
 
   EXPECT_EQ(metric.type(), "workload.googleapis.com/test");
   EXPECT_THAT(metric.labels(), UnorderedElementsAre(Pair("key1", "value1"),
-                                                    Pair("key2", "value2")));
+                                                    Pair("_key2", "value2")));
 }
 
 TEST(ToMetric, BadLabelNames) {
