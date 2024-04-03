@@ -85,8 +85,8 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
     EXPECT_EQ(full, LoremIpsum());
   }
   auto status = async
-                    .DeleteObject(bucket_name(), object_name,
-                                  gcs::Generation(insert->generation()))
+                    .DeleteObject(BucketName(bucket_name()), object_name,
+                                  insert->generation())
                     .get();
   EXPECT_STATUS_OK(status);
 
