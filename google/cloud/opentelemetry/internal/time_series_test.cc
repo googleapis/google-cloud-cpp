@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/time_series.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,6 +22,8 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
@@ -29,14 +32,31 @@ TEST(ToMetric, Simple) {
   md.instrument_descriptor.name_ = "test";
 
   opentelemetry::sdk::metrics::PointAttributes attributes = {
-      {"key", "value"}, {"a key-with.bad/regex", "value2"}};
+      {"key1", "value1"}, {"key2", "value2"}};
 
   auto metric = ToMetric(md, attributes);
 
   EXPECT_EQ(metric.type(), "workload.googleapis.com/test");
+  EXPECT_THAT(metric.labels(), UnorderedElementsAre(Pair("key1", "value1"),
+                                                    Pair("key2", "value2")));
+}
+
+TEST(ToMetric, BadLabelNames) {
+  testing_util::ScopedLog log;
+
+  opentelemetry::sdk::metrics::MetricData md;
+
+  opentelemetry::sdk::metrics::PointAttributes attributes = {
+      {"99", "dropped"}, {"a key-with.bad/characters", "value"}};
+
+  auto metric = ToMetric(md, attributes);
+
   EXPECT_THAT(metric.labels(),
-              UnorderedElementsAre(Pair("key", "value"),
-                                   Pair("a_key_with_bad_regex", "value2")));
+              UnorderedElementsAre(Pair("a_key_with_bad_characters", "value")));
+
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(AllOf(HasSubstr("Dropping metric label"), HasSubstr("99"))));
 }
 
 }  // namespace

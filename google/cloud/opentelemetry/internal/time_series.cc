@@ -15,7 +15,7 @@
 #include "google/cloud/opentelemetry/internal/time_series.h"
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
-#include "absl/types/variant.h"
+#include "google/cloud/log.h"
 #include <opentelemetry/common/attribute_value.h>
 
 namespace google {
@@ -31,13 +31,20 @@ google::api::Metric ToMetric(
       "workload.googleapis.com/" + metric_data.instrument_descriptor.name_;
   proto.set_type(metric_type);
 
+  auto& labels = *proto.mutable_labels();
   for (auto const& kv : attributes) {
-    auto& labels = *proto.mutable_labels();
-    // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)". We could
-    // convert any non-matching character to '_', but let's just do some usual
-    // suspects.
-    auto key = absl::StrReplaceAll(
-        kv.first, {{".", "_"}, {"-", "_"}, {"/", "_"}, {" ", "_"}});
+    auto key = kv.first;
+    // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)".
+    if (key.empty()) continue;
+    if (!std::isalpha(key[0])) {
+      GCP_LOG(INFO) << "Dropping metric label which does not start with "
+                       "[A-Za-z]: "
+                    << key;
+      continue;
+    }
+    for (auto& c : key) {
+      if (!std::isalnum(c)) c = '_';
+    }
     labels[std::move(key)] = AsString(kv.second);
   }
   return proto;
