@@ -35,7 +35,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
 using ::testing::Le;
 using ::testing::Not;
-using ::testing::Optional;
 using ::testing::VariantWith;
 
 class AsyncClientIntegrationTest
@@ -49,6 +48,15 @@ class AsyncClientIntegrationTest
   }
 
   std::string const& bucket_name() const { return bucket_name_; }
+
+  using google::cloud::storage::testing::StorageIntegrationTest::
+      ScheduleForDelete;
+  void ScheduleForDelete(google::storage::v2::Object const& object) {
+    ScheduleForDelete(storage::ObjectMetadata{}
+                          .set_bucket(MakeBucketName(object.bucket())->name())
+                          .set_name(object.name())
+                          .set_generation(object.generation()));
+  }
 
  private:
   std::string bucket_name_;
@@ -113,14 +121,16 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
     ASSERT_STATUS_OK(insert);
     ScheduleForDelete(*insert);
   }
-  std::vector<storage::ComposeSourceObject> sources(inserted.size());
-  std::transform(inserted.begin(), inserted.end(), sources.begin(),
+  std::vector<google::storage::v2::ComposeObjectRequest::SourceObject> sources;
+  std::transform(inserted.begin(), inserted.end(), std::back_inserter(sources),
                  [](auto const& o) {
-                   return storage::ComposeSourceObject{
-                       o->name(), o->generation(), absl::nullopt};
+                   google::storage::v2::ComposeObjectRequest::SourceObject r;
+                   r.set_name(o->name());
+                   r.set_generation(o->generation());
+                   return r;
                  });
-  auto pending =
-      async.ComposeObject(bucket_name(), std::move(sources), destination);
+  auto pending = async.ComposeObject(BucketName(bucket_name()), destination,
+                                     std::move(sources));
   auto const composed = pending.get();
   EXPECT_STATUS_OK(composed);
   ScheduleForDelete(*composed);
@@ -137,7 +147,8 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
                                                return a;
                                              });
   EXPECT_EQ(full_contents, LoremIpsum() + LoremIpsum());
-  EXPECT_THAT(read->metadata(), Optional(*composed));
+  // TODO(#13910) - disabled until ReadObject also returns protos.
+  // EXPECT_THAT(read->metadata(), Optional(*composed));
 }
 
 TEST_F(AsyncClientIntegrationTest, StreamingRead) {
@@ -434,11 +445,7 @@ TEST_F(AsyncClientIntegrationTest, RewriteObject) {
     token = std::move(t);
     if (!response.has_resource()) continue;
     metadata = response.resource();
-    EXPECT_EQ(metadata.bucket(), BucketName(bucket_name()).FullName());
-    ScheduleForDelete(storage::ObjectMetadata()
-                          .set_bucket(bucket_name())
-                          .set_name(metadata.name())
-                          .set_generation(metadata.generation()));
+    ScheduleForDelete(metadata);
     EXPECT_FALSE(token.valid());
   }
   EXPECT_EQ(metadata.name(), o2);
@@ -500,13 +507,10 @@ TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
     token = std::move(t);
     if (!response.has_resource()) continue;
     metadata = response.resource();
+    ScheduleForDelete(metadata);
     EXPECT_EQ(metadata.bucket(), BucketName(*destination).FullName());
     EXPECT_EQ(metadata.name(), expected_name);
     EXPECT_EQ(metadata.size(), source->size());
-    ScheduleForDelete(storage::ObjectMetadata()
-                          .set_bucket(metadata.bucket())
-                          .set_name(metadata.name())
-                          .set_generation(metadata.generation()));
     EXPECT_FALSE(token.valid());
   }
 }

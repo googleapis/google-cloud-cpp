@@ -133,7 +133,7 @@ class AsyncConnection {
     /// The bucket name, the name of the source objects, and the name of the
     /// destination object. Including pre-conditions on the source objects, the
     /// destination object, and other optional parameters.
-    ComposeObjectRequest request;
+    google::storage::v2::ComposeObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
     Options options;
@@ -141,7 +141,7 @@ class AsyncConnection {
 
   /// Create a new object by composing (concatenating) the contents of existing
   /// objects.
-  virtual future<StatusOr<storage::ObjectMetadata>> ComposeObject(
+  virtual future<StatusOr<google::storage::v2::Object>> ComposeObject(
       ComposeObjectParams p) = 0;
 
   /**

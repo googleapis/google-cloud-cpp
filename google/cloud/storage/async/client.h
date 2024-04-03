@@ -508,32 +508,46 @@ class AsyncClient {
   /**
    * Composes existing objects into a new object in the same bucket.
    *
-   * @param bucket_name the name of the bucket used for source object and
-   *     destination object.
-   * @param source_objects objects used to compose `destination_object_name`.
-   * @param destination_object_name the composed object name.
-   * @param args a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include
-   *     `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
-   *     `IfMetagenerationMatch`, `KmsKeyName`, `UserProject`, and
-   *     `WithObjectMetadata`.
+   * @par Example
+   * @snippet storage_async_samples.cc compose-object
    *
    * @par Idempotency
-   * This operation is only idempotent if restricted by pre-conditions, in this
-   * case, `IfGenerationMatch`.
+   * This operation is never idempotent. Use the overload consuming a
+   * `google::storage::v2::ComposeObjectRequest` and set pre-conditions on the
+   * destination object to make the request idempotent.
+   *
+   * @param bucket_name the name of the bucket used for source object and
+   *     destination objects.
+   * @param destination_object_name the composed object name.
+   * @param source_objects objects used to compose `destination_object_name`.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
    */
-  template <typename... Args>
-  future<StatusOr<storage::ObjectMetadata>> ComposeObject(
-      std::string bucket_name,
-      std::vector<storage::ComposeSourceObject> source_objects,
-      std::string destination_object_name, Args&&... args) {
-    auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_->ComposeObject(
-        {ComposeObjectRequest(std::move(bucket_name), std::move(source_objects),
-                              std::move(destination_object_name))
-             .set_multiple_options(std::forward<Args>(args)...),
-         std::move(options)});
-  }
+  future<StatusOr<google::storage::v2::Object>> ComposeObject(
+      BucketName const& bucket_name, std::string destination_object_name,
+      std::vector<google::storage::v2::ComposeObjectRequest::SourceObject>
+          source_objects,
+      Options opts = {});
+
+  /**
+   * Composes existing objects into a new object in the same bucket.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc compose-object-request
+   *
+   * @par Idempotency
+   * This operation is idempotent if the are pre-conditions on the destination
+   * object. Set the `if_generation_match()` or `if_metageneration_match()`
+   * fields.
+   *
+   * @param request the full request describing what objects to compose, the
+   *     name of the destination object, and any metadata for this destination
+   *     object. See the proto documentation for details.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<google::storage::v2::Object>> ComposeObject(
+      google::storage::v2::ComposeObjectRequest request, Options opts = {});
 
   /*
   [delete-object-common]

@@ -320,7 +320,7 @@ TEST(ConnectionTracing, StartBufferedUploadSuccess) {
 
 TEST(ConnectionTracing, ComposeObject) {
   auto span_catcher = InstallSpanCatcher();
-  PromiseWithOTelContext<StatusOr<storage::ObjectMetadata>> p;
+  PromiseWithOTelContext<StatusOr<google::storage::v2::Object>> p;
 
   auto mock = std::make_unique<MockAsyncConnection>();
   EXPECT_CALL(*mock, options).WillOnce(Return(TracingEnabled()));
@@ -329,7 +329,7 @@ TEST(ConnectionTracing, ComposeObject) {
   auto result = actual->ComposeObject(AsyncConnection::ComposeObjectParams{})
                     .then(expect_no_context);
 
-  p.set_value(make_status_or(storage::ObjectMetadata{}));
+  p.set_value(make_status_or(google::storage::v2::Object{}));
   ASSERT_STATUS_OK(result.get());
 
   auto spans = span_catcher->GetSpans();

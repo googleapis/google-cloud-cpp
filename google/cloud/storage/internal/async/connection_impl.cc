@@ -61,11 +61,6 @@ inline std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<storage::BackoffPolicyOption>()->clone();
 }
 
-inline std::unique_ptr<storage::IdempotencyPolicy> legacy_idempotency_policy(
-    Options const& options) {
-  return options.get<storage::IdempotencyPolicyOption>()->clone();
-}
-
 inline std::unique_ptr<storage_experimental::IdempotencyPolicy>
 idempotency_policy(Options const& options) {
   return options.get<storage_experimental::IdempotencyPolicyOption>()();
@@ -240,37 +235,24 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
       });
 }
 
-future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::ComposeObject(
-    ComposeObjectParams p) {
+future<StatusOr<google::storage::v2::Object>>
+AsyncConnectionImpl::ComposeObject(ComposeObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
-  auto proto = ToProto(p.request.impl_);
-  if (!proto) {
-    return make_ready_future(
-        StatusOr<storage::ObjectMetadata>(std::move(proto).status()));
-  }
   auto const idempotency =
-      legacy_idempotency_policy(*current)->IsIdempotent(p.request.impl_)
-          ? Idempotency::kIdempotent
-          : Idempotency::kNonIdempotent;
-  auto call = [stub = stub_, request = std::move(p.request)](
+      idempotency_policy(*current)->ComposeObject(p.request);
+  auto call = [stub = stub_](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
-                  google::storage::v2::ComposeObjectRequest const& proto) {
-    ApplyQueryParameters(*context, *options, request);
+                  google::storage::v2::ComposeObjectRequest const& request) {
     return stub->AsyncComposeObject(cq, std::move(context), std::move(options),
-                                    proto);
+                                    request);
   };
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
-             std::move(retry), std::move(backoff), idempotency, cq_,
-             std::move(call), current, *std::move(proto), __func__)
-      .then([current](auto f) -> StatusOr<storage::ObjectMetadata> {
-        auto response = f.get();
-        if (!response) return std::move(response).status();
-        return FromProto(*response, *current);
-      });
+      std::move(retry), std::move(backoff), idempotency, cq_, std::move(call),
+      current, std::move(p.request), __func__);
 }
 
 future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {

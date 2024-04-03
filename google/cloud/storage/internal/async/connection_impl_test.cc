@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/connection_impl.h"
+#include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
@@ -1869,6 +1870,113 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUploadResume) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
+}
+
+TEST_F(AsyncConnectionImplTest, ComposeObject) {
+  auto constexpr kExpectedRequest = R"pb(
+    destination { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+    source_objects { name: "input-0" }
+    source_objects { name: "input-1" }
+    if_generation_match: 0
+  )pb";
+  auto constexpr kExpectedObject = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    name: "test-object"
+    size: 4096
+    component_count: 2
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncComposeObject)
+      .WillOnce([&] {
+        return sequencer.PushBack("ComposeObject(1)").then([](auto) {
+          return StatusOr<google::storage::v2::Object>(TransientError());
+        });
+      })
+      .WillOnce([&](CompletionQueue&, auto,
+                    google::cloud::internal::ImmutableOptions const& options,
+                    google::storage::v2::ComposeObjectRequest const& request) {
+        // Verify at least one option is initialized with the correct value.
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
+        auto expected = google::storage::v2::ComposeObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
+        return sequencer.PushBack("ComposeObject(2)").then([](auto) {
+          auto result = google::storage::v2::Object{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kExpectedObject, &result));
+          return make_status_or(std::move(result));
+        });
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto request = google::storage::v2::ComposeObjectRequest{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto pending =
+      connection->ComposeObject({std::move(request), connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "ComposeObject(1)");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "ComposeObject(2)");
+  next.first.set_value(true);
+
+  auto expected = google::storage::v2::Object{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedObject, &expected));
+  EXPECT_THAT(pending.get(), IsOkAndHolds(IsProtoEqual(expected)));
+}
+
+TEST_F(AsyncConnectionImplTest, ComposeObjectPermanentError) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncComposeObject).WillOnce([&] {
+    return sequencer.PushBack("ComposeObject").then([](auto) {
+      return StatusOr<google::storage::v2::Object>(PermanentError());
+    });
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->ComposeObject(
+      {google::storage::v2::ComposeObjectRequest{}, connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "ComposeObject");
+  next.first.set_value(false);
+
+  auto response = pending.get();
+  EXPECT_THAT(response, StatusIs(PermanentError().code()));
+}
+
+TEST_F(AsyncConnectionImplTest, ComposeObjectTooManyTransients) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncComposeObject).Times(3).WillRepeatedly([&] {
+    return sequencer.PushBack("ComposeObject").then([](auto) {
+      return StatusOr<google::storage::v2::Object>(TransientError());
+    });
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  // Use a policy that makes a default-initialized request retryable.
+  auto connection = MakeTestConnection(
+      pool.cq(), mock,
+      Options{}.set<storage_experimental::IdempotencyPolicyOption>(
+          storage_experimental::MakeAlwaysRetryIdempotencyPolicy));
+  auto pending = connection->ComposeObject(
+      {google::storage::v2::ComposeObjectRequest{}, connection->options()});
+
+  for (int i = 0; i != 3; ++i) {
+    auto next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "ComposeObject");
+    next.first.set_value(false);
+  }
+
+  auto response = pending.get();
+  EXPECT_THAT(response, StatusIs(TransientError().code()));
 }
 
 TEST_F(AsyncConnectionImplTest, DeleteObject) {

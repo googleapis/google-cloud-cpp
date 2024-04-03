@@ -48,7 +48,7 @@ class MockAsyncConnection : public storage_experimental::AsyncConnection {
       future<StatusOr<
           std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
       StartBufferedUpload, (UploadParams), (override));
-  MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, ComposeObject,
+  MOCK_METHOD(future<StatusOr<google::storage::v2::Object>>, ComposeObject,
               (ComposeObjectParams), (override));
   MOCK_METHOD(future<Status>, DeleteObject, (DeleteObjectParams), (override));
   MOCK_METHOD(std::shared_ptr<storage_experimental::AsyncRewriterConnection>,
