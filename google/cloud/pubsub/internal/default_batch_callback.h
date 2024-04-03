@@ -51,8 +51,8 @@ class DefaultBatchCallback : public BatchCallback {
   void StartConcurrencyControl(std::string const&) override {}
   void EndConcurrencyControl(std::string const&) override {}
 
-  void StartScheduler(std::string const& ack_id) override {}
-  void EndScheduler(std::string const& ack_id) override {}
+  void StartScheduler(std::string const&) override {}
+  void EndScheduler(std::string const&) override {}
 
   void AckStart(std::string const&) override {}
   void AckEnd(std::string const&) override {}
