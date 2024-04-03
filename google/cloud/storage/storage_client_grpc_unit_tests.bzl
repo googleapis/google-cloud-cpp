@@ -18,6 +18,7 @@
 
 storage_client_grpc_unit_tests = [
     "async/client_test.cc",
+    "async/idempotency_policy_test.cc",
     "async/reader_test.cc",
     "async/resume_policy_test.cc",
     "async/rewriter_test.cc",
