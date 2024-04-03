@@ -906,6 +906,34 @@ Required. Parent resource name. The format of this value varies depending on the
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, ParagraphWithParagraph) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+    <para id='tested-node'>
+      <para>
+        <simplesect kind="warning">
+        <para>Something clever about the warning.</para>
+      </para>
+    </para>
+    </doxygen>)xml";
+  auto constexpr kExpected = R"md(
+
+
+
+
+
+<aside class="warning"><b>Warning:</b>
+Something clever about the warning.
+</aside>)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='tested-node']");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, ItemizedListSimple) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
