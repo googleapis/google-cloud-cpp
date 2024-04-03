@@ -69,7 +69,8 @@ void InstrumentedClient(std::vector<std::string> const& argv) {
       }
       std::cout << "Counted " << count << " 7's in the GCS object\n";
 
-      auto deleted = co_await client.DeleteObject(bucket_name, object_name);
+      auto deleted = co_await client.DeleteObject(
+          gcs_ex::BucketName(bucket_name), object_name);
       if (!deleted.ok()) throw gc::Status(std::move(deleted));
 
       co_return;

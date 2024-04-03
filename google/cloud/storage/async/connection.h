@@ -153,7 +153,7 @@ class AsyncConnection {
   struct DeleteObjectParams {
     /// The bucket and object name for the object to be deleted. Including
     /// pre-conditions on the object and other optional parameters.
-    DeleteObjectRequest request;
+    google::storage::v2::DeleteObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
     Options options;

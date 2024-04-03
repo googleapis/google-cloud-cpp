@@ -14,6 +14,7 @@
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
+#include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
@@ -58,8 +59,8 @@ TEST(SmokeTest, Grpc) {
   EXPECT_EQ(contents, "Hello World!");
 
   auto deleted = client
-                     .DeleteObject(metadata.bucket(), metadata.name(),
-                                   storage::Generation(metadata.generation()))
+                     .DeleteObject(BucketName(metadata.bucket()),
+                                   metadata.name(), metadata.generation())
                      .get();
   EXPECT_STATUS_OK(deleted);
 }
