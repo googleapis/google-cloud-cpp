@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/batch_callback_wrapper.h"
 #include "google/cloud/pubsub/internal/default_batch_callback.h"
+#include "google/cloud/pubsub/internal/span.h"
 #include "google/cloud/pubsub/internal/tracing_batch_callback.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -140,7 +141,7 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
         std::move(w), std::move(*m.mutable_ack_id()), subscription_,
         m.delivery_attempt());
     callback_->user_callback(MessageCallback::MessageAndHandler{
-        FromProto(std::move(*m.mutable_message())), std::move(h)});
+        FromProto(std::move(*m.mutable_message())), std::move(h), Span{}});
   });
   shutdown_manager_->FinishedOperation("callback");
 }
