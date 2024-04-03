@@ -51,6 +51,9 @@ class BatchCallback {
   virtual void StartConcurrencyControl(std::string const& ack_id) = 0;
   virtual void EndConcurrencyControl(std::string const& ack_id) = 0;
 
+  virtual void StartScheduler(std::string const& ack_id) = 0;
+  virtual void EndScheduler(std::string const& ack_id) = 0;
+
   virtual void AckStart(std::string const& ack_id) = 0;
   virtual void AckEnd(std::string const& ack_id) = 0;
 
