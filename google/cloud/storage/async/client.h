@@ -118,51 +118,64 @@ class AsyncClient {
 
   ~AsyncClient() = default;
 
+  /*
+    This snippet discusses the tradeoffs between `InsertObject()`,
+    `StartBufferedUpload()`, and `StartUnbufferedUpload()`. The text is included
+    in the Doxygen documentation for these function too.
+
+    [selecting-an-upload-function]
+    @par Selecting an upload function
+
+    When choosing an upload method consider the following tradeoffs:
+
+    We recommend using `InsertObject()` for relatively small objects that fit
+    in memory.
+
+    - *Pro:* Easy to use, a single function call uploads the object.
+    - *Pro:* Lowest latency for small objects. Use <= 4MiB as a rule of thumb.
+      The precise threshold depends on your environment.
+    - *Con:* Recovery from transient errors requires resending all the data.
+    - *Con:* Multiple concurrent calls to `InsertObject()` will consume as
+      much memory as is needed to hold all the data.
+
+    We recommend using `StartBufferedUpload()` to upload data of unknown or
+    arbitrary size.
+
+    - *Pro:* Relatively easy to use, the library can automatically resend
+      data under most transient errors.
+    - *Pro:* The application can limit the amount of memory used by each
+      upload, even if the full object is arbitrarily large.
+    - *Pro:* Can be used to upload "streaming" data sources where it is
+      inefficient or impossible to go back and re-read data from an arbitrary
+      point.
+    - *Con:* Throughput is limited as it needs to periodically wait for the
+      service to flush the buffer to persistent storage.
+    - *Con:* Cannot automatically resume uploads after the application
+      restarts.
+
+    We recommend using `StartUnbufferedUpload()` to upload data where the
+    upload can efficiently resume from arbitrary points.
+
+    - *Pro:* Can achieve the maximum theoretical throughput for a single
+      stream upload. It is possible to use [Parallel Composite Uploads] to
+      achieve even higher throughput.
+    - *Pro:* It can resume uploads even after the application restarts.
+    - *Con:* Requires manually handling transient errors during the upload.
+
+    [Parallel Composite Uploads]:
+    https://cloud.google.com/storage/docs/parallel-composite-uploads
+    [selecting-an-upload-function]
+  */
+
   /**
    * Creates an object given its name and contents.
    *
-   * @par Selecting an upload function
+   * This function always uses [single-request uploads][single-request-link].
+   * As the name implies, these uploads use a single RPC to upload all the data.
+   * There is no way to restart or resume these uploads if there is a partial
+   * failure. All the data must be sent again in that case.
    *
-   * When choosing an upload method consider the following tradeoffs:
-   *
-   * @parblock
-   * We recommend using `InsertObject()` for relatively small objects that fit
-   * in memory.
-   *
-   * - *Pro:* Easy to use, a single function call uploads the object.
-   * - *Pro:* Lowest latency for small objects. Use <= 4MiB as a rule of thumb.
-   *   The precise threshold depends on your environment.
-   * - *Con:* Recovery from transient errors requires resending all the data.
-   * - *Con:* Multiple concurrent calls to `InsertObject()` will consume as
-   *   much memory as is needed to hold all the data.
-   *
-   * We recommend using `StartBufferedUpload()` to upload data of unknown or
-   * arbitrary size.
-   *
-   * - *Pro:* Relatively easy to use, the library can automatically resend
-   *   data under most transient errors.
-   * - *Pro:* The application can limit the amount of memory used by each
-   *   upload, even if the full object is arbitrarily large.
-   * - *Pro:* Can be used to upload "streaming" data sources where it is
-   *   inefficient or impossible to go back and re-read data from an arbitrary
-   *   point.
-   * - *Con:* Throughput is limited as it needs to periodically wait for the
-   *   service to flush the buffer to persistent storage.
-   * - *Con:* Cannot automatically resume uploads after the application
-   *   restarts.
-   *
-   * We recommend using `StartUnbufferedUpload()` to upload data where the
-   * upload can efficiently resume from arbitrary points.
-   *
-   * - *Pro:* Can achieve the maximum theoretical throughput for a single
-   *   stream upload. It is possible to use [Parallel Composite Uploads] to
-   *   achieve even higher throughput.
-   * - *Pro:* It can resume uploads even after the application restarts.
-   * - *Con:* Requires manually handling transient errors during the upload.
-   *
-   * [Parallel Composite Uploads]:
-   * https://cloud.google.com/storage/docs/parallel-composite-uploads
-   * @endparblock
+   * @snippet{doc} async/client.h selecting-an-upload-function
    *
    * @param bucket_name the name of the bucket that will contain the object.
    * @param object_name the name of the object to be created.
@@ -186,6 +199,9 @@ class AsyncClient {
    *
    * @par Example
    * @snippet storage_async_samples.cc insert-object
+   *
+   * [single-request-link]:
+   * https://cloud.google.com/storage/docs/uploads-downloads#uploads
    */
   template <typename Collection, typename... Args>
   future<StatusOr<storage::ObjectMetadata>> InsertObject(
@@ -301,45 +317,6 @@ class AsyncClient {
   /**
    * Uploads a new object without buffering.
    *
-   * @parblock
-   * We recommend using `InsertObject()` for relatively small objects that fit
-   * in memory.
-   *
-   * - *Pro:* Easy to use, a single function call uploads the object.
-   * - *Pro:* Lowest latency for small objects. Use <= 4MiB as a rule of thumb.
-   *   The precise threshold depends on your environment.
-   * - *Con:* Recovery from transient errors requires resending all the data.
-   * - *Con:* Multiple concurrent calls to `InsertObject()` will consume as
-   *   much memory as is needed to hold all the data.
-   *
-   * We recommend using `StartBufferedUpload()` to upload data of unknown or
-   * arbitrary size.
-   *
-   * - *Pro:* Relatively easy to use, the library can automatically resend
-   *   data under most transient errors.
-   * - *Pro:* The application can limit the amount of memory used by each
-   *   upload, even if the full object is arbitrarily large.
-   * - *Pro:* Can be used to upload "streaming" data sources where it is
-   *   inefficient or impossible to go back and re-read data from an arbitrary
-   *   point.
-   * - *Con:* Throughput is limited as it needs to periodically wait for the
-   *   service to flush the buffer to persistent storage.
-   * - *Con:* Cannot automatically resume uploads after the application
-   *   restarts.
-   *
-   * We recommend using `StartUnbufferedUpload()` to upload data where the
-   * upload can efficiently resume from arbitrary points.
-   *
-   * - *Pro:* Can achieve the maximum theoretical throughput for a single
-   *   stream upload. It is possible to use [Parallel Composite Uploads] to
-   *   achieve even higher throughput.
-   * - *Pro:* It can resume uploads even after the application restarts.
-   * - *Con:* Requires manually handling transient errors during the upload.
-   *
-   * [Parallel Composite Uploads]:
-   * https://cloud.google.com/storage/docs/parallel-composite-uploads
-   * @endparblock
-   *
    * This function always uses [resumable uploads][resumable-link]. The
    * application can provide a `#RestoreResumableUploadSession()` option to
    * resume a previously created upload. The returned object has accessors to
@@ -353,6 +330,8 @@ class AsyncClient {
    * If the application does not provide a `#RestoreResumableUploadSession()`
    * option, or it provides the `#NewResumableUploadSession()` option, then this
    * function will create a new resumable upload session.
+   *
+   * @snippet{doc} async/client.h selecting-an-upload-function
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
@@ -409,45 +388,6 @@ class AsyncClient {
    * Uploads a new object with buffering and automatic recovery from transient
    * failures.
    *
-   * @parblock
-   * We recommend using `InsertObject()` for relatively small objects that fit
-   * in memory.
-   *
-   * - *Pro:* Easy to use, a single function call uploads the object.
-   * - *Pro:* Lowest latency for small objects. Use <= 4MiB as a rule of thumb.
-   *   The precise threshold depends on your environment.
-   * - *Con:* Recovery from transient errors requires resending all the data.
-   * - *Con:* Multiple concurrent calls to `InsertObject()` will consume as
-   *   much memory as is needed to hold all the data.
-   *
-   * We recommend using `StartBufferedUpload()` to upload data of unknown or
-   * arbitrary size.
-   *
-   * - *Pro:* Relatively easy to use, the library can automatically resend
-   *   data under most transient errors.
-   * - *Pro:* The application can limit the amount of memory used by each
-   *   upload, even if the full object is arbitrarily large.
-   * - *Pro:* Can be used to upload "streaming" data sources where it is
-   *   inefficient or impossible to go back and re-read data from an arbitrary
-   *   point.
-   * - *Con:* Throughput is limited as it needs to periodically wait for the
-   *   service to flush the buffer to persistent storage.
-   * - *Con:* Cannot automatically resume uploads after the application
-   *   restarts.
-   *
-   * We recommend using `StartUnbufferedUpload()` to upload data where the
-   * upload can efficiently resume from arbitrary points.
-   *
-   * - *Pro:* Can achieve the maximum theoretical throughput for a single
-   *   stream upload. It is possible to use [Parallel Composite Uploads] to
-   *   achieve even higher throughput.
-   * - *Pro:* It can resume uploads even after the application restarts.
-   * - *Con:* Requires manually handling transient errors during the upload.
-   *
-   * [Parallel Composite Uploads]:
-   * https://cloud.google.com/storage/docs/parallel-composite-uploads
-   * @endparblock
-   *
    * This function always uses [resumable uploads][resumable-link]. The
    * application can provide a `#RestoreResumableUploadSession()` option to
    * resume a previously created upload. The returned object has accessors to
@@ -461,6 +401,8 @@ class AsyncClient {
    * If the application does not provide a `#RestoreResumableUploadSession()`
    * option, or it provides the `#NewResumableUploadSession()` option, then this
    * function will create a new resumable upload session.
+   *
+   * @snippet{doc} async/client.h selecting-an-upload-function
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
