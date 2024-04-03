@@ -37,7 +37,6 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
-using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::Optional;
 using ::testing::ResultOf;
@@ -54,6 +53,14 @@ storage::ObjectMetadata TestObject() {
       .set_bucket("test-bucket")
       .set_name("test-object")
       .set_size(0);
+}
+
+auto TestProtoObject() {
+  google::storage::v2::Object result;
+  result.set_bucket("projects/_/buckets/test-bucket");
+  result.set_name("test-object");
+  result.set_size(0);
+  return result;
 }
 
 TEST(AsyncClient, InsertObject) {
@@ -293,7 +300,7 @@ TEST(AsyncClient, StartBufferedUploadResumeFinalized) {
               VariantWith<storage::ObjectMetadata>(TestObject()));
 }
 
-TEST(AsyncClient, ComposeObject) {
+TEST(AsyncClient, ComposeObject1) {
   auto mock = std::make_shared<MockAsyncConnection>();
   EXPECT_CALL(*mock, options)
       .WillRepeatedly(
@@ -304,34 +311,85 @@ TEST(AsyncClient, ComposeObject) {
         EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
         EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
         EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
-        EXPECT_EQ(p.request.bucket_name(), "test-bucket");
-        auto source_is = [](std::string name) {
-          return ResultOf(
-              "source object name", [](auto const& s) { return s.object_name; },
-              std::move(name));
-        };
-        EXPECT_THAT(p.request.source_objects(),
-                    ElementsAre(source_is("source0"), source_is("source1")));
-        EXPECT_EQ(p.request.object_name(), "test-object");
-        EXPECT_EQ(p.request.GetOption<storage::IfGenerationMatch>().value_or(0),
-                  42);
-        return make_ready_future(make_status_or(TestObject()));
+        auto constexpr kExpected = R"pb(
+          destination {
+            bucket: "projects/_/buckets/test-bucket"
+            name: "test-object"
+          }
+          source_objects { name: "source0" }
+          source_objects { name: "source1" }
+        )pb";
+        google::storage::v2::ComposeObjectRequest expected;
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpected, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(make_status_or(TestProtoObject()));
       });
 
   auto client = AsyncClient(mock);
+  auto make_source = [](std::string n) {
+    google::storage::v2::ComposeObjectRequest::SourceObject source;
+    source.set_name(std::move(n));
+    return source;
+  };
   auto response =
       client
-          .ComposeObject("test-bucket",
-                         {storage::ComposeSourceObject{"source0", absl::nullopt,
-                                                       absl::nullopt},
-                          storage::ComposeSourceObject{"source1", absl::nullopt,
-                                                       absl::nullopt}},
-                         "test-object", storage::IfGenerationMatch(42),
+          .ComposeObject(BucketName("test-bucket"), "test-object",
+                         {make_source("source0"), make_source("source1")},
                          Options{}
                              .set<TestOption<1>>("O1-function")
                              .set<TestOption<2>>("O2-function"))
           .get();
-  EXPECT_THAT(response, IsOkAndHolds(TestObject()));
+  EXPECT_THAT(response, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
+}
+
+TEST(AsyncClient, ComposeObject2) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, ComposeObject)
+      .WillOnce([](AsyncConnection::ComposeObjectParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto constexpr kExpected = R"pb(
+          destination {
+            bucket: "test-only-invalid"
+            name: "test-object"
+            content_type: "text/plain"
+          }
+          if_generation_match: 12345
+          source_objects { name: "source0" generation: 2345 }
+          source_objects { name: "source1" generation: 2345 }
+        )pb";
+        google::storage::v2::ComposeObjectRequest expected;
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpected, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(make_status_or(TestProtoObject()));
+      });
+
+  auto client = AsyncClient(mock);
+  auto make_source = [](std::string n) {
+    google::storage::v2::ComposeObjectRequest::SourceObject source;
+    source.set_name(std::move(n));
+    source.set_generation(2345);
+    return source;
+  };
+  google::storage::v2::ComposeObjectRequest request;
+  request.mutable_destination()->set_bucket("test-only-invalid");
+  request.mutable_destination()->set_name("test-object");
+  request.mutable_destination()->set_content_type("text/plain");
+  request.set_if_generation_match(12345);
+  request.mutable_source_objects()->Add(make_source("source0"));
+  request.mutable_source_objects()->Add(make_source("source1"));
+  auto response = client
+                      .ComposeObject(std::move(request),
+                                     Options{}
+                                         .set<TestOption<1>>("O1-function")
+                                         .set<TestOption<2>>("O2-function"))
+                      .get();
+  EXPECT_THAT(response, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
 }
 
 TEST(AsyncClient, DeleteObject1) {

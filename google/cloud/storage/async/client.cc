@@ -38,6 +38,27 @@ AsyncClient::AsyncClient(Options options) {
 AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
     : connection_(std::move(connection)) {}
 
+future<StatusOr<google::storage::v2::Object>> AsyncClient::ComposeObject(
+    BucketName const& bucket_name, std::string destination_object_name,
+    std::vector<google::storage::v2::ComposeObjectRequest::SourceObject>
+        source_objects,
+    Options opts) {
+  google::storage::v2::ComposeObjectRequest request;
+  request.mutable_destination()->set_bucket(bucket_name.FullName());
+  request.mutable_destination()->set_name(std::move(destination_object_name));
+  for (auto& source : source_objects) {
+    request.mutable_source_objects()->Add(std::move(source));
+  }
+  return ComposeObject(std::move(request), std::move(opts));
+}
+
+future<StatusOr<google::storage::v2::Object>> AsyncClient::ComposeObject(
+    google::storage::v2::ComposeObjectRequest request, Options opts) {
+  return connection_->ComposeObject(
+      {std::move(request),
+       internal::MergeOptions(std::move(opts), connection_->options())});
+}
+
 future<Status> AsyncClient::DeleteObject(BucketName const& bucket_name,
                                          std::string object_name,
                                          Options opts) {

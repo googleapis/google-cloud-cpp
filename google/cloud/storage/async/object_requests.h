@@ -218,51 +218,6 @@ class ReadObjectRequest {
   storage::internal::ReadObjectRangeRequest impl_;
 };
 
-/**
- * A request to compose multiple objects into a single object.
- *
- * This class can hold all the mandatory and optional parameters to compose
- * objects. This class is in the public API because it is required for mocking.
- */
-class ComposeObjectRequest {
- public:
-  ComposeObjectRequest() = default;
-  ComposeObjectRequest(std::string bucket_name,
-                       std::vector<storage::ComposeSourceObject> source_objects,
-                       std::string destination_object_name)
-      : impl_(std::move(bucket_name), std::move(source_objects),
-              std::move(destination_object_name)) {}
-
-  std::string const& bucket_name() const { return impl_.bucket_name(); }
-  std::string const& object_name() const { return impl_.object_name(); }
-  std::vector<storage::ComposeSourceObject> source_objects() const {
-    return impl_.source_objects();
-  }
-
-  template <typename... T>
-  ComposeObjectRequest& set_multiple_options(T&&... o) & {
-    impl_.set_multiple_options(std::forward<T>(o)...);
-    return *this;
-  }
-  template <typename... T>
-  ComposeObjectRequest&& set_multiple_options(T&&... o) && {
-    return std::move(set_multiple_options(std::forward<T>(o)...));
-  }
-
-  template <typename T>
-  bool HasOption() const {
-    return impl_.HasOption<T>();
-  }
-  template <typename T>
-  T GetOption() const {
-    return impl_.GetOption<T>();
-  }
-
- protected:
-  friend class storage_internal::AsyncConnectionImpl;
-  storage::internal::ComposeObjectRequest impl_;
-};
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud
