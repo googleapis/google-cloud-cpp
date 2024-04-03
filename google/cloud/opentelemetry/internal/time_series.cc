@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include <opentelemetry/common/attribute_value.h>
+#include <cctype>
 
 namespace google {
 namespace cloud {
