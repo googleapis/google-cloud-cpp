@@ -91,8 +91,9 @@ class TracingBatchCallback : public BatchCallback {
     // End all outstanding spans.
     for (auto const& kv : spans_by_ack_id_) {
       if (kv.second.subscribe_span) kv.second.subscribe_span->End();
-      if (kv.second.concurrency_control_span)
+      if (kv.second.concurrency_control_span) {
         kv.second.concurrency_control_span->End();
+      }
       if (kv.second.scheduler_span) kv.second.scheduler_span->End();
     }
     spans_by_ack_id_.clear();
@@ -136,10 +137,9 @@ class TracingBatchCallback : public BatchCallback {
       if (subscribe_span) {
         opentelemetry::trace::StartSpanOptions options;
         options.parent = subscribe_span->GetContext();
-        auto span =
-            internal::MakeSpan("subscriber concurrency control",
-                               {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
-        spans->second.concurrency_control_span = std::move(span);
+        spans->second.concurrency_control_span = std::move(internal::MakeSpan(
+            "subscriber concurrency control",
+            {{sc::kMessagingSystem, "gcp_pubsub"}}, options));
       }
     }
   }
@@ -165,10 +165,9 @@ class TracingBatchCallback : public BatchCallback {
       if (subscribe_span) {
         opentelemetry::trace::StartSpanOptions options;
         options.parent = subscribe_span->GetContext();
-        auto span =
-            internal::MakeSpan("subscriber scheduler",
-                               {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
-        spans->second.scheduler_span = std::move(span);
+        spans->second.scheduler_span = std::move(internal::MakeSpan(
+            "subscriber scheduler", {{sc::kMessagingSystem, "gcp_pubsub"}},
+            options));
       }
     }
   }
