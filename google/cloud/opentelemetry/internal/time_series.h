@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_TIME_SERIES_H
 
 #include "google/cloud/version.h"
-#include <google/api/metric.pb.h>
+#include <google/monitoring/v3/metric_service.pb.h>
 #include <opentelemetry/sdk/metrics/metric_reader.h>
 
 namespace google {
@@ -27,6 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::PointAttributes const& attributes);
+
+google::monitoring::v3::TimeSeries ToTimeSeries(
+    opentelemetry::sdk::metrics::MetricData const& metric_data,
+    opentelemetry::sdk::metrics::SumPointData const& sum);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal
