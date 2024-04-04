@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/async/idempotency_policy.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/common_options.h"
@@ -62,6 +63,15 @@ TEST(DefaultOptionsAsync, IdempotencyPolicy) {
   EXPECT_TRUE(static_cast<bool>(factory));
   auto policy = factory();
   EXPECT_THAT(policy, NotNull());
+}
+
+TEST(DefaultOptionsAsync, Hashes) {
+  auto const options = DefaultOptionsAsync({});
+  EXPECT_TRUE(
+      options.get<storage_experimental::EnableCrc32cValidationOption>());
+  EXPECT_FALSE(options.get<storage_experimental::EnableMD5ValidationOption>());
+  EXPECT_FALSE(options.has<storage_experimental::UseCrc32cValueOption>());
+  EXPECT_FALSE(options.has<storage_experimental::UseMD5ValueOption>());
 }
 
 TEST(DefaultOptionsAsync, Adjust) {
