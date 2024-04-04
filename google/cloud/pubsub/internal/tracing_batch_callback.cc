@@ -128,6 +128,8 @@ class TracingBatchCallback : public BatchCallback {
     if (spans != spans_by_ack_id_.end()) {
       m.subscribe_span.span = spans->second.subscribe_span;
     }
+    // Don't hold the lock while the callback executes.
+    lk.unlock();
     child_->user_callback(std::move(m));
   }
 
