@@ -137,9 +137,9 @@ class TracingBatchCallback : public BatchCallback {
       if (subscribe_span) {
         opentelemetry::trace::StartSpanOptions options;
         options.parent = subscribe_span->GetContext();
-        spans->second.concurrency_control_span = std::move(internal::MakeSpan(
-            "subscriber concurrency control",
-            {{sc::kMessagingSystem, "gcp_pubsub"}}, options));
+        spans->second.concurrency_control_span =
+            internal::MakeSpan("subscriber concurrency control",
+                               {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
       }
     }
   }
@@ -165,9 +165,9 @@ class TracingBatchCallback : public BatchCallback {
       if (subscribe_span) {
         opentelemetry::trace::StartSpanOptions options;
         options.parent = subscribe_span->GetContext();
-        spans->second.scheduler_span = std::move(internal::MakeSpan(
-            "subscriber scheduler", {{sc::kMessagingSystem, "gcp_pubsub"}},
-            options));
+        spans->second.scheduler_span =
+            internal::MakeSpan("subscriber scheduler",
+                               {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
       }
     }
   }
