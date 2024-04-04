@@ -77,6 +77,7 @@ void SubscriptionMessageQueue::OnRead(
     shutdown_manager_->FinishedOperation("OnRead");
     for (auto& m : *r.mutable_received_messages()) {
       auto key = m.message().ordering_key();
+      callback_->StartScheduler(m.ack_id());
       if (key.empty()) {
         // Empty key, requires no ordering and therefore immediately runnable.
         runnable_messages_.push_back(std::move(m));
@@ -129,6 +130,7 @@ void SubscriptionMessageQueue::Shutdown(std::unique_lock<std::mutex> lk) {
     }
   }
   for (auto& m : runnable_messages) {
+    callback_->EndScheduler(m.ack_id());
     ack_ids.push_back(std::move(*m.mutable_ack_id()));
   }
 
@@ -141,11 +143,13 @@ void SubscriptionMessageQueue::DrainQueue(std::unique_lock<std::mutex> lk) {
     auto m = std::move(runnable_messages_.front());
     runnable_messages_.pop_front();
     --available_slots_;
+    callback_->EndScheduler(m.ack_id());
     // No need to track messages without an ordering key, as there is no action
     // to take in their HandlerDone() member function.
     if (!m.message().ordering_key().empty()) {
       ordering_key_by_ack_id_[m.ack_id()] = m.message().ordering_key();
     }
+
     // Don't hold a lock during the callback, as the callee may call `Read()`
     // or something similar.
     lk.unlock();

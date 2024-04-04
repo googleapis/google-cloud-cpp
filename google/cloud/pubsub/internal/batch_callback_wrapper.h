@@ -64,6 +64,13 @@ class BatchCallbackWrapper : public BatchCallback {
     child_->EndConcurrencyControl(ack_id);
   }
 
+  void StartScheduler(std::string const& ack_id) override {
+    child_->StartScheduler(ack_id);
+  }
+  void EndScheduler(std::string const& ack_id) override {
+    child_->EndScheduler(ack_id);
+  }
+
   void AckStart(std::string const& ack_id) override {
     child_->AckStart(ack_id);
   }

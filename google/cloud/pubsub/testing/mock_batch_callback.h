@@ -40,6 +40,8 @@ class MockBatchCallback : public pubsub_internal::BatchCallback {
               (pubsub_internal::BatchCallback::ReceivedMessage));
   MOCK_METHOD(void, StartConcurrencyControl, (std::string const&));
   MOCK_METHOD(void, EndConcurrencyControl, (std::string const&));
+  MOCK_METHOD(void, StartScheduler, (std::string const&));
+  MOCK_METHOD(void, EndScheduler, (std::string const&));
   MOCK_METHOD(void, AckStart, (std::string const&));
   MOCK_METHOD(void, AckEnd, (std::string const&));
   MOCK_METHOD(void, NackStart, (std::string const&));
