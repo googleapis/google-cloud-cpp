@@ -379,8 +379,8 @@ Install some of the dependencies for `google-cloud-cpp`.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y libcurl-devel libopenssl-devel \
-        libcrc32c-devel nlohmann_json-devel
+sudo zypper install --allow-downgrade -y abseil-cpp-devel c-ares-devel \
+        libcurl-devel libopenssl-devel libcrc32c-devel nlohmann_json-devel
 ```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
@@ -392,26 +392,6 @@ multiple ways to solve this problem, the following steps are one solution:
 sudo tee /etc/ld.so.conf.d/usrlocal.conf
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export PATH=/usr/local/bin:${PATH}
-```
-
-#### Abseil
-
-We need a recent version of Abseil. Enabling `ABSL_PROPAGATE_CXX_STD` propagates
-the version of C++ used to compile Abseil to anything that depends on Abseil.
-
-```bash
-mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.1.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
-      -DBUILD_SHARED_LIBS=yes \
-      -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
 ```
 
 #### RE2
@@ -447,20 +427,6 @@ curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.3.tar.gz | \
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### c-ares
-
-Recent versions of gRPC require c-ares >= 1.11, while openSUSE/Leap distributes
-c-ares-1.9. Manually install a newer version:
-
-```bash
-mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
-curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    ./buildconf && ./configure && make -j ${NCPU:-4} && \
-sudo make install && \
 sudo ldconfig
 ```
 

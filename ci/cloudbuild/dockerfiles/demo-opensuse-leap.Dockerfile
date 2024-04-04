@@ -34,8 +34,8 @@ RUN zypper refresh && \
 
 # ```bash
 RUN zypper refresh && \
-    zypper install --allow-downgrade -y libcurl-devel libopenssl-devel \
-        libcrc32c-devel nlohmann_json-devel
+    zypper install --allow-downgrade -y abseil-cpp-devel c-ares-devel \
+        libcurl-devel libopenssl-devel libcrc32c-devel nlohmann_json-devel
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. openSUSE
@@ -47,27 +47,6 @@ RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
     tee /etc/ld.so.conf.d/usrlocal.conf
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 ENV PATH=/usr/local/bin:${PATH}
-# ```
-
-# #### Abseil
-
-# We need a recent version of Abseil. Enabling `ABSL_PROPAGATE_CXX_STD` 
-# propagates the version of C++ used to compile Abseil to anything that depends
-# on Abseil.
-
-# ```bash
-WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.1.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
-      -DBUILD_SHARED_LIBS=yes \
-      -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
 # ```
 
 # #### RE2
@@ -103,20 +82,6 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.3.tar.gz 
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### c-ares
-
-# Recent versions of gRPC require c-ares >= 1.11, while openSUSE/Leap
-# distributes c-ares-1.9. Manually install a newer version:
-
-# ```bash
-WORKDIR /var/tmp/build/c-ares
-RUN curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    ./buildconf && ./configure && make -j ${NCPU:-4} && \
-    make install && \
     ldconfig
 # ```
 
