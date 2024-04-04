@@ -126,6 +126,7 @@ class TracingBatchCallback : public BatchCallback {
     std::unique_lock<std::mutex> lk(mu_);
     auto it = spans_by_ack_id_.find(m.ack_id);
     if (it != spans_by_ack_id_.end()) {
+      // Takes the subscribe span from the TracingBatchCallback and passes it to the MessageCallback. 
       m.subscribe_span.span = it->second.subscribe_span;
     }
     // Don't hold the lock while the callback executes.
@@ -211,7 +212,7 @@ class TracingBatchCallback : public BatchCallback {
       }
       if (end_event) {
         subscribe_span->End();
-        spans_by_ack_id_.erase(spans);
+        spans_by_ack_id_.erase(it);
       }
     }
   }

@@ -42,7 +42,9 @@ class TracingMessageCallback : public MessageCallback {
   void user_callback(MessageAndHandler m) override {
     namespace sc = opentelemetry::trace::SemanticConventions;
     opentelemetry::trace::StartSpanOptions options;
-    options.parent = m.subscribe_span.span->GetContext();
+    if (m.subscribe_span.span) {
+      options.parent = m.subscribe_span.span->GetContext();
+    }
     auto subscription_id =
         options_.get<pubsub::SubscriptionOption>().subscription_id();
     auto span =

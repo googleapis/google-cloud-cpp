@@ -22,6 +22,7 @@
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -42,6 +43,7 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsInternal;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithParent;
 using ::testing::AllOf;
 using ::testing::Contains;
 
@@ -54,19 +56,8 @@ pubsub::Subscription TestSubscription() {
 std::shared_ptr<MessageCallback> MakeTestMessageCallback(
     std::shared_ptr<MessageCallback> mock) {
   return MakeTracingMessageCallback(
-      std::move(mock), google::cloud::Options{}.set<pubsub::SubscriptionOption>(
-                           TestSubscription()));
-}
-
-MessageCallback::MessageAndHandler MakeMessageAndHandler() {
-  auto span = internal::MakeSpan("my-sub subscribe");
-  span->End();
-  MessageCallback::MessageAndHandler m{
-      pubsub::MessageBuilder().Build(),
-      std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>(),
-      "ack-id",
-      {span}};
-  return m;
+      std::move(mock),
+      Options{}.set<pubsub::SubscriptionOption>(TestSubscription()));
 }
 
 TEST(TracingMessageCallback, UserCallback) {
@@ -76,14 +67,22 @@ TEST(TracingMessageCallback, UserCallback) {
   EXPECT_CALL(*mock, user_callback).Times(1);
   auto message_callback = MakeTestMessageCallback(std::move(mock));
 
-  message_callback->user_callback(MakeMessageAndHandler());
+  auto span = internal::MakeSpan("my-sub subscribe");
+  MessageCallback::MessageAndHandler m{
+      pubsub::MessageBuilder().Build(),
+      std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>(),
+      "ack-id",
+      {span}};
+  message_callback->user_callback(std::move(m));
+  span->End();
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
                             SpanNamed("test-sub process"),
                             SpanHasAttributes(OTelAttribute<std::string>(
-                                sc::kMessagingSystem, "gcp_pubsub")))));
+                                sc::kMessagingSystem, "gcp_pubsub")),
+                            SpanWithParent(span))));
 }
 
 }  // namespace
