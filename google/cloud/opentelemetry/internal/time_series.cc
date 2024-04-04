@@ -128,7 +128,8 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 
   auto& p = *ts.add_points();
   // Note that the start timestamp is omitted for gauge metrics.
-  *p.mutable_interval()->mutable_end_time() = ToProtoTimestamp(metric_data.end_ts);
+  *p.mutable_interval()->mutable_end_time() =
+      ToProtoTimestamp(metric_data.end_ts);
   *p.mutable_value() = ToValue(gauge_data.value_);
   return ts;
 }
