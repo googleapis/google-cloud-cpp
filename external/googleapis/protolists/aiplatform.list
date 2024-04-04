@@ -77,6 +77,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:featurestore_monitoring.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:featurestore_online_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:featurestore_service.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:genai_tuning_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:hyperparameter_tuning_job.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:index.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:index_endpoint.proto
@@ -134,6 +135,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:tensorboard_time_series.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:tool.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:training_pipeline.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:tuning_job.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:types.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:unmanaged_container_model.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:user_action_reference.proto
