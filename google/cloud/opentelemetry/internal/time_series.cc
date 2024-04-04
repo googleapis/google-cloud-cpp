@@ -86,11 +86,13 @@ google::api::Metric ToMetric(
   return proto;
 }
 
-google::monitoring::v3::TimeInterval ToNonEmptyTimeInterval(
+google::monitoring::v3::TimeInterval ToNonGaugeTimeInterval(
     opentelemetry::sdk::metrics::MetricData const& metric_data) {
-  // GCM requires that time intervals are non-empty. To achieve this, we
-  // override the end value to be at least 1ms after the start value.
-  // https://github.com/GoogleCloudPlatform/opentelemetry-operations-go/blob/babed4870546b78cee69606726961cfd20cbea42/exporter/metric/metric.go#L604-L609
+  // GCM requires that time intervals for non-GAUGE metrics are at least 1ms
+  // long. To achieve this, we override the end value to be at least 1ms after
+  // the start value.
+  //
+  // https://cloud.google.com/monitoring/api/ref_v3/rpc/google.monitoring.v3#timeinterval
   auto end_ts_nanos = (std::max)(
       metric_data.end_ts.time_since_epoch(),
       metric_data.start_ts.time_since_epoch() + std::chrono::milliseconds(1));
@@ -111,7 +113,7 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
   ts.set_value_type(ToValueType(metric_data.instrument_descriptor.value_type_));
 
   auto& p = *ts.add_points();
-  *p.mutable_interval() = ToNonEmptyTimeInterval(metric_data);
+  *p.mutable_interval() = ToNonGaugeTimeInterval(metric_data);
   *p.mutable_value() = ToValue(sum_data.value_);
   return ts;
 }

@@ -29,12 +29,11 @@ using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
-using ::testing::Matcher;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::UnorderedElementsAre;
 
-Matcher<google::monitoring::v3::Point const&> DoubleTypedValue(double v) {
+auto DoubleTypedValue(double v) {
   return ResultOf(
       "double_value",
       [](google::monitoring::v3::Point const& p) {
@@ -43,7 +42,7 @@ Matcher<google::monitoring::v3::Point const&> DoubleTypedValue(double v) {
       Eq(v));
 }
 
-Matcher<google::monitoring::v3::Point const&> Int64TypedValue(std::int64_t v) {
+auto Int64TypedValue(std::int64_t v) {
   return ResultOf(
       "int64_value",
       [](google::monitoring::v3::Point const& p) {
@@ -52,9 +51,8 @@ Matcher<google::monitoring::v3::Point const&> Int64TypedValue(std::int64_t v) {
       Eq(v));
 }
 
-Matcher<google::monitoring::v3::Point const&> Interval(
-    std::chrono::system_clock::time_point start,
-    std::chrono::system_clock::time_point end) {
+auto Interval(std::chrono::system_clock::time_point start,
+              std::chrono::system_clock::time_point end) {
   return AllOf(
       ResultOf(
           "start_time",
@@ -68,7 +66,7 @@ Matcher<google::monitoring::v3::Point const&> Interval(
             return internal::ToChronoTimePoint(p.interval().end_time());
           },
           Eq(end)));
-};
+}
 
 TEST(ToMetric, Simple) {
   opentelemetry::sdk::metrics::MetricData md;
@@ -159,7 +157,7 @@ TEST(SumPointData, NonEmptyInterval) {
   EXPECT_LE(end - start, std::chrono::seconds::zero());
 
   // The spec says to drop the end timestamp, and use the start timestamp plus
-  // some delta as the end timestamp.
+  // 1ms as the end timestamp.
   auto const expected_end = start + std::chrono::milliseconds(1);
 
   opentelemetry::sdk::metrics::MetricData md;
