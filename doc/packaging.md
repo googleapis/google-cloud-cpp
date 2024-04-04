@@ -490,47 +490,6 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
-#### crc32c
-
-The project depends on the Crc32c library, we need to compile this from source:
-
-```bash
-mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -DCRC32C_BUILD_TESTS=OFF \
-        -DCRC32C_BUILD_BENCHMARKS=OFF \
-        -DCRC32C_USE_GLOG=OFF \
-        -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### nlohmann_json library
-
-The project depends on the nlohmann_json library. We use CMake to install it as
-this installs the necessary CMake configuration files. Note that this is a
-header-only library, and often installed manually. This leaves your environment
-without support for CMake pkg-config.
-
-```bash
-mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=yes \
-      -DBUILD_TESTING=OFF \
-      -DJSON_BuildTests=OFF \
-      -S . -B cmake-out && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
 #### opentelemetry-cpp
 
 The project has an **optional** dependency on the OpenTelemetry library. We
