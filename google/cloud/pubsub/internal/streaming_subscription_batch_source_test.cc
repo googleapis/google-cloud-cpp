@@ -1130,7 +1130,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, callback).Times(1);
   EXPECT_CALL(*mock_batch_callback, ModackStart).Times(2);
-  EXPECT_CALL(*mock_batch_callback, ModackEnd).Times(0);
+  EXPECT_CALL(*mock_batch_callback, ModackEnd).Times(2);
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);
