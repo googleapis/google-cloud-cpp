@@ -121,7 +121,7 @@ class AsyncConnectionImpl
   UnbufferedUploadImpl(
       internal::ImmutableOptions current,
       std::function<void(grpc::ClientContext&)> configure_context,
-      std::string upload_id,
+      google::storage::v2::BidiWriteObjectRequest request,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
       std::int64_t persisted_size);
 
