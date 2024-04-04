@@ -39,12 +39,14 @@ class AsyncWriterConnectionImpl
 
   explicit AsyncWriterConnectionImpl(
       google::cloud::internal::ImmutableOptions options,
-      std::unique_ptr<StreamingRpc> impl, std::string upload_id,
+      google::storage::v2::BidiWriteObjectRequest request,
+      std::unique_ptr<StreamingRpc> impl,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
       std::int64_t persisted_size);
   explicit AsyncWriterConnectionImpl(
       google::cloud::internal::ImmutableOptions options,
-      std::unique_ptr<StreamingRpc> impl, std::string upload_id,
+      google::storage::v2::BidiWriteObjectRequest request,
+      std::unique_ptr<StreamingRpc> impl,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
       storage::ObjectMetadata metadata);
   ~AsyncWriterConnectionImpl() override;
@@ -63,6 +65,15 @@ class AsyncWriterConnectionImpl
   RpcMetadata GetRequestMetadata() override;
 
  private:
+  using PersistedStateType =
+      absl::variant<std::int64_t, storage::ObjectMetadata>;
+  AsyncWriterConnectionImpl(
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::v2::BidiWriteObjectRequest request,
+      std::unique_ptr<StreamingRpc> impl,
+      std::shared_ptr<storage::internal::HashFunction> hash_function,
+      PersistedStateType persisted_state, std::int64_t offset);
+
   google::storage::v2::BidiWriteObjectRequest MakeRequest();
 
   future<Status> OnPartialUpload(std::size_t upload_size,
@@ -75,9 +86,9 @@ class AsyncWriterConnectionImpl
 
   google::cloud::internal::ImmutableOptions options_;
   std::shared_ptr<StreamingRpc> impl_;
-  std::string upload_id_;
+  google::storage::v2::BidiWriteObjectRequest request_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
-  absl::variant<std::int64_t, storage::ObjectMetadata> persisted_state_;
+  PersistedStateType persisted_state_;
   std::int64_t offset_ = 0;
   bool first_request_ = true;
 
