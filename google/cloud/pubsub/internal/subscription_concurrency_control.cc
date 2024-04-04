@@ -139,6 +139,9 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
     callback_->EndConcurrencyControl(m.ack_id());
     auto h = std::make_unique<AckHandlerImpl>(
         std::move(w), m.ack_id(), subscription_, m.delivery_attempt());
+    // Note: at creation in the concurrency control layer, the subscription span
+    // does not exist. This is supplied when the callback reaches the
+    // TracingBatchCallback.
     callback_->user_callback(MessageCallback::MessageAndHandler{
         FromProto(std::move(*m.mutable_message())), std::move(h),
         std::move(*m.mutable_ack_id()), Span{}});

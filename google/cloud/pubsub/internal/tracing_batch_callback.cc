@@ -124,9 +124,9 @@ class TracingBatchCallback : public BatchCallback {
 
   void user_callback(MessageCallback::MessageAndHandler m) override {
     std::unique_lock<std::mutex> lk(mu_);
-    auto spans = spans_by_ack_id_.find(m.ack_id);
-    if (spans != spans_by_ack_id_.end()) {
-      m.subscribe_span.span = spans->second.subscribe_span;
+    auto it = spans_by_ack_id_.find(m.ack_id);
+    if (it != spans_by_ack_id_.end()) {
+      m.subscribe_span.span = it->second.subscribe_span;
     }
     // Don't hold the lock while the callback executes.
     lk.unlock();
@@ -136,26 +136,26 @@ class TracingBatchCallback : public BatchCallback {
   void StartConcurrencyControl(std::string const& ack_id) override {
     namespace sc = opentelemetry::trace::SemanticConventions;
     std::lock_guard<std::mutex> lk(mu_);
-    auto spans = spans_by_ack_id_.find(ack_id);
-    if (spans != spans_by_ack_id_.end()) {
-      auto subscribe_span = spans->second.subscribe_span;
+    auto it = spans_by_ack_id_.find(ack_id);
+    if (it != spans_by_ack_id_.end()) {
+      auto subscribe_span = it->second.subscribe_span;
       if (subscribe_span) {
         opentelemetry::trace::StartSpanOptions options;
         options.parent = subscribe_span->GetContext();
         auto span =
             internal::MakeSpan("subscriber concurrency control",
                                {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
-        spans->second.concurrency_control_span = std::move(span);
+        it->second.concurrency_control_span = std::move(span);
       }
     }
   }
 
   void EndConcurrencyControl(std::string const& ack_id) override {
     std::lock_guard<std::mutex> lk(mu_);
-    auto spans = spans_by_ack_id_.find(ack_id);
-    if (spans != spans_by_ack_id_.end()) {
+    auto it = spans_by_ack_id_.find(ack_id);
+    if (it != spans_by_ack_id_.end()) {
       auto concurrency_control_span =
-          std::move(spans->second.concurrency_control_span);
+          std::move(it->second.concurrency_control_span);
       if (concurrency_control_span) {
         concurrency_control_span->End();
       }
@@ -198,9 +198,9 @@ class TracingBatchCallback : public BatchCallback {
                 bool end_event = false) {
     std::lock_guard<std::mutex> lk(mu_);
     // Use the ack_id to find the subscribe span and add an event to it.
-    auto spans = spans_by_ack_id_.find(ack_id);
-    if (spans != spans_by_ack_id_.end()) {
-      auto subscribe_span = spans->second.subscribe_span;
+    auto it = spans_by_ack_id_.find(ack_id);
+    if (it != spans_by_ack_id_.end()) {
+      auto subscribe_span = it->second.subscribe_span;
       subscribe_span->AddEvent(event);
       if (event == "gl-cpp.ack_end") {
         subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "ack");

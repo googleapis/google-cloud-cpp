@@ -38,7 +38,8 @@ class MessageCallback {
     pubsub::Message message;
     std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> ack_handler;
     std::string ack_id;
-    // A single subscribe span, if it exists.
+    // A single subscribe span, if it exists. This value is not known initially.
+    // The TracingBatchCallback will supply it once created.
     Span subscribe_span;
   };
 

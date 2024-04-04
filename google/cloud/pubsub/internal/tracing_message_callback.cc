@@ -18,7 +18,6 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <google/pubsub/v1/pubsub.pb.h>
 #include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -32,14 +31,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-/**
- * Tracing implementation for a MessageCallback.
- * */
 class TracingMessageCallback : public MessageCallback {
  public:
   explicit TracingMessageCallback(std::shared_ptr<MessageCallback> child,
                                   Options const& opts)
-      : child_(std::move(child)), options_(std::move(opts)) {}
+      : child_(std::move(child)), options_(opts) {}
 
   ~TracingMessageCallback() override = default;
 
