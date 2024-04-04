@@ -149,7 +149,6 @@ class TracingBatchCallback : public BatchCallback {
         it->second.concurrency_control_span =
             internal::MakeSpan("subscriber concurrency control",
                                {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
-        it->second.concurrency_control_span = std::move(span);
       }
     }
   }
