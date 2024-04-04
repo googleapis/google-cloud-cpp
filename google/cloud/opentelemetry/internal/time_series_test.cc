@@ -33,6 +33,21 @@ using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::UnorderedElementsAre;
 
+std::string ToString(opentelemetry::sdk::metrics::InstrumentValueType type) {
+  switch (type) {
+    case opentelemetry::sdk::metrics::InstrumentValueType::kInt:
+      return "kInt";
+    case opentelemetry::sdk::metrics::InstrumentValueType::kLong:
+      return "kLong";
+    case opentelemetry::sdk::metrics::InstrumentValueType::kFloat:
+      return "kFloat";
+    case opentelemetry::sdk::metrics::InstrumentValueType::kDouble:
+      return "kDouble";
+    default:
+      return "unreachable";
+  }
+}
+
 auto DoubleTypedValue(double v) {
   return ResultOf(
       "double_value",
@@ -120,15 +135,17 @@ TEST(SumPointData, Simple) {
 }
 
 TEST(SumPointData, IntValueTypes) {
+  opentelemetry::sdk::metrics::SumPointData point;
+  point.value_ = 42L;
+
   for (auto value_type : {
            opentelemetry::sdk::metrics::InstrumentValueType::kInt,
            opentelemetry::sdk::metrics::InstrumentValueType::kLong,
        }) {
+    SCOPED_TRACE("value_type: " + ToString(value_type));
+
     opentelemetry::sdk::metrics::MetricData md;
     md.instrument_descriptor.value_type_ = value_type;
-
-    opentelemetry::sdk::metrics::SumPointData point;
-    point.value_ = 42L;
 
     auto ts = ToTimeSeries(md, point);
     EXPECT_THAT(ts.points(), ElementsAre(Int64TypedValue(42)));
@@ -136,15 +153,17 @@ TEST(SumPointData, IntValueTypes) {
 }
 
 TEST(SumPointData, DoubleValueTypes) {
+  opentelemetry::sdk::metrics::SumPointData point;
+  point.value_ = 42.0;
+
   for (auto value_type : {
            opentelemetry::sdk::metrics::InstrumentValueType::kFloat,
            opentelemetry::sdk::metrics::InstrumentValueType::kDouble,
        }) {
+    SCOPED_TRACE("value_type: " + ToString(value_type));
+
     opentelemetry::sdk::metrics::MetricData md;
     md.instrument_descriptor.value_type_ = value_type;
-
-    opentelemetry::sdk::metrics::SumPointData point;
-    point.value_ = 42.0;
 
     auto ts = ToTimeSeries(md, point);
     EXPECT_THAT(ts.points(), ElementsAre(DoubleTypedValue(42)));
@@ -168,6 +187,78 @@ TEST(SumPointData, NonEmptyInterval) {
 
   auto ts = ToTimeSeries(md, opentelemetry::sdk::metrics::SumPointData{});
   EXPECT_THAT(ts.points(), ElementsAre(Interval(start, expected_end)));
+}
+
+TEST(LastValuePointData, Simple) {
+  auto const now = std::chrono::system_clock::now();
+
+  opentelemetry::sdk::metrics::MetricData md;
+  md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.value_type_ =
+      opentelemetry::sdk::metrics::InstrumentValueType::kInt;
+  md.start_ts = now;
+  md.end_ts = now;
+
+  opentelemetry::sdk::metrics::LastValuePointData point;
+  point.value_ = 42L;
+
+  auto interval = [](std::chrono::system_clock::time_point end) {
+    return AllOf(
+        ResultOf(
+            "has_start_time",
+            [](google::monitoring::v3::Point const& p) {
+              return p.interval().has_start_time();
+            },
+            Eq(false)),
+        ResultOf(
+            "end_time",
+            [](google::monitoring::v3::Point const& p) {
+              return internal::ToChronoTimePoint(p.interval().end_time());
+            },
+            Eq(end)));
+  };
+
+  auto ts = ToTimeSeries(md, point);
+  EXPECT_EQ(ts.unit(), "unit");
+  EXPECT_EQ(ts.metric_kind(), google::api::MetricDescriptor::GAUGE);
+  EXPECT_THAT(ts.points(),
+              ElementsAre(AllOf(Int64TypedValue(42), interval(now))));
+}
+
+TEST(LastValuePointData, IntValueTypes) {
+  opentelemetry::sdk::metrics::LastValuePointData point;
+  point.value_ = 42L;
+
+  for (auto value_type : {
+           opentelemetry::sdk::metrics::InstrumentValueType::kInt,
+           opentelemetry::sdk::metrics::InstrumentValueType::kLong,
+       }) {
+    SCOPED_TRACE("value_type: " + ToString(value_type));
+
+    opentelemetry::sdk::metrics::MetricData md;
+    md.instrument_descriptor.value_type_ = value_type;
+
+    auto ts = ToTimeSeries(md, point);
+    EXPECT_THAT(ts.points(), ElementsAre(Int64TypedValue(42)));
+  }
+}
+
+TEST(LastValuePointData, DoubleValueTypes) {
+  opentelemetry::sdk::metrics::LastValuePointData point;
+  point.value_ = 42.0;
+
+  for (auto value_type : {
+           opentelemetry::sdk::metrics::InstrumentValueType::kFloat,
+           opentelemetry::sdk::metrics::InstrumentValueType::kDouble,
+       }) {
+    SCOPED_TRACE("value_type: " + ToString(value_type));
+
+    opentelemetry::sdk::metrics::MetricData md;
+    md.instrument_descriptor.value_type_ = value_type;
+
+    auto ts = ToTimeSeries(md, point);
+    EXPECT_THAT(ts.points(), ElementsAre(DoubleTypedValue(42)));
+  }
 }
 
 }  // namespace
