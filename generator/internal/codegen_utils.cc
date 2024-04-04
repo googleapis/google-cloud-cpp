@@ -389,7 +389,10 @@ void MakeDirectory(std::string const& path) {
 #if _WIN32
   _mkdir(path.c_str());
 #else
-  mkdir(path.c_str(), 0755);
+  if (mkdir(path.c_str(), 0755) == 0) return;
+  if (errno != EEXIST) {
+    GCP_LOG(ERROR) << "Unable to create directory for path:" << path << "\n";
+  }
 #endif  // _WIN32
 }
 
