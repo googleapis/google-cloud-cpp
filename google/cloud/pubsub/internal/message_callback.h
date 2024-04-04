@@ -37,6 +37,7 @@ class MessageCallback {
   struct MessageAndHandler {
     pubsub::Message message;
     std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> ack_handler;
+    std::string ack_id;
     // A single subscribe span, if it exists.
     Span subscribe_span;
   };

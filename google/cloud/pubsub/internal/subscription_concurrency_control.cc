@@ -138,10 +138,10 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
   shutdown_manager_->StartOperation(__func__, "handler", [&] {
     callback_->EndConcurrencyControl(m.ack_id());
     auto h = std::make_unique<AckHandlerImpl>(
-        std::move(w), std::move(*m.mutable_ack_id()), subscription_,
-        m.delivery_attempt());
+        std::move(w), m.ack_id(), subscription_, m.delivery_attempt());
     callback_->user_callback(MessageCallback::MessageAndHandler{
-        FromProto(std::move(*m.mutable_message())), std::move(h), Span{}});
+        FromProto(std::move(*m.mutable_message())), std::move(h),
+        std::move(*m.mutable_ack_id()), Span{}});
   });
   shutdown_manager_->FinishedOperation("callback");
 }

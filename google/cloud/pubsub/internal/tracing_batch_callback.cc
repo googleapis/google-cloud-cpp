@@ -123,6 +123,11 @@ class TracingBatchCallback : public BatchCallback {
   }
 
   void user_callback(MessageCallback::MessageAndHandler m) override {
+    std::lock_guard<std::mutex> lk(mu_);
+    auto spans = spans_by_ack_id_.find(m.ack_id);
+    if (spans != spans_by_ack_id_.end()) {
+      m.subscribe_span.span = spans->second.subscribe_span;
+    }
     child_->user_callback(std::move(m));
   }
 

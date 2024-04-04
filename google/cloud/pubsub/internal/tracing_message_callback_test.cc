@@ -36,11 +36,9 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
-using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsInternal;
 using ::google::cloud::testing_util::SpanNamed;
@@ -65,7 +63,9 @@ MessageCallback::MessageAndHandler MakeMessageAndHandler() {
   span->End();
   MessageCallback::MessageAndHandler m{
       pubsub::MessageBuilder().Build(),
-      std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>(), span};
+      std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>(),
+      "ack-id",
+      {span}};
   return m;
 }
 
