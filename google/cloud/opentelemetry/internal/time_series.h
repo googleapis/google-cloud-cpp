@@ -31,7 +31,11 @@ google::api::Metric ToMetric(
 
 google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
-    opentelemetry::sdk::metrics::SumPointData const& sum);
+    opentelemetry::sdk::metrics::SumPointData const& sum_data);
+
+google::monitoring::v3::TimeSeries ToTimeSeries(
+    opentelemetry::sdk::metrics::MetricData const& metric_data,
+    opentelemetry::sdk::metrics::LastValuePointData const& gauge_data);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal

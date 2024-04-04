@@ -118,6 +118,21 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
   return ts;
 }
 
+google::monitoring::v3::TimeSeries ToTimeSeries(
+    opentelemetry::sdk::metrics::MetricData const& metric_data,
+    opentelemetry::sdk::metrics::LastValuePointData const& gauge_data) {
+  google::monitoring::v3::TimeSeries ts;
+  ts.set_unit(metric_data.instrument_descriptor.unit_);
+  ts.set_metric_kind(google::api::MetricDescriptor::GAUGE);
+  ts.set_value_type(ToValueType(metric_data.instrument_descriptor.value_type_));
+
+  auto& p = *ts.add_points();
+  // Note that the start timestamp is omitted for gauge metrics.
+  *p.mutable_interval()->mutable_end_time() = ToProtoTimestamp(metric_data.end_ts);
+  *p.mutable_value() = ToValue(gauge_data.value_);
+  return ts;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal
 }  // namespace cloud
