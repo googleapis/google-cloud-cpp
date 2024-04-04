@@ -54,6 +54,7 @@ google::api::MetricDescriptor::ValueType ToValueType(
     case opentelemetry::sdk::metrics::InstrumentValueType::kDouble:
       return google::api::MetricDescriptor::DOUBLE;
   }
+  return google::api::MetricDescriptor::INT64;
 }
 
 }  // namespace
