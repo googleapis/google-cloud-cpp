@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/time_series.h"
+#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
@@ -22,10 +24,49 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::UnorderedElementsAre;
+
+auto DoubleTypedValue(double v) {
+  return ResultOf(
+      "double_value",
+      [](google::monitoring::v3::Point const& p) {
+        return p.value().double_value();
+      },
+      Eq(v));
+}
+
+auto Int64TypedValue(std::int64_t v) {
+  return ResultOf(
+      "int64_value",
+      [](google::monitoring::v3::Point const& p) {
+        return p.value().int64_value();
+      },
+      Eq(v));
+}
+
+auto Interval(std::chrono::system_clock::time_point start,
+              std::chrono::system_clock::time_point end) {
+  return AllOf(
+      ResultOf(
+          "start_time",
+          [](google::monitoring::v3::Point const& p) {
+            return internal::ToChronoTimePoint(p.interval().start_time());
+          },
+          Eq(start)),
+      ResultOf(
+          "end_time",
+          [](google::monitoring::v3::Point const& p) {
+            return internal::ToChronoTimePoint(p.interval().end_time());
+          },
+          Eq(end)));
+}
 
 TEST(ToMetric, Simple) {
   opentelemetry::sdk::metrics::MetricData md;
@@ -44,12 +85,10 @@ TEST(ToMetric, Simple) {
 TEST(ToMetric, BadLabelNames) {
   testing_util::ScopedLog log;
 
-  opentelemetry::sdk::metrics::MetricData md;
-
   opentelemetry::sdk::metrics::PointAttributes attributes = {
       {"99", "dropped"}, {"a key-with.bad/characters", "value"}};
 
-  auto metric = ToMetric(md, attributes);
+  auto metric = ToMetric({}, attributes);
 
   EXPECT_THAT(metric.labels(),
               UnorderedElementsAre(Pair("a_key_with_bad_characters", "value")));
@@ -57,6 +96,78 @@ TEST(ToMetric, BadLabelNames) {
   EXPECT_THAT(
       log.ExtractLines(),
       Contains(AllOf(HasSubstr("Dropping metric label"), HasSubstr("99"))));
+}
+
+TEST(SumPointData, Simple) {
+  auto const start = std::chrono::system_clock::now();
+  auto const end = start + std::chrono::seconds(5);
+
+  opentelemetry::sdk::metrics::MetricData md;
+  md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.value_type_ =
+      opentelemetry::sdk::metrics::InstrumentValueType::kInt;
+  md.start_ts = start;
+  md.end_ts = end;
+
+  opentelemetry::sdk::metrics::SumPointData point;
+  point.value_ = 42L;
+
+  auto ts = ToTimeSeries(md, point);
+  EXPECT_EQ(ts.unit(), "unit");
+  EXPECT_EQ(ts.metric_kind(), google::api::MetricDescriptor::CUMULATIVE);
+  EXPECT_THAT(ts.points(),
+              ElementsAre(AllOf(Int64TypedValue(42), Interval(start, end))));
+}
+
+TEST(SumPointData, IntValueTypes) {
+  for (auto value_type : {
+           opentelemetry::sdk::metrics::InstrumentValueType::kInt,
+           opentelemetry::sdk::metrics::InstrumentValueType::kLong,
+       }) {
+    opentelemetry::sdk::metrics::MetricData md;
+    md.instrument_descriptor.value_type_ = value_type;
+
+    opentelemetry::sdk::metrics::SumPointData point;
+    point.value_ = 42L;
+
+    auto ts = ToTimeSeries(md, point);
+    EXPECT_THAT(ts.points(), ElementsAre(Int64TypedValue(42)));
+  }
+}
+
+TEST(SumPointData, DoubleValueTypes) {
+  for (auto value_type : {
+           opentelemetry::sdk::metrics::InstrumentValueType::kFloat,
+           opentelemetry::sdk::metrics::InstrumentValueType::kDouble,
+       }) {
+    opentelemetry::sdk::metrics::MetricData md;
+    md.instrument_descriptor.value_type_ = value_type;
+
+    opentelemetry::sdk::metrics::SumPointData point;
+    point.value_ = 42.0;
+
+    auto ts = ToTimeSeries(md, point);
+    EXPECT_THAT(ts.points(), ElementsAre(DoubleTypedValue(42)));
+  }
+}
+
+TEST(SumPointData, NonEmptyInterval) {
+  auto const start = std::chrono::system_clock::now();
+  auto const end = start - std::chrono::seconds(5);
+  EXPECT_LE(end - start, std::chrono::seconds::zero());
+
+  // The spec says to drop the end timestamp, and use the start timestamp plus
+  // 1ms as the end timestamp.
+  auto const expected_end = start + std::chrono::milliseconds(1);
+
+  opentelemetry::sdk::metrics::MetricData md;
+  md.instrument_descriptor.value_type_ =
+      opentelemetry::sdk::metrics::InstrumentValueType::kInt;
+  md.start_ts = start;
+  md.end_ts = end;
+
+  auto ts = ToTimeSeries(md, opentelemetry::sdk::metrics::SumPointData{});
+  EXPECT_THAT(ts.points(), ElementsAre(Interval(start, expected_end)));
 }
 
 }  // namespace
