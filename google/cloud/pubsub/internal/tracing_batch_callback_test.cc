@@ -255,6 +255,26 @@ TEST(TracingBatchCallback, StartAndEndConcurrencyControlSpan) {
                                 sc::kMessagingSystem, "gcp_pubsub")))));
 }
 
+TEST(TracingBatchCallback, StartAndEndSchedulerSpan) {
+  namespace sc = opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->StartScheduler("ack-id-0");
+  batch_callback->EndScheduler("ack-id-0");
+  batch_callback->AckEnd("ack-id-0");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                            SpanNamed("subscriber scheduler"),
+                            SpanHasAttributes(OTelAttribute<std::string>(
+                                sc::kMessagingSystem, "gcp_pubsub")))));
+}
+
 TEST(TracingBatchCallback, VerifyDestructorEndsAllSpans) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();

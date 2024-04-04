@@ -82,6 +82,20 @@ TEST(DiscoveryTypeVertexTest, DetermineIntroducerOptionalString) {
   EXPECT_THAT(DiscoveryTypeVertex::DetermineIntroducer(json), Eq("optional "));
 }
 
+TEST(DiscoveryTypeVertexTest, FormatMessageDescriptionWithDollarSigns) {
+  auto constexpr kMessageWithDollarSignInDescription = R"""(
+        {
+          "description": "Example: `sample_table$20190123`",
+          "type": "string"
+        }
+  )""";
+  auto json = nlohmann::json::parse(kMessageWithDollarSignInDescription,
+                                    nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::FormatMessageDescription(json, 0),
+              Eq("// Example: `sample_table$$20190123`\n"));
+}
+
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsEmpty) {
   auto constexpr kOptionalEmptyFieldJson = R"""({})""";
   auto json = nlohmann::json::parse(kOptionalEmptyFieldJson, nullptr, false);

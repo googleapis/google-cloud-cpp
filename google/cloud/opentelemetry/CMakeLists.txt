@@ -42,6 +42,8 @@ add_library(
     internal/recordable.h
     internal/resource_detector_impl.cc
     internal/resource_detector_impl.h
+    internal/time_series.cc
+    internal/time_series.h
     monitoring_exporter.cc
     monitoring_exporter.h
     resource_detector.cc
@@ -125,6 +127,7 @@ set(opentelemetry_unit_tests
     internal/monitored_resource_test.cc
     internal/recordable_test.cc
     internal/resource_detector_impl_test.cc
+    internal/time_series_test.cc
     monitoring_exporter_test.cc
     trace_exporter_test.cc)
 

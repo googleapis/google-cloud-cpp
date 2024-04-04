@@ -428,6 +428,7 @@ bool AppendIfLinebreak(std::ostream& os, MarkdownContext const& /*ctx*/,
 //     <xsd:element name="nonbreakablespace" type="docEmptyType" />
 //     <xsd:element name="iexcl" type="docEmptyType" />
 // ... other "symbols", such as currency, math formulas, accents, etc. ...
+//     <xsd:element name="para" type="docEmptyType" />
 // ... upper case greek letters ...
 // ... lower case greek letters ...
 //   </xsd:choice>
@@ -453,6 +454,7 @@ bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: nonbreakablespace
   // Unexpected: many many symbols
   if (AppendIfNDash(os, ctx, node)) return true;
+  if (AppendIfParagraph(os, ctx, node)) return true;
   return false;
 }
 
