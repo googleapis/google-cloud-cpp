@@ -222,7 +222,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   auto split = SplitModifyAckDeadline(std::move(request), kMaxAckIdsPerMessage);
   if (exactly_once_delivery_enabled_.value_or(false)) {
     lk.unlock();
-    for (auto& r : split)
+    for (auto& r : split) {
       (void)ExtendLeasesWithRetry(stub_, cq_, r)
           .then([cb = callback_, r](auto f) {
             auto result = f.get();
@@ -231,6 +231,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
             }
             return result;
           });
+    }
     return;
   }
   lk.unlock();
