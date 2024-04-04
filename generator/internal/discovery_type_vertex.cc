@@ -364,7 +364,8 @@ std::string DiscoveryTypeVertex::FormatMessageDescription(
   std::string description;
   if (field.contains("description")) {
     auto sanitized_description = std::string(field["description"]);
-    // If there are any $ in the description, we want to replace it with two $$
+// Replace the $ in the description with $$ so the protoc compiler 
+// will emit a $ instead of trying to perform a substitution.
     // because protobuf will interpret it as message substitution.
     absl::StrReplaceAll({{"$", "$$"}}, &sanitized_description);
     description = absl::StrCat(
