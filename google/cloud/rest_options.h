@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REST_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REST_OPTIONS_H
 
+#include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -24,33 +25,6 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/**
- * Configure the QuotaUser system parameter.
- *
- * A pseudo user identifier for charging per-user quotas. If not specified, the
- * authenticated principal is used. If there is no authenticated principal, the
- * client IP address will be used. When specified, a valid API key with service
- * restrictions must be used to identify the quota project. Otherwise, this
- * parameter is ignored.
- *
- * @ingroup rest-options
- */
-struct QuotaUserOption {
-  using Type = std::string;
-};
-
-/**
- * Configure the UserIp query parameter.
- *
- * This can be used to separate quota usage by source IP address.
- *
- * @deprecated prefer using `google::cloud::QuotaUser`.
- * @ingroup rest-options
- */
-struct UserIpOption {
-  using Type = std::string;
-};
 
 /**
  * Timeout for the server to finish processing the request. This system param

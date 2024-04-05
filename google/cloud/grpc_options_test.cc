@@ -328,6 +328,7 @@ TEST(GrpcSetMetadata, Full) {
       context,
       Options{}
           .set<UserProjectOption>("user-project")
+          .set<QuotaUserOption>("quota-user")
           .set<AuthorityOption>("authority.googleapis.com")
           .set<CustomHeadersOption>(
               {{"custom-header-1", "v1"}, {"custom-header-2", "v2"}}),
@@ -338,6 +339,7 @@ TEST(GrpcSetMetadata, Full) {
   EXPECT_THAT(metadata,
               UnorderedElementsAre(
                   Pair("x-goog-user-project", "user-project"),
+                  Pair("x-goog-quota-user", "quota-user"),
                   Pair("fixed-header-1", "v1"), Pair("fixed-header-2", "v2"),
                   Pair("custom-header-1", "v1"), Pair("custom-header-2", "v2"),
                   Pair("x-goog-api-client", "api-client-header")));
@@ -352,6 +354,44 @@ TEST(GrpcSetMetadata, Authority) {
   auto const authority = fixture.GetAuthority(context);
   if (!authority.has_value()) GTEST_SKIP() << "cannot retrieve authority";
   EXPECT_EQ(authority, "authority.googleapis.com");
+}
+
+TEST(GrpcSetMetadata, ConfigureUserIp) {
+  grpc::ClientContext context;
+  internal::SetMetadata(context, Options{}.set<UserIpOption>("1234"), {},
+                        "api-client-header");
+
+  ValidateMetadataFixture fixture;
+  auto const metadata = fixture.GetMetadata(context);
+  EXPECT_THAT(metadata, UnorderedElementsAre(
+                            Pair("x-goog-user-ip", "1234"),
+                            Pair("x-goog-api-client", "api-client-header")));
+}
+
+TEST(GrpcSetMetadata, ConfigureQuotaUser) {
+  grpc::ClientContext context;
+  internal::SetMetadata(context, Options{}.set<QuotaUserOption>("my-user"), {},
+                        "api-client-header");
+
+  ValidateMetadataFixture fixture;
+  auto const metadata = fixture.GetMetadata(context);
+  EXPECT_THAT(metadata, UnorderedElementsAre(
+                            Pair("x-goog-quota-user", "my-user"),
+                            Pair("x-goog-api-client", "api-client-header")));
+}
+
+TEST(GrpcSetMetadata, QuotaUserOverridesUserIp) {
+  grpc::ClientContext context;
+  internal::SetMetadata(
+      context,
+      Options{}.set<QuotaUserOption>("my-user").set<UserIpOption>("1234"), {},
+      "api-client-header");
+
+  ValidateMetadataFixture fixture;
+  auto const metadata = fixture.GetMetadata(context);
+  EXPECT_THAT(metadata, UnorderedElementsAre(
+                            Pair("x-goog-quota-user", "my-user"),
+                            Pair("x-goog-api-client", "api-client-header")));
 }
 
 TEST(GrpcClientContext, Configure) {
