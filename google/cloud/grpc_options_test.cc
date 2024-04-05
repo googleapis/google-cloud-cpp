@@ -16,6 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <utility>
@@ -26,11 +27,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::NotNull;
+using ::testing::Pair;
+using ::testing::UnorderedElementsAre;
 using ms = std::chrono::milliseconds;
 using ThreadPool = internal::AutomaticallyCreatedBackgroundThreads;
 
@@ -320,6 +324,39 @@ TEST(GrpcClientContext, Configure) {
   EXPECT_EQ(GRPC_COMPRESS_NONE, context.compression_algorithm());
   internal::ConfigureContext(context, std::move(opts));
   EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context.compression_algorithm());
+}
+
+TEST(GrpcClientContext, ConfigureUserIp) {
+  auto opts = Options{}.set<UserIpOption>("1234");
+  grpc::ClientContext context;
+  internal::ConfigureContext(context, std::move(opts));
+
+  ValidateMetadataFixture fixture;
+  auto const metadata = fixture.GetMetadata(context);
+  EXPECT_THAT(metadata, UnorderedElementsAre(Pair("x-goog-user-ip", "1234")));
+}
+
+TEST(GrpcClientContext, ConfigureQuotaUser) {
+  auto opts = Options{}.set<QuotaUserOption>("my-user");
+  grpc::ClientContext context;
+  internal::ConfigureContext(context, std::move(opts));
+
+  ValidateMetadataFixture fixture;
+  auto const metadata = fixture.GetMetadata(context);
+  EXPECT_THAT(metadata,
+              UnorderedElementsAre(Pair("x-goog-quota-user", "my-user")));
+}
+
+TEST(GrpcClientContext, QuotaUserOverridesUserIp) {
+  auto opts =
+      Options{}.set<QuotaUserOption>("my-user").set<UserIpOption>("1234");
+  grpc::ClientContext context;
+  internal::ConfigureContext(context, std::move(opts));
+
+  ValidateMetadataFixture fixture;
+  auto const metadata = fixture.GetMetadata(context);
+  EXPECT_THAT(metadata,
+              UnorderedElementsAre(Pair("x-goog-quota-user", "my-user")));
 }
 
 TEST(GrpcClientContext, ConfigurePoll) {
