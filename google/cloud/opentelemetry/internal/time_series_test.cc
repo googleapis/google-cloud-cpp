@@ -17,6 +17,7 @@
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
+#include <cstdint>
 
 namespace google {
 namespace cloud {
@@ -158,7 +159,7 @@ TEST(SumPointData, Simple) {
   md.end_ts = end;
 
   opentelemetry::sdk::metrics::SumPointData point;
-  point.value_ = 42L;
+  point.value_ = std::int64_t{42};
 
   auto ts = ToTimeSeries(md, point);
   EXPECT_EQ(ts.unit(), "unit");
@@ -169,7 +170,7 @@ TEST(SumPointData, Simple) {
 
 TEST(SumPointData, IntValueTypes) {
   opentelemetry::sdk::metrics::SumPointData point;
-  point.value_ = 42L;
+  point.value_ = std::int64_t{42};
 
   for (auto value_type : {
            opentelemetry::sdk::metrics::InstrumentValueType::kInt,
@@ -233,7 +234,7 @@ TEST(LastValuePointData, Simple) {
   md.end_ts = now;
 
   opentelemetry::sdk::metrics::LastValuePointData point;
-  point.value_ = 42L;
+  point.value_ = std::int64_t{42};
 
   auto interval = [](std::chrono::system_clock::time_point end) {
     return AllOf(
@@ -260,7 +261,7 @@ TEST(LastValuePointData, Simple) {
 
 TEST(LastValuePointData, IntValueTypes) {
   opentelemetry::sdk::metrics::LastValuePointData point;
-  point.value_ = 42L;
+  point.value_ = std::int64_t{42};
 
   for (auto value_type : {
            opentelemetry::sdk::metrics::InstrumentValueType::kInt,
@@ -306,7 +307,7 @@ TEST(HistogramPointData, SimpleWithInt64Sum) {
   md.end_ts = end;
 
   opentelemetry::sdk::metrics::HistogramPointData point;
-  point.sum_ = 64L;
+  point.sum_ = std::int64_t{64};
   point.boundaries_ = {0.0, 1.0, 2.0, 3.0, 10.0, 30.0};
   point.counts_ = {0, 1, 4, 6, 4, 1, 0};
   point.count_ = 16;
