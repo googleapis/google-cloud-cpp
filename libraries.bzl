@@ -39,6 +39,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "asset",
     "assuredworkloads",
     "automl",
+    "backupdr",
     "baremetalsolution",
     "batch",
     "beyondcorp",
