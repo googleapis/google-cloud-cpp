@@ -34,7 +34,7 @@ namespace {
 class TracingMessageCallback : public MessageCallback {
  public:
   explicit TracingMessageCallback(std::shared_ptr<MessageCallback> child,
-                                  Options const& opts)
+                                  Options opts)
       : child_(std::move(child)), options_(std::move(opts)) {}
 
   ~TracingMessageCallback() override = default;

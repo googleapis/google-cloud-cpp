@@ -85,6 +85,18 @@ TEST(TracingMessageCallback, UserCallback) {
                             SpanWithParent(span))));
 }
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(TracingMessageCallback,
+     VerifyMessageCallbackIsNotNullWhenOTelIsNotCompiled) {
+  auto message_callback = MakeTestMessageCallback(
+      std::make_shared<pubsub_testing::MockMessageCallback>());
+
+  EXPECT_THAT(message_callback, testing::Not(testing::IsNull()));
+}
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
