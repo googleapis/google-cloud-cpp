@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <chrono>
+#include <map>
 #include <string>
 #include <unordered_map>
 #include <utility>
