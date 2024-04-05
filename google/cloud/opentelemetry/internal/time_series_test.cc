@@ -307,7 +307,7 @@ TEST(HistogramPointData, SimpleWithInt64Sum) {
   md.end_ts = end;
 
   opentelemetry::sdk::metrics::HistogramPointData point;
-  point.sum = std::int64_t{64};
+  point.sum_ = std::int64_t{64};
   point.boundaries_ = {0.0, 1.0, 2.0, 3.0, 10.0, 30.0};
   point.counts_ = {0, 1, 4, 6, 4, 1, 0};
   point.count_ = 16;
