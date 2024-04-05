@@ -219,7 +219,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
     request.add_ack_ids(std::move(a));
   }
   std::unique_lock<std::mutex> lk(mu_);
-  auto split = SplitModifyAckDeadline(std::move(request), kMaxAckIdsPerMessage);
+  auto split = SplitModifyAckDeadline(request, kMaxAckIdsPerMessage);
   if (exactly_once_delivery_enabled_.value_or(false)) {
     lk.unlock();
     for (auto& r : split) {
@@ -236,11 +236,13 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   }
   lk.unlock();
   for (auto& r : split) {
+    callback_->StartModackSpan(request, nonce_++);
     (void)stub_
         ->AsyncModifyAckDeadline(cq_, std::make_shared<grpc::ClientContext>(),
                                  options_, r)
-        .then([cb = callback_, r](auto f) {
+        .then([cb = callback_, nonce = nonce_, r](auto f) {
           auto result = f.get();
+          cb->EndModackSpan(nonce);
           for (auto const& ack_id : r.ack_ids()) {
             cb->ModackEnd(ack_id);
           }

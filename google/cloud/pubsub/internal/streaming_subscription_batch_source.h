@@ -133,6 +133,8 @@ class StreamingSubscriptionBatchSource
   std::int64_t const max_outstanding_bytes_;
   std::chrono::seconds const min_deadline_time_;
   std::chrono::seconds const max_deadline_time_;
+  // A number only used once to identify modack requests for tracing.
+  std::int64_t nonce_;
 
   std::mutex mu_;
   std::shared_ptr<BatchCallback> callback_;

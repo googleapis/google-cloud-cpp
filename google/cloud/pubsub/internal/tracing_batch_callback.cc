@@ -97,6 +97,10 @@ class TracingBatchCallback : public BatchCallback {
       if (kv.second.scheduler_span) kv.second.scheduler_span->End();
     }
     spans_by_ack_id_.clear();
+    for (auto const& kv : lease_span_by_nonce_) {
+      kv.second->End();
+    }
+    lease_span_by_nonce_.clear();
   }
 
   void callback(BatchCallback::StreamingPullResponse response) override {
@@ -183,6 +187,60 @@ class TracingBatchCallback : public BatchCallback {
     }
   }
 
+  void StartModackSpan(
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request,
+      std::int64_t nonce) override {
+    namespace sc = opentelemetry::trace::SemanticConventions;
+    using Attributes =
+        std::vector<std::pair<opentelemetry::nostd::string_view,
+                              opentelemetry::common::AttributeValue>>;
+    using Links =
+        std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
+
+    if (request.ack_ids().empty()) {
+      return;
+    }
+
+    Links links;
+    std::unique_lock<std::mutex> lk(mu_);
+    for (auto const& ack_id : request.ack_ids()) {
+      auto spans = spans_by_ack_id_.find(ack_id);
+      if (spans != spans_by_ack_id_.end()) {
+        links.emplace_back(std::make_pair(
+            spans->second.subscribe_span->GetContext(), Attributes{}));
+      }
+    }
+    lk.unlock();
+
+    opentelemetry::trace::StartSpanOptions options;
+    options.kind = opentelemetry::trace::SpanKind::kClient;
+    auto span = internal::MakeSpan(
+        subscription_.subscription_id() + " modack",
+        {{sc::kMessagingSystem, "gcp_pubsub"},
+         {sc::kMessagingOperation, "extend"},
+         {sc::kMessagingBatchMessageCount,
+          static_cast<int64_t>(request.ack_ids().size())},
+         {"messaging.gcp_pubsub.message.ack_deadline_seconds",
+          static_cast<int64_t>(request.ack_deadline_seconds())},
+         {sc::kMessagingDestinationName, subscription_.subscription_id()},
+         {"gcp.project_id", subscription_.project_id()}},
+        std::move(links), options);
+    lk.lock();
+    auto lease_span = lease_span_by_nonce_.find(nonce);
+    if (lease_span != lease_span_by_nonce_.end()) {
+      lease_span->second->End();
+    }
+    lease_span_by_nonce_[nonce] = span;
+    lk.unlock();
+  }
+
+  void EndModackSpan(std::int64_t nonce) override {
+    auto kv = lease_span_by_nonce_.find(nonce);
+    if (kv != lease_span_by_nonce_.end()) {
+      kv->second->End();
+    }
+  }
+
   void AckStart(std::string const& ack_id) override {
     AddEvent(ack_id, "gl-cpp.ack_start");
   }
@@ -245,6 +303,10 @@ class TracingBatchCallback : public BatchCallback {
   std::mutex mu_;
   std::unordered_map<std::string, MessageSpans>
       spans_by_ack_id_;  // ABSL_GUARDED_BY(mu_)
+  std::unordered_map<
+      std::int64_t,
+      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      lease_span_by_nonce_;  // ABSL_GUARDED_BY(mu_)};
 };
 
 }  // namespace
