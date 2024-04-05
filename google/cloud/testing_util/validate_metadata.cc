@@ -298,6 +298,23 @@ std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(
   return res;
 }
 
+std::string ValidateMetadataFixture::GetAuthority(
+    grpc::ClientContext& client_context) {
+  // Set the deadline to far in the future. If the deadline is in the past,
+  // gRPC doesn't send the initial metadata at all (which makes sense, given
+  // that the context is already expired). The `context` is destroyed by this
+  // function anyway, so we're not making things worse by changing the
+  // deadline.
+  client_context.set_deadline(std::chrono::system_clock::now() +
+                              std::chrono::hours(24));
+
+  grpc::GenericServerContext server_context;
+  ExchangeMetadata(client_context, server_context);
+
+  auto result = server_context.ExperimentalGetAuthority();
+  return std::string(result.data(), result.size());
+}
+
 void ValidateMetadataFixture::SetServerMetadata(
     grpc::ClientContext& client_context, RpcMetadata const& server_metadata) {
   // Create a server context with the given server metadata.

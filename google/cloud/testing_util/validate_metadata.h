@@ -71,6 +71,14 @@ class ValidateMetadataFixture {
       grpc::ClientContext& client_context);
 
   /**
+   * Get the `authority` field from `ClientContext`.
+   *
+   * @note A `grpc::ClientContext` can be used in only one gRPC. The caller
+   *   cannot reuse @p context for other RPCs or other calls to this function.
+   */
+  std::string GetAuthority(grpc::ClientContext& client_context);
+
+  /**
    * Set server metadata on a `ClientContext`.
    *
    * @note A `grpc::ClientContext` can be used in only one gRPC. The caller

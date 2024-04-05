@@ -16,6 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <utility>
@@ -26,11 +27,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::NotNull;
+using ::testing::Pair;
+using ::testing::UnorderedElementsAre;
 using ms = std::chrono::milliseconds;
 using ThreadPool = internal::AutomaticallyCreatedBackgroundThreads;
 
@@ -306,6 +310,46 @@ TEST(GrpcOptionList, Unexpected) {
   EXPECT_THAT(
       log.ExtractLines(),
       Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));
+}
+
+TEST(GrpcSetMetadata, Base) {
+  grpc::ClientContext context;
+  internal::SetMetadata(context, Options{}, {}, "api-client-header");
+  ValidateMetadataFixture fixture;
+  auto const metadata = fixture.GetMetadata(context);
+  EXPECT_THAT(metadata, UnorderedElementsAre(
+                            Pair("x-goog-api-client", "api-client-header")));
+}
+
+TEST(GrpcSetMetadata, Full) {
+  grpc::ClientContext context;
+  internal::SetMetadata(
+      context,
+      Options{}
+          .set<UserProjectOption>("user-project")
+          .set<AuthorityOption>("authority.googleapis.com")
+          .set<CustomHeadersOption>(
+              {{"custom-header-1", "v1"}, {"custom-header-2", "v2"}}),
+      {{"fixed-header-1", "v1"}, {"fixed-header-2", "v2"}},
+      "api-client-header");
+  ValidateMetadataFixture fixture;
+  auto const metadata = fixture.GetMetadata(context);
+  EXPECT_THAT(metadata,
+              UnorderedElementsAre(
+                  Pair("x-goog-user-project", "user-project"),
+                  Pair("fixed-header-1", "v1"), Pair("fixed-header-2", "v2"),
+                  Pair("custom-header-1", "v1"), Pair("custom-header-2", "v2"),
+                  Pair("x-goog-api-client", "api-client-header")));
+}
+
+TEST(GrpcSetMetadata, Authority) {
+  grpc::ClientContext context;
+  internal::SetMetadata(
+      context, Options{}.set<AuthorityOption>("authority.googleapis.com"), {},
+      "api-client-header");
+  ValidateMetadataFixture fixture;
+  auto const authority = fixture.GetAuthority(context);
+  EXPECT_EQ(authority, "authority.googleapis.com");
 }
 
 TEST(GrpcClientContext, Configure) {
