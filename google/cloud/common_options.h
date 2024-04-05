@@ -279,6 +279,17 @@ struct CustomHeadersOption {
 };
 
 /**
+ * Configure server-side filtering.
+ *
+ * Google services can filter the fields in a response using the
+ * `X-Goog-FieldMask` header. This can be useful in large responses, such as
+ * listing resources, where some of the fields are uninteresting.
+ */
+struct FieldMaskOption {
+  using Type = std::string;
+};
+
+/**
  * A list of all the common options.
  */
 using CommonOptionList =

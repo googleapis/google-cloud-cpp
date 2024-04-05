@@ -52,6 +52,7 @@ TEST(RestContextTest, SetMetadataFull) {
               Options{}
                   .set<UserProjectOption>("user-project")
                   .set<QuotaUserOption>("quota-user")
+                  .set<FieldMaskOption>("items.name,token")
                   .set<ServerTimeoutOption>(std::chrono::milliseconds(1050))
                   .set<CustomHeadersOption>(
                       {{"custom-header-1", "v1"}, {"custom-header-2", "v2"}}),
@@ -62,6 +63,7 @@ TEST(RestContextTest, SetMetadataFull) {
                   Pair("x-goog-request-params", ElementsAre("p1=v1&p2=v2")),
                   Pair("x-goog-user-project", ElementsAre("user-project")),
                   Pair("x-goog-quota-user", ElementsAre("quota-user")),
+                  Pair("x-goog-fieldmask", ElementsAre("items.name,token")),
                   Pair("x-server-timeout", ElementsAre("1.050")),
                   Pair("custom-header-1", ElementsAre("v1")),
                   Pair("custom-header-2", ElementsAre("v2"))));
