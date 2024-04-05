@@ -35,6 +35,7 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -46,8 +47,6 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithParent;
 using ::testing::AllOf;
 using ::testing::Contains;
-
-namespace {
 
 pubsub::Subscription TestSubscription() {
   return pubsub::Subscription("test-project", "test-sub");
