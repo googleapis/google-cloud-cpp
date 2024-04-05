@@ -12,27 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/pubsub/internal/tracing_message_callback.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/options.h"
-#include "google/cloud/pubsub/testing/mock_exactly_once_ack_handler_impl.h"
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/testing/mock_message_callback.h"
-#include "google/cloud/pubsub/topic.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/pubsub/testing/mock_exactly_once_ack_handler_impl.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
 #include <opentelemetry/trace/semantic_conventions.h>
-
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <gmock/gmock.h>
+
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
@@ -48,7 +46,6 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithParent;
 using ::testing::AllOf;
 using ::testing::Contains;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace {
 
@@ -62,8 +59,6 @@ std::shared_ptr<MessageCallback> MakeTestMessageCallback(
       std::move(mock),
       Options{}.set<pubsub::SubscriptionOption>(TestSubscription()));
 }
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TEST(TracingMessageCallback, UserCallback) {
   namespace sc = opentelemetry::trace::SemanticConventions;
@@ -94,10 +89,13 @@ TEST(TracingMessageCallback, UserCallback) {
 
 TEST(TracingMessageCallback,
      VerifyMessageCallbackIsNotNullWhenOTelIsNotCompiled) {
-  auto message_callback = MakeTestMessageCallback(
-      std::make_shared<pubsub_testing::MockMessageCallback>());
+  auto message_callback = MakeTracingMessageCallback(
+      std::make_shared<pubsub_testing::MockMessageCallback>(),
+      Options{}.set<pubsub::SubscriptionOption>(
+          pubsub::Subscription("test-project", "test-sub")));
+}
 
-  EXPECT_THAT(message_callback, testing::Not(testing::IsNull()));
+EXPECT_THAT(message_callback, testing::Not(testing::IsNull()));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
