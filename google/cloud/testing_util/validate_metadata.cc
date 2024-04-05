@@ -18,6 +18,7 @@
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
+#include "absl/meta/type_traits.h"
 #include "absl/strings/str_split.h"
 #include <google/api/annotations.pb.h>
 #include <google/api/routing.pb.h>
@@ -31,6 +32,7 @@
 #include <deque>
 #include <iterator>
 #include <regex>
+#include <type_traits>
 
 // Undefine a Windows macro, which conflicts with
 // `protobuf::Reflection::GetMessage`
@@ -298,7 +300,23 @@ std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(
   return res;
 }
 
-std::string ValidateMetadataFixture::GetAuthority(
+// Older versions of gRPC do not provide `ExperimentalGetAuthority()`. In that
+// case just return `absl::nullopt`, to indicate that the test cannot run.
+template <typename T, typename AlwaysVoid = void>
+struct GetAuthorityImpl {
+  absl::optional<std::string> Get(T& /*sc*/) { return absl::nullopt; }
+};
+
+template <typename T>
+struct GetAuthorityImpl<
+    T, absl::void_t<decltype(std::declval<T>().ExperimentalGetAuthority())>> {
+  absl::optional<std::string> Get(T& sc) {
+    auto result = sc.ExperimentalGetAuthority();
+    return std::string(result.data(), result.size());
+  }
+};
+
+absl::optional<std::string> ValidateMetadataFixture::GetAuthority(
     grpc::ClientContext& client_context) {
   // Set the deadline to far in the future. If the deadline is in the past,
   // gRPC doesn't send the initial metadata at all (which makes sense, given
@@ -311,8 +329,7 @@ std::string ValidateMetadataFixture::GetAuthority(
   grpc::GenericServerContext server_context;
   ExchangeMetadata(client_context, server_context);
 
-  auto result = server_context.ExperimentalGetAuthority();
-  return std::string(result.data(), result.size());
+  return GetAuthorityImpl<grpc::GenericServerContext>{}.Get(server_context);
 }
 
 void ValidateMetadataFixture::SetServerMetadata(
