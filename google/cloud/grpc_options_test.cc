@@ -17,7 +17,6 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <string>
