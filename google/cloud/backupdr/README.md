@@ -1,8 +1,8 @@
 # Backup and DR Service API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Backup and DR Service API][cloud-service-docs], a service to \<UNKNOWN - NO
-SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Backup and DR Service API][cloud-service-docs], a managed backup and disaster
+recovery (DR) service for centralized, application-consistent data protection.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -17,7 +17,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/backupdr/v1/ EDIT HERE _client.h"
+#include "google/cloud/backupdr/v1/backup_dr_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -30,12 +30,11 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace backupdr = ::google::cloud::backupdr_v1;
-  auto client =
-      backupdr::ServiceClient(backupdr::MakeServiceConnection());  // EDIT HERE
+  auto client = backupdr::BackupDRClient(backupdr::MakeBackupDRConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto ms : client.ListManagementServers(location.FullName())) {
+    if (!ms) throw std::move(ms).status();
+    std::cout << ms->DebugString() << "\n";
   }
 
   return 0;
@@ -55,6 +54,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/backupdr
+[cloud-service-docs]: https://cloud.google.com/backup-disaster-recovery
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/backupdr/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/backupdr

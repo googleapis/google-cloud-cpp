@@ -335,7 +335,7 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# BackupDR
+# Backup and DR
 service {
   service_proto_path: "google/cloud/backupdr/v1/backupdr.proto"
   product_path: "google/cloud/backupdr/v1"

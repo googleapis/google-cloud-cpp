@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/backupdr/v1/ EDIT HERE _client.h"
+#include "google/cloud/backupdr/v1/backup_dr_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,12 +26,11 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace backupdr = ::google::cloud::backupdr_v1;
-  auto client =
-      backupdr::ServiceClient(backupdr::MakeServiceConnection());  // EDIT HERE
+  auto client = backupdr::BackupDRClient(backupdr::MakeBackupDRConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto ms : client.ListManagementServers(location.FullName())) {
+    if (!ms) throw std::move(ms).status();
+    std::cout << ms->DebugString() << "\n";
   }
 
   return 0;
