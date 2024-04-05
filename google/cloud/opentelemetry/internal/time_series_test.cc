@@ -17,6 +17,7 @@
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
+#include <cstdint>
 
 namespace google {
 namespace cloud {
@@ -24,6 +25,7 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ElementsAre;
@@ -65,6 +67,38 @@ auto Int64TypedValue(std::int64_t v) {
       },
       Eq(v));
 }
+
+auto distribution = [](auto count, auto mean, auto bucket_counts_matcher,
+                       auto bounds_matcher) {
+  return AllOf(ResultOf(
+                   "distribution count",
+                   [](google::monitoring::v3::Point const& p) {
+                     return p.value().distribution_value().count();
+                   },
+                   Eq(count)),
+               ResultOf(
+                   "distribution mean",
+                   [](google::monitoring::v3::Point const& p) {
+                     return p.value().distribution_value().mean();
+                   },
+                   Eq(mean)),
+               ResultOf(
+                   "distribution bucket_counts",
+                   [](google::monitoring::v3::Point const& p) {
+                     return p.value().distribution_value().bucket_counts();
+                   },
+                   bucket_counts_matcher),
+               ResultOf(
+                   "distribution bounds",
+                   [](google::monitoring::v3::Point const& p) {
+                     return p.value()
+                         .distribution_value()
+                         .bucket_options()
+                         .explicit_buckets()
+                         .bounds();
+                   },
+                   bounds_matcher));
+};
 
 auto Interval(std::chrono::system_clock::time_point start,
               std::chrono::system_clock::time_point end) {
@@ -125,7 +159,7 @@ TEST(SumPointData, Simple) {
   md.end_ts = end;
 
   opentelemetry::sdk::metrics::SumPointData point;
-  point.value_ = 42L;
+  point.value_ = std::int64_t{42};
 
   auto ts = ToTimeSeries(md, point);
   EXPECT_EQ(ts.unit(), "unit");
@@ -136,7 +170,7 @@ TEST(SumPointData, Simple) {
 
 TEST(SumPointData, IntValueTypes) {
   opentelemetry::sdk::metrics::SumPointData point;
-  point.value_ = 42L;
+  point.value_ = std::int64_t{42};
 
   for (auto value_type : {
            opentelemetry::sdk::metrics::InstrumentValueType::kInt,
@@ -200,7 +234,7 @@ TEST(LastValuePointData, Simple) {
   md.end_ts = now;
 
   opentelemetry::sdk::metrics::LastValuePointData point;
-  point.value_ = 42L;
+  point.value_ = std::int64_t{42};
 
   auto interval = [](std::chrono::system_clock::time_point end) {
     return AllOf(
@@ -227,7 +261,7 @@ TEST(LastValuePointData, Simple) {
 
 TEST(LastValuePointData, IntValueTypes) {
   opentelemetry::sdk::metrics::LastValuePointData point;
-  point.value_ = 42L;
+  point.value_ = std::int64_t{42};
 
   for (auto value_type : {
            opentelemetry::sdk::metrics::InstrumentValueType::kInt,
@@ -259,6 +293,81 @@ TEST(LastValuePointData, DoubleValueTypes) {
     auto ts = ToTimeSeries(md, point);
     EXPECT_THAT(ts.points(), ElementsAre(DoubleTypedValue(42)));
   }
+}
+
+TEST(HistogramPointData, SimpleWithInt64Sum) {
+  auto const start = std::chrono::system_clock::now();
+  auto const end = start + std::chrono::seconds(5);
+
+  opentelemetry::sdk::metrics::MetricData md;
+  md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.value_type_ =
+      opentelemetry::sdk::metrics::InstrumentValueType::kInt;
+  md.start_ts = start;
+  md.end_ts = end;
+
+  opentelemetry::sdk::metrics::HistogramPointData point;
+  point.sum_ = std::int64_t{64};
+  point.boundaries_ = {0.0, 1.0, 2.0, 3.0, 10.0, 30.0};
+  point.counts_ = {0, 1, 4, 6, 4, 1, 0};
+  point.count_ = 16;
+
+  auto ts = ToTimeSeries(md, point);
+  EXPECT_EQ(ts.unit(), "unit");
+  EXPECT_EQ(ts.metric_kind(), google::api::MetricDescriptor::CUMULATIVE);
+  EXPECT_THAT(
+      ts.points(),
+      ElementsAre(AllOf(
+          distribution(
+              /*count=*/16, /*mean=*/4.0,
+              /*bucket_counts_matcher=*/ElementsAre(0, 1, 4, 6, 4, 1, 0),
+              /*bounds_matcher=*/ElementsAre(0.0, 1.0, 2.0, 3.0, 10.0, 30.0)),
+          Interval(start, end))));
+}
+
+TEST(HistogramPointData, DoubleSum) {
+  opentelemetry::sdk::metrics::HistogramPointData point;
+  point.sum_ = 64.0;
+  point.boundaries_ = {0.0, 1.0, 2.0, 3.0, 10.0, 30.0};
+  point.counts_ = {0, 1, 4, 6, 4, 1, 0};
+  point.count_ = 16;
+
+  auto ts = ToTimeSeries(opentelemetry::sdk::metrics::MetricData{}, point);
+  EXPECT_THAT(ts.points(), ElementsAre(distribution(
+                               /*count=*/16, /*mean=*/4.0,
+                               /*bucket_counts_matcher=*/_,
+                               /*bounds_matcher=*/_)));
+}
+
+TEST(HistogramPointData, EmptyMean) {
+  opentelemetry::sdk::metrics::HistogramPointData point;
+  point.sum_ = 0L;
+  point.boundaries_ = {0.0, 1.0, 2.0, 3.0, 10.0, 30.0};
+  point.counts_ = {0, 0, 0, 0, 0, 0, 0};
+  point.count_ = 0;
+
+  auto ts = ToTimeSeries(opentelemetry::sdk::metrics::MetricData{}, point);
+  EXPECT_THAT(ts.points(), ElementsAre(distribution(
+                               /*count=*/0, /*mean=*/0,
+                               /*bucket_counts_matcher=*/_,
+                               /*bounds_matcher=*/_)));
+}
+
+TEST(HistogramPointData, NonEmptyInterval) {
+  auto const start = std::chrono::system_clock::now();
+  auto const end = start - std::chrono::seconds(5);
+  EXPECT_LE(end - start, std::chrono::seconds::zero());
+
+  // The spec says to drop the end timestamp, and use the start timestamp plus
+  // 1ms as the end timestamp.
+  auto const expected_end = start + std::chrono::milliseconds(1);
+
+  opentelemetry::sdk::metrics::MetricData md;
+  md.start_ts = start;
+  md.end_ts = end;
+
+  auto ts = ToTimeSeries(md, opentelemetry::sdk::metrics::HistogramPointData{});
+  EXPECT_THAT(ts.points(), ElementsAre(Interval(start, expected_end)));
 }
 
 }  // namespace

@@ -57,6 +57,12 @@ google::api::MetricDescriptor::ValueType ToValueType(
   return google::api::MetricDescriptor::INT64;
 }
 
+double AsDouble(opentelemetry::sdk::metrics::ValueType const& v) {
+  return absl::holds_alternative<double>(v)
+             ? absl::get<double>(v)
+             : static_cast<double>(absl::get<std::int64_t>(v));
+}
+
 }  // namespace
 
 google::api::Metric ToMetric(
@@ -131,6 +137,32 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
   *p.mutable_interval()->mutable_end_time() =
       ToProtoTimestamp(metric_data.end_ts);
   *p.mutable_value() = ToValue(gauge_data.value_);
+  return ts;
+}
+
+google::monitoring::v3::TimeSeries ToTimeSeries(
+    opentelemetry::sdk::metrics::MetricData const& metric_data,
+    opentelemetry::sdk::metrics::HistogramPointData const& histogram_data) {
+  google::monitoring::v3::TimeSeries ts;
+  ts.set_unit(metric_data.instrument_descriptor.unit_);
+  ts.set_metric_kind(google::api::MetricDescriptor::CUMULATIVE);
+  ts.set_value_type(google::api::MetricDescriptor::DISTRIBUTION);
+
+  auto& p = *ts.add_points();
+  *p.mutable_interval() = ToNonGaugeTimeInterval(metric_data);
+  auto& d = *p.mutable_value()->mutable_distribution_value();
+  d.set_count(histogram_data.count_);
+  if (histogram_data.count_ > 0) {
+    d.set_mean(AsDouble(histogram_data.sum_) /
+               static_cast<double>(histogram_data.count_));
+  }
+  auto& bounds =
+      *d.mutable_bucket_options()->mutable_explicit_buckets()->mutable_bounds();
+  bounds.Reserve(static_cast<int>(histogram_data.boundaries_.size()));
+  for (auto d : histogram_data.boundaries_) bounds.Add(d);
+  auto& counts = *d.mutable_bucket_counts();
+  counts.Reserve(static_cast<int>(histogram_data.counts_.size()));
+  for (auto c : histogram_data.counts_) counts.Add(c);
   return ts;
 }
 
