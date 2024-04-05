@@ -93,9 +93,8 @@ TEST(TracingMessageCallback,
       std::make_shared<pubsub_testing::MockMessageCallback>(),
       Options{}.set<pubsub::SubscriptionOption>(
           pubsub::Subscription("test-project", "test-sub")));
-}
 
-EXPECT_THAT(message_callback, testing::Not(testing::IsNull()));
+  EXPECT_THAT(message_callback, testing::Not(testing::IsNull()));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
