@@ -32,11 +32,13 @@
 #include <opentelemetry/trace/scope.h>
 #include <opentelemetry/trace/semantic_conventions.h>
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -46,6 +48,7 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithParent;
 using ::testing::AllOf;
 using ::testing::Contains;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace {
 
@@ -59,6 +62,8 @@ std::shared_ptr<MessageCallback> MakeTestMessageCallback(
       std::move(mock),
       Options{}.set<pubsub::SubscriptionOption>(TestSubscription()));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TEST(TracingMessageCallback, UserCallback) {
   namespace sc = opentelemetry::trace::SemanticConventions;
@@ -85,7 +90,7 @@ TEST(TracingMessageCallback, UserCallback) {
                             SpanWithParent(span))));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TEST(TracingMessageCallback,
      VerifyMessageCallbackIsNotNullWhenOTelIsNotCompiled) {
@@ -95,12 +100,10 @@ TEST(TracingMessageCallback,
   EXPECT_THAT(message_callback, testing::Not(testing::IsNull()));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
