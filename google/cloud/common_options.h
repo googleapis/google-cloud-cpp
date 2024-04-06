@@ -92,7 +92,7 @@ struct UserProjectOption {
 };
 
 /**
- * Configure the QuotaUser system parameter.
+ * Configure the QuotaUser [system parameter].
  *
  * A pseudo user identifier for charging per-user quotas. If not specified, the
  * authenticated principal is used. If there is no authenticated principal, the
@@ -100,6 +100,9 @@ struct UserProjectOption {
  * restrictions must be used to identify the quota project. Otherwise, this
  * parameter is ignored.
  *
+ * [system parameter]: https://cloud.google.com/apis/docs/system-parameters
+ *
+ * @ingroup options
  * @ingroup rest-options
  */
 struct QuotaUserOption {
@@ -107,11 +110,15 @@ struct QuotaUserOption {
 };
 
 /**
- * Configure the UserIp query parameter.
+ * Configure the UserIp system parameter.
+ *
+ * @deprecated prefer using `google::cloud::QuotaUserOption`.
  *
  * This can be used to separate quota usage by source IP address.
  *
- * @deprecated prefer using `google::cloud::QuotaUser`.
+ * [system parameter]: https://cloud.google.com/apis/docs/system-parameters
+ *
+ * @ingroup options
  * @ingroup rest-options
  */
 struct UserIpOption {
