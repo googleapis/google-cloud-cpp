@@ -229,6 +229,11 @@ struct GrpcSetupPollOption {
   using Type = std::function<void(grpc::ClientContext&)>;
 };
 
+/// Configure the metadata in @p context.
+void SetMetadata(grpc::ClientContext& context, Options const& options,
+                 std::multimap<std::string, std::string> const& fixed_metadata,
+                 std::string const& api_client_header);
+
 /// Configure the ClientContext using options.
 void ConfigureContext(grpc::ClientContext& context, Options const& opts);
 

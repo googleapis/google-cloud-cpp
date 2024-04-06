@@ -22,6 +22,24 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+void SetMetadata(grpc::ClientContext& context, Options const& options,
+                 std::multimap<std::string, std::string> const& fixed_metadata,
+                 std::string const& api_client_header) {
+  for (auto const& kv : fixed_metadata) {
+    context.AddMetadata(kv.first, kv.second);
+  }
+  context.AddMetadata("x-goog-api-client", api_client_header);
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
+  for (auto const& h : options.get<CustomHeadersOption>()) {
+    context.AddMetadata(h.first, h.second);
+  }
+}
+
 void ConfigureContext(grpc::ClientContext& context, Options const& opts) {
   if (opts.has<GrpcSetupOption>()) {
     opts.get<GrpcSetupOption>()(context);
