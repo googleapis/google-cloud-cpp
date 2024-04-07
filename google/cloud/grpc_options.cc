@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/background_threads_impl.h"
@@ -37,6 +38,12 @@ void SetMetadata(grpc::ClientContext& context, Options const& options,
   if (!authority.empty()) context.set_authority(authority);
   for (auto const& h : options.get<CustomHeadersOption>()) {
     context.AddMetadata(h.first, h.second);
+  }
+  if (options.has<UserIpOption>() && !options.has<QuotaUserOption>()) {
+    context.AddMetadata("x-goog-user-ip", options.get<UserIpOption>());
+  }
+  if (options.has<QuotaUserOption>()) {
+    context.AddMetadata("x-goog-quota-user", options.get<QuotaUserOption>());
   }
 }
 
