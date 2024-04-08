@@ -51,8 +51,9 @@ std::shared_ptr<OsLoginServiceStub> CreateDefaultOsLoginServiceStub(
     stub =
         std::make_shared<OsLoginServiceAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<OsLoginServiceMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{});
+  std::multimap<std::string, std::string> fixed_metadata;
+  stub = std::make_shared<OsLoginServiceMetadata>(std::move(stub),
+                                                  std::move(fixed_metadata));
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<OsLoginServiceLogging>(

@@ -53,8 +53,9 @@ std::shared_ptr<OsConfigZonalServiceStub> CreateDefaultOsConfigZonalServiceStub(
     stub = std::make_shared<OsConfigZonalServiceAuth>(std::move(auth),
                                                       std::move(stub));
   }
+  std::multimap<std::string, std::string> fixed_metadata;
   stub = std::make_shared<OsConfigZonalServiceMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{});
+      std::move(stub), std::move(fixed_metadata));
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<OsConfigZonalServiceLogging>(

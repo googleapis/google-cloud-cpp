@@ -52,8 +52,9 @@ std::shared_ptr<PolicyTagManagerStub> CreateDefaultPolicyTagManagerStub(
     stub = std::make_shared<PolicyTagManagerAuth>(std::move(auth),
                                                   std::move(stub));
   }
-  stub = std::make_shared<PolicyTagManagerMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{});
+  std::multimap<std::string, std::string> fixed_metadata;
+  stub = std::make_shared<PolicyTagManagerMetadata>(std::move(stub),
+                                                    std::move(fixed_metadata));
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<PolicyTagManagerLogging>(
