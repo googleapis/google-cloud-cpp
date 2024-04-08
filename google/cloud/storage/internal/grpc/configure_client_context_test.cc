@@ -30,7 +30,6 @@ using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::_;
 using ::testing::Contains;
 using ::testing::IsEmpty;
-using ::testing::MockFunction;
 using ::testing::Not;
 using ::testing::Pair;
 
@@ -117,19 +116,6 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersQuotaUserAndUserIp) {
     auto metadata = GetMetadata(ctx);
     EXPECT_THAT(metadata, Contains(Pair("x-goog-quota-user", test.expected)));
   }
-}
-
-TEST_F(GrpcConfigureClientContext, ApplyQueryParametersGrpcOptions) {
-  MockFunction<void(grpc::ClientContext&)> mock;
-  EXPECT_CALL(mock, Call);
-
-  auto const options = Options{}.set<google::cloud::internal::GrpcSetupOption>(
-      mock.AsStdFunction());
-
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(
-      ctx, options,
-      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {

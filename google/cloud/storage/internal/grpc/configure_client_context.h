@@ -63,7 +63,6 @@ void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
     ctx.AddMetadata("x-goog-fieldmask",
                     request.template GetOption<storage::Fields>().value());
   }
-  google::cloud::internal::ConfigureContext(ctx, options);
 }
 
 /**
