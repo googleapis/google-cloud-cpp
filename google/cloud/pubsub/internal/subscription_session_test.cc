@@ -217,12 +217,14 @@ using ::testing::SizeIs;
 /// @test Verify callbacks are scheduled in the background threads with Open
 /// Telemetry enabled.
 TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
   auto constexpr kAckCount = 100;
   ScheduleCallbacks(kAckCount, /*enable_open_telemetry=*/true);
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, SizeIs(kAckCount));
+  // Verify there is at least one process span.
   EXPECT_THAT(
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
                             SpanNamed("test-subscription process"),
