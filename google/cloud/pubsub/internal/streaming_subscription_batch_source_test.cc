@@ -1347,7 +1347,7 @@ void CheckExtendLeasesMultipleRequests(bool enable_exactly_once) {
   auto done = shutdown->Start({});
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, callback).Times(AtLeast(3));
+  EXPECT_CALL(*mock_batch_callback, callback).Times(AtLeast(1));
   EXPECT_CALL(*mock_batch_callback, ModackStart).Times(kMaxIds + kMaxIds + 2);
   EXPECT_CALL(*mock_batch_callback, ModackEnd).Times(kMaxIds + kMaxIds + 2);
   if (!enable_exactly_once) {

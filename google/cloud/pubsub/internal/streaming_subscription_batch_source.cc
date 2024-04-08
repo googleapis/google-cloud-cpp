@@ -236,7 +236,10 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   }
   lk.unlock();
   for (auto& r : split) {
-    callback_->StartModackSpan(request, nonce_++);
+    std::unique_lock<std::mutex> lk(mu_);
+    nonce_++;
+    lk.unlock();
+    callback_->StartModackSpan(request, nonce_);
     (void)stub_
         ->AsyncModifyAckDeadline(cq_, std::make_shared<grpc::ClientContext>(),
                                  options_, r)
