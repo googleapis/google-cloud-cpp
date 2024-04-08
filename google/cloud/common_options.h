@@ -110,7 +110,7 @@ struct QuotaUserOption {
 };
 
 /**
- * Configure the UserIp system parameter.
+ * Configure the UserIp [system parameter].
  *
  * @deprecated prefer using `google::cloud::QuotaUserOption`.
  *
