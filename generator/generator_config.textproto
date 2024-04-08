@@ -886,6 +886,15 @@ discovery_products {
   }
 
   rest_services {
+    service_proto_path: "google/cloud/compute/instance_settings/v1/instance_settings.proto"
+    product_path: "google/cloud/compute/instance_settings/v1"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
     service_proto_path: "google/cloud/compute/instance_templates/v1/instance_templates.proto"
     product_path: "google/cloud/compute/instance_templates/v1"
     initial_copyright_year: "2023"

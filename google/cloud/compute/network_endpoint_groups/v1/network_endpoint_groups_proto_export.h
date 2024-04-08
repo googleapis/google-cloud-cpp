@@ -29,8 +29,8 @@
 #include <google/cloud/compute/v1/internal/common_012.pb.h>
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
 #include <google/cloud/compute/v1/internal/common_047.pb.h>
-#include <google/cloud/compute/v1/internal/common_080.pb.h>
-#include <google/cloud/compute/v1/internal/common_136.pb.h>
+#include <google/cloud/compute/v1/internal/common_081.pb.h>
+#include <google/cloud/compute/v1/internal/common_137.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ENDPOINT_GROUPS_V1_NETWORK_ENDPOINT_GROUPS_PROTO_EXPORT_H

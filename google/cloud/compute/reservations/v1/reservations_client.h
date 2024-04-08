@@ -117,7 +117,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L164}
-  /// [google.cloud.cpp.compute.v1.ReservationsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_104.proto#L248}
+  /// [google.cloud.cpp.compute.v1.ReservationsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L248}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -159,7 +159,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L164}
-  /// [google.cloud.cpp.compute.v1.ReservationsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_104.proto#L248}
+  /// [google.cloud.cpp.compute.v1.ReservationsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_105.proto#L248}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -697,7 +697,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L471}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_136.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -733,7 +733,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L471}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_136.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
