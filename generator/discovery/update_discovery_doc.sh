@@ -19,6 +19,26 @@ set -euo pipefail
 source "$(dirname "$0")/../../ci/lib/init.sh"
 source module ci/lib/io.sh
 
+function print_service_textproto() {
+  service_proto_path=$(echo "${1}" | sed -En 's/protos\/(google\/cloud\/compute\/.*\/v[[:digit:]]\/.*\.proto)/\1/p')
+  product_path=$(echo "${1}" | sed -En 's/protos\/(google\/cloud\/compute\/.*\/v[[:digit:]])\/.*\.proto/\1/p')
+  initial_copyright_year=$(date +"%Y")
+  echo "  rest_services {"
+  echo "    service_proto_path: \"${service_proto_path}\""
+  echo "    product_path: \"${product_path}\""
+  echo "    initial_copyright_year: \"${initial_copyright_year}\""
+  echo "    retryable_status_codes: [\"kUnavailable\"]"
+  echo "    generate_rest_transport: true"
+  echo "    generate_grpc_transport: false"
+  echo "  }"
+}
+
+function add_service_directory() {
+  service_dir=$(echo "${1}" | sed -En 's/protos\/google\/cloud\/compute\/(.*\/v[[:digit:]]\/).*\.proto/\1/p')
+  echo "    \"${service_dir}\""
+  sed -i "19i\    \"${service_dir}\"" "${PROJECT_ROOT}/google/cloud/compute/service_dirs.cmake"
+}
+
 if (($# > 0)); then
   cat 1>&2 <<EOM
 Usage: $(basename "$0")
@@ -51,11 +71,13 @@ if [[ -n "${NEW_FILES}" ]]; then
   echo "${NEW_FILES}"
   mapfile -t proto_array < <(echo "${NEW_FILES}")
   io::log_red "Add rest_services definitions to the generator_config.textproto and re-run this script."
-  git add protos
-  io::log_red "Add new directories to google/cloud/compute/service_dirs.cmake"
   for i in "${proto_array[@]}"; do
-    service_dir=$(echo "${i}" | sed -En 's/protos\/google\/cloud\/compute\/(.*\/v[[:digit:]]\/).*\.proto/\1/p')
-    echo "    \"${service_dir}\""
+    print_service_textproto "${i}"
+  done
+  git add protos
+  io::log_yellow "Adding new directories to google/cloud/compute/service_dirs.cmake"
+  for i in "${proto_array[@]}"; do
+    add_service_directory "${i}"
   done
   exit 1
 fi
