@@ -86,14 +86,25 @@ TEST(TracingMessageCallback, UserCallback) {
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+using ::testing::IsNull;
+using ::testing::Not;
+
 TEST(TracingMessageCallback,
      VerifyMessageCallbackIsNotNullWhenOTelIsNotCompiled) {
-  auto message_callback = MakeTracingMessageCallback(
-      std::make_shared<pubsub_testing::MockMessageCallback>(),
-      Options{}.set<pubsub::SubscriptionOption>(
-          pubsub::Subscription("test-project", "test-sub")));
+  auto mock = std::make_shared<pubsub_testing::MockMessageCallback>();
+  EXPECT_CALL(*mock, user_callback).Times(1);
+  auto message_callback = MakeTestMessageCallback(std::move(mock));
 
-  EXPECT_THAT(message_callback, testing::Not(testing::IsNull()));
+  EXPECT_THAT(message_callback, Not(IsNull()));
+
+  auto span = internal::MakeSpan("my-sub subscribe");
+  MessageCallback::MessageAndHandler m{
+      pubsub::MessageBuilder().Build(),
+      std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>(),
+      "ack-id",
+      {span}};
+  message_callback->user_callback(std::move(m));
+  span->End();
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
