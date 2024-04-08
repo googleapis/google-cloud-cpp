@@ -394,6 +394,19 @@ TEST(GrpcSetMetadata, QuotaUserOverridesUserIp) {
                             Pair("x-goog-api-client", "api-client-header")));
 }
 
+TEST(GrpcClientContext, FieldMask) {
+  grpc::ClientContext context;
+  internal::SetMetadata(context,
+                        Options{}.set<FieldMaskOption>("items.name,token"), {},
+                        "api-client-header");
+
+  ValidateMetadataFixture fixture;
+  auto const metadata = fixture.GetMetadata(context);
+  EXPECT_THAT(metadata, UnorderedElementsAre(
+                            Pair("x-goog-fieldmask", "items.name,token"),
+                            Pair("x-goog-api-client", "api-client-header")));
+}
+
 TEST(GrpcClientContext, Configure) {
   auto setup = [](grpc::ClientContext& context) {
     // This might not be the most useful setting, but it is the most easily

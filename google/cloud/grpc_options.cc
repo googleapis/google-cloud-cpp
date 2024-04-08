@@ -45,6 +45,9 @@ void SetMetadata(grpc::ClientContext& context, Options const& options,
   if (options.has<QuotaUserOption>()) {
     context.AddMetadata("x-goog-quota-user", options.get<QuotaUserOption>());
   }
+  if (options.has<FieldMaskOption>()) {
+    context.AddMetadata("x-goog-fieldmask", options.get<FieldMaskOption>());
+  }
 }
 
 void ConfigureContext(grpc::ClientContext& context, Options const& opts) {

@@ -38,6 +38,9 @@ void SetMetadata(RestContext& context, Options const& options,
   if (options.has<QuotaUserOption>()) {
     context.AddHeader("x-goog-quota-user", options.get<QuotaUserOption>());
   }
+  if (options.has<FieldMaskOption>()) {
+    context.AddHeader("x-goog-fieldmask", options.get<FieldMaskOption>());
+  }
   if (options.has<ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<ServerTimeoutOption>().count(), absl::kZeroPad4));
