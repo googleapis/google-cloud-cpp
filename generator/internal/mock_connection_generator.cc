@@ -94,7 +94,7 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
                  {IsResponseTypeEmpty,
                   // clang-format off
     "\n  MOCK_METHOD(Status,\n",
-    "\n  MOCK_METHOD(StatusOr<$response_type$>,\n"},
+    "\n  MOCK_METHOD((StatusOr<$response_type$>),\n"},
    {"  $method_name$,\n"
     "  ($request_type$ const& request), (override));\n",}
                  // clang-format on
@@ -106,7 +106,7 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
                  {IsResponseTypeEmpty,
                   // clang-format off
     "\n  MOCK_METHOD(future<Status>,\n",
-    "\n  MOCK_METHOD(future<StatusOr<$longrunning_deduced_response_type$>>,\n"},
+    "\n  MOCK_METHOD((future<StatusOr<$longrunning_deduced_response_type$>>),\n"},
    {"  $method_name$,\n"
     "  ($request_type$ const& request), (override));\n",}
                  // clang-format on
@@ -124,7 +124,7 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
          MethodPattern(
              {
                  // clang-format off
-   {"\n  MOCK_METHOD(StreamRange<$response_type$>,\n"
+   {"\n  MOCK_METHOD((StreamRange<$response_type$>),\n"
     "  $method_name$,\n"
     "  ($request_type$ const& request), (override));\n"},
                  // clang-format on
@@ -141,7 +141,7 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
                 {IsResponseTypeEmpty,
                  // clang-format off
     "\n  MOCK_METHOD(future<Status>,\n",
-    "\n  MOCK_METHOD(future<StatusOr<$response_type$>>,\n"},
+    "\n  MOCK_METHOD((future<StatusOr<$response_type$>>),\n"},
    {"  Async$method_name$,\n"
     "  ($request_type$ const& request), (override));\n",}
                 // clang-format on
