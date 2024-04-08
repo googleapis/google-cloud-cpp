@@ -99,7 +99,7 @@ TEST(TracingMessageCallback,
 
   EXPECT_THAT(message_callback, Not(IsNull()));
 
-  message_callback->user_callback( MessageCallback::MessageAndHandler{
+  message_callback->user_callback(MessageCallback::MessageAndHandler{
       pubsub::MessageBuilder().Build(),
       std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>(),
       "ack-id",
