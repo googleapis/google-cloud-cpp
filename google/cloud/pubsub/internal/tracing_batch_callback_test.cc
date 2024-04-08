@@ -48,6 +48,7 @@ using ::google::cloud::testing_util::SpanKindIsInternal;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::NotNull;
 
 namespace {
 
@@ -109,15 +110,10 @@ TEST(TracingBatchCallback, VerifySpanIsSetInUserCallback) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
-  // Since there is no default constructor, we need to create a fake before we
-  // get the actual value.
-  MessageCallback::MessageAndHandler actual_message_and_handler{
-      pubsub::MessageBuilder().Build(),
-      std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>(),
-      "invalid-ack-id", Span{}};
   EXPECT_CALL(*mock, user_callback)
-      .WillOnce([&](MessageCallback::MessageAndHandler arg0) {
-        actual_message_and_handler = std::move(arg0);
+      .WillOnce([&](MessageCallback::MessageAndHandler m) {
+        EXPECT_EQ(m.ack_id, "ack-id-0");
+        EXPECT_THAT(m.subscribe_span.span, NotNull());
       });
   auto batch_callback = MakeTestBatchCallback(std::move(mock));
   MessageCallback::MessageAndHandler message_and_handler{
@@ -134,9 +130,6 @@ TEST(TracingBatchCallback, VerifySpanIsSetInUserCallback) {
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
                             SpanNamed("test-sub subscribe"),
                             SpanHasEvents(EventNamed("gl-cpp.ack_end")))));
-  EXPECT_EQ(actual_message_and_handler.ack_id, "ack-id-0");
-  EXPECT_THAT(actual_message_and_handler.subscribe_span.span,
-              testing::NotNull());
 }
 
 TEST(TracingBatchCallback, SubscribeAttributes) {

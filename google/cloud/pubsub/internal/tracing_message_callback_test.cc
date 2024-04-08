@@ -16,14 +16,14 @@
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/subscription.h"
-#include "google/cloud/pubsub/testing/mock_message_callback.h"
-#include "google/cloud/options.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/pubsub/testing/mock_exactly_once_ack_handler_impl.h"
+#include "google/cloud/pubsub/testing/mock_message_callback.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>

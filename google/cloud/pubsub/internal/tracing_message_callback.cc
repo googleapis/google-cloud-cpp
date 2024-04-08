@@ -34,8 +34,10 @@ namespace {
 class TracingMessageCallback : public MessageCallback {
  public:
   explicit TracingMessageCallback(std::shared_ptr<MessageCallback> child,
-                                  Options opts)
-      : child_(std::move(child)), options_(std::move(opts)) {}
+                                  Options const& opts)
+      : child_(std::move(child)),
+        subscription_id_(
+            opts.get<pubsub::SubscriptionOption>().subscription_id()) {}
 
   ~TracingMessageCallback() override = default;
 
@@ -45,10 +47,8 @@ class TracingMessageCallback : public MessageCallback {
     if (m.subscribe_span.span) {
       options.parent = m.subscribe_span.span->GetContext();
     }
-    auto subscription_id =
-        options_.get<pubsub::SubscriptionOption>().subscription_id();
     auto span =
-        internal::MakeSpan(subscription_id + " process",
+        internal::MakeSpan(subscription_id_ + " process",
                            {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
 
     child_->user_callback(std::move(m));
@@ -56,7 +56,7 @@ class TracingMessageCallback : public MessageCallback {
   }
 
   std::shared_ptr<MessageCallback> child_;
-  Options options_;
+  std::string subscription_id_;
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> subscribe_span_;
 };
 
