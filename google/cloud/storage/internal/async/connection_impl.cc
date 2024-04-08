@@ -385,7 +385,6 @@ AsyncConnectionImpl::StartResumableWrite(
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::cloud::internal::ImmutableOptions options,
           google::storage::v2::StartResumableWriteRequest const& proto) {
-        internal::ConfigureContext(*context, *options);
         return stub->AsyncStartResumableWrite(cq, std::move(context),
                                               std::move(options), proto);
       },
@@ -494,11 +493,10 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
                 request.GetOption<storage::MD5HashValue>(),
                 request.GetOption<storage::DisableMD5Hash>())
           : storage::internal::CreateNullHashFunction();
-  auto configure =
-      [current, upload_id = query.upload_id()](grpc::ClientContext& context) {
-        internal::ConfigureContext(context, *current);
-        ApplyResumableUploadRoutingHeader(context, upload_id);
-      };
+  auto configure = [upload_id =
+                        query.upload_id()](grpc::ClientContext& context) {
+    ApplyResumableUploadRoutingHeader(context, upload_id);
+  };
   auto proto = google::storage::v2::BidiWriteObjectRequest{};
   proto.set_upload_id(std::move(*query.mutable_upload_id()));
   *proto.mutable_common_object_request_params() =

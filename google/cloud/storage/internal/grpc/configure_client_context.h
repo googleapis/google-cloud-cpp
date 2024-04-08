@@ -42,7 +42,7 @@ void AddIdempotencyToken(grpc::ClientContext& ctx,
  * @see https://cloud.google.com/apis/docs/system-parameters
  */
 template <typename Request>
-void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
+void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& /*options*/,
                           Request const& request) {
   // The gRPC API has a single field for the `QuotaUser` parameter, while the
   // JSON API has two:
@@ -63,7 +63,6 @@ void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
     ctx.AddMetadata("x-goog-fieldmask",
                     request.template GetOption<storage::Fields>().value());
   }
-  internal::ConfigureContext(ctx, options);
 }
 
 /**
