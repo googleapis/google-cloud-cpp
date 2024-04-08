@@ -26,6 +26,14 @@
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/trace/propagation/http_trace_context.h>
+#include <opentelemetry/trace/scope.h>
+#include <opentelemetry/trace/semantic_conventions.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <gmock/gmock.h>
 #include <atomic>
 #include <chrono>
@@ -69,8 +77,7 @@ future<Status> CreateTestSubscriptionSession(
                                    std::move(callback));
 }
 
-/// @test Verify callbacks are scheduled in the background threads.
-TEST(SubscriptionSessionTest, ScheduleCallbacks) {
+void ScheduleCallbacks(int64_t ack_count, bool enable_open_telemetry) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   pubsub::Subscription const subscription("test-project", "test-subscription");
 
@@ -79,7 +86,6 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   std::mutex ack_id_mu;
   std::condition_variable ack_id_cv;
   int expected_ack_id = 0;
-  auto constexpr kAckCount = 100;
 
   google::cloud::CompletionQueue cq;
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
@@ -92,7 +98,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
               std::lock_guard<std::mutex> lk(ack_id_mu);
               EXPECT_EQ("test-ack-id-" + std::to_string(expected_ack_id), a);
               ++expected_ack_id;
-              if (expected_ack_id >= kAckCount) ack_id_cv.notify_one();
+              if (expected_ack_id >= ack_count) ack_id_cv.notify_one();
             }
             return cq.MakeRelativeTimer(us(10)).then(
                 [](TimerFuture) { return Status{}; });
@@ -176,11 +182,14 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   };
 
   auto response = CreateTestSubscriptionSession(
-      subscription, Options{}.set<pubsub::MaxConcurrencyOption>(1), mock, cq,
-      {handler});
+      subscription,
+      Options{}
+          .set<pubsub::MaxConcurrencyOption>(1)
+          .set<OpenTelemetryTracingOption>(enable_open_telemetry),
+      mock, cq, {handler});
   {
     std::unique_lock<std::mutex> lk(ack_id_mu);
-    ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
+    ack_id_cv.wait(lk, [&] { return expected_ack_id >= ack_count; });
   }
   response.cancel();
   EXPECT_STATUS_OK(response.get());
@@ -188,6 +197,49 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   cq.Shutdown();
   for (auto& t : tasks) t.join();
 }
+
+/// @test Verify callbacks are scheduled in the background threads.
+TEST(SubscriptionSessionTest, ScheduleCallbacks) {
+  ScheduleCallbacks(/*ack_count=*/100, /*enable_open_telemetry=*/false);
+}
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SpanHasAttributes;
+using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanKindIsInternal;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::ElementsAre;
+using ::testing::SizeIs;
+
+/// @test Verify callbacks are scheduled in the background threads with Open
+/// Telemetry enabled.
+TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
+  auto span_catcher = InstallSpanCatcher();
+  auto constexpr kAckCount = 100;
+  ScheduleCallbacks(kAckCount, /*enable_open_telemetry=*/true);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, SizeIs(kAckCount));
+}
+
+/// @test Verify the process span is created.
+TEST(SubscriptionSessionTest, ScheduleCallbackWithOtelEnabled) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  ScheduleCallbacks(/*ack_count=*/1, /*enable_open_telemetry=*/true);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(AllOf(
+                         SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                         SpanNamed("test-subscription process"),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             sc::kMessagingSystem, "gcp_pubsub")))));
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /// @test Verify callbacks are scheduled in the background threads.
 TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
@@ -295,130 +347,6 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
   auto response = CreateTestSubscriptionSession(
       subscription, Options{}.set<pubsub::MaxConcurrencyOption>(1), mock, cq,
       callback);
-  {
-    std::unique_lock<std::mutex> lk(ack_id_mu);
-    ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
-  }
-  response.cancel();
-  EXPECT_STATUS_OK(response.get());
-
-  cq.Shutdown();
-  for (auto& t : tasks) t.join();
-}
-
-/// @test Verify callbacks are scheduled in the background threads with Open
-/// Telemetry enabled.
-TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  pubsub::Subscription const subscription("test-project", "test-subscription");
-
-  std::mutex mu;
-  int count = 0;
-  std::mutex ack_id_mu;
-  std::condition_variable ack_id_cv;
-  int expected_ack_id = 0;
-  auto constexpr kAckCount = 100;
-
-  google::cloud::CompletionQueue cq;
-  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
-  using us = std::chrono::microseconds;
-  EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly(
-          [&](google::cloud::CompletionQueue&, auto, auto,
-              google::pubsub::v1::AcknowledgeRequest const& request) {
-            for (auto const& a : request.ack_ids()) {
-              std::lock_guard<std::mutex> lk(ack_id_mu);
-              EXPECT_EQ("test-ack-id-" + std::to_string(expected_ack_id), a);
-              ++expected_ack_id;
-              if (expected_ack_id >= kAckCount) ack_id_cv.notify_one();
-            }
-            return cq.MakeRelativeTimer(us(10)).then(
-                [](TimerFuture) { return Status{}; });
-          });
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
-                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
-        return make_ready_future(Status{});
-      });
-  EXPECT_CALL(*mock, AsyncStreamingPull)
-      .Times(AtLeast(1))
-      .WillRepeatedly([&](google::cloud::CompletionQueue const&, auto, auto) {
-        auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
-        EXPECT_CALL(*stream, Start).WillOnce([&] {
-          return cq.MakeRelativeTimer(us(10)).then(
-              [](TimerFuture) { return true; });
-        });
-        EXPECT_CALL(*stream, Write)
-            .WillOnce(
-                [&](google::pubsub::v1::StreamingPullRequest const& request,
-                    grpc::WriteOptions const&) {
-                  EXPECT_EQ(subscription.FullName(), request.subscription());
-                  EXPECT_TRUE(request.ack_ids().empty());
-                  EXPECT_TRUE(request.modify_deadline_ack_ids().empty());
-                  EXPECT_TRUE(request.modify_deadline_seconds().empty());
-                  return cq.MakeRelativeTimer(us(10)).then(
-                      [](TimerFuture) { return true; });
-                });
-
-        ::testing::InSequence sequence;
-        EXPECT_CALL(*stream, Read).WillRepeatedly([&] {
-          google::pubsub::v1::StreamingPullResponse response;
-          for (int i = 0; i != 2; ++i) {
-            auto& m = *response.add_received_messages();
-            std::lock_guard<std::mutex> lk(mu);
-            m.set_ack_id("test-ack-id-" + std::to_string(count));
-            m.set_delivery_attempt(42);
-            m.mutable_message()->set_message_id("test-message-id-" +
-                                                std::to_string(count));
-            ++count;
-          }
-          return cq.MakeRelativeTimer(us(10)).then([response](TimerFuture) {
-            return absl::make_optional(response);
-          });
-        });
-        EXPECT_CALL(*stream, Cancel).Times(1);
-        EXPECT_CALL(*stream, Read).WillRepeatedly([&] {
-          return cq.MakeRelativeTimer(us(10)).then([](TimerFuture) {
-            return absl::optional<google::pubsub::v1::StreamingPullResponse>{};
-          });
-        });
-        EXPECT_CALL(*stream, Finish).WillOnce([&] {
-          return cq.MakeRelativeTimer(us(10)).then([](TimerFuture) {
-            return Status{StatusCode::kCancelled, "cancel"};
-          });
-        });
-
-        return stream;
-      });
-
-  std::vector<std::thread> tasks;
-  std::generate_n(std::back_inserter(tasks), 4,
-                  [&] { return std::thread([&cq] { cq.Run(); }); });
-  std::set<std::thread::id> ids;
-  auto const main_id = std::this_thread::get_id();
-  std::transform(tasks.begin(), tasks.end(), std::inserter(ids, ids.end()),
-                 [](std::thread const& t) { return t.get_id(); });
-
-  std::atomic<int> expected_message_id{0};
-  auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
-    EXPECT_EQ(42, h.delivery_attempt());
-    EXPECT_EQ("test-message-id-" + std::to_string(expected_message_id),
-              m.message_id());
-    auto pos = ids.find(std::this_thread::get_id());
-    EXPECT_NE(ids.end(), pos);
-    EXPECT_NE(main_id, std::this_thread::get_id());
-    // Increment the counter before acking, as the ack() may trigger a new call
-    // before this function gets to run.
-    ++expected_message_id;
-    std::move(h).ack();
-  };
-
-  auto response =
-      CreateTestSubscriptionSession(subscription,
-                                    Options{}
-                                        .set<pubsub::MaxConcurrencyOption>(1)
-                                        .set<OpenTelemetryTracingOption>(true),
-                                    mock, cq, {handler});
   {
     std::unique_lock<std::mutex> lk(ack_id_mu);
     ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
