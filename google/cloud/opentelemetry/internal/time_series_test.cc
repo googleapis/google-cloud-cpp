@@ -341,7 +341,7 @@ TEST(HistogramPointData, DoubleSum) {
 
 TEST(HistogramPointData, EmptyMean) {
   opentelemetry::sdk::metrics::HistogramPointData point;
-  point.sum_ = static_cast<std::int64_t>(0);
+  point.sum_ = std::int64_t{0};
   point.boundaries_ = {0.0, 1.0, 2.0, 3.0, 10.0, 30.0};
   point.counts_ = {0, 0, 0, 0, 0, 0, 0};
   point.count_ = 0;
