@@ -366,7 +366,10 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         async/writer_test.cc
         grpc_plugin_test.cc
         internal/async/accumulate_read_object_test.cc
+        internal/async/connection_impl_insert_test.cc
+        internal/async/connection_impl_read_test.cc
         internal/async/connection_impl_test.cc
+        internal/async/connection_impl_upload_test.cc
         internal/async/connection_tracing_test.cc
         internal/async/default_options_test.cc
         internal/async/insert_object_test.cc
