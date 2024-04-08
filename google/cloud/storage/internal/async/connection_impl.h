@@ -102,19 +102,17 @@ class AsyncConnectionImpl
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   ResumeUpload(internal::ImmutableOptions current,
-               storage_experimental::ResumableUploadRequest request,
                google::storage::v2::QueryWriteStatusRequest query);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   StartUnbufferedUploadImpl(
       internal::ImmutableOptions current,
-      storage_experimental::ResumableUploadRequest request,
+      google::storage::v2::StartResumableWriteRequest request,
       StatusOr<google::storage::v2::StartResumableWriteResponse> response);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   ResumeUnbufferedUploadImpl(
       internal::ImmutableOptions current,
-      storage_experimental::ResumableUploadRequest const& request,
       google::storage::v2::QueryWriteStatusRequest query,
       StatusOr<google::storage::v2::QueryWriteStatusResponse> response);
 
