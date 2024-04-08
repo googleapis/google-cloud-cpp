@@ -53,7 +53,7 @@ class MockServiceHealthConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::servicehealth::v1::Event>, GetEvent,
+      (StatusOr<google::cloud::servicehealth::v1::Event>), GetEvent,
       (google::cloud::servicehealth::v1::GetEventRequest const& request),
       (override));
 
@@ -64,7 +64,7 @@ class MockServiceHealthConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>,
+      (StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>),
       GetOrganizationEvent,
       (google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
            request),
@@ -78,7 +78,7 @@ class MockServiceHealthConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>,
+      (StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>),
       GetOrganizationImpact,
       (google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
            request),

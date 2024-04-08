@@ -48,14 +48,14 @@ class MockConnectionServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::connection::v1::Connection>,
+      (StatusOr<google::cloud::bigquery::connection::v1::Connection>),
       CreateConnection,
       (google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::connection::v1::Connection>,
+      (StatusOr<google::cloud::bigquery::connection::v1::Connection>),
       GetConnection,
       (google::cloud::bigquery::connection::v1::GetConnectionRequest const&
            request),
@@ -68,7 +68,7 @@ class MockConnectionServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::connection::v1::Connection>,
+      (StatusOr<google::cloud::bigquery::connection::v1::Connection>),
       UpdateConnection,
       (google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
            request),
@@ -80,15 +80,15 @@ class MockConnectionServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

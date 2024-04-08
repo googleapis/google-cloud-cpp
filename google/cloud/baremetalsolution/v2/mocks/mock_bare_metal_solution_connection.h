@@ -54,61 +54,64 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::Instance>, GetInstance,
+      (StatusOr<google::cloud::baremetalsolution::v2::Instance>), GetInstance,
       (google::cloud::baremetalsolution::v2::GetInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>,
+      (future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>),
       UpdateInstance,
       (google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::Instance>, RenameInstance,
+      (StatusOr<google::cloud::baremetalsolution::v2::Instance>),
+      RenameInstance,
       (google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::baremetalsolution::v2::ResetInstanceResponse>>,
-              ResetInstance,
-              (google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::baremetalsolution::v2::StartInstanceResponse>>,
-              StartInstance,
-              (google::cloud::baremetalsolution::v2::StartInstanceRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::baremetalsolution::v2::ResetInstanceResponse>>),
+      ResetInstance,
+      (google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>,
+      (future<StatusOr<
+           google::cloud::baremetalsolution::v2::StartInstanceResponse>>),
+      StartInstance,
+      (google::cloud::baremetalsolution::v2::StartInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::baremetalsolution::v2::StopInstanceResponse>>),
       StopInstance,
       (google::cloud::baremetalsolution::v2::StopInstanceRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::
-                                  EnableInteractiveSerialConsoleResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::baremetalsolution::v2::
+                                   EnableInteractiveSerialConsoleResponse>>),
               EnableInteractiveSerialConsole,
               (google::cloud::baremetalsolution::v2::
                    EnableInteractiveSerialConsoleRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::
-                                  DisableInteractiveSerialConsoleResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::baremetalsolution::v2::
+                                   DisableInteractiveSerialConsoleResponse>>),
               DisableInteractiveSerialConsole,
               (google::cloud::baremetalsolution::v2::
                    DisableInteractiveSerialConsoleRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>,
+      (future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>),
       DetachLun,
       (google::cloud::baremetalsolution::v2::DetachLunRequest const& request),
       (override));
@@ -118,7 +121,7 @@ class MockBareMetalSolutionConnection
       (google::cloud::baremetalsolution::v2::ListSSHKeysRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::baremetalsolution::v2::SSHKey>,
+  MOCK_METHOD((StatusOr<google::cloud::baremetalsolution::v2::SSHKey>),
               CreateSSHKey,
               (google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const&
                    request),
@@ -135,29 +138,30 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::Volume>, GetVolume,
+      (StatusOr<google::cloud::baremetalsolution::v2::Volume>), GetVolume,
       (google::cloud::baremetalsolution::v2::GetVolumeRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>),
               UpdateVolume,
               (google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::baremetalsolution::v2::Volume>,
+  MOCK_METHOD((StatusOr<google::cloud::baremetalsolution::v2::Volume>),
               RenameVolume,
               (google::cloud::baremetalsolution::v2::RenameVolumeRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>),
       EvictVolume,
       (google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>),
               ResizeVolume,
               (google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
                    request),
@@ -170,32 +174,33 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>,
+      (StatusOr<
+          google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>),
       ListNetworkUsage,
       (google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::Network>, GetNetwork,
+      (StatusOr<google::cloud::baremetalsolution::v2::Network>), GetNetwork,
       (google::cloud::baremetalsolution::v2::GetNetworkRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Network>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::baremetalsolution::v2::Network>>),
               UpdateNetwork,
               (google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>,
+      (StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>),
       CreateVolumeSnapshot,
       (google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>,
+      (future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>),
       RestoreVolumeSnapshot,
       (google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
            request),
@@ -208,7 +213,7 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>,
+      (StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>),
       GetVolumeSnapshot,
       (google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
            request),
@@ -222,7 +227,7 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::Lun>, GetLun,
+      (StatusOr<google::cloud::baremetalsolution::v2::Lun>), GetLun,
       (google::cloud::baremetalsolution::v2::GetLunRequest const& request),
       (override));
 
@@ -232,13 +237,14 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>),
       EvictLun,
       (google::cloud::baremetalsolution::v2::EvictLunRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::NfsShare>, GetNfsShare,
+      (StatusOr<google::cloud::baremetalsolution::v2::NfsShare>), GetNfsShare,
       (google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request),
       (override));
 
@@ -249,27 +255,29 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>,
+      (future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>),
       UpdateNfsShare,
       (google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>,
+      (future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>),
       CreateNfsShare,
       (google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::NfsShare>, RenameNfsShare,
+      (StatusOr<google::cloud::baremetalsolution::v2::NfsShare>),
+      RenameNfsShare,
       (google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>),
       DeleteNfsShare,
       (google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
            request),
@@ -282,35 +290,35 @@ class MockBareMetalSolutionConnection
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::baremetalsolution::v2::
-                           SubmitProvisioningConfigResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::baremetalsolution::v2::
+                            SubmitProvisioningConfigResponse>),
               SubmitProvisioningConfig,
               (google::cloud::baremetalsolution::v2::
                    SubmitProvisioningConfigRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>,
+      (StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>),
       GetProvisioningConfig,
       (google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>,
+      (StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>),
       CreateProvisioningConfig,
       (google::cloud::baremetalsolution::v2::
            CreateProvisioningConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>,
+      (StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>),
       UpdateProvisioningConfig,
       (google::cloud::baremetalsolution::v2::
            UpdateProvisioningConfigRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::baremetalsolution::v2::Network>,
+  MOCK_METHOD((StatusOr<google::cloud::baremetalsolution::v2::Network>),
               RenameNetwork,
               (google::cloud::baremetalsolution::v2::RenameNetworkRequest const&
                    request),

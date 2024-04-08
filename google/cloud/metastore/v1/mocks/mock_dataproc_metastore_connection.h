@@ -52,22 +52,22 @@ class MockDataprocMetastoreConnection
               (google::cloud::metastore::v1::ListServicesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::metastore::v1::Service>, GetService,
+  MOCK_METHOD((StatusOr<google::cloud::metastore::v1::Service>), GetService,
               (google::cloud::metastore::v1::GetServiceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::Service>>, CreateService,
+      (future<StatusOr<google::cloud::metastore::v1::Service>>), CreateService,
       (google::cloud::metastore::v1::CreateServiceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::Service>>, UpdateService,
+      (future<StatusOr<google::cloud::metastore::v1::Service>>), UpdateService,
       (google::cloud::metastore::v1::UpdateServiceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>),
       DeleteService,
       (google::cloud::metastore::v1::DeleteServiceRequest const& request),
       (override));
@@ -79,30 +79,31 @@ class MockDataprocMetastoreConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::metastore::v1::MetadataImport>, GetMetadataImport,
+      (StatusOr<google::cloud::metastore::v1::MetadataImport>),
+      GetMetadataImport,
       (google::cloud::metastore::v1::GetMetadataImportRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataImport>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::metastore::v1::MetadataImport>>),
               CreateMetadataImport,
               (google::cloud::metastore::v1::CreateMetadataImportRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataImport>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::metastore::v1::MetadataImport>>),
               UpdateMetadataImport,
               (google::cloud::metastore::v1::UpdateMetadataImportRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::MetadataExport>>,
+      (future<StatusOr<google::cloud::metastore::v1::MetadataExport>>),
       ExportMetadata,
       (google::cloud::metastore::v1::ExportMetadataRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::Restore>>, RestoreService,
+      (future<StatusOr<google::cloud::metastore::v1::Restore>>), RestoreService,
       (google::cloud::metastore::v1::RestoreServiceRequest const& request),
       (override));
 
@@ -110,37 +111,37 @@ class MockDataprocMetastoreConnection
               (google::cloud::metastore::v1::ListBackupsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::metastore::v1::Backup>, GetBackup,
+  MOCK_METHOD((StatusOr<google::cloud::metastore::v1::Backup>), GetBackup,
               (google::cloud::metastore::v1::GetBackupRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::Backup>>, CreateBackup,
+      (future<StatusOr<google::cloud::metastore::v1::Backup>>), CreateBackup,
       (google::cloud::metastore::v1::CreateBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>),
       DeleteBackup,
       (google::cloud::metastore::v1::DeleteBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>,
+      (future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>),
       QueryMetadata,
       (google::cloud::metastore::v1::QueryMetadataRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>,
+      (future<
+          StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>),
       MoveTableToDatabase,
       (google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>,
+      (future<StatusOr<google::cloud::metastore::v1::
+                           AlterMetadataResourceLocationResponse>>),
       AlterMetadataResourceLocation,
       (google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
            request),

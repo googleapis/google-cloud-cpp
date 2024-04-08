@@ -47,34 +47,33 @@ class MockInterconnectsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
                    DeleteInterconnectRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Interconnect>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Interconnect>),
               GetInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
                    GetInterconnectRequest const& request),
               (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>,
-      GetDiagnostics,
-      (google::cloud::cpp::compute::interconnects::v1::
-           GetDiagnosticsRequest const& request),
-      (override));
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::
+                            InterconnectsGetDiagnosticsResponse>),
+              GetDiagnostics,
+              (google::cloud::cpp::compute::interconnects::v1::
+                   GetDiagnosticsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::
-                           InterconnectsGetMacsecConfigResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::
+                            InterconnectsGetMacsecConfigResponse>),
               GetMacsecConfig,
               (google::cloud::cpp::compute::interconnects::v1::
                    GetMacsecConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
                    InsertInterconnectRequest const& request),
@@ -87,14 +86,14 @@ class MockInterconnectsConnection
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
                    PatchInterconnectRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), SetLabels,
       (google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
            request),
       (override));

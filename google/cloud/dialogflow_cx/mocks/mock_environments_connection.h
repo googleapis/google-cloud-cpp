@@ -54,19 +54,20 @@ class MockEnvironmentsConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Environment>, GetEnvironment,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Environment>),
+      GetEnvironment,
       (google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
+      (future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>),
       CreateEnvironment,
       (google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
+      (future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>),
       UpdateEnvironment,
       (google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
            request),
@@ -86,8 +87,8 @@ class MockEnvironmentsConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
+      (future<StatusOr<
+           google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>),
       RunContinuousTest,
       (google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
            request),
@@ -101,7 +102,7 @@ class MockEnvironmentsConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
+      (future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>),
       DeployFlow,
       (google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request),
       (override));

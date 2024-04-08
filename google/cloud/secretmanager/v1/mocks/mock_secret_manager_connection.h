@@ -53,23 +53,23 @@ class MockSecretManagerServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::secretmanager::v1::Secret>, CreateSecret,
+      (StatusOr<google::cloud::secretmanager::v1::Secret>), CreateSecret,
       (google::cloud::secretmanager::v1::CreateSecretRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::secretmanager::v1::SecretVersion>,
+  MOCK_METHOD((StatusOr<google::cloud::secretmanager::v1::SecretVersion>),
               AddSecretVersion,
               (google::cloud::secretmanager::v1::AddSecretVersionRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::secretmanager::v1::Secret>, GetSecret,
+      (StatusOr<google::cloud::secretmanager::v1::Secret>), GetSecret,
       (google::cloud::secretmanager::v1::GetSecretRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::secretmanager::v1::Secret>, UpdateSecret,
+      (StatusOr<google::cloud::secretmanager::v1::Secret>), UpdateSecret,
       (google::cloud::secretmanager::v1::UpdateSecretRequest const& request),
       (override));
 
@@ -84,49 +84,49 @@ class MockSecretManagerServiceConnection
       (google::cloud::secretmanager::v1::ListSecretVersionsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::secretmanager::v1::SecretVersion>,
+  MOCK_METHOD((StatusOr<google::cloud::secretmanager::v1::SecretVersion>),
               GetSecretVersion,
               (google::cloud::secretmanager::v1::GetSecretVersionRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>,
+      (StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>),
       AccessSecretVersion,
       (google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::secretmanager::v1::SecretVersion>,
+      (StatusOr<google::cloud::secretmanager::v1::SecretVersion>),
       DisableSecretVersion,
       (google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::secretmanager::v1::SecretVersion>,
+      (StatusOr<google::cloud::secretmanager::v1::SecretVersion>),
       EnableSecretVersion,
       (google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::secretmanager::v1::SecretVersion>,
+      (StatusOr<google::cloud::secretmanager::v1::SecretVersion>),
       DestroySecretVersion,
       (google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

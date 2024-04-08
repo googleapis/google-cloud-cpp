@@ -46,11 +46,11 @@ class MockSchemaServiceConnection : public pubsub::SchemaServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, CreateSchema,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Schema>), CreateSchema,
               (google::pubsub::v1::CreateSchemaRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, GetSchema,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Schema>), GetSchema,
               (google::pubsub::v1::GetSchemaRequest const& request),
               (override));
 
@@ -61,15 +61,15 @@ class MockSchemaServiceConnection : public pubsub::SchemaServiceConnection {
               (google::pubsub::v1::ListSchemaRevisionsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, CommitSchema,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Schema>), CommitSchema,
               (google::pubsub::v1::CommitSchemaRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, RollbackSchema,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Schema>), RollbackSchema,
               (google::pubsub::v1::RollbackSchemaRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, DeleteSchemaRevision,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Schema>), DeleteSchemaRevision,
               (google::pubsub::v1::DeleteSchemaRevisionRequest const& request),
               (override));
 
@@ -77,12 +77,12 @@ class MockSchemaServiceConnection : public pubsub::SchemaServiceConnection {
               (google::pubsub::v1::DeleteSchemaRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::ValidateSchemaResponse>,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::ValidateSchemaResponse>),
               ValidateSchema,
               (google::pubsub::v1::ValidateSchemaRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::ValidateMessageResponse>,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::ValidateMessageResponse>),
               ValidateMessage,
               (google::pubsub::v1::ValidateMessageRequest const& request),
               (override));

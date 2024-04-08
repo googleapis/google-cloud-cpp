@@ -47,20 +47,20 @@ class MockAssuredWorkloadsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>),
               CreateWorkload,
               (google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::Workload>,
+  MOCK_METHOD((StatusOr<google::cloud::assuredworkloads::v1::Workload>),
               UpdateWorkload,
               (google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::
-                           RestrictAllowedResourcesResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::assuredworkloads::v1::
+                            RestrictAllowedResourcesResponse>),
               RestrictAllowedResources,
               (google::cloud::assuredworkloads::v1::
                    RestrictAllowedResourcesRequest const& request),
@@ -72,7 +72,7 @@ class MockAssuredWorkloadsServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::assuredworkloads::v1::Workload>, GetWorkload,
+      (StatusOr<google::cloud::assuredworkloads::v1::Workload>), GetWorkload,
       (google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request),
       (override));
 
@@ -89,13 +89,13 @@ class MockAssuredWorkloadsServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::assuredworkloads::v1::Violation>, GetViolation,
+      (StatusOr<google::cloud::assuredworkloads::v1::Violation>), GetViolation,
       (google::cloud::assuredworkloads::v1::GetViolationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>,
+      (StatusOr<
+          google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>),
       AcknowledgeViolation,
       (google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
            request),

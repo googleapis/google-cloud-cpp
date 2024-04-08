@@ -48,14 +48,14 @@ class MockConversationDatasetsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>),
       CreateConversationDataset,
       (google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::ConversationDataset>,
+      (StatusOr<google::cloud::dialogflow::v2::ConversationDataset>),
       GetConversationDataset,
       (google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
            request),
@@ -68,16 +68,16 @@ class MockConversationDatasetsConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::
-                          DeleteConversationDatasetOperationMetadata>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::
+                           DeleteConversationDatasetOperationMetadata>>),
       DeleteConversationDataset,
       (google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::
-                          ImportConversationDataOperationResponse>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::
+                           ImportConversationDataOperationResponse>>),
       ImportConversationData,
       (google::cloud::dialogflow::v2::ImportConversationDataRequest const&
            request),

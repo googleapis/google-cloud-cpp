@@ -51,7 +51,7 @@ class MockLoggingServiceV2Connection
               (google::logging::v2::DeleteLogRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::WriteLogEntriesResponse>,
+  MOCK_METHOD((StatusOr<google::logging::v2::WriteLogEntriesResponse>),
               WriteLogEntries,
               (google::logging::v2::WriteLogEntriesRequest const& request),
               (override));
@@ -73,7 +73,7 @@ class MockLoggingServiceV2Connection
                    google::logging::v2::TailLogEntriesResponse>>),
               AsyncTailLogEntries, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>,
+  MOCK_METHOD((future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>),
               AsyncWriteLogEntries,
               (google::logging::v2::WriteLogEntriesRequest const& request),
               (override));

@@ -49,19 +49,19 @@ class MockRegionTargetHttpsProxiesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
                    DeleteTargetHttpsProxyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>),
               GetTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
                    GetTargetHttpsProxyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
                    InsertTargetHttpsProxyRequest const& request),
@@ -73,19 +73,19 @@ class MockRegionTargetHttpsProxiesConnection
                    ListRegionTargetHttpsProxiesRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
                    PatchTargetHttpsProxyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetSslCertificates,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
                    SetSslCertificatesRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetUrlMap,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
                    SetUrlMapRequest const& request),

@@ -51,17 +51,17 @@ class MockVersionsConnection : public dialogflow_es::VersionsConnection {
               (google::cloud::dialogflow::v2::ListVersionsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Version>, GetVersion,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::Version>), GetVersion,
               (google::cloud::dialogflow::v2::GetVersionRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Version>, CreateVersion,
+      (StatusOr<google::cloud::dialogflow::v2::Version>), CreateVersion,
       (google::cloud::dialogflow::v2::CreateVersionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Version>, UpdateVersion,
+      (StatusOr<google::cloud::dialogflow::v2::Version>), UpdateVersion,
       (google::cloud::dialogflow::v2::UpdateVersionRequest const& request),
       (override));
 

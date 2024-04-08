@@ -53,7 +53,7 @@ class MockChangelogsConnection : public dialogflow_cx::ChangelogsConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Changelog>, GetChangelog,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Changelog>), GetChangelog,
       (google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request),
       (override));
 };

@@ -47,14 +47,14 @@ class MockSpecialistPoolServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>),
               CreateSpecialistPool,
               (google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::SpecialistPool>,
+      (StatusOr<google::cloud::aiplatform::v1::SpecialistPool>),
       GetSpecialistPool,
       (google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request),
       (override));
@@ -66,13 +66,14 @@ class MockSpecialistPoolServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteSpecialistPool,
       (google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>),
               UpdateSpecialistPool,
               (google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
                    request),

@@ -46,7 +46,7 @@ class MockTasksConnection : public run_v2::TasksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::run::v2::Task>, GetTask,
+  MOCK_METHOD((StatusOr<google::cloud::run::v2::Task>), GetTask,
               (google::cloud::run::v2::GetTaskRequest const& request),
               (override));
 

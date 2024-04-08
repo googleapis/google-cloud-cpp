@@ -53,17 +53,17 @@ class MockMigrationCenterConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::Asset>, GetAsset,
+      (StatusOr<google::cloud::migrationcenter::v1::Asset>), GetAsset,
       (google::cloud::migrationcenter::v1::GetAssetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::Asset>, UpdateAsset,
+      (StatusOr<google::cloud::migrationcenter::v1::Asset>), UpdateAsset,
       (google::cloud::migrationcenter::v1::UpdateAssetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse>,
+      (StatusOr<google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse>),
       BatchUpdateAssets,
       (google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const&
            request),
@@ -81,21 +81,21 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::ReportAssetFramesResponse>,
+      (StatusOr<google::cloud::migrationcenter::v1::ReportAssetFramesResponse>),
       ReportAssetFrames,
       (google::cloud::migrationcenter::v1::ReportAssetFramesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse>,
+      (StatusOr<
+          google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse>),
       AggregateAssetsValues,
       (google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>),
               CreateImportJob,
               (google::cloud::migrationcenter::v1::CreateImportJobRequest const&
                    request),
@@ -108,38 +108,38 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::ImportJob>, GetImportJob,
+      (StatusOr<google::cloud::migrationcenter::v1::ImportJob>), GetImportJob,
       (google::cloud::migrationcenter::v1::GetImportJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>),
       DeleteImportJob,
       (google::cloud::migrationcenter::v1::DeleteImportJobRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>),
               UpdateImportJob,
               (google::cloud::migrationcenter::v1::UpdateImportJobRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>),
       ValidateImportJob,
       (google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>),
       RunImportJob,
       (google::cloud::migrationcenter::v1::RunImportJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>,
+      (StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>),
       GetImportDataFile,
       (google::cloud::migrationcenter::v1::GetImportDataFileRequest const&
            request),
@@ -152,14 +152,14 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>),
       CreateImportDataFile,
       (google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>),
       DeleteImportDataFile,
       (google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
            request),
@@ -171,35 +171,37 @@ class MockMigrationCenterConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::Group>, GetGroup,
+      (StatusOr<google::cloud::migrationcenter::v1::Group>), GetGroup,
       (google::cloud::migrationcenter::v1::GetGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::Group>>, CreateGroup,
+      (future<StatusOr<google::cloud::migrationcenter::v1::Group>>),
+      CreateGroup,
       (google::cloud::migrationcenter::v1::CreateGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::Group>>, UpdateGroup,
+      (future<StatusOr<google::cloud::migrationcenter::v1::Group>>),
+      UpdateGroup,
       (google::cloud::migrationcenter::v1::UpdateGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>),
       DeleteGroup,
       (google::cloud::migrationcenter::v1::DeleteGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::Group>>),
       AddAssetsToGroup,
       (google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::Group>>),
       RemoveAssetsFromGroup,
       (google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
            request),
@@ -212,7 +214,7 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::ErrorFrame>, GetErrorFrame,
+      (StatusOr<google::cloud::migrationcenter::v1::ErrorFrame>), GetErrorFrame,
       (google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request),
       (override));
 
@@ -222,24 +224,24 @@ class MockMigrationCenterConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::Source>, GetSource,
+      (StatusOr<google::cloud::migrationcenter::v1::Source>), GetSource,
       (google::cloud::migrationcenter::v1::GetSourceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::Source>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::Source>>),
       CreateSource,
       (google::cloud::migrationcenter::v1::CreateSourceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::Source>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::Source>>),
       UpdateSource,
       (google::cloud::migrationcenter::v1::UpdateSourceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>),
       DeleteSource,
       (google::cloud::migrationcenter::v1::DeleteSourceRequest const& request),
       (override));
@@ -251,52 +253,52 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>,
+      (StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>),
       GetPreferenceSet,
       (google::cloud::migrationcenter::v1::GetPreferenceSetRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>),
       CreatePreferenceSet,
       (google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>),
       UpdatePreferenceSet,
       (google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>),
       DeletePreferenceSet,
       (google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::Settings>, GetSettings,
+      (StatusOr<google::cloud::migrationcenter::v1::Settings>), GetSettings,
       (google::cloud::migrationcenter::v1::GetSettingsRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Settings>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::migrationcenter::v1::Settings>>),
               UpdateSettings,
               (google::cloud::migrationcenter::v1::UpdateSettingsRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>),
       CreateReportConfig,
       (google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::migrationcenter::v1::ReportConfig>,
+  MOCK_METHOD((StatusOr<google::cloud::migrationcenter::v1::ReportConfig>),
               GetReportConfig,
               (google::cloud::migrationcenter::v1::GetReportConfigRequest const&
                    request),
@@ -309,20 +311,20 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>),
       DeleteReportConfig,
       (google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::Report>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::Report>>),
       CreateReport,
       (google::cloud::migrationcenter::v1::CreateReportRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::migrationcenter::v1::Report>, GetReport,
+      (StatusOr<google::cloud::migrationcenter::v1::Report>), GetReport,
       (google::cloud::migrationcenter::v1::GetReportRequest const& request),
       (override));
 
@@ -332,7 +334,7 @@ class MockMigrationCenterConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>),
       DeleteReport,
       (google::cloud::migrationcenter::v1::DeleteReportRequest const& request),
       (override));

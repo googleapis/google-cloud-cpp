@@ -47,29 +47,29 @@ class MockUserEventServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::UserEvent>, WriteUserEvent,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::UserEvent>), WriteUserEvent,
               (google::cloud::retail::v2::WriteUserEventRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::HttpBody>, CollectUserEvent,
+      (StatusOr<google::api::HttpBody>), CollectUserEvent,
       (google::cloud::retail::v2::CollectUserEventRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
+      (future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>),
       PurgeUserEvents,
       (google::cloud::retail::v2::PurgeUserEventsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
+      (future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>),
       ImportUserEvents,
       (google::cloud::retail::v2::ImportUserEventsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
+      (future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>),
       RejoinUserEvents,
       (google::cloud::retail::v2::RejoinUserEventsRequest const& request),
       (override));

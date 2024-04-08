@@ -52,32 +52,36 @@ class MockCloudFilestoreManagerConnection
               (google::cloud::filestore::v1::ListInstancesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Instance>, GetInstance,
+  MOCK_METHOD((StatusOr<google::cloud::filestore::v1::Instance>), GetInstance,
               (google::cloud::filestore::v1::GetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Instance>>, CreateInstance,
+      (future<StatusOr<google::cloud::filestore::v1::Instance>>),
+      CreateInstance,
       (google::cloud::filestore::v1::CreateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Instance>>, UpdateInstance,
+      (future<StatusOr<google::cloud::filestore::v1::Instance>>),
+      UpdateInstance,
       (google::cloud::filestore::v1::UpdateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Instance>>, RestoreInstance,
+      (future<StatusOr<google::cloud::filestore::v1::Instance>>),
+      RestoreInstance,
       (google::cloud::filestore::v1::RestoreInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Instance>>, RevertInstance,
+      (future<StatusOr<google::cloud::filestore::v1::Instance>>),
+      RevertInstance,
       (google::cloud::filestore::v1::RevertInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::common::OperationMetadata>>,
+      (future<StatusOr<google::cloud::common::OperationMetadata>>),
       DeleteInstance,
       (google::cloud::filestore::v1::DeleteInstanceRequest const& request),
       (override));
@@ -87,23 +91,25 @@ class MockCloudFilestoreManagerConnection
               (google::cloud::filestore::v1::ListSnapshotsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Snapshot>, GetSnapshot,
+  MOCK_METHOD((StatusOr<google::cloud::filestore::v1::Snapshot>), GetSnapshot,
               (google::cloud::filestore::v1::GetSnapshotRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Snapshot>>, CreateSnapshot,
+      (future<StatusOr<google::cloud::filestore::v1::Snapshot>>),
+      CreateSnapshot,
       (google::cloud::filestore::v1::CreateSnapshotRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::common::OperationMetadata>>,
+      (future<StatusOr<google::cloud::common::OperationMetadata>>),
       DeleteSnapshot,
       (google::cloud::filestore::v1::DeleteSnapshotRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Snapshot>>, UpdateSnapshot,
+      (future<StatusOr<google::cloud::filestore::v1::Snapshot>>),
+      UpdateSnapshot,
       (google::cloud::filestore::v1::UpdateSnapshotRequest const& request),
       (override));
 
@@ -111,22 +117,23 @@ class MockCloudFilestoreManagerConnection
               (google::cloud::filestore::v1::ListBackupsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Backup>, GetBackup,
+  MOCK_METHOD((StatusOr<google::cloud::filestore::v1::Backup>), GetBackup,
               (google::cloud::filestore::v1::GetBackupRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Backup>>, CreateBackup,
+      (future<StatusOr<google::cloud::filestore::v1::Backup>>), CreateBackup,
       (google::cloud::filestore::v1::CreateBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::common::OperationMetadata>>, DeleteBackup,
+      (future<StatusOr<google::cloud::common::OperationMetadata>>),
+      DeleteBackup,
       (google::cloud::filestore::v1::DeleteBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Backup>>, UpdateBackup,
+      (future<StatusOr<google::cloud::filestore::v1::Backup>>), UpdateBackup,
       (google::cloud::filestore::v1::UpdateBackupRequest const& request),
       (override));
 };

@@ -48,7 +48,8 @@ class MockConversationsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Conversation>, CreateConversation,
+      (StatusOr<google::cloud::dialogflow::v2::Conversation>),
+      CreateConversation,
       (google::cloud::dialogflow::v2::CreateConversationRequest const& request),
       (override));
 
@@ -58,11 +59,11 @@ class MockConversationsConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Conversation>, GetConversation,
+      (StatusOr<google::cloud::dialogflow::v2::Conversation>), GetConversation,
       (google::cloud::dialogflow::v2::GetConversationRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Conversation>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::Conversation>),
               CompleteConversation,
               (google::cloud::dialogflow::v2::CompleteConversationRequest const&
                    request),
@@ -74,22 +75,23 @@ class MockConversationsConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>,
+      (StatusOr<
+          google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>),
       SuggestConversationSummary,
       (google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>,
+      (StatusOr<
+          google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>),
       GenerateStatelessSummary,
       (google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>,
+      (StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>),
       SearchKnowledge,
       (google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request),
       (override));

@@ -51,22 +51,25 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (google::cloud::config::v1::ListDeploymentsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::config::v1::Deployment>, GetDeployment,
+  MOCK_METHOD((StatusOr<google::cloud::config::v1::Deployment>), GetDeployment,
               (google::cloud::config::v1::GetDeploymentRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::config::v1::Deployment>>, CreateDeployment,
+      (future<StatusOr<google::cloud::config::v1::Deployment>>),
+      CreateDeployment,
       (google::cloud::config::v1::CreateDeploymentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::config::v1::Deployment>>, UpdateDeployment,
+      (future<StatusOr<google::cloud::config::v1::Deployment>>),
+      UpdateDeployment,
       (google::cloud::config::v1::UpdateDeploymentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::config::v1::Deployment>>, DeleteDeployment,
+      (future<StatusOr<google::cloud::config::v1::Deployment>>),
+      DeleteDeployment,
       (google::cloud::config::v1::DeleteDeploymentRequest const& request),
       (override));
 
@@ -74,11 +77,11 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (google::cloud::config::v1::ListRevisionsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::config::v1::Revision>, GetRevision,
+  MOCK_METHOD((StatusOr<google::cloud::config::v1::Revision>), GetRevision,
               (google::cloud::config::v1::GetRevisionRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::config::v1::Resource>, GetResource,
+  MOCK_METHOD((StatusOr<google::cloud::config::v1::Resource>), GetResource,
               (google::cloud::config::v1::GetResourceRequest const& request),
               (override));
 
@@ -87,19 +90,20 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::config::v1::Statefile>, ExportDeploymentStatefile,
+      (StatusOr<google::cloud::config::v1::Statefile>),
+      ExportDeploymentStatefile,
       (google::cloud::config::v1::ExportDeploymentStatefileRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::config::v1::Statefile>,
+  MOCK_METHOD((StatusOr<google::cloud::config::v1::Statefile>),
               ExportRevisionStatefile,
               (google::cloud::config::v1::ExportRevisionStatefileRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::config::v1::Statefile>, ImportStatefile,
+      (StatusOr<google::cloud::config::v1::Statefile>), ImportStatefile,
       (google::cloud::config::v1::ImportStatefileRequest const& request),
       (override));
 
@@ -108,26 +112,27 @@ class MockConfigConnection : public config_v1::ConfigConnection {
       (google::cloud::config::v1::DeleteStatefileRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Deployment>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::config::v1::Deployment>>),
               LockDeployment,
               (google::cloud::config::v1::LockDeploymentRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::config::v1::Deployment>>, UnlockDeployment,
+      (future<StatusOr<google::cloud::config::v1::Deployment>>),
+      UnlockDeployment,
       (google::cloud::config::v1::UnlockDeploymentRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::config::v1::LockInfo>, ExportLockInfo,
+  MOCK_METHOD((StatusOr<google::cloud::config::v1::LockInfo>), ExportLockInfo,
               (google::cloud::config::v1::ExportLockInfoRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Preview>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::config::v1::Preview>>),
               CreatePreview,
               (google::cloud::config::v1::CreatePreviewRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::config::v1::Preview>, GetPreview,
+  MOCK_METHOD((StatusOr<google::cloud::config::v1::Preview>), GetPreview,
               (google::cloud::config::v1::GetPreviewRequest const& request),
               (override));
 
@@ -135,13 +140,13 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (google::cloud::config::v1::ListPreviewsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Preview>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::config::v1::Preview>>),
               DeletePreview,
               (google::cloud::config::v1::DeletePreviewRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>,
+      (StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>),
       ExportPreviewResult,
       (google::cloud::config::v1::ExportPreviewResultRequest const& request),
       (override));
@@ -152,7 +157,7 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::config::v1::TerraformVersion>,
+      (StatusOr<google::cloud::config::v1::TerraformVersion>),
       GetTerraformVersion,
       (google::cloud::config::v1::GetTerraformVersionRequest const& request),
       (override));

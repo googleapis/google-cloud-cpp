@@ -55,24 +55,24 @@ class MockResourcePoliciesConnection
            AggregatedListResourcePoliciesRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
                    DeleteResourcePolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>),
               GetResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
                    GetResourcePolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), GetIamPolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
                    GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
                    InsertResourcePolicyRequest const& request),
@@ -84,19 +84,19 @@ class MockResourcePoliciesConnection
                    ListResourcePoliciesRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
                    PatchResourcePolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), SetIamPolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
                    SetIamPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::resource_policies::v1::
            TestIamPermissionsRequest const& request),

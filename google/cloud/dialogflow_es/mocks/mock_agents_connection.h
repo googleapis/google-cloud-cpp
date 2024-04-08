@@ -46,11 +46,11 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Agent>, GetAgent,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::Agent>), GetAgent,
               (google::cloud::dialogflow::v2::GetAgentRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Agent>, SetAgent,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::Agent>), SetAgent,
               (google::cloud::dialogflow::v2::SetAgentRequest const& request),
               (override));
 
@@ -63,27 +63,27 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
               (google::cloud::dialogflow::v2::SearchAgentsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, TrainAgent,
+  MOCK_METHOD((future<StatusOr<google::protobuf::Struct>>), TrainAgent,
               (google::cloud::dialogflow::v2::TrainAgentRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>),
       ExportAgent,
       (google::cloud::dialogflow::v2::ExportAgentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, ImportAgent,
+      (future<StatusOr<google::protobuf::Struct>>), ImportAgent,
       (google::cloud::dialogflow::v2::ImportAgentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
+      (future<StatusOr<google::protobuf::Struct>>), RestoreAgent,
       (google::cloud::dialogflow::v2::RestoreAgentRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::ValidationResult>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::ValidationResult>),
               GetValidationResult,
               (google::cloud::dialogflow::v2::GetValidationResultRequest const&
                    request),

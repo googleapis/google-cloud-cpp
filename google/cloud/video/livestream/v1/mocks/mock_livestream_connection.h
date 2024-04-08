@@ -47,7 +47,7 @@ class MockLivestreamServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Channel>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::video::livestream::v1::Channel>>),
               CreateChannel,
               (google::cloud::video::livestream::v1::CreateChannelRequest const&
                    request),
@@ -60,40 +60,41 @@ class MockLivestreamServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::livestream::v1::Channel>, GetChannel,
+      (StatusOr<google::cloud::video::livestream::v1::Channel>), GetChannel,
       (google::cloud::video::livestream::v1::GetChannelRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>),
       DeleteChannel,
       (google::cloud::video::livestream::v1::DeleteChannelRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Channel>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::video::livestream::v1::Channel>>),
               UpdateChannel,
               (google::cloud::video::livestream::v1::UpdateChannelRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::video::livestream::v1::ChannelOperationResponse>>,
+      (future<StatusOr<
+           google::cloud::video::livestream::v1::ChannelOperationResponse>>),
       StartChannel,
       (google::cloud::video::livestream::v1::StartChannelRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::video::livestream::v1::ChannelOperationResponse>>,
+      (future<StatusOr<
+           google::cloud::video::livestream::v1::ChannelOperationResponse>>),
       StopChannel,
       (google::cloud::video::livestream::v1::StopChannelRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::video::livestream::v1::Input>>,
+      (future<StatusOr<google::cloud::video::livestream::v1::Input>>),
       CreateInput,
       (google::cloud::video::livestream::v1::CreateInputRequest const& request),
       (override));
@@ -104,24 +105,25 @@ class MockLivestreamServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::livestream::v1::Input>, GetInput,
+      (StatusOr<google::cloud::video::livestream::v1::Input>), GetInput,
       (google::cloud::video::livestream::v1::GetInputRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>),
       DeleteInput,
       (google::cloud::video::livestream::v1::DeleteInputRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::video::livestream::v1::Input>>,
+      (future<StatusOr<google::cloud::video::livestream::v1::Input>>),
       UpdateInput,
       (google::cloud::video::livestream::v1::UpdateInputRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::livestream::v1::Event>, CreateEvent,
+      (StatusOr<google::cloud::video::livestream::v1::Event>), CreateEvent,
       (google::cloud::video::livestream::v1::CreateEventRequest const& request),
       (override));
 
@@ -131,7 +133,7 @@ class MockLivestreamServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::livestream::v1::Event>, GetEvent,
+      (StatusOr<google::cloud::video::livestream::v1::Event>), GetEvent,
       (google::cloud::video::livestream::v1::GetEventRequest const& request),
       (override));
 
@@ -141,19 +143,20 @@ class MockLivestreamServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::video::livestream::v1::Asset>>,
+      (future<StatusOr<google::cloud::video::livestream::v1::Asset>>),
       CreateAsset,
       (google::cloud::video::livestream::v1::CreateAssetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>),
       DeleteAsset,
       (google::cloud::video::livestream::v1::DeleteAssetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::livestream::v1::Asset>, GetAsset,
+      (StatusOr<google::cloud::video::livestream::v1::Asset>), GetAsset,
       (google::cloud::video::livestream::v1::GetAssetRequest const& request),
       (override));
 
@@ -163,12 +166,13 @@ class MockLivestreamServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::livestream::v1::Pool>, GetPool,
+      (StatusOr<google::cloud::video::livestream::v1::Pool>), GetPool,
       (google::cloud::video::livestream::v1::GetPoolRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::video::livestream::v1::Pool>>, UpdatePool,
+      (future<StatusOr<google::cloud::video::livestream::v1::Pool>>),
+      UpdatePool,
       (google::cloud::video::livestream::v1::UpdatePoolRequest const& request),
       (override));
 };

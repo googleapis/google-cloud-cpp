@@ -47,11 +47,11 @@ class MockAdaptationConnection : public speech_v1::AdaptationConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::speech::v1::PhraseSet>, CreatePhraseSet,
+      (StatusOr<google::cloud::speech::v1::PhraseSet>), CreatePhraseSet,
       (google::cloud::speech::v1::CreatePhraseSetRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v1::PhraseSet>, GetPhraseSet,
+  MOCK_METHOD((StatusOr<google::cloud::speech::v1::PhraseSet>), GetPhraseSet,
               (google::cloud::speech::v1::GetPhraseSetRequest const& request),
               (override));
 
@@ -61,7 +61,7 @@ class MockAdaptationConnection : public speech_v1::AdaptationConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::speech::v1::PhraseSet>, UpdatePhraseSet,
+      (StatusOr<google::cloud::speech::v1::PhraseSet>), UpdatePhraseSet,
       (google::cloud::speech::v1::UpdatePhraseSetRequest const& request),
       (override));
 
@@ -71,11 +71,12 @@ class MockAdaptationConnection : public speech_v1::AdaptationConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::speech::v1::CustomClass>, CreateCustomClass,
+      (StatusOr<google::cloud::speech::v1::CustomClass>), CreateCustomClass,
       (google::cloud::speech::v1::CreateCustomClassRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v1::CustomClass>, GetCustomClass,
+  MOCK_METHOD((StatusOr<google::cloud::speech::v1::CustomClass>),
+              GetCustomClass,
               (google::cloud::speech::v1::GetCustomClassRequest const& request),
               (override));
 
@@ -85,7 +86,7 @@ class MockAdaptationConnection : public speech_v1::AdaptationConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::speech::v1::CustomClass>, UpdateCustomClass,
+      (StatusOr<google::cloud::speech::v1::CustomClass>), UpdateCustomClass,
       (google::cloud::speech::v1::UpdateCustomClassRequest const& request),
       (override));
 

@@ -52,20 +52,22 @@ class MockFirewallConnection : public appengine_v1::FirewallConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>,
+      (StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>),
       BatchUpdateIngressRules,
       (google::appengine::v1::BatchUpdateIngressRulesRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::FirewallRule>, CreateIngressRule,
+  MOCK_METHOD((StatusOr<google::appengine::v1::FirewallRule>),
+              CreateIngressRule,
               (google::appengine::v1::CreateIngressRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::FirewallRule>, GetIngressRule,
+  MOCK_METHOD((StatusOr<google::appengine::v1::FirewallRule>), GetIngressRule,
               (google::appengine::v1::GetIngressRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::FirewallRule>, UpdateIngressRule,
+  MOCK_METHOD((StatusOr<google::appengine::v1::FirewallRule>),
+              UpdateIngressRule,
               (google::appengine::v1::UpdateIngressRuleRequest const& request),
               (override));
 

@@ -52,36 +52,36 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (google::cloud::datastream::v1::ListConnectionProfilesRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datastream::v1::ConnectionProfile>,
+  MOCK_METHOD((StatusOr<google::cloud::datastream::v1::ConnectionProfile>),
               GetConnectionProfile,
               (google::cloud::datastream::v1::GetConnectionProfileRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
+      (future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>),
       CreateConnectionProfile,
       (google::cloud::datastream::v1::CreateConnectionProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
+      (future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>),
       UpdateConnectionProfile,
       (google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>),
       DeleteConnectionProfile,
       (google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::datastream::v1::DiscoverConnectionProfileResponse>,
+      (StatusOr<
+          google::cloud::datastream::v1::DiscoverConnectionProfileResponse>),
       DiscoverConnectionProfile,
       (google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
            request),
@@ -91,33 +91,34 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
               (google::cloud::datastream::v1::ListStreamsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datastream::v1::Stream>, GetStream,
+  MOCK_METHOD((StatusOr<google::cloud::datastream::v1::Stream>), GetStream,
               (google::cloud::datastream::v1::GetStreamRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::Stream>>, CreateStream,
+      (future<StatusOr<google::cloud::datastream::v1::Stream>>), CreateStream,
       (google::cloud::datastream::v1::CreateStreamRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::Stream>>, UpdateStream,
+      (future<StatusOr<google::cloud::datastream::v1::Stream>>), UpdateStream,
       (google::cloud::datastream::v1::UpdateStreamRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>),
       DeleteStream,
       (google::cloud::datastream::v1::DeleteStreamRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datastream::v1::StreamObject>, GetStreamObject,
+      (StatusOr<google::cloud::datastream::v1::StreamObject>), GetStreamObject,
       (google::cloud::datastream::v1::GetStreamObjectRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datastream::v1::StreamObject>, LookupStreamObject,
+      (StatusOr<google::cloud::datastream::v1::StreamObject>),
+      LookupStreamObject,
       (google::cloud::datastream::v1::LookupStreamObjectRequest const& request),
       (override));
 
@@ -127,13 +128,13 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>,
+      (StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>),
       StartBackfillJob,
       (google::cloud::datastream::v1::StartBackfillJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>,
+      (StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>),
       StopBackfillJob,
       (google::cloud::datastream::v1::StopBackfillJobRequest const& request),
       (override));
@@ -143,13 +144,13 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>,
+      (future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>),
       CreatePrivateConnection,
       (google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datastream::v1::PrivateConnection>,
+  MOCK_METHOD((StatusOr<google::cloud::datastream::v1::PrivateConnection>),
               GetPrivateConnection,
               (google::cloud::datastream::v1::GetPrivateConnectionRequest const&
                    request),
@@ -162,18 +163,18 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>),
       DeletePrivateConnection,
       (google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::Route>>, CreateRoute,
+      (future<StatusOr<google::cloud::datastream::v1::Route>>), CreateRoute,
       (google::cloud::datastream::v1::CreateRouteRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datastream::v1::Route>, GetRoute,
+  MOCK_METHOD((StatusOr<google::cloud::datastream::v1::Route>), GetRoute,
               (google::cloud::datastream::v1::GetRouteRequest const& request),
               (override));
 
@@ -182,7 +183,7 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>),
       DeleteRoute,
       (google::cloud::datastream::v1::DeleteRouteRequest const& request),
       (override));

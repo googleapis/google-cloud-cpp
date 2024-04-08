@@ -53,18 +53,19 @@ class MockUptimeCheckServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::UptimeCheckConfig>, GetUptimeCheckConfig,
+      (StatusOr<google::monitoring::v3::UptimeCheckConfig>),
+      GetUptimeCheckConfig,
       (google::monitoring::v3::GetUptimeCheckConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::UptimeCheckConfig>,
+      (StatusOr<google::monitoring::v3::UptimeCheckConfig>),
       CreateUptimeCheckConfig,
       (google::monitoring::v3::CreateUptimeCheckConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::UptimeCheckConfig>,
+      (StatusOr<google::monitoring::v3::UptimeCheckConfig>),
       UpdateUptimeCheckConfig,
       (google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request),
       (override));

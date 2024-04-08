@@ -55,7 +55,7 @@ class MockNotificationChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannelDescriptor>,
+      (StatusOr<google::monitoring::v3::NotificationChannelDescriptor>),
       GetNotificationChannelDescriptor,
       (google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
            request),
@@ -67,19 +67,19 @@ class MockNotificationChannelServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannel>,
+      (StatusOr<google::monitoring::v3::NotificationChannel>),
       GetNotificationChannel,
       (google::monitoring::v3::GetNotificationChannelRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannel>,
+      (StatusOr<google::monitoring::v3::NotificationChannel>),
       CreateNotificationChannel,
       (google::monitoring::v3::CreateNotificationChannelRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannel>,
+      (StatusOr<google::monitoring::v3::NotificationChannel>),
       UpdateNotificationChannel,
       (google::monitoring::v3::UpdateNotificationChannelRequest const& request),
       (override));
@@ -96,15 +96,15 @@ class MockNotificationChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::
-                   GetNotificationChannelVerificationCodeResponse>,
+      (StatusOr<google::monitoring::v3::
+                    GetNotificationChannelVerificationCodeResponse>),
       GetNotificationChannelVerificationCode,
       (google::monitoring::v3::
            GetNotificationChannelVerificationCodeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannel>,
+      (StatusOr<google::monitoring::v3::NotificationChannel>),
       VerifyNotificationChannel,
       (google::monitoring::v3::VerifyNotificationChannelRequest const& request),
       (override));

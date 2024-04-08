@@ -47,7 +47,7 @@ class MockSessionsConnection : public dialogflow_es::SessionsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>,
+      (StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>),
       DetectIntent,
       (google::cloud::dialogflow::v2::DetectIntentRequest const& request),
       (override));

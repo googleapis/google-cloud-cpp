@@ -48,7 +48,8 @@ class MockSystemPolicyV1Connection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::binaryauthorization::v1::Policy>, GetSystemPolicy,
+      (StatusOr<google::cloud::binaryauthorization::v1::Policy>),
+      GetSystemPolicy,
       (google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
            request),
       (override));

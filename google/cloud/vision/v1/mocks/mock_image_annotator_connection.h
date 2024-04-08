@@ -48,27 +48,28 @@ class MockImageAnnotatorConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>,
+      (StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>),
       BatchAnnotateImages,
       (google::cloud::vision::v1::BatchAnnotateImagesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>,
+      (StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>),
       BatchAnnotateFiles,
       (google::cloud::vision::v1::BatchAnnotateFilesRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
-              AsyncBatchAnnotateImages,
-              (google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>),
+      AsyncBatchAnnotateImages,
+      (google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,
+      (future<StatusOr<
+           google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>),
       AsyncBatchAnnotateFiles,
       (google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
            request),

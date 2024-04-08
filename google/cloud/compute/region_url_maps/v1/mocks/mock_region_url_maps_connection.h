@@ -47,19 +47,19 @@ class MockRegionUrlMapsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
                    DeleteUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::UrlMap>, GetUrlMap,
+      (StatusOr<google::cloud::cpp::compute::v1::UrlMap>), GetUrlMap,
       (google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
                    InsertUrlMapRequest const& request),
@@ -71,20 +71,20 @@ class MockRegionUrlMapsConnection
                    ListRegionUrlMapsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
                    PatchUrlMapRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               UpdateUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
                    UpdateUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>),
       Validate,
       (google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
            request),

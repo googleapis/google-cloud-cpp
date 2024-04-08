@@ -46,38 +46,39 @@ class MockDatastoreConnection : public datastore_v1::DatastoreConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::datastore::v1::LookupResponse>, Lookup,
+  MOCK_METHOD((StatusOr<google::datastore::v1::LookupResponse>), Lookup,
               (google::datastore::v1::LookupRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::datastore::v1::RunQueryResponse>, RunQuery,
+  MOCK_METHOD((StatusOr<google::datastore::v1::RunQueryResponse>), RunQuery,
               (google::datastore::v1::RunQueryRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::datastore::v1::RunAggregationQueryResponse>,
+      (StatusOr<google::datastore::v1::RunAggregationQueryResponse>),
       RunAggregationQuery,
       (google::datastore::v1::RunAggregationQueryRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::datastore::v1::BeginTransactionResponse>,
+  MOCK_METHOD((StatusOr<google::datastore::v1::BeginTransactionResponse>),
               BeginTransaction,
               (google::datastore::v1::BeginTransactionRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::datastore::v1::CommitResponse>, Commit,
+  MOCK_METHOD((StatusOr<google::datastore::v1::CommitResponse>), Commit,
               (google::datastore::v1::CommitRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::datastore::v1::RollbackResponse>, Rollback,
+  MOCK_METHOD((StatusOr<google::datastore::v1::RollbackResponse>), Rollback,
               (google::datastore::v1::RollbackRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::datastore::v1::AllocateIdsResponse>, AllocateIds,
+  MOCK_METHOD((StatusOr<google::datastore::v1::AllocateIdsResponse>),
+              AllocateIds,
               (google::datastore::v1::AllocateIdsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::datastore::v1::ReserveIdsResponse>, ReserveIds,
+  MOCK_METHOD((StatusOr<google::datastore::v1::ReserveIdsResponse>), ReserveIds,
               (google::datastore::v1::ReserveIdsRequest const& request),
               (override));
 };

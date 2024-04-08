@@ -49,19 +49,19 @@ class MockRegionNotificationEndpointsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteNotificationEndpoint,
               (google::cloud::cpp::compute::region_notification_endpoints::v1::
                    DeleteNotificationEndpointRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>),
               GetNotificationEndpoint,
               (google::cloud::cpp::compute::region_notification_endpoints::v1::
                    GetNotificationEndpointRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertNotificationEndpoint,
               (google::cloud::cpp::compute::region_notification_endpoints::v1::
                    InsertNotificationEndpointRequest const& request),

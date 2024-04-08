@@ -46,47 +46,47 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::privacy::dlp::v2::InspectContentResponse>,
+  MOCK_METHOD((StatusOr<google::privacy::dlp::v2::InspectContentResponse>),
               InspectContent,
               (google::privacy::dlp::v2::InspectContentRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::privacy::dlp::v2::RedactImageResponse>,
+  MOCK_METHOD((StatusOr<google::privacy::dlp::v2::RedactImageResponse>),
               RedactImage,
               (google::privacy::dlp::v2::RedactImageRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>,
+      (StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>),
       DeidentifyContent,
       (google::privacy::dlp::v2::DeidentifyContentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>,
+      (StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>),
       ReidentifyContent,
       (google::privacy::dlp::v2::ReidentifyContentRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>,
+  MOCK_METHOD((StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>),
               ListInfoTypes,
               (google::privacy::dlp::v2::ListInfoTypesRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::InspectTemplate>,
+      (StatusOr<google::privacy::dlp::v2::InspectTemplate>),
       CreateInspectTemplate,
       (google::privacy::dlp::v2::CreateInspectTemplateRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::InspectTemplate>,
+      (StatusOr<google::privacy::dlp::v2::InspectTemplate>),
       UpdateInspectTemplate,
       (google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::InspectTemplate>, GetInspectTemplate,
+      (StatusOr<google::privacy::dlp::v2::InspectTemplate>), GetInspectTemplate,
       (google::privacy::dlp::v2::GetInspectTemplateRequest const& request),
       (override));
 
@@ -100,20 +100,20 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       (google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>,
+  MOCK_METHOD((StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>),
               CreateDeidentifyTemplate,
               (google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>,
+  MOCK_METHOD((StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>),
               UpdateDeidentifyTemplate,
               (google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>,
+      (StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>),
       GetDeidentifyTemplate,
       (google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request),
       (override));
@@ -130,22 +130,22 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::JobTrigger>, CreateJobTrigger,
+      (StatusOr<google::privacy::dlp::v2::JobTrigger>), CreateJobTrigger,
       (google::privacy::dlp::v2::CreateJobTriggerRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::JobTrigger>, UpdateJobTrigger,
+      (StatusOr<google::privacy::dlp::v2::JobTrigger>), UpdateJobTrigger,
       (google::privacy::dlp::v2::UpdateJobTriggerRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::HybridInspectResponse>,
+      (StatusOr<google::privacy::dlp::v2::HybridInspectResponse>),
       HybridInspectJobTrigger,
       (google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::privacy::dlp::v2::JobTrigger>, GetJobTrigger,
+  MOCK_METHOD((StatusOr<google::privacy::dlp::v2::JobTrigger>), GetJobTrigger,
               (google::privacy::dlp::v2::GetJobTriggerRequest const& request),
               (override));
 
@@ -160,24 +160,24 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::DlpJob>, ActivateJobTrigger,
+      (StatusOr<google::privacy::dlp::v2::DlpJob>), ActivateJobTrigger,
       (google::privacy::dlp::v2::ActivateJobTriggerRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::DiscoveryConfig>,
+      (StatusOr<google::privacy::dlp::v2::DiscoveryConfig>),
       CreateDiscoveryConfig,
       (google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::DiscoveryConfig>,
+      (StatusOr<google::privacy::dlp::v2::DiscoveryConfig>),
       UpdateDiscoveryConfig,
       (google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::DiscoveryConfig>, GetDiscoveryConfig,
+      (StatusOr<google::privacy::dlp::v2::DiscoveryConfig>), GetDiscoveryConfig,
       (google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request),
       (override));
 
@@ -191,7 +191,7 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       (google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::privacy::dlp::v2::DlpJob>, CreateDlpJob,
+  MOCK_METHOD((StatusOr<google::privacy::dlp::v2::DlpJob>), CreateDlpJob,
               (google::privacy::dlp::v2::CreateDlpJobRequest const& request),
               (override));
 
@@ -199,7 +199,7 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
               (google::privacy::dlp::v2::ListDlpJobsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::privacy::dlp::v2::DlpJob>, GetDlpJob,
+  MOCK_METHOD((StatusOr<google::privacy::dlp::v2::DlpJob>), GetDlpJob,
               (google::privacy::dlp::v2::GetDlpJobRequest const& request),
               (override));
 
@@ -212,17 +212,19 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::StoredInfoType>, CreateStoredInfoType,
+      (StatusOr<google::privacy::dlp::v2::StoredInfoType>),
+      CreateStoredInfoType,
       (google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::StoredInfoType>, UpdateStoredInfoType,
+      (StatusOr<google::privacy::dlp::v2::StoredInfoType>),
+      UpdateStoredInfoType,
       (google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::StoredInfoType>, GetStoredInfoType,
+      (StatusOr<google::privacy::dlp::v2::StoredInfoType>), GetStoredInfoType,
       (google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request),
       (override));
 
@@ -253,24 +255,25 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::ProjectDataProfile>,
+      (StatusOr<google::privacy::dlp::v2::ProjectDataProfile>),
       GetProjectDataProfile,
       (google::privacy::dlp::v2::GetProjectDataProfileRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::TableDataProfile>, GetTableDataProfile,
+      (StatusOr<google::privacy::dlp::v2::TableDataProfile>),
+      GetTableDataProfile,
       (google::privacy::dlp::v2::GetTableDataProfileRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::ColumnDataProfile>,
+      (StatusOr<google::privacy::dlp::v2::ColumnDataProfile>),
       GetColumnDataProfile,
       (google::privacy::dlp::v2::GetColumnDataProfileRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::privacy::dlp::v2::HybridInspectResponse>,
+      (StatusOr<google::privacy::dlp::v2::HybridInspectResponse>),
       HybridInspectDlpJob,
       (google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request),
       (override));

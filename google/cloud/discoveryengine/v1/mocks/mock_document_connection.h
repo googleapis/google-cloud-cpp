@@ -48,7 +48,7 @@ class MockDocumentServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::discoveryengine::v1::Document>, GetDocument,
+      (StatusOr<google::cloud::discoveryengine::v1::Document>), GetDocument,
       (google::cloud::discoveryengine::v1::GetDocumentRequest const& request),
       (override));
 
@@ -58,13 +58,13 @@ class MockDocumentServiceConnection
       (google::cloud::discoveryengine::v1::ListDocumentsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Document>,
+  MOCK_METHOD((StatusOr<google::cloud::discoveryengine::v1::Document>),
               CreateDocument,
               (google::cloud::discoveryengine::v1::CreateDocumentRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Document>,
+  MOCK_METHOD((StatusOr<google::cloud::discoveryengine::v1::Document>),
               UpdateDocument,
               (google::cloud::discoveryengine::v1::UpdateDocumentRequest const&
                    request),
@@ -75,16 +75,17 @@ class MockDocumentServiceConnection
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::discoveryengine::v1::ImportDocumentsResponse>>,
-              ImportDocuments,
-              (google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::discoveryengine::v1::ImportDocumentsResponse>>),
+      ImportDocuments,
+      (google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,
+      (future<StatusOr<
+           google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>),
       PurgeDocuments,
       (google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
            request),

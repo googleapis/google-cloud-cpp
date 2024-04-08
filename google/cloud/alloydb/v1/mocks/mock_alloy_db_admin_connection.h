@@ -50,36 +50,36 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (google::cloud::alloydb::v1::ListClustersRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::Cluster>, GetCluster,
+  MOCK_METHOD((StatusOr<google::cloud::alloydb::v1::Cluster>), GetCluster,
               (google::cloud::alloydb::v1::GetClusterRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::alloydb::v1::Cluster>>),
               CreateCluster,
               (google::cloud::alloydb::v1::CreateClusterRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::alloydb::v1::Cluster>>),
               UpdateCluster,
               (google::cloud::alloydb::v1::UpdateClusterRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>),
               DeleteCluster,
               (google::cloud::alloydb::v1::DeleteClusterRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::alloydb::v1::Cluster>>, PromoteCluster,
+      (future<StatusOr<google::cloud::alloydb::v1::Cluster>>), PromoteCluster,
       (google::cloud::alloydb::v1::PromoteClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::alloydb::v1::Cluster>>, RestoreCluster,
+      (future<StatusOr<google::cloud::alloydb::v1::Cluster>>), RestoreCluster,
       (google::cloud::alloydb::v1::RestoreClusterRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::alloydb::v1::Cluster>>),
               CreateSecondaryCluster,
               (google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&
                    request),
@@ -90,51 +90,52 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (google::cloud::alloydb::v1::ListInstancesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::Instance>, GetInstance,
+  MOCK_METHOD((StatusOr<google::cloud::alloydb::v1::Instance>), GetInstance,
               (google::cloud::alloydb::v1::GetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::alloydb::v1::Instance>>, CreateInstance,
+      (future<StatusOr<google::cloud::alloydb::v1::Instance>>), CreateInstance,
       (google::cloud::alloydb::v1::CreateInstanceRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::alloydb::v1::Instance>>),
               CreateSecondaryInstance,
               (google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>,
+      (future<
+          StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>),
       BatchCreateInstances,
       (google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::alloydb::v1::Instance>>, UpdateInstance,
+      (future<StatusOr<google::cloud::alloydb::v1::Instance>>), UpdateInstance,
       (google::cloud::alloydb::v1::UpdateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>),
       DeleteInstance,
       (google::cloud::alloydb::v1::DeleteInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::alloydb::v1::Instance>>, FailoverInstance,
+      (future<StatusOr<google::cloud::alloydb::v1::Instance>>),
+      FailoverInstance,
       (google::cloud::alloydb::v1::FailoverInstanceRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::alloydb::v1::Instance>>),
               InjectFault,
               (google::cloud::alloydb::v1::InjectFaultRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::alloydb::v1::Instance>>, RestartInstance,
+      (future<StatusOr<google::cloud::alloydb::v1::Instance>>), RestartInstance,
       (google::cloud::alloydb::v1::RestartInstanceRequest const& request),
       (override));
 
@@ -142,21 +143,21 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (google::cloud::alloydb::v1::ListBackupsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::Backup>, GetBackup,
+  MOCK_METHOD((StatusOr<google::cloud::alloydb::v1::Backup>), GetBackup,
               (google::cloud::alloydb::v1::GetBackupRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::alloydb::v1::Backup>>),
               CreateBackup,
               (google::cloud::alloydb::v1::CreateBackupRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::alloydb::v1::Backup>>),
               UpdateBackup,
               (google::cloud::alloydb::v1::UpdateBackupRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>),
               DeleteBackup,
               (google::cloud::alloydb::v1::DeleteBackupRequest const& request),
               (override));
@@ -168,14 +169,14 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>,
+      (StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>),
       GenerateClientCertificate,
       (google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::alloydb::v1::ConnectionInfo>, GetConnectionInfo,
+      (StatusOr<google::cloud::alloydb::v1::ConnectionInfo>), GetConnectionInfo,
       (google::cloud::alloydb::v1::GetConnectionInfoRequest const& request),
       (override));
 
@@ -183,15 +184,15 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (google::cloud::alloydb::v1::ListUsersRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::User>, GetUser,
+  MOCK_METHOD((StatusOr<google::cloud::alloydb::v1::User>), GetUser,
               (google::cloud::alloydb::v1::GetUserRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::User>, CreateUser,
+  MOCK_METHOD((StatusOr<google::cloud::alloydb::v1::User>), CreateUser,
               (google::cloud::alloydb::v1::CreateUserRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::User>, UpdateUser,
+  MOCK_METHOD((StatusOr<google::cloud::alloydb::v1::User>), UpdateUser,
               (google::cloud::alloydb::v1::UpdateUserRequest const& request),
               (override));
 

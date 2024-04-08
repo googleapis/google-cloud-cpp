@@ -54,15 +54,15 @@ class MockTagBindingsConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>,
+      (future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>),
       CreateTagBinding,
       (google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>,
+      (future<StatusOr<
+           google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>),
       DeleteTagBinding,
       (google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
            request),

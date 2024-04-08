@@ -51,28 +51,28 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (google::cloud::vmmigration::v1::ListSourcesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vmmigration::v1::Source>, GetSource,
+  MOCK_METHOD((StatusOr<google::cloud::vmmigration::v1::Source>), GetSource,
               (google::cloud::vmmigration::v1::GetSourceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::Source>>, CreateSource,
+      (future<StatusOr<google::cloud::vmmigration::v1::Source>>), CreateSource,
       (google::cloud::vmmigration::v1::CreateSourceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::Source>>, UpdateSource,
+      (future<StatusOr<google::cloud::vmmigration::v1::Source>>), UpdateSource,
       (google::cloud::vmmigration::v1::UpdateSourceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>),
       DeleteSource,
       (google::cloud::vmmigration::v1::DeleteSourceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>,
+      (StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>),
       FetchInventory,
       (google::cloud::vmmigration::v1::FetchInventoryRequest const& request),
       (override));
@@ -84,21 +84,21 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vmmigration::v1::UtilizationReport>,
+      (StatusOr<google::cloud::vmmigration::v1::UtilizationReport>),
       GetUtilizationReport,
       (google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>),
       CreateUtilizationReport,
       (google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>),
       DeleteUtilizationReport,
       (google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
            request),
@@ -111,35 +111,35 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>,
+      (StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>),
       GetDatacenterConnector,
       (google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>),
       CreateDatacenterConnector,
       (google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>),
       DeleteDatacenterConnector,
       (google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>,
+      (future<
+          StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>),
       UpgradeAppliance,
       (google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>),
       CreateMigratingVm,
       (google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request),
       (override));
@@ -150,55 +150,59 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vmmigration::v1::MigratingVm>, GetMigratingVm,
+      (StatusOr<google::cloud::vmmigration::v1::MigratingVm>), GetMigratingVm,
       (google::cloud::vmmigration::v1::GetMigratingVmRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>),
       UpdateMigratingVm,
       (google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>),
       DeleteMigratingVm,
       (google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>,
+      (future<
+          StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>),
       StartMigration,
       (google::cloud::vmmigration::v1::StartMigrationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>,
+      (future<
+          StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>),
       ResumeMigration,
       (google::cloud::vmmigration::v1::ResumeMigrationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>,
+      (future<
+          StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>),
       PauseMigration,
       (google::cloud::vmmigration::v1::PauseMigrationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>,
+      (future<
+          StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>),
       FinalizeMigration,
       (google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>),
       CreateCloneJob,
       (google::cloud::vmmigration::v1::CreateCloneJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>,
+      (future<
+          StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>),
       CancelCloneJob,
       (google::cloud::vmmigration::v1::CancelCloneJobRequest const& request),
       (override));
@@ -209,19 +213,19 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vmmigration::v1::CloneJob>, GetCloneJob,
+      (StatusOr<google::cloud::vmmigration::v1::CloneJob>), GetCloneJob,
       (google::cloud::vmmigration::v1::GetCloneJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>),
       CreateCutoverJob,
       (google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>,
+      (future<
+          StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>),
       CancelCutoverJob,
       (google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request),
       (override));
@@ -232,7 +236,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vmmigration::v1::CutoverJob>, GetCutoverJob,
+      (StatusOr<google::cloud::vmmigration::v1::CutoverJob>), GetCutoverJob,
       (google::cloud::vmmigration::v1::GetCutoverJobRequest const& request),
       (override));
 
@@ -240,36 +244,36 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (google::cloud::vmmigration::v1::ListGroupsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vmmigration::v1::Group>, GetGroup,
+  MOCK_METHOD((StatusOr<google::cloud::vmmigration::v1::Group>), GetGroup,
               (google::cloud::vmmigration::v1::GetGroupRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::Group>>, CreateGroup,
+      (future<StatusOr<google::cloud::vmmigration::v1::Group>>), CreateGroup,
       (google::cloud::vmmigration::v1::CreateGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::Group>>, UpdateGroup,
+      (future<StatusOr<google::cloud::vmmigration::v1::Group>>), UpdateGroup,
       (google::cloud::vmmigration::v1::UpdateGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>),
       DeleteGroup,
       (google::cloud::vmmigration::v1::DeleteGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>,
+      (future<
+          StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>),
       AddGroupMigration,
       (google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>,
+      (future<StatusOr<
+           google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>),
       RemoveGroupMigration,
       (google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
            request),
@@ -282,24 +286,25 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vmmigration::v1::TargetProject>, GetTargetProject,
+      (StatusOr<google::cloud::vmmigration::v1::TargetProject>),
+      GetTargetProject,
       (google::cloud::vmmigration::v1::GetTargetProjectRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>),
               CreateTargetProject,
               (google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>),
               UpdateTargetProject,
               (google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>),
       DeleteTargetProject,
       (google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
            request),
@@ -311,7 +316,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::ListReplicationCyclesRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>,
+  MOCK_METHOD((StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>),
               GetReplicationCycle,
               (google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
                    request),

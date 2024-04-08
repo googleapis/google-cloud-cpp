@@ -53,7 +53,7 @@ class MockDeploymentsConnection : public dialogflow_cx::DeploymentsConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Deployment>, GetDeployment,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Deployment>), GetDeployment,
       (google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request),
       (override));
 };

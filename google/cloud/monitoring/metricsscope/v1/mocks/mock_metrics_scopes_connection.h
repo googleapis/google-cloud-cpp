@@ -48,28 +48,30 @@ class MockMetricsScopesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::metricsscope::v1::MetricsScope>,
+      (StatusOr<google::monitoring::metricsscope::v1::MetricsScope>),
       GetMetricsScope,
       (google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::metricsscope::v1::
-                           ListMetricsScopesByMonitoredProjectResponse>,
+  MOCK_METHOD((StatusOr<google::monitoring::metricsscope::v1::
+                            ListMetricsScopesByMonitoredProjectResponse>),
               ListMetricsScopesByMonitoredProject,
               (google::monitoring::metricsscope::v1::
                    ListMetricsScopesByMonitoredProjectRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
+      (future<
+          StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>),
       CreateMonitoredProject,
       (google::monitoring::metricsscope::v1::
            CreateMonitoredProjectRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>),
       DeleteMonitoredProject,
       (google::monitoring::metricsscope::v1::
            DeleteMonitoredProjectRequest const& request),

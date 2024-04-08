@@ -49,20 +49,20 @@ class MockFeaturestoreOnlineServingServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>),
       ReadFeatureValues,
       (google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>,
+      (StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>),
       StreamingReadFeatureValues,
       (google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>),
       WriteFeatureValues,
       (google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request),
       (override));

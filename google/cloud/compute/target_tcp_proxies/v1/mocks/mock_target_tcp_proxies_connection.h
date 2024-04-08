@@ -55,19 +55,19 @@ class MockTargetTcpProxiesConnection
            AggregatedListTargetTcpProxiesRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteTargetTcpProxy,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    DeleteTargetTcpProxyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>),
               GetTargetTcpProxy,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    GetTargetTcpProxyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertTargetTcpProxy,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    InsertTargetTcpProxyRequest const& request),
@@ -79,13 +79,13 @@ class MockTargetTcpProxiesConnection
                    ListTargetTcpProxiesRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetBackendService,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    SetBackendServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetProxyHeader,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    SetProxyHeaderRequest const& request),

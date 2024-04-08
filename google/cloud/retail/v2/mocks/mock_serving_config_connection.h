@@ -48,7 +48,7 @@ class MockServingConfigServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::ServingConfig>, CreateServingConfig,
+      (StatusOr<google::cloud::retail::v2::ServingConfig>), CreateServingConfig,
       (google::cloud::retail::v2::CreateServingConfigRequest const& request),
       (override));
 
@@ -58,12 +58,12 @@ class MockServingConfigServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::ServingConfig>, UpdateServingConfig,
+      (StatusOr<google::cloud::retail::v2::ServingConfig>), UpdateServingConfig,
       (google::cloud::retail::v2::UpdateServingConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::ServingConfig>, GetServingConfig,
+      (StatusOr<google::cloud::retail::v2::ServingConfig>), GetServingConfig,
       (google::cloud::retail::v2::GetServingConfigRequest const& request),
       (override));
 
@@ -72,11 +72,12 @@ class MockServingConfigServiceConnection
               (google::cloud::retail::v2::ListServingConfigsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>, AddControl,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::ServingConfig>), AddControl,
               (google::cloud::retail::v2::AddControlRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>, RemoveControl,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::ServingConfig>),
+              RemoveControl,
               (google::cloud::retail::v2::RemoveControlRequest const& request),
               (override));
 };

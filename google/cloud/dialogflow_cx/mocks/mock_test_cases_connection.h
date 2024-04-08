@@ -58,52 +58,53 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::TestCase>, GetTestCase,
+      (StatusOr<google::cloud::dialogflow::cx::v3::TestCase>), GetTestCase,
       (google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::TestCase>, CreateTestCase,
+      (StatusOr<google::cloud::dialogflow::cx::v3::TestCase>), CreateTestCase,
       (google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::TestCase>, UpdateTestCase,
+      (StatusOr<google::cloud::dialogflow::cx::v3::TestCase>), UpdateTestCase,
       (google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
+      (future<
+          StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>),
       RunTestCase,
       (google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
+      (future<StatusOr<
+           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>),
       BatchRunTestCases,
       (google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>),
       CalculateCoverage,
       (google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>,
+      (future<StatusOr<
+           google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>),
       ImportTestCases,
       (google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>,
+      (future<StatusOr<
+           google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>),
       ExportTestCases,
       (google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
            request),
@@ -116,7 +117,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>),
       GetTestCaseResult,
       (google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
            request),

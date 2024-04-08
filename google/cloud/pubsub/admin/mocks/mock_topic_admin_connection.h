@@ -46,14 +46,14 @@ class MockTopicAdminConnection : public pubsub_admin::TopicAdminConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>, CreateTopic,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Topic>), CreateTopic,
               (google::pubsub::v1::Topic const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>, UpdateTopic,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Topic>), UpdateTopic,
               (google::pubsub::v1::UpdateTopicRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>, GetTopic,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Topic>), GetTopic,
               (google::pubsub::v1::GetTopicRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::pubsub::v1::Topic>), ListTopics,
@@ -71,7 +71,7 @@ class MockTopicAdminConnection : public pubsub_admin::TopicAdminConnection {
               (google::pubsub::v1::DeleteTopicRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::DetachSubscriptionResponse>,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::DetachSubscriptionResponse>),
               DetachSubscription,
               (google::pubsub::v1::DetachSubscriptionRequest const& request),
               (override));

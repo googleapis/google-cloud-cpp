@@ -52,23 +52,24 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::StoragePool>>,
+      (future<StatusOr<google::cloud::netapp::v1::StoragePool>>),
       CreateStoragePool,
       (google::cloud::netapp::v1::CreateStoragePoolRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::StoragePool>, GetStoragePool,
+  MOCK_METHOD((StatusOr<google::cloud::netapp::v1::StoragePool>),
+              GetStoragePool,
               (google::cloud::netapp::v1::GetStoragePoolRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::StoragePool>>,
+      (future<StatusOr<google::cloud::netapp::v1::StoragePool>>),
       UpdateStoragePool,
       (google::cloud::netapp::v1::UpdateStoragePoolRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>),
       DeleteStoragePool,
       (google::cloud::netapp::v1::DeleteStoragePoolRequest const& request),
       (override));
@@ -77,24 +78,27 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::ListVolumesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::Volume>, GetVolume,
+  MOCK_METHOD((StatusOr<google::cloud::netapp::v1::Volume>), GetVolume,
               (google::cloud::netapp::v1::GetVolumeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>, CreateVolume,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::Volume>>),
+              CreateVolume,
               (google::cloud::netapp::v1::CreateVolumeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>, UpdateVolume,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::Volume>>),
+              UpdateVolume,
               (google::cloud::netapp::v1::UpdateVolumeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>),
               DeleteVolume,
               (google::cloud::netapp::v1::DeleteVolumeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>, RevertVolume,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::Volume>>),
+              RevertVolume,
               (google::cloud::netapp::v1::RevertVolumeRequest const& request),
               (override));
 
@@ -102,21 +106,21 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::ListSnapshotsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::Snapshot>, GetSnapshot,
+  MOCK_METHOD((StatusOr<google::cloud::netapp::v1::Snapshot>), GetSnapshot,
               (google::cloud::netapp::v1::GetSnapshotRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Snapshot>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::Snapshot>>),
               CreateSnapshot,
               (google::cloud::netapp::v1::CreateSnapshotRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>),
               DeleteSnapshot,
               (google::cloud::netapp::v1::DeleteSnapshotRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Snapshot>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::Snapshot>>),
               UpdateSnapshot,
               (google::cloud::netapp::v1::UpdateSnapshotRequest const& request),
               (override));
@@ -127,24 +131,25 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::netapp::v1::ActiveDirectory>, GetActiveDirectory,
+      (StatusOr<google::cloud::netapp::v1::ActiveDirectory>),
+      GetActiveDirectory,
       (google::cloud::netapp::v1::GetActiveDirectoryRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>,
+      (future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>),
       CreateActiveDirectory,
       (google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>,
+      (future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>),
       UpdateActiveDirectory,
       (google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>),
       DeleteActiveDirectory,
       (google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request),
       (override));
@@ -155,32 +160,32 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::KmsConfig>>, CreateKmsConfig,
+      (future<StatusOr<google::cloud::netapp::v1::KmsConfig>>), CreateKmsConfig,
       (google::cloud::netapp::v1::CreateKmsConfigRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::KmsConfig>, GetKmsConfig,
+  MOCK_METHOD((StatusOr<google::cloud::netapp::v1::KmsConfig>), GetKmsConfig,
               (google::cloud::netapp::v1::GetKmsConfigRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::KmsConfig>>, UpdateKmsConfig,
+      (future<StatusOr<google::cloud::netapp::v1::KmsConfig>>), UpdateKmsConfig,
       (google::cloud::netapp::v1::UpdateKmsConfigRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::KmsConfig>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::KmsConfig>>),
               EncryptVolumes,
               (google::cloud::netapp::v1::EncryptVolumesRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>,
+      (StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>),
       VerifyKmsConfig,
       (google::cloud::netapp::v1::VerifyKmsConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>),
       DeleteKmsConfig,
       (google::cloud::netapp::v1::DeleteKmsConfigRequest const& request),
       (override));
@@ -190,53 +195,56 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::ListReplicationsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::Replication>, GetReplication,
+  MOCK_METHOD((StatusOr<google::cloud::netapp::v1::Replication>),
+              GetReplication,
               (google::cloud::netapp::v1::GetReplicationRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::Replication>>,
+      (future<StatusOr<google::cloud::netapp::v1::Replication>>),
       CreateReplication,
       (google::cloud::netapp::v1::CreateReplicationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>),
       DeleteReplication,
       (google::cloud::netapp::v1::DeleteReplicationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::Replication>>,
+      (future<StatusOr<google::cloud::netapp::v1::Replication>>),
       UpdateReplication,
       (google::cloud::netapp::v1::UpdateReplicationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::Replication>>, StopReplication,
+      (future<StatusOr<google::cloud::netapp::v1::Replication>>),
+      StopReplication,
       (google::cloud::netapp::v1::StopReplicationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::Replication>>,
+      (future<StatusOr<google::cloud::netapp::v1::Replication>>),
       ResumeReplication,
       (google::cloud::netapp::v1::ResumeReplicationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::Replication>>,
+      (future<StatusOr<google::cloud::netapp::v1::Replication>>),
       ReverseReplicationDirection,
       (google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::BackupVault>>,
+      (future<StatusOr<google::cloud::netapp::v1::BackupVault>>),
       CreateBackupVault,
       (google::cloud::netapp::v1::CreateBackupVaultRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::BackupVault>, GetBackupVault,
+  MOCK_METHOD((StatusOr<google::cloud::netapp::v1::BackupVault>),
+              GetBackupVault,
               (google::cloud::netapp::v1::GetBackupVaultRequest const& request),
               (override));
 
@@ -246,22 +254,23 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::BackupVault>>,
+      (future<StatusOr<google::cloud::netapp::v1::BackupVault>>),
       UpdateBackupVault,
       (google::cloud::netapp::v1::UpdateBackupVaultRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>),
       DeleteBackupVault,
       (google::cloud::netapp::v1::DeleteBackupVaultRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Backup>>, CreateBackup,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::Backup>>),
+              CreateBackup,
               (google::cloud::netapp::v1::CreateBackupRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::Backup>, GetBackup,
+  MOCK_METHOD((StatusOr<google::cloud::netapp::v1::Backup>), GetBackup,
               (google::cloud::netapp::v1::GetBackupRequest const& request),
               (override));
 
@@ -269,23 +278,24 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::ListBackupsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>),
               DeleteBackup,
               (google::cloud::netapp::v1::DeleteBackupRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Backup>>, UpdateBackup,
+  MOCK_METHOD((future<StatusOr<google::cloud::netapp::v1::Backup>>),
+              UpdateBackup,
               (google::cloud::netapp::v1::UpdateBackupRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>,
+      (future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>),
       CreateBackupPolicy,
       (google::cloud::netapp::v1::CreateBackupPolicyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::netapp::v1::BackupPolicy>, GetBackupPolicy,
+      (StatusOr<google::cloud::netapp::v1::BackupPolicy>), GetBackupPolicy,
       (google::cloud::netapp::v1::GetBackupPolicyRequest const& request),
       (override));
 
@@ -295,13 +305,13 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>,
+      (future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>),
       UpdateBackupPolicy,
       (google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>),
       DeleteBackupPolicy,
       (google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request),
       (override));

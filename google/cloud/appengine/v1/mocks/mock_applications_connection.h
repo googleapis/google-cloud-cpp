@@ -46,21 +46,21 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::Application>, GetApplication,
+  MOCK_METHOD((StatusOr<google::appengine::v1::Application>), GetApplication,
               (google::appengine::v1::GetApplicationRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::Application>>),
               CreateApplication,
               (google::appengine::v1::CreateApplicationRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::Application>>),
               UpdateApplication,
               (google::appengine::v1::UpdateApplicationRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::Application>>),
               RepairApplication,
               (google::appengine::v1::RepairApplicationRequest const& request),
               (override));

@@ -53,17 +53,17 @@ class MockEnvironmentsConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Environment>, GetEnvironment,
+      (StatusOr<google::cloud::dialogflow::v2::Environment>), GetEnvironment,
       (google::cloud::dialogflow::v2::GetEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Environment>, CreateEnvironment,
+      (StatusOr<google::cloud::dialogflow::v2::Environment>), CreateEnvironment,
       (google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Environment>, UpdateEnvironment,
+      (StatusOr<google::cloud::dialogflow::v2::Environment>), UpdateEnvironment,
       (google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request),
       (override));
 

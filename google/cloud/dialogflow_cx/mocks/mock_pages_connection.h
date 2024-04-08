@@ -51,17 +51,17 @@ class MockPagesConnection : public dialogflow_cx::PagesConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Page>, GetPage,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Page>), GetPage,
       (google::cloud::dialogflow::cx::v3::GetPageRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Page>, CreatePage,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Page>), CreatePage,
       (google::cloud::dialogflow::cx::v3::CreatePageRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Page>, UpdatePage,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Page>), UpdatePage,
       (google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request),
       (override));
 

@@ -47,20 +47,20 @@ class MockProfilerServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::devtools::cloudprofiler::v2::Profile>,
+  MOCK_METHOD((StatusOr<google::devtools::cloudprofiler::v2::Profile>),
               CreateProfile,
               (google::devtools::cloudprofiler::v2::CreateProfileRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::devtools::cloudprofiler::v2::Profile>,
+      (StatusOr<google::devtools::cloudprofiler::v2::Profile>),
       CreateOfflineProfile,
       (google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::devtools::cloudprofiler::v2::Profile>,
+  MOCK_METHOD((StatusOr<google::devtools::cloudprofiler::v2::Profile>),
               UpdateProfile,
               (google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
                    request),

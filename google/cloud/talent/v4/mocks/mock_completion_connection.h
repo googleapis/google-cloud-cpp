@@ -46,7 +46,7 @@ class MockCompletionConnection : public talent_v4::CompletionConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::CompleteQueryResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::CompleteQueryResponse>),
               CompleteQuery,
               (google::cloud::talent::v4::CompleteQueryRequest const& request),
               (override));

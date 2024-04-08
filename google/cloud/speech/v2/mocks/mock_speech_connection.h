@@ -47,7 +47,8 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::Recognizer>>, CreateRecognizer,
+      (future<StatusOr<google::cloud::speech::v2::Recognizer>>),
+      CreateRecognizer,
       (google::cloud::speech::v2::CreateRecognizerRequest const& request),
       (override));
 
@@ -56,27 +57,30 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
               (google::cloud::speech::v2::ListRecognizersRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::Recognizer>, GetRecognizer,
+  MOCK_METHOD((StatusOr<google::cloud::speech::v2::Recognizer>), GetRecognizer,
               (google::cloud::speech::v2::GetRecognizerRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::Recognizer>>, UpdateRecognizer,
+      (future<StatusOr<google::cloud::speech::v2::Recognizer>>),
+      UpdateRecognizer,
       (google::cloud::speech::v2::UpdateRecognizerRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::Recognizer>>, DeleteRecognizer,
+      (future<StatusOr<google::cloud::speech::v2::Recognizer>>),
+      DeleteRecognizer,
       (google::cloud::speech::v2::DeleteRecognizerRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::Recognizer>>,
+      (future<StatusOr<google::cloud::speech::v2::Recognizer>>),
       UndeleteRecognizer,
       (google::cloud::speech::v2::UndeleteRecognizerRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::RecognizeResponse>, Recognize,
+  MOCK_METHOD((StatusOr<google::cloud::speech::v2::RecognizeResponse>),
+              Recognize,
               (google::cloud::speech::v2::RecognizeRequest const& request),
               (override));
 
@@ -86,21 +90,21 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
               AsyncStreamingRecognize, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>,
+      (future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>),
       BatchRecognize,
       (google::cloud::speech::v2::BatchRecognizeRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::Config>, GetConfig,
+  MOCK_METHOD((StatusOr<google::cloud::speech::v2::Config>), GetConfig,
               (google::cloud::speech::v2::GetConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::Config>, UpdateConfig,
+  MOCK_METHOD((StatusOr<google::cloud::speech::v2::Config>), UpdateConfig,
               (google::cloud::speech::v2::UpdateConfigRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+      (future<StatusOr<google::cloud::speech::v2::CustomClass>>),
       CreateCustomClass,
       (google::cloud::speech::v2::CreateCustomClassRequest const& request),
       (override));
@@ -110,30 +114,31 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
               (google::cloud::speech::v2::ListCustomClassesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::CustomClass>, GetCustomClass,
+  MOCK_METHOD((StatusOr<google::cloud::speech::v2::CustomClass>),
+              GetCustomClass,
               (google::cloud::speech::v2::GetCustomClassRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+      (future<StatusOr<google::cloud::speech::v2::CustomClass>>),
       UpdateCustomClass,
       (google::cloud::speech::v2::UpdateCustomClassRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+      (future<StatusOr<google::cloud::speech::v2::CustomClass>>),
       DeleteCustomClass,
       (google::cloud::speech::v2::DeleteCustomClassRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+      (future<StatusOr<google::cloud::speech::v2::CustomClass>>),
       UndeleteCustomClass,
       (google::cloud::speech::v2::UndeleteCustomClassRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::PhraseSet>>, CreatePhraseSet,
+      (future<StatusOr<google::cloud::speech::v2::PhraseSet>>), CreatePhraseSet,
       (google::cloud::speech::v2::CreatePhraseSetRequest const& request),
       (override));
 
@@ -142,22 +147,23 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
               (google::cloud::speech::v2::ListPhraseSetsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::PhraseSet>, GetPhraseSet,
+  MOCK_METHOD((StatusOr<google::cloud::speech::v2::PhraseSet>), GetPhraseSet,
               (google::cloud::speech::v2::GetPhraseSetRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::PhraseSet>>, UpdatePhraseSet,
+      (future<StatusOr<google::cloud::speech::v2::PhraseSet>>), UpdatePhraseSet,
       (google::cloud::speech::v2::UpdatePhraseSetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::PhraseSet>>, DeletePhraseSet,
+      (future<StatusOr<google::cloud::speech::v2::PhraseSet>>), DeletePhraseSet,
       (google::cloud::speech::v2::DeletePhraseSetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v2::PhraseSet>>, UndeletePhraseSet,
+      (future<StatusOr<google::cloud::speech::v2::PhraseSet>>),
+      UndeletePhraseSet,
       (google::cloud::speech::v2::UndeletePhraseSetRequest const& request),
       (override));
 };

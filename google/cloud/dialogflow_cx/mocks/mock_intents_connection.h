@@ -52,17 +52,17 @@ class MockIntentsConnection : public dialogflow_cx::IntentsConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Intent>, GetIntent,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Intent>), GetIntent,
       (google::cloud::dialogflow::cx::v3::GetIntentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Intent>, CreateIntent,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Intent>), CreateIntent,
       (google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Intent>, UpdateIntent,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Intent>), UpdateIntent,
       (google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request),
       (override));
 
@@ -72,15 +72,15 @@ class MockIntentsConnection : public dialogflow_cx::IntentsConnection {
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>,
+      (future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>),
       ImportIntents,
       (google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>,
+      (future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>),
       ExportIntents,
       (google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request),
       (override));

@@ -47,18 +47,18 @@ class MockRuleSetServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::RuleSet>,
+  MOCK_METHOD((StatusOr<google::cloud::contentwarehouse::v1::RuleSet>),
               CreateRuleSet,
               (google::cloud::contentwarehouse::v1::CreateRuleSetRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::RuleSet>, GetRuleSet,
+      (StatusOr<google::cloud::contentwarehouse::v1::RuleSet>), GetRuleSet,
       (google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::RuleSet>,
+  MOCK_METHOD((StatusOr<google::cloud::contentwarehouse::v1::RuleSet>),
               UpdateRuleSet,
               (google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const&
                    request),

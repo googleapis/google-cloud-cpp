@@ -50,17 +50,17 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
               (google::cloud::dialogflow::v2::ListIntentsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Intent>, GetIntent,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::Intent>), GetIntent,
               (google::cloud::dialogflow::v2::GetIntentRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Intent>, CreateIntent,
+      (StatusOr<google::cloud::dialogflow::v2::Intent>), CreateIntent,
       (google::cloud::dialogflow::v2::CreateIntentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Intent>, UpdateIntent,
+      (StatusOr<google::cloud::dialogflow::v2::Intent>), UpdateIntent,
       (google::cloud::dialogflow::v2::UpdateIntentRequest const& request),
       (override));
 
@@ -70,14 +70,14 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
+      (future<
+          StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>),
       BatchUpdateIntents,
       (google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, BatchDeleteIntents,
+      (future<StatusOr<google::protobuf::Struct>>), BatchDeleteIntents,
       (google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request),
       (override));
 };

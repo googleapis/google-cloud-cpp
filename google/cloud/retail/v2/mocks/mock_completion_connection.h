@@ -47,13 +47,14 @@ class MockCompletionServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::CompleteQueryResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::CompleteQueryResponse>),
               CompleteQuery,
               (google::cloud::retail::v2::CompleteQueryRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
+      (future<
+          StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>),
       ImportCompletionData,
       (google::cloud::retail::v2::ImportCompletionDataRequest const& request),
       (override));

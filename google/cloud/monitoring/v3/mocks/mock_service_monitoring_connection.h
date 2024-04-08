@@ -47,11 +47,11 @@ class MockServiceMonitoringServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Service>, CreateService,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::Service>), CreateService,
               (google::monitoring::v3::CreateServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Service>, GetService,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::Service>), GetService,
               (google::monitoring::v3::GetServiceRequest const& request),
               (override));
 
@@ -59,7 +59,7 @@ class MockServiceMonitoringServiceConnection
               (google::monitoring::v3::ListServicesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Service>, UpdateService,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::Service>), UpdateService,
               (google::monitoring::v3::UpdateServiceRequest const& request),
               (override));
 
@@ -67,14 +67,14 @@ class MockServiceMonitoringServiceConnection
               (google::monitoring::v3::DeleteServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::ServiceLevelObjective>,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::ServiceLevelObjective>),
               CreateServiceLevelObjective,
               (google::monitoring::v3::CreateServiceLevelObjectiveRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::v3::ServiceLevelObjective>,
+      (StatusOr<google::monitoring::v3::ServiceLevelObjective>),
       GetServiceLevelObjective,
       (google::monitoring::v3::GetServiceLevelObjectiveRequest const& request),
       (override));
@@ -85,7 +85,7 @@ class MockServiceMonitoringServiceConnection
       (google::monitoring::v3::ListServiceLevelObjectivesRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::ServiceLevelObjective>,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::ServiceLevelObjective>),
               UpdateServiceLevelObjective,
               (google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&
                    request),

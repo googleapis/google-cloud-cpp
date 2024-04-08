@@ -54,8 +54,8 @@ class MockMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>,
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>),
       BatchMigrateResources,
       (google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
            request),

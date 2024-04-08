@@ -46,7 +46,7 @@ class MockSqlFlagsServiceConnection : public sql_v1::SqlFlagsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::FlagsListResponse>, List,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::FlagsListResponse>), List,
               (google::cloud::sql::v1::SqlFlagsListRequest const& request),
               (override));
 };

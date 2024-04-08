@@ -48,21 +48,21 @@ class MockSecuritySettingsServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>),
       CreateSecuritySettings,
       (google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>),
       GetSecuritySettings,
       (google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>),
       UpdateSecuritySettings,
       (google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
            request),

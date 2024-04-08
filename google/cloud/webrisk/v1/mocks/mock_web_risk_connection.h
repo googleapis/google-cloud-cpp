@@ -48,27 +48,27 @@ class MockWebRiskServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>,
+      (StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>),
       ComputeThreatListDiff,
       (google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>),
               SearchUris,
               (google::cloud::webrisk::v1::SearchUrisRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>),
               SearchHashes,
               (google::cloud::webrisk::v1::SearchHashesRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::webrisk::v1::Submission>, CreateSubmission,
+      (StatusOr<google::cloud::webrisk::v1::Submission>), CreateSubmission,
       (google::cloud::webrisk::v1::CreateSubmissionRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::webrisk::v1::Submission>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::webrisk::v1::Submission>>),
               SubmitUri,
               (google::cloud::webrisk::v1::SubmitUriRequest const& request),
               (override));

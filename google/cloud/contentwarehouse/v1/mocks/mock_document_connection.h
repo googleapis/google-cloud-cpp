@@ -48,19 +48,19 @@ class MockDocumentServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>,
+      (StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>),
       CreateDocument,
       (google::cloud::contentwarehouse::v1::CreateDocumentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::Document>, GetDocument,
+      (StatusOr<google::cloud::contentwarehouse::v1::Document>), GetDocument,
       (google::cloud::contentwarehouse::v1::GetDocumentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>,
+      (StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>),
       UpdateDocument,
       (google::cloud::contentwarehouse::v1::UpdateDocumentRequest const&
            request),
@@ -79,17 +79,18 @@ class MockDocumentServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::Document>, LockDocument,
+      (StatusOr<google::cloud::contentwarehouse::v1::Document>), LockDocument,
       (google::cloud::contentwarehouse::v1::LockDocumentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>, FetchAcl,
+      (StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>),
+      FetchAcl,
       (google::cloud::contentwarehouse::v1::FetchAclRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>, SetAcl,
+      (StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>), SetAcl,
       (google::cloud::contentwarehouse::v1::SetAclRequest const& request),
       (override));
 };

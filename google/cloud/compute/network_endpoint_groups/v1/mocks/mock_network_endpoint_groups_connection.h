@@ -58,31 +58,31 @@ class MockNetworkEndpointGroupsConnection
            AggregatedListNetworkEndpointGroupsRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               AttachNetworkEndpoints,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
                    AttachNetworkEndpointsRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteNetworkEndpointGroup,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
                    DeleteNetworkEndpointGroupRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DetachNetworkEndpoints,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
                    DetachNetworkEndpointsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>),
               GetNetworkEndpointGroup,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
                    GetNetworkEndpointGroupRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertNetworkEndpointGroup,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
                    InsertNetworkEndpointGroupRequest const& request),
@@ -104,7 +104,7 @@ class MockNetworkEndpointGroupsConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::network_endpoint_groups::v1::
            TestIamPermissionsRequest const& request),

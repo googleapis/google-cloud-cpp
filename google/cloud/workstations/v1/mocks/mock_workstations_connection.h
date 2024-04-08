@@ -48,7 +48,7 @@ class MockWorkstationsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::workstations::v1::WorkstationCluster>,
+      (StatusOr<google::cloud::workstations::v1::WorkstationCluster>),
       GetWorkstationCluster,
       (google::cloud::workstations::v1::GetWorkstationClusterRequest const&
            request),
@@ -61,28 +61,28 @@ class MockWorkstationsConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
+      (future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>),
       CreateWorkstationCluster,
       (google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
+      (future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>),
       UpdateWorkstationCluster,
       (google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
+      (future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>),
       DeleteWorkstationCluster,
       (google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::workstations::v1::WorkstationConfig>,
+      (StatusOr<google::cloud::workstations::v1::WorkstationConfig>),
       GetWorkstationConfig,
       (google::cloud::workstations::v1::GetWorkstationConfigRequest const&
            request),
@@ -102,28 +102,28 @@ class MockWorkstationsConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
+      (future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>),
       CreateWorkstationConfig,
       (google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
+      (future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>),
       UpdateWorkstationConfig,
       (google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
+      (future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>),
       DeleteWorkstationConfig,
       (google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::workstations::v1::Workstation>, GetWorkstation,
+      (StatusOr<google::cloud::workstations::v1::Workstation>), GetWorkstation,
       (google::cloud::workstations::v1::GetWorkstationRequest const& request),
       (override));
 
@@ -139,38 +139,38 @@ class MockWorkstationsConnection
       (google::cloud::workstations::v1::ListUsableWorkstationsRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::workstations::v1::Workstation>>),
               CreateWorkstation,
               (google::cloud::workstations::v1::CreateWorkstationRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::workstations::v1::Workstation>>),
               UpdateWorkstation,
               (google::cloud::workstations::v1::UpdateWorkstationRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::workstations::v1::Workstation>>),
               DeleteWorkstation,
               (google::cloud::workstations::v1::DeleteWorkstationRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workstations::v1::Workstation>>,
+      (future<StatusOr<google::cloud::workstations::v1::Workstation>>),
       StartWorkstation,
       (google::cloud::workstations::v1::StartWorkstationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workstations::v1::Workstation>>,
+      (future<StatusOr<google::cloud::workstations::v1::Workstation>>),
       StopWorkstation,
       (google::cloud::workstations::v1::StopWorkstationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>,
+      (StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>),
       GenerateAccessToken,
       (google::cloud::workstations::v1::GenerateAccessTokenRequest const&
            request),

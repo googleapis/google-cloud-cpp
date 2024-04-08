@@ -48,12 +48,13 @@ class MockLlmUtilityServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>, CountTokens,
+      (StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>),
+      CountTokens,
       (google::cloud::aiplatform::v1::CountTokensRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>),
       ComputeTokens,
       (google::cloud::aiplatform::v1::ComputeTokensRequest const& request),
       (override));

@@ -53,24 +53,24 @@ class MockDataprocMetastoreFederationConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::metastore::v1::Federation>, GetFederation,
+      (StatusOr<google::cloud::metastore::v1::Federation>), GetFederation,
       (google::cloud::metastore::v1::GetFederationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::Federation>>,
+      (future<StatusOr<google::cloud::metastore::v1::Federation>>),
       CreateFederation,
       (google::cloud::metastore::v1::CreateFederationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::Federation>>,
+      (future<StatusOr<google::cloud::metastore::v1::Federation>>),
       UpdateFederation,
       (google::cloud::metastore::v1::UpdateFederationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>),
       DeleteFederation,
       (google::cloud::metastore::v1::DeleteFederationRequest const& request),
       (override));

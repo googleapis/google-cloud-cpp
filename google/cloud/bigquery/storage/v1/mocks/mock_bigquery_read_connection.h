@@ -48,20 +48,20 @@ class MockBigQueryReadConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::ReadSession>,
+      (StatusOr<google::cloud::bigquery::storage::v1::ReadSession>),
       CreateReadSession,
       (google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>,
+      (StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>),
       ReadRows,
       (google::cloud::bigquery::storage::v1::ReadRowsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>,
+      (StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>),
       SplitReadStream,
       (google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
            request),

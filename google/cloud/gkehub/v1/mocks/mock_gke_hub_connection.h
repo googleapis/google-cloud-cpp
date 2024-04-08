@@ -55,47 +55,49 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
               (google::cloud::gkehub::v1::ListFeaturesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gkehub::v1::Membership>, GetMembership,
+  MOCK_METHOD((StatusOr<google::cloud::gkehub::v1::Membership>), GetMembership,
               (google::cloud::gkehub::v1::GetMembershipRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gkehub::v1::Feature>, GetFeature,
+  MOCK_METHOD((StatusOr<google::cloud::gkehub::v1::Feature>), GetFeature,
               (google::cloud::gkehub::v1::GetFeatureRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkehub::v1::Membership>>, CreateMembership,
+      (future<StatusOr<google::cloud::gkehub::v1::Membership>>),
+      CreateMembership,
       (google::cloud::gkehub::v1::CreateMembershipRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::gkehub::v1::Feature>>),
               CreateFeature,
               (google::cloud::gkehub::v1::CreateFeatureRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>),
       DeleteMembership,
       (google::cloud::gkehub::v1::DeleteMembershipRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>),
               DeleteFeature,
               (google::cloud::gkehub::v1::DeleteFeatureRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkehub::v1::Membership>>, UpdateMembership,
+      (future<StatusOr<google::cloud::gkehub::v1::Membership>>),
+      UpdateMembership,
       (google::cloud::gkehub::v1::UpdateMembershipRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::gkehub::v1::Feature>>),
               UpdateFeature,
               (google::cloud::gkehub::v1::UpdateFeatureRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>,
+      (StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>),
       GenerateConnectManifest,
       (google::cloud::gkehub::v1::GenerateConnectManifestRequest const&
            request),

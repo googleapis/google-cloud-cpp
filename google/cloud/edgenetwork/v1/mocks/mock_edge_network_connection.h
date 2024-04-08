@@ -47,7 +47,7 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>,
+      (StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>),
       InitializeZone,
       (google::cloud::edgenetwork::v1::InitializeZoneRequest const& request),
       (override));
@@ -56,7 +56,7 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
               (google::cloud::edgenetwork::v1::ListZonesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Zone>, GetZone,
+  MOCK_METHOD((StatusOr<google::cloud::edgenetwork::v1::Zone>), GetZone,
               (google::cloud::edgenetwork::v1::GetZoneRequest const& request),
               (override));
 
@@ -66,23 +66,24 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::Network>, GetNetwork,
+      (StatusOr<google::cloud::edgenetwork::v1::Network>), GetNetwork,
       (google::cloud::edgenetwork::v1::GetNetworkRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>,
+      (StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>),
       DiagnoseNetwork,
       (google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Network>>, CreateNetwork,
+      (future<StatusOr<google::cloud::edgenetwork::v1::Network>>),
+      CreateNetwork,
       (google::cloud::edgenetwork::v1::CreateNetworkRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>),
       DeleteNetwork,
       (google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request),
       (override));
@@ -92,22 +93,22 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
               (google::cloud::edgenetwork::v1::ListSubnetsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Subnet>, GetSubnet,
+  MOCK_METHOD((StatusOr<google::cloud::edgenetwork::v1::Subnet>), GetSubnet,
               (google::cloud::edgenetwork::v1::GetSubnetRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>, CreateSubnet,
+      (future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>), CreateSubnet,
       (google::cloud::edgenetwork::v1::CreateSubnetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>, UpdateSubnet,
+      (future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>), UpdateSubnet,
       (google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>),
       DeleteSubnet,
       (google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request),
       (override));
@@ -119,12 +120,12 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::Interconnect>, GetInterconnect,
+      (StatusOr<google::cloud::edgenetwork::v1::Interconnect>), GetInterconnect,
       (google::cloud::edgenetwork::v1::GetInterconnectRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>,
+      (StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>),
       DiagnoseInterconnect,
       (google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
            request),
@@ -138,21 +139,22 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>,
+      (StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>),
       GetInterconnectAttachment,
       (google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>,
+      (future<
+          StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>),
       CreateInterconnectAttachment,
       (google::cloud::edgenetwork::v1::
            CreateInterconnectAttachmentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>),
       DeleteInterconnectAttachment,
       (google::cloud::edgenetwork::v1::
            DeleteInterconnectAttachmentRequest const& request),
@@ -163,28 +165,28 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
               (google::cloud::edgenetwork::v1::ListRoutersRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Router>, GetRouter,
+  MOCK_METHOD((StatusOr<google::cloud::edgenetwork::v1::Router>), GetRouter,
               (google::cloud::edgenetwork::v1::GetRouterRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>,
+      (StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>),
       DiagnoseRouter,
       (google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Router>>, CreateRouter,
+      (future<StatusOr<google::cloud::edgenetwork::v1::Router>>), CreateRouter,
       (google::cloud::edgenetwork::v1::CreateRouterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Router>>, UpdateRouter,
+      (future<StatusOr<google::cloud::edgenetwork::v1::Router>>), UpdateRouter,
       (google::cloud::edgenetwork::v1::UpdateRouterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>),
       DeleteRouter,
       (google::cloud::edgenetwork::v1::DeleteRouterRequest const& request),
       (override));

@@ -48,13 +48,13 @@ class MockFeaturestoreServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>),
       CreateFeaturestore,
       (google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Featurestore>, GetFeaturestore,
+      (StatusOr<google::cloud::aiplatform::v1::Featurestore>), GetFeaturestore,
       (google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request),
       (override));
 
@@ -64,25 +64,26 @@ class MockFeaturestoreServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>),
       UpdateFeaturestore,
       (google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteFeaturestore,
       (google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::EntityType>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::EntityType>>),
       CreateEntityType,
       (google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::EntityType>, GetEntityType,
+      (StatusOr<google::cloud::aiplatform::v1::EntityType>), GetEntityType,
       (google::cloud::aiplatform::v1::GetEntityTypeRequest const& request),
       (override));
 
@@ -92,30 +93,31 @@ class MockFeaturestoreServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::EntityType>, UpdateEntityType,
+      (StatusOr<google::cloud::aiplatform::v1::EntityType>), UpdateEntityType,
       (google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteEntityType,
       (google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Feature>>, CreateFeature,
+      (future<StatusOr<google::cloud::aiplatform::v1::Feature>>), CreateFeature,
       (google::cloud::aiplatform::v1::CreateFeatureRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>,
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>),
       BatchCreateFeatures,
       (google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Feature>, GetFeature,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::Feature>), GetFeature,
               (google::cloud::aiplatform::v1::GetFeatureRequest const& request),
               (override));
 
@@ -125,43 +127,44 @@ class MockFeaturestoreServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Feature>, UpdateFeature,
+      (StatusOr<google::cloud::aiplatform::v1::Feature>), UpdateFeature,
       (google::cloud::aiplatform::v1::UpdateFeatureRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteFeature,
       (google::cloud::aiplatform::v1::DeleteFeatureRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>,
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>),
       ImportFeatureValues,
       (google::cloud::aiplatform::v1::ImportFeatureValuesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>,
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>),
       BatchReadFeatureValues,
       (google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>,
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>),
       ExportFeatureValues,
       (google::cloud::aiplatform::v1::ExportFeatureValuesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>,
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>),
       DeleteFeatureValues,
       (google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const&
            request),

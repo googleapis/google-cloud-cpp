@@ -46,35 +46,36 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, CreateKey,
+  MOCK_METHOD((future<StatusOr<google::api::apikeys::v2::Key>>), CreateKey,
               (google::api::apikeys::v2::CreateKeyRequest const& request),
               (override));
 
   MOCK_METHOD((StreamRange<google::api::apikeys::v2::Key>), ListKeys,
               (google::api::apikeys::v2::ListKeysRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::api::apikeys::v2::Key>, GetKey,
+  MOCK_METHOD((StatusOr<google::api::apikeys::v2::Key>), GetKey,
               (google::api::apikeys::v2::GetKeyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::api::apikeys::v2::GetKeyStringResponse>,
+  MOCK_METHOD((StatusOr<google::api::apikeys::v2::GetKeyStringResponse>),
               GetKeyString,
               (google::api::apikeys::v2::GetKeyStringRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UpdateKey,
+  MOCK_METHOD((future<StatusOr<google::api::apikeys::v2::Key>>), UpdateKey,
               (google::api::apikeys::v2::UpdateKeyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, DeleteKey,
+  MOCK_METHOD((future<StatusOr<google::api::apikeys::v2::Key>>), DeleteKey,
               (google::api::apikeys::v2::DeleteKeyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UndeleteKey,
+  MOCK_METHOD((future<StatusOr<google::api::apikeys::v2::Key>>), UndeleteKey,
               (google::api::apikeys::v2::UndeleteKeyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::api::apikeys::v2::LookupKeyResponse>, LookupKey,
+  MOCK_METHOD((StatusOr<google::api::apikeys::v2::LookupKeyResponse>),
+              LookupKey,
               (google::api::apikeys::v2::LookupKeyRequest const& request),
               (override));
 };

@@ -47,15 +47,16 @@ class MockPublisherConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::eventarc::publishing::v1::
-                           PublishChannelConnectionEventsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::eventarc::publishing::v1::
+                            PublishChannelConnectionEventsResponse>),
               PublishChannelConnectionEvents,
               (google::cloud::eventarc::publishing::v1::
                    PublishChannelConnectionEventsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>,
+      (StatusOr<
+          google::cloud::eventarc::publishing::v1::PublishEventsResponse>),
       PublishEvents,
       (google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
            request),

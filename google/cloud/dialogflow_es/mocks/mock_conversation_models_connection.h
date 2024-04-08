@@ -48,13 +48,13 @@ class MockConversationModelsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>),
       CreateConversationModel,
       (google::cloud::dialogflow::v2::CreateConversationModelRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::ConversationModel>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::ConversationModel>),
               GetConversationModel,
               (google::cloud::dialogflow::v2::GetConversationModelRequest const&
                    request),
@@ -67,31 +67,31 @@ class MockConversationModelsConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::
-                          DeleteConversationModelOperationMetadata>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::
+                           DeleteConversationModelOperationMetadata>>),
       DeleteConversationModel,
       (google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::
-                          DeployConversationModelOperationMetadata>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::
+                           DeployConversationModelOperationMetadata>>),
       DeployConversationModel,
       (google::cloud::dialogflow::v2::DeployConversationModelRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::
-                          UndeployConversationModelOperationMetadata>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::
+                           UndeployConversationModelOperationMetadata>>),
       UndeployConversationModel,
       (google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>,
+      (StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>),
       GetConversationModelEvaluation,
       (google::cloud::dialogflow::v2::
            GetConversationModelEvaluationRequest const& request),
@@ -105,8 +105,8 @@ class MockConversationModelsConnection
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>,
+      (future<StatusOr<
+           google::cloud::dialogflow::v2::ConversationModelEvaluation>>),
       CreateConversationModelEvaluation,
       (google::cloud::dialogflow::v2::
            CreateConversationModelEvaluationRequest const& request),

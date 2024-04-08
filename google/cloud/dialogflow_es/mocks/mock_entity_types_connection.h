@@ -52,17 +52,17 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::EntityType>, GetEntityType,
+      (StatusOr<google::cloud::dialogflow::v2::EntityType>), GetEntityType,
       (google::cloud::dialogflow::v2::GetEntityTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::EntityType>, CreateEntityType,
+      (StatusOr<google::cloud::dialogflow::v2::EntityType>), CreateEntityType,
       (google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::EntityType>, UpdateEntityType,
+      (StatusOr<google::cloud::dialogflow::v2::EntityType>), UpdateEntityType,
       (google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request),
       (override));
 
@@ -72,30 +72,30 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>,
+      (future<StatusOr<
+           google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>),
       BatchUpdateEntityTypes,
       (google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntityTypes,
+      (future<StatusOr<google::protobuf::Struct>>), BatchDeleteEntityTypes,
       (google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchCreateEntities,
+  MOCK_METHOD((future<StatusOr<google::protobuf::Struct>>), BatchCreateEntities,
               (google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchUpdateEntities,
+  MOCK_METHOD((future<StatusOr<google::protobuf::Struct>>), BatchUpdateEntities,
               (google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntities,
+  MOCK_METHOD((future<StatusOr<google::protobuf::Struct>>), BatchDeleteEntities,
               (google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&
                    request),
               (override));

@@ -47,27 +47,30 @@ class MockContactCenterInsightsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::Conversation>,
-              CreateConversation,
-              (google::cloud::contactcenterinsights::v1::
-                   CreateConversationRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StatusOr<google::cloud::contactcenterinsights::v1::Conversation>),
+      CreateConversation,
+      (google::cloud::contactcenterinsights::v1::
+           CreateConversationRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>,
+      (future<
+          StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>),
       UploadConversation,
       (google::cloud::contactcenterinsights::v1::
            UploadConversationRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::Conversation>,
-              UpdateConversation,
-              (google::cloud::contactcenterinsights::v1::
-                   UpdateConversationRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StatusOr<google::cloud::contactcenterinsights::v1::Conversation>),
+      UpdateConversation,
+      (google::cloud::contactcenterinsights::v1::
+           UpdateConversationRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::Conversation>,
+      (StatusOr<google::cloud::contactcenterinsights::v1::Conversation>),
       GetConversation,
       (google::cloud::contactcenterinsights::v1::GetConversationRequest const&
            request),
@@ -86,14 +89,15 @@ class MockContactCenterInsightsConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>,
+      (future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>),
       CreateAnalysis,
       (google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::Analysis>, GetAnalysis,
+      (StatusOr<google::cloud::contactcenterinsights::v1::Analysis>),
+      GetAnalysis,
       (google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
            request),
       (override));
@@ -110,101 +114,101 @@ class MockContactCenterInsightsConnection
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
-                                  BulkAnalyzeConversationsResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                   BulkAnalyzeConversationsResponse>>),
               BulkAnalyzeConversations,
               (google::cloud::contactcenterinsights::v1::
                    BulkAnalyzeConversationsRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
-                                  BulkDeleteConversationsResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                   BulkDeleteConversationsResponse>>),
               BulkDeleteConversations,
               (google::cloud::contactcenterinsights::v1::
                    BulkDeleteConversationsRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
-                                  IngestConversationsResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                   IngestConversationsResponse>>),
               IngestConversations,
               (google::cloud::contactcenterinsights::v1::
                    IngestConversationsRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
-                                  ExportInsightsDataResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                   ExportInsightsDataResponse>>),
               ExportInsightsData,
               (google::cloud::contactcenterinsights::v1::
                    ExportInsightsDataRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>,
+      (future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>),
       CreateIssueModel,
       (google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>,
+      (StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>),
       UpdateIssueModel,
       (google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>,
+      (StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>),
       GetIssueModel,
       (google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>,
+      (StatusOr<
+          google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>),
       ListIssueModels,
       (google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>,
+      (future<StatusOr<google::cloud::contactcenterinsights::v1::
+                           DeleteIssueModelMetadata>>),
       DeleteIssueModel,
       (google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>,
+      (future<StatusOr<google::cloud::contactcenterinsights::v1::
+                           DeployIssueModelResponse>>),
       DeployIssueModel,
       (google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
-                                  UndeployIssueModelResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                   UndeployIssueModelResponse>>),
               UndeployIssueModel,
               (google::cloud::contactcenterinsights::v1::
                    UndeployIssueModelRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::Issue>,
+  MOCK_METHOD((StatusOr<google::cloud::contactcenterinsights::v1::Issue>),
               GetIssue,
               (google::cloud::contactcenterinsights::v1::GetIssueRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>,
+      (StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>),
       ListIssues,
       (google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::Issue>, UpdateIssue,
+      (StatusOr<google::cloud::contactcenterinsights::v1::Issue>), UpdateIssue,
       (google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
            request),
       (override));
@@ -215,21 +219,22 @@ class MockContactCenterInsightsConnection
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::
-                           CalculateIssueModelStatsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::contactcenterinsights::v1::
+                            CalculateIssueModelStatsResponse>),
               CalculateIssueModelStats,
               (google::cloud::contactcenterinsights::v1::
                    CalculateIssueModelStatsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>,
-              CreatePhraseMatcher,
-              (google::cloud::contactcenterinsights::v1::
-                   CreatePhraseMatcherRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>),
+      CreatePhraseMatcher,
+      (google::cloud::contactcenterinsights::v1::
+           CreatePhraseMatcherRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>,
+      (StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>),
       GetPhraseMatcher,
       (google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
            request),
@@ -247,41 +252,43 @@ class MockContactCenterInsightsConnection
                    DeletePhraseMatcherRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>,
-              UpdatePhraseMatcher,
-              (google::cloud::contactcenterinsights::v1::
-                   UpdatePhraseMatcherRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>),
+      UpdatePhraseMatcher,
+      (google::cloud::contactcenterinsights::v1::
+           UpdatePhraseMatcherRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::contactcenterinsights::v1::CalculateStatsResponse>,
+      (StatusOr<
+          google::cloud::contactcenterinsights::v1::CalculateStatsResponse>),
       CalculateStats,
       (google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::Settings>, GetSettings,
+      (StatusOr<google::cloud::contactcenterinsights::v1::Settings>),
+      GetSettings,
       (google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::Settings>,
+      (StatusOr<google::cloud::contactcenterinsights::v1::Settings>),
       UpdateSettings,
       (google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::View>, CreateView,
+      (StatusOr<google::cloud::contactcenterinsights::v1::View>), CreateView,
       (google::cloud::contactcenterinsights::v1::CreateViewRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::View>, GetView,
+      (StatusOr<google::cloud::contactcenterinsights::v1::View>), GetView,
       (google::cloud::contactcenterinsights::v1::GetViewRequest const& request),
       (override));
 
@@ -291,7 +298,7 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::View>, UpdateView,
+      (StatusOr<google::cloud::contactcenterinsights::v1::View>), UpdateView,
       (google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
            request),
       (override));

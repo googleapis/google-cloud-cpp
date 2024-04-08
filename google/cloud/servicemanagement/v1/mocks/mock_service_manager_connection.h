@@ -53,28 +53,30 @@ class MockServiceManagerConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::servicemanagement::v1::ManagedService>, GetService,
+      (StatusOr<google::api::servicemanagement::v1::ManagedService>),
+      GetService,
       (google::api::servicemanagement::v1::GetServiceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::api::servicemanagement::v1::ManagedService>>,
+      (future<StatusOr<google::api::servicemanagement::v1::ManagedService>>),
       CreateService,
       (google::api::servicemanagement::v1::CreateServiceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>,
+      (future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>),
       DeleteService,
       (google::api::servicemanagement::v1::DeleteServiceRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::api::servicemanagement::v1::UndeleteServiceResponse>>,
-              UndeleteService,
-              (google::api::servicemanagement::v1::UndeleteServiceRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::api::servicemanagement::v1::UndeleteServiceResponse>>),
+      UndeleteService,
+      (google::api::servicemanagement::v1::UndeleteServiceRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(
       (StreamRange<google::api::Service>), ListServiceConfigs,
@@ -82,20 +84,20 @@ class MockServiceManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::Service>, GetServiceConfig,
+      (StatusOr<google::api::Service>), GetServiceConfig,
       (google::api::servicemanagement::v1::GetServiceConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::Service>, CreateServiceConfig,
+      (StatusOr<google::api::Service>), CreateServiceConfig,
       (google::api::servicemanagement::v1::CreateServiceConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::api::servicemanagement::v1::SubmitConfigSourceResponse>>,
+      (future<StatusOr<
+           google::api::servicemanagement::v1::SubmitConfigSourceResponse>>),
       SubmitConfigSource,
       (google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
            request),
@@ -108,21 +110,22 @@ class MockServiceManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::servicemanagement::v1::Rollout>, GetServiceRollout,
+      (StatusOr<google::api::servicemanagement::v1::Rollout>),
+      GetServiceRollout,
       (google::api::servicemanagement::v1::GetServiceRolloutRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::api::servicemanagement::v1::Rollout>>,
+      (future<StatusOr<google::api::servicemanagement::v1::Rollout>>),
       CreateServiceRollout,
       (google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::api::servicemanagement::v1::GenerateConfigReportResponse>,
+      (StatusOr<
+          google::api::servicemanagement::v1::GenerateConfigReportResponse>),
       GenerateConfigReport,
       (google::api::servicemanagement::v1::GenerateConfigReportRequest const&
            request),

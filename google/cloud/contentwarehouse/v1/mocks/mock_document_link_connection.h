@@ -48,7 +48,8 @@ class MockDocumentLinkServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>,
+      (StatusOr<
+          google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>),
       ListLinkedTargets,
       (google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
            request),
@@ -61,7 +62,7 @@ class MockDocumentLinkServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>,
+      (StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>),
       CreateDocumentLink,
       (google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
            request),

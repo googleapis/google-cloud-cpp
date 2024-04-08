@@ -48,28 +48,28 @@ class MockAttachedClustersConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
+      (future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>),
       CreateAttachedCluster,
       (google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
+      (future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>),
       UpdateAttachedCluster,
       (google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
+      (future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>),
       ImportAttachedCluster,
       (google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>,
+      (StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>),
       GetAttachedCluster,
       (google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
            request),
@@ -82,29 +82,29 @@ class MockAttachedClustersConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>),
       DeleteAttachedCluster,
       (google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>,
+      (StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>),
       GetAttachedServerConfig,
       (google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkemulticloud::v1::
-                   GenerateAttachedClusterInstallManifestResponse>,
+      (StatusOr<google::cloud::gkemulticloud::v1::
+                    GenerateAttachedClusterInstallManifestResponse>),
       GenerateAttachedClusterInstallManifest,
       (google::cloud::gkemulticloud::v1::
            GenerateAttachedClusterInstallManifestRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::
-                           GenerateAttachedClusterAgentTokenResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::gkemulticloud::v1::
+                            GenerateAttachedClusterAgentTokenResponse>),
               GenerateAttachedClusterAgentToken,
               (google::cloud::gkemulticloud::v1::
                    GenerateAttachedClusterAgentTokenRequest const& request),

@@ -56,24 +56,24 @@ class MockNodeTemplatesConnection
            AggregatedListNodeTemplatesRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteNodeTemplate,
               (google::cloud::cpp::compute::node_templates::v1::
                    DeleteNodeTemplateRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>),
               GetNodeTemplate,
               (google::cloud::cpp::compute::node_templates::v1::
                    GetNodeTemplateRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), GetIamPolicy,
               (google::cloud::cpp::compute::node_templates::v1::
                    GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertNodeTemplate,
               (google::cloud::cpp::compute::node_templates::v1::
                    InsertNodeTemplateRequest const& request),
@@ -86,13 +86,13 @@ class MockNodeTemplatesConnection
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), SetIamPolicy,
               (google::cloud::cpp::compute::node_templates::v1::
                    SetIamPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::node_templates::v1::
            TestIamPermissionsRequest const& request),

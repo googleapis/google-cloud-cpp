@@ -48,7 +48,7 @@ class MockCloudChannelReportsServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>,
+      (future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>),
       RunReportJob,
       (google::cloud::channel::v1::RunReportJobRequest const& request),
       (override));

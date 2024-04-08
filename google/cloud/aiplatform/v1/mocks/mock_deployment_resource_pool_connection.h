@@ -48,14 +48,14 @@ class MockDeploymentResourcePoolServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>),
       CreateDeploymentResourcePool,
       (google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>,
+      (StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>),
       GetDeploymentResourcePool,
       (google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
            request),
@@ -69,7 +69,8 @@ class MockDeploymentResourcePoolServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteDeploymentResourcePool,
       (google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
            request),

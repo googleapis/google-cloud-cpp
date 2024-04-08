@@ -56,26 +56,26 @@ class MockVpnGatewaysConnection
            AggregatedListVpnGatewaysRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteVpnGateway,
               (google::cloud::cpp::compute::vpn_gateways::v1::
                    DeleteVpnGatewayRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::VpnGateway>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::VpnGateway>),
               GetVpnGateway,
               (google::cloud::cpp::compute::vpn_gateways::v1::
                    GetVpnGatewayRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>),
       GetStatus,
       (google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertVpnGateway,
               (google::cloud::cpp::compute::vpn_gateways::v1::
                    InsertVpnGatewayRequest const& request),
@@ -89,13 +89,13 @@ class MockVpnGatewaysConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), SetLabels,
       (google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::vpn_gateways::v1::
            TestIamPermissionsRequest const& request),

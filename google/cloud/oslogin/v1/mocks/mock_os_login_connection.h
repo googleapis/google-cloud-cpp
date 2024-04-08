@@ -48,7 +48,7 @@ class MockOsLoginServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::common::SshPublicKey>,
+      (StatusOr<google::cloud::oslogin::common::SshPublicKey>),
       CreateSshPublicKey,
       (google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request),
       (override));
@@ -64,23 +64,23 @@ class MockOsLoginServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::v1::LoginProfile>, GetLoginProfile,
+      (StatusOr<google::cloud::oslogin::v1::LoginProfile>), GetLoginProfile,
       (google::cloud::oslogin::v1::GetLoginProfileRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::common::SshPublicKey>, GetSshPublicKey,
+      (StatusOr<google::cloud::oslogin::common::SshPublicKey>), GetSshPublicKey,
       (google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>,
+      (StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>),
       ImportSshPublicKey,
       (google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::common::SshPublicKey>,
+      (StatusOr<google::cloud::oslogin::common::SshPublicKey>),
       UpdateSshPublicKey,
       (google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request),
       (override));

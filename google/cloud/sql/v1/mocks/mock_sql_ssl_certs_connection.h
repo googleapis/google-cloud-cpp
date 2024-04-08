@@ -47,19 +47,20 @@ class MockSqlSslCertsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Delete,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::Operation>), Delete,
               (google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::SslCert>, Get,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::SslCert>), Get,
               (google::cloud::sql::v1::SqlSslCertsGetRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>, Insert,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>),
+              Insert,
               (google::cloud::sql::v1::SqlSslCertsInsertRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::SslCertsListResponse>, List,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::SslCertsListResponse>), List,
               (google::cloud::sql::v1::SqlSslCertsListRequest const& request),
               (override));
 };

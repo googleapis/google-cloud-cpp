@@ -49,49 +49,49 @@ class MockRegionInstanceGroupManagersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               AbandonInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    AbandonInstancesRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               ApplyUpdatesToInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    ApplyUpdatesToInstancesRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               CreateInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    CreateInstancesRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    DeleteInstanceGroupManagerRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    DeleteInstancesRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeletePerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    DeletePerInstanceConfigsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>),
               GetInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    GetInstanceGroupManagerRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    InsertInstanceGroupManagerRequest const& request),
@@ -111,8 +111,8 @@ class MockRegionInstanceGroupManagersConnection
            ListErrorsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::
-                           RegionInstanceGroupManagersListInstancesResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::
+                            RegionInstanceGroupManagersListInstancesResponse>),
               ListManagedInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    ListManagedInstancesRequest const& request),
@@ -124,43 +124,43 @@ class MockRegionInstanceGroupManagersConnection
                    ListPerInstanceConfigsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    PatchInstanceGroupManagerRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchPerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    PatchPerInstanceConfigsRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               RecreateInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    RecreateInstancesRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               Resize,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    ResizeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetInstanceTemplate,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    SetInstanceTemplateRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetTargetPools,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    SetTargetPoolsRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               UpdatePerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    UpdatePerInstanceConfigsRequest const& request),

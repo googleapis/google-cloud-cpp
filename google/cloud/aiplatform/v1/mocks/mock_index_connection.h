@@ -48,11 +48,11 @@ class MockIndexServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Index>>, CreateIndex,
+      (future<StatusOr<google::cloud::aiplatform::v1::Index>>), CreateIndex,
       (google::cloud::aiplatform::v1::CreateIndexRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Index>, GetIndex,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::Index>), GetIndex,
               (google::cloud::aiplatform::v1::GetIndexRequest const& request),
               (override));
 
@@ -61,24 +61,25 @@ class MockIndexServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Index>>, UpdateIndex,
+      (future<StatusOr<google::cloud::aiplatform::v1::Index>>), UpdateIndex,
       (google::cloud::aiplatform::v1::UpdateIndexRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteIndex,
       (google::cloud::aiplatform::v1::DeleteIndexRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>),
       UpsertDatapoints,
       (google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>),
       RemoveDatapoints,
       (google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request),
       (override));

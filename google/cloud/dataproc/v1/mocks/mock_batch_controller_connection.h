@@ -47,11 +47,12 @@ class MockBatchControllerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Batch>>, CreateBatch,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataproc::v1::Batch>>),
+              CreateBatch,
               (google::cloud::dataproc::v1::CreateBatchRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Batch>, GetBatch,
+  MOCK_METHOD((StatusOr<google::cloud::dataproc::v1::Batch>), GetBatch,
               (google::cloud::dataproc::v1::GetBatchRequest const& request),
               (override));
 

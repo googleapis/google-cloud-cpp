@@ -55,22 +55,22 @@ class MockTelcoAutomationConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>,
+      (StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>),
       GetOrchestrationCluster,
       (google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>,
+      (future<
+          StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>),
       CreateOrchestrationCluster,
       (google::cloud::telcoautomation::v1::
            CreateOrchestrationClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>),
       DeleteOrchestrationCluster,
       (google::cloud::telcoautomation::v1::
            DeleteOrchestrationClusterRequest const& request),
@@ -82,36 +82,36 @@ class MockTelcoAutomationConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>, GetEdgeSlm,
+      (StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>), GetEdgeSlm,
       (google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>,
+      (future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>),
       CreateEdgeSlm,
       (google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>),
       DeleteEdgeSlm,
       (google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::telcoautomation::v1::Blueprint>,
+  MOCK_METHOD((StatusOr<google::cloud::telcoautomation::v1::Blueprint>),
               CreateBlueprint,
               (google::cloud::telcoautomation::v1::CreateBlueprintRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::telcoautomation::v1::Blueprint>,
+  MOCK_METHOD((StatusOr<google::cloud::telcoautomation::v1::Blueprint>),
               UpdateBlueprint,
               (google::cloud::telcoautomation::v1::UpdateBlueprintRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::Blueprint>, GetBlueprint,
+      (StatusOr<google::cloud::telcoautomation::v1::Blueprint>), GetBlueprint,
       (google::cloud::telcoautomation::v1::GetBlueprintRequest const& request),
       (override));
 
@@ -127,18 +127,20 @@ class MockTelcoAutomationConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::Blueprint>, ApproveBlueprint,
+      (StatusOr<google::cloud::telcoautomation::v1::Blueprint>),
+      ApproveBlueprint,
       (google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::Blueprint>, ProposeBlueprint,
+      (StatusOr<google::cloud::telcoautomation::v1::Blueprint>),
+      ProposeBlueprint,
       (google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::telcoautomation::v1::Blueprint>,
+  MOCK_METHOD((StatusOr<google::cloud::telcoautomation::v1::Blueprint>),
               RejectBlueprint,
               (google::cloud::telcoautomation::v1::RejectBlueprintRequest const&
                    request),
@@ -165,8 +167,8 @@ class MockTelcoAutomationConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>,
+      (StatusOr<
+          google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>),
       DiscardBlueprintChanges,
       (google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
            request),
@@ -179,28 +181,28 @@ class MockTelcoAutomationConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>,
+      (StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>),
       GetPublicBlueprint,
       (google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::Deployment>,
+      (StatusOr<google::cloud::telcoautomation::v1::Deployment>),
       CreateDeployment,
       (google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::Deployment>,
+      (StatusOr<google::cloud::telcoautomation::v1::Deployment>),
       UpdateDeployment,
       (google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::Deployment>, GetDeployment,
+      (StatusOr<google::cloud::telcoautomation::v1::Deployment>), GetDeployment,
       (google::cloud::telcoautomation::v1::GetDeploymentRequest const& request),
       (override));
 
@@ -223,37 +225,36 @@ class MockTelcoAutomationConnection
            request),
       (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>,
-      DiscardDeploymentChanges,
-      (google::cloud::telcoautomation::v1::
-           DiscardDeploymentChangesRequest const& request),
-      (override));
+  MOCK_METHOD((StatusOr<google::cloud::telcoautomation::v1::
+                            DiscardDeploymentChangesResponse>),
+              DiscardDeploymentChanges,
+              (google::cloud::telcoautomation::v1::
+                   DiscardDeploymentChangesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::telcoautomation::v1::Deployment>,
+  MOCK_METHOD((StatusOr<google::cloud::telcoautomation::v1::Deployment>),
               ApplyDeployment,
               (google::cloud::telcoautomation::v1::ApplyDeploymentRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>,
+      (StatusOr<
+          google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>),
       ComputeDeploymentStatus,
       (google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::Deployment>,
+      (StatusOr<google::cloud::telcoautomation::v1::Deployment>),
       RollbackDeployment,
       (google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>,
+      (StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>),
       GetHydratedDeployment,
       (google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
            request),
@@ -266,14 +267,15 @@ class MockTelcoAutomationConnection
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>,
-              UpdateHydratedDeployment,
-              (google::cloud::telcoautomation::v1::
-                   UpdateHydratedDeploymentRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>),
+      UpdateHydratedDeployment,
+      (google::cloud::telcoautomation::v1::
+           UpdateHydratedDeploymentRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>,
+      (StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>),
       ApplyHydratedDeployment,
       (google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
            request),

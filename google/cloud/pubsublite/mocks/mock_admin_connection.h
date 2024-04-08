@@ -47,16 +47,16 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Topic>, CreateTopic,
+      (StatusOr<google::cloud::pubsublite::v1::Topic>), CreateTopic,
       (google::cloud::pubsublite::v1::CreateTopicRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Topic>, GetTopic,
+  MOCK_METHOD((StatusOr<google::cloud::pubsublite::v1::Topic>), GetTopic,
               (google::cloud::pubsublite::v1::GetTopicRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::TopicPartitions>,
+      (StatusOr<google::cloud::pubsublite::v1::TopicPartitions>),
       GetTopicPartitions,
       (google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request),
       (override));
@@ -66,7 +66,7 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Topic>, UpdateTopic,
+      (StatusOr<google::cloud::pubsublite::v1::Topic>), UpdateTopic,
       (google::cloud::pubsublite::v1::UpdateTopicRequest const& request),
       (override));
 
@@ -81,12 +81,13 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Subscription>, CreateSubscription,
+      (StatusOr<google::cloud::pubsublite::v1::Subscription>),
+      CreateSubscription,
       (google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Subscription>, GetSubscription,
+      (StatusOr<google::cloud::pubsublite::v1::Subscription>), GetSubscription,
       (google::cloud::pubsublite::v1::GetSubscriptionRequest const& request),
       (override));
 
@@ -96,7 +97,8 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Subscription>, UpdateSubscription,
+      (StatusOr<google::cloud::pubsublite::v1::Subscription>),
+      UpdateSubscription,
       (google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request),
       (override));
 
@@ -106,18 +108,19 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
+      (future<
+          StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>),
       SeekSubscription,
       (google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Reservation>, CreateReservation,
+      (StatusOr<google::cloud::pubsublite::v1::Reservation>), CreateReservation,
       (google::cloud::pubsublite::v1::CreateReservationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Reservation>, GetReservation,
+      (StatusOr<google::cloud::pubsublite::v1::Reservation>), GetReservation,
       (google::cloud::pubsublite::v1::GetReservationRequest const& request),
       (override));
 
@@ -127,7 +130,7 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Reservation>, UpdateReservation,
+      (StatusOr<google::cloud::pubsublite::v1::Reservation>), UpdateReservation,
       (google::cloud::pubsublite::v1::UpdateReservationRequest const& request),
       (override));
 
@@ -142,7 +145,7 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>,
+      (future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>),
       AsyncGetTopicPartitions,
       (google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request),
       (override));

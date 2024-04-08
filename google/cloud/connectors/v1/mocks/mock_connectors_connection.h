@@ -52,24 +52,24 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::Connection>, GetConnection,
+      (StatusOr<google::cloud::connectors::v1::Connection>), GetConnection,
       (google::cloud::connectors::v1::GetConnectionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::Connection>>,
+      (future<StatusOr<google::cloud::connectors::v1::Connection>>),
       CreateConnection,
       (google::cloud::connectors::v1::CreateConnectionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::Connection>>,
+      (future<StatusOr<google::cloud::connectors::v1::Connection>>),
       UpdateConnection,
       (google::cloud::connectors::v1::UpdateConnectionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>),
       DeleteConnection,
       (google::cloud::connectors::v1::DeleteConnectionRequest const& request),
       (override));
@@ -80,7 +80,7 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::Provider>, GetProvider,
+      (StatusOr<google::cloud::connectors::v1::Provider>), GetProvider,
       (google::cloud::connectors::v1::GetProviderRequest const& request),
       (override));
 
@@ -90,7 +90,7 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::Connector>, GetConnector,
+      (StatusOr<google::cloud::connectors::v1::Connector>), GetConnector,
       (google::cloud::connectors::v1::GetConnectorRequest const& request),
       (override));
 
@@ -100,21 +100,22 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       (google::cloud::connectors::v1::ListConnectorVersionsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::connectors::v1::ConnectorVersion>,
+  MOCK_METHOD((StatusOr<google::cloud::connectors::v1::ConnectorVersion>),
               GetConnectorVersion,
               (google::cloud::connectors::v1::GetConnectorVersionRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>,
+      (StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>),
       GetConnectionSchemaMetadata,
       (google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>,
+      (future<
+          StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>),
       RefreshConnectionSchemaMetadata,
       (google::cloud::connectors::v1::
            RefreshConnectionSchemaMetadataRequest const& request),
@@ -133,12 +134,13 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::RuntimeConfig>, GetRuntimeConfig,
+      (StatusOr<google::cloud::connectors::v1::RuntimeConfig>),
+      GetRuntimeConfig,
       (google::cloud::connectors::v1::GetRuntimeConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::Settings>, GetGlobalSettings,
+      (StatusOr<google::cloud::connectors::v1::Settings>), GetGlobalSettings,
       (google::cloud::connectors::v1::GetGlobalSettingsRequest const& request),
       (override));
 };

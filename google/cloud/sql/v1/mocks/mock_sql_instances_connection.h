@@ -48,55 +48,55 @@ class MockSqlInstancesServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, AddServerCa,
+      (StatusOr<google::cloud::sql::v1::Operation>), AddServerCa,
       (google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Clone,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::Operation>), Clone,
               (google::cloud::sql::v1::SqlInstancesCloneRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Delete,
+      (StatusOr<google::cloud::sql::v1::Operation>), Delete,
       (google::cloud::sql::v1::SqlInstancesDeleteRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, DemoteMaster,
+      (StatusOr<google::cloud::sql::v1::Operation>), DemoteMaster,
       (google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Demote,
+      (StatusOr<google::cloud::sql::v1::Operation>), Demote,
       (google::cloud::sql::v1::SqlInstancesDemoteRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Export,
+      (StatusOr<google::cloud::sql::v1::Operation>), Export,
       (google::cloud::sql::v1::SqlInstancesExportRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Failover,
+      (StatusOr<google::cloud::sql::v1::Operation>), Failover,
       (google::cloud::sql::v1::SqlInstancesFailoverRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Reencrypt,
+      (StatusOr<google::cloud::sql::v1::Operation>), Reencrypt,
       (google::cloud::sql::v1::SqlInstancesReencryptRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::DatabaseInstance>, Get,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::DatabaseInstance>), Get,
               (google::cloud::sql::v1::SqlInstancesGetRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Import,
+      (StatusOr<google::cloud::sql::v1::Operation>), Import,
       (google::cloud::sql::v1::SqlInstancesImportRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Insert,
+      (StatusOr<google::cloud::sql::v1::Operation>), Insert,
       (google::cloud::sql::v1::SqlInstancesInsertRequest const& request),
       (override));
 
@@ -105,113 +105,114 @@ class MockSqlInstancesServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>,
+      (StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>),
       ListServerCas,
       (google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Patch,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::Operation>), Patch,
               (google::cloud::sql::v1::SqlInstancesPatchRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, PromoteReplica,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::Operation>), PromoteReplica,
               (google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Switchover,
+      (StatusOr<google::cloud::sql::v1::Operation>), Switchover,
       (google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, ResetSslConfig,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::Operation>), ResetSslConfig,
               (google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Restart,
+      (StatusOr<google::cloud::sql::v1::Operation>), Restart,
       (google::cloud::sql::v1::SqlInstancesRestartRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, RestoreBackup,
+      (StatusOr<google::cloud::sql::v1::Operation>), RestoreBackup,
       (google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, RotateServerCa,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::Operation>), RotateServerCa,
               (google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, StartReplica,
+      (StatusOr<google::cloud::sql::v1::Operation>), StartReplica,
       (google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, StopReplica,
+      (StatusOr<google::cloud::sql::v1::Operation>), StopReplica,
       (google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, TruncateLog,
+      (StatusOr<google::cloud::sql::v1::Operation>), TruncateLog,
       (google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Update,
+      (StatusOr<google::cloud::sql::v1::Operation>), Update,
       (google::cloud::sql::v1::SqlInstancesUpdateRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::SslCert>, CreateEphemeral,
+      (StatusOr<google::cloud::sql::v1::SslCert>), CreateEphemeral,
       (google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, RescheduleMaintenance,
+      (StatusOr<google::cloud::sql::v1::Operation>), RescheduleMaintenance,
       (google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::
-                   SqlInstancesVerifyExternalSyncSettingsResponse>,
+      (StatusOr<google::cloud::sql::v1::
+                    SqlInstancesVerifyExternalSyncSettingsResponse>),
       VerifyExternalSyncSettings,
       (google::cloud::sql::v1::
            SqlInstancesVerifyExternalSyncSettingsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, StartExternalSync,
+      (StatusOr<google::cloud::sql::v1::Operation>), StartExternalSync,
       (google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, PerformDiskShrink,
+      (StatusOr<google::cloud::sql::v1::Operation>), PerformDiskShrink,
       (google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>,
+      (StatusOr<
+          google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>),
       GetDiskShrinkConfig,
       (google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, ResetReplicaSize,
+      (StatusOr<google::cloud::sql::v1::Operation>), ResetReplicaSize,
       (google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>,
+      (StatusOr<
+          google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>),
       GetLatestRecoveryTime,
       (google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
            request),

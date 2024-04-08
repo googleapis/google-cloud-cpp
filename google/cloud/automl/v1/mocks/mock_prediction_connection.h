@@ -47,11 +47,11 @@ class MockPredictionServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::PredictResponse>, Predict,
+  MOCK_METHOD((StatusOr<google::cloud::automl::v1::PredictResponse>), Predict,
               (google::cloud::automl::v1::PredictRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>),
               BatchPredict,
               (google::cloud::automl::v1::BatchPredictRequest const& request),
               (override));

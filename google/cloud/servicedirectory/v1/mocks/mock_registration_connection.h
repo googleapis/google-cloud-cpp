@@ -48,7 +48,8 @@ class MockRegistrationServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Namespace>, CreateNamespace,
+      (StatusOr<google::cloud::servicedirectory::v1::Namespace>),
+      CreateNamespace,
       (google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
            request),
       (override));
@@ -60,12 +61,13 @@ class MockRegistrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Namespace>, GetNamespace,
+      (StatusOr<google::cloud::servicedirectory::v1::Namespace>), GetNamespace,
       (google::cloud::servicedirectory::v1::GetNamespaceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Namespace>, UpdateNamespace,
+      (StatusOr<google::cloud::servicedirectory::v1::Namespace>),
+      UpdateNamespace,
       (google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
            request),
       (override));
@@ -76,7 +78,7 @@ class MockRegistrationServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Service>,
+  MOCK_METHOD((StatusOr<google::cloud::servicedirectory::v1::Service>),
               CreateService,
               (google::cloud::servicedirectory::v1::CreateServiceRequest const&
                    request),
@@ -88,11 +90,11 @@ class MockRegistrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Service>, GetService,
+      (StatusOr<google::cloud::servicedirectory::v1::Service>), GetService,
       (google::cloud::servicedirectory::v1::GetServiceRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Service>,
+  MOCK_METHOD((StatusOr<google::cloud::servicedirectory::v1::Service>),
               UpdateService,
               (google::cloud::servicedirectory::v1::UpdateServiceRequest const&
                    request),
@@ -103,7 +105,7 @@ class MockRegistrationServiceConnection
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Endpoint>,
+  MOCK_METHOD((StatusOr<google::cloud::servicedirectory::v1::Endpoint>),
               CreateEndpoint,
               (google::cloud::servicedirectory::v1::CreateEndpointRequest const&
                    request),
@@ -116,11 +118,11 @@ class MockRegistrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Endpoint>, GetEndpoint,
+      (StatusOr<google::cloud::servicedirectory::v1::Endpoint>), GetEndpoint,
       (google::cloud::servicedirectory::v1::GetEndpointRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Endpoint>,
+  MOCK_METHOD((StatusOr<google::cloud::servicedirectory::v1::Endpoint>),
               UpdateEndpoint,
               (google::cloud::servicedirectory::v1::UpdateEndpointRequest const&
                    request),
@@ -131,15 +133,15 @@ class MockRegistrationServiceConnection
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

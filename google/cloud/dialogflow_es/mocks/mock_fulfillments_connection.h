@@ -48,12 +48,12 @@ class MockFulfillmentsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Fulfillment>, GetFulfillment,
+      (StatusOr<google::cloud::dialogflow::v2::Fulfillment>), GetFulfillment,
       (google::cloud::dialogflow::v2::GetFulfillmentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Fulfillment>, UpdateFulfillment,
+      (StatusOr<google::cloud::dialogflow::v2::Fulfillment>), UpdateFulfillment,
       (google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request),
       (override));
 };

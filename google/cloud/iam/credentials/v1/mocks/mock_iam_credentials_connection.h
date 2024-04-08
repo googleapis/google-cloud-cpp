@@ -48,23 +48,24 @@ class MockIAMCredentialsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>,
+      (StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>),
       GenerateAccessToken,
       (google::iam::credentials::v1::GenerateAccessTokenRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>,
+      (StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>),
       GenerateIdToken,
       (google::iam::credentials::v1::GenerateIdTokenRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignBlobResponse>,
+  MOCK_METHOD((StatusOr<google::iam::credentials::v1::SignBlobResponse>),
               SignBlob,
               (google::iam::credentials::v1::SignBlobRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignJwtResponse>, SignJwt,
+  MOCK_METHOD((StatusOr<google::iam::credentials::v1::SignJwtResponse>),
+              SignJwt,
               (google::iam::credentials::v1::SignJwtRequest const& request),
               (override));
 };

@@ -47,7 +47,7 @@ class MockImageFamilyViewsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>),
               GetImageFamilyView,
               (google::cloud::cpp::compute::image_family_views::v1::
                    GetImageFamilyViewRequest const& request),

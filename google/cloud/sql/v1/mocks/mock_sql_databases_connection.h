@@ -48,30 +48,30 @@ class MockSqlDatabasesServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Delete,
+      (StatusOr<google::cloud::sql::v1::Operation>), Delete,
       (google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Database>, Get,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::Database>), Get,
               (google::cloud::sql::v1::SqlDatabasesGetRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Insert,
+      (StatusOr<google::cloud::sql::v1::Operation>), Insert,
       (google::cloud::sql::v1::SqlDatabasesInsertRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::DatabasesListResponse>, List,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::DatabasesListResponse>), List,
               (google::cloud::sql::v1::SqlDatabasesListRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Patch,
+      (StatusOr<google::cloud::sql::v1::Operation>), Patch,
       (google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Update,
+      (StatusOr<google::cloud::sql::v1::Operation>), Update,
       (google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request),
       (override));
 };

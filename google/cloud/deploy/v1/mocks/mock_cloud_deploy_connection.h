@@ -52,25 +52,25 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::deploy::v1::DeliveryPipeline>,
+      (StatusOr<google::cloud::deploy::v1::DeliveryPipeline>),
       GetDeliveryPipeline,
       (google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>,
+      (future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>),
       CreateDeliveryPipeline,
       (google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>,
+      (future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>),
       UpdateDeliveryPipeline,
       (google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>),
       DeleteDeliveryPipeline,
       (google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request),
       (override));
@@ -79,24 +79,26 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::ListTargetsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>),
               RollbackTarget,
               (google::cloud::deploy::v1::RollbackTargetRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::Target>, GetTarget,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::Target>), GetTarget,
               (google::cloud::deploy::v1::GetTargetRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::Target>>, CreateTarget,
+  MOCK_METHOD((future<StatusOr<google::cloud::deploy::v1::Target>>),
+              CreateTarget,
               (google::cloud::deploy::v1::CreateTargetRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::Target>>, UpdateTarget,
+  MOCK_METHOD((future<StatusOr<google::cloud::deploy::v1::Target>>),
+              UpdateTarget,
               (google::cloud::deploy::v1::UpdateTargetRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>),
               DeleteTarget,
               (google::cloud::deploy::v1::DeleteTargetRequest const& request),
               (override));
@@ -107,25 +109,25 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::deploy::v1::CustomTargetType>,
+      (StatusOr<google::cloud::deploy::v1::CustomTargetType>),
       GetCustomTargetType,
       (google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>,
+      (future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>),
       CreateCustomTargetType,
       (google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>,
+      (future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>),
       UpdateCustomTargetType,
       (google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>),
       DeleteCustomTargetType,
       (google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request),
       (override));
@@ -134,31 +136,31 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::ListReleasesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::Release>, GetRelease,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::Release>), GetRelease,
               (google::cloud::deploy::v1::GetReleaseRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::Release>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::deploy::v1::Release>>),
               CreateRelease,
               (google::cloud::deploy::v1::CreateReleaseRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>),
               AbandonRelease,
               (google::cloud::deploy::v1::AbandonReleaseRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>),
               ApproveRollout,
               (google::cloud::deploy::v1::ApproveRolloutRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>),
               AdvanceRollout,
               (google::cloud::deploy::v1::AdvanceRolloutRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>),
               CancelRollout,
               (google::cloud::deploy::v1::CancelRolloutRequest const& request),
               (override));
@@ -167,20 +169,21 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::ListRolloutsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::Rollout>, GetRollout,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::Rollout>), GetRollout,
               (google::cloud::deploy::v1::GetRolloutRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::Rollout>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::deploy::v1::Rollout>>),
               CreateRollout,
               (google::cloud::deploy::v1::CreateRolloutRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>, IgnoreJob,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>),
+              IgnoreJob,
               (google::cloud::deploy::v1::IgnoreJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::RetryJobResponse>, RetryJob,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::RetryJobResponse>), RetryJob,
               (google::cloud::deploy::v1::RetryJobRequest const& request),
               (override));
 
@@ -188,37 +191,39 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::ListJobRunsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::JobRun>, GetJobRun,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::JobRun>), GetJobRun,
               (google::cloud::deploy::v1::GetJobRunRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>,
+      (StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>),
       TerminateJobRun,
       (google::cloud::deploy::v1::TerminateJobRunRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::Config>, GetConfig,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::Config>), GetConfig,
               (google::cloud::deploy::v1::GetConfigRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::deploy::v1::Automation>>, CreateAutomation,
+      (future<StatusOr<google::cloud::deploy::v1::Automation>>),
+      CreateAutomation,
       (google::cloud::deploy::v1::CreateAutomationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::deploy::v1::Automation>>, UpdateAutomation,
+      (future<StatusOr<google::cloud::deploy::v1::Automation>>),
+      UpdateAutomation,
       (google::cloud::deploy::v1::UpdateAutomationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>),
       DeleteAutomation,
       (google::cloud::deploy::v1::DeleteAutomationRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::Automation>, GetAutomation,
+  MOCK_METHOD((StatusOr<google::cloud::deploy::v1::Automation>), GetAutomation,
               (google::cloud::deploy::v1::GetAutomationRequest const& request),
               (override));
 
@@ -228,7 +233,7 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::deploy::v1::AutomationRun>, GetAutomationRun,
+      (StatusOr<google::cloud::deploy::v1::AutomationRun>), GetAutomationRun,
       (google::cloud::deploy::v1::GetAutomationRunRequest const& request),
       (override));
 
@@ -238,7 +243,7 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>,
+      (StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>),
       CancelAutomationRun,
       (google::cloud::deploy::v1::CancelAutomationRunRequest const& request),
       (override));

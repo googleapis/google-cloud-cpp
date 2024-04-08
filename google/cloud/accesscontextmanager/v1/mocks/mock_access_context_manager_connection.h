@@ -55,29 +55,29 @@ class MockAccessContextManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>,
+      (StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>),
       GetAccessPolicy,
       (google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
+      (future<
+          StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>),
       CreateAccessPolicy,
       (google::identity::accesscontextmanager::v1::AccessPolicy const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
+      (future<
+          StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>),
       UpdateAccessPolicy,
       (google::identity::accesscontextmanager::v1::
            UpdateAccessPolicyRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
-                                  AccessContextManagerOperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::identity::accesscontextmanager::v1::
+                                   AccessContextManagerOperationMetadata>>),
               DeleteAccessPolicy,
               (google::identity::accesscontextmanager::v1::
                    DeleteAccessPolicyRequest const& request),
@@ -91,35 +91,37 @@ class MockAccessContextManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>,
+      (StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>),
       GetAccessLevel,
       (google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>,
+      (future<
+          StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>),
       CreateAccessLevel,
       (google::identity::accesscontextmanager::v1::
            CreateAccessLevelRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>,
+      (future<
+          StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>),
       UpdateAccessLevel,
       (google::identity::accesscontextmanager::v1::
            UpdateAccessLevelRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
-                                  AccessContextManagerOperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::identity::accesscontextmanager::v1::
+                                   AccessContextManagerOperationMetadata>>),
               DeleteAccessLevel,
               (google::identity::accesscontextmanager::v1::
                    DeleteAccessLevelRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
-                                  ReplaceAccessLevelsResponse>>,
+  MOCK_METHOD((future<StatusOr<google::identity::accesscontextmanager::v1::
+                                   ReplaceAccessLevelsResponse>>),
               ReplaceAccessLevels,
               (google::identity::accesscontextmanager::v1::
                    ReplaceAccessLevelsRequest const& request),
@@ -134,44 +136,44 @@ class MockAccessContextManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>,
+      (StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>),
       GetServicePerimeter,
       (google::identity::accesscontextmanager::v1::
            GetServicePerimeterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::identity::accesscontextmanager::v1::ServicePerimeter>>,
+      (future<StatusOr<
+           google::identity::accesscontextmanager::v1::ServicePerimeter>>),
       CreateServicePerimeter,
       (google::identity::accesscontextmanager::v1::
            CreateServicePerimeterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::identity::accesscontextmanager::v1::ServicePerimeter>>,
+      (future<StatusOr<
+           google::identity::accesscontextmanager::v1::ServicePerimeter>>),
       UpdateServicePerimeter,
       (google::identity::accesscontextmanager::v1::
            UpdateServicePerimeterRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
-                                  AccessContextManagerOperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::identity::accesscontextmanager::v1::
+                                   AccessContextManagerOperationMetadata>>),
               DeleteServicePerimeter,
               (google::identity::accesscontextmanager::v1::
                    DeleteServicePerimeterRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
-                                  ReplaceServicePerimetersResponse>>,
+  MOCK_METHOD((future<StatusOr<google::identity::accesscontextmanager::v1::
+                                   ReplaceServicePerimetersResponse>>),
               ReplaceServicePerimeters,
               (google::identity::accesscontextmanager::v1::
                    ReplaceServicePerimetersRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
-                                  CommitServicePerimetersResponse>>,
+  MOCK_METHOD((future<StatusOr<google::identity::accesscontextmanager::v1::
+                                   CommitServicePerimetersResponse>>),
               CommitServicePerimeters,
               (google::identity::accesscontextmanager::v1::
                    CommitServicePerimetersRequest const& request),
@@ -186,45 +188,45 @@ class MockAccessContextManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::identity::accesscontextmanager::v1::GcpUserAccessBinding>,
+      (StatusOr<
+          google::identity::accesscontextmanager::v1::GcpUserAccessBinding>),
       GetGcpUserAccessBinding,
       (google::identity::accesscontextmanager::v1::
            GetGcpUserAccessBindingRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>,
+      (future<StatusOr<
+           google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>),
       CreateGcpUserAccessBinding,
       (google::identity::accesscontextmanager::v1::
            CreateGcpUserAccessBindingRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>,
+      (future<StatusOr<
+           google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>),
       UpdateGcpUserAccessBinding,
       (google::identity::accesscontextmanager::v1::
            UpdateGcpUserAccessBindingRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
-                                  GcpUserAccessBindingOperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::identity::accesscontextmanager::v1::
+                                   GcpUserAccessBindingOperationMetadata>>),
               DeleteGcpUserAccessBinding,
               (google::identity::accesscontextmanager::v1::
                    DeleteGcpUserAccessBindingRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

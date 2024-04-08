@@ -51,28 +51,28 @@ class MockInstanceGroupManagerResizeRequestsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Cancel,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), Cancel,
       (google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
            CancelRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       DeleteInstanceGroupManagerResizeRequest,
       (google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
            DeleteInstanceGroupManagerResizeRequestRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>,
+      (StatusOr<
+          google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>),
       GetInstanceGroupManagerResizeRequest,
       (google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
            GetInstanceGroupManagerResizeRequestRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       InsertInstanceGroupManagerResizeRequest,
       (google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
            InsertInstanceGroupManagerResizeRequestRequest const& request),

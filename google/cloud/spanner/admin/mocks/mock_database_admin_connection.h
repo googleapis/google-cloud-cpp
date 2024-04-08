@@ -54,27 +54,27 @@ class MockDatabaseAdminConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::database::v1::Database>>,
+      (future<StatusOr<google::spanner::admin::database::v1::Database>>),
       CreateDatabase,
       (google::spanner::admin::database::v1::CreateDatabaseRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::spanner::admin::database::v1::Database>, GetDatabase,
+      (StatusOr<google::spanner::admin::database::v1::Database>), GetDatabase,
       (google::spanner::admin::database::v1::GetDatabaseRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::database::v1::Database>>,
+      (future<StatusOr<google::spanner::admin::database::v1::Database>>),
       UpdateDatabase,
       (google::spanner::admin::database::v1::UpdateDatabaseRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
+      (future<StatusOr<
+           google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>),
       UpdateDatabaseDdl,
       (google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
            request),
@@ -86,43 +86,43 @@ class MockDatabaseAdminConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>,
+      (StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>),
       GetDatabaseDdl,
       (google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
+  MOCK_METHOD((future<StatusOr<google::spanner::admin::database::v1::Backup>>),
               CreateBackup,
               (google::spanner::admin::database::v1::CreateBackupRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::database::v1::Backup>>,
+      (future<StatusOr<google::spanner::admin::database::v1::Backup>>),
       CopyBackup,
       (google::spanner::admin::database::v1::CopyBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::spanner::admin::database::v1::Backup>, GetBackup,
+      (StatusOr<google::spanner::admin::database::v1::Backup>), GetBackup,
       (google::spanner::admin::database::v1::GetBackupRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::Backup>,
+  MOCK_METHOD((StatusOr<google::spanner::admin::database::v1::Backup>),
               UpdateBackup,
               (google::spanner::admin::database::v1::UpdateBackupRequest const&
                    request),
@@ -139,7 +139,7 @@ class MockDatabaseAdminConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::database::v1::Database>>,
+      (future<StatusOr<google::spanner::admin::database::v1::Database>>),
       RestoreDatabase,
       (google::spanner::admin::database::v1::RestoreDatabaseRequest const&
            request),

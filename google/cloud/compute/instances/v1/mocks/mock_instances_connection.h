@@ -48,13 +48,13 @@ class MockInstancesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       AddAccessConfig,
       (google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               AddResourcePolicies,
               (google::cloud::cpp::compute::instances::v1::
                    AddResourcePoliciesRequest const& request),
@@ -69,82 +69,85 @@ class MockInstancesConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AttachDisk,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
+      AttachDisk,
       (google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, BulkInsert,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
+      BulkInsert,
       (google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       DeleteInstance,
       (google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteAccessConfig,
               (google::cloud::cpp::compute::instances::v1::
                    DeleteAccessConfigRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DetachDisk,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
+      DetachDisk,
       (google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Instance>, GetInstance,
+      (StatusOr<google::cloud::cpp::compute::v1::Instance>), GetInstance,
       (google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::
-                           InstancesGetEffectiveFirewallsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::
+                            InstancesGetEffectiveFirewallsResponse>),
               GetEffectiveFirewalls,
               (google::cloud::cpp::compute::instances::v1::
                    GetEffectiveFirewallsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>),
               GetGuestAttributes,
               (google::cloud::cpp::compute::instances::v1::
                    GetGuestAttributesRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+      (StatusOr<google::cloud::cpp::compute::v1::Policy>), GetIamPolicy,
       (google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Screenshot>, GetScreenshot,
+      (StatusOr<google::cloud::cpp::compute::v1::Screenshot>), GetScreenshot,
       (google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>),
               GetSerialPortOutput,
               (google::cloud::cpp::compute::instances::v1::
                    GetSerialPortOutputRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>,
+      (StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>),
       GetShieldedInstanceIdentity,
       (google::cloud::cpp::compute::instances::v1::
            GetShieldedInstanceIdentityRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       InsertInstance,
       (google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
            request),
@@ -162,24 +165,24 @@ class MockInstancesConnection
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PerformMaintenance,
               (google::cloud::cpp::compute::instances::v1::
                    PerformMaintenanceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               RemoveResourcePolicies,
               (google::cloud::cpp::compute::instances::v1::
                    RemoveResourcePoliciesRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Reset,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), Reset,
       (google::cloud::cpp::compute::instances::v1::ResetRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               Resume,
               (google::cloud::cpp::compute::instances::v1::ResumeRequest const&
                    request),
@@ -190,153 +193,154 @@ class MockInstancesConnection
                    SendDiagnosticInterruptRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetDeletionProtection,
               (google::cloud::cpp::compute::instances::v1::
                    SetDeletionProtectionRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetDiskAutoDelete,
               (google::cloud::cpp::compute::instances::v1::
                    SetDiskAutoDeleteRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+      (StatusOr<google::cloud::cpp::compute::v1::Policy>), SetIamPolicy,
       (google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), SetLabels,
       (google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetMachineResources,
               (google::cloud::cpp::compute::instances::v1::
                    SetMachineResourcesRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       SetMachineType,
       (google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetMetadata,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
+      SetMetadata,
       (google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetMinCpuPlatform,
               (google::cloud::cpp::compute::instances::v1::
                    SetMinCpuPlatformRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetName,
               (google::cloud::cpp::compute::instances::v1::SetNameRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       SetScheduling,
       (google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetSecurityPolicy,
               (google::cloud::cpp::compute::instances::v1::
                    SetSecurityPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetServiceAccount,
               (google::cloud::cpp::compute::instances::v1::
                    SetServiceAccountRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetShieldedInstanceIntegrityPolicy,
               (google::cloud::cpp::compute::instances::v1::
                    SetShieldedInstanceIntegrityPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetTags,
               (google::cloud::cpp::compute::instances::v1::SetTagsRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SimulateMaintenanceEvent,
               (google::cloud::cpp::compute::instances::v1::
                    SimulateMaintenanceEventRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Start,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), Start,
       (google::cloud::cpp::compute::instances::v1::StartRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               StartWithEncryptionKey,
               (google::cloud::cpp::compute::instances::v1::
                    StartWithEncryptionKeyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Stop,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), Stop,
       (google::cloud::cpp::compute::instances::v1::StopRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               Suspend,
               (google::cloud::cpp::compute::instances::v1::SuspendRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::instances::v1::
            TestIamPermissionsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       UpdateInstance,
       (google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               UpdateAccessConfig,
               (google::cloud::cpp::compute::instances::v1::
                    UpdateAccessConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               UpdateDisplayDevice,
               (google::cloud::cpp::compute::instances::v1::
                    UpdateDisplayDeviceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               UpdateNetworkInterface,
               (google::cloud::cpp::compute::instances::v1::
                    UpdateNetworkInterfaceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               UpdateShieldedInstanceConfig,
               (google::cloud::cpp::compute::instances::v1::
                    UpdateShieldedInstanceConfigRequest const& request),

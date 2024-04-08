@@ -49,18 +49,18 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
   MOCK_METHOD((StreamRange<google::iam::v2::Policy>), ListPolicies,
               (google::iam::v2::ListPoliciesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v2::Policy>, GetPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v2::Policy>), GetPolicy,
               (google::iam::v2::GetPolicyRequest const& request), (override));
 
-  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, CreatePolicy,
+  MOCK_METHOD((future<StatusOr<google::iam::v2::Policy>>), CreatePolicy,
               (google::iam::v2::CreatePolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, UpdatePolicy,
+  MOCK_METHOD((future<StatusOr<google::iam::v2::Policy>>), UpdatePolicy,
               (google::iam::v2::UpdatePolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
+  MOCK_METHOD((future<StatusOr<google::iam::v2::Policy>>), DeletePolicy,
               (google::iam::v2::DeletePolicyRequest const& request),
               (override));
 };

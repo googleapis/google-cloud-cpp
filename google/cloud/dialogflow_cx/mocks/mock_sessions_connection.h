@@ -47,13 +47,13 @@ class MockSessionsConnection : public dialogflow_cx::SessionsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>),
       DetectIntent,
       (google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>),
       ServerStreamingDetectIntent,
       (google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request),
       (override));
@@ -65,19 +65,19 @@ class MockSessionsConnection : public dialogflow_cx::SessionsConnection {
       AsyncStreamingDetectIntent, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>),
       MatchIntent,
       (google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>),
       FulfillIntent,
       (google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>),
       SubmitAnswerFeedback,
       (google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
            request),

@@ -53,70 +53,70 @@ class MockDataMigrationServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>, GetMigrationJob,
+      (StatusOr<google::cloud::clouddms::v1::MigrationJob>), GetMigrationJob,
       (google::cloud::clouddms::v1::GetMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+      (future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>),
       CreateMigrationJob,
       (google::cloud::clouddms::v1::CreateMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+      (future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>),
       UpdateMigrationJob,
       (google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>),
       DeleteMigrationJob,
       (google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+      (future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>),
       StartMigrationJob,
       (google::cloud::clouddms::v1::StartMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+      (future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>),
       StopMigrationJob,
       (google::cloud::clouddms::v1::StopMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+      (future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>),
       ResumeMigrationJob,
       (google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+      (future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>),
       PromoteMigrationJob,
       (google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+      (future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>),
       VerifyMigrationJob,
       (google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+      (future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>),
       RestartMigrationJob,
       (google::cloud::clouddms::v1::RestartMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::clouddms::v1::SshScript>, GenerateSshScript,
+      (StatusOr<google::cloud::clouddms::v1::SshScript>), GenerateSshScript,
       (google::cloud::clouddms::v1::GenerateSshScriptRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::clouddms::v1::TcpProxyScript>,
+  MOCK_METHOD((StatusOr<google::cloud::clouddms::v1::TcpProxyScript>),
               GenerateTcpProxyScript,
               (google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&
                    request),
@@ -129,41 +129,41 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::clouddms::v1::ConnectionProfile>,
+      (StatusOr<google::cloud::clouddms::v1::ConnectionProfile>),
       GetConnectionProfile,
       (google::cloud::clouddms::v1::GetConnectionProfileRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>),
       CreateConnectionProfile,
       (google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>),
       UpdateConnectionProfile,
       (google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>),
       DeleteConnectionProfile,
       (google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>,
+      (future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>),
       CreatePrivateConnection,
       (google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::clouddms::v1::PrivateConnection>,
+      (StatusOr<google::cloud::clouddms::v1::PrivateConnection>),
       GetPrivateConnection,
       (google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request),
       (override));
@@ -175,13 +175,13 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>),
       DeletePrivateConnection,
       (google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>,
+  MOCK_METHOD((StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>),
               GetConversionWorkspace,
               (google::cloud::clouddms::v1::GetConversionWorkspaceRequest const&
                    request),
@@ -194,28 +194,28 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>),
       CreateConversionWorkspace,
       (google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>),
       UpdateConversionWorkspace,
       (google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>),
       DeleteConversionWorkspace,
       (google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::clouddms::v1::MappingRule>, CreateMappingRule,
+      (StatusOr<google::cloud::clouddms::v1::MappingRule>), CreateMappingRule,
       (google::cloud::clouddms::v1::CreateMappingRuleRequest const& request),
       (override));
 
@@ -230,46 +230,46 @@ class MockDataMigrationServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::clouddms::v1::MappingRule>, GetMappingRule,
+      (StatusOr<google::cloud::clouddms::v1::MappingRule>), GetMappingRule,
       (google::cloud::clouddms::v1::GetMappingRuleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>),
       SeedConversionWorkspace,
       (google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>),
       ImportMappingRules,
       (google::cloud::clouddms::v1::ImportMappingRulesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>),
       ConvertConversionWorkspace,
       (google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>),
       CommitConversionWorkspace,
       (google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>),
       RollbackConversionWorkspace,
       (google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      (future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>),
       ApplyConversionWorkspace,
       (google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
            request),
@@ -282,13 +282,13 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>,
+      (StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>),
       SearchBackgroundJobs,
       (google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::clouddms::v1::
-                           DescribeConversionWorkspaceRevisionsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::clouddms::v1::
+                            DescribeConversionWorkspaceRevisionsResponse>),
               DescribeConversionWorkspaceRevisions,
               (google::cloud::clouddms::v1::
                    DescribeConversionWorkspaceRevisionsRequest const& request),

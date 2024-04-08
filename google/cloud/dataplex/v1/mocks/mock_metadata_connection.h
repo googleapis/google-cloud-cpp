@@ -47,11 +47,11 @@ class MockMetadataServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>, CreateEntity,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Entity>), CreateEntity,
               (google::cloud::dataplex::v1::CreateEntityRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>, UpdateEntity,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Entity>), UpdateEntity,
               (google::cloud::dataplex::v1::UpdateEntityRequest const& request),
               (override));
 
@@ -59,7 +59,7 @@ class MockMetadataServiceConnection
               (google::cloud::dataplex::v1::DeleteEntityRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>, GetEntity,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Entity>), GetEntity,
               (google::cloud::dataplex::v1::GetEntityRequest const& request),
               (override));
 
@@ -68,7 +68,7 @@ class MockMetadataServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::Partition>, CreatePartition,
+      (StatusOr<google::cloud::dataplex::v1::Partition>), CreatePartition,
       (google::cloud::dataplex::v1::CreatePartitionRequest const& request),
       (override));
 
@@ -77,7 +77,7 @@ class MockMetadataServiceConnection
       (google::cloud::dataplex::v1::DeletePartitionRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Partition>, GetPartition,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Partition>), GetPartition,
               (google::cloud::dataplex::v1::GetPartitionRequest const& request),
               (override));
 

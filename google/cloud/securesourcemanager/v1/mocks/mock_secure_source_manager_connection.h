@@ -53,22 +53,22 @@ class MockSecureSourceManagerConnection
       (google::cloud::securesourcemanager::v1::ListInstancesRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::securesourcemanager::v1::Instance>,
+  MOCK_METHOD((StatusOr<google::cloud::securesourcemanager::v1::Instance>),
               GetInstance,
               (google::cloud::securesourcemanager::v1::GetInstanceRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>,
+      (future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>),
       CreateInstance,
       (google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>),
       DeleteInstance,
       (google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
            request),
@@ -81,36 +81,36 @@ class MockSecureSourceManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securesourcemanager::v1::Repository>,
+      (StatusOr<google::cloud::securesourcemanager::v1::Repository>),
       GetRepository,
       (google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>,
+      (future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>),
       CreateRepository,
       (google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>),
       DeleteRepository,
       (google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicyRepo,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicyRepo,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicyRepo,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicyRepo,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissionsRepo,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

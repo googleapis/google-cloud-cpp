@@ -47,11 +47,11 @@ class MockProductServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Product>, CreateProduct,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Product>), CreateProduct,
               (google::cloud::retail::v2::CreateProductRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Product>, GetProduct,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Product>), GetProduct,
               (google::cloud::retail::v2::GetProductRequest const& request),
               (override));
 
@@ -59,7 +59,7 @@ class MockProductServiceConnection
               (google::cloud::retail::v2::ListProductsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Product>, UpdateProduct,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Product>), UpdateProduct,
               (google::cloud::retail::v2::UpdateProductRequest const& request),
               (override));
 
@@ -68,39 +68,42 @@ class MockProductServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>,
+      (future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>),
       ImportProducts,
       (google::cloud::retail::v2::ImportProductsRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>,
-              SetInventory,
-              (google::cloud::retail::v2::SetInventoryRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>),
+      SetInventory,
+      (google::cloud::retail::v2::SetInventoryRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>,
+      (future<
+          StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>),
       AddFulfillmentPlaces,
       (google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>,
+      (future<StatusOr<
+           google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>),
       RemoveFulfillmentPlaces,
       (google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>,
+      (future<
+          StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>),
       AddLocalInventories,
       (google::cloud::retail::v2::AddLocalInventoriesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>,
+      (future<
+          StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>),
       RemoveLocalInventories,
       (google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request),
       (override));

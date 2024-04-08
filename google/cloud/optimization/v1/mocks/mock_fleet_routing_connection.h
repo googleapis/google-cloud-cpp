@@ -48,17 +48,18 @@ class MockFleetRoutingConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>,
+      (StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>),
       OptimizeTours,
       (google::cloud::optimization::v1::OptimizeToursRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::optimization::v1::BatchOptimizeToursResponse>>,
-              BatchOptimizeTours,
-              (google::cloud::optimization::v1::BatchOptimizeToursRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::optimization::v1::BatchOptimizeToursResponse>>),
+      BatchOptimizeTours,
+      (google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

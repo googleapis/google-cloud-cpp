@@ -48,7 +48,7 @@ class MockKeyTrackingServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>,
+      (StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>),
       GetProtectedResourcesSummary,
       (google::cloud::kms::inventory::v1::
            GetProtectedResourcesSummaryRequest const& request),

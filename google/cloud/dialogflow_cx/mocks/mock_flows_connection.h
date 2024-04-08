@@ -47,7 +47,7 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Flow>, CreateFlow,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Flow>), CreateFlow,
       (google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request),
       (override));
 
@@ -61,41 +61,41 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Flow>, GetFlow,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Flow>), GetFlow,
       (google::cloud::dialogflow::cx::v3::GetFlowRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Flow>, UpdateFlow,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Flow>), UpdateFlow,
       (google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, TrainFlow,
+      (future<StatusOr<google::protobuf::Struct>>), TrainFlow,
       (google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>),
       ValidateFlow,
       (google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>),
       GetFlowValidationResult,
       (google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>,
+      (future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>),
       ImportFlow,
       (google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>,
+      (future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>),
       ExportFlow,
       (google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request),
       (override));

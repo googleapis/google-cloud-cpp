@@ -46,26 +46,26 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, CreateJob,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::Job>), CreateJob,
               (google::cloud::talent::v4::CreateJobRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>,
+      (future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>),
       BatchCreateJobs,
       (google::cloud::talent::v4::BatchCreateJobsRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, GetJob,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::Job>), GetJob,
               (google::cloud::talent::v4::GetJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, UpdateJob,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::Job>), UpdateJob,
               (google::cloud::talent::v4::UpdateJobRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>,
+      (future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>),
       BatchUpdateJobs,
       (google::cloud::talent::v4::BatchUpdateJobsRequest const& request),
       (override));
@@ -75,7 +75,7 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>,
+      (future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>),
       BatchDeleteJobs,
       (google::cloud::talent::v4::BatchDeleteJobsRequest const& request),
       (override));
@@ -83,12 +83,12 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
   MOCK_METHOD((StreamRange<google::cloud::talent::v4::Job>), ListJobs,
               (google::cloud::talent::v4::ListJobsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::SearchJobsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::SearchJobsResponse>),
               SearchJobs,
               (google::cloud::talent::v4::SearchJobsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::SearchJobsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::SearchJobsResponse>),
               SearchJobsForAlert,
               (google::cloud::talent::v4::SearchJobsRequest const& request),
               (override));

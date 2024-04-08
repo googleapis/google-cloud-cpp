@@ -48,7 +48,7 @@ class MockQuotaControllerConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>,
+      (StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>),
       AllocateQuota,
       (google::api::servicecontrol::v1::AllocateQuotaRequest const& request),
       (override));

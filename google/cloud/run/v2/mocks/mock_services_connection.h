@@ -46,11 +46,12 @@ class MockServicesConnection : public run_v2::ServicesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, CreateService,
+  MOCK_METHOD((future<StatusOr<google::cloud::run::v2::Service>>),
+              CreateService,
               (google::cloud::run::v2::CreateServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::run::v2::Service>, GetService,
+  MOCK_METHOD((StatusOr<google::cloud::run::v2::Service>), GetService,
               (google::cloud::run::v2::GetServiceRequest const& request),
               (override));
 
@@ -58,23 +59,25 @@ class MockServicesConnection : public run_v2::ServicesConnection {
               (google::cloud::run::v2::ListServicesRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, UpdateService,
+  MOCK_METHOD((future<StatusOr<google::cloud::run::v2::Service>>),
+              UpdateService,
               (google::cloud::run::v2::UpdateServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, DeleteService,
+  MOCK_METHOD((future<StatusOr<google::cloud::run::v2::Service>>),
+              DeleteService,
               (google::cloud::run::v2::DeleteServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

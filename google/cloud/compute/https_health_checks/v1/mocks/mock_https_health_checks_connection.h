@@ -47,19 +47,19 @@ class MockHttpsHealthChecksConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteHttpsHealthCheck,
               (google::cloud::cpp::compute::https_health_checks::v1::
                    DeleteHttpsHealthCheckRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>),
               GetHttpsHealthCheck,
               (google::cloud::cpp::compute::https_health_checks::v1::
                    GetHttpsHealthCheckRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertHttpsHealthCheck,
               (google::cloud::cpp::compute::https_health_checks::v1::
                    InsertHttpsHealthCheckRequest const& request),
@@ -71,13 +71,13 @@ class MockHttpsHealthChecksConnection
                    ListHttpsHealthChecksRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchHttpsHealthCheck,
               (google::cloud::cpp::compute::https_health_checks::v1::
                    PatchHttpsHealthCheckRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               UpdateHttpsHealthCheck,
               (google::cloud::cpp::compute::https_health_checks::v1::
                    UpdateHttpsHealthCheckRequest const& request),

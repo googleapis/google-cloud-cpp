@@ -48,14 +48,14 @@ class MockCertificateAuthorityServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::security::privateca::v1::Certificate>,
+      (StatusOr<google::cloud::security::privateca::v1::Certificate>),
       CreateCertificate,
       (google::cloud::security::privateca::v1::CreateCertificateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::security::privateca::v1::Certificate>,
+      (StatusOr<google::cloud::security::privateca::v1::Certificate>),
       GetCertificate,
       (google::cloud::security::privateca::v1::GetCertificateRequest const&
            request),
@@ -68,60 +68,60 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::security::privateca::v1::Certificate>,
+      (StatusOr<google::cloud::security::privateca::v1::Certificate>),
       RevokeCertificate,
       (google::cloud::security::privateca::v1::RevokeCertificateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::security::privateca::v1::Certificate>,
+      (StatusOr<google::cloud::security::privateca::v1::Certificate>),
       UpdateCertificate,
       (google::cloud::security::privateca::v1::UpdateCertificateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateAuthority>>),
       ActivateCertificateAuthority,
       (google::cloud::security::privateca::v1::
            ActivateCertificateAuthorityRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateAuthority>>),
       CreateCertificateAuthority,
       (google::cloud::security::privateca::v1::
            CreateCertificateAuthorityRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateAuthority>>),
       DisableCertificateAuthority,
       (google::cloud::security::privateca::v1::
            DisableCertificateAuthorityRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateAuthority>>),
       EnableCertificateAuthority,
       (google::cloud::security::privateca::v1::
            EnableCertificateAuthorityRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::security::privateca::v1::
-                           FetchCertificateAuthorityCsrResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::security::privateca::v1::
+                            FetchCertificateAuthorityCsrResponse>),
               FetchCertificateAuthorityCsr,
               (google::cloud::security::privateca::v1::
                    FetchCertificateAuthorityCsrRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>,
+      (StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>),
       GetCertificateAuthority,
       (google::cloud::security::privateca::v1::
            GetCertificateAuthorityRequest const& request),
@@ -136,45 +136,45 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateAuthority>>),
       UndeleteCertificateAuthority,
       (google::cloud::security::privateca::v1::
            UndeleteCertificateAuthorityRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateAuthority>>),
       DeleteCertificateAuthority,
       (google::cloud::security::privateca::v1::
            DeleteCertificateAuthorityRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateAuthority>>),
       UpdateCertificateAuthority,
       (google::cloud::security::privateca::v1::
            UpdateCertificateAuthorityRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
+      (future<StatusOr<google::cloud::security::privateca::v1::CaPool>>),
       CreateCaPool,
       (google::cloud::security::privateca::v1::CreateCaPoolRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
+      (future<StatusOr<google::cloud::security::privateca::v1::CaPool>>),
       UpdateCaPool,
       (google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::security::privateca::v1::CaPool>, GetCaPool,
+      (StatusOr<google::cloud::security::privateca::v1::CaPool>), GetCaPool,
       (google::cloud::security::privateca::v1::GetCaPoolRequest const& request),
       (override));
 
@@ -185,23 +185,23 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>),
       DeleteCaPool,
       (google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>,
+      (StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>),
       FetchCaCerts,
       (google::cloud::security::privateca::v1::FetchCaCertsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::security::privateca::v1::CertificateRevocationList>,
+      (StatusOr<
+          google::cloud::security::privateca::v1::CertificateRevocationList>),
       GetCertificateRevocationList,
       (google::cloud::security::privateca::v1::
            GetCertificateRevocationListRequest const& request),
@@ -216,30 +216,31 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::security::privateca::v1::CertificateRevocationList>>,
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateRevocationList>>),
       UpdateCertificateRevocationList,
       (google::cloud::security::privateca::v1::
            UpdateCertificateRevocationListRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::security::privateca::v1::CertificateTemplate>>,
-              CreateCertificateTemplate,
-              (google::cloud::security::privateca::v1::
-                   CreateCertificateTemplateRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateTemplate>>),
+      CreateCertificateTemplate,
+      (google::cloud::security::privateca::v1::
+           CreateCertificateTemplateRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>),
       DeleteCertificateTemplate,
       (google::cloud::security::privateca::v1::
            DeleteCertificateTemplateRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>,
+      (StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>),
       GetCertificateTemplate,
       (google::cloud::security::privateca::v1::
            GetCertificateTemplateRequest const& request),
@@ -253,12 +254,13 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::security::privateca::v1::CertificateTemplate>>,
-              UpdateCertificateTemplate,
-              (google::cloud::security::privateca::v1::
-                   UpdateCertificateTemplateRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::security::privateca::v1::CertificateTemplate>>),
+      UpdateCertificateTemplate,
+      (google::cloud::security::privateca::v1::
+           UpdateCertificateTemplateRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

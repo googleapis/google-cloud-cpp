@@ -50,15 +50,15 @@ class MockConsumerProcurementServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>,
+      (future<
+          StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>),
       PlaceOrder,
       (google::cloud::commerce::consumer::procurement::v1::
            PlaceOrderRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>,
+      (StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>),
       GetOrder,
       (google::cloud::commerce::consumer::procurement::v1::
            GetOrderRequest const& request),

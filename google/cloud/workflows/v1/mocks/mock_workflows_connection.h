@@ -51,23 +51,25 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
               (google::cloud::workflows::v1::ListWorkflowsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::workflows::v1::Workflow>, GetWorkflow,
+  MOCK_METHOD((StatusOr<google::cloud::workflows::v1::Workflow>), GetWorkflow,
               (google::cloud::workflows::v1::GetWorkflowRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workflows::v1::Workflow>>, CreateWorkflow,
+      (future<StatusOr<google::cloud::workflows::v1::Workflow>>),
+      CreateWorkflow,
       (google::cloud::workflows::v1::CreateWorkflowRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>),
       DeleteWorkflow,
       (google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::workflows::v1::Workflow>>, UpdateWorkflow,
+      (future<StatusOr<google::cloud::workflows::v1::Workflow>>),
+      UpdateWorkflow,
       (google::cloud::workflows::v1::UpdateWorkflowRequest const& request),
       (override));
 };

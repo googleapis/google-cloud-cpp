@@ -47,17 +47,17 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::EntityType>, GetEntityType,
+      (StatusOr<google::cloud::dialogflow::cx::v3::EntityType>), GetEntityType,
       (google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::EntityType>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::cx::v3::EntityType>),
               CreateEntityType,
               (google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::EntityType>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::cx::v3::EntityType>),
               UpdateEntityType,
               (google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const&
                    request),
@@ -75,16 +75,16 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
+      (future<StatusOr<
+           google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>),
       ExportEntityTypes,
       (google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
+      (future<StatusOr<
+           google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>),
       ImportEntityTypes,
       (google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
            request),

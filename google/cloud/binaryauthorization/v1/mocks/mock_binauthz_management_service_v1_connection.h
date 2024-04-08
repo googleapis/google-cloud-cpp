@@ -48,31 +48,31 @@ class MockBinauthzManagementServiceV1Connection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::binaryauthorization::v1::Policy>, GetPolicy,
+      (StatusOr<google::cloud::binaryauthorization::v1::Policy>), GetPolicy,
       (google::cloud::binaryauthorization::v1::GetPolicyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::binaryauthorization::v1::Policy>, UpdatePolicy,
+      (StatusOr<google::cloud::binaryauthorization::v1::Policy>), UpdatePolicy,
       (google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::binaryauthorization::v1::Attestor>,
+      (StatusOr<google::cloud::binaryauthorization::v1::Attestor>),
       CreateAttestor,
       (google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::binaryauthorization::v1::Attestor>,
+  MOCK_METHOD((StatusOr<google::cloud::binaryauthorization::v1::Attestor>),
               GetAttestor,
               (google::cloud::binaryauthorization::v1::GetAttestorRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::binaryauthorization::v1::Attestor>,
+      (StatusOr<google::cloud::binaryauthorization::v1::Attestor>),
       UpdateAttestor,
       (google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
            request),

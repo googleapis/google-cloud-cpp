@@ -48,7 +48,7 @@ class MockTranscoderServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::transcoder::v1::Job>, CreateJob,
+      (StatusOr<google::cloud::video::transcoder::v1::Job>), CreateJob,
       (google::cloud::video::transcoder::v1::CreateJobRequest const& request),
       (override));
 
@@ -58,7 +58,7 @@ class MockTranscoderServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::transcoder::v1::Job>, GetJob,
+      (StatusOr<google::cloud::video::transcoder::v1::Job>), GetJob,
       (google::cloud::video::transcoder::v1::GetJobRequest const& request),
       (override));
 
@@ -68,7 +68,7 @@ class MockTranscoderServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::transcoder::v1::JobTemplate>,
+      (StatusOr<google::cloud::video::transcoder::v1::JobTemplate>),
       CreateJobTemplate,
       (google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
            request),
@@ -81,7 +81,7 @@ class MockTranscoderServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::video::transcoder::v1::JobTemplate>,
+      (StatusOr<google::cloud::video::transcoder::v1::JobTemplate>),
       GetJobTemplate,
       (google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
            request),

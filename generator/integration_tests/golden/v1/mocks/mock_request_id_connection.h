@@ -46,11 +46,11 @@ class MockRequestIdServiceConnection : public golden_v1::RequestIdServiceConnect
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::test::requestid::v1::Foo>,
+  MOCK_METHOD((StatusOr<google::test::requestid::v1::Foo>),
   CreateFoo,
   (google::test::requestid::v1::CreateFooRequest const& request), (override));
 
-  MOCK_METHOD(future<StatusOr<google::test::requestid::v1::Foo>>,
+  MOCK_METHOD((future<StatusOr<google::test::requestid::v1::Foo>>),
   RenameFoo,
   (google::test::requestid::v1::RenameFooRequest const& request), (override));
 
@@ -58,7 +58,7 @@ class MockRequestIdServiceConnection : public golden_v1::RequestIdServiceConnect
   ListFoos,
   (google::test::requestid::v1::ListFoosRequest request), (override));
 
-  MOCK_METHOD(future<StatusOr<google::test::requestid::v1::Foo>>,
+  MOCK_METHOD((future<StatusOr<google::test::requestid::v1::Foo>>),
   AsyncCreateFoo,
   (google::test::requestid::v1::CreateFooRequest const& request), (override));
 };

@@ -52,18 +52,18 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Version>, GetVersion,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Version>), GetVersion,
       (google::cloud::dialogflow::cx::v3::GetVersionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>,
+      (future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>),
       CreateVersion,
       (google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Version>, UpdateVersion,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Version>), UpdateVersion,
       (google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request),
       (override));
 
@@ -73,12 +73,12 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, LoadVersion,
+      (future<StatusOr<google::protobuf::Struct>>), LoadVersion,
       (google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>),
       CompareVersions,
       (google::cloud::dialogflow::cx::v3::CompareVersionsRequest const&
            request),

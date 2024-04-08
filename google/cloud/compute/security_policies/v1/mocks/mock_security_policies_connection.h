@@ -48,7 +48,7 @@ class MockSecurityPoliciesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AddRule,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), AddRule,
       (google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
            request),
       (override));
@@ -61,25 +61,25 @@ class MockSecurityPoliciesConnection
            AggregatedListSecurityPoliciesRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteSecurityPolicy,
               (google::cloud::cpp::compute::security_policies::v1::
                    DeleteSecurityPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>),
               GetSecurityPolicy,
               (google::cloud::cpp::compute::security_policies::v1::
                    GetSecurityPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>, GetRule,
+      (StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>), GetRule,
       (google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertSecurityPolicy,
               (google::cloud::cpp::compute::security_policies::v1::
                    InsertSecurityPolicyRequest const& request),
@@ -92,32 +92,32 @@ class MockSecurityPoliciesConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::
-                   SecurityPoliciesListPreconfiguredExpressionSetsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::
+                    SecurityPoliciesListPreconfiguredExpressionSetsResponse>),
       ListPreconfiguredExpressionSets,
       (google::cloud::cpp::compute::security_policies::v1::
            ListPreconfiguredExpressionSetsRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchSecurityPolicy,
               (google::cloud::cpp::compute::security_policies::v1::
                    PatchSecurityPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchRule,
               (google::cloud::cpp::compute::security_policies::v1::
                    PatchRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               RemoveRule,
               (google::cloud::cpp::compute::security_policies::v1::
                    RemoveRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetLabels,
               (google::cloud::cpp::compute::security_policies::v1::
                    SetLabelsRequest const& request),

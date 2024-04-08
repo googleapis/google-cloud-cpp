@@ -48,16 +48,16 @@ class MockOsConfigServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchJob>, ExecutePatchJob,
+      (StatusOr<google::cloud::osconfig::v1::PatchJob>), ExecutePatchJob,
       (google::cloud::osconfig::v1::ExecutePatchJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchJob>, GetPatchJob,
+  MOCK_METHOD((StatusOr<google::cloud::osconfig::v1::PatchJob>), GetPatchJob,
               (google::cloud::osconfig::v1::GetPatchJobRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchJob>, CancelPatchJob,
+      (StatusOr<google::cloud::osconfig::v1::PatchJob>), CancelPatchJob,
       (google::cloud::osconfig::v1::CancelPatchJobRequest const& request),
       (override));
 
@@ -72,14 +72,14 @@ class MockOsConfigServiceConnection
       (google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+  MOCK_METHOD((StatusOr<google::cloud::osconfig::v1::PatchDeployment>),
               CreatePatchDeployment,
               (google::cloud::osconfig::v1::CreatePatchDeploymentRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+      (StatusOr<google::cloud::osconfig::v1::PatchDeployment>),
       GetPatchDeployment,
       (google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request),
       (override));
@@ -95,19 +95,19 @@ class MockOsConfigServiceConnection
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+  MOCK_METHOD((StatusOr<google::cloud::osconfig::v1::PatchDeployment>),
               UpdatePatchDeployment,
               (google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+      (StatusOr<google::cloud::osconfig::v1::PatchDeployment>),
       PausePatchDeployment,
       (google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+  MOCK_METHOD((StatusOr<google::cloud::osconfig::v1::PatchDeployment>),
               ResumePatchDeployment,
               (google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&
                    request),

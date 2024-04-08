@@ -48,12 +48,13 @@ class MockTextToSpeechConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>, ListVoices,
+      (StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>),
+      ListVoices,
       (google::cloud::texttospeech::v1::ListVoicesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>,
+      (StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>),
       SynthesizeSpeech,
       (google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request),
       (override));

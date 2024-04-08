@@ -48,13 +48,13 @@ class MockVpcAccessServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vpcaccess::v1::Connector>>,
+      (future<StatusOr<google::cloud::vpcaccess::v1::Connector>>),
       CreateConnector,
       (google::cloud::vpcaccess::v1::CreateConnectorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vpcaccess::v1::Connector>, GetConnector,
+      (StatusOr<google::cloud::vpcaccess::v1::Connector>), GetConnector,
       (google::cloud::vpcaccess::v1::GetConnectorRequest const& request),
       (override));
 
@@ -64,7 +64,7 @@ class MockVpcAccessServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>),
       DeleteConnector,
       (google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request),
       (override));

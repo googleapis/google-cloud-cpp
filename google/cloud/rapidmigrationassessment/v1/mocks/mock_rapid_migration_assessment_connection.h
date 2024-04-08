@@ -49,21 +49,23 @@ class MockRapidMigrationAssessmentConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      (future<
+          StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>),
       CreateCollector,
       (google::cloud::rapidmigrationassessment::v1::
            CreateCollectorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>,
+      (future<
+          StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>),
       CreateAnnotation,
       (google::cloud::rapidmigrationassessment::v1::
            CreateAnnotationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>,
+      (StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>),
       GetAnnotation,
       (google::cloud::rapidmigrationassessment::v1::GetAnnotationRequest const&
            request),
@@ -77,42 +79,47 @@ class MockRapidMigrationAssessmentConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>,
+      (StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>),
       GetCollector,
       (google::cloud::rapidmigrationassessment::v1::GetCollectorRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      (future<
+          StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>),
       UpdateCollector,
       (google::cloud::rapidmigrationassessment::v1::
            UpdateCollectorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      (future<
+          StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>),
       DeleteCollector,
       (google::cloud::rapidmigrationassessment::v1::
            DeleteCollectorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      (future<
+          StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>),
       ResumeCollector,
       (google::cloud::rapidmigrationassessment::v1::
            ResumeCollectorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      (future<
+          StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>),
       RegisterCollector,
       (google::cloud::rapidmigrationassessment::v1::
            RegisterCollectorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      (future<
+          StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>),
       PauseCollector,
       (google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
            request),

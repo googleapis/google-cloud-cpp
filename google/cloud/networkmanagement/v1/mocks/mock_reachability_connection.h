@@ -55,35 +55,39 @@ class MockReachabilityServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>,
+      (StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>),
       GetConnectivityTest,
       (google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
+      (future<
+          StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>),
       CreateConnectivityTest,
       (google::cloud::networkmanagement::v1::
            CreateConnectivityTestRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
+      (future<
+          StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>),
       UpdateConnectivityTest,
       (google::cloud::networkmanagement::v1::
            UpdateConnectivityTestRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
+      (future<
+          StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>),
       RerunConnectivityTest,
       (google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>),
       DeleteConnectivityTest,
       (google::cloud::networkmanagement::v1::
            DeleteConnectivityTestRequest const& request),

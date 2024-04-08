@@ -46,7 +46,7 @@ class MockGrafeasConnection : public containeranalysis_v1::GrafeasConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, GetOccurrence,
+  MOCK_METHOD((StatusOr<grafeas::v1::Occurrence>), GetOccurrence,
               (grafeas::v1::GetOccurrenceRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<grafeas::v1::Occurrence>), ListOccurrences,
@@ -56,24 +56,24 @@ class MockGrafeasConnection : public containeranalysis_v1::GrafeasConnection {
               (grafeas::v1::DeleteOccurrenceRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, CreateOccurrence,
+  MOCK_METHOD((StatusOr<grafeas::v1::Occurrence>), CreateOccurrence,
               (grafeas::v1::CreateOccurrenceRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>,
+  MOCK_METHOD((StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>),
               BatchCreateOccurrences,
               (grafeas::v1::BatchCreateOccurrencesRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, UpdateOccurrence,
+  MOCK_METHOD((StatusOr<grafeas::v1::Occurrence>), UpdateOccurrence,
               (grafeas::v1::UpdateOccurrenceRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, GetOccurrenceNote,
+  MOCK_METHOD((StatusOr<grafeas::v1::Note>), GetOccurrenceNote,
               (grafeas::v1::GetOccurrenceNoteRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, GetNote,
+  MOCK_METHOD((StatusOr<grafeas::v1::Note>), GetNote,
               (grafeas::v1::GetNoteRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<grafeas::v1::Note>), ListNotes,
@@ -82,14 +82,15 @@ class MockGrafeasConnection : public containeranalysis_v1::GrafeasConnection {
   MOCK_METHOD(Status, DeleteNote,
               (grafeas::v1::DeleteNoteRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, CreateNote,
+  MOCK_METHOD((StatusOr<grafeas::v1::Note>), CreateNote,
               (grafeas::v1::CreateNoteRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::BatchCreateNotesResponse>, BatchCreateNotes,
+  MOCK_METHOD((StatusOr<grafeas::v1::BatchCreateNotesResponse>),
+              BatchCreateNotes,
               (grafeas::v1::BatchCreateNotesRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, UpdateNote,
+  MOCK_METHOD((StatusOr<grafeas::v1::Note>), UpdateNote,
               (grafeas::v1::UpdateNoteRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<grafeas::v1::Occurrence>), ListNoteOccurrences,

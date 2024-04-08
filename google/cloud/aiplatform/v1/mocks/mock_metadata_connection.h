@@ -47,14 +47,15 @@ class MockMetadataServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>),
               CreateMetadataStore,
               (google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::MetadataStore>, GetMetadataStore,
+      (StatusOr<google::cloud::aiplatform::v1::MetadataStore>),
+      GetMetadataStore,
       (google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request),
       (override));
 
@@ -64,21 +65,20 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::ListMetadataStoresRequest request),
       (override));
 
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>,
-      DeleteMetadataStore,
-      (google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
-           request),
-      (override));
+  MOCK_METHOD((future<StatusOr<google::cloud::aiplatform::v1::
+                                   DeleteMetadataStoreOperationMetadata>>),
+              DeleteMetadataStore,
+              (google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
+                   request),
+              (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Artifact>, CreateArtifact,
+      (StatusOr<google::cloud::aiplatform::v1::Artifact>), CreateArtifact,
       (google::cloud::aiplatform::v1::CreateArtifactRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Artifact>, GetArtifact,
+      (StatusOr<google::cloud::aiplatform::v1::Artifact>), GetArtifact,
       (google::cloud::aiplatform::v1::GetArtifactRequest const& request),
       (override));
 
@@ -88,28 +88,29 @@ class MockMetadataServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Artifact>, UpdateArtifact,
+      (StatusOr<google::cloud::aiplatform::v1::Artifact>), UpdateArtifact,
       (google::cloud::aiplatform::v1::UpdateArtifactRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteArtifact,
       (google::cloud::aiplatform::v1::DeleteArtifactRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>),
       PurgeArtifacts,
       (google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Context>, CreateContext,
+      (StatusOr<google::cloud::aiplatform::v1::Context>), CreateContext,
       (google::cloud::aiplatform::v1::CreateContextRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Context>, GetContext,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::Context>), GetContext,
               (google::cloud::aiplatform::v1::GetContextRequest const& request),
               (override));
 
@@ -119,56 +120,57 @@ class MockMetadataServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Context>, UpdateContext,
+      (StatusOr<google::cloud::aiplatform::v1::Context>), UpdateContext,
       (google::cloud::aiplatform::v1::UpdateContextRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteContext,
       (google::cloud::aiplatform::v1::DeleteContextRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>),
       PurgeContexts,
       (google::cloud::aiplatform::v1::PurgeContextsRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
-                           AddContextArtifactsAndExecutionsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::
+                            AddContextArtifactsAndExecutionsResponse>),
               AddContextArtifactsAndExecutions,
               (google::cloud::aiplatform::v1::
                    AddContextArtifactsAndExecutionsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>),
       AddContextChildren,
       (google::cloud::aiplatform::v1::AddContextChildrenRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>),
       RemoveContextChildren,
       (google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>,
+      (StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>),
       QueryContextLineageSubgraph,
       (google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Execution>, CreateExecution,
+      (StatusOr<google::cloud::aiplatform::v1::Execution>), CreateExecution,
       (google::cloud::aiplatform::v1::CreateExecutionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Execution>, GetExecution,
+      (StatusOr<google::cloud::aiplatform::v1::Execution>), GetExecution,
       (google::cloud::aiplatform::v1::GetExecutionRequest const& request),
       (override));
 
@@ -178,42 +180,44 @@ class MockMetadataServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Execution>, UpdateExecution,
+      (StatusOr<google::cloud::aiplatform::v1::Execution>), UpdateExecution,
       (google::cloud::aiplatform::v1::UpdateExecutionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteExecution,
       (google::cloud::aiplatform::v1::DeleteExecutionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>),
       PurgeExecutions,
       (google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>),
       AddExecutionEvents,
       (google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>),
               QueryExecutionInputsAndOutputs,
               (google::cloud::aiplatform::v1::
                    QueryExecutionInputsAndOutputsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::MetadataSchema>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::MetadataSchema>),
               CreateMetadataSchema,
               (google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::MetadataSchema>,
+      (StatusOr<google::cloud::aiplatform::v1::MetadataSchema>),
       GetMetadataSchema,
       (google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request),
       (override));
@@ -225,7 +229,7 @@ class MockMetadataServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>,
+      (StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>),
       QueryArtifactLineageSubgraph,
       (google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&
            request),

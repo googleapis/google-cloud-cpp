@@ -47,39 +47,40 @@ class MockSecurityCenterConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>,
-              BulkMuteFindings,
-              (google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>),
+      BulkMuteFindings,
+      (google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::
-                   SecurityHealthAnalyticsCustomModule>,
+      (StatusOr<google::cloud::securitycenter::v1::
+                    SecurityHealthAnalyticsCustomModule>),
       CreateSecurityHealthAnalyticsCustomModule,
       (google::cloud::securitycenter::v1::
            CreateSecurityHealthAnalyticsCustomModuleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::Source>, CreateSource,
+      (StatusOr<google::cloud::securitycenter::v1::Source>), CreateSource,
       (google::cloud::securitycenter::v1::CreateSourceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::Finding>, CreateFinding,
+      (StatusOr<google::cloud::securitycenter::v1::Finding>), CreateFinding,
       (google::cloud::securitycenter::v1::CreateFindingRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::securitycenter::v1::MuteConfig>,
+  MOCK_METHOD((StatusOr<google::cloud::securitycenter::v1::MuteConfig>),
               CreateMuteConfig,
               (google::cloud::securitycenter::v1::CreateMuteConfigRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::NotificationConfig>,
+      (StatusOr<google::cloud::securitycenter::v1::NotificationConfig>),
       CreateNotificationConfig,
       (google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
            request),
@@ -103,37 +104,37 @@ class MockSecurityCenterConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::BigQueryExport>,
+      (StatusOr<google::cloud::securitycenter::v1::BigQueryExport>),
       GetBigQueryExport,
       (google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::MuteConfig>, GetMuteConfig,
+      (StatusOr<google::cloud::securitycenter::v1::MuteConfig>), GetMuteConfig,
       (google::cloud::securitycenter::v1::GetMuteConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::NotificationConfig>,
+      (StatusOr<google::cloud::securitycenter::v1::NotificationConfig>),
       GetNotificationConfig,
       (google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>,
+      (StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>),
       GetOrganizationSettings,
       (google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::securitycenter::v1::
-                           EffectiveSecurityHealthAnalyticsCustomModule>,
+  MOCK_METHOD((StatusOr<google::cloud::securitycenter::v1::
+                            EffectiveSecurityHealthAnalyticsCustomModule>),
               GetEffectiveSecurityHealthAnalyticsCustomModule,
               (google::cloud::securitycenter::v1::
                    GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
@@ -141,15 +142,15 @@ class MockSecurityCenterConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::
-                   SecurityHealthAnalyticsCustomModule>,
+      (StatusOr<google::cloud::securitycenter::v1::
+                    SecurityHealthAnalyticsCustomModule>),
       GetSecurityHealthAnalyticsCustomModule,
       (google::cloud::securitycenter::v1::
            GetSecurityHealthAnalyticsCustomModuleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::Source>, GetSource,
+      (StatusOr<google::cloud::securitycenter::v1::Source>), GetSource,
       (google::cloud::securitycenter::v1::GetSourceRequest const& request),
       (override));
 
@@ -217,94 +218,95 @@ class MockSecurityCenterConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>,
+      (future<StatusOr<
+           google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>),
       RunAssetDiscovery,
       (google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::securitycenter::v1::Finding>,
+  MOCK_METHOD((StatusOr<google::cloud::securitycenter::v1::Finding>),
               SetFindingState,
               (google::cloud::securitycenter::v1::SetFindingStateRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::Finding>, SetMute,
+      (StatusOr<google::cloud::securitycenter::v1::Finding>), SetMute,
       (google::cloud::securitycenter::v1::SetMuteRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::
-                   SimulateSecurityHealthAnalyticsCustomModuleResponse>,
+      (StatusOr<google::cloud::securitycenter::v1::
+                    SimulateSecurityHealthAnalyticsCustomModuleResponse>),
       SimulateSecurityHealthAnalyticsCustomModule,
       (google::cloud::securitycenter::v1::
            SimulateSecurityHealthAnalyticsCustomModuleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::ExternalSystem>,
+      (StatusOr<google::cloud::securitycenter::v1::ExternalSystem>),
       UpdateExternalSystem,
       (google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::Finding>, UpdateFinding,
+      (StatusOr<google::cloud::securitycenter::v1::Finding>), UpdateFinding,
       (google::cloud::securitycenter::v1::UpdateFindingRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::securitycenter::v1::MuteConfig>,
+  MOCK_METHOD((StatusOr<google::cloud::securitycenter::v1::MuteConfig>),
               UpdateMuteConfig,
               (google::cloud::securitycenter::v1::UpdateMuteConfigRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::NotificationConfig>,
+      (StatusOr<google::cloud::securitycenter::v1::NotificationConfig>),
       UpdateNotificationConfig,
       (google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>,
-              UpdateOrganizationSettings,
-              (google::cloud::securitycenter::v1::
-                   UpdateOrganizationSettingsRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>),
+      UpdateOrganizationSettings,
+      (google::cloud::securitycenter::v1::
+           UpdateOrganizationSettingsRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::
-                   SecurityHealthAnalyticsCustomModule>,
+      (StatusOr<google::cloud::securitycenter::v1::
+                    SecurityHealthAnalyticsCustomModule>),
       UpdateSecurityHealthAnalyticsCustomModule,
       (google::cloud::securitycenter::v1::
            UpdateSecurityHealthAnalyticsCustomModuleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::Source>, UpdateSource,
+      (StatusOr<google::cloud::securitycenter::v1::Source>), UpdateSource,
       (google::cloud::securitycenter::v1::UpdateSourceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::SecurityMarks>,
+      (StatusOr<google::cloud::securitycenter::v1::SecurityMarks>),
       UpdateSecurityMarks,
       (google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::BigQueryExport>,
+      (StatusOr<google::cloud::securitycenter::v1::BigQueryExport>),
       CreateBigQueryExport,
       (google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
            request),
@@ -317,7 +319,7 @@ class MockSecurityCenterConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycenter::v1::BigQueryExport>,
+      (StatusOr<google::cloud::securitycenter::v1::BigQueryExport>),
       UpdateBigQueryExport,
       (google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
            request),

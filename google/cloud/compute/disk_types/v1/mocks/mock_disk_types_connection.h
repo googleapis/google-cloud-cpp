@@ -56,7 +56,7 @@ class MockDiskTypesConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::DiskType>, GetDiskType,
+      (StatusOr<google::cloud::cpp::compute::v1::DiskType>), GetDiskType,
       (google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
            request),
       (override));

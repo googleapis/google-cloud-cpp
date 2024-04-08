@@ -54,7 +54,7 @@ class MockCloudControlsPartnerMonitoringConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>,
+      (StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>),
       GetViolation,
       (google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
            request),

@@ -48,7 +48,7 @@ class MockBigQueryWriteConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::WriteStream>,
+      (StatusOr<google::cloud::bigquery::storage::v1::WriteStream>),
       CreateWriteStream,
       (google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
            request),
@@ -60,29 +60,29 @@ class MockBigQueryWriteConnection
               AsyncAppendRows, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::WriteStream>,
+      (StatusOr<google::cloud::bigquery::storage::v1::WriteStream>),
       GetWriteStream,
       (google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>,
+      (StatusOr<
+          google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>),
       FinalizeWriteStream,
       (google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::
-                           BatchCommitWriteStreamsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::bigquery::storage::v1::
+                            BatchCommitWriteStreamsResponse>),
               BatchCommitWriteStreams,
               (google::cloud::bigquery::storage::v1::
                    BatchCommitWriteStreamsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>,
+      (StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>),
       FlushRows,
       (google::cloud::bigquery::storage::v1::FlushRowsRequest const& request),
       (override));

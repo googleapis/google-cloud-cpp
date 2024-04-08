@@ -47,7 +47,7 @@ class MockDashboardsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::dashboard::v1::Dashboard>,
+  MOCK_METHOD((StatusOr<google::monitoring::dashboard::v1::Dashboard>),
               CreateDashboard,
               (google::monitoring::dashboard::v1::CreateDashboardRequest const&
                    request),
@@ -60,7 +60,7 @@ class MockDashboardsServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::monitoring::dashboard::v1::Dashboard>, GetDashboard,
+      (StatusOr<google::monitoring::dashboard::v1::Dashboard>), GetDashboard,
       (google::monitoring::dashboard::v1::GetDashboardRequest const& request),
       (override));
 
@@ -69,7 +69,7 @@ class MockDashboardsServiceConnection
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::dashboard::v1::Dashboard>,
+  MOCK_METHOD((StatusOr<google::monitoring::dashboard::v1::Dashboard>),
               UpdateDashboard,
               (google::monitoring::dashboard::v1::UpdateDashboardRequest const&
                    request),

@@ -48,14 +48,14 @@ class MockPersistentResourceServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>),
       CreatePersistentResource,
       (google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::PersistentResource>,
+      (StatusOr<google::cloud::aiplatform::v1::PersistentResource>),
       GetPersistentResource,
       (google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
            request),
@@ -68,21 +68,22 @@ class MockPersistentResourceServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeletePersistentResource,
       (google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>),
       UpdatePersistentResource,
       (google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>),
       RebootPersistentResource,
       (google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
            request),

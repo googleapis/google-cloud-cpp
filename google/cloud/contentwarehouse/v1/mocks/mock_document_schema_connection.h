@@ -48,21 +48,21 @@ class MockDocumentSchemaServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>,
+      (StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>),
       CreateDocumentSchema,
       (google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>,
+      (StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>),
       UpdateDocumentSchema,
       (google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>,
+      (StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>),
       GetDocumentSchema,
       (google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
            request),

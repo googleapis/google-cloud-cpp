@@ -51,17 +51,17 @@ class MockContextsConnection : public dialogflow_es::ContextsConnection {
               (google::cloud::dialogflow::v2::ListContextsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Context>, GetContext,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::Context>), GetContext,
               (google::cloud::dialogflow::v2::GetContextRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Context>, CreateContext,
+      (StatusOr<google::cloud::dialogflow::v2::Context>), CreateContext,
       (google::cloud::dialogflow::v2::CreateContextRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Context>, UpdateContext,
+      (StatusOr<google::cloud::dialogflow::v2::Context>), UpdateContext,
       (google::cloud::dialogflow::v2::UpdateContextRequest const& request),
       (override));
 

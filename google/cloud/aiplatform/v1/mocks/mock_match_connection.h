@@ -48,13 +48,13 @@ class MockMatchServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>),
       FindNeighbors,
       (google::cloud::aiplatform::v1::FindNeighborsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>),
       ReadIndexDatapoints,
       (google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const&
            request),

@@ -53,44 +53,44 @@ class MockEdgeContainerConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgecontainer::v1::Cluster>, GetCluster,
+      (StatusOr<google::cloud::edgecontainer::v1::Cluster>), GetCluster,
       (google::cloud::edgecontainer::v1::GetClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
+      (future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>),
       CreateCluster,
       (google::cloud::edgecontainer::v1::CreateClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
+      (future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>),
       UpdateCluster,
       (google::cloud::edgecontainer::v1::UpdateClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
+      (future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>),
       UpgradeCluster,
       (google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>),
       DeleteCluster,
       (google::cloud::edgecontainer::v1::DeleteClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>,
+      (StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>),
       GenerateAccessToken,
       (google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>,
+      (StatusOr<
+          google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>),
       GenerateOfflineCredential,
       (google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
            request),
@@ -102,24 +102,24 @@ class MockEdgeContainerConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgecontainer::v1::NodePool>, GetNodePool,
+      (StatusOr<google::cloud::edgecontainer::v1::NodePool>), GetNodePool,
       (google::cloud::edgecontainer::v1::GetNodePoolRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
+      (future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>),
       CreateNodePool,
       (google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
+      (future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>),
       UpdateNodePool,
       (google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>),
       DeleteNodePool,
       (google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request),
       (override));
@@ -130,7 +130,7 @@ class MockEdgeContainerConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgecontainer::v1::Machine>, GetMachine,
+      (StatusOr<google::cloud::edgecontainer::v1::Machine>), GetMachine,
       (google::cloud::edgecontainer::v1::GetMachineRequest const& request),
       (override));
 
@@ -140,28 +140,29 @@ class MockEdgeContainerConnection
       (google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::edgecontainer::v1::VpnConnection>,
+  MOCK_METHOD((StatusOr<google::cloud::edgecontainer::v1::VpnConnection>),
               GetVpnConnection,
               (google::cloud::edgecontainer::v1::GetVpnConnectionRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>,
+      (future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>),
       CreateVpnConnection,
       (google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>),
       DeleteVpnConnection,
       (google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::edgecontainer::v1::ServerConfig>, GetServerConfig,
+      (StatusOr<google::cloud::edgecontainer::v1::ServerConfig>),
+      GetServerConfig,
       (google::cloud::edgecontainer::v1::GetServerConfigRequest const& request),
       (override));
 };

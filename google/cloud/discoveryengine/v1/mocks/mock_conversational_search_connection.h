@@ -48,15 +48,15 @@ class MockConversationalSearchServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::discoveryengine::v1::ConverseConversationResponse>,
+      (StatusOr<
+          google::cloud::discoveryengine::v1::ConverseConversationResponse>),
       ConverseConversation,
       (google::cloud::discoveryengine::v1::ConverseConversationRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::discoveryengine::v1::Conversation>,
+      (StatusOr<google::cloud::discoveryengine::v1::Conversation>),
       CreateConversation,
       (google::cloud::discoveryengine::v1::CreateConversationRequest const&
            request),
@@ -69,13 +69,13 @@ class MockConversationalSearchServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::discoveryengine::v1::Conversation>,
+      (StatusOr<google::cloud::discoveryengine::v1::Conversation>),
       UpdateConversation,
       (google::cloud::discoveryengine::v1::UpdateConversationRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Conversation>,
+  MOCK_METHOD((StatusOr<google::cloud::discoveryengine::v1::Conversation>),
               GetConversation,
               (google::cloud::discoveryengine::v1::GetConversationRequest const&
                    request),

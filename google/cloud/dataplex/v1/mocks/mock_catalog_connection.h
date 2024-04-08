@@ -48,17 +48,19 @@ class MockCatalogServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::EntryType>>, CreateEntryType,
+      (future<StatusOr<google::cloud::dataplex::v1::EntryType>>),
+      CreateEntryType,
       (google::cloud::dataplex::v1::CreateEntryTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::EntryType>>, UpdateEntryType,
+      (future<StatusOr<google::cloud::dataplex::v1::EntryType>>),
+      UpdateEntryType,
       (google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>),
       DeleteEntryType,
       (google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request),
       (override));
@@ -68,24 +70,24 @@ class MockCatalogServiceConnection
               (google::cloud::dataplex::v1::ListEntryTypesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::EntryType>, GetEntryType,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::EntryType>), GetEntryType,
               (google::cloud::dataplex::v1::GetEntryTypeRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::AspectType>>,
+      (future<StatusOr<google::cloud::dataplex::v1::AspectType>>),
       CreateAspectType,
       (google::cloud::dataplex::v1::CreateAspectTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::AspectType>>,
+      (future<StatusOr<google::cloud::dataplex::v1::AspectType>>),
       UpdateAspectType,
       (google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>),
       DeleteAspectType,
       (google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request),
       (override));
@@ -96,24 +98,24 @@ class MockCatalogServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::AspectType>, GetAspectType,
+      (StatusOr<google::cloud::dataplex::v1::AspectType>), GetAspectType,
       (google::cloud::dataplex::v1::GetAspectTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>,
+      (future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>),
       CreateEntryGroup,
       (google::cloud::dataplex::v1::CreateEntryGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>,
+      (future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>),
       UpdateEntryGroup,
       (google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>),
       DeleteEntryGroup,
       (google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request),
       (override));
@@ -124,19 +126,19 @@ class MockCatalogServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::EntryGroup>, GetEntryGroup,
+      (StatusOr<google::cloud::dataplex::v1::EntryGroup>), GetEntryGroup,
       (google::cloud::dataplex::v1::GetEntryGroupRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entry>, CreateEntry,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Entry>), CreateEntry,
               (google::cloud::dataplex::v1::CreateEntryRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entry>, UpdateEntry,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Entry>), UpdateEntry,
               (google::cloud::dataplex::v1::UpdateEntryRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entry>, DeleteEntry,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Entry>), DeleteEntry,
               (google::cloud::dataplex::v1::DeleteEntryRequest const& request),
               (override));
 
@@ -144,11 +146,11 @@ class MockCatalogServiceConnection
               (google::cloud::dataplex::v1::ListEntriesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entry>, GetEntry,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Entry>), GetEntry,
               (google::cloud::dataplex::v1::GetEntryRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entry>, LookupEntry,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Entry>), LookupEntry,
               (google::cloud::dataplex::v1::LookupEntryRequest const& request),
               (override));
 

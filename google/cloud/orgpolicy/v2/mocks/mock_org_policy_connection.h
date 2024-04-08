@@ -55,22 +55,22 @@ class MockOrgPolicyConnection : public orgpolicy_v2::OrgPolicyConnection {
               (google::cloud::orgpolicy::v2::ListPoliciesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orgpolicy::v2::Policy>, GetPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::orgpolicy::v2::Policy>), GetPolicy,
               (google::cloud::orgpolicy::v2::GetPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::orgpolicy::v2::Policy>, GetEffectivePolicy,
+      (StatusOr<google::cloud::orgpolicy::v2::Policy>), GetEffectivePolicy,
       (google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::orgpolicy::v2::Policy>, CreatePolicy,
+      (StatusOr<google::cloud::orgpolicy::v2::Policy>), CreatePolicy,
       (google::cloud::orgpolicy::v2::CreatePolicyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::orgpolicy::v2::Policy>, UpdatePolicy,
+      (StatusOr<google::cloud::orgpolicy::v2::Policy>), UpdatePolicy,
       (google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request),
       (override));
 
@@ -80,21 +80,21 @@ class MockOrgPolicyConnection : public orgpolicy_v2::OrgPolicyConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>,
+      (StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>),
       CreateCustomConstraint,
       (google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>,
+      (StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>),
       UpdateCustomConstraint,
       (google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>,
+      (StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>),
       GetCustomConstraint,
       (google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request),
       (override));

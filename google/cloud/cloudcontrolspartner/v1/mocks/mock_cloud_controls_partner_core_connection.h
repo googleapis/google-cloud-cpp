@@ -48,7 +48,8 @@ class MockCloudControlsPartnerCoreConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>, GetWorkload,
+      (StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>),
+      GetWorkload,
       (google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
            request),
       (override));
@@ -60,7 +61,8 @@ class MockCloudControlsPartnerCoreConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>, GetCustomer,
+      (StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>),
+      GetCustomer,
       (google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
            request),
       (override));
@@ -72,14 +74,14 @@ class MockCloudControlsPartnerCoreConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>,
+      (StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>),
       GetEkmConnections,
       (google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>,
+      (StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>),
       GetPartnerPermissions,
       (google::cloud::cloudcontrolspartner::v1::
            GetPartnerPermissionsRequest const& request),
@@ -93,7 +95,7 @@ class MockCloudControlsPartnerCoreConnection
            ListAccessApprovalRequestsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>,
+  MOCK_METHOD((StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>),
               GetPartner,
               (google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
                    request),

@@ -46,7 +46,7 @@ class MockExecutionsConnection : public run_v2::ExecutionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::run::v2::Execution>, GetExecution,
+  MOCK_METHOD((StatusOr<google::cloud::run::v2::Execution>), GetExecution,
               (google::cloud::run::v2::GetExecutionRequest const& request),
               (override));
 
@@ -54,12 +54,12 @@ class MockExecutionsConnection : public run_v2::ExecutionsConnection {
               (google::cloud::run::v2::ListExecutionsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::run::v2::Execution>>),
               DeleteExecution,
               (google::cloud::run::v2::DeleteExecutionRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::run::v2::Execution>>),
               CancelExecution,
               (google::cloud::run::v2::CancelExecutionRequest const& request),
               (override));

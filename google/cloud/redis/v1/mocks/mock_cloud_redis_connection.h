@@ -50,53 +50,53 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
               (google::cloud::redis::v1::ListInstancesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::redis::v1::Instance>, GetInstance,
+  MOCK_METHOD((StatusOr<google::cloud::redis::v1::Instance>), GetInstance,
               (google::cloud::redis::v1::GetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::redis::v1::InstanceAuthString>,
+      (StatusOr<google::cloud::redis::v1::InstanceAuthString>),
       GetInstanceAuthString,
       (google::cloud::redis::v1::GetInstanceAuthStringRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::redis::v1::Instance>>),
               CreateInstance,
               (google::cloud::redis::v1::CreateInstanceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::redis::v1::Instance>>),
               UpdateInstance,
               (google::cloud::redis::v1::UpdateInstanceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::redis::v1::Instance>>),
               UpgradeInstance,
               (google::cloud::redis::v1::UpgradeInstanceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::redis::v1::Instance>>),
               ImportInstance,
               (google::cloud::redis::v1::ImportInstanceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::redis::v1::Instance>>),
               ExportInstance,
               (google::cloud::redis::v1::ExportInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::redis::v1::Instance>>, FailoverInstance,
+      (future<StatusOr<google::cloud::redis::v1::Instance>>), FailoverInstance,
       (google::cloud::redis::v1::FailoverInstanceRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::redis::v1::OperationMetadata>>),
               DeleteInstance,
               (google::cloud::redis::v1::DeleteInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::redis::v1::Instance>>,
+      (future<StatusOr<google::cloud::redis::v1::Instance>>),
       RescheduleMaintenance,
       (google::cloud::redis::v1::RescheduleMaintenanceRequest const& request),
       (override));

@@ -54,7 +54,7 @@ class MockMetricServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::MonitoredResourceDescriptor>,
+      (StatusOr<google::api::MonitoredResourceDescriptor>),
       GetMonitoredResourceDescriptor,
       (google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
            request),
@@ -66,12 +66,12 @@ class MockMetricServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::MetricDescriptor>, GetMetricDescriptor,
+      (StatusOr<google::api::MetricDescriptor>), GetMetricDescriptor,
       (google::monitoring::v3::GetMetricDescriptorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::MetricDescriptor>, CreateMetricDescriptor,
+      (StatusOr<google::api::MetricDescriptor>), CreateMetricDescriptor,
       (google::monitoring::v3::CreateMetricDescriptorRequest const& request),
       (override));
 

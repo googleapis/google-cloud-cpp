@@ -48,20 +48,20 @@ class MockSynonymSetServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>,
+      (StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>),
       CreateSynonymSet,
       (google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>,
+  MOCK_METHOD((StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>),
               GetSynonymSet,
               (google::cloud::contentwarehouse::v1::GetSynonymSetRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>,
+      (StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>),
       UpdateSynonymSet,
       (google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
            request),

@@ -56,13 +56,13 @@ class MockRegionCommitmentsConnection
            AggregatedListRegionCommitmentsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Commitment>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Commitment>),
               GetCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::
                    GetCommitmentRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::
                    InsertCommitmentRequest const& request),
@@ -74,7 +74,7 @@ class MockRegionCommitmentsConnection
                    ListRegionCommitmentsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               UpdateCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::
                    UpdateCommitmentRequest const& request),

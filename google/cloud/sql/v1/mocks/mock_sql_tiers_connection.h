@@ -46,7 +46,7 @@ class MockSqlTiersServiceConnection : public sql_v1::SqlTiersServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::TiersListResponse>, List,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::TiersListResponse>), List,
               (google::cloud::sql::v1::SqlTiersListRequest const& request),
               (override));
 };

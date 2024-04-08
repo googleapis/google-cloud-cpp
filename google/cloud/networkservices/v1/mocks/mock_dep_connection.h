@@ -55,28 +55,30 @@ class MockDepServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>,
+      (StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>),
       GetLbTrafficExtension,
       (google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>,
+      (future<
+          StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>),
       CreateLbTrafficExtension,
       (google::cloud::networkservices::v1::
            CreateLbTrafficExtensionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>,
+      (future<
+          StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>),
       UpdateLbTrafficExtension,
       (google::cloud::networkservices::v1::
            UpdateLbTrafficExtensionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>),
       DeleteLbTrafficExtension,
       (google::cloud::networkservices::v1::
            DeleteLbTrafficExtensionRequest const& request),
@@ -90,28 +92,28 @@ class MockDepServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networkservices::v1::LbRouteExtension>,
+      (StatusOr<google::cloud::networkservices::v1::LbRouteExtension>),
       GetLbRouteExtension,
       (google::cloud::networkservices::v1::GetLbRouteExtensionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>,
+      (future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>),
       CreateLbRouteExtension,
       (google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>,
+      (future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>),
       UpdateLbRouteExtension,
       (google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>),
       DeleteLbRouteExtension,
       (google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
            request),

@@ -55,7 +55,7 @@ class MockAcceleratorTypesConnection
            AggregatedListAcceleratorTypesRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>),
               GetAcceleratorType,
               (google::cloud::cpp::compute::accelerator_types::v1::
                    GetAcceleratorTypeRequest const& request),

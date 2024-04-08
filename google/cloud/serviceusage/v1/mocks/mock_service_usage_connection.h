@@ -48,18 +48,18 @@ class MockServiceUsageConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
+      (future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>),
       EnableService,
       (google::api::serviceusage::v1::EnableServiceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
+      (future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>),
       DisableService,
       (google::api::serviceusage::v1::DisableServiceRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::api::serviceusage::v1::Service>, GetService,
+  MOCK_METHOD((StatusOr<google::api::serviceusage::v1::Service>), GetService,
               (google::api::serviceusage::v1::GetServiceRequest const& request),
               (override));
 
@@ -69,15 +69,15 @@ class MockServiceUsageConnection
               (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,
+      (future<StatusOr<
+           google::api::serviceusage::v1::BatchEnableServicesResponse>>),
       BatchEnableServices,
       (google::api::serviceusage::v1::BatchEnableServicesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>,
+      (StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>),
       BatchGetServices,
       (google::api::serviceusage::v1::BatchGetServicesRequest const& request),
       (override));

@@ -58,28 +58,30 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datafusion::v1::Instance>, GetInstance,
+      (StatusOr<google::cloud::datafusion::v1::Instance>), GetInstance,
       (google::cloud::datafusion::v1::GetInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datafusion::v1::Instance>>, CreateInstance,
+      (future<StatusOr<google::cloud::datafusion::v1::Instance>>),
+      CreateInstance,
       (google::cloud::datafusion::v1::CreateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>),
       DeleteInstance,
       (google::cloud::datafusion::v1::DeleteInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datafusion::v1::Instance>>, UpdateInstance,
+      (future<StatusOr<google::cloud::datafusion::v1::Instance>>),
+      UpdateInstance,
       (google::cloud::datafusion::v1::UpdateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::datafusion::v1::Instance>>,
+      (future<StatusOr<google::cloud::datafusion::v1::Instance>>),
       RestartInstance,
       (google::cloud::datafusion::v1::RestartInstanceRequest const& request),
       (override));

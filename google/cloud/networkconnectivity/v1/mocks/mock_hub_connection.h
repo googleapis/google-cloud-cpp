@@ -53,23 +53,25 @@ class MockHubServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::Hub>, GetHub,
+      (StatusOr<google::cloud::networkconnectivity::v1::Hub>), GetHub,
       (google::cloud::networkconnectivity::v1::GetHubRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>, CreateHub,
+      (future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>),
+      CreateHub,
       (google::cloud::networkconnectivity::v1::CreateHubRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>, UpdateHub,
+      (future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>),
+      UpdateHub,
       (google::cloud::networkconnectivity::v1::UpdateHubRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>),
       DeleteHub,
       (google::cloud::networkconnectivity::v1::DeleteHubRequest const& request),
       (override));
@@ -86,55 +88,55 @@ class MockHubServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::Spoke>, GetSpoke,
+      (StatusOr<google::cloud::networkconnectivity::v1::Spoke>), GetSpoke,
       (google::cloud::networkconnectivity::v1::GetSpokeRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>),
               CreateSpoke,
               (google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>),
               UpdateSpoke,
               (google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>,
+      (future<StatusOr<
+           google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>),
       RejectHubSpoke,
       (google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
+      (future<StatusOr<
+           google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>),
       AcceptHubSpoke,
       (google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>),
       DeleteSpoke,
       (google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::RouteTable>,
+      (StatusOr<google::cloud::networkconnectivity::v1::RouteTable>),
       GetRouteTable,
       (google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::Route>, GetRoute,
+      (StatusOr<google::cloud::networkconnectivity::v1::Route>), GetRoute,
       (google::cloud::networkconnectivity::v1::GetRouteRequest const& request),
       (override));
 
@@ -150,7 +152,7 @@ class MockHubServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::Group>, GetGroup,
+      (StatusOr<google::cloud::networkconnectivity::v1::Group>), GetGroup,
       (google::cloud::networkconnectivity::v1::GetGroupRequest const& request),
       (override));
 

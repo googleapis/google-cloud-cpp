@@ -53,7 +53,8 @@ class MockAnswerRecordsConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::AnswerRecord>, UpdateAnswerRecord,
+      (StatusOr<google::cloud::dialogflow::v2::AnswerRecord>),
+      UpdateAnswerRecord,
       (google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request),
       (override));
 };

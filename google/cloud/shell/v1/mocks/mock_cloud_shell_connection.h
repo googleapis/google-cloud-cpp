@@ -47,29 +47,31 @@ class MockCloudShellServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::shell::v1::Environment>, GetEnvironment,
+  MOCK_METHOD((StatusOr<google::cloud::shell::v1::Environment>), GetEnvironment,
               (google::cloud::shell::v1::GetEnvironmentRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
+      (future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>),
       StartEnvironment,
       (google::cloud::shell::v1::StartEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
+      (future<
+          StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>),
       AuthorizeEnvironment,
       (google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>,
-              AddPublicKey,
-              (google::cloud::shell::v1::AddPublicKeyRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>),
+      AddPublicKey,
+      (google::cloud::shell::v1::AddPublicKeyRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
+      (future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>),
       RemovePublicKey,
       (google::cloud::shell::v1::RemovePublicKeyRequest const& request),
       (override));

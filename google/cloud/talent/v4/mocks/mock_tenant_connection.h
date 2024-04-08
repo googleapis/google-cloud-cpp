@@ -46,15 +46,15 @@ class MockTenantServiceConnection : public talent_v4::TenantServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, CreateTenant,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::Tenant>), CreateTenant,
               (google::cloud::talent::v4::CreateTenantRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, GetTenant,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::Tenant>), GetTenant,
               (google::cloud::talent::v4::GetTenantRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, UpdateTenant,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::Tenant>), UpdateTenant,
               (google::cloud::talent::v4::UpdateTenantRequest const& request),
               (override));
 

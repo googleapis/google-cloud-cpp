@@ -47,46 +47,46 @@ class MockAgentEndpointServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::osconfig::agentendpoint::v1::
-                              ReceiveTaskNotificationResponse>,
+  MOCK_METHOD((StreamRange<google::cloud::osconfig::agentendpoint::v1::
+                               ReceiveTaskNotificationResponse>),
               ReceiveTaskNotification,
               (google::cloud::osconfig::agentendpoint::v1::
                    ReceiveTaskNotificationRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>,
+      (StatusOr<
+          google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>),
       StartNextTask,
       (google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::agentendpoint::v1::
-                           ReportTaskProgressResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::osconfig::agentendpoint::v1::
+                            ReportTaskProgressResponse>),
               ReportTaskProgress,
               (google::cloud::osconfig::agentendpoint::v1::
                    ReportTaskProgressRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::agentendpoint::v1::
-                           ReportTaskCompleteResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::osconfig::agentendpoint::v1::
+                            ReportTaskCompleteResponse>),
               ReportTaskComplete,
               (google::cloud::osconfig::agentendpoint::v1::
                    ReportTaskCompleteRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>,
+      (StatusOr<
+          google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>),
       RegisterAgent,
       (google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>,
+      (StatusOr<
+          google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>),
       ReportInventory,
       (google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
            request),

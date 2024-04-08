@@ -48,20 +48,20 @@ class MockOsConfigZonalServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
+      (future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>),
       CreateOSPolicyAssignment,
       (google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
+      (future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>),
       UpdateOSPolicyAssignment,
       (google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>,
+  MOCK_METHOD((StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>),
               GetOSPolicyAssignment,
               (google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const&
                    request),
@@ -81,15 +81,15 @@ class MockOsConfigZonalServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,
+      (future<StatusOr<
+           google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>),
       DeleteOSPolicyAssignment,
       (google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>,
+      (StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>),
       GetOSPolicyAssignmentReport,
       (google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
            request),
@@ -102,7 +102,7 @@ class MockOsConfigZonalServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::Inventory>, GetInventory,
+  MOCK_METHOD((StatusOr<google::cloud::osconfig::v1::Inventory>), GetInventory,
               (google::cloud::osconfig::v1::GetInventoryRequest const& request),
               (override));
 
@@ -111,7 +111,7 @@ class MockOsConfigZonalServiceConnection
               (google::cloud::osconfig::v1::ListInventoriesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>,
+  MOCK_METHOD((StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>),
               GetVulnerabilityReport,
               (google::cloud::osconfig::v1::GetVulnerabilityReportRequest const&
                    request),

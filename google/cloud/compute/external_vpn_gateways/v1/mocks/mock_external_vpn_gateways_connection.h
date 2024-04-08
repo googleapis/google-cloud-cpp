@@ -48,19 +48,19 @@ class MockExternalVpnGatewaysConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteExternalVpnGateway,
               (google::cloud::cpp::compute::external_vpn_gateways::v1::
                    DeleteExternalVpnGatewayRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>),
               GetExternalVpnGateway,
               (google::cloud::cpp::compute::external_vpn_gateways::v1::
                    GetExternalVpnGatewayRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertExternalVpnGateway,
               (google::cloud::cpp::compute::external_vpn_gateways::v1::
                    InsertExternalVpnGatewayRequest const& request),
@@ -73,14 +73,14 @@ class MockExternalVpnGatewaysConnection
            ListExternalVpnGatewaysRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetLabels,
               (google::cloud::cpp::compute::external_vpn_gateways::v1::
                    SetLabelsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::external_vpn_gateways::v1::
            TestIamPermissionsRequest const& request),

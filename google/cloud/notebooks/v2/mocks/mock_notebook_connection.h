@@ -52,62 +52,65 @@ class MockNotebookServiceConnection
               (google::cloud::notebooks::v2::ListInstancesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::notebooks::v2::Instance>, GetInstance,
+  MOCK_METHOD((StatusOr<google::cloud::notebooks::v2::Instance>), GetInstance,
               (google::cloud::notebooks::v2::GetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v2::Instance>>, CreateInstance,
+      (future<StatusOr<google::cloud::notebooks::v2::Instance>>),
+      CreateInstance,
       (google::cloud::notebooks::v2::CreateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v2::Instance>>, UpdateInstance,
+      (future<StatusOr<google::cloud::notebooks::v2::Instance>>),
+      UpdateInstance,
       (google::cloud::notebooks::v2::UpdateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>,
+      (future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>),
       DeleteInstance,
       (google::cloud::notebooks::v2::DeleteInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v2::Instance>>, StartInstance,
+      (future<StatusOr<google::cloud::notebooks::v2::Instance>>), StartInstance,
       (google::cloud::notebooks::v2::StartInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v2::Instance>>, StopInstance,
+      (future<StatusOr<google::cloud::notebooks::v2::Instance>>), StopInstance,
       (google::cloud::notebooks::v2::StopInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v2::Instance>>, ResetInstance,
+      (future<StatusOr<google::cloud::notebooks::v2::Instance>>), ResetInstance,
       (google::cloud::notebooks::v2::ResetInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>,
+      (StatusOr<
+          google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>),
       CheckInstanceUpgradability,
       (google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v2::Instance>>, UpgradeInstance,
+      (future<StatusOr<google::cloud::notebooks::v2::Instance>>),
+      UpgradeInstance,
       (google::cloud::notebooks::v2::UpgradeInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v2::Instance>>,
+      (future<StatusOr<google::cloud::notebooks::v2::Instance>>),
       RollbackInstance,
       (google::cloud::notebooks::v2::RollbackInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v2::Instance>>,
+      (future<StatusOr<google::cloud::notebooks::v2::Instance>>),
       DiagnoseInstance,
       (google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request),
       (override));

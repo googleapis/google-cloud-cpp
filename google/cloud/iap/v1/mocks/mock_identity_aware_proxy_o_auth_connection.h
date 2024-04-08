@@ -47,20 +47,21 @@ class MockIdentityAwareProxyOAuthServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::ListBrandsResponse>, ListBrands,
+  MOCK_METHOD((StatusOr<google::cloud::iap::v1::ListBrandsResponse>),
+              ListBrands,
               (google::cloud::iap::v1::ListBrandsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::Brand>, CreateBrand,
+  MOCK_METHOD((StatusOr<google::cloud::iap::v1::Brand>), CreateBrand,
               (google::cloud::iap::v1::CreateBrandRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::Brand>, GetBrand,
+  MOCK_METHOD((StatusOr<google::cloud::iap::v1::Brand>), GetBrand,
               (google::cloud::iap::v1::GetBrandRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>,
+      (StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>),
       CreateIdentityAwareProxyClient,
       (google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
            request),
@@ -72,14 +73,14 @@ class MockIdentityAwareProxyOAuthServiceConnection
       (google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>,
+  MOCK_METHOD((StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>),
               GetIdentityAwareProxyClient,
               (google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>,
+      (StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>),
       ResetIdentityAwareProxyClientSecret,
       (google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
            request),

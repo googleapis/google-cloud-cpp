@@ -54,21 +54,21 @@ class MockExecutionsConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::workflows::executions::v1::Execution>,
+      (StatusOr<google::cloud::workflows::executions::v1::Execution>),
       CreateExecution,
       (google::cloud::workflows::executions::v1::CreateExecutionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::workflows::executions::v1::Execution>,
+      (StatusOr<google::cloud::workflows::executions::v1::Execution>),
       GetExecution,
       (google::cloud::workflows::executions::v1::GetExecutionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::workflows::executions::v1::Execution>,
+      (StatusOr<google::cloud::workflows::executions::v1::Execution>),
       CancelExecution,
       (google::cloud::workflows::executions::v1::CancelExecutionRequest const&
            request),

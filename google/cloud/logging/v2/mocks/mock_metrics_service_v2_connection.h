@@ -50,15 +50,15 @@ class MockMetricsServiceV2Connection
   MOCK_METHOD((StreamRange<google::logging::v2::LogMetric>), ListLogMetrics,
               (google::logging::v2::ListLogMetricsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>, GetLogMetric,
+  MOCK_METHOD((StatusOr<google::logging::v2::LogMetric>), GetLogMetric,
               (google::logging::v2::GetLogMetricRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>, CreateLogMetric,
+  MOCK_METHOD((StatusOr<google::logging::v2::LogMetric>), CreateLogMetric,
               (google::logging::v2::CreateLogMetricRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>, UpdateLogMetric,
+  MOCK_METHOD((StatusOr<google::logging::v2::LogMetric>), UpdateLogMetric,
               (google::logging::v2::UpdateLogMetricRequest const& request),
               (override));
 

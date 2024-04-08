@@ -50,7 +50,7 @@ class MockInterconnectRemoteLocationsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>,
+      (StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>),
       GetInterconnectRemoteLocation,
       (google::cloud::cpp::compute::interconnect_remote_locations::v1::
            GetInterconnectRemoteLocationRequest const& request),

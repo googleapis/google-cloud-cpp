@@ -51,18 +51,18 @@ class MockIAMConnection : public iam_admin_v1::IAMConnection {
               (google::iam::admin::v1::ListServiceAccountsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::admin::v1::ServiceAccount>,
+  MOCK_METHOD((StatusOr<google::iam::admin::v1::ServiceAccount>),
               GetServiceAccount,
               (google::iam::admin::v1::GetServiceAccountRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::admin::v1::ServiceAccount>, CreateServiceAccount,
+      (StatusOr<google::iam::admin::v1::ServiceAccount>), CreateServiceAccount,
       (google::iam::admin::v1::CreateServiceAccountRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::admin::v1::ServiceAccount>, PatchServiceAccount,
+      (StatusOr<google::iam::admin::v1::ServiceAccount>), PatchServiceAccount,
       (google::iam::admin::v1::PatchServiceAccountRequest const& request),
       (override));
 
@@ -72,7 +72,7 @@ class MockIAMConnection : public iam_admin_v1::IAMConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>,
+      (StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>),
       UndeleteServiceAccount,
       (google::iam::admin::v1::UndeleteServiceAccountRequest const& request),
       (override));
@@ -88,24 +88,25 @@ class MockIAMConnection : public iam_admin_v1::IAMConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>,
+      (StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>),
       ListServiceAccountKeys,
       (google::iam::admin::v1::ListServiceAccountKeysRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::admin::v1::ServiceAccountKey>, GetServiceAccountKey,
+      (StatusOr<google::iam::admin::v1::ServiceAccountKey>),
+      GetServiceAccountKey,
       (google::iam::admin::v1::GetServiceAccountKeyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::admin::v1::ServiceAccountKey>,
+      (StatusOr<google::iam::admin::v1::ServiceAccountKey>),
       CreateServiceAccountKey,
       (google::iam::admin::v1::CreateServiceAccountKeyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::admin::v1::ServiceAccountKey>,
+      (StatusOr<google::iam::admin::v1::ServiceAccountKey>),
       UploadServiceAccountKey,
       (google::iam::admin::v1::UploadServiceAccountKeyRequest const& request),
       (override));
@@ -125,15 +126,15 @@ class MockIAMConnection : public iam_admin_v1::IAMConnection {
       (google::iam::admin::v1::EnableServiceAccountKeyRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
@@ -145,23 +146,23 @@ class MockIAMConnection : public iam_admin_v1::IAMConnection {
   MOCK_METHOD((StreamRange<google::iam::admin::v1::Role>), ListRoles,
               (google::iam::admin::v1::ListRolesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::admin::v1::Role>, GetRole,
+  MOCK_METHOD((StatusOr<google::iam::admin::v1::Role>), GetRole,
               (google::iam::admin::v1::GetRoleRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::admin::v1::Role>, CreateRole,
+  MOCK_METHOD((StatusOr<google::iam::admin::v1::Role>), CreateRole,
               (google::iam::admin::v1::CreateRoleRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::admin::v1::Role>, UpdateRole,
+  MOCK_METHOD((StatusOr<google::iam::admin::v1::Role>), UpdateRole,
               (google::iam::admin::v1::UpdateRoleRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::admin::v1::Role>, DeleteRole,
+  MOCK_METHOD((StatusOr<google::iam::admin::v1::Role>), DeleteRole,
               (google::iam::admin::v1::DeleteRoleRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::admin::v1::Role>, UndeleteRole,
+  MOCK_METHOD((StatusOr<google::iam::admin::v1::Role>), UndeleteRole,
               (google::iam::admin::v1::UndeleteRoleRequest const& request),
               (override));
 
@@ -171,12 +172,13 @@ class MockIAMConnection : public iam_admin_v1::IAMConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>,
+      (StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>),
       QueryAuditableServices,
       (google::iam::admin::v1::QueryAuditableServicesRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::admin::v1::LintPolicyResponse>, LintPolicy,
+  MOCK_METHOD((StatusOr<google::iam::admin::v1::LintPolicyResponse>),
+              LintPolicy,
               (google::iam::admin::v1::LintPolicyRequest const& request),
               (override));
 };

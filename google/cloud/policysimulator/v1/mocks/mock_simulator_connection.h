@@ -47,12 +47,12 @@ class MockSimulatorConnection : public policysimulator_v1::SimulatorConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::policysimulator::v1::Replay>, GetReplay,
+      (StatusOr<google::cloud::policysimulator::v1::Replay>), GetReplay,
       (google::cloud::policysimulator::v1::GetReplayRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::policysimulator::v1::Replay>>,
+      (future<StatusOr<google::cloud::policysimulator::v1::Replay>>),
       CreateReplay,
       (google::cloud::policysimulator::v1::CreateReplayRequest const& request),
       (override));

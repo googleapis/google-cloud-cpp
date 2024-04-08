@@ -49,55 +49,55 @@ class MockNetworkFirewallPoliciesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               AddAssociation,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    AddAssociationRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               AddRule,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    AddRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               CloneRules,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    CloneRulesRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    DeleteFirewallPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>),
               GetFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    GetFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>,
+      (StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>),
       GetAssociation,
       (google::cloud::cpp::compute::network_firewall_policies::v1::
            GetAssociationRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), GetIamPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>),
               GetRule,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    GetRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    InsertFirewallPolicyRequest const& request),
@@ -109,37 +109,37 @@ class MockNetworkFirewallPoliciesConnection
                    ListNetworkFirewallPoliciesRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    PatchFirewallPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchRule,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    PatchRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               RemoveAssociation,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    RemoveAssociationRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               RemoveRule,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    RemoveRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), SetIamPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    SetIamPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::network_firewall_policies::v1::
            TestIamPermissionsRequest const& request),

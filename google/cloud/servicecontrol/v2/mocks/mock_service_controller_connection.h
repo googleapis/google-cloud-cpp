@@ -47,11 +47,12 @@ class MockServiceControllerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::api::servicecontrol::v2::CheckResponse>, Check,
+  MOCK_METHOD((StatusOr<google::api::servicecontrol::v2::CheckResponse>), Check,
               (google::api::servicecontrol::v2::CheckRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::api::servicecontrol::v2::ReportResponse>, Report,
+  MOCK_METHOD((StatusOr<google::api::servicecontrol::v2::ReportResponse>),
+              Report,
               (google::api::servicecontrol::v2::ReportRequest const& request),
               (override));
 };

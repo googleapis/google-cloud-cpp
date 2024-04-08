@@ -48,7 +48,7 @@ class MockSchemaServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::discoveryengine::v1::Schema>, GetSchema,
+      (StatusOr<google::cloud::discoveryengine::v1::Schema>), GetSchema,
       (google::cloud::discoveryengine::v1::GetSchemaRequest const& request),
       (override));
 
@@ -58,20 +58,20 @@ class MockSchemaServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::discoveryengine::v1::Schema>>,
+      (future<StatusOr<google::cloud::discoveryengine::v1::Schema>>),
       CreateSchema,
       (google::cloud::discoveryengine::v1::CreateSchemaRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::discoveryengine::v1::Schema>>,
+      (future<StatusOr<google::cloud::discoveryengine::v1::Schema>>),
       UpdateSchema,
       (google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>,
+      (future<
+          StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>),
       DeleteSchema,
       (google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request),
       (override));

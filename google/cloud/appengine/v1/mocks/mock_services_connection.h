@@ -49,15 +49,15 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
   MOCK_METHOD((StreamRange<google::appengine::v1::Service>), ListServices,
               (google::appengine::v1::ListServicesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::Service>, GetService,
+  MOCK_METHOD((StatusOr<google::appengine::v1::Service>), GetService,
               (google::appengine::v1::GetServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Service>>, UpdateService,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::Service>>), UpdateService,
               (google::appengine::v1::UpdateServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::OperationMetadataV1>>),
               DeleteService,
               (google::appengine::v1::DeleteServiceRequest const& request),
               (override));

@@ -48,7 +48,7 @@ class MockStorageControlConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::storage::control::v2::Folder>, CreateFolder,
+      (StatusOr<google::storage::control::v2::Folder>), CreateFolder,
       (google::storage::control::v2::CreateFolderRequest const& request),
       (override));
 
@@ -57,7 +57,7 @@ class MockStorageControlConnection
       (google::storage::control::v2::DeleteFolderRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::storage::control::v2::Folder>, GetFolder,
+  MOCK_METHOD((StatusOr<google::storage::control::v2::Folder>), GetFolder,
               (google::storage::control::v2::GetFolderRequest const& request),
               (override));
 
@@ -66,17 +66,17 @@ class MockStorageControlConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::storage::control::v2::Folder>>, RenameFolder,
+      (future<StatusOr<google::storage::control::v2::Folder>>), RenameFolder,
       (google::storage::control::v2::RenameFolderRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::storage::control::v2::StorageLayout>, GetStorageLayout,
+      (StatusOr<google::storage::control::v2::StorageLayout>), GetStorageLayout,
       (google::storage::control::v2::GetStorageLayoutRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::storage::control::v2::ManagedFolder>,
+      (StatusOr<google::storage::control::v2::ManagedFolder>),
       CreateManagedFolder,
       (google::storage::control::v2::CreateManagedFolderRequest const& request),
       (override));
@@ -87,7 +87,7 @@ class MockStorageControlConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::storage::control::v2::ManagedFolder>, GetManagedFolder,
+      (StatusOr<google::storage::control::v2::ManagedFolder>), GetManagedFolder,
       (google::storage::control::v2::GetManagedFolderRequest const& request),
       (override));
 

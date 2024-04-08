@@ -47,7 +47,7 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>,
+      (future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>),
       CreateBackupPlan,
       (google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request),
       (override));
@@ -58,24 +58,24 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkebackup::v1::BackupPlan>, GetBackupPlan,
+      (StatusOr<google::cloud::gkebackup::v1::BackupPlan>), GetBackupPlan,
       (google::cloud::gkebackup::v1::GetBackupPlanRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>,
+      (future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>),
       UpdateBackupPlan,
       (google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>),
       DeleteBackupPlan,
       (google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::Backup>>, CreateBackup,
+      (future<StatusOr<google::cloud::gkebackup::v1::Backup>>), CreateBackup,
       (google::cloud::gkebackup::v1::CreateBackupRequest const& request),
       (override));
 
@@ -83,17 +83,17 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
               (google::cloud::gkebackup::v1::ListBackupsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gkebackup::v1::Backup>, GetBackup,
+  MOCK_METHOD((StatusOr<google::cloud::gkebackup::v1::Backup>), GetBackup,
               (google::cloud::gkebackup::v1::GetBackupRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::Backup>>, UpdateBackup,
+      (future<StatusOr<google::cloud::gkebackup::v1::Backup>>), UpdateBackup,
       (google::cloud::gkebackup::v1::UpdateBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>),
       DeleteBackup,
       (google::cloud::gkebackup::v1::DeleteBackupRequest const& request),
       (override));
@@ -104,12 +104,12 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkebackup::v1::VolumeBackup>, GetVolumeBackup,
+      (StatusOr<google::cloud::gkebackup::v1::VolumeBackup>), GetVolumeBackup,
       (google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>,
+      (future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>),
       CreateRestorePlan,
       (google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request),
       (override));
@@ -120,24 +120,24 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkebackup::v1::RestorePlan>, GetRestorePlan,
+      (StatusOr<google::cloud::gkebackup::v1::RestorePlan>), GetRestorePlan,
       (google::cloud::gkebackup::v1::GetRestorePlanRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>,
+      (future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>),
       UpdateRestorePlan,
       (google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>),
       DeleteRestorePlan,
       (google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::Restore>>, CreateRestore,
+      (future<StatusOr<google::cloud::gkebackup::v1::Restore>>), CreateRestore,
       (google::cloud::gkebackup::v1::CreateRestoreRequest const& request),
       (override));
 
@@ -146,17 +146,17 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
               (google::cloud::gkebackup::v1::ListRestoresRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gkebackup::v1::Restore>, GetRestore,
+  MOCK_METHOD((StatusOr<google::cloud::gkebackup::v1::Restore>), GetRestore,
               (google::cloud::gkebackup::v1::GetRestoreRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::Restore>>, UpdateRestore,
+      (future<StatusOr<google::cloud::gkebackup::v1::Restore>>), UpdateRestore,
       (google::cloud::gkebackup::v1::UpdateRestoreRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>),
       DeleteRestore,
       (google::cloud::gkebackup::v1::DeleteRestoreRequest const& request),
       (override));
@@ -167,12 +167,13 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkebackup::v1::VolumeRestore>, GetVolumeRestore,
+      (StatusOr<google::cloud::gkebackup::v1::VolumeRestore>), GetVolumeRestore,
       (google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>,
+      (StatusOr<
+          google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>),
       GetBackupIndexDownloadUrl,
       (google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
            request),

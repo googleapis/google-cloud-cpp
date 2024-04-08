@@ -48,18 +48,18 @@ class MockTensorboardServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>),
       CreateTensorboard,
       (google::cloud::aiplatform::v1::CreateTensorboardRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Tensorboard>, GetTensorboard,
+      (StatusOr<google::cloud::aiplatform::v1::Tensorboard>), GetTensorboard,
       (google::cloud::aiplatform::v1::GetTensorboardRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>),
       UpdateTensorboard,
       (google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request),
       (override));
@@ -70,41 +70,42 @@ class MockTensorboardServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteTensorboard,
       (google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>),
       ReadTensorboardUsage,
       (google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>),
       ReadTensorboardSize,
       (google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>,
+      (StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>),
       CreateTensorboardExperiment,
       (google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>,
+      (StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>),
       GetTensorboardExperiment,
       (google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>,
+      (StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>),
       UpdateTensorboardExperiment,
       (google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
            request),
@@ -118,33 +119,34 @@ class MockTensorboardServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteTensorboardExperiment,
       (google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::TensorboardRun>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::TensorboardRun>),
               CreateTensorboardRun,
               (google::cloud::aiplatform::v1::CreateTensorboardRunRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>,
+      (StatusOr<
+          google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>),
       BatchCreateTensorboardRuns,
       (google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::TensorboardRun>,
+      (StatusOr<google::cloud::aiplatform::v1::TensorboardRun>),
       GetTensorboardRun,
       (google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::TensorboardRun>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::TensorboardRun>),
               UpdateTensorboardRun,
               (google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const&
                    request),
@@ -157,35 +159,36 @@ class MockTensorboardServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteTensorboardRun,
       (google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
-                           BatchCreateTensorboardTimeSeriesResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::
+                            BatchCreateTensorboardTimeSeriesResponse>),
               BatchCreateTensorboardTimeSeries,
               (google::cloud::aiplatform::v1::
                    BatchCreateTensorboardTimeSeriesRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>,
+      (StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>),
       CreateTensorboardTimeSeries,
       (google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>,
+      (StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>),
       GetTensorboardTimeSeries,
       (google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>,
+      (StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>),
       UpdateTensorboardTimeSeries,
       (google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
            request),
@@ -198,44 +201,45 @@ class MockTensorboardServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteTensorboardTimeSeries,
       (google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
-                           BatchReadTensorboardTimeSeriesDataResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::
+                            BatchReadTensorboardTimeSeriesDataResponse>),
               BatchReadTensorboardTimeSeriesData,
               (google::cloud::aiplatform::v1::
                    BatchReadTensorboardTimeSeriesDataRequest const& request),
               (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>,
-      ReadTensorboardTimeSeriesData,
-      (google::cloud::aiplatform::v1::
-           ReadTensorboardTimeSeriesDataRequest const& request),
-      (override));
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::
+                            ReadTensorboardTimeSeriesDataResponse>),
+              ReadTensorboardTimeSeriesData,
+              (google::cloud::aiplatform::v1::
+                   ReadTensorboardTimeSeriesDataRequest const& request),
+              (override));
 
   MOCK_METHOD(
-      StreamRange<
-          google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>,
+      (StreamRange<
+          google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>),
       ReadTensorboardBlobData,
       (google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
-                           WriteTensorboardExperimentDataResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::
+                            WriteTensorboardExperimentDataResponse>),
               WriteTensorboardExperimentData,
               (google::cloud::aiplatform::v1::
                    WriteTensorboardExperimentDataRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>,
+      (StatusOr<
+          google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>),
       WriteTensorboardRunData,
       (google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
            request),

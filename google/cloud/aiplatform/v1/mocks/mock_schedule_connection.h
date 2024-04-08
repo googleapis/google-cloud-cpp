@@ -48,18 +48,19 @@ class MockScheduleServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Schedule>, CreateSchedule,
+      (StatusOr<google::cloud::aiplatform::v1::Schedule>), CreateSchedule,
       (google::cloud::aiplatform::v1::CreateScheduleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteSchedule,
       (google::cloud::aiplatform::v1::DeleteScheduleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Schedule>, GetSchedule,
+      (StatusOr<google::cloud::aiplatform::v1::Schedule>), GetSchedule,
       (google::cloud::aiplatform::v1::GetScheduleRequest const& request),
       (override));
 
@@ -79,7 +80,7 @@ class MockScheduleServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Schedule>, UpdateSchedule,
+      (StatusOr<google::cloud::aiplatform::v1::Schedule>), UpdateSchedule,
       (google::cloud::aiplatform::v1::UpdateScheduleRequest const& request),
       (override));
 };

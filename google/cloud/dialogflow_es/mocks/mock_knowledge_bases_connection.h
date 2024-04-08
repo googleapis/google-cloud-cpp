@@ -54,11 +54,12 @@ class MockKnowledgeBasesConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>, GetKnowledgeBase,
+      (StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>),
+      GetKnowledgeBase,
       (google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>),
               CreateKnowledgeBase,
               (google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const&
                    request),
@@ -69,7 +70,7 @@ class MockKnowledgeBasesConnection
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>),
               UpdateKnowledgeBase,
               (google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const&
                    request),

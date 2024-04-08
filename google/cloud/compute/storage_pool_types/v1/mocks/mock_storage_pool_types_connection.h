@@ -55,7 +55,7 @@ class MockStoragePoolTypesConnection
            AggregatedListStoragePoolTypesRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>),
               GetStoragePoolType,
               (google::cloud::cpp::compute::storage_pool_types::v1::
                    GetStoragePoolTypeRequest const& request),

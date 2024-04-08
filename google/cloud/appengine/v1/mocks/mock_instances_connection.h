@@ -50,16 +50,17 @@ class MockInstancesConnection : public appengine_v1::InstancesConnection {
               (google::appengine::v1::ListInstancesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::Instance>, GetInstance,
+  MOCK_METHOD((StatusOr<google::appengine::v1::Instance>), GetInstance,
               (google::appengine::v1::GetInstanceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::OperationMetadataV1>>),
               DeleteInstance,
               (google::appengine::v1::DeleteInstanceRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Instance>>, DebugInstance,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::Instance>>),
+              DebugInstance,
               (google::appengine::v1::DebugInstanceRequest const& request),
               (override));
 };

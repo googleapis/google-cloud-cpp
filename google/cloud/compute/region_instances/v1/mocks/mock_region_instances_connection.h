@@ -47,7 +47,7 @@ class MockRegionInstancesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               BulkInsert,
               (google::cloud::cpp::compute::region_instances::v1::
                    BulkInsertRequest const& request),

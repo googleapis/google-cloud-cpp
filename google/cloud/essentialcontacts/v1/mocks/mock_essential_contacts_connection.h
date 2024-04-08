@@ -47,13 +47,13 @@ class MockEssentialContactsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::essentialcontacts::v1::Contact>,
+  MOCK_METHOD((StatusOr<google::cloud::essentialcontacts::v1::Contact>),
               CreateContact,
               (google::cloud::essentialcontacts::v1::CreateContactRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::essentialcontacts::v1::Contact>,
+  MOCK_METHOD((StatusOr<google::cloud::essentialcontacts::v1::Contact>),
               UpdateContact,
               (google::cloud::essentialcontacts::v1::UpdateContactRequest const&
                    request),
@@ -66,7 +66,7 @@ class MockEssentialContactsServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::essentialcontacts::v1::Contact>, GetContact,
+      (StatusOr<google::cloud::essentialcontacts::v1::Contact>), GetContact,
       (google::cloud::essentialcontacts::v1::GetContactRequest const& request),
       (override));
 

@@ -56,8 +56,8 @@ class MockSecurityCenterManagementConnection
            ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::securitycentermanagement::v1::
-                           EffectiveSecurityHealthAnalyticsCustomModule>,
+  MOCK_METHOD((StatusOr<google::cloud::securitycentermanagement::v1::
+                            EffectiveSecurityHealthAnalyticsCustomModule>),
               GetEffectiveSecurityHealthAnalyticsCustomModule,
               (google::cloud::securitycentermanagement::v1::
                    GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
@@ -80,24 +80,24 @@ class MockSecurityCenterManagementConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycentermanagement::v1::
-                   SecurityHealthAnalyticsCustomModule>,
+      (StatusOr<google::cloud::securitycentermanagement::v1::
+                    SecurityHealthAnalyticsCustomModule>),
       GetSecurityHealthAnalyticsCustomModule,
       (google::cloud::securitycentermanagement::v1::
            GetSecurityHealthAnalyticsCustomModuleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycentermanagement::v1::
-                   SecurityHealthAnalyticsCustomModule>,
+      (StatusOr<google::cloud::securitycentermanagement::v1::
+                    SecurityHealthAnalyticsCustomModule>),
       CreateSecurityHealthAnalyticsCustomModule,
       (google::cloud::securitycentermanagement::v1::
            CreateSecurityHealthAnalyticsCustomModuleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycentermanagement::v1::
-                   SecurityHealthAnalyticsCustomModule>,
+      (StatusOr<google::cloud::securitycentermanagement::v1::
+                    SecurityHealthAnalyticsCustomModule>),
       UpdateSecurityHealthAnalyticsCustomModule,
       (google::cloud::securitycentermanagement::v1::
            UpdateSecurityHealthAnalyticsCustomModuleRequest const& request),
@@ -110,8 +110,8 @@ class MockSecurityCenterManagementConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycentermanagement::v1::
-                   SimulateSecurityHealthAnalyticsCustomModuleResponse>,
+      (StatusOr<google::cloud::securitycentermanagement::v1::
+                    SimulateSecurityHealthAnalyticsCustomModuleResponse>),
       SimulateSecurityHealthAnalyticsCustomModule,
       (google::cloud::securitycentermanagement::v1::
            SimulateSecurityHealthAnalyticsCustomModuleRequest const& request),
@@ -126,8 +126,8 @@ class MockSecurityCenterManagementConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycentermanagement::v1::
-                   EffectiveEventThreatDetectionCustomModule>,
+      (StatusOr<google::cloud::securitycentermanagement::v1::
+                    EffectiveEventThreatDetectionCustomModule>),
       GetEffectiveEventThreatDetectionCustomModule,
       (google::cloud::securitycentermanagement::v1::
            GetEffectiveEventThreatDetectionCustomModuleRequest const& request),
@@ -148,24 +148,24 @@ class MockSecurityCenterManagementConnection
            ListDescendantEventThreatDetectionCustomModulesRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::securitycentermanagement::v1::
-                           EventThreatDetectionCustomModule>,
+  MOCK_METHOD((StatusOr<google::cloud::securitycentermanagement::v1::
+                            EventThreatDetectionCustomModule>),
               GetEventThreatDetectionCustomModule,
               (google::cloud::securitycentermanagement::v1::
                    GetEventThreatDetectionCustomModuleRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycentermanagement::v1::
-                   EventThreatDetectionCustomModule>,
+      (StatusOr<google::cloud::securitycentermanagement::v1::
+                    EventThreatDetectionCustomModule>),
       CreateEventThreatDetectionCustomModule,
       (google::cloud::securitycentermanagement::v1::
            CreateEventThreatDetectionCustomModuleRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycentermanagement::v1::
-                   EventThreatDetectionCustomModule>,
+      (StatusOr<google::cloud::securitycentermanagement::v1::
+                    EventThreatDetectionCustomModule>),
       UpdateEventThreatDetectionCustomModule,
       (google::cloud::securitycentermanagement::v1::
            UpdateEventThreatDetectionCustomModuleRequest const& request),
@@ -178,8 +178,8 @@ class MockSecurityCenterManagementConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::securitycentermanagement::v1::
-                   ValidateEventThreatDetectionCustomModuleResponse>,
+      (StatusOr<google::cloud::securitycentermanagement::v1::
+                    ValidateEventThreatDetectionCustomModuleResponse>),
       ValidateEventThreatDetectionCustomModule,
       (google::cloud::securitycentermanagement::v1::
            ValidateEventThreatDetectionCustomModuleRequest const& request),

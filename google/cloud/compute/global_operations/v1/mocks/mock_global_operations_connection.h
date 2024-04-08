@@ -61,7 +61,7 @@ class MockGlobalOperationsConnection
                    DeleteOperationRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Operation>),
               GetOperation,
               (google::cloud::cpp::compute::global_operations::v1::
                    GetOperationRequest const& request),
@@ -74,7 +74,7 @@ class MockGlobalOperationsConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, Wait,
+      (StatusOr<google::cloud::cpp::compute::v1::Operation>), Wait,
       (google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
            request),
       (override));

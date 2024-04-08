@@ -47,7 +47,7 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::resourcemanager::v3::Folder>, GetFolder,
+      (StatusOr<google::cloud::resourcemanager::v3::Folder>), GetFolder,
       (google::cloud::resourcemanager::v3::GetFolderRequest const& request),
       (override));
 
@@ -62,43 +62,44 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+      (future<StatusOr<google::cloud::resourcemanager::v3::Folder>>),
       CreateFolder,
       (google::cloud::resourcemanager::v3::CreateFolderRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+      (future<StatusOr<google::cloud::resourcemanager::v3::Folder>>),
       UpdateFolder,
       (google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::Folder>>, MoveFolder,
+      (future<StatusOr<google::cloud::resourcemanager::v3::Folder>>),
+      MoveFolder,
       (google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+      (future<StatusOr<google::cloud::resourcemanager::v3::Folder>>),
       DeleteFolder,
       (google::cloud::resourcemanager::v3::DeleteFolderRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::resourcemanager::v3::Folder>>),
               UndeleteFolder,
               (google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

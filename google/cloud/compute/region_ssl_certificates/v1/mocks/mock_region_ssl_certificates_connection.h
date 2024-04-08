@@ -49,19 +49,19 @@ class MockRegionSslCertificatesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteSslCertificate,
               (google::cloud::cpp::compute::region_ssl_certificates::v1::
                    DeleteSslCertificateRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslCertificate>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::SslCertificate>),
               GetSslCertificate,
               (google::cloud::cpp::compute::region_ssl_certificates::v1::
                    GetSslCertificateRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertSslCertificate,
               (google::cloud::cpp::compute::region_ssl_certificates::v1::
                    InsertSslCertificateRequest const& request),

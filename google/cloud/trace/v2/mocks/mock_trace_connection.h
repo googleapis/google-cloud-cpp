@@ -51,7 +51,7 @@ class MockTraceServiceConnection : public trace_v2::TraceServiceConnection {
       (google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::devtools::cloudtrace::v2::Span>, CreateSpan,
+  MOCK_METHOD((StatusOr<google::devtools::cloudtrace::v2::Span>), CreateSpan,
               (google::devtools::cloudtrace::v2::Span const& request),
               (override));
 };

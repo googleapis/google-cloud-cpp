@@ -48,18 +48,18 @@ class MockPolicyTagManagerSerializationConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::Taxonomy>, ReplaceTaxonomy,
+      (StatusOr<google::cloud::datacatalog::v1::Taxonomy>), ReplaceTaxonomy,
       (google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>,
+      (StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>),
       ImportTaxonomies,
       (google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>,
+      (StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>),
       ExportTaxonomies,
       (google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request),
       (override));

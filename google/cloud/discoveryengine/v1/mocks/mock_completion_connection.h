@@ -48,20 +48,20 @@ class MockCompletionServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>,
+      (StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>),
       CompleteQuery,
       (google::cloud::discoveryengine::v1::CompleteQueryRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
-                                  ImportSuggestionDenyListEntriesResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::discoveryengine::v1::
+                                   ImportSuggestionDenyListEntriesResponse>>),
               ImportSuggestionDenyListEntries,
               (google::cloud::discoveryengine::v1::
                    ImportSuggestionDenyListEntriesRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
-                                  PurgeSuggestionDenyListEntriesResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::discoveryengine::v1::
+                                   PurgeSuggestionDenyListEntriesResponse>>),
               PurgeSuggestionDenyListEntries,
               (google::cloud::discoveryengine::v1::
                    PurgeSuggestionDenyListEntriesRequest const& request),

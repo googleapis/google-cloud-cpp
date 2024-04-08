@@ -47,14 +47,14 @@ class MockSubscriptionAdminConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Subscription>, CreateSubscription,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Subscription>), CreateSubscription,
               (google::pubsub::v1::Subscription const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Subscription>, GetSubscription,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Subscription>), GetSubscription,
               (google::pubsub::v1::GetSubscriptionRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Subscription>, UpdateSubscription,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Subscription>), UpdateSubscription,
               (google::pubsub::v1::UpdateSubscriptionRequest const& request),
               (override));
 
@@ -71,18 +71,18 @@ class MockSubscriptionAdminConnection
               (google::pubsub::v1::ModifyPushConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Snapshot>, GetSnapshot,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Snapshot>), GetSnapshot,
               (google::pubsub::v1::GetSnapshotRequest const& request),
               (override));
 
   MOCK_METHOD((StreamRange<google::pubsub::v1::Snapshot>), ListSnapshots,
               (google::pubsub::v1::ListSnapshotsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Snapshot>, CreateSnapshot,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Snapshot>), CreateSnapshot,
               (google::pubsub::v1::CreateSnapshotRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Snapshot>, UpdateSnapshot,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::Snapshot>), UpdateSnapshot,
               (google::pubsub::v1::UpdateSnapshotRequest const& request),
               (override));
 
@@ -90,7 +90,7 @@ class MockSubscriptionAdminConnection
               (google::pubsub::v1::DeleteSnapshotRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::SeekResponse>, Seek,
+  MOCK_METHOD((StatusOr<google::pubsub::v1::SeekResponse>), Seek,
               (google::pubsub::v1::SeekRequest const& request), (override));
 };
 

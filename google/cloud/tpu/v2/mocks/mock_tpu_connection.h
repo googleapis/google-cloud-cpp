@@ -49,33 +49,33 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
   MOCK_METHOD((StreamRange<google::cloud::tpu::v2::Node>), ListNodes,
               (google::cloud::tpu::v2::ListNodesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::tpu::v2::Node>, GetNode,
+  MOCK_METHOD((StatusOr<google::cloud::tpu::v2::Node>), GetNode,
               (google::cloud::tpu::v2::GetNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, CreateNode,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v2::Node>>), CreateNode,
               (google::cloud::tpu::v2::CreateNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>),
               DeleteNode,
               (google::cloud::tpu::v2::DeleteNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StopNode,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v2::Node>>), StopNode,
               (google::cloud::tpu::v2::StopNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StartNode,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v2::Node>>), StartNode,
               (google::cloud::tpu::v2::StartNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, UpdateNode,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v2::Node>>), UpdateNode,
               (google::cloud::tpu::v2::UpdateNodeRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>,
+      (StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>),
       GenerateServiceIdentity,
       (google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request),
       (override));
@@ -86,7 +86,7 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::tpu::v2::AcceleratorType>, GetAcceleratorType,
+      (StatusOr<google::cloud::tpu::v2::AcceleratorType>), GetAcceleratorType,
       (google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request),
       (override));
 
@@ -95,13 +95,13 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
               (google::cloud::tpu::v2::ListRuntimeVersionsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::tpu::v2::RuntimeVersion>,
+  MOCK_METHOD((StatusOr<google::cloud::tpu::v2::RuntimeVersion>),
               GetRuntimeVersion,
               (google::cloud::tpu::v2::GetRuntimeVersionRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>,
+      (StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>),
       GetGuestAttributes,
       (google::cloud::tpu::v2::GetGuestAttributesRequest const& request),
       (override));

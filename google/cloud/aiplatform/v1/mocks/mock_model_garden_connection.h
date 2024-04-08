@@ -48,7 +48,7 @@ class MockModelGardenServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::PublisherModel>,
+      (StatusOr<google::cloud::aiplatform::v1::PublisherModel>),
       GetPublisherModel,
       (google::cloud::aiplatform::v1::GetPublisherModelRequest const& request),
       (override));

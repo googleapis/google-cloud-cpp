@@ -48,7 +48,7 @@ class MockWebSecurityScannerConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>,
+      (StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>),
       CreateScanConfig,
       (google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
            request),
@@ -61,7 +61,7 @@ class MockWebSecurityScannerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>,
+      (StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>),
       GetScanConfig,
       (google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
            request),
@@ -74,20 +74,20 @@ class MockWebSecurityScannerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>,
+      (StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>),
       UpdateScanConfig,
       (google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::websecurityscanner::v1::ScanRun>,
+  MOCK_METHOD((StatusOr<google::cloud::websecurityscanner::v1::ScanRun>),
               StartScanRun,
               (google::cloud::websecurityscanner::v1::StartScanRunRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::websecurityscanner::v1::ScanRun>, GetScanRun,
+      (StatusOr<google::cloud::websecurityscanner::v1::ScanRun>), GetScanRun,
       (google::cloud::websecurityscanner::v1::GetScanRunRequest const& request),
       (override));
 
@@ -97,7 +97,7 @@ class MockWebSecurityScannerConnection
       (google::cloud::websecurityscanner::v1::ListScanRunsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::websecurityscanner::v1::ScanRun>,
+  MOCK_METHOD((StatusOr<google::cloud::websecurityscanner::v1::ScanRun>),
               StopScanRun,
               (google::cloud::websecurityscanner::v1::StopScanRunRequest const&
                    request),
@@ -110,7 +110,7 @@ class MockWebSecurityScannerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::websecurityscanner::v1::Finding>, GetFinding,
+      (StatusOr<google::cloud::websecurityscanner::v1::Finding>), GetFinding,
       (google::cloud::websecurityscanner::v1::GetFindingRequest const& request),
       (override));
 
@@ -121,8 +121,8 @@ class MockWebSecurityScannerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>,
+      (StatusOr<
+          google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>),
       ListFindingTypeStats,
       (google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
            request),

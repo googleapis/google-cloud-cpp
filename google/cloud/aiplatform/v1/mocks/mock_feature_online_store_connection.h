@@ -48,13 +48,13 @@ class MockFeatureOnlineStoreServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>),
       FetchFeatureValues,
       (google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>),
       SearchNearestEntities,
       (google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
            request),

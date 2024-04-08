@@ -55,28 +55,30 @@ class MockNetworkSecurityConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>,
+      (StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>),
       GetAuthorizationPolicy,
       (google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
+      (future<
+          StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>),
       CreateAuthorizationPolicy,
       (google::cloud::networksecurity::v1::
            CreateAuthorizationPolicyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
+      (future<
+          StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>),
       UpdateAuthorizationPolicy,
       (google::cloud::networksecurity::v1::
            UpdateAuthorizationPolicyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>),
       DeleteAuthorizationPolicy,
       (google::cloud::networksecurity::v1::
            DeleteAuthorizationPolicyRequest const& request),
@@ -90,28 +92,28 @@ class MockNetworkSecurityConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>,
+      (StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>),
       GetServerTlsPolicy,
       (google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
+      (future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>),
       CreateServerTlsPolicy,
       (google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
+      (future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>),
       UpdateServerTlsPolicy,
       (google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>),
       DeleteServerTlsPolicy,
       (google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
            request),
@@ -125,28 +127,28 @@ class MockNetworkSecurityConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>,
+      (StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>),
       GetClientTlsPolicy,
       (google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
+      (future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>),
       CreateClientTlsPolicy,
       (google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
+      (future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>),
       UpdateClientTlsPolicy,
       (google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>),
       DeleteClientTlsPolicy,
       (google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
            request),

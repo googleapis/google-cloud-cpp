@@ -47,7 +47,7 @@ class MockFunctionServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::functions::v2::Function>, GetFunction,
+  MOCK_METHOD((StatusOr<google::cloud::functions::v2::Function>), GetFunction,
               (google::cloud::functions::v2::GetFunctionRequest const& request),
               (override));
 
@@ -57,35 +57,37 @@ class MockFunctionServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::functions::v2::Function>>, CreateFunction,
+      (future<StatusOr<google::cloud::functions::v2::Function>>),
+      CreateFunction,
       (google::cloud::functions::v2::CreateFunctionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::functions::v2::Function>>, UpdateFunction,
+      (future<StatusOr<google::cloud::functions::v2::Function>>),
+      UpdateFunction,
       (google::cloud::functions::v2::UpdateFunctionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::functions::v2::OperationMetadata>>,
+      (future<StatusOr<google::cloud::functions::v2::OperationMetadata>>),
       DeleteFunction,
       (google::cloud::functions::v2::DeleteFunctionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>,
+      (StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>),
       GenerateUploadUrl,
       (google::cloud::functions::v2::GenerateUploadUrlRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>,
+      (StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>),
       GenerateDownloadUrl,
       (google::cloud::functions::v2::GenerateDownloadUrlRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::functions::v2::ListRuntimesResponse>,
+      (StatusOr<google::cloud::functions::v2::ListRuntimesResponse>),
       ListRuntimes,
       (google::cloud::functions::v2::ListRuntimesRequest const& request),
       (override));

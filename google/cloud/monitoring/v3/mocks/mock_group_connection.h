@@ -50,15 +50,15 @@ class MockGroupServiceConnection
   MOCK_METHOD((StreamRange<google::monitoring::v3::Group>), ListGroups,
               (google::monitoring::v3::ListGroupsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>, GetGroup,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::Group>), GetGroup,
               (google::monitoring::v3::GetGroupRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>, CreateGroup,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::Group>), CreateGroup,
               (google::monitoring::v3::CreateGroupRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>, UpdateGroup,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::Group>), UpdateGroup,
               (google::monitoring::v3::UpdateGroupRequest const& request),
               (override));
 

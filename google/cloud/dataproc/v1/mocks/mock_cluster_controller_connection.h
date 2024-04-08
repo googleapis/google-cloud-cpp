@@ -48,32 +48,32 @@ class MockClusterControllerConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::Cluster>>, CreateCluster,
+      (future<StatusOr<google::cloud::dataproc::v1::Cluster>>), CreateCluster,
       (google::cloud::dataproc::v1::CreateClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::Cluster>>, UpdateCluster,
+      (future<StatusOr<google::cloud::dataproc::v1::Cluster>>), UpdateCluster,
       (google::cloud::dataproc::v1::UpdateClusterRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataproc::v1::Cluster>>),
               StopCluster,
               (google::cloud::dataproc::v1::StopClusterRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataproc::v1::Cluster>>),
               StartCluster,
               (google::cloud::dataproc::v1::StartClusterRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
+      (future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>),
       DeleteCluster,
       (google::cloud::dataproc::v1::DeleteClusterRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Cluster>, GetCluster,
+  MOCK_METHOD((StatusOr<google::cloud::dataproc::v1::Cluster>), GetCluster,
               (google::cloud::dataproc::v1::GetClusterRequest const& request),
               (override));
 
@@ -82,7 +82,7 @@ class MockClusterControllerConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
+      (future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>),
       DiagnoseCluster,
       (google::cloud::dataproc::v1::DiagnoseClusterRequest const& request),
       (override));

@@ -46,7 +46,7 @@ class MockCaseServiceConnection : public support_v2::CaseServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::support::v2::Case>, GetCase,
+  MOCK_METHOD((StatusOr<google::cloud::support::v2::Case>), GetCase,
               (google::cloud::support::v2::GetCaseRequest const& request),
               (override));
 
@@ -58,19 +58,19 @@ class MockCaseServiceConnection : public support_v2::CaseServiceConnection {
               (google::cloud::support::v2::SearchCasesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::support::v2::Case>, CreateCase,
+  MOCK_METHOD((StatusOr<google::cloud::support::v2::Case>), CreateCase,
               (google::cloud::support::v2::CreateCaseRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::support::v2::Case>, UpdateCase,
+  MOCK_METHOD((StatusOr<google::cloud::support::v2::Case>), UpdateCase,
               (google::cloud::support::v2::UpdateCaseRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::support::v2::Case>, EscalateCase,
+  MOCK_METHOD((StatusOr<google::cloud::support::v2::Case>), EscalateCase,
               (google::cloud::support::v2::EscalateCaseRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::support::v2::Case>, CloseCase,
+  MOCK_METHOD((StatusOr<google::cloud::support::v2::Case>), CloseCase,
               (google::cloud::support::v2::CloseCaseRequest const& request),
               (override));
 

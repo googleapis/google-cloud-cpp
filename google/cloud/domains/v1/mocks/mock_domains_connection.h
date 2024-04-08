@@ -46,33 +46,35 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::domains::v1::SearchDomainsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::domains::v1::SearchDomainsResponse>),
               SearchDomains,
               (google::cloud::domains::v1::SearchDomainsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>,
+      (StatusOr<
+          google::cloud::domains::v1::RetrieveRegisterParametersResponse>),
       RetrieveRegisterParameters,
       (google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
+      (future<StatusOr<google::cloud::domains::v1::Registration>>),
       RegisterDomain,
       (google::cloud::domains::v1::RegisterDomainRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>,
+      (StatusOr<
+          google::cloud::domains::v1::RetrieveTransferParametersResponse>),
       RetrieveTransferParameters,
       (google::cloud::domains::v1::RetrieveTransferParametersRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
+      (future<StatusOr<google::cloud::domains::v1::Registration>>),
       TransferDomain,
       (google::cloud::domains::v1::TransferDomainRequest const& request),
       (override));
@@ -83,56 +85,56 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::domains::v1::Registration>, GetRegistration,
+      (StatusOr<google::cloud::domains::v1::Registration>), GetRegistration,
       (google::cloud::domains::v1::GetRegistrationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
+      (future<StatusOr<google::cloud::domains::v1::Registration>>),
       UpdateRegistration,
       (google::cloud::domains::v1::UpdateRegistrationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
+      (future<StatusOr<google::cloud::domains::v1::Registration>>),
       ConfigureManagementSettings,
       (google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
+      (future<StatusOr<google::cloud::domains::v1::Registration>>),
       ConfigureDnsSettings,
       (google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
+      (future<StatusOr<google::cloud::domains::v1::Registration>>),
       ConfigureContactSettings,
       (google::cloud::domains::v1::ConfigureContactSettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
+      (future<StatusOr<google::cloud::domains::v1::Registration>>),
       ExportRegistration,
       (google::cloud::domains::v1::ExportRegistrationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::domains::v1::OperationMetadata>>),
       DeleteRegistration,
       (google::cloud::domains::v1::DeleteRegistrationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::domains::v1::AuthorizationCode>,
+      (StatusOr<google::cloud::domains::v1::AuthorizationCode>),
       RetrieveAuthorizationCode,
       (google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::domains::v1::AuthorizationCode>,
+  MOCK_METHOD((StatusOr<google::cloud::domains::v1::AuthorizationCode>),
               ResetAuthorizationCode,
               (google::cloud::domains::v1::ResetAuthorizationCodeRequest const&
                    request),

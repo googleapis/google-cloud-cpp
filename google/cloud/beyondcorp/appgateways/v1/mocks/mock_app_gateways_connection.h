@@ -55,21 +55,22 @@ class MockAppGatewaysServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>,
+      (StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>),
       GetAppGateway,
       (google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
+      (future<
+          StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>),
       CreateAppGateway,
       (google::cloud::beyondcorp::appgateways::v1::
            CreateAppGatewayRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
-                                  AppGatewayOperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
+                                   AppGatewayOperationMetadata>>),
               DeleteAppGateway,
               (google::cloud::beyondcorp::appgateways::v1::
                    DeleteAppGatewayRequest const& request),

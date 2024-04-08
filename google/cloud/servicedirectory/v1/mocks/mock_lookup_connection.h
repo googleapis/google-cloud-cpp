@@ -48,7 +48,7 @@ class MockLookupServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>,
+      (StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>),
       ResolveService,
       (google::cloud::servicedirectory::v1::ResolveServiceRequest const&
            request),

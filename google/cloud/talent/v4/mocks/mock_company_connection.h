@@ -47,15 +47,15 @@ class MockCompanyServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>, CreateCompany,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::Company>), CreateCompany,
               (google::cloud::talent::v4::CreateCompanyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>, GetCompany,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::Company>), GetCompany,
               (google::cloud::talent::v4::GetCompanyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>, UpdateCompany,
+  MOCK_METHOD((StatusOr<google::cloud::talent::v4::Company>), UpdateCompany,
               (google::cloud::talent::v4::UpdateCompanyRequest const& request),
               (override));
 

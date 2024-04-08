@@ -55,24 +55,24 @@ class MockInstanceTemplatesConnection
            AggregatedListInstanceTemplatesRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteInstanceTemplate,
               (google::cloud::cpp::compute::instance_templates::v1::
                    DeleteInstanceTemplateRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>),
               GetInstanceTemplate,
               (google::cloud::cpp::compute::instance_templates::v1::
                    GetInstanceTemplateRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), GetIamPolicy,
               (google::cloud::cpp::compute::instance_templates::v1::
                    GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertInstanceTemplate,
               (google::cloud::cpp::compute::instance_templates::v1::
                    InsertInstanceTemplateRequest const& request),
@@ -84,13 +84,13 @@ class MockInstanceTemplatesConnection
                    ListInstanceTemplatesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), SetIamPolicy,
               (google::cloud::cpp::compute::instance_templates::v1::
                    SetIamPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::instance_templates::v1::
            TestIamPermissionsRequest const& request),

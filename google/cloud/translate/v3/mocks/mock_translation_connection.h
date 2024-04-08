@@ -48,47 +48,48 @@ class MockTranslationServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::TranslateTextResponse>,
+      (StatusOr<google::cloud::translation::v3::TranslateTextResponse>),
       TranslateText,
       (google::cloud::translation::v3::TranslateTextRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::DetectLanguageResponse>,
+      (StatusOr<google::cloud::translation::v3::DetectLanguageResponse>),
       DetectLanguage,
       (google::cloud::translation::v3::DetectLanguageRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::SupportedLanguages>,
+      (StatusOr<google::cloud::translation::v3::SupportedLanguages>),
       GetSupportedLanguages,
       (google::cloud::translation::v3::GetSupportedLanguagesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>,
+      (StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>),
       TranslateDocument,
       (google::cloud::translation::v3::TranslateDocumentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>,
+      (future<
+          StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>),
       BatchTranslateText,
       (google::cloud::translation::v3::BatchTranslateTextRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
+      (future<StatusOr<
+           google::cloud::translation::v3::BatchTranslateDocumentResponse>>),
       BatchTranslateDocument,
       (google::cloud::translation::v3::BatchTranslateDocumentRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::Glossary>>,
+      (future<StatusOr<google::cloud::translation::v3::Glossary>>),
       CreateGlossary,
       (google::cloud::translation::v3::CreateGlossaryRequest const& request),
       (override));
@@ -99,18 +100,19 @@ class MockTranslationServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::Glossary>, GetGlossary,
+      (StatusOr<google::cloud::translation::v3::Glossary>), GetGlossary,
       (google::cloud::translation::v3::GetGlossaryRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
+      (future<
+          StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>),
       DeleteGlossary,
       (google::cloud::translation::v3::DeleteGlossaryRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>,
+      (StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>),
       CreateAdaptiveMtDataset,
       (google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
            request),
@@ -123,7 +125,7 @@ class MockTranslationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>,
+      (StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>),
       GetAdaptiveMtDataset,
       (google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
            request),
@@ -136,14 +138,14 @@ class MockTranslationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>,
+      (StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>),
       AdaptiveMtTranslate,
       (google::cloud::translation::v3::AdaptiveMtTranslateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::AdaptiveMtFile>,
+      (StatusOr<google::cloud::translation::v3::AdaptiveMtFile>),
       GetAdaptiveMtFile,
       (google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request),
       (override));
@@ -155,7 +157,7 @@ class MockTranslationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>,
+      (StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>),
       ImportAdaptiveMtFile,
       (google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
            request),

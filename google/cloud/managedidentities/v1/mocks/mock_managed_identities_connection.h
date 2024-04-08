@@ -47,15 +47,15 @@ class MockManagedIdentitiesServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::managedidentities::v1::Domain>>),
               CreateMicrosoftAdDomain,
               (google::cloud::managedidentities::v1::
                    CreateMicrosoftAdDomainRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::managedidentities::v1::ResetAdminPasswordResponse>,
+      (StatusOr<
+          google::cloud::managedidentities::v1::ResetAdminPasswordResponse>),
       ResetAdminPassword,
       (google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
            request),
@@ -67,43 +67,43 @@ class MockManagedIdentitiesServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::managedidentities::v1::Domain>, GetDomain,
+      (StatusOr<google::cloud::managedidentities::v1::Domain>), GetDomain,
       (google::cloud::managedidentities::v1::GetDomainRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::managedidentities::v1::Domain>>),
               UpdateDomain,
               (google::cloud::managedidentities::v1::UpdateDomainRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>,
+      (future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>),
       DeleteDomain,
       (google::cloud::managedidentities::v1::DeleteDomainRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+      (future<StatusOr<google::cloud::managedidentities::v1::Domain>>),
       AttachTrust,
       (google::cloud::managedidentities::v1::AttachTrustRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+      (future<StatusOr<google::cloud::managedidentities::v1::Domain>>),
       ReconfigureTrust,
       (google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+      (future<StatusOr<google::cloud::managedidentities::v1::Domain>>),
       DetachTrust,
       (google::cloud::managedidentities::v1::DetachTrustRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::managedidentities::v1::Domain>>),
               ValidateTrust,
               (google::cloud::managedidentities::v1::ValidateTrustRequest const&
                    request),

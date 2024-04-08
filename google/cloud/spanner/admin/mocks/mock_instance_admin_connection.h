@@ -55,21 +55,21 @@ class MockInstanceAdminConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::spanner::admin::instance::v1::InstanceConfig>,
+      (StatusOr<google::spanner::admin::instance::v1::InstanceConfig>),
       GetInstanceConfig,
       (google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
+      (future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>),
       CreateInstanceConfig,
       (google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
+      (future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>),
       UpdateInstanceConfig,
       (google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
            request),
@@ -102,19 +102,19 @@ class MockInstanceAdminConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::spanner::admin::instance::v1::Instance>, GetInstance,
+      (StatusOr<google::spanner::admin::instance::v1::Instance>), GetInstance,
       (google::spanner::admin::instance::v1::GetInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
+      (future<StatusOr<google::spanner::admin::instance::v1::Instance>>),
       CreateInstance,
       (google::spanner::admin::instance::v1::CreateInstanceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
+      (future<StatusOr<google::spanner::admin::instance::v1::Instance>>),
       UpdateInstance,
       (google::spanner::admin::instance::v1::UpdateInstanceRequest const&
            request),
@@ -126,28 +126,29 @@ class MockInstanceAdminConnection
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::spanner::admin::instance::v1::InstancePartition>,
+      (StatusOr<google::spanner::admin::instance::v1::InstancePartition>),
       GetInstancePartition,
       (google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
+      (future<
+          StatusOr<google::spanner::admin::instance::v1::InstancePartition>>),
       CreateInstancePartition,
       (google::spanner::admin::instance::v1::
            CreateInstancePartitionRequest const& request),
@@ -159,7 +160,8 @@ class MockInstanceAdminConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
+      (future<
+          StatusOr<google::spanner::admin::instance::v1::InstancePartition>>),
       UpdateInstancePartition,
       (google::spanner::admin::instance::v1::
            UpdateInstancePartitionRequest const& request),

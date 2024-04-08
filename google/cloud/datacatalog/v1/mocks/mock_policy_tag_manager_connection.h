@@ -48,7 +48,7 @@ class MockPolicyTagManagerConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::Taxonomy>, CreateTaxonomy,
+      (StatusOr<google::cloud::datacatalog::v1::Taxonomy>), CreateTaxonomy,
       (google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request),
       (override));
 
@@ -58,7 +58,7 @@ class MockPolicyTagManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::Taxonomy>, UpdateTaxonomy,
+      (StatusOr<google::cloud::datacatalog::v1::Taxonomy>), UpdateTaxonomy,
       (google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request),
       (override));
 
@@ -68,12 +68,12 @@ class MockPolicyTagManagerConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::Taxonomy>, GetTaxonomy,
+      (StatusOr<google::cloud::datacatalog::v1::Taxonomy>), GetTaxonomy,
       (google::cloud::datacatalog::v1::GetTaxonomyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::PolicyTag>, CreatePolicyTag,
+      (StatusOr<google::cloud::datacatalog::v1::PolicyTag>), CreatePolicyTag,
       (google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request),
       (override));
 
@@ -83,7 +83,7 @@ class MockPolicyTagManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::PolicyTag>, UpdatePolicyTag,
+      (StatusOr<google::cloud::datacatalog::v1::PolicyTag>), UpdatePolicyTag,
       (google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request),
       (override));
 
@@ -93,19 +93,19 @@ class MockPolicyTagManagerConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::PolicyTag>, GetPolicyTag,
+      (StatusOr<google::cloud::datacatalog::v1::PolicyTag>), GetPolicyTag,
       (google::cloud::datacatalog::v1::GetPolicyTagRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

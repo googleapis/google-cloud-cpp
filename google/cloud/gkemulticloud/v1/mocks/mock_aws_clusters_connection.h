@@ -47,20 +47,20 @@ class MockAwsClustersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>),
               CreateAwsCluster,
               (google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>),
               UpdateAwsCluster,
               (google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>, GetAwsCluster,
+      (StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>), GetAwsCluster,
       (google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request),
       (override));
 
@@ -71,48 +71,48 @@ class MockAwsClustersConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>),
       DeleteAwsCluster,
       (google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::
-                           GenerateAwsClusterAgentTokenResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::gkemulticloud::v1::
+                            GenerateAwsClusterAgentTokenResponse>),
               GenerateAwsClusterAgentToken,
               (google::cloud::gkemulticloud::v1::
                    GenerateAwsClusterAgentTokenRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>,
+      (StatusOr<
+          google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>),
       GenerateAwsAccessToken,
       (google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>),
               CreateAwsNodePool,
               (google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>),
               UpdateAwsNodePool,
               (google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
+      (future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>),
       RollbackAwsNodePoolUpdate,
       (google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>, GetAwsNodePool,
+      (StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>), GetAwsNodePool,
       (google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request),
       (override));
 
@@ -123,27 +123,27 @@ class MockAwsClustersConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>),
       DeleteAwsNodePool,
       (google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>,
+      (StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>),
       GetAwsOpenIdConfig,
       (google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>,
+  MOCK_METHOD((StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>),
               GetAwsJsonWebKeys,
               (google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>,
+      (StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>),
       GetAwsServerConfig,
       (google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
            request),

@@ -55,24 +55,24 @@ class MockServiceAttachmentsConnection
            AggregatedListServiceAttachmentsRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
                    DeleteServiceAttachmentRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>),
               GetServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
                    GetServiceAttachmentRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), GetIamPolicy,
               (google::cloud::cpp::compute::service_attachments::v1::
                    GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
                    InsertServiceAttachmentRequest const& request),
@@ -84,19 +84,19 @@ class MockServiceAttachmentsConnection
                    ListServiceAttachmentsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
                    PatchServiceAttachmentRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), SetIamPolicy,
               (google::cloud::cpp::compute::service_attachments::v1::
                    SetIamPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::service_attachments::v1::
            TestIamPermissionsRequest const& request),

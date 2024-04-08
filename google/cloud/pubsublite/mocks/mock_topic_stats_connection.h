@@ -48,20 +48,20 @@ class MockTopicStatsServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>,
+      (StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>),
       ComputeMessageStats,
       (google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>,
+      (StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>),
       ComputeHeadCursor,
       (google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>,
+      (StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>),
       ComputeTimeCursor,
       (google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request),
       (override));

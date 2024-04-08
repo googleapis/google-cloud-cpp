@@ -53,17 +53,17 @@ class MockExperimentsConnection : public dialogflow_cx::ExperimentsConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Experiment>, GetExperiment,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Experiment>), GetExperiment,
       (google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Experiment>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::cx::v3::Experiment>),
               CreateExperiment,
               (google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Experiment>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::cx::v3::Experiment>),
               UpdateExperiment,
               (google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
                    request),
@@ -74,14 +74,14 @@ class MockExperimentsConnection : public dialogflow_cx::ExperimentsConnection {
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Experiment>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::cx::v3::Experiment>),
               StartExperiment,
               (google::cloud::dialogflow::cx::v3::StartExperimentRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Experiment>, StopExperiment,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Experiment>), StopExperiment,
       (google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request),
       (override));
 };

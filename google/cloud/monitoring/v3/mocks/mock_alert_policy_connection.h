@@ -52,11 +52,12 @@ class MockAlertPolicyServiceConnection
               (google::monitoring::v3::ListAlertPoliciesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::AlertPolicy>, GetAlertPolicy,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::AlertPolicy>), GetAlertPolicy,
               (google::monitoring::v3::GetAlertPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::AlertPolicy>, CreateAlertPolicy,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::AlertPolicy>),
+              CreateAlertPolicy,
               (google::monitoring::v3::CreateAlertPolicyRequest const& request),
               (override));
 
@@ -64,7 +65,8 @@ class MockAlertPolicyServiceConnection
               (google::monitoring::v3::DeleteAlertPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::AlertPolicy>, UpdateAlertPolicy,
+  MOCK_METHOD((StatusOr<google::monitoring::v3::AlertPolicy>),
+              UpdateAlertPolicy,
               (google::monitoring::v3::UpdateAlertPolicyRequest const& request),
               (override));
 };

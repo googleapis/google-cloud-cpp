@@ -52,11 +52,11 @@ class MockRecommenderConnection : public recommender_v1::RecommenderConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Insight>, GetInsight,
+      (StatusOr<google::cloud::recommender::v1::Insight>), GetInsight,
       (google::cloud::recommender::v1::GetInsightRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::recommender::v1::Insight>,
+  MOCK_METHOD((StatusOr<google::cloud::recommender::v1::Insight>),
               MarkInsightAccepted,
               (google::cloud::recommender::v1::MarkInsightAcceptedRequest const&
                    request),
@@ -69,62 +69,62 @@ class MockRecommenderConnection : public recommender_v1::RecommenderConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Recommendation>,
+      (StatusOr<google::cloud::recommender::v1::Recommendation>),
       GetRecommendation,
       (google::cloud::recommender::v1::GetRecommendationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Recommendation>,
+      (StatusOr<google::cloud::recommender::v1::Recommendation>),
       MarkRecommendationDismissed,
       (google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Recommendation>,
+      (StatusOr<google::cloud::recommender::v1::Recommendation>),
       MarkRecommendationClaimed,
       (google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Recommendation>,
+      (StatusOr<google::cloud::recommender::v1::Recommendation>),
       MarkRecommendationSucceeded,
       (google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Recommendation>,
+      (StatusOr<google::cloud::recommender::v1::Recommendation>),
       MarkRecommendationFailed,
       (google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::RecommenderConfig>,
+      (StatusOr<google::cloud::recommender::v1::RecommenderConfig>),
       GetRecommenderConfig,
       (google::cloud::recommender::v1::GetRecommenderConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::RecommenderConfig>,
+      (StatusOr<google::cloud::recommender::v1::RecommenderConfig>),
       UpdateRecommenderConfig,
       (google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::InsightTypeConfig>,
+      (StatusOr<google::cloud::recommender::v1::InsightTypeConfig>),
       GetInsightTypeConfig,
       (google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::InsightTypeConfig>,
+      (StatusOr<google::cloud::recommender::v1::InsightTypeConfig>),
       UpdateInsightTypeConfig,
       (google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
            request),

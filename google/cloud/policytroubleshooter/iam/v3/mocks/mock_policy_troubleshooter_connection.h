@@ -47,8 +47,8 @@ class MockPolicyTroubleshooterConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::policytroubleshooter::iam::v3::
-                           TroubleshootIamPolicyResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::policytroubleshooter::iam::v3::
+                            TroubleshootIamPolicyResponse>),
               TroubleshootIamPolicy,
               (google::cloud::policytroubleshooter::iam::v3::
                    TroubleshootIamPolicyRequest const& request),

@@ -52,17 +52,17 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Agent>, GetAgent,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Agent>), GetAgent,
       (google::cloud::dialogflow::cx::v3::GetAgentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Agent>, CreateAgent,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Agent>), CreateAgent,
       (google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Agent>, UpdateAgent,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Agent>), UpdateAgent,
       (google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request),
       (override));
 
@@ -72,38 +72,39 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>,
+      (future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>),
       ExportAgent,
       (google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
+      (future<StatusOr<google::protobuf::Struct>>), RestoreAgent,
       (google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>),
       ValidateAgent,
       (google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>),
       GetAgentValidationResult,
       (google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>),
       GetGenerativeSettings,
       (google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>),
       UpdateGenerativeSettings,
       (google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
            request),

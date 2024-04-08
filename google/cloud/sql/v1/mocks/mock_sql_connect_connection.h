@@ -48,12 +48,12 @@ class MockSqlConnectServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::ConnectSettings>, GetConnectSettings,
+      (StatusOr<google::cloud::sql::v1::ConnectSettings>), GetConnectSettings,
       (google::cloud::sql::v1::GetConnectSettingsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>,
+      (StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>),
       GenerateEphemeralCert,
       (google::cloud::sql::v1::GenerateEphemeralCertRequest const& request),
       (override));

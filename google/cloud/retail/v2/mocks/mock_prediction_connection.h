@@ -47,7 +47,7 @@ class MockPredictionServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::PredictResponse>, Predict,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::PredictResponse>), Predict,
               (google::cloud::retail::v2::PredictRequest const& request),
               (override));
 };

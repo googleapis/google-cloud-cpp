@@ -47,7 +47,7 @@ class MockBigtableTableAdminConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Table>, CreateTable,
+  MOCK_METHOD((StatusOr<google::bigtable::admin::v2::Table>), CreateTable,
               (google::bigtable::admin::v2::CreateTableRequest const& request),
               (override));
 
@@ -55,11 +55,12 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::ListTablesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Table>, GetTable,
+  MOCK_METHOD((StatusOr<google::bigtable::admin::v2::Table>), GetTable,
               (google::bigtable::admin::v2::GetTableRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>, UpdateTable,
+  MOCK_METHOD((future<StatusOr<google::bigtable::admin::v2::Table>>),
+              UpdateTable,
               (google::bigtable::admin::v2::UpdateTableRequest const& request),
               (override));
 
@@ -68,12 +69,12 @@ class MockBigtableTableAdminConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::Table>>, UndeleteTable,
+      (future<StatusOr<google::bigtable::admin::v2::Table>>), UndeleteTable,
       (google::bigtable::admin::v2::UndeleteTableRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
+      (future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>),
       CreateAuthorizedView,
       (google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request),
       (override));
@@ -84,12 +85,13 @@ class MockBigtableTableAdminConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::bigtable::admin::v2::AuthorizedView>, GetAuthorizedView,
+      (StatusOr<google::bigtable::admin::v2::AuthorizedView>),
+      GetAuthorizedView,
       (google::bigtable::admin::v2::GetAuthorizedViewRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
+      (future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>),
       UpdateAuthorizedView,
       (google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request),
       (override));
@@ -100,7 +102,7 @@ class MockBigtableTableAdminConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::bigtable::admin::v2::Table>, ModifyColumnFamilies,
+      (StatusOr<google::bigtable::admin::v2::Table>), ModifyColumnFamilies,
       (google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request),
       (override));
 
@@ -109,28 +111,28 @@ class MockBigtableTableAdminConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>,
+      (StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>),
       GenerateConsistencyToken,
       (google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>,
+      (StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>),
       CheckConsistency,
       (google::bigtable::admin::v2::CheckConsistencyRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>,
+  MOCK_METHOD((future<StatusOr<google::bigtable::admin::v2::Backup>>),
               CreateBackup,
               (google::bigtable::admin::v2::CreateBackupRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Backup>, GetBackup,
+  MOCK_METHOD((StatusOr<google::bigtable::admin::v2::Backup>), GetBackup,
               (google::bigtable::admin::v2::GetBackupRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Backup>, UpdateBackup,
+  MOCK_METHOD((StatusOr<google::bigtable::admin::v2::Backup>), UpdateBackup,
               (google::bigtable::admin::v2::UpdateBackupRequest const& request),
               (override));
 
@@ -142,30 +144,31 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::ListBackupsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>,
+  MOCK_METHOD((future<StatusOr<google::bigtable::admin::v2::Table>>),
               RestoreTable,
               (google::bigtable::admin::v2::RestoreTableRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>, CopyBackup,
+  MOCK_METHOD((future<StatusOr<google::bigtable::admin::v2::Backup>>),
+              CopyBackup,
               (google::bigtable::admin::v2::CopyBackupRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>,
+      (future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>),
       AsyncCheckConsistency,
       (google::bigtable::admin::v2::CheckConsistencyRequest const& request),
       (override));

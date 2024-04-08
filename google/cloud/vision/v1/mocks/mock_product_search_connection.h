@@ -47,7 +47,7 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::ProductSet>, CreateProductSet,
+      (StatusOr<google::cloud::vision::v1::ProductSet>), CreateProductSet,
       (google::cloud::vision::v1::CreateProductSetRequest const& request),
       (override));
 
@@ -56,12 +56,12 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
               (google::cloud::vision::v1::ListProductSetsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::ProductSet>, GetProductSet,
+  MOCK_METHOD((StatusOr<google::cloud::vision::v1::ProductSet>), GetProductSet,
               (google::cloud::vision::v1::GetProductSetRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::ProductSet>, UpdateProductSet,
+      (StatusOr<google::cloud::vision::v1::ProductSet>), UpdateProductSet,
       (google::cloud::vision::v1::UpdateProductSetRequest const& request),
       (override));
 
@@ -70,7 +70,7 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (google::cloud::vision::v1::DeleteProductSetRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::Product>, CreateProduct,
+  MOCK_METHOD((StatusOr<google::cloud::vision::v1::Product>), CreateProduct,
               (google::cloud::vision::v1::CreateProductRequest const& request),
               (override));
 
@@ -78,11 +78,11 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
               (google::cloud::vision::v1::ListProductsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::Product>, GetProduct,
+  MOCK_METHOD((StatusOr<google::cloud::vision::v1::Product>), GetProduct,
               (google::cloud::vision::v1::GetProductRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::Product>, UpdateProduct,
+  MOCK_METHOD((StatusOr<google::cloud::vision::v1::Product>), UpdateProduct,
               (google::cloud::vision::v1::UpdateProductRequest const& request),
               (override));
 
@@ -91,7 +91,8 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::ReferenceImage>, CreateReferenceImage,
+      (StatusOr<google::cloud::vision::v1::ReferenceImage>),
+      CreateReferenceImage,
       (google::cloud::vision::v1::CreateReferenceImageRequest const& request),
       (override));
 
@@ -106,7 +107,7 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::ReferenceImage>, GetReferenceImage,
+      (StatusOr<google::cloud::vision::v1::ReferenceImage>), GetReferenceImage,
       (google::cloud::vision::v1::GetReferenceImageRequest const& request),
       (override));
 
@@ -128,13 +129,13 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
+      (future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>),
       ImportProductSets,
       (google::cloud::vision::v1::ImportProductSetsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
+      (future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>),
       PurgeProducts,
       (google::cloud::vision::v1::PurgeProductsRequest const& request),
       (override));

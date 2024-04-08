@@ -48,20 +48,20 @@ class MockSqlBackupRunsServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Delete,
+      (StatusOr<google::cloud::sql::v1::Operation>), Delete,
       (google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::BackupRun>, Get,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::BackupRun>), Get,
               (google::cloud::sql::v1::SqlBackupRunsGetRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Insert,
+      (StatusOr<google::cloud::sql::v1::Operation>), Insert,
       (google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::BackupRunsListResponse>, List,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::BackupRunsListResponse>), List,
               (google::cloud::sql::v1::SqlBackupRunsListRequest const& request),
               (override));
 };

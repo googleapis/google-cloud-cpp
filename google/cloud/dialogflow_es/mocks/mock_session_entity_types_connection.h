@@ -53,21 +53,21 @@ class MockSessionEntityTypesConnection
       (google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::SessionEntityType>,
+  MOCK_METHOD((StatusOr<google::cloud::dialogflow::v2::SessionEntityType>),
               GetSessionEntityType,
               (google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::SessionEntityType>,
+      (StatusOr<google::cloud::dialogflow::v2::SessionEntityType>),
       CreateSessionEntityType,
       (google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::SessionEntityType>,
+      (StatusOr<google::cloud::dialogflow::v2::SessionEntityType>),
       UpdateSessionEntityType,
       (google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
            request),

@@ -47,14 +47,14 @@ class MockTagHoldsConnection : public resourcemanager_v3::TagHoldsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>,
+      (future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>),
       CreateTagHold,
       (google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>,
+      (future<
+          StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>),
       DeleteTagHold,
       (google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request),
       (override));

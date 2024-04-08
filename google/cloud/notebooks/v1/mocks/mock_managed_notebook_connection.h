@@ -52,67 +52,68 @@ class MockManagedNotebookServiceConnection
               (google::cloud::notebooks::v1::ListRuntimesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::notebooks::v1::Runtime>, GetRuntime,
+  MOCK_METHOD((StatusOr<google::cloud::notebooks::v1::Runtime>), GetRuntime,
               (google::cloud::notebooks::v1::GetRuntimeRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, CreateRuntime,
+      (future<StatusOr<google::cloud::notebooks::v1::Runtime>>), CreateRuntime,
       (google::cloud::notebooks::v1::CreateRuntimeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, UpdateRuntime,
+      (future<StatusOr<google::cloud::notebooks::v1::Runtime>>), UpdateRuntime,
       (google::cloud::notebooks::v1::UpdateRuntimeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>),
       DeleteRuntime,
       (google::cloud::notebooks::v1::DeleteRuntimeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, StartRuntime,
+      (future<StatusOr<google::cloud::notebooks::v1::Runtime>>), StartRuntime,
       (google::cloud::notebooks::v1::StartRuntimeRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::notebooks::v1::Runtime>>),
               StopRuntime,
               (google::cloud::notebooks::v1::StopRuntimeRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, SwitchRuntime,
+      (future<StatusOr<google::cloud::notebooks::v1::Runtime>>), SwitchRuntime,
       (google::cloud::notebooks::v1::SwitchRuntimeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, ResetRuntime,
+      (future<StatusOr<google::cloud::notebooks::v1::Runtime>>), ResetRuntime,
       (google::cloud::notebooks::v1::ResetRuntimeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, UpgradeRuntime,
+      (future<StatusOr<google::cloud::notebooks::v1::Runtime>>), UpgradeRuntime,
       (google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
+      (future<StatusOr<google::cloud::notebooks::v1::Runtime>>),
       ReportRuntimeEvent,
       (google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>,
+      (StatusOr<
+          google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>),
       RefreshRuntimeTokenInternal,
       (google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, DiagnoseRuntime,
+      (future<StatusOr<google::cloud::notebooks::v1::Runtime>>),
+      DiagnoseRuntime,
       (google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request),
       (override));
 };

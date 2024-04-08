@@ -47,16 +47,16 @@ class MockJobControllerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, SubmitJob,
+  MOCK_METHOD((StatusOr<google::cloud::dataproc::v1::Job>), SubmitJob,
               (google::cloud::dataproc::v1::SubmitJobRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Job>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataproc::v1::Job>>),
               SubmitJobAsOperation,
               (google::cloud::dataproc::v1::SubmitJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, GetJob,
+  MOCK_METHOD((StatusOr<google::cloud::dataproc::v1::Job>), GetJob,
               (google::cloud::dataproc::v1::GetJobRequest const& request),
               (override));
 
@@ -64,11 +64,11 @@ class MockJobControllerConnection
               (google::cloud::dataproc::v1::ListJobsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, UpdateJob,
+  MOCK_METHOD((StatusOr<google::cloud::dataproc::v1::Job>), UpdateJob,
               (google::cloud::dataproc::v1::UpdateJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, CancelJob,
+  MOCK_METHOD((StatusOr<google::cloud::dataproc::v1::Job>), CancelJob,
               (google::cloud::dataproc::v1::CancelJobRequest const& request),
               (override));
 

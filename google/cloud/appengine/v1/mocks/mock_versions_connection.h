@@ -49,19 +49,19 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
   MOCK_METHOD((StreamRange<google::appengine::v1::Version>), ListVersions,
               (google::appengine::v1::ListVersionsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::Version>, GetVersion,
+  MOCK_METHOD((StatusOr<google::appengine::v1::Version>), GetVersion,
               (google::appengine::v1::GetVersionRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, CreateVersion,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::Version>>), CreateVersion,
               (google::appengine::v1::CreateVersionRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, UpdateVersion,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::Version>>), UpdateVersion,
               (google::appengine::v1::UpdateVersionRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
+  MOCK_METHOD((future<StatusOr<google::appengine::v1::OperationMetadataV1>>),
               DeleteVersion,
               (google::appengine::v1::DeleteVersionRequest const& request),
               (override));

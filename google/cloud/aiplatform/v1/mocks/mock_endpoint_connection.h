@@ -48,12 +48,13 @@ class MockEndpointServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>, CreateEndpoint,
+      (future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>),
+      CreateEndpoint,
       (google::cloud::aiplatform::v1::CreateEndpointRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Endpoint>, GetEndpoint,
+      (StatusOr<google::cloud::aiplatform::v1::Endpoint>), GetEndpoint,
       (google::cloud::aiplatform::v1::GetEndpointRequest const& request),
       (override));
 
@@ -63,31 +64,32 @@ class MockEndpointServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Endpoint>, UpdateEndpoint,
+      (StatusOr<google::cloud::aiplatform::v1::Endpoint>), UpdateEndpoint,
       (google::cloud::aiplatform::v1::UpdateEndpointRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteEndpoint,
       (google::cloud::aiplatform::v1::DeleteEndpointRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>),
       DeployModel,
       (google::cloud::aiplatform::v1::DeployModelRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>),
       UndeployModel,
       (google::cloud::aiplatform::v1::UndeployModelRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>,
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::MutateDeployedModelResponse>>),
       MutateDeployedModel,
       (google::cloud::aiplatform::v1::MutateDeployedModelRequest const&
            request),

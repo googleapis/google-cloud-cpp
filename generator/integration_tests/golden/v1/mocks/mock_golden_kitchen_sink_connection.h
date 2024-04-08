@@ -46,15 +46,15 @@ class MockGoldenKitchenSinkConnection : public golden_v1::GoldenKitchenSinkConne
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>,
+  MOCK_METHOD((StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>),
   GenerateAccessToken,
   (google::test::admin::database::v1::GenerateAccessTokenRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>,
+  MOCK_METHOD((StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>),
   GenerateIdToken,
   (google::test::admin::database::v1::GenerateIdTokenRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>,
+  MOCK_METHOD((StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>),
   WriteLogEntries,
   (google::test::admin::database::v1::WriteLogEntriesRequest const& request), (override));
 
@@ -62,7 +62,7 @@ class MockGoldenKitchenSinkConnection : public golden_v1::GoldenKitchenSinkConne
   ListLogs,
   (google::test::admin::database::v1::ListLogsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>,
+  MOCK_METHOD((StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>),
   ListServiceAccountKeys,
   (google::test::admin::database::v1::ListServiceAccountKeysRequest const& request), (override));
 
@@ -74,7 +74,7 @@ class MockGoldenKitchenSinkConnection : public golden_v1::GoldenKitchenSinkConne
   Deprecated2,
   (google::test::admin::database::v1::GenerateAccessTokenRequest const& request), (override));
 
-  MOCK_METHOD(StreamRange<google::test::admin::database::v1::Response>,
+  MOCK_METHOD((StreamRange<google::test::admin::database::v1::Response>),
   StreamingRead,
   (google::test::admin::database::v1::Request const& request), (override));
 

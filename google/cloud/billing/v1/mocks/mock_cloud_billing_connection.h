@@ -47,7 +47,7 @@ class MockCloudBillingConnection : public billing_v1::CloudBillingConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>, GetBillingAccount,
+      (StatusOr<google::cloud::billing::v1::BillingAccount>), GetBillingAccount,
       (google::cloud::billing::v1::GetBillingAccountRequest const& request),
       (override));
 
@@ -57,13 +57,13 @@ class MockCloudBillingConnection : public billing_v1::CloudBillingConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>,
+      (StatusOr<google::cloud::billing::v1::BillingAccount>),
       UpdateBillingAccount,
       (google::cloud::billing::v1::UpdateBillingAccountRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>,
+      (StatusOr<google::cloud::billing::v1::BillingAccount>),
       CreateBillingAccount,
       (google::cloud::billing::v1::CreateBillingAccountRequest const& request),
       (override));
@@ -75,33 +75,34 @@ class MockCloudBillingConnection : public billing_v1::CloudBillingConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::ProjectBillingInfo>,
+      (StatusOr<google::cloud::billing::v1::ProjectBillingInfo>),
       GetProjectBillingInfo,
       (google::cloud::billing::v1::GetProjectBillingInfoRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::ProjectBillingInfo>,
+      (StatusOr<google::cloud::billing::v1::ProjectBillingInfo>),
       UpdateProjectBillingInfo,
       (google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>, MoveBillingAccount,
+      (StatusOr<google::cloud::billing::v1::BillingAccount>),
+      MoveBillingAccount,
       (google::cloud::billing::v1::MoveBillingAccountRequest const& request),
       (override));
 };

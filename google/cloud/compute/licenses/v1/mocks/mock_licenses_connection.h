@@ -47,26 +47,26 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       DeleteLicense,
       (google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::License>, GetLicense,
+      (StatusOr<google::cloud::cpp::compute::v1::License>), GetLicense,
       (google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+      (StatusOr<google::cloud::cpp::compute::v1::Policy>), GetIamPolicy,
       (google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       InsertLicense,
       (google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
            request),
@@ -78,13 +78,13 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+      (StatusOr<google::cloud::cpp::compute::v1::Policy>), SetIamPolicy,
       (google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::licenses::v1::
            TestIamPermissionsRequest const& request),

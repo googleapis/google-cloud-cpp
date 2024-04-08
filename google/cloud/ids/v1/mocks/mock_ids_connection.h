@@ -50,16 +50,16 @@ class MockIDSConnection : public ids_v1::IDSConnection {
               (google::cloud::ids::v1::ListEndpointsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::ids::v1::Endpoint>, GetEndpoint,
+  MOCK_METHOD((StatusOr<google::cloud::ids::v1::Endpoint>), GetEndpoint,
               (google::cloud::ids::v1::GetEndpointRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::Endpoint>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::ids::v1::Endpoint>>),
               CreateEndpoint,
               (google::cloud::ids::v1::CreateEndpointRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::ids::v1::OperationMetadata>>),
               DeleteEndpoint,
               (google::cloud::ids::v1::DeleteEndpointRequest const& request),
               (override));

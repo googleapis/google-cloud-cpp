@@ -52,40 +52,45 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Document>, GetDocument,
+      (StatusOr<google::cloud::dialogflow::v2::Document>), GetDocument,
       (google::cloud::dialogflow::v2::GetDocumentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::Document>>, CreateDocument,
+      (future<StatusOr<google::cloud::dialogflow::v2::Document>>),
+      CreateDocument,
       (google::cloud::dialogflow::v2::CreateDocumentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>,
+      (future<
+          StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>),
       ImportDocuments,
       (google::cloud::dialogflow::v2::ImportDocumentsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>),
       DeleteDocument,
       (google::cloud::dialogflow::v2::DeleteDocumentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::Document>>, UpdateDocument,
+      (future<StatusOr<google::cloud::dialogflow::v2::Document>>),
+      UpdateDocument,
       (google::cloud::dialogflow::v2::UpdateDocumentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::Document>>, ReloadDocument,
+      (future<StatusOr<google::cloud::dialogflow::v2::Document>>),
+      ReloadDocument,
       (google::cloud::dialogflow::v2::ReloadDocumentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::Document>>, ExportDocument,
+      (future<StatusOr<google::cloud::dialogflow::v2::Document>>),
+      ExportDocument,
       (google::cloud::dialogflow::v2::ExportDocumentRequest const& request),
       (override));
 };

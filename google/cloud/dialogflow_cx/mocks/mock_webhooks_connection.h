@@ -52,17 +52,17 @@ class MockWebhooksConnection : public dialogflow_cx::WebhooksConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Webhook>, GetWebhook,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Webhook>), GetWebhook,
       (google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Webhook>, CreateWebhook,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Webhook>), CreateWebhook,
       (google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Webhook>, UpdateWebhook,
+      (StatusOr<google::cloud::dialogflow::cx::v3::Webhook>), UpdateWebhook,
       (google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request),
       (override));
 

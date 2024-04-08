@@ -54,21 +54,21 @@ class MockConversationProfilesConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::ConversationProfile>,
+      (StatusOr<google::cloud::dialogflow::v2::ConversationProfile>),
       GetConversationProfile,
       (google::cloud::dialogflow::v2::GetConversationProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::ConversationProfile>,
+      (StatusOr<google::cloud::dialogflow::v2::ConversationProfile>),
       CreateConversationProfile,
       (google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::ConversationProfile>,
+      (StatusOr<google::cloud::dialogflow::v2::ConversationProfile>),
       UpdateConversationProfile,
       (google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
            request),
@@ -81,14 +81,14 @@ class MockConversationProfilesConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>),
       SetSuggestionFeatureConfig,
       (google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
+      (future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>),
       ClearSuggestionFeatureConfig,
       (google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
            request),

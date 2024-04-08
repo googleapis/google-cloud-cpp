@@ -55,20 +55,21 @@ class MockAdvisoryNotificationsServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::advisorynotifications::v1::Notification>,
+      (StatusOr<google::cloud::advisorynotifications::v1::Notification>),
       GetNotification,
       (google::cloud::advisorynotifications::v1::GetNotificationRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::advisorynotifications::v1::Settings>, GetSettings,
+      (StatusOr<google::cloud::advisorynotifications::v1::Settings>),
+      GetSettings,
       (google::cloud::advisorynotifications::v1::GetSettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::advisorynotifications::v1::Settings>,
+      (StatusOr<google::cloud::advisorynotifications::v1::Settings>),
       UpdateSettings,
       (google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
            request),

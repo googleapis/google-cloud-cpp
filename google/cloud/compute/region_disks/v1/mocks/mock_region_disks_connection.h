@@ -47,44 +47,47 @@ class MockRegionDisksConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               AddResourcePolicies,
               (google::cloud::cpp::compute::region_disks::v1::
                    AddResourcePoliciesRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, BulkInsert,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
+      BulkInsert,
       (google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               CreateSnapshot,
               (google::cloud::cpp::compute::region_disks::v1::
                    CreateSnapshotRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DeleteDisk,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
+      DeleteDisk,
       (google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Disk>, GetDisk,
+      (StatusOr<google::cloud::cpp::compute::v1::Disk>), GetDisk,
       (google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+      (StatusOr<google::cloud::cpp::compute::v1::Policy>), GetIamPolicy,
       (google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, InsertDisk,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
+      InsertDisk,
       (google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
            request),
       (override));
@@ -95,57 +98,58 @@ class MockRegionDisksConnection
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               RemoveResourcePolicies,
               (google::cloud::cpp::compute::region_disks::v1::
                    RemoveResourcePoliciesRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Resize,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), Resize,
       (google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+      (StatusOr<google::cloud::cpp::compute::v1::Policy>), SetIamPolicy,
       (google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), SetLabels,
       (google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               StartAsyncReplication,
               (google::cloud::cpp::compute::region_disks::v1::
                    StartAsyncReplicationRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               StopAsyncReplication,
               (google::cloud::cpp::compute::region_disks::v1::
                    StopAsyncReplicationRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               StopGroupAsyncReplication,
               (google::cloud::cpp::compute::region_disks::v1::
                    StopGroupAsyncReplicationRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::region_disks::v1::
            TestIamPermissionsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, UpdateDisk,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
+      UpdateDisk,
       (google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
            request),
       (override));

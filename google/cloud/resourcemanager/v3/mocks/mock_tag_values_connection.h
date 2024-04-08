@@ -53,44 +53,44 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::resourcemanager::v3::TagValue>, GetTagValue,
+      (StatusOr<google::cloud::resourcemanager::v3::TagValue>), GetTagValue,
       (google::cloud::resourcemanager::v3::GetTagValueRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::resourcemanager::v3::TagValue>,
+      (StatusOr<google::cloud::resourcemanager::v3::TagValue>),
       GetNamespacedTagValue,
       (google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>),
               CreateTagValue,
               (google::cloud::resourcemanager::v3::CreateTagValueRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>),
               UpdateTagValue,
               (google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>),
               DeleteTagValue,
               (google::cloud::resourcemanager::v3::DeleteTagValueRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

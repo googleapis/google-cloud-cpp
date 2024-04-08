@@ -48,15 +48,15 @@ class MockConfidentialComputingConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::confidentialcomputing::v1::Challenge>,
+      (StatusOr<google::cloud::confidentialcomputing::v1::Challenge>),
       CreateChallenge,
       (google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>,
+      (StatusOr<
+          google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>),
       VerifyAttestation,
       (google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
            request),

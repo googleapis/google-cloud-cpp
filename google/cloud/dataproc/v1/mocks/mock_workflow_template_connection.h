@@ -47,32 +47,32 @@ class MockWorkflowTemplateServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>,
+  MOCK_METHOD((StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>),
               CreateWorkflowTemplate,
               (google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>,
+      (StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>),
       GetWorkflowTemplate,
       (google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
+      (future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>),
       InstantiateWorkflowTemplate,
       (google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>),
               InstantiateInlineWorkflowTemplate,
               (google::cloud::dataproc::v1::
                    InstantiateInlineWorkflowTemplateRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>,
+  MOCK_METHOD((StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>),
               UpdateWorkflowTemplate,
               (google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&
                    request),

@@ -47,20 +47,20 @@ class MockMetastoreServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::biglake::v1::Catalog>,
+  MOCK_METHOD((StatusOr<google::cloud::bigquery::biglake::v1::Catalog>),
               CreateCatalog,
               (google::cloud::bigquery::biglake::v1::CreateCatalogRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::biglake::v1::Catalog>,
+  MOCK_METHOD((StatusOr<google::cloud::bigquery::biglake::v1::Catalog>),
               DeleteCatalog,
               (google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Catalog>, GetCatalog,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Catalog>), GetCatalog,
       (google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request),
       (override));
 
@@ -71,25 +71,28 @@ class MockMetastoreServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Database>, CreateDatabase,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Database>),
+      CreateDatabase,
       (google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Database>, DeleteDatabase,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Database>),
+      DeleteDatabase,
       (google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Database>, UpdateDatabase,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Database>),
+      UpdateDatabase,
       (google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Database>, GetDatabase,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Database>), GetDatabase,
       (google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request),
       (override));
 
@@ -100,27 +103,27 @@ class MockMetastoreServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Table>, CreateTable,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Table>), CreateTable,
       (google::cloud::bigquery::biglake::v1::CreateTableRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Table>, DeleteTable,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Table>), DeleteTable,
       (google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Table>, UpdateTable,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Table>), UpdateTable,
       (google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Table>, RenameTable,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Table>), RenameTable,
       (google::cloud::bigquery::biglake::v1::RenameTableRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::biglake::v1::Table>, GetTable,
+      (StatusOr<google::cloud::bigquery::biglake::v1::Table>), GetTable,
       (google::cloud::bigquery::biglake::v1::GetTableRequest const& request),
       (override));
 

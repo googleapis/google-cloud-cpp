@@ -53,11 +53,11 @@ class MockResourceSettingsServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::resourcesettings::v1::Setting>, GetSetting,
+      (StatusOr<google::cloud::resourcesettings::v1::Setting>), GetSetting,
       (google::cloud::resourcesettings::v1::GetSettingRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::resourcesettings::v1::Setting>,
+  MOCK_METHOD((StatusOr<google::cloud::resourcesettings::v1::Setting>),
               UpdateSetting,
               (google::cloud::resourcesettings::v1::UpdateSettingRequest const&
                    request),

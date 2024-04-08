@@ -53,21 +53,21 @@ class MockStorageInsightsConnection
       (google::cloud::storageinsights::v1::ListReportConfigsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::storageinsights::v1::ReportConfig>,
+  MOCK_METHOD((StatusOr<google::cloud::storageinsights::v1::ReportConfig>),
               GetReportConfig,
               (google::cloud::storageinsights::v1::GetReportConfigRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::storageinsights::v1::ReportConfig>,
+      (StatusOr<google::cloud::storageinsights::v1::ReportConfig>),
       CreateReportConfig,
       (google::cloud::storageinsights::v1::CreateReportConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::storageinsights::v1::ReportConfig>,
+      (StatusOr<google::cloud::storageinsights::v1::ReportConfig>),
       UpdateReportConfig,
       (google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
            request),
@@ -85,7 +85,7 @@ class MockStorageInsightsConnection
       (google::cloud::storageinsights::v1::ListReportDetailsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::storageinsights::v1::ReportDetail>,
+  MOCK_METHOD((StatusOr<google::cloud::storageinsights::v1::ReportDetail>),
               GetReportDetail,
               (google::cloud::storageinsights::v1::GetReportDetailRequest const&
                    request),

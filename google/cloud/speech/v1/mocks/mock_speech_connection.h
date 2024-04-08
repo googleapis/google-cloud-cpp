@@ -46,12 +46,14 @@ class MockSpeechConnection : public speech_v1::SpeechConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v1::RecognizeResponse>, Recognize,
+  MOCK_METHOD((StatusOr<google::cloud::speech::v1::RecognizeResponse>),
+              Recognize,
               (google::cloud::speech::v1::RecognizeRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>,
+      (future<
+          StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>),
       LongRunningRecognize,
       (google::cloud::speech::v1::LongRunningRecognizeRequest const& request),
       (override));

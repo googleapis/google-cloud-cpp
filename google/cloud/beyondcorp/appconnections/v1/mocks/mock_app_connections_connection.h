@@ -57,30 +57,30 @@ class MockAppConnectionsServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>,
+      (StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>),
       GetAppConnection,
       (google::cloud::beyondcorp::appconnections::v1::
            GetAppConnectionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
+      (future<StatusOr<
+           google::cloud::beyondcorp::appconnections::v1::AppConnection>>),
       CreateAppConnection,
       (google::cloud::beyondcorp::appconnections::v1::
            CreateAppConnectionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
+      (future<StatusOr<
+           google::cloud::beyondcorp::appconnections::v1::AppConnection>>),
       UpdateAppConnection,
       (google::cloud::beyondcorp::appconnections::v1::
            UpdateAppConnectionRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
-                                  AppConnectionOperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
+                                   AppConnectionOperationMetadata>>),
               DeleteAppConnection,
               (google::cloud::beyondcorp::appconnections::v1::
                    DeleteAppConnectionRequest const& request),

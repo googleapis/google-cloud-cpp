@@ -47,8 +47,8 @@ class MockValidationHelperV1Connection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::binaryauthorization::v1::
-                           ValidateAttestationOccurrenceResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::binaryauthorization::v1::
+                            ValidateAttestationOccurrenceResponse>),
               ValidateAttestationOccurrence,
               (google::cloud::binaryauthorization::v1::
                    ValidateAttestationOccurrenceRequest const& request),

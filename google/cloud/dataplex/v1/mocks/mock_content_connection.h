@@ -48,12 +48,12 @@ class MockContentServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::Content>, CreateContent,
+      (StatusOr<google::cloud::dataplex::v1::Content>), CreateContent,
       (google::cloud::dataplex::v1::CreateContentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::Content>, UpdateContent,
+      (StatusOr<google::cloud::dataplex::v1::Content>), UpdateContent,
       (google::cloud::dataplex::v1::UpdateContentRequest const& request),
       (override));
 
@@ -62,19 +62,19 @@ class MockContentServiceConnection
       (google::cloud::dataplex::v1::DeleteContentRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Content>, GetContent,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Content>), GetContent,
               (google::cloud::dataplex::v1::GetContentRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

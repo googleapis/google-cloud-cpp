@@ -54,7 +54,7 @@ class MockTimeseriesInsightsControllerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::timeseriesinsights::v1::DataSet>, CreateDataSet,
+      (StatusOr<google::cloud::timeseriesinsights::v1::DataSet>), CreateDataSet,
       (google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
            request),
       (override));
@@ -66,28 +66,28 @@ class MockTimeseriesInsightsControllerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>,
+      (StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>),
       AppendEvents,
       (google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>,
+      (StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>),
       QueryDataSet,
       (google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>,
+      (StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>),
       EvaluateSlice,
       (google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>,
+      (StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>),
       EvaluateTimeseries,
       (google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
            request),

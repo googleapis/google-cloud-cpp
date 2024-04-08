@@ -52,7 +52,7 @@ class MockTraceServiceConnection : public trace_v1::TraceServiceConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::devtools::cloudtrace::v1::Trace>, GetTrace,
+      (StatusOr<google::devtools::cloudtrace::v1::Trace>), GetTrace,
       (google::devtools::cloudtrace::v1::GetTraceRequest const& request),
       (override));
 

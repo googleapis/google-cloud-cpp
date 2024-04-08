@@ -47,14 +47,15 @@ class MockIndexEndpointServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>),
               CreateIndexEndpoint,
               (google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>, GetIndexEndpoint,
+      (StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>),
+      GetIndexEndpoint,
       (google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request),
       (override));
 
@@ -64,34 +65,35 @@ class MockIndexEndpointServiceConnection
       (google::cloud::aiplatform::v1::ListIndexEndpointsRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>),
               UpdateIndexEndpoint,
               (google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteIndexEndpoint,
       (google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>),
       DeployIndex,
       (google::cloud::aiplatform::v1::DeployIndexRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>),
       UndeployIndex,
       (google::cloud::aiplatform::v1::UndeployIndexRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>,
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>),
       MutateDeployedIndex,
       (google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&
            request),

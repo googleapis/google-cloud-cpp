@@ -55,38 +55,38 @@ class MockAppConnectorsServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
+      (StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>),
       GetAppConnector,
       (google::cloud::beyondcorp::appconnectors::v1::
            GetAppConnectorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
+      (future<StatusOr<
+           google::cloud::beyondcorp::appconnectors::v1::AppConnector>>),
       CreateAppConnector,
       (google::cloud::beyondcorp::appconnectors::v1::
            CreateAppConnectorRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
+      (future<StatusOr<
+           google::cloud::beyondcorp::appconnectors::v1::AppConnector>>),
       UpdateAppConnector,
       (google::cloud::beyondcorp::appconnectors::v1::
            UpdateAppConnectorRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                                  AppConnectorOperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                                   AppConnectorOperationMetadata>>),
               DeleteAppConnector,
               (google::cloud::beyondcorp::appconnectors::v1::
                    DeleteAppConnectorRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
+      (future<StatusOr<
+           google::cloud::beyondcorp::appconnectors::v1::AppConnector>>),
       ReportStatus,
       (google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
            request),

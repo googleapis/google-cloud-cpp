@@ -49,27 +49,27 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
   MOCK_METHOD((StreamRange<google::cloud::tpu::v1::Node>), ListNodes,
               (google::cloud::tpu::v1::ListNodesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::tpu::v1::Node>, GetNode,
+  MOCK_METHOD((StatusOr<google::cloud::tpu::v1::Node>), GetNode,
               (google::cloud::tpu::v1::GetNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, CreateNode,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v1::Node>>), CreateNode,
               (google::cloud::tpu::v1::CreateNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, DeleteNode,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v1::Node>>), DeleteNode,
               (google::cloud::tpu::v1::DeleteNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, ReimageNode,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v1::Node>>), ReimageNode,
               (google::cloud::tpu::v1::ReimageNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, StopNode,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v1::Node>>), StopNode,
               (google::cloud::tpu::v1::StopNodeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, StartNode,
+  MOCK_METHOD((future<StatusOr<google::cloud::tpu::v1::Node>>), StartNode,
               (google::cloud::tpu::v1::StartNodeRequest const& request),
               (override));
 
@@ -79,7 +79,8 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::tpu::v1::TensorFlowVersion>, GetTensorFlowVersion,
+      (StatusOr<google::cloud::tpu::v1::TensorFlowVersion>),
+      GetTensorFlowVersion,
       (google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request),
       (override));
 
@@ -89,7 +90,7 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::tpu::v1::AcceleratorType>, GetAcceleratorType,
+      (StatusOr<google::cloud::tpu::v1::AcceleratorType>), GetAcceleratorType,
       (google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request),
       (override));
 };

@@ -52,24 +52,25 @@ class MockDomainMappingsConnection
               (google::appengine::v1::ListDomainMappingsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::DomainMapping>, GetDomainMapping,
+  MOCK_METHOD((StatusOr<google::appengine::v1::DomainMapping>),
+              GetDomainMapping,
               (google::appengine::v1::GetDomainMappingRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::appengine::v1::DomainMapping>>,
+      (future<StatusOr<google::appengine::v1::DomainMapping>>),
       CreateDomainMapping,
       (google::appengine::v1::CreateDomainMappingRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::appengine::v1::DomainMapping>>,
+      (future<StatusOr<google::appengine::v1::DomainMapping>>),
       UpdateDomainMapping,
       (google::appengine::v1::UpdateDomainMappingRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
+      (future<StatusOr<google::appengine::v1::OperationMetadataV1>>),
       DeleteDomainMapping,
       (google::appengine::v1::DeleteDomainMappingRequest const& request),
       (override));

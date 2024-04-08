@@ -48,16 +48,16 @@ class MockDatasetServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Dataset>>, CreateDataset,
+      (future<StatusOr<google::cloud::aiplatform::v1::Dataset>>), CreateDataset,
       (google::cloud::aiplatform::v1::CreateDatasetRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Dataset>, GetDataset,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::Dataset>), GetDataset,
               (google::cloud::aiplatform::v1::GetDatasetRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Dataset>, UpdateDataset,
+      (StatusOr<google::cloud::aiplatform::v1::Dataset>), UpdateDataset,
       (google::cloud::aiplatform::v1::UpdateDatasetRequest const& request),
       (override));
 
@@ -67,38 +67,40 @@ class MockDatasetServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteDataset,
       (google::cloud::aiplatform::v1::DeleteDatasetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>),
       ImportData,
       (google::cloud::aiplatform::v1::ImportDataRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>),
       ExportData,
       (google::cloud::aiplatform::v1::ExportDataRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>),
               CreateDatasetVersion,
               (google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteDatasetVersion,
       (google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::DatasetVersion>,
+      (StatusOr<google::cloud::aiplatform::v1::DatasetVersion>),
       GetDatasetVersion,
       (google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request),
       (override));
@@ -110,7 +112,7 @@ class MockDatasetServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>),
       RestoreDatasetVersion,
       (google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
            request),
@@ -132,13 +134,14 @@ class MockDatasetServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteSavedQuery,
       (google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>,
+      (StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>),
       GetAnnotationSpec,
       (google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request),
       (override));

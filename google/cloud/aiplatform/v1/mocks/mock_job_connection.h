@@ -47,12 +47,12 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::CustomJob>, CreateCustomJob,
+      (StatusOr<google::cloud::aiplatform::v1::CustomJob>), CreateCustomJob,
       (google::cloud::aiplatform::v1::CreateCustomJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::CustomJob>, GetCustomJob,
+      (StatusOr<google::cloud::aiplatform::v1::CustomJob>), GetCustomJob,
       (google::cloud::aiplatform::v1::GetCustomJobRequest const& request),
       (override));
 
@@ -62,7 +62,8 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteCustomJob,
       (google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request),
       (override));
@@ -73,14 +74,14 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>,
+      (StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>),
       CreateDataLabelingJob,
       (google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>,
+      (StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>),
       GetDataLabelingJob,
       (google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request),
       (override));
@@ -92,7 +93,8 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteDataLabelingJob,
       (google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
            request),
@@ -104,14 +106,15 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>,
-              CreateHyperparameterTuningJob,
-              (google::cloud::aiplatform::v1::
-                   CreateHyperparameterTuningJobRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>),
+      CreateHyperparameterTuningJob,
+      (google::cloud::aiplatform::v1::
+           CreateHyperparameterTuningJobRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>,
+      (StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>),
       GetHyperparameterTuningJob,
       (google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
            request),
@@ -125,7 +128,8 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteHyperparameterTuningJob,
       (google::cloud::aiplatform::v1::
            DeleteHyperparameterTuningJobRequest const& request),
@@ -137,11 +141,11 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::NasJob>, CreateNasJob,
+      (StatusOr<google::cloud::aiplatform::v1::NasJob>), CreateNasJob,
       (google::cloud::aiplatform::v1::CreateNasJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::NasJob>, GetNasJob,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::NasJob>), GetNasJob,
               (google::cloud::aiplatform::v1::GetNasJobRequest const& request),
               (override));
 
@@ -150,7 +154,8 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteNasJob,
       (google::cloud::aiplatform::v1::DeleteNasJobRequest const& request),
       (override));
@@ -161,7 +166,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>,
+      (StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>),
       GetNasTrialDetail,
       (google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request),
       (override));
@@ -173,14 +178,14 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>,
+      (StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>),
       CreateBatchPredictionJob,
       (google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>,
+      (StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>),
       GetBatchPredictionJob,
       (google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
            request),
@@ -193,7 +198,8 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteBatchPredictionJob,
       (google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
            request),
@@ -206,7 +212,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>,
+      (StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>),
       CreateModelDeploymentMonitoringJob,
       (google::cloud::aiplatform::v1::
            CreateModelDeploymentMonitoringJobRequest const& request),
@@ -221,7 +227,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>,
+      (StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>),
       GetModelDeploymentMonitoringJob,
       (google::cloud::aiplatform::v1::
            GetModelDeploymentMonitoringJobRequest const& request),
@@ -235,15 +241,17 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>,
-              UpdateModelDeploymentMonitoringJob,
-              (google::cloud::aiplatform::v1::
-                   UpdateModelDeploymentMonitoringJobRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>),
+      UpdateModelDeploymentMonitoringJob,
+      (google::cloud::aiplatform::v1::
+           UpdateModelDeploymentMonitoringJobRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteModelDeploymentMonitoringJob,
       (google::cloud::aiplatform::v1::
            DeleteModelDeploymentMonitoringJobRequest const& request),

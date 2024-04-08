@@ -46,7 +46,7 @@ class MockRevisionsConnection : public run_v2::RevisionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::run::v2::Revision>, GetRevision,
+  MOCK_METHOD((StatusOr<google::cloud::run::v2::Revision>), GetRevision,
               (google::cloud::run::v2::GetRevisionRequest const& request),
               (override));
 
@@ -54,7 +54,7 @@ class MockRevisionsConnection : public run_v2::RevisionsConnection {
               (google::cloud::run::v2::ListRevisionsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Revision>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::run::v2::Revision>>),
               DeleteRevision,
               (google::cloud::run::v2::DeleteRevisionRequest const& request),
               (override));

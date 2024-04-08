@@ -47,13 +47,13 @@ class MockSnapshotSettingsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>),
               GetSnapshotSettings,
               (google::cloud::cpp::compute::snapshot_settings::v1::
                    GetSnapshotSettingsRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchSnapshotSettings,
               (google::cloud::cpp::compute::snapshot_settings::v1::
                    PatchSnapshotSettingsRequest const& request),

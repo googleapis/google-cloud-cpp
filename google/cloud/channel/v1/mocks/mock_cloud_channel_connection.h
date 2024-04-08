@@ -52,25 +52,25 @@ class MockCloudChannelServiceConnection
               (google::cloud::channel::v1::ListCustomersRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::channel::v1::Customer>, GetCustomer,
+  MOCK_METHOD((StatusOr<google::cloud::channel::v1::Customer>), GetCustomer,
               (google::cloud::channel::v1::GetCustomerRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>,
+      (StatusOr<
+          google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>),
       CheckCloudIdentityAccountsExist,
       (google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::Customer>, CreateCustomer,
+      (StatusOr<google::cloud::channel::v1::Customer>), CreateCustomer,
       (google::cloud::channel::v1::CreateCustomerRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::Customer>, UpdateCustomer,
+      (StatusOr<google::cloud::channel::v1::Customer>), UpdateCustomer,
       (google::cloud::channel::v1::UpdateCustomerRequest const& request),
       (override));
 
@@ -80,11 +80,11 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::Customer>, ImportCustomer,
+      (StatusOr<google::cloud::channel::v1::Customer>), ImportCustomer,
       (google::cloud::channel::v1::ImportCustomerRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Customer>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::channel::v1::Customer>>),
               ProvisionCloudIdentity,
               (google::cloud::channel::v1::ProvisionCloudIdentityRequest const&
                    request),
@@ -107,66 +107,66 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::Entitlement>, GetEntitlement,
+      (StatusOr<google::cloud::channel::v1::Entitlement>), GetEntitlement,
       (google::cloud::channel::v1::GetEntitlementRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+      (future<StatusOr<google::cloud::channel::v1::Entitlement>>),
       CreateEntitlement,
       (google::cloud::channel::v1::CreateEntitlementRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+      (future<StatusOr<google::cloud::channel::v1::Entitlement>>),
       ChangeParameters,
       (google::cloud::channel::v1::ChangeParametersRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+      (future<StatusOr<google::cloud::channel::v1::Entitlement>>),
       ChangeRenewalSettings,
       (google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::channel::v1::Entitlement>>),
               ChangeOffer,
               (google::cloud::channel::v1::ChangeOfferRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+      (future<StatusOr<google::cloud::channel::v1::Entitlement>>),
       StartPaidService,
       (google::cloud::channel::v1::StartPaidServiceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+      (future<StatusOr<google::cloud::channel::v1::Entitlement>>),
       SuspendEntitlement,
       (google::cloud::channel::v1::SuspendEntitlementRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::channel::v1::OperationMetadata>>),
       CancelEntitlement,
       (google::cloud::channel::v1::CancelEntitlementRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+      (future<StatusOr<google::cloud::channel::v1::Entitlement>>),
       ActivateEntitlement,
       (google::cloud::channel::v1::ActivateEntitlementRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>,
+      (future<
+          StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>),
       TransferEntitlements,
       (google::cloud::channel::v1::TransferEntitlementsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::channel::v1::OperationMetadata>>),
       TransferEntitlementsToGoogle,
       (google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
            request),
@@ -179,27 +179,27 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::ChannelPartnerLink>,
+      (StatusOr<google::cloud::channel::v1::ChannelPartnerLink>),
       GetChannelPartnerLink,
       (google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::ChannelPartnerLink>,
+      (StatusOr<google::cloud::channel::v1::ChannelPartnerLink>),
       CreateChannelPartnerLink,
       (google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::ChannelPartnerLink>,
+      (StatusOr<google::cloud::channel::v1::ChannelPartnerLink>),
       UpdateChannelPartnerLink,
       (google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>,
+      (StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>),
       GetCustomerRepricingConfig,
       (google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
            request),
@@ -212,14 +212,14 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>,
+      (StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>),
       CreateCustomerRepricingConfig,
       (google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>,
+      (StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>),
       UpdateCustomerRepricingConfig,
       (google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
            request),
@@ -232,7 +232,7 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      (StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>),
       GetChannelPartnerRepricingConfig,
       (google::cloud::channel::v1::
            GetChannelPartnerRepricingConfigRequest const& request),
@@ -246,14 +246,14 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      (StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>),
       CreateChannelPartnerRepricingConfig,
       (google::cloud::channel::v1::
            CreateChannelPartnerRepricingConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      (StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>),
       UpdateChannelPartnerRepricingConfig,
       (google::cloud::channel::v1::
            UpdateChannelPartnerRepricingConfigRequest const& request),
@@ -275,7 +275,7 @@ class MockCloudChannelServiceConnection
       (google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::channel::v1::Offer>, LookupOffer,
+  MOCK_METHOD((StatusOr<google::cloud::channel::v1::Offer>), LookupOffer,
               (google::cloud::channel::v1::LookupOfferRequest const& request),
               (override));
 
@@ -303,21 +303,21 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>,
+      (StatusOr<
+          google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>),
       QueryEligibleBillingAccounts,
       (google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>,
+      (StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>),
       RegisterSubscriber,
       (google::cloud::channel::v1::RegisterSubscriberRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>,
+      (StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>),
       UnregisterSubscriber,
       (google::cloud::channel::v1::UnregisterSubscriberRequest const& request),
       (override));

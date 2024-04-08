@@ -48,21 +48,21 @@ class MockAutoscalingPolicyServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>,
+      (StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>),
       CreateAutoscalingPolicy,
       (google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>,
+      (StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>),
       UpdateAutoscalingPolicy,
       (google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>,
+      (StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>),
       GetAutoscalingPolicy,
       (google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request),
       (override));

@@ -55,40 +55,40 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       DeleteRouter,
       (google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Router>, GetRouter,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Router>), GetRouter,
               (google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>),
       GetNatIpInfo,
       (google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>,
+      (StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>),
       GetNatMappingInfo,
       (google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>),
       GetRouterStatus,
       (google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       InsertRouter,
       (google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
            request),
@@ -100,19 +100,20 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, PatchRouter,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
+      PatchRouter,
       (google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>),
       Preview,
       (google::cloud::cpp::compute::routers::v1::PreviewRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
       UpdateRouter,
       (google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
            request),

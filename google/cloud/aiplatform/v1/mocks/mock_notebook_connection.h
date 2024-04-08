@@ -48,14 +48,15 @@ class MockNotebookServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>),
       CreateNotebookRuntimeTemplate,
       (google::cloud::aiplatform::v1::
            CreateNotebookRuntimeTemplateRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>,
+      (StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>),
       GetNotebookRuntimeTemplate,
       (google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
            request),
@@ -69,21 +70,22 @@ class MockNotebookServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteNotebookRuntimeTemplate,
       (google::cloud::aiplatform::v1::
            DeleteNotebookRuntimeTemplateRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>),
       AssignNotebookRuntime,
       (google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>,
+      (StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>),
       GetNotebookRuntime,
       (google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request),
       (override));
@@ -95,26 +97,28 @@ class MockNotebookServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>),
       DeleteNotebookRuntime,
       (google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>,
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>),
       UpgradeNotebookRuntime,
       (google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>,
-              StartNotebookRuntime,
-              (google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<
+           google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>),
+      StartNotebookRuntime,
+      (google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

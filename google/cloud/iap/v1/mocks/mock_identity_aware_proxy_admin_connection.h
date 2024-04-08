@@ -47,24 +47,25 @@ class MockIdentityAwareProxyAdminServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::IapSettings>, GetIapSettings,
+  MOCK_METHOD((StatusOr<google::cloud::iap::v1::IapSettings>), GetIapSettings,
               (google::cloud::iap::v1::GetIapSettingsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::IapSettings>, UpdateIapSettings,
+  MOCK_METHOD((StatusOr<google::cloud::iap::v1::IapSettings>),
+              UpdateIapSettings,
               (google::cloud::iap::v1::UpdateIapSettingsRequest const& request),
               (override));
 
@@ -74,12 +75,13 @@ class MockIdentityAwareProxyAdminServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::TunnelDestGroup>, CreateTunnelDestGroup,
+      (StatusOr<google::cloud::iap::v1::TunnelDestGroup>),
+      CreateTunnelDestGroup,
       (google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::TunnelDestGroup>, GetTunnelDestGroup,
+      (StatusOr<google::cloud::iap::v1::TunnelDestGroup>), GetTunnelDestGroup,
       (google::cloud::iap::v1::GetTunnelDestGroupRequest const& request),
       (override));
 
@@ -89,7 +91,8 @@ class MockIdentityAwareProxyAdminServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::TunnelDestGroup>, UpdateTunnelDestGroup,
+      (StatusOr<google::cloud::iap::v1::TunnelDestGroup>),
+      UpdateTunnelDestGroup,
       (google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request),
       (override));
 };

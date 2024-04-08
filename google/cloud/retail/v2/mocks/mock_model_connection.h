@@ -46,19 +46,19 @@ class MockModelServiceConnection : public retail_v2::ModelServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::Model>>, CreateModel,
+  MOCK_METHOD((future<StatusOr<google::cloud::retail::v2::Model>>), CreateModel,
               (google::cloud::retail::v2::CreateModelRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Model>, GetModel,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Model>), GetModel,
               (google::cloud::retail::v2::GetModelRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Model>, PauseModel,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Model>), PauseModel,
               (google::cloud::retail::v2::PauseModelRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Model>, ResumeModel,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Model>), ResumeModel,
               (google::cloud::retail::v2::ResumeModelRequest const& request),
               (override));
 
@@ -70,11 +70,11 @@ class MockModelServiceConnection : public retail_v2::ModelServiceConnection {
               (google::cloud::retail::v2::ListModelsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Model>, UpdateModel,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Model>), UpdateModel,
               (google::cloud::retail::v2::UpdateModelRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>),
               TuneModel,
               (google::cloud::retail::v2::TuneModelRequest const& request),
               (override));

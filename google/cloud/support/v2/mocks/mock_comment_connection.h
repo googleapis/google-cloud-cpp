@@ -51,7 +51,7 @@ class MockCommentServiceConnection
               (google::cloud::support::v2::ListCommentsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::support::v2::Comment>, CreateComment,
+  MOCK_METHOD((StatusOr<google::cloud::support::v2::Comment>), CreateComment,
               (google::cloud::support::v2::CreateCommentRequest const& request),
               (override));
 };

@@ -48,14 +48,14 @@ class MockMigrationServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
+      (StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>),
       CreateMigrationWorkflow,
       (google::cloud::bigquery::migration::v2::
            CreateMigrationWorkflowRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
+      (StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>),
       GetMigrationWorkflow,
       (google::cloud::bigquery::migration::v2::
            GetMigrationWorkflowRequest const& request),
@@ -79,7 +79,7 @@ class MockMigrationServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>,
+      (StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>),
       GetMigrationSubtask,
       (google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
            request),

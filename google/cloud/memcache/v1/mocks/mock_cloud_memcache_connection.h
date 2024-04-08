@@ -52,37 +52,39 @@ class MockCloudMemcacheConnection
               (google::cloud::memcache::v1::ListInstancesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::memcache::v1::Instance>, GetInstance,
+  MOCK_METHOD((StatusOr<google::cloud::memcache::v1::Instance>), GetInstance,
               (google::cloud::memcache::v1::GetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, CreateInstance,
+      (future<StatusOr<google::cloud::memcache::v1::Instance>>), CreateInstance,
       (google::cloud::memcache::v1::CreateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateInstance,
+      (future<StatusOr<google::cloud::memcache::v1::Instance>>), UpdateInstance,
       (google::cloud::memcache::v1::UpdateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateParameters,
+      (future<StatusOr<google::cloud::memcache::v1::Instance>>),
+      UpdateParameters,
       (google::cloud::memcache::v1::UpdateParametersRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>),
       DeleteInstance,
       (google::cloud::memcache::v1::DeleteInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, ApplyParameters,
+      (future<StatusOr<google::cloud::memcache::v1::Instance>>),
+      ApplyParameters,
       (google::cloud::memcache::v1::ApplyParametersRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::memcache::v1::Instance>>),
               RescheduleMaintenance,
               (google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
                    request),

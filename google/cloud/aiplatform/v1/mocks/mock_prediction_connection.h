@@ -47,27 +47,28 @@ class MockPredictionServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::PredictResponse>, Predict,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::PredictResponse>),
+              Predict,
               (google::cloud::aiplatform::v1::PredictRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::api::HttpBody>, RawPredict,
+  MOCK_METHOD((StatusOr<google::api::HttpBody>), RawPredict,
               (google::cloud::aiplatform::v1::RawPredictRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::api::HttpBody>, StreamRawPredict,
+      (StreamRange<google::api::HttpBody>), StreamRawPredict,
       (google::cloud::aiplatform::v1::StreamRawPredictRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>),
       DirectPredict,
       (google::cloud::aiplatform::v1::DirectPredictRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>),
       DirectRawPredict,
       (google::cloud::aiplatform::v1::DirectRawPredictRequest const& request),
       (override));
@@ -90,7 +91,7 @@ class MockPredictionServiceConnection
               AsyncStreamingPredict, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>,
+      (StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>),
       ServerStreamingPredict,
       (google::cloud::aiplatform::v1::StreamingPredictRequest const& request),
       (override));
@@ -101,18 +102,19 @@ class MockPredictionServiceConnection
            google::cloud::aiplatform::v1::StreamingRawPredictResponse>>),
       AsyncStreamingRawPredict, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ExplainResponse>, Explain,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::ExplainResponse>),
+              Explain,
               (google::cloud::aiplatform::v1::ExplainRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>),
       GenerateContent,
       (google::cloud::aiplatform::v1::GenerateContentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>,
+      (StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>),
       StreamGenerateContent,
       (google::cloud::aiplatform::v1::GenerateContentRequest const& request),
       (override));

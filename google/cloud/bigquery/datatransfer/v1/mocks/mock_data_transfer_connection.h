@@ -48,7 +48,7 @@ class MockDataTransferServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>,
+      (StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>),
       GetDataSource,
       (google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
            request),
@@ -62,14 +62,14 @@ class MockDataTransferServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
+      (StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>),
       CreateTransferConfig,
       (google::cloud::bigquery::datatransfer::v1::
            CreateTransferConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
+      (StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>),
       UpdateTransferConfig,
       (google::cloud::bigquery::datatransfer::v1::
            UpdateTransferConfigRequest const& request),
@@ -81,7 +81,7 @@ class MockDataTransferServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
+      (StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>),
       GetTransferConfig,
       (google::cloud::bigquery::datatransfer::v1::
            GetTransferConfigRequest const& request),
@@ -94,22 +94,22 @@ class MockDataTransferServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::
-                           ScheduleTransferRunsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::bigquery::datatransfer::v1::
+                            ScheduleTransferRunsResponse>),
               ScheduleTransferRuns,
               (google::cloud::bigquery::datatransfer::v1::
                    ScheduleTransferRunsRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::
-                           StartManualTransferRunsResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::bigquery::datatransfer::v1::
+                            StartManualTransferRunsResponse>),
               StartManualTransferRuns,
               (google::cloud::bigquery::datatransfer::v1::
                    StartManualTransferRunsRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>,
+      (StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>),
       GetTransferRun,
       (google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
            request),
@@ -135,8 +135,8 @@ class MockDataTransferServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>,
+      (StatusOr<
+          google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>),
       CheckValidCreds,
       (google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
            request),

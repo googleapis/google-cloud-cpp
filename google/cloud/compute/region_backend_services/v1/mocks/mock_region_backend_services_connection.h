@@ -49,31 +49,31 @@ class MockRegionBackendServicesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    DeleteBackendServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendService>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::BackendService>),
               GetBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    GetBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>,
+      (StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>),
       GetHealth,
       (google::cloud::cpp::compute::region_backend_services::v1::
            GetHealthRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), GetIamPolicy,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    InsertBackendServiceRequest const& request),
@@ -91,31 +91,31 @@ class MockRegionBackendServicesConnection
                    ListUsableRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    PatchBackendServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Policy>), SetIamPolicy,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetSecurityPolicy,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    SetSecurityPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      (StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>),
       TestIamPermissions,
       (google::cloud::cpp::compute::region_backend_services::v1::
            TestIamPermissionsRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               UpdateBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    UpdateBackendServiceRequest const& request),

@@ -48,28 +48,28 @@ class MockLanguageServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>,
+      (StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>),
       AnalyzeSentiment,
       (google::cloud::language::v2::AnalyzeSentimentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>,
+      (StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>),
       AnalyzeEntities,
       (google::cloud::language::v2::AnalyzeEntitiesRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::language::v2::ClassifyTextResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::language::v2::ClassifyTextResponse>),
               ClassifyText,
               (google::cloud::language::v2::ClassifyTextRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::language::v2::ModerateTextResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::language::v2::ModerateTextResponse>),
               ModerateText,
               (google::cloud::language::v2::ModerateTextRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::language::v2::AnnotateTextResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::language::v2::AnnotateTextResponse>),
               AnnotateText,
               (google::cloud::language::v2::AnnotateTextRequest const& request),
               (override));

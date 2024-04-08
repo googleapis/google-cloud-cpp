@@ -55,23 +55,25 @@ class MockTransitionRouteGroupsConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>,
+      (StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>),
       GetTransitionRouteGroup,
       (google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>,
-              CreateTransitionRouteGroup,
-              (google::cloud::dialogflow::cx::v3::
-                   CreateTransitionRouteGroupRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>),
+      CreateTransitionRouteGroup,
+      (google::cloud::dialogflow::cx::v3::
+           CreateTransitionRouteGroupRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>,
-              UpdateTransitionRouteGroup,
-              (google::cloud::dialogflow::cx::v3::
-                   UpdateTransitionRouteGroupRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>),
+      UpdateTransitionRouteGroup,
+      (google::cloud::dialogflow::cx::v3::
+           UpdateTransitionRouteGroupRequest const& request),
+      (override));
 
   MOCK_METHOD(Status, DeleteTransitionRouteGroup,
               (google::cloud::dialogflow::cx::v3::

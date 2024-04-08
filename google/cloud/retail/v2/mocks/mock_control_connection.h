@@ -47,7 +47,7 @@ class MockControlServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Control>, CreateControl,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Control>), CreateControl,
               (google::cloud::retail::v2::CreateControlRequest const& request),
               (override));
 
@@ -55,11 +55,11 @@ class MockControlServiceConnection
               (google::cloud::retail::v2::DeleteControlRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Control>, UpdateControl,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Control>), UpdateControl,
               (google::cloud::retail::v2::UpdateControlRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Control>, GetControl,
+  MOCK_METHOD((StatusOr<google::cloud::retail::v2::Control>), GetControl,
               (google::cloud::retail::v2::GetControlRequest const& request),
               (override));
 

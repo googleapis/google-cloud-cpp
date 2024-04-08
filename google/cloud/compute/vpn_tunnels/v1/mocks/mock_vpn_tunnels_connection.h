@@ -56,19 +56,19 @@ class MockVpnTunnelsConnection
            AggregatedListVpnTunnelsRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteVpnTunnel,
               (google::cloud::cpp::compute::vpn_tunnels::v1::
                    DeleteVpnTunnelRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>, GetVpnTunnel,
+      (StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>), GetVpnTunnel,
       (google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertVpnTunnel,
               (google::cloud::cpp::compute::vpn_tunnels::v1::
                    InsertVpnTunnelRequest const& request),
@@ -81,7 +81,7 @@ class MockVpnTunnelsConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), SetLabels,
       (google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
            request),
       (override));

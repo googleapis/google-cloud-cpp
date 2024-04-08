@@ -48,11 +48,11 @@ class MockVizierServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Study>, CreateStudy,
+      (StatusOr<google::cloud::aiplatform::v1::Study>), CreateStudy,
       (google::cloud::aiplatform::v1::CreateStudyRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Study>, GetStudy,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::Study>), GetStudy,
               (google::cloud::aiplatform::v1::GetStudyRequest const& request),
               (override));
 
@@ -66,22 +66,22 @@ class MockVizierServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Study>, LookupStudy,
+      (StatusOr<google::cloud::aiplatform::v1::Study>), LookupStudy,
       (google::cloud::aiplatform::v1::LookupStudyRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>),
       SuggestTrials,
       (google::cloud::aiplatform::v1::SuggestTrialsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Trial>, CreateTrial,
+      (StatusOr<google::cloud::aiplatform::v1::Trial>), CreateTrial,
       (google::cloud::aiplatform::v1::CreateTrialRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>, GetTrial,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::Trial>), GetTrial,
               (google::cloud::aiplatform::v1::GetTrialRequest const& request),
               (override));
 
@@ -89,14 +89,14 @@ class MockVizierServiceConnection
               (google::cloud::aiplatform::v1::ListTrialsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::Trial>),
               AddTrialMeasurement,
               (google::cloud::aiplatform::v1::AddTrialMeasurementRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Trial>, CompleteTrial,
+      (StatusOr<google::cloud::aiplatform::v1::Trial>), CompleteTrial,
       (google::cloud::aiplatform::v1::CompleteTrialRequest const& request),
       (override));
 
@@ -106,19 +106,19 @@ class MockVizierServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>,
+      (future<StatusOr<google::cloud::aiplatform::v1::
+                           CheckTrialEarlyStoppingStateResponse>>),
       CheckTrialEarlyStoppingState,
       (google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>, StopTrial,
+  MOCK_METHOD((StatusOr<google::cloud::aiplatform::v1::Trial>), StopTrial,
               (google::cloud::aiplatform::v1::StopTrialRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>,
+      (StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>),
       ListOptimalTrials,
       (google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request),
       (override));

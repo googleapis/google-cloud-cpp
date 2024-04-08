@@ -47,18 +47,18 @@ class MockGlobalAddressesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
                    DeleteAddressRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Address>, GetAddress,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::Address>), GetAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
                    GetAddressRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
                    InsertAddressRequest const& request),
@@ -71,12 +71,12 @@ class MockGlobalAddressesConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Move,
+      (future<StatusOr<google::cloud::cpp::compute::v1::Operation>>), Move,
       (google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               SetLabels,
               (google::cloud::cpp::compute::global_addresses::v1::
                    SetLabelsRequest const& request),

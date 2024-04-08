@@ -47,21 +47,21 @@ class MockUserEventServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::UserEvent>,
+  MOCK_METHOD((StatusOr<google::cloud::discoveryengine::v1::UserEvent>),
               WriteUserEvent,
               (google::cloud::discoveryengine::v1::WriteUserEventRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::HttpBody>, CollectUserEvent,
+      (StatusOr<google::api::HttpBody>), CollectUserEvent,
       (google::cloud::discoveryengine::v1::CollectUserEventRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::discoveryengine::v1::ImportUserEventsResponse>>,
+      (future<StatusOr<
+           google::cloud::discoveryengine::v1::ImportUserEventsResponse>>),
       ImportUserEvents,
       (google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
            request),

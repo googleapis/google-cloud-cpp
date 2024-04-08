@@ -47,19 +47,19 @@ class MockRegionSslPoliciesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               DeleteSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
                    DeleteSslPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslPolicy>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::SslPolicy>),
               GetSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
                    GetSslPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               InsertSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
                    InsertSslPolicyRequest const& request),
@@ -71,14 +71,14 @@ class MockRegionSslPoliciesConnection
                    ListRegionSslPoliciesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::
-                           SslPoliciesListAvailableFeaturesResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::cpp::compute::v1::
+                            SslPoliciesListAvailableFeaturesResponse>),
               ListAvailableFeatures,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
                    ListAvailableFeaturesRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::cpp::compute::v1::Operation>>),
               PatchSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
                    PatchSslPolicyRequest const& request),

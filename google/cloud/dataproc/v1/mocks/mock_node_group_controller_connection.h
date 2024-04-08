@@ -48,16 +48,18 @@ class MockNodeGroupControllerConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>, CreateNodeGroup,
+      (future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>),
+      CreateNodeGroup,
       (google::cloud::dataproc::v1::CreateNodeGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>, ResizeNodeGroup,
+      (future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>),
+      ResizeNodeGroup,
       (google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::NodeGroup>, GetNodeGroup,
+  MOCK_METHOD((StatusOr<google::cloud::dataproc::v1::NodeGroup>), GetNodeGroup,
               (google::cloud::dataproc::v1::GetNodeGroupRequest const& request),
               (override));
 };

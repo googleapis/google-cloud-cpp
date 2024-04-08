@@ -54,41 +54,41 @@ class MockAccessApprovalConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>,
+      (StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>),
       GetApprovalRequest,
       (google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>,
+      (StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>),
       ApproveApprovalRequest,
       (google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>,
+      (StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>),
       DismissApprovalRequest,
       (google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>,
+  MOCK_METHOD((StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>),
               InvalidateApprovalRequest,
               (google::cloud::accessapproval::v1::
                    InvalidateApprovalRequestMessage const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>,
+      (StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>),
       GetAccessApprovalSettings,
       (google::cloud::accessapproval::v1::
            GetAccessApprovalSettingsMessage const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>,
+      (StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>),
       UpdateAccessApprovalSettings,
       (google::cloud::accessapproval::v1::
            UpdateAccessApprovalSettingsMessage const& request),
@@ -100,7 +100,8 @@ class MockAccessApprovalConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>,
+      (StatusOr<
+          google::cloud::accessapproval::v1::AccessApprovalServiceAccount>),
       GetAccessApprovalServiceAccount,
       (google::cloud::accessapproval::v1::
            GetAccessApprovalServiceAccountMessage const& request),

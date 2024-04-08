@@ -52,7 +52,7 @@ class MockCloudQuotasConnection : public cloudquotas_v1::CloudQuotasConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::cloudquotas::v1::QuotaInfo>, GetQuotaInfo,
+      (StatusOr<google::api::cloudquotas::v1::QuotaInfo>), GetQuotaInfo,
       (google::api::cloudquotas::v1::GetQuotaInfoRequest const& request),
       (override));
 
@@ -63,18 +63,18 @@ class MockCloudQuotasConnection : public cloudquotas_v1::CloudQuotasConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::api::cloudquotas::v1::QuotaPreference>,
+      (StatusOr<google::api::cloudquotas::v1::QuotaPreference>),
       GetQuotaPreference,
       (google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::api::cloudquotas::v1::QuotaPreference>,
+  MOCK_METHOD((StatusOr<google::api::cloudquotas::v1::QuotaPreference>),
               CreateQuotaPreference,
               (google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::api::cloudquotas::v1::QuotaPreference>,
+  MOCK_METHOD((StatusOr<google::api::cloudquotas::v1::QuotaPreference>),
               UpdateQuotaPreference,
               (google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&
                    request),

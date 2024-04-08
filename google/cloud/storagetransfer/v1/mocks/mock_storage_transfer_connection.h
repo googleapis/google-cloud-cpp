@@ -48,24 +48,24 @@ class MockStorageTransferServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::GoogleServiceAccount>,
+      (StatusOr<google::storagetransfer::v1::GoogleServiceAccount>),
       GetGoogleServiceAccount,
       (google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::TransferJob>, CreateTransferJob,
+      (StatusOr<google::storagetransfer::v1::TransferJob>), CreateTransferJob,
       (google::storagetransfer::v1::CreateTransferJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::TransferJob>, UpdateTransferJob,
+      (StatusOr<google::storagetransfer::v1::TransferJob>), UpdateTransferJob,
       (google::storagetransfer::v1::UpdateTransferJobRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::TransferJob>, GetTransferJob,
+      (StatusOr<google::storagetransfer::v1::TransferJob>), GetTransferJob,
       (google::storagetransfer::v1::GetTransferJobRequest const& request),
       (override));
 
@@ -86,7 +86,7 @@ class MockStorageTransferServiceConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::storagetransfer::v1::TransferOperation>>,
+      (future<StatusOr<google::storagetransfer::v1::TransferOperation>>),
       RunTransferJob,
       (google::storagetransfer::v1::RunTransferJobRequest const& request),
       (override));
@@ -97,16 +97,16 @@ class MockStorageTransferServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::AgentPool>, CreateAgentPool,
+      (StatusOr<google::storagetransfer::v1::AgentPool>), CreateAgentPool,
       (google::storagetransfer::v1::CreateAgentPoolRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::AgentPool>, UpdateAgentPool,
+      (StatusOr<google::storagetransfer::v1::AgentPool>), UpdateAgentPool,
       (google::storagetransfer::v1::UpdateAgentPoolRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::storagetransfer::v1::AgentPool>, GetAgentPool,
+  MOCK_METHOD((StatusOr<google::storagetransfer::v1::AgentPool>), GetAgentPool,
               (google::storagetransfer::v1::GetAgentPoolRequest const& request),
               (override));
 

@@ -48,25 +48,25 @@ class MockBigtableInstanceAdminConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::Instance>>, CreateInstance,
+      (future<StatusOr<google::bigtable::admin::v2::Instance>>), CreateInstance,
       (google::bigtable::admin::v2::CreateInstanceRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Instance>, GetInstance,
+  MOCK_METHOD((StatusOr<google::bigtable::admin::v2::Instance>), GetInstance,
               (google::bigtable::admin::v2::GetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::bigtable::admin::v2::ListInstancesResponse>,
+      (StatusOr<google::bigtable::admin::v2::ListInstancesResponse>),
       ListInstances,
       (google::bigtable::admin::v2::ListInstancesRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Instance>, UpdateInstance,
+  MOCK_METHOD((StatusOr<google::bigtable::admin::v2::Instance>), UpdateInstance,
               (google::bigtable::admin::v2::Instance const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Instance>>,
+  MOCK_METHOD((future<StatusOr<google::bigtable::admin::v2::Instance>>),
               PartialUpdateInstance,
               (google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
                    request),
@@ -78,26 +78,26 @@ class MockBigtableInstanceAdminConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::Cluster>>, CreateCluster,
+      (future<StatusOr<google::bigtable::admin::v2::Cluster>>), CreateCluster,
       (google::bigtable::admin::v2::CreateClusterRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Cluster>, GetCluster,
+  MOCK_METHOD((StatusOr<google::bigtable::admin::v2::Cluster>), GetCluster,
               (google::bigtable::admin::v2::GetClusterRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::bigtable::admin::v2::ListClustersResponse>,
+  MOCK_METHOD((StatusOr<google::bigtable::admin::v2::ListClustersResponse>),
               ListClusters,
               (google::bigtable::admin::v2::ListClustersRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Cluster>>,
+  MOCK_METHOD((future<StatusOr<google::bigtable::admin::v2::Cluster>>),
               UpdateCluster,
               (google::bigtable::admin::v2::Cluster const& request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::Cluster>>,
+      (future<StatusOr<google::bigtable::admin::v2::Cluster>>),
       PartialUpdateCluster,
       (google::bigtable::admin::v2::PartialUpdateClusterRequest const& request),
       (override));
@@ -108,12 +108,12 @@ class MockBigtableInstanceAdminConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::bigtable::admin::v2::AppProfile>, CreateAppProfile,
+      (StatusOr<google::bigtable::admin::v2::AppProfile>), CreateAppProfile,
       (google::bigtable::admin::v2::CreateAppProfileRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::bigtable::admin::v2::AppProfile>, GetAppProfile,
+      (StatusOr<google::bigtable::admin::v2::AppProfile>), GetAppProfile,
       (google::bigtable::admin::v2::GetAppProfileRequest const& request),
       (override));
 
@@ -123,7 +123,7 @@ class MockBigtableInstanceAdminConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::AppProfile>>,
+      (future<StatusOr<google::bigtable::admin::v2::AppProfile>>),
       UpdateAppProfile,
       (google::bigtable::admin::v2::UpdateAppProfileRequest const& request),
       (override));
@@ -133,15 +133,15 @@ class MockBigtableInstanceAdminConnection
       (google::bigtable::admin::v2::DeleteAppProfileRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+  MOCK_METHOD((StatusOr<google::iam::v1::Policy>), SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+  MOCK_METHOD((StatusOr<google::iam::v1::TestIamPermissionsResponse>),
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));

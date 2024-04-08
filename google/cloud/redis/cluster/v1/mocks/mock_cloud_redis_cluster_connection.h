@@ -53,23 +53,23 @@ class MockCloudRedisClusterConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::redis::cluster::v1::Cluster>, GetCluster,
+      (StatusOr<google::cloud::redis::cluster::v1::Cluster>), GetCluster,
       (google::cloud::redis::cluster::v1::GetClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+      (future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>),
       UpdateCluster,
       (google::cloud::redis::cluster::v1::UpdateClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::protobuf::Any>>, DeleteCluster,
+      (future<StatusOr<google::protobuf::Any>>), DeleteCluster,
       (google::cloud::redis::cluster::v1::DeleteClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+      (future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>),
       CreateCluster,
       (google::cloud::redis::cluster::v1::CreateClusterRequest const& request),
       (override));

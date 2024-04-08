@@ -48,17 +48,17 @@ class MockBudgetServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::billing::budgets::v1::Budget>, CreateBudget,
+      (StatusOr<google::cloud::billing::budgets::v1::Budget>), CreateBudget,
       (google::cloud::billing::budgets::v1::CreateBudgetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::billing::budgets::v1::Budget>, UpdateBudget,
+      (StatusOr<google::cloud::billing::budgets::v1::Budget>), UpdateBudget,
       (google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::billing::budgets::v1::Budget>, GetBudget,
+      (StatusOr<google::cloud::billing::budgets::v1::Budget>), GetBudget,
       (google::cloud::billing::budgets::v1::GetBudgetRequest const& request),
       (override));
 

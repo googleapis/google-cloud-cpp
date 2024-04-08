@@ -48,12 +48,12 @@ class MockParticipantsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Participant>, CreateParticipant,
+      (StatusOr<google::cloud::dialogflow::v2::Participant>), CreateParticipant,
       (google::cloud::dialogflow::v2::CreateParticipantRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Participant>, GetParticipant,
+      (StatusOr<google::cloud::dialogflow::v2::Participant>), GetParticipant,
       (google::cloud::dialogflow::v2::GetParticipantRequest const& request),
       (override));
 
@@ -63,12 +63,12 @@ class MockParticipantsConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::Participant>, UpdateParticipant,
+      (StatusOr<google::cloud::dialogflow::v2::Participant>), UpdateParticipant,
       (google::cloud::dialogflow::v2::UpdateParticipantRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>,
+      (StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>),
       AnalyzeContent,
       (google::cloud::dialogflow::v2::AnalyzeContentRequest const& request),
       (override));
@@ -80,19 +80,19 @@ class MockParticipantsConnection
       AsyncStreamingAnalyzeContent, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>,
+      (StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>),
       SuggestArticles,
       (google::cloud::dialogflow::v2::SuggestArticlesRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>,
+      (StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>),
       SuggestFaqAnswers,
       (google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>,
+      (StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>),
       SuggestSmartReplies,
       (google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&
            request),

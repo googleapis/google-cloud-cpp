@@ -47,7 +47,7 @@ class MockSqlOperationsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Get,
+  MOCK_METHOD((StatusOr<google::cloud::sql::v1::Operation>), Get,
               (google::cloud::sql::v1::SqlOperationsGetRequest const& request),
               (override));
 

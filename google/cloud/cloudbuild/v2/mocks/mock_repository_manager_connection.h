@@ -47,14 +47,14 @@ class MockRepositoryManagerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
+  MOCK_METHOD((future<StatusOr<google::devtools::cloudbuild::v2::Connection>>),
               CreateConnection,
               (google::devtools::cloudbuild::v2::CreateConnectionRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v2::Connection>, GetConnection,
+      (StatusOr<google::devtools::cloudbuild::v2::Connection>), GetConnection,
       (google::devtools::cloudbuild::v2::GetConnectionRequest const& request),
       (override));
 
@@ -64,35 +64,35 @@ class MockRepositoryManagerConnection
       (google::devtools::cloudbuild::v2::ListConnectionsRequest request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
+  MOCK_METHOD((future<StatusOr<google::devtools::cloudbuild::v2::Connection>>),
               UpdateConnection,
               (google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      (future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>),
       DeleteConnection,
       (google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
            request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
+  MOCK_METHOD((future<StatusOr<google::devtools::cloudbuild::v2::Repository>>),
               CreateRepository,
               (google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
+      (future<StatusOr<
+           google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>),
       BatchCreateRepositories,
       (google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v2::Repository>, GetRepository,
+      (StatusOr<google::devtools::cloudbuild::v2::Repository>), GetRepository,
       (google::devtools::cloudbuild::v2::GetRepositoryRequest const& request),
       (override));
 
@@ -103,21 +103,21 @@ class MockRepositoryManagerConnection
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      (future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>),
       DeleteRepository,
       (google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>,
+      (StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>),
       FetchReadWriteToken,
       (google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>,
+      (StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>),
       FetchReadToken,
       (google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request),
       (override));
@@ -130,7 +130,7 @@ class MockRepositoryManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>,
+      (StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>),
       FetchGitRefs,
       (google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request),
       (override));

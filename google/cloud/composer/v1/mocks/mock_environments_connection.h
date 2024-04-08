@@ -47,15 +47,16 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::orchestration::airflow::service::v1::Environment>>,
+      (future<StatusOr<
+           google::cloud::orchestration::airflow::service::v1::Environment>>),
       CreateEnvironment,
       (google::cloud::orchestration::airflow::service::v1::
            CreateEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>,
+      (StatusOr<
+          google::cloud::orchestration::airflow::service::v1::Environment>),
       GetEnvironment,
       (google::cloud::orchestration::airflow::service::v1::
            GetEnvironmentRequest const& request),
@@ -70,36 +71,36 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::orchestration::airflow::service::v1::Environment>>,
+      (future<StatusOr<
+           google::cloud::orchestration::airflow::service::v1::Environment>>),
       UpdateEnvironment,
       (google::cloud::orchestration::airflow::service::v1::
            UpdateEnvironmentRequest const& request),
       (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
-                                  v1::OperationMetadata>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::orchestration::airflow::service::
+                                   v1::OperationMetadata>>),
               DeleteEnvironment,
               (google::cloud::orchestration::airflow::service::v1::
                    DeleteEnvironmentRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           ExecuteAirflowCommandResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            ExecuteAirflowCommandResponse>),
               ExecuteAirflowCommand,
               (google::cloud::orchestration::airflow::service::v1::
                    ExecuteAirflowCommandRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           StopAirflowCommandResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            StopAirflowCommandResponse>),
               StopAirflowCommand,
               (google::cloud::orchestration::airflow::service::v1::
                    StopAirflowCommandRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           PollAirflowCommandResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            PollAirflowCommandResponse>),
               PollAirflowCommand,
               (google::cloud::orchestration::airflow::service::v1::
                    PollAirflowCommandRequest const& request),
@@ -113,15 +114,15 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           UserWorkloadsSecret>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            UserWorkloadsSecret>),
               CreateUserWorkloadsSecret,
               (google::cloud::orchestration::airflow::service::v1::
                    CreateUserWorkloadsSecretRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           UserWorkloadsSecret>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            UserWorkloadsSecret>),
               GetUserWorkloadsSecret,
               (google::cloud::orchestration::airflow::service::v1::
                    GetUserWorkloadsSecretRequest const& request),
@@ -134,8 +135,8 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    ListUserWorkloadsSecretsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           UserWorkloadsSecret>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            UserWorkloadsSecret>),
               UpdateUserWorkloadsSecret,
               (google::cloud::orchestration::airflow::service::v1::
                    UpdateUserWorkloadsSecretRequest const& request),
@@ -146,15 +147,15 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    DeleteUserWorkloadsSecretRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           UserWorkloadsConfigMap>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            UserWorkloadsConfigMap>),
               CreateUserWorkloadsConfigMap,
               (google::cloud::orchestration::airflow::service::v1::
                    CreateUserWorkloadsConfigMapRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           UserWorkloadsConfigMap>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            UserWorkloadsConfigMap>),
               GetUserWorkloadsConfigMap,
               (google::cloud::orchestration::airflow::service::v1::
                    GetUserWorkloadsConfigMapRequest const& request),
@@ -167,8 +168,8 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    ListUserWorkloadsConfigMapsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           UserWorkloadsConfigMap>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            UserWorkloadsConfigMap>),
               UpdateUserWorkloadsConfigMap,
               (google::cloud::orchestration::airflow::service::v1::
                    UpdateUserWorkloadsConfigMapRequest const& request),
@@ -179,29 +180,29 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    DeleteUserWorkloadsConfigMapRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
-                                  v1::SaveSnapshotResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::orchestration::airflow::service::
+                                   v1::SaveSnapshotResponse>>),
               SaveSnapshot,
               (google::cloud::orchestration::airflow::service::v1::
                    SaveSnapshotRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
-                                  v1::LoadSnapshotResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::orchestration::airflow::service::
+                                   v1::LoadSnapshotResponse>>),
               LoadSnapshot,
               (google::cloud::orchestration::airflow::service::v1::
                    LoadSnapshotRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
-                                  v1::DatabaseFailoverResponse>>,
+  MOCK_METHOD((future<StatusOr<google::cloud::orchestration::airflow::service::
+                                   v1::DatabaseFailoverResponse>>),
               DatabaseFailover,
               (google::cloud::orchestration::airflow::service::v1::
                    DatabaseFailoverRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
-                           FetchDatabasePropertiesResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::orchestration::airflow::service::v1::
+                            FetchDatabasePropertiesResponse>),
               FetchDatabaseProperties,
               (google::cloud::orchestration::airflow::service::v1::
                    FetchDatabasePropertiesRequest const& request),

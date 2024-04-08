@@ -51,30 +51,31 @@ class MockEkmServiceConnection : public kms_v1::EkmServiceConnection {
               (google::cloud::kms::v1::ListEkmConnectionsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConnection>, GetEkmConnection,
+  MOCK_METHOD((StatusOr<google::cloud::kms::v1::EkmConnection>),
+              GetEkmConnection,
               (google::cloud::kms::v1::GetEkmConnectionRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::EkmConnection>, CreateEkmConnection,
+      (StatusOr<google::cloud::kms::v1::EkmConnection>), CreateEkmConnection,
       (google::cloud::kms::v1::CreateEkmConnectionRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::EkmConnection>, UpdateEkmConnection,
+      (StatusOr<google::cloud::kms::v1::EkmConnection>), UpdateEkmConnection,
       (google::cloud::kms::v1::UpdateEkmConnectionRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConfig>, GetEkmConfig,
+  MOCK_METHOD((StatusOr<google::cloud::kms::v1::EkmConfig>), GetEkmConfig,
               (google::cloud::kms::v1::GetEkmConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConfig>, UpdateEkmConfig,
+  MOCK_METHOD((StatusOr<google::cloud::kms::v1::EkmConfig>), UpdateEkmConfig,
               (google::cloud::kms::v1::UpdateEkmConfigRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>,
+      (StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>),
       VerifyConnectivity,
       (google::cloud::kms::v1::VerifyConnectivityRequest const& request),
       (override));

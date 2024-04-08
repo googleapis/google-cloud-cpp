@@ -54,29 +54,29 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::certificatemanager::v1::Certificate>,
+      (StatusOr<google::cloud::certificatemanager::v1::Certificate>),
       GetCertificate,
       (google::cloud::certificatemanager::v1::GetCertificateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>,
+      (future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>),
       CreateCertificate,
       (google::cloud::certificatemanager::v1::CreateCertificateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>,
+      (future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>),
       UpdateCertificate,
       (google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>),
       DeleteCertificate,
       (google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
            request),
@@ -90,29 +90,29 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::certificatemanager::v1::CertificateMap>,
+      (StatusOr<google::cloud::certificatemanager::v1::CertificateMap>),
       GetCertificateMap,
       (google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>,
+      (future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>),
       CreateCertificateMap,
       (google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>,
+      (future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>),
       UpdateCertificateMap,
       (google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>),
       DeleteCertificateMap,
       (google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
            request),
@@ -126,31 +126,31 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>,
+      (StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>),
       GetCertificateMapEntry,
       (google::cloud::certificatemanager::v1::
            GetCertificateMapEntryRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>,
+      (future<StatusOr<
+           google::cloud::certificatemanager::v1::CertificateMapEntry>>),
       CreateCertificateMapEntry,
       (google::cloud::certificatemanager::v1::
            CreateCertificateMapEntryRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>,
+      (future<StatusOr<
+           google::cloud::certificatemanager::v1::CertificateMapEntry>>),
       UpdateCertificateMapEntry,
       (google::cloud::certificatemanager::v1::
            UpdateCertificateMapEntryRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>),
       DeleteCertificateMapEntry,
       (google::cloud::certificatemanager::v1::
            DeleteCertificateMapEntryRequest const& request),
@@ -164,29 +164,31 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>,
+      (StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>),
       GetDnsAuthorization,
       (google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>,
+      (future<
+          StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>),
       CreateDnsAuthorization,
       (google::cloud::certificatemanager::v1::
            CreateDnsAuthorizationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>,
+      (future<
+          StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>),
       UpdateDnsAuthorization,
       (google::cloud::certificatemanager::v1::
            UpdateDnsAuthorizationRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>),
       DeleteDnsAuthorization,
       (google::cloud::certificatemanager::v1::
            DeleteDnsAuthorizationRequest const& request),
@@ -201,24 +203,24 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::certificatemanager::v1::CertificateIssuanceConfig>,
+      (StatusOr<
+          google::cloud::certificatemanager::v1::CertificateIssuanceConfig>),
       GetCertificateIssuanceConfig,
       (google::cloud::certificatemanager::v1::
            GetCertificateIssuanceConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>,
+      (future<StatusOr<
+           google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>),
       CreateCertificateIssuanceConfig,
       (google::cloud::certificatemanager::v1::
            CreateCertificateIssuanceConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>),
       DeleteCertificateIssuanceConfig,
       (google::cloud::certificatemanager::v1::
            DeleteCertificateIssuanceConfigRequest const& request),
@@ -231,29 +233,29 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::certificatemanager::v1::TrustConfig>,
+      (StatusOr<google::cloud::certificatemanager::v1::TrustConfig>),
       GetTrustConfig,
       (google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
+      (future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>),
       CreateTrustConfig,
       (google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
+      (future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>),
       UpdateTrustConfig,
       (google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
+      (future<
+          StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>),
       DeleteTrustConfig,
       (google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
            request),

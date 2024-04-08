@@ -46,26 +46,28 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::lineage::v1::
-                           ProcessOpenLineageRunEventResponse>,
+  MOCK_METHOD((StatusOr<google::cloud::datacatalog::lineage::v1::
+                            ProcessOpenLineageRunEventResponse>),
               ProcessOpenLineageRunEvent,
               (google::cloud::datacatalog::lineage::v1::
                    ProcessOpenLineageRunEventRequest const& request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::lineage::v1::Process>, CreateProcess,
+      (StatusOr<google::cloud::datacatalog::lineage::v1::Process>),
+      CreateProcess,
       (google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::lineage::v1::Process>, UpdateProcess,
+      (StatusOr<google::cloud::datacatalog::lineage::v1::Process>),
+      UpdateProcess,
       (google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::lineage::v1::Process>,
+  MOCK_METHOD((StatusOr<google::cloud::datacatalog::lineage::v1::Process>),
               GetProcess,
               (google::cloud::datacatalog::lineage::v1::GetProcessRequest const&
                    request),
@@ -78,25 +80,27 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,
+      (future<StatusOr<
+           google::cloud::datacatalog::lineage::v1::OperationMetadata>>),
       DeleteProcess,
       (google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::lineage::v1::Run>, CreateRun,
+  MOCK_METHOD((StatusOr<google::cloud::datacatalog::lineage::v1::Run>),
+              CreateRun,
               (google::cloud::datacatalog::lineage::v1::CreateRunRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::lineage::v1::Run>, UpdateRun,
+  MOCK_METHOD((StatusOr<google::cloud::datacatalog::lineage::v1::Run>),
+              UpdateRun,
               (google::cloud::datacatalog::lineage::v1::UpdateRunRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::lineage::v1::Run>, GetRun,
+      (StatusOr<google::cloud::datacatalog::lineage::v1::Run>), GetRun,
       (google::cloud::datacatalog::lineage::v1::GetRunRequest const& request),
       (override));
 
@@ -106,22 +110,22 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       (override));
 
   MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,
+      (future<StatusOr<
+           google::cloud::datacatalog::lineage::v1::OperationMetadata>>),
       DeleteRun,
       (google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>,
+      (StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>),
       CreateLineageEvent,
       (google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>,
+      (StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>),
       GetLineageEvent,
       (google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
            request),

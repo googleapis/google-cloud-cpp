@@ -54,18 +54,18 @@ class MockAuthorizedCertificatesConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::appengine::v1::AuthorizedCertificate>,
+      (StatusOr<google::appengine::v1::AuthorizedCertificate>),
       GetAuthorizedCertificate,
       (google::appengine::v1::GetAuthorizedCertificateRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::AuthorizedCertificate>,
+  MOCK_METHOD((StatusOr<google::appengine::v1::AuthorizedCertificate>),
               CreateAuthorizedCertificate,
               (google::appengine::v1::CreateAuthorizedCertificateRequest const&
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::AuthorizedCertificate>,
+  MOCK_METHOD((StatusOr<google::appengine::v1::AuthorizedCertificate>),
               UpdateAuthorizedCertificate,
               (google::appengine::v1::UpdateAuthorizedCertificateRequest const&
                    request),

@@ -47,24 +47,25 @@ class MockDataplexServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>, CreateLake,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataplex::v1::Lake>>), CreateLake,
               (google::cloud::dataplex::v1::CreateLakeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>, UpdateLake,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataplex::v1::Lake>>), UpdateLake,
               (google::cloud::dataplex::v1::UpdateLakeRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-              DeleteLake,
-              (google::cloud::dataplex::v1::DeleteLakeRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>),
+      DeleteLake,
+      (google::cloud::dataplex::v1::DeleteLakeRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Lake>), ListLakes,
               (google::cloud::dataplex::v1::ListLakesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Lake>, GetLake,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Lake>), GetLake,
               (google::cloud::dataplex::v1::GetLakeRequest const& request),
               (override));
 
@@ -73,24 +74,25 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::ListLakeActionsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>, CreateZone,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataplex::v1::Zone>>), CreateZone,
               (google::cloud::dataplex::v1::CreateZoneRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>, UpdateZone,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataplex::v1::Zone>>), UpdateZone,
               (google::cloud::dataplex::v1::UpdateZoneRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-              DeleteZone,
-              (google::cloud::dataplex::v1::DeleteZoneRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>),
+      DeleteZone,
+      (google::cloud::dataplex::v1::DeleteZoneRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Zone>), ListZones,
               (google::cloud::dataplex::v1::ListZonesRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Zone>, GetZone,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Zone>), GetZone,
               (google::cloud::dataplex::v1::GetZoneRequest const& request),
               (override));
 
@@ -99,24 +101,27 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::ListZoneActionsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>, CreateAsset,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataplex::v1::Asset>>),
+              CreateAsset,
               (google::cloud::dataplex::v1::CreateAssetRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>, UpdateAsset,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataplex::v1::Asset>>),
+              UpdateAsset,
               (google::cloud::dataplex::v1::UpdateAssetRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-              DeleteAsset,
-              (google::cloud::dataplex::v1::DeleteAssetRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>),
+      DeleteAsset,
+      (google::cloud::dataplex::v1::DeleteAssetRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Asset>), ListAssets,
               (google::cloud::dataplex::v1::ListAssetsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Asset>, GetAsset,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Asset>), GetAsset,
               (google::cloud::dataplex::v1::GetAssetRequest const& request),
               (override));
 
@@ -125,24 +130,25 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::ListAssetActionsRequest request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>, CreateTask,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataplex::v1::Task>>), CreateTask,
               (google::cloud::dataplex::v1::CreateTaskRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>, UpdateTask,
+  MOCK_METHOD((future<StatusOr<google::cloud::dataplex::v1::Task>>), UpdateTask,
               (google::cloud::dataplex::v1::UpdateTaskRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-              DeleteTask,
-              (google::cloud::dataplex::v1::DeleteTaskRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>),
+      DeleteTask,
+      (google::cloud::dataplex::v1::DeleteTaskRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Task>), ListTasks,
               (google::cloud::dataplex::v1::ListTasksRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Task>, GetTask,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Task>), GetTask,
               (google::cloud::dataplex::v1::GetTaskRequest const& request),
               (override));
 
@@ -150,11 +156,11 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::ListJobsRequest request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::RunTaskResponse>, RunTask,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::RunTaskResponse>), RunTask,
               (google::cloud::dataplex::v1::RunTaskRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Job>, GetJob,
+  MOCK_METHOD((StatusOr<google::cloud::dataplex::v1::Job>), GetJob,
               (google::cloud::dataplex::v1::GetJobRequest const& request),
               (override));
 
@@ -163,19 +169,19 @@ class MockDataplexServiceConnection
               (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::Environment>>,
+      (future<StatusOr<google::cloud::dataplex::v1::Environment>>),
       CreateEnvironment,
       (google::cloud::dataplex::v1::CreateEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::Environment>>,
+      (future<StatusOr<google::cloud::dataplex::v1::Environment>>),
       UpdateEnvironment,
       (google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
+      (future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>),
       DeleteEnvironment,
       (google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request),
       (override));
@@ -186,7 +192,7 @@ class MockDataplexServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::Environment>, GetEnvironment,
+      (StatusOr<google::cloud::dataplex::v1::Environment>), GetEnvironment,
       (google::cloud::dataplex::v1::GetEnvironmentRequest const& request),
       (override));
 
