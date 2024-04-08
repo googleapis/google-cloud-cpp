@@ -119,7 +119,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L143}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L132}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L132}
   ///
   // clang-format on
   StreamRange<
@@ -164,7 +164,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L143}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_062.proto#L132}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L132}
   ///
   // clang-format on
   StreamRange<
@@ -626,7 +626,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L387}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_136.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -661,7 +661,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L387}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_136.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

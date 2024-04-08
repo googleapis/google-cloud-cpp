@@ -307,6 +307,10 @@
 ./include/google/cloud/compute/instance_groups/v1
 ./include/google/cloud/compute/instance_groups/v1/internal
 ./include/google/cloud/compute/instance_groups/v1/mocks
+./include/google/cloud/compute/instance_settings
+./include/google/cloud/compute/instance_settings/v1
+./include/google/cloud/compute/instance_settings/v1/internal
+./include/google/cloud/compute/instance_settings/v1/mocks
 ./include/google/cloud/compute/instance_templates
 ./include/google/cloud/compute/instance_templates/v1
 ./include/google/cloud/compute/instance_templates/v1/internal
