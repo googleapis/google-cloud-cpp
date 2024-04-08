@@ -117,8 +117,15 @@ CreateDefault$stub_class_name$(
     stub = std::make_shared<$auth_class_name$>(
         std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<$metadata_class_name$>(
-      std::move(stub), std::multimap<std::string, std::string>{});
+  std::multimap<std::string, std::string> fixed_metadata;
+)""");
+  if (HasApiVersion()) {
+    CcPrint(
+        R"""(  fixed_metadata.emplace("x-goog-api-version", "$api_version$");
+)""");
+  }
+  CcPrint(R"""(  stub = std::make_shared<$metadata_class_name$>(
+      std::move(stub), std::move(fixed_metadata));
   if (internal::Contains(
       options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
