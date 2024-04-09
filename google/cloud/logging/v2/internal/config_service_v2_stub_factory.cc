@@ -53,9 +53,8 @@ std::shared_ptr<ConfigServiceV2Stub> CreateDefaultConfigServiceV2Stub(
     stub =
         std::make_shared<ConfigServiceV2Auth>(std::move(auth), std::move(stub));
   }
-  std::multimap<std::string, std::string> fixed_metadata;
-  stub = std::make_shared<ConfigServiceV2Metadata>(std::move(stub),
-                                                   std::move(fixed_metadata));
+  stub = std::make_shared<ConfigServiceV2Metadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ConfigServiceV2Logging>(

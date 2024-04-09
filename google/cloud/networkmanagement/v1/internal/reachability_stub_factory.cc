@@ -54,9 +54,8 @@ std::shared_ptr<ReachabilityServiceStub> CreateDefaultReachabilityServiceStub(
     stub = std::make_shared<ReachabilityServiceAuth>(std::move(auth),
                                                      std::move(stub));
   }
-  std::multimap<std::string, std::string> fixed_metadata;
   stub = std::make_shared<ReachabilityServiceMetadata>(
-      std::move(stub), std::move(fixed_metadata));
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ReachabilityServiceLogging>(

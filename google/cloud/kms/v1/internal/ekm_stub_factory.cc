@@ -49,9 +49,8 @@ std::shared_ptr<EkmServiceStub> CreateDefaultEkmServiceStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<EkmServiceAuth>(std::move(auth), std::move(stub));
   }
-  std::multimap<std::string, std::string> fixed_metadata;
-  stub = std::make_shared<EkmServiceMetadata>(std::move(stub),
-                                              std::move(fixed_metadata));
+  stub = std::make_shared<EkmServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<EkmServiceLogging>(

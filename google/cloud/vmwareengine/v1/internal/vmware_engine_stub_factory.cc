@@ -52,9 +52,8 @@ std::shared_ptr<VmwareEngineStub> CreateDefaultVmwareEngineStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<VmwareEngineAuth>(std::move(auth), std::move(stub));
   }
-  std::multimap<std::string, std::string> fixed_metadata;
-  stub = std::make_shared<VmwareEngineMetadata>(std::move(stub),
-                                                std::move(fixed_metadata));
+  stub = std::make_shared<VmwareEngineMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<VmwareEngineLogging>(

@@ -50,9 +50,8 @@ std::shared_ptr<AppHubStub> CreateDefaultAppHubStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<AppHubAuth>(std::move(auth), std::move(stub));
   }
-  std::multimap<std::string, std::string> fixed_metadata;
-  stub = std::make_shared<AppHubMetadata>(std::move(stub),
-                                          std::move(fixed_metadata));
+  stub = std::make_shared<AppHubMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AppHubLogging>(

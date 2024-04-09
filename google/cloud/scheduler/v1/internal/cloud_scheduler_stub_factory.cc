@@ -51,9 +51,8 @@ std::shared_ptr<CloudSchedulerStub> CreateDefaultCloudSchedulerStub(
     stub =
         std::make_shared<CloudSchedulerAuth>(std::move(auth), std::move(stub));
   }
-  std::multimap<std::string, std::string> fixed_metadata;
-  stub = std::make_shared<CloudSchedulerMetadata>(std::move(stub),
-                                                  std::move(fixed_metadata));
+  stub = std::make_shared<CloudSchedulerMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudSchedulerLogging>(
