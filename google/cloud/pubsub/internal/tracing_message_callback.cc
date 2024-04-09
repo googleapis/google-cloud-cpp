@@ -13,10 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/message_callback.h"
+#include "google/cloud/pubsub/internal/tracing_exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/opentelemetry_options.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_startoptions.h>
@@ -37,7 +39,8 @@ class TracingMessageCallback : public MessageCallback {
                                   Options const& opts)
       : child_(std::move(child)),
         subscription_id_(
-            opts.get<pubsub::SubscriptionOption>().subscription_id()) {}
+            opts.get<pubsub::SubscriptionOption>().subscription_id()),
+        enable_otel_(opts.get<OpenTelemetryTracingOption>()) {}
 
   ~TracingMessageCallback() override = default;
 
@@ -50,13 +53,17 @@ class TracingMessageCallback : public MessageCallback {
     auto span =
         internal::MakeSpan(subscription_id_ + " process",
                            {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
-
+    if (enable_otel_) {
+      m.ack_handler = MakeTracingExactlyOnceAckHandler(std::move(m.ack_handler),
+                                                       m.subscribe_span);
+    }
     child_->user_callback(std::move(m));
     span->End();
   }
 
   std::shared_ptr<MessageCallback> child_;
   std::string subscription_id_;
+  bool enable_otel_;
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> subscribe_span_;
 };
 
