@@ -176,8 +176,8 @@ google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
     auto mr = ToMonitoredResource(data.resource_->GetAttributes());
     resource.set_type(std::move(mr.type));
     for (auto& label : mr.labels) {
-      resource.mutable_labels()->emplace(std::move(label.first),
-                                         std::move(label.second));
+      (*resource.mutable_labels())[std::move(label.first)] =
+          std::move(label.second);
     }
   }
 
