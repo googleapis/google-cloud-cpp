@@ -21,13 +21,13 @@
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
