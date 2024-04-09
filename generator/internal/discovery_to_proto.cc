@@ -130,7 +130,8 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
   }
 
   auto const& schemas = discovery_doc["schemas"];
-  bool schemas_all_type_object = true;
+  std::vector<std::string> recognized_types = {"object", "any"};
+  bool schemas_all_recognized_types = true;
   bool schemas_all_have_id = true;
   std::string id;
   for (auto const& s : schemas) {
@@ -142,9 +143,10 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     }
     id = s["id"];
     std::string type = s.value("type", "untyped");
-    if (type != "object") {
-      GCP_LOG(ERROR) << id << " not type:object; is instead " << type;
-      schemas_all_type_object = false;
+    if (!internal::Contains(recognized_types, type)) {
+      GCP_LOG(ERROR) << id << " type is not in `recognized_types`; is instead "
+                     << type;
+      schemas_all_recognized_types = false;
       continue;
     }
     types.emplace(id, DiscoveryTypeVertex{
@@ -160,9 +162,9 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
         "Discovery Document contains schema without id field.");
   }
 
-  if (!schemas_all_type_object) {
+  if (!schemas_all_recognized_types) {
     return internal::InvalidArgumentError(
-        "Discovery Document contains non object schema.");
+        "Discovery Document contains unrecognized schema type.");
   }
 
   return types;
@@ -637,10 +639,10 @@ Status GenerateProtosFromDiscoveryDoc(
   // google::protobuf::DescriptorPool lazily initializes itself. Searching for
   // types by name will fail if the descriptor has not yet been created. By
   // finding all the files we intend to write, the DescriptorPool builds its
-  // collection of descriptors for that file and any it imports. We must perform
-  // this mutation of the DescriptorPool before we begin the threaded write
-  // process. Additionally, populating the DescriptorPool allows us to snapshot
-  // the existing proto files before we overwrite them in place.
+  // collection of descriptors for that file and any it imports. We must
+  // perform this mutation of the DescriptorPool before we begin the threaded
+  // write process. Additionally, populating the DescriptorPool allows us to
+  // snapshot the existing proto files before we overwrite them in place.
   for (auto const& f : files->first) {
     (void)descriptor_pool.FindFileByName(f.relative_proto_path());
   }
@@ -677,7 +679,8 @@ Status GenerateProtosFromDiscoveryDoc(
 
     if (file_write_error) {
       return internal::InternalError(
-          "Error encountered writing file. Check log for additional details.");
+          "Error encountered writing file. Check log for additional "
+          "details.");
     }
   } else {
     for (auto const& f : files->first) {
