@@ -86,10 +86,24 @@ char const* const kAnnotationsProto =
     "  HttpRule http = 72295728;\n"
     "}\n";
 
+char const* const kClientProto =
+    "syntax = \"proto3\";\n"
+    "package google.api;\n"
+    "import \"google/protobuf/descriptor.proto\";\n"
+    "extend google.protobuf.MethodOptions {\n"
+    "  repeated string method_signature = 1051;\n"
+    "}\n"
+    "extend google.protobuf.ServiceOptions {\n"
+    "  string default_host = 1049;\n"
+    "  string oauth_scopes = 1050;\n"
+    "  string api_version = 525000001;\n"
+    "}\n";
+
 char const* const kFrobberServiceProto =
     "syntax = \"proto3\";\n"
     "package google.cloud.frobber.v1;\n"
     "import \"google/api/annotations.proto\";\n"
+    "import \"google/api/client.proto\";\n"
     "import \"google/api/http.proto\";\n"
     "// Leading comments about message Bar.\n"
     "message Bar {\n"
@@ -100,6 +114,7 @@ char const* const kFrobberServiceProto =
     "// Leading comments about service FrobberService.\n"
     "// $Delimiter escapes$ $\n"
     "service FrobberService {\n"
+    "  option (google.api.api_version) = \"test-api-version\";\n"
     "  // Leading comments about rpc Method0.\n"
     "  rpc Method0(Bar) returns (Empty) {\n"
     "    option (google.api.http) = {\n"
@@ -113,6 +128,7 @@ class CreateServiceVarsTest
  public:
   CreateServiceVarsTest()
       : source_tree_(std::map<std::string, std::string>{
+            {std::string("google/api/client.proto"), kClientProto},
             {std::string("google/api/http.proto"), kHttpProto},
             {std::string("google/api/annotations.proto"), kAnnotationsProto},
             {std::string("google/cloud/frobber/v1/frobber.proto"),
@@ -219,6 +235,7 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("product_options_page", "google-cloud-frobber-options"),
         std::make_pair("additional_pb_header_paths",
                        "google/cloud/add1.pb.h,google/cloud/add2.pb.h"),
+        std::make_pair("api_version", "test-api-version"),
         std::make_pair("class_comment_block",
                        "///\n/// Leading comments about service "
                        "FrobberService.\n/// $Delimiter escapes$ $\n///"),
@@ -609,18 +626,6 @@ char const* const kIamProto =
     "message GetIamPolicyRequest {}\n"
     "message TestIamPermissionsRequest {}\n"
     "message TestIamPermissionsResponse {}\n";
-
-char const* const kClientProto =
-    "syntax = \"proto3\";\n"
-    "package google.api;\n"
-    "import \"google/protobuf/descriptor.proto\";\n"
-    "extend google.protobuf.MethodOptions {\n"
-    "  repeated string method_signature = 1051;\n"
-    "}\n"
-    "extend google.protobuf.ServiceOptions {\n"
-    "  string default_host = 1049;\n"
-    "  string oauth_scopes = 1050;\n"
-    "}\n";
 
 char const* const kLongrunningOperationsProto =
     "syntax = \"proto3\";\n"

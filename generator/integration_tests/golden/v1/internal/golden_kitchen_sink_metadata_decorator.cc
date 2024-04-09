@@ -33,6 +33,10 @@ namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace {
+  auto constexpr kServiceApiVersion = "test-api-version";
+}  // namespace
+
 GoldenKitchenSinkMetadata::GoldenKitchenSinkMetadata(
     std::shared_ptr<GoldenKitchenSinkStub> child,
     std::multimap<std::string, std::string> fixed_metadata,
@@ -246,6 +250,7 @@ void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
 
 void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
+  context.AddMetadata("x-goog-api-version", kServiceApiVersion);
   google::cloud::internal::SetMetadata(
       context, options, fixed_metadata_, api_client_header_);
 }
