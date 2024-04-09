@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CALLBACK_H
 
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/internal/span.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/version.h"
 #include <google/pubsub/v1/pubsub.pb.h>
@@ -36,6 +37,10 @@ class MessageCallback {
   struct MessageAndHandler {
     pubsub::Message message;
     std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> ack_handler;
+    std::string ack_id;
+    // A single subscribe span, if it exists. This value is not known initially.
+    // The TracingBatchCallback will supply it once created.
+    Span subscribe_span;
   };
 
   virtual void user_callback(MessageAndHandler m) = 0;

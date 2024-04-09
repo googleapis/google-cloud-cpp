@@ -21,10 +21,19 @@
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/trace/propagation/http_trace_context.h>
+#include <opentelemetry/trace/scope.h>
+#include <opentelemetry/trace/semantic_conventions.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <gmock/gmock.h>
 #include <atomic>
 #include <chrono>
@@ -68,8 +77,7 @@ future<Status> CreateTestSubscriptionSession(
                                    std::move(callback));
 }
 
-/// @test Verify callbacks are scheduled in the background threads.
-TEST(SubscriptionSessionTest, ScheduleCallbacks) {
+void ScheduleCallbacks(int64_t ack_count, bool enable_open_telemetry) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   pubsub::Subscription const subscription("test-project", "test-subscription");
 
@@ -78,7 +86,6 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   std::mutex ack_id_mu;
   std::condition_variable ack_id_cv;
   int expected_ack_id = 0;
-  auto constexpr kAckCount = 100;
 
   google::cloud::CompletionQueue cq;
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
@@ -91,7 +98,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
               std::lock_guard<std::mutex> lk(ack_id_mu);
               EXPECT_EQ("test-ack-id-" + std::to_string(expected_ack_id), a);
               ++expected_ack_id;
-              if (expected_ack_id >= kAckCount) ack_id_cv.notify_one();
+              if (expected_ack_id >= ack_count) ack_id_cv.notify_one();
             }
             return cq.MakeRelativeTimer(us(10)).then(
                 [](TimerFuture) { return Status{}; });
@@ -175,11 +182,14 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   };
 
   auto response = CreateTestSubscriptionSession(
-      subscription, Options{}.set<pubsub::MaxConcurrencyOption>(1), mock, cq,
-      {handler});
+      subscription,
+      Options{}
+          .set<pubsub::MaxConcurrencyOption>(1)
+          .set<OpenTelemetryTracingOption>(enable_open_telemetry),
+      mock, cq, {handler});
   {
     std::unique_lock<std::mutex> lk(ack_id_mu);
-    ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
+    ack_id_cv.wait(lk, [&] { return expected_ack_id >= ack_count; });
   }
   response.cancel();
   EXPECT_STATUS_OK(response.get());
@@ -187,6 +197,42 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   cq.Shutdown();
   for (auto& t : tasks) t.join();
 }
+
+/// @test Verify callbacks are scheduled in the background threads.
+TEST(SubscriptionSessionTest, ScheduleCallbacks) {
+  ScheduleCallbacks(/*ack_count=*/100, /*enable_open_telemetry=*/false);
+}
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SpanHasAttributes;
+using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanKindIsInternal;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::Contains;
+using ::testing::SizeIs;
+
+/// @test Verify callbacks are scheduled in the background threads with Open
+/// Telemetry enabled.
+TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto constexpr kAckCount = 100;
+  ScheduleCallbacks(kAckCount, /*enable_open_telemetry=*/true);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, SizeIs(kAckCount));
+  // Verify there is at least one process span.
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                            SpanNamed("test-subscription process"),
+                            SpanHasAttributes(OTelAttribute<std::string>(
+                                sc::kMessagingSystem, "gcp_pubsub")))));
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /// @test Verify callbacks are scheduled in the background threads.
 TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
