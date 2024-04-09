@@ -34,7 +34,6 @@
 #include <future>
 #include <map>
 #include <thread>
-#include <unordered_set>
 #include <utility>
 
 namespace google {
@@ -131,7 +130,7 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
   }
 
   auto const& schemas = discovery_doc["schemas"];
-  std::unordered_set<std::string> recognized_types = {"object", "any"};
+  std::vector<std::string> recognized_types = {"object", "any"};
   bool schemas_all_recognized_types = true;
   bool schemas_all_have_id = true;
   std::string id;
@@ -144,7 +143,7 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     }
     id = s["id"];
     std::string type = s.value("type", "untyped");
-    if (recognized_types.count(type) == 0) {
+    if (!internal::Contains(recognized_types, type)) {
       GCP_LOG(ERROR) << id << " type is not in `recognized_types`; is instead "
                      << type;
       schemas_all_recognized_types = false;
