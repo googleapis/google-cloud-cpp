@@ -515,6 +515,7 @@ std::string DiscoveryTypeVertex::DebugString() const {
   return absl::StrCat(
       "name: ", absl::StrJoin(needs_type_, ",", formatter),
       "; needs_type_name: ", absl::StrJoin(needed_by_type_, ",", formatter),
+      "; needed_by_resource: ", absl::StrJoin(needed_by_resource_, ","),
       "; needed_by_type_name: ", name_);
 }
 
