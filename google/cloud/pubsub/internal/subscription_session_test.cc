@@ -26,9 +26,9 @@
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
