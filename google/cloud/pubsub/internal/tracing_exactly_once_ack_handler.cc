@@ -48,9 +48,7 @@ class TracingExactlyOnceAckHandler
 
   ~TracingExactlyOnceAckHandler() override = default;
   future<Status> ack() override {
-    if (subscribe_span_) {
-      subscribe_span_->AddEvent("gl-cpp.message_ack");
-    }
+    subscribe_span_->AddEvent("gl-cpp.message_ack");
     namespace sc = opentelemetry::trace::SemanticConventions;
     opentelemetry::trace::StartSpanOptions options = RootStartSpanOptions();
     options.kind = opentelemetry::trace::SpanKind::kInternal;
@@ -68,6 +66,7 @@ class TracingExactlyOnceAckHandler
          {sc::kMessagingOperation, "settle"}},
         options);
 
+    auto scope = internal::OTelScope(span);
     return internal::EndSpan(std::move(span), child_->ack());
   }
 
