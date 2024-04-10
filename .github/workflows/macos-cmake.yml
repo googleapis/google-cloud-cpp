@@ -103,6 +103,14 @@ jobs:
         fi
     - name: Install bash >= 5.x and Ninja
       run: brew install bash ninja
+    - name: Download cmake formula(3.27.2) and install
+      run: |
+        brew install wget
+        brew unlink cmake
+        wget https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
+        brew install cmake.rb
+    - name: cmake version
+      run: cmake --version
     - name: Download and Install sccache
       working-directory: "${{runner.temp}}"
       run: |
@@ -120,7 +128,12 @@ jobs:
     - name: Build google-cloud-cpp
       run: |
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
+        export VCPKG_FORCE_SYSTEM_BINARIES=1
         /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
+    - name: print logs
+      if: always()
+      working-directory: "${{runner.temp}}"
+      run: find . -name "config-arm64-osx-*.log" | grep grpc | xargs -n1 -t cat {}
     env:
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
       SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache

@@ -41,6 +41,26 @@ jobs:
       run: |
         echo "version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
       shell: bash
+    - name: purge existing cmake
+      run: sudo apt purge cmake
+    - name: apt clean and autoremove
+      run: sudo apt clean && sudo apt autoremove
+#    - name: find cmake
+#      run: find /usr -name cmake
+    - name: list cmake version
+      run: sudo apt list --all-versions cmake
+    - name: install cmake-data
+      run: sudo apt install cmake-data=3.22.1-1ubuntu1
+    - name: install cmake
+      run: sudo apt install cmake=3.22.1-1ubuntu1
+    - name: which cmake again
+      run: which cmake
+#    - name: find cmake again
+#      run: find /usr -name cmake
+    - name: rm /usr/local/bin/cmake
+      run: sudo rm /usr/local/bin/cmake
+    - name: cmake version
+      run: cmake --version
     - name: install ninja
       run: sudo apt install ninja-build
     - name: download-sccache
@@ -59,7 +79,7 @@ jobs:
         vcpkg/bootstrap-vcpkg.sh -disableMetrics
     # First compile the code using the identity with access to the build cache
     - run: |
-        env VCPKG_ROOT="${{ runner.temp }}/vcpkg" ci/gha/builds/external-account.sh
+        env VCPKG_ROOT="${{ runner.temp }}/vcpkg" VCPKG_FORCE_SYSTEM_BINARIES=1 ci/gha/builds/external-account.sh
     # Then switch to the BYOID identity and run the integration test
     - id: byoid-auth
       if: '!github.event.pull_request.head.repo.fork'
