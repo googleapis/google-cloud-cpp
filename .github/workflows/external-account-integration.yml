@@ -41,6 +41,8 @@ jobs:
       run: |
         echo "version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
       shell: bash
+    - name: install cmake
+      run: sudo apt install cmake=3.27.7
     - name: install ninja
       run: sudo apt install ninja-build
     - name: download-sccache
