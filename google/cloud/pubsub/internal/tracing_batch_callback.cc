@@ -201,7 +201,6 @@ class TracingBatchCallback : public BatchCallback {
     using Links =
         std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 
-
     Links links;
     std::unique_lock<std::mutex> lk(mu_);
     for (auto const& ack_id : request.ack_ids()) {
