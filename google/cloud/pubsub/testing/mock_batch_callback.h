@@ -42,10 +42,9 @@ class MockBatchCallback : public pubsub_internal::BatchCallback {
   MOCK_METHOD(void, EndConcurrencyControl, (std::string const&));
   MOCK_METHOD(void, StartScheduler, (std::string const&));
   MOCK_METHOD(void, EndScheduler, (std::string const&));
-  MOCK_METHOD(void, StartModackSpan,
-              (google::pubsub::v1::ModifyAckDeadlineRequest const&,
-               std::int64_t));
-  MOCK_METHOD(void, EndModackSpan, (std::int64_t));
+  MOCK_METHOD(pubsub_internal::Span, StartModackSpan,
+              (google::pubsub::v1::ModifyAckDeadlineRequest const&));
+  MOCK_METHOD(void, EndModackSpan, (pubsub_internal::Span));
   MOCK_METHOD(void, AckStart, (std::string const&));
   MOCK_METHOD(void, AckEnd, (std::string const&));
   MOCK_METHOD(void, NackStart, (std::string const&));

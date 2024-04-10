@@ -97,10 +97,6 @@ class TracingBatchCallback : public BatchCallback {
       if (kv.second.scheduler_span) kv.second.scheduler_span->End();
     }
     spans_by_ack_id_.clear();
-    for (auto const& kv : lease_span_by_id_) {
-      kv.second->End();
-    }
-    lease_span_by_id_.clear();
   }
 
   void callback(BatchCallback::StreamingPullResponse response) override {
@@ -196,9 +192,8 @@ class TracingBatchCallback : public BatchCallback {
     }
   }
 
-  void StartModackSpan(
-      google::pubsub::v1::ModifyAckDeadlineRequest const& request,
-      std::int64_t request_id) override {
+  Span StartModackSpan(
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
     namespace sc = opentelemetry::trace::SemanticConventions;
     using Attributes =
         std::vector<std::pair<opentelemetry::nostd::string_view,
@@ -206,7 +201,7 @@ class TracingBatchCallback : public BatchCallback {
     using Links =
         std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 
-    if (request.ack_ids().empty()) return;
+    if (request.ack_ids().empty()) return {};
 
     Links links;
     std::unique_lock<std::mutex> lk(mu_);
@@ -233,19 +228,13 @@ class TracingBatchCallback : public BatchCallback {
          {"gcp.project_id", subscription_.project_id()}},
         std::move(links), options);
     lk.lock();
-    auto lease_span = lease_span_by_id_.find(request_id);
-    if (lease_span != lease_span_by_id_.end()) {
-      lease_span->second->End();
-    }
-    lease_span_by_id_[request_id] = span;
+
+    return Span{span};
   }
 
-  void EndModackSpan(std::int64_t request_id) override {
-    auto kv = lease_span_by_id_.find(request_id);
-    if (kv != lease_span_by_id_.end()) {
-      kv->second->End();
-      lease_span_by_id_.erase(kv);
-    }
+  void EndModackSpan(Span span) override {
+    if (!span.span) return;
+    span.span->End();
   }
 
   void AckStart(std::string const& ack_id) override {
@@ -310,10 +299,6 @@ class TracingBatchCallback : public BatchCallback {
   std::mutex mu_;
   std::unordered_map<std::string, MessageSpans>
       spans_by_ack_id_;  // ABSL_GUARDED_BY(mu_)
-  std::unordered_map<
-      std::int64_t,
-      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      lease_span_by_id_;  // ABSL_GUARDED_BY(mu_)};
 };
 
 }  // namespace

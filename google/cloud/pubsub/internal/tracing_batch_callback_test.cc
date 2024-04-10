@@ -146,8 +146,8 @@ TEST(TracingBatchCallback, StartAndEndModackSpanForOneMessage) {
   *request.add_ack_ids() = "ack-id-0";
   request.set_ack_deadline_seconds(10);
   request.set_subscription(TestSubscription().FullName());
-  batch_callback->StartModackSpan(request, 0);
-  batch_callback->EndModackSpan(0);
+  auto s = batch_callback->StartModackSpan(request);
+  batch_callback->EndModackSpan(s);
   batch_callback->AckEnd("ack-id-0");
 
   auto spans = span_catcher->GetSpans();
@@ -181,8 +181,8 @@ TEST(TracingBatchCallback, StartAndEndModackSpanForMultipleMessages) {
   *request.add_ack_ids() = "ack-id-1";
   request.set_ack_deadline_seconds(10);
   request.set_subscription(TestSubscription().FullName());
-  batch_callback->StartModackSpan(request, 0);
-  batch_callback->EndModackSpan(0);
+  auto s = batch_callback->StartModackSpan(request);
+  batch_callback->EndModackSpan(s);
   batch_callback->AckEnd("ack-id-0");
   batch_callback->AckEnd("ack-id-1");
 
@@ -219,7 +219,7 @@ TEST(TracingBatchCallback, VerifyModackSpansAreEndedInDestructor) {
     *request.add_ack_ids() = "ack-id-0";
     request.set_ack_deadline_seconds(10);
     request.set_subscription(TestSubscription().FullName());
-    batch_callback->StartModackSpan(request, 0);
+    batch_callback->StartModackSpan(request);
   }
 
   auto spans = span_catcher->GetSpans();
