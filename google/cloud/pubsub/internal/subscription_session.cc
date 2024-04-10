@@ -23,7 +23,9 @@
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
+#include "google/cloud/pubsub/internal/tracing_message_callback.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
 
 namespace google {
 namespace cloud {
@@ -40,7 +42,14 @@ class SubscriptionSessionImpl
       Options const& opts, CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
-      std::shared_ptr<BatchCallback> callback) {
+      std::shared_ptr<MessageCallback> callback) {
+    if (opts.get<OpenTelemetryTracingOption>()) {
+      callback = MakeTracingMessageCallback(std::move(callback), opts);
+    }
+    std::shared_ptr<BatchCallback> batch_callback =
+        std::make_shared<DefaultBatchCallback>(
+            [](BatchCallback::StreamingPullResponse const&) {},
+            std::move(callback));
     auto queue =
         SubscriptionMessageQueue::Create(shutdown_manager, std::move(source));
     auto concurrency_control = SubscriptionConcurrencyControl::Create(
@@ -63,7 +72,7 @@ class SubscriptionSessionImpl
     // 2) When the completion queue is shutdown, the timer is canceled and
     //    `self` gets a chance to shut down the pipeline.
     self->ScheduleTimer();
-    self->pipeline_->Start(std::move(callback));
+    self->pipeline_->Start(std::move(batch_callback));
     return result.then([weak](future<Status> f) {
       if (auto self = weak.lock()) self->ShutdownCompleted();
       return f.get();
@@ -86,10 +95,7 @@ class SubscriptionSessionImpl
             });
 
     return Create(opts, std::move(cq), std::move(shutdown_manager),
-                  std::move(source),
-                  std::make_shared<DefaultBatchCallback>(
-                      [](BatchCallback::StreamingPullResponse const&) {},
-                      std::move(callback)));
+                  std::move(source), std::move(callback));
   }
 
   static future<Status> Create(
@@ -105,10 +111,7 @@ class SubscriptionSessionImpl
               cb(std::move(m), pubsub::ExactlyOnceAckHandler(std::move(h)));
             });
     return Create(opts, std::move(cq), std::move(shutdown_manager),
-                  std::move(source),
-                  std::make_shared<DefaultBatchCallback>(
-                      [](BatchCallback::StreamingPullResponse const&) {},
-                      std::move(callback)));
+                  std::move(source), std::move(callback));
   }
 
   SubscriptionSessionImpl(

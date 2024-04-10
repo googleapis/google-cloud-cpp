@@ -192,6 +192,9 @@ class ServiceCodeGenerator : public GeneratorInterface {
   /// Determine if @p method has an auto-populated `request_id`-like field.
   bool HasRequestId(google::protobuf::MethodDescriptor const& method) const;
 
+  /// Determine if the `google.api.api_version` option is specified.
+  bool HasApiVersion() const;
+
   /**
    * Determines if any of the method signatures has any Protocol Buffer
    * Well-Known Types per

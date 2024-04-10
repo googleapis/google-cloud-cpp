@@ -55,6 +55,7 @@ pubsub_client_unit_tests = [
     "internal/tracing_batch_sink_test.cc",
     "internal/tracing_exactly_once_ack_handler_test.cc",
     "internal/tracing_helpers_test.cc",
+    "internal/tracing_message_callback_test.cc",
     "internal/tracing_pull_ack_handler_test.cc",
     "internal/tracing_pull_lease_manager_test.cc",
     "message_test.cc",

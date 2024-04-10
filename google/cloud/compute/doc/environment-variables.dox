@@ -114,6 +114,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInstanceGroupManagerResizeRequestsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_INSTANCE_SETTINGS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInstanceSettingsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_INSTANCE_TEMPLATES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInstanceTemplatesConnection()`.

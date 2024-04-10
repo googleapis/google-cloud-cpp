@@ -96,11 +96,11 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_absl",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_absl/20240116.1.tar.gz",
-            "https://github.com/abseil/abseil-cpp/archive/20240116.1.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_absl/20240116.2.tar.gz",
+            "https://github.com/abseil/abseil-cpp/archive/20240116.2.tar.gz",
         ],
-        sha256 = "3c743204df78366ad2eaf236d6631d83f6bc928d1705dd0000b872e53b73dc6a",
-        strip_prefix = "abseil-cpp-20240116.1",
+        sha256 = "733726b8c3a6d39a4120d7e45ea8b41a434cdacde401cba500f14236c49b39dc",
+        strip_prefix = "abseil-cpp-20240116.2",
     )
 
     # Load a version of googletest that we know works. This is needed to create

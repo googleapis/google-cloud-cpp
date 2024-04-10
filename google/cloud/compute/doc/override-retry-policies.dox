@@ -104,6 +104,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient](@ref compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient-retry-snippet)
 - [\c compute_instance_group_managers_v1::InstanceGroupManagersClient](@ref compute_instance_group_managers_v1::InstanceGroupManagersClient-retry-snippet)
 - [\c compute_instance_groups_v1::InstanceGroupsClient](@ref compute_instance_groups_v1::InstanceGroupsClient-retry-snippet)
+- [\c compute_instance_settings_v1::InstanceSettingsClient](@ref compute_instance_settings_v1::InstanceSettingsClient-retry-snippet)
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-retry-snippet)
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-retry-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-retry-snippet)
@@ -488,6 +489,18 @@ This shows how to override the retry policies for compute_instance_groups_v1::In
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/compute/instance_groups/v1/samples/instance_groups_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_instance_settings_v1::InstanceSettingsClient-retry-snippet Override compute_instance_settings_v1::InstanceSettingsClient Retry Policies
+
+This shows how to override the retry policies for compute_instance_settings_v1::InstanceSettingsClient:
+
+@snippet google/cloud/compute/instance_settings/v1/samples/instance_settings_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/instance_settings/v1/samples/instance_settings_client_samples.cc custom-idempotency-policy
 
 */
 

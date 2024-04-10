@@ -40,6 +40,7 @@ service_dirs = [
     "instance_group_manager_resize_requests/v1/",
     "instance_group_managers/v1/",
     "instance_groups/v1/",
+    "instance_settings/v1/",
     "instance_templates/v1/",
     "instances/v1/",
     "interconnect_attachments/v1/",

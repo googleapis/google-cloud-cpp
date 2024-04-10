@@ -230,6 +230,8 @@ add_library(
     internal/tracing_exactly_once_ack_handler.h
     internal/tracing_helpers.cc
     internal/tracing_helpers.h
+    internal/tracing_message_callback.cc
+    internal/tracing_message_callback.h
     internal/tracing_pull_ack_handler.cc
     internal/tracing_pull_ack_handler.h
     internal/tracing_pull_lease_manager.cc
@@ -486,6 +488,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/tracing_batch_sink_test.cc
         internal/tracing_exactly_once_ack_handler_test.cc
         internal/tracing_helpers_test.cc
+        internal/tracing_message_callback_test.cc
         internal/tracing_pull_ack_handler_test.cc
         internal/tracing_pull_lease_manager_test.cc
         message_test.cc

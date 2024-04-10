@@ -86,6 +86,10 @@
 ./include/google/cloud/automl/v1
 ./include/google/cloud/automl/v1/internal
 ./include/google/cloud/automl/v1/mocks
+./include/google/cloud/backupdr
+./include/google/cloud/backupdr/v1
+./include/google/cloud/backupdr/v1/internal
+./include/google/cloud/backupdr/v1/mocks
 ./include/google/cloud/baremetalsolution
 ./include/google/cloud/baremetalsolution/mocks
 ./include/google/cloud/baremetalsolution/v2
@@ -303,6 +307,10 @@
 ./include/google/cloud/compute/instance_groups/v1
 ./include/google/cloud/compute/instance_groups/v1/internal
 ./include/google/cloud/compute/instance_groups/v1/mocks
+./include/google/cloud/compute/instance_settings
+./include/google/cloud/compute/instance_settings/v1
+./include/google/cloud/compute/instance_settings/v1/internal
+./include/google/cloud/compute/instance_settings/v1/mocks
 ./include/google/cloud/compute/instance_templates
 ./include/google/cloud/compute/instance_templates/v1
 ./include/google/cloud/compute/instance_templates/v1/internal
@@ -1244,6 +1252,8 @@
 ./lib64/cmake/google_cloud_cpp_assuredworkloads_mocks
 ./lib64/cmake/google_cloud_cpp_automl
 ./lib64/cmake/google_cloud_cpp_automl_mocks
+./lib64/cmake/google_cloud_cpp_backupdr
+./lib64/cmake/google_cloud_cpp_backupdr_mocks
 ./lib64/cmake/google_cloud_cpp_baremetalsolution
 ./lib64/cmake/google_cloud_cpp_baremetalsolution_mocks
 ./lib64/cmake/google_cloud_cpp_batch

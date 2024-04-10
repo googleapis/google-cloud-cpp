@@ -177,22 +177,29 @@ Status MetadataDecoratorGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes({vars("metadata_header_path"),
-                   "google/cloud/internal/absl_str_cat_quiet.h",
-                   HasExplicitRoutingMethod()
-                       ? "google/cloud/internal/absl_str_join_quiet.h"
-                       : "",
-                   "google/cloud/internal/api_client_header.h",
-                   HasExplicitRoutingMethod()
-                       ? "google/cloud/internal/routing_matcher.h"
-                       : "",
-                   "google/cloud/common_options.h", "google/cloud/status_or.h",
-                   "google/cloud/internal/url_encode.h"});
+  CcLocalIncludes(
+      {vars("metadata_header_path"),
+       "google/cloud/internal/absl_str_cat_quiet.h",
+       HasExplicitRoutingMethod()
+           ? "google/cloud/internal/absl_str_join_quiet.h"
+           : "",
+       "google/cloud/internal/api_client_header.h",
+       "google/cloud/grpc_options.h",
+       HasExplicitRoutingMethod() ? "google/cloud/internal/routing_matcher.h"
+                                  : "",
+       "google/cloud/status_or.h", "google/cloud/internal/url_encode.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
+  if (HasApiVersion()) {
+    CcPrint(R"""(
+namespace {
+  auto constexpr kServiceApiVersion = "$api_version$";
+}  // namespace
+)""");
+  }
   // constructor
   CcPrint(R"""(
 $metadata_class_name$::$metadata_class_name$(
@@ -396,19 +403,14 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
 
 void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  for (auto const& kv : fixed_metadata_) {
-    context.AddMetadata(kv.first, kv.second);
+)""");
+  if (HasApiVersion()) {
+    CcPrint(
+        R"""(  context.AddMetadata("x-goog-api-version", kServiceApiVersion);
+)""");
   }
-  context.AddMetadata("x-goog-api-client", api_client_header_);
-  if (options.has<UserProjectOption>()) {
-    context.AddMetadata(
-        "x-goog-user-project", options.get<UserProjectOption>());
-  }
-  auto const& authority = options.get<AuthorityOption>();
-  if (!authority.empty()) context.set_authority(authority);
-  for (auto const& h : options.get<CustomHeadersOption>()) {
-    context.AddMetadata(h.first, h.second);
-  }
+  CcPrint(R"""(  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 )""");
 

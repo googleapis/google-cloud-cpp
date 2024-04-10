@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/mock_batch_callback.h"
+#include "google/cloud/pubsub/testing/mock_exactly_once_ack_handler_impl.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -49,6 +50,7 @@ using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::NotNull;
 
 namespace {
 
@@ -97,6 +99,32 @@ TEST(TracingBatchCallback, StartAndEndMessage) {
   auto batch_callback = MakeTestBatchCallback(std::move(mock));
 
   batch_callback->callback(MakeResponse(1));
+  batch_callback->AckEnd("ack-id-0");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+                            SpanNamed("test-sub subscribe"),
+                            SpanHasEvents(EventNamed("gl-cpp.ack_end")))));
+}
+
+TEST(TracingBatchCallback, VerifySpanIsSetInUserCallback) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  EXPECT_CALL(*mock, user_callback)
+      .WillOnce([&](MessageCallback::MessageAndHandler m) {
+        EXPECT_EQ(m.ack_id, "ack-id-0");
+        EXPECT_THAT(m.subscribe_span.span, NotNull());
+      });
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+  MessageCallback::MessageAndHandler message_and_handler{
+      pubsub::MessageBuilder().Build(),
+      std::make_unique<pubsub_testing::MockExactlyOnceAckHandlerImpl>(),
+      "ack-id-0", Span{}};
+
+  batch_callback->callback(MakeResponse(1));
+  batch_callback->user_callback(std::move(message_and_handler));
   batch_callback->AckEnd("ack-id-0");
 
   auto spans = span_catcher->GetSpans();

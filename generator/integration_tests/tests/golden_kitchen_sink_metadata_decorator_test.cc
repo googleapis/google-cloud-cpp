@@ -145,6 +145,7 @@ TEST_F(MetadataDecoratorTest, CustomHeaders) {
                            GenerateAccessTokenRequest const&) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, ::testing::UnorderedElementsAre(
+                                  Pair("x-goog-api-version", _),
                                   Pair("x-goog-request-params", _),
                                   Pair("x-goog-api-client", _)));
         return TransientError();
@@ -154,7 +155,8 @@ TEST_F(MetadataDecoratorTest, CustomHeaders) {
                            GenerateAccessTokenRequest const&) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
-                    UnorderedElementsAre(Pair("x-goog-request-params", _),
+                    UnorderedElementsAre(Pair("x-goog-api-version", _),
+                                         Pair("x-goog-request-params", _),
                                          Pair("x-goog-api-client", _),
                                          Pair("header-key0", "header-value0"),
                                          Pair("header-key1", "header-value1"),

@@ -38,6 +38,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient](@ref compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient-service-account-snippet)
 - [\c compute_instance_group_managers_v1::InstanceGroupManagersClient](@ref compute_instance_group_managers_v1::InstanceGroupManagersClient-service-account-snippet)
 - [\c compute_instance_groups_v1::InstanceGroupsClient](@ref compute_instance_groups_v1::InstanceGroupsClient-service-account-snippet)
+- [\c compute_instance_settings_v1::InstanceSettingsClient](@ref compute_instance_settings_v1::InstanceSettingsClient-service-account-snippet)
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-service-account-snippet)
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-service-account-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-service-account-snippet)
@@ -274,6 +275,12 @@ guide for more details.
 /*! @page compute_instance_groups_v1::InstanceGroupsClient-service-account-snippet Override compute_instance_groups_v1::InstanceGroupsClient Authentication Defaults
 
 @snippet google/cloud/compute/instance_groups/v1/samples/instance_groups_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_instance_settings_v1::InstanceSettingsClient-service-account-snippet Override compute_instance_settings_v1::InstanceSettingsClient Authentication Defaults
+
+@snippet google/cloud/compute/instance_settings/v1/samples/instance_settings_client_samples.cc with-service-account
 
 */
 
