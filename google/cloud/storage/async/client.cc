@@ -38,6 +38,56 @@ AsyncClient::AsyncClient(Options options) {
 AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
     : connection_(std::move(connection)) {}
 
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::ResumeBufferedUpload(std::string upload_id, Options opts) {
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  request.set_upload_id(std::move(upload_id));
+  return ResumeBufferedUpload(std::move(request), std::move(opts));
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::ResumeBufferedUpload(
+    google::storage::v2::QueryWriteStatusRequest request, Options opts) {
+  return connection_
+      ->ResumeBufferedUpload(
+          {std::move(request),
+           internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        auto t = absl::holds_alternative<storage::ObjectMetadata>(
+                     (*w)->PersistedState())
+                     ? AsyncToken()
+                     : storage_internal::MakeAsyncToken(w->get());
+        return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
+      });
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::ResumeUnbufferedUpload(std::string upload_id, Options opts) {
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  request.set_upload_id(std::move(upload_id));
+  return ResumeUnbufferedUpload(std::move(request), std::move(opts));
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::ResumeUnbufferedUpload(
+    google::storage::v2::QueryWriteStatusRequest request, Options opts) {
+  return connection_
+      ->ResumeUnbufferedUpload(
+          {std::move(request),
+           internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        auto t = absl::holds_alternative<storage::ObjectMetadata>(
+                     (*w)->PersistedState())
+                     ? AsyncToken()
+                     : storage_internal::MakeAsyncToken(w->get());
+        return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
+      });
+}
+
 future<StatusOr<google::storage::v2::Object>> AsyncClient::ComposeObject(
     BucketName const& bucket_name, std::string destination_object_name,
     std::vector<google::storage::v2::ComposeObjectRequest::SourceObject>
