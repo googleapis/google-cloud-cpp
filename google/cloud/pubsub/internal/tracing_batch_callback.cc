@@ -197,9 +197,7 @@ class TracingBatchCallback : public BatchCallback {
     using Links =
         std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
 
-    if (request.ack_ids().empty()) {
-      return;
-    }
+    if (request.ack_ids().empty()) return;
 
     Links links;
     std::unique_lock<std::mutex> lk(mu_);
@@ -231,13 +229,13 @@ class TracingBatchCallback : public BatchCallback {
       lease_span->second->End();
     }
     lease_span_by_nonce_[nonce] = span;
-    lk.unlock();
   }
 
   void EndModackSpan(std::int64_t nonce) override {
     auto kv = lease_span_by_nonce_.find(nonce);
     if (kv != lease_span_by_nonce_.end()) {
       kv->second->End();
+      lease_span_by_nonce_.erase(kv);
     }
   }
 
