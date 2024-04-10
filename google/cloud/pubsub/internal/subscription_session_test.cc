@@ -211,8 +211,8 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsInternal;
 using ::google::cloud::testing_util::SpanNamed;
-using ::testing::AtLeast;
 using ::testing::Contains;
+using ::testing::Ge;
 using ::testing::SizeIs;
 
 /// @test Verify callbacks are scheduled in the background threads with Open
@@ -224,7 +224,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksWithOtelEnabled) {
   ScheduleCallbacks(kAckCount, /*enable_open_telemetry=*/true);
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, SizeIs(AtLeast(kAckCount)));
+  EXPECT_THAT(spans, SizeIs(Ge(kAckCount)));
   // Verify there is at least one process span.
   EXPECT_THAT(
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
