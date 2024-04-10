@@ -56,8 +56,8 @@ class BatchCallback {
 
   virtual void StartModackSpan(
       google::pubsub::v1::ModifyAckDeadlineRequest const& request,
-      std::int64_t nonce) = 0;
-  virtual void EndModackSpan(std::int64_t nonce) = 0;
+      std::int64_t request_id) = 0;
+  virtual void EndModackSpan(std::int64_t request_id) = 0;
 
   virtual void AckStart(std::string const& ack_id) = 0;
   virtual void AckEnd(std::string const& ack_id) = 0;

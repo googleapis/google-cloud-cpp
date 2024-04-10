@@ -237,20 +237,21 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   lk.unlock();
   for (auto& r : split) {
     lk.lock();
-    nonce_++;
-    callback_->StartModackSpan(request, nonce_);
+    auto modack_request_id = modack_request_id_++;
+    lk.unlock();
+    callback_->StartModackSpan(request, modack_request_id);
     (void)stub_
         ->AsyncModifyAckDeadline(cq_, std::make_shared<grpc::ClientContext>(),
                                  options_, r)
-        .then([cb = callback_, nonce = nonce_, r](auto f) {
-          auto result = f.get();
-          cb->EndModackSpan(nonce);
-          for (auto const& ack_id : r.ack_ids()) {
-            cb->ModackEnd(ack_id);
-          }
-          return result;
-        });
-    lk.unlock();
+        .then(
+            [cb = callback_, modack_request_id = modack_request_id, r](auto f) {
+              auto result = f.get();
+              cb->EndModackSpan(modack_request_id);
+              for (auto const& ack_id : r.ack_ids()) {
+                cb->ModackEnd(ack_id);
+              }
+              return result;
+            });
   }
 }
 

@@ -97,10 +97,10 @@ class TracingBatchCallback : public BatchCallback {
       if (kv.second.scheduler_span) kv.second.scheduler_span->End();
     }
     spans_by_ack_id_.clear();
-    for (auto const& kv : lease_span_by_nonce_) {
+    for (auto const& kv : lease_span_by_id_) {
       kv.second->End();
     }
-    lease_span_by_nonce_.clear();
+    lease_span_by_id_.clear();
   }
 
   void callback(BatchCallback::StreamingPullResponse response) override {
@@ -198,7 +198,7 @@ class TracingBatchCallback : public BatchCallback {
 
   void StartModackSpan(
       google::pubsub::v1::ModifyAckDeadlineRequest const& request,
-      std::int64_t nonce) override {
+      std::int64_t request_id) override {
     namespace sc = opentelemetry::trace::SemanticConventions;
     using Attributes =
         std::vector<std::pair<opentelemetry::nostd::string_view,
@@ -233,18 +233,18 @@ class TracingBatchCallback : public BatchCallback {
          {"gcp.project_id", subscription_.project_id()}},
         std::move(links), options);
     lk.lock();
-    auto lease_span = lease_span_by_nonce_.find(nonce);
-    if (lease_span != lease_span_by_nonce_.end()) {
+    auto lease_span = lease_span_by_id_.find(request_id);
+    if (lease_span != lease_span_by_id_.end()) {
       lease_span->second->End();
     }
-    lease_span_by_nonce_[nonce] = span;
+    lease_span_by_id_[request_id] = span;
   }
 
-  void EndModackSpan(std::int64_t nonce) override {
-    auto kv = lease_span_by_nonce_.find(nonce);
-    if (kv != lease_span_by_nonce_.end()) {
+  void EndModackSpan(std::int64_t request_id) override {
+    auto kv = lease_span_by_id_.find(request_id);
+    if (kv != lease_span_by_id_.end()) {
       kv->second->End();
-      lease_span_by_nonce_.erase(kv);
+      lease_span_by_id_.erase(kv);
     }
   }
 
@@ -313,7 +313,7 @@ class TracingBatchCallback : public BatchCallback {
   std::unordered_map<
       std::int64_t,
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      lease_span_by_nonce_;  // ABSL_GUARDED_BY(mu_)};
+      lease_span_by_id_;  // ABSL_GUARDED_BY(mu_)};
 };
 
 }  // namespace
