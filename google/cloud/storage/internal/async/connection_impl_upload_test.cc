@@ -23,9 +23,11 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -38,9 +40,11 @@ using ::google::cloud::storage::testing::MockAsyncBidiWriteObjectStream;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::google::protobuf::TextFormat;
 
 using AsyncBidiWriteObjectStream = ::google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiWriteObjectRequest,
@@ -352,7 +356,18 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUploadWithTimeout) {
   next.first.set_value(true);
 }
 
-TEST_F(AsyncConnectionImplTest, UnbufferedUploadResumeUpload) {
+TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUpload) {
+  // The placeholder values in the `common_object_request_params` are just
+  // canaries to verify the full request is passed along.
+  auto constexpr kRequestText = R"pb(
+    upload_id: "test-upload-id"
+    common_object_request_params {
+      encryption_algorithm: "test-ea"
+      encryption_key_bytes: "test-ekb"
+      encryption_key_sha256_bytes: "test-eksb"
+    }
+  )pb";
+
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncQueryWriteStatus)
@@ -365,7 +380,9 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadResumeUpload) {
       .WillOnce(
           [&](auto&, auto, auto,
               google::storage::v2::QueryWriteStatusRequest const& request) {
-            EXPECT_EQ(request.upload_id(), "test-upload-id");
+            auto expected = google::storage::v2::QueryWriteStatusRequest{};
+            EXPECT_TRUE(TextFormat::ParseFromString(kRequestText, &expected));
+            EXPECT_THAT(request, IsProtoEqual(expected));
 
             return sequencer.PushBack("QueryWriteStatus(2)").then([](auto) {
               auto response = google::storage::v2::QueryWriteStatusResponse{};
@@ -419,12 +436,10 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadResumeUpload) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::UseResumableUploadSession("test-upload-id")),
-       connection->options()});
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kRequestText, &request));
+  auto pending = connection->ResumeUnbufferedUpload(
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "QueryWriteStatus(1)");
@@ -478,7 +493,16 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadResumeUpload) {
   next.first.set_value(true);
 }
 
-TEST_F(AsyncConnectionImplTest, UnbufferedUploadResumeFinalizedUpload) {
+TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUploadFinalized) {
+  auto constexpr kRequestText = R"pb(
+    upload_id: "test-upload-id"
+    common_object_request_params {
+      encryption_algorithm: "test-ea"
+      encryption_key_bytes: "test-ekb"
+      encryption_key_sha256_bytes: "test-eksb"
+    }
+  )pb";
+
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncQueryWriteStatus)
@@ -491,7 +515,9 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadResumeFinalizedUpload) {
       .WillOnce(
           [&](auto&, auto, auto,
               google::storage::v2::QueryWriteStatusRequest const& request) {
-            EXPECT_EQ(request.upload_id(), "test-upload-id");
+            auto expected = google::storage::v2::QueryWriteStatusRequest{};
+            EXPECT_TRUE(TextFormat::ParseFromString(kRequestText, &expected));
+            EXPECT_THAT(request, IsProtoEqual(expected));
 
             return sequencer.PushBack("QueryWriteStatus(2)").then([](auto) {
               auto response = google::storage::v2::QueryWriteStatusResponse{};
@@ -506,12 +532,10 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadResumeFinalizedUpload) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::UseResumableUploadSession("test-upload-id")),
-       connection->options()});
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kRequestText, &request));
+  auto pending = connection->ResumeUnbufferedUpload(
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "QueryWriteStatus(1)");
@@ -596,7 +620,7 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadInvalidRequest) {
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
   // Intentionally create an invalid key. Converting this key to a proto message
-  // will fail, and that should result in a
+  // will fail, and that should result in an error.
   auto key = storage::EncryptionDataFromBinaryKey("123");
   key.sha256 = "not-a-valid-base-64-SHA256";
   auto pending = connection->StartUnbufferedUpload(
@@ -609,8 +633,7 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadInvalidRequest) {
   EXPECT_THAT(r, StatusIs(StatusCode::kInvalidArgument));
 }
 
-TEST_F(AsyncConnectionImplTest,
-       UnbufferedUploadTooManyTransientsOnQueryWriteStatus) {
+TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUploadTooManyTransients) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncQueryWriteStatus).Times(3).WillRepeatedly([&] {
@@ -622,12 +645,10 @@ TEST_F(AsyncConnectionImplTest,
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::UseResumableUploadSession("test-upload-id")),
-       connection->options()});
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  request.set_upload_id("resume-upload-id");
+  auto pending = connection->ResumeUnbufferedUpload(
+      {std::move(request), connection->options()});
 
   for (int i = 0; i != 3; ++i) {
     auto next = sequencer.PopFrontWithName();
@@ -639,8 +660,7 @@ TEST_F(AsyncConnectionImplTest,
   EXPECT_THAT(r, StatusIs(TransientError().code()));
 }
 
-TEST_F(AsyncConnectionImplTest,
-       UnbufferedUploadPermanentErrorOnQueryWriteStatus) {
+TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUploadPermanentError) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncQueryWriteStatus).WillOnce([&] {
@@ -652,12 +672,10 @@ TEST_F(AsyncConnectionImplTest,
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::UseResumableUploadSession("test-upload-id")),
-       connection->options()});
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  request.set_upload_id("resume-upload-id");
+  auto pending = connection->ResumeUnbufferedUpload(
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "QueryWriteStatus");
@@ -852,7 +870,7 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
   next.first.set_value(true);
 }
 
-TEST_F(AsyncConnectionImplTest, BufferedUploadNewUploadResume) {
+TEST_F(AsyncConnectionImplTest, ResumeBufferedUploadNewUploadResume) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncStartResumableWrite)
