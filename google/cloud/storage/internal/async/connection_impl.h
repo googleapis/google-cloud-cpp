@@ -71,6 +71,12 @@ class AsyncConnectionImpl
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   StartBufferedUpload(UploadParams p) override;
 
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  ResumeUnbufferedUpload(ResumeUploadParams p) override;
+
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  ResumeBufferedUpload(ResumeUploadParams p) override;
+
   future<StatusOr<google::storage::v2::Object>> ComposeObject(
       ComposeObjectParams p) override;
 

@@ -124,6 +124,32 @@ class AsyncConnection {
   StartBufferedUpload(UploadParams p) = 0;
 
   /**
+   * A thin wrapper around the `QueryWriteStatus()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct ResumeUploadParams {
+    /// The upload id and any common object request parameters. Note that
+    /// bucket name, object name, and pre-conditions are saved as part of the
+    /// service internal information about the upload id.
+    google::storage::v2::QueryWriteStatusRequest request;
+    /// Any options modifying the RPC behavior, including per-client and
+    /// per-connection options.
+    Options options;
+  };
+
+  /// Resume an upload configured for persistent sources.
+  virtual future<
+      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  ResumeUnbufferedUpload(ResumeUploadParams p) = 0;
+
+  /// Resume an upload configured for streaming sources.
+  virtual future<
+      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  ResumeBufferedUpload(ResumeUploadParams p) = 0;
+
+  /**
    * A thin wrapper around the `ComposeObject()` parameters.
    *
    * We use a single struct as the input parameter for this function to

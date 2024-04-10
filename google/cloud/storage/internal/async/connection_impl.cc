@@ -277,6 +277,40 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
       });
 }
 
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::ResumeUnbufferedUpload(ResumeUploadParams p) {
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  return ResumeUpload(current, std::move(p.request));
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::ResumeBufferedUpload(ResumeUploadParams p) {
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  // This is a factory to create unbuffered writer connections. We will call
+  // it and wrap its result with a BufferedWriterConnection. Cleverly (too
+  // cleverly?) this wrapper calls the factory again if it needs to resume an
+  // upload.
+  auto make_unbuffered = [c = current, query = p.request,
+                          w = WeakFromThis()]() mutable {
+    if (auto self = w.lock()) return self->ResumeUpload(c, std::move(query));
+    return make_ready_future(
+        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>{
+            internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())});
+  };
+
+  auto f = make_unbuffered();
+  return f.then(
+      [current = std::move(current),
+       make_unbuffered = std::move(make_unbuffered)](auto f) mutable
+      -> StatusOr<
+          std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        return MakeWriterConnectionBuffered(std::move(make_unbuffered),
+                                            *std::move(w), *current);
+      });
+}
+
 future<StatusOr<google::storage::v2::Object>>
 AsyncConnectionImpl::ComposeObject(ComposeObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
