@@ -47,10 +47,8 @@ using ::google::cloud::testing_util::SpanKindIsInternal;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithParent;
 using ::testing::AllOf;
-using ::testing::AnyOf;
 using ::testing::ByMove;
 using ::testing::Contains;
-using ::testing::ElementsAre;
 using ::testing::Return;
 using ::testing::SizeIs;
 
