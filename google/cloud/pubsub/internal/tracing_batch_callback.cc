@@ -227,14 +227,12 @@ class TracingBatchCallback : public BatchCallback {
          {sc::kMessagingDestinationName, subscription_.subscription_id()},
          {"gcp.project_id", subscription_.project_id()}},
         std::move(links), options);
-    lk.lock();
 
     return Span{span};
   }
 
   void EndModackSpan(Span span) override {
-    if (!span.span) return;
-    span.span->End();
+    if (span.span) span.span->End();
   }
 
   void AckStart(std::string const& ack_id) override {
