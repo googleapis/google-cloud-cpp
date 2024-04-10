@@ -83,7 +83,9 @@ void ApplyResourceLabelsToTypesHelper(std::string const& resource_name,
   type.AddNeededByResource(resource_name);
   auto deps = type.needs_type();
   for (auto* dep : deps) {
-    ApplyResourceLabelsToTypesHelper(resource_name, *dep);
+    if (!internal::Contains(dep->needed_by_resource(), resource_name)) {
+      ApplyResourceLabelsToTypesHelper(resource_name, *dep);
+    }
   }
 }
 
