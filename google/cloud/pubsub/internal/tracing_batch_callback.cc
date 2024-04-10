@@ -230,7 +230,7 @@ class TracingBatchCallback : public BatchCallback {
   }
 
   void EndModackSpan(Span span) override {
-    if (span.span) span.span->End();
+span.span->End();
   }
 
   void AckStart(std::string const& ack_id) override {
