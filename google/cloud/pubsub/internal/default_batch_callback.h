@@ -55,8 +55,10 @@ class DefaultBatchCallback : public BatchCallback {
   void EndScheduler(std::string const&) override {}
 
   Span StartModackSpan(
-      google::pubsub::v1::ModifyAckDeadlineRequest const&) override {}
-  void EndModackSpan(Span span) override {}
+      google::pubsub::v1::ModifyAckDeadlineRequest const&) override {
+    return Span{};
+  }
+  void EndModackSpan(Span) override {}
 
   void AckStart(std::string const&) override {}
   void AckEnd(std::string const&) override {}
