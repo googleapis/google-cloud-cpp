@@ -206,16 +206,15 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
 
 future<StatusOr<storage_experimental::ReadPayload>>
 AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
-  auto const current = internal::MakeImmutableOptions(std::move(p.options));
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto context_factory = []() {
     return std::make_shared<grpc::ClientContext>();
   };
   return storage_internal::AsyncAccumulateReadObjectFull(
              cq_, stub_, std::move(context_factory), std::move(p.request),
-             current)
-      .then([current](
-                future<storage_internal::AsyncAccumulateReadObjectResult> f) {
-        return ToResponse(f.get(), *current);
+             std::move(current))
+      .then([](future<storage_internal::AsyncAccumulateReadObjectResult> f) {
+        return ToResponse(f.get());
       });
 }
 

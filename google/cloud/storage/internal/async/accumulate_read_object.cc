@@ -336,7 +336,7 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
 }
 
 StatusOr<storage_experimental::ReadPayload> ToResponse(
-    AsyncAccumulateReadObjectResult accumulated, Options const& options) {
+    AsyncAccumulateReadObjectResult accumulated) {
   if (!accumulated.status.ok()) return std::move(accumulated.status);
   absl::Cord contents;
   for (auto& r : accumulated.payload) {
@@ -351,11 +351,10 @@ StatusOr<storage_experimental::ReadPayload> ToResponse(
 
   storage_experimental::ReadPayload response(
       ReadPayloadImpl::Make(std::move(contents)));
-  auto const r =
-      std::find_if(accumulated.payload.begin(), accumulated.payload.end(),
-                   [](auto const& r) { return r.has_metadata(); });
+  auto r = std::find_if(accumulated.payload.begin(), accumulated.payload.end(),
+                        [](auto const& r) { return r.has_metadata(); });
   if (r != accumulated.payload.end()) {
-    response.set_metadata(FromProto(*r->mutable_metadata(), options));
+    response.set_metadata(std::move(*r->mutable_metadata()));
   }
 
   storage::HeadersMap headers = std::move(accumulated.metadata.headers);

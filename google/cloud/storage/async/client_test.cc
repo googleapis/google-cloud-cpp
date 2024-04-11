@@ -37,7 +37,6 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
-using ::testing::Eq;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -415,7 +414,7 @@ TEST(AsyncClient, ReadObjectRange1) {
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
         EXPECT_THAT(p.request, IsProtoEqual(expected));
         return make_ready_future(
-            make_status_or(ReadPayload{}.set_metadata(TestObject())));
+            make_status_or(ReadPayload{}.set_metadata(TestProtoObject())));
       });
 
   auto client = AsyncClient(mock);
@@ -427,7 +426,7 @@ TEST(AsyncClient, ReadObjectRange1) {
                                .set<TestOption<2>>("O2-function"))
           .get();
   ASSERT_STATUS_OK(payload);
-  EXPECT_THAT(payload->metadata(), Optional(Eq(TestObject())));
+  EXPECT_THAT(payload->metadata(), Optional(IsProtoEqual(TestProtoObject())));
 }
 
 TEST(AsyncClient, ReadObjectRange2) {
@@ -451,7 +450,7 @@ TEST(AsyncClient, ReadObjectRange2) {
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
         EXPECT_THAT(p.request, IsProtoEqual(expected));
         return make_ready_future(
-            make_status_or(ReadPayload{}.set_metadata(TestObject())));
+            make_status_or(ReadPayload{}.set_metadata(TestProtoObject())));
       });
 
   auto client = AsyncClient(mock);
@@ -466,7 +465,7 @@ TEST(AsyncClient, ReadObjectRange2) {
                                           .set<TestOption<2>>("O2-function"))
                      .get();
   ASSERT_STATUS_OK(payload);
-  EXPECT_THAT(payload->metadata(), Optional(Eq(TestObject())));
+  EXPECT_THAT(payload->metadata(), Optional(IsProtoEqual(TestProtoObject())));
 }
 
 TEST(AsyncClient, StartUnbufferedUpload1) {
