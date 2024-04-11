@@ -88,6 +88,8 @@ class DiscoveryResource {
   StatusOr<std::string> JsonToProtobufService(
       DiscoveryDocumentProperties const& document_properties) const;
 
+  std::string DebugString() const;
+
  private:
   std::string name_;
   std::string package_name_;
