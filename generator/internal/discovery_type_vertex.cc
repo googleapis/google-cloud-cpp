@@ -277,33 +277,25 @@ Status DiscoveryTypeVertex::UpdateTypeNames(
   return {};
 }
 
-// TODO(#12234): Refactor this function into multiple smaller functions to
-// reduce cognitive burden.
-StatusOr<DiscoveryTypeVertex::MessageProperties>
-DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
+Status DiscoveryTypeVertex::Helper(
     std::map<std::string, DiscoveryTypeVertex> const& types,
     std::string const& message_name, std::string const& qualified_message_name,
-    std::string const& file_package_name, nlohmann::json const& json,
-    int indent_level) const {
-  if (indent_level > kMaxRecursionDepth) {
-    GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
-  }
+    std::string const& file_package_name, nlohmann::json const& field,
+    std::string const& field_key, int indent_level,
+    MessageProperties& message_properties,
+    google::protobuf::Descriptor const* message_descriptor,
+    std::set<std::string>& current_field_names,
+    std::string const& indent) const {
+  try {
+    std::string json_field_name = field_key;
+    if (field.contains("id")) {
+      json_field_name = field["id"];
+    }
+    if (message_name == "JsonObject") {
+    }
 
-  MessageProperties message_properties{{}, {}, kInitialFieldNumber};
-  auto const* message_descriptor =
-      descriptor_pool_->FindMessageTypeByName(qualified_message_name);
-  if (message_descriptor != nullptr) {
-    message_properties =
-        DetermineReservedAndMaxFieldNumbers(*message_descriptor);
-  }
-
-  std::string indent(indent_level * 2, ' ');
-  std::set<std::string> current_field_names;
-  auto const& properties = json.find("properties");
-  for (auto p = properties->begin(); p != properties->end(); ++p) {
-    auto const& field = p.value();
     auto type_and_synthesize =
-        DetermineTypeAndSynthesis(field, field.value("id", p.key()));
+        DetermineTypeAndSynthesis(field, json_field_name);
     if (!type_and_synthesize) return std::move(type_and_synthesize).status();
 
     std::string type_name = type_and_synthesize->name;
@@ -327,8 +319,8 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     if (!update_type_name_status.ok()) return update_type_name_status;
 
     std::string const introducer = DetermineIntroducer(field);
-    std::string json_field_name = field.value("id", p.key());
     std::string field_name = CamelCaseToSnakeCase(json_field_name);
+    absl::StrReplaceAll({{".", "_"}}, &field_name);
     current_field_names.insert(field_name);
 
     auto field_number =
@@ -344,19 +336,76 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     if (*field_number == message_properties.next_available_field_number) {
       ++message_properties.next_available_field_number;
     }
-  }
 
-  // Identify field numbers of deleted fields.
-  if (message_descriptor != nullptr) {
-    for (auto i = 0; i != message_descriptor->field_count(); ++i) {
-      auto const* field_descriptor = message_descriptor->field(i);
-      if (!internal::Contains(current_field_names, field_descriptor->name())) {
-        message_properties.reserved_numbers.insert(field_descriptor->number());
+    return {};
+  } catch (std::exception& e) {
+    return internal::InternalError(
+        e.what(), GCP_ERROR_INFO().WithMetadata("json", field.dump()));
+  }
+}
+
+// TODO(#12234): Refactor this function into multiple smaller functions to
+// reduce cognitive burden.
+StatusOr<DiscoveryTypeVertex::MessageProperties>
+DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
+    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::string const& message_name, std::string const& qualified_message_name,
+    std::string const& file_package_name, nlohmann::json const& json,
+    int indent_level) const {
+  if (indent_level > kMaxRecursionDepth) {
+    GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
+  }
+  try {
+    MessageProperties message_properties{{}, {}, kInitialFieldNumber};
+    auto const* message_descriptor =
+        descriptor_pool_->FindMessageTypeByName(qualified_message_name);
+    if (message_descriptor != nullptr) {
+      message_properties =
+          DetermineReservedAndMaxFieldNumbers(*message_descriptor);
+    }
+
+    std::string indent(indent_level * 2, ' ');
+    std::set<std::string> current_field_names;
+    if (json.contains("properties")) {
+      auto const& properties = json.find("properties");
+      for (auto p = properties->begin(); p != properties->end(); ++p) {
+        auto const& field = p.value();
+        auto const& field_key = p.key();
+        auto result = Helper(types, message_name, qualified_message_name,
+                             file_package_name, field, field_key, indent_level,
+                             message_properties, message_descriptor,
+                             current_field_names, indent);
+        if (!result.ok()) return result;
       }
     }
-  }
 
-  return message_properties;
+    // This checks for a BigQuery style map field.
+    if (json.contains("additionalProperties") &&
+        json.value("type", "untyped") == "object") {
+      auto result =
+          Helper(types, message_name, qualified_message_name, file_package_name,
+                 json, message_name, indent_level, message_properties,
+                 message_descriptor, current_field_names, indent);
+      if (!result.ok()) return result;
+    }
+
+    // Identify field numbers of deleted fields.
+    if (message_descriptor != nullptr) {
+      for (auto i = 0; i != message_descriptor->field_count(); ++i) {
+        auto const* field_descriptor = message_descriptor->field(i);
+        if (!internal::Contains(current_field_names,
+                                field_descriptor->name())) {
+          message_properties.reserved_numbers.insert(
+              field_descriptor->number());
+        }
+      }
+    }
+
+    return message_properties;
+  } catch (std::exception& e) {
+    return internal::InternalError(
+        e.what(), GCP_ERROR_INFO().WithMetadata("json", json.dump()));
+  }
 }
 
 std::string DiscoveryTypeVertex::FormatMessageDescription(
