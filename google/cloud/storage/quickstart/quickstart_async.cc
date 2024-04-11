@@ -23,28 +23,32 @@ int main(int argc, char* argv[]) {
   }
   std::string const bucket_name = argv[1];
 
+  namespace gcs_ex = ::google::cloud::storage_experimental;
+
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  auto client = google::cloud::storage_experimental::AsyncClient();
+  auto client = gcs_ex::AsyncClient();
 
   auto constexpr kObjectName = "quickstart-async.txt";
-  auto done =
-      client.InsertObject(bucket_name, kObjectName, "Hello World!")
-          .then([](auto f) {
-            auto metadata = f.get();
-            if (!metadata) {
-              std::cerr << "Error creating object: " << metadata.status()
-                        << "\n";
-              std::exit(1);
-            }
-            std::cout << "Successfully created object " << *metadata << "\n";
-          });
+  auto done = client
+                  .InsertObject(gcs_ex::BucketName(bucket_name), kObjectName,
+                                "Hello World!")
+                  .then([](auto f) {
+                    auto metadata = f.get();
+                    if (!metadata) {
+                      std::cerr
+                          << "Error creating object: " << metadata.status()
+                          << "\n";
+                      std::exit(1);
+                    }
+                    std::cout << "Successfully created object "
+                              << metadata->DebugString() << "\n";
+                  });
   done.get();
 
   done = client
-             .ReadObjectRange(
-                 google::cloud::storage_experimental::BucketName(bucket_name),
-                 kObjectName, 0, 1000)
+             .ReadObjectRange(gcs_ex::BucketName(bucket_name), kObjectName, 0,
+                              1000)
              .then([](auto f) {
                auto payload = f.get();
                if (!payload) {

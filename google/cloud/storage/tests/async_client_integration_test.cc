@@ -16,6 +16,7 @@
 
 #include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -30,7 +31,6 @@ namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace gcs = ::google::cloud::storage;
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -64,6 +64,11 @@ class AsyncClientIntegrationTest
   std::string bucket_name_;
 };
 
+auto AlwaysRetry() {
+  return Options{}.set<IdempotencyPolicyOption>(
+      MakeAlwaysRetryIdempotencyPolicy);
+}
+
 TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -72,8 +77,8 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
 
   auto async = AsyncClient();
   auto insert = async
-                    .InsertObject(bucket_name(), object_name, LoremIpsum(),
-                                  gcs::IfGenerationMatch(0))
+                    .InsertObject(BucketName(bucket_name()), object_name,
+                                  LoremIpsum(), AlwaysRetry())
                     .get();
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
@@ -113,12 +118,12 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
   auto destination = MakeRandomObjectName();
 
   auto async = AsyncClient();
-  auto insert1 = async.InsertObject(bucket_name(), o1, LoremIpsum(),
-                                    gcs::IfGenerationMatch(0));
-  auto insert2 = async.InsertObject(bucket_name(), o2, LoremIpsum(),
-                                    gcs::IfGenerationMatch(0));
-  std::vector<StatusOr<storage::ObjectMetadata>> inserted{insert1.get(),
-                                                          insert2.get()};
+  auto insert1 = async.InsertObject(BucketName(bucket_name()), o1, LoremIpsum(),
+                                    AlwaysRetry());
+  auto insert2 = async.InsertObject(BucketName(bucket_name()), o2, LoremIpsum(),
+                                    AlwaysRetry());
+  std::vector<StatusOr<google::storage::v2::Object>> inserted{insert1.get(),
+                                                              insert2.get()};
   for (auto const& insert : inserted) {
     ASSERT_STATUS_OK(insert);
     ScheduleForDelete(*insert);
@@ -169,10 +174,9 @@ TEST_F(AsyncClientIntegrationTest, StreamingRead) {
       [](auto a, auto const& b) { return a + b.size(); });
 
   auto async = AsyncClient();
-  auto insert = async
-                    .InsertObject(bucket_name(), object_name, insert_data,
-                                  gcs::IfGenerationMatch(0))
-                    .get();
+  auto insert =
+      async.InsertObject(BucketName(bucket_name()), object_name, insert_data)
+          .get();
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
@@ -400,8 +404,8 @@ TEST_F(AsyncClientIntegrationTest, RewriteObject) {
   auto async = AsyncClient();
   auto constexpr kBlockSize = 4 * 1024 * 1024;
   auto insert = async
-                    .InsertObject(bucket_name(), o1, MakeRandomData(kBlockSize),
-                                  gcs::IfGenerationMatch(0))
+                    .InsertObject(BucketName(bucket_name()), o1,
+                                  MakeRandomData(kBlockSize), AlwaysRetry())
                     .get();
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
@@ -443,8 +447,8 @@ TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
   auto constexpr kBlockSize = 4 * 1024 * 1024;
   auto source =
       async
-          .InsertObject(bucket_name(), MakeRandomObjectName(),
-                        MakeRandomData(kBlockSize), gcs::IfGenerationMatch(0))
+          .InsertObject(BucketName(bucket_name()), MakeRandomObjectName(),
+                        MakeRandomData(kBlockSize), AlwaysRetry())
           .get();
   ASSERT_STATUS_OK(source);
   ScheduleForDelete(*source);
@@ -458,7 +462,7 @@ TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
   start_request.set_destination_name(expected_name);
   start_request.set_destination_bucket(BucketName(*destination).FullName());
   start_request.set_source_object(source->name());
-  start_request.set_source_bucket(BucketName(bucket_name()).FullName());
+  start_request.set_source_bucket(source->bucket());
   start_request.set_max_bytes_rewritten_per_call(1024 * 1024);
   std::tie(rewriter, token) = async.StartRewrite(start_request);
 
@@ -473,7 +477,7 @@ TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
   ASSERT_THAT(response.rewrite_token(), Not(IsEmpty()));
 
   google::storage::v2::RewriteObjectRequest resume_request;
-  resume_request.set_source_bucket(BucketName(source->bucket()).FullName());
+  resume_request.set_source_bucket(source->bucket());
   resume_request.set_source_object(source->name());
   resume_request.set_destination_bucket(BucketName(*destination).FullName());
   resume_request.set_destination_name(expected_name);

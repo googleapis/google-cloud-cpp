@@ -530,11 +530,6 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
 }
 
 StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
-    storage_experimental::InsertObjectRequest const& request) {
-  return ToProtoImpl(request);
-}
-
-StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
     storage::internal::InsertObjectMediaRequest const& request) {
   return ToProtoImpl(request);
 }

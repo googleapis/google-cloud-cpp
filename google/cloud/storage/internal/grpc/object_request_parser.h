@@ -45,8 +45,6 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
     storage::internal::UpdateObjectRequest const& request);
 
 StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
-    storage_experimental::InsertObjectRequest const& request);
-StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
     storage::internal::InsertObjectMediaRequest const& request);
 storage::internal::QueryResumableUploadResponse FromProto(
     google::storage::v2::WriteObjectResponse const& p, Options const& options,

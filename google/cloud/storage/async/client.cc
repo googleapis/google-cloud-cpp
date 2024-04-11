@@ -38,6 +38,14 @@ AsyncClient::AsyncClient(Options options) {
 AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
     : connection_(std::move(connection)) {}
 
+future<StatusOr<google::storage::v2::Object>> AsyncClient::InsertObject(
+    google::storage::v2::WriteObjectRequest request, WritePayload contents,
+    Options opts) {
+  return connection_->InsertObject(
+      {std::move(request), std::move(contents),
+       internal::MergeOptions(std::move(opts), connection_->options())});
+}
+
 future<StatusOr<std::pair<AsyncReader, AsyncToken>>> AsyncClient::ReadObject(
     BucketName const& bucket_name, std::string object_name, Options opts) {
   auto request = google::storage::v2::ReadObjectRequest{};

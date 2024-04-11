@@ -37,6 +37,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
+using ::testing::ElementsAre;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -47,13 +48,6 @@ struct TestOption {
   using Type = std::string;
 };
 
-storage::ObjectMetadata TestObject() {
-  return storage::ObjectMetadata{}
-      .set_bucket("test-bucket")
-      .set_name("test-object")
-      .set_size(0);
-}
-
 auto TestProtoObject() {
   google::storage::v2::Object result;
   result.set_bucket("projects/_/buckets/test-bucket");
@@ -62,33 +56,109 @@ auto TestProtoObject() {
   return result;
 }
 
-TEST(AsyncClient, InsertObject) {
+TEST(AsyncClient, InsertObject1) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+    }
+  )pb";
   auto mock = std::make_shared<MockAsyncConnection>();
   EXPECT_CALL(*mock, options)
       .WillRepeatedly(
           Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
 
   EXPECT_CALL(*mock, InsertObject)
-      .WillOnce([](AsyncConnection::InsertObjectParams const& p) {
+      .WillOnce([&](AsyncConnection::InsertObjectParams const& p) {
         EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
         EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
         EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
-        EXPECT_EQ(p.request.bucket_name(), "test-bucket");
-        EXPECT_EQ(p.request.object_name(), "test-object");
-        EXPECT_EQ(p.request.GetOption<storage::IfGenerationMatch>().value_or(0),
-                  42);
-        return make_ready_future(make_status_or(TestObject()));
+        auto expected = google::storage::v2::WriteObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(make_status_or(TestProtoObject()));
       });
 
   auto client = AsyncClient(mock);
+  auto response =
+      client
+          .InsertObject(BucketName("test-bucket"), "test-object", "Contents",
+                        Options{}
+                            .set<TestOption<1>>("O1-function")
+                            .set<TestOption<2>>("O2-function"))
+          .get();
+  EXPECT_THAT(response, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
+}
+
+TEST(AsyncClient, InsertObject2) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+      if_generation_match: 42
+    }
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, InsertObject)
+      .WillOnce([&](AsyncConnection::InsertObjectParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::WriteObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(make_status_or(TestProtoObject()));
+      });
+
+  auto client = AsyncClient(mock);
+  auto request = google::storage::v2::WriteObjectRequest{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
   auto response = client
-                      .InsertObject("test-bucket", "test-object", "Contents",
-                                    storage::IfGenerationMatch(42),
+                      .InsertObject(std::move(request), "Contents",
                                     Options{}
                                         .set<TestOption<1>>("O1-function")
                                         .set<TestOption<2>>("O2-function"))
                       .get();
-  EXPECT_THAT(response, IsOkAndHolds(TestObject()));
+  EXPECT_THAT(response, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
+}
+
+TEST(AsyncClient, InsertObject3) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+      if_generation_match: 42
+    }
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, InsertObject)
+      .WillOnce([&](AsyncConnection::InsertObjectParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::WriteObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        EXPECT_THAT(p.payload.payload(), ElementsAre("Contents"));
+        return make_ready_future(make_status_or(TestProtoObject()));
+      });
+
+  auto client = AsyncClient(mock);
+  auto request = google::storage::v2::WriteObjectRequest{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto response =
+      client
+          .InsertObject(std::move(request), WritePayload{"Contents"},
+                        Options{}
+                            .set<TestOption<1>>("O1-function")
+                            .set<TestOption<2>>("O2-function"))
+          .get();
+  EXPECT_THAT(response, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
 }
 
 TEST(AsyncClient, ReadObject1) {

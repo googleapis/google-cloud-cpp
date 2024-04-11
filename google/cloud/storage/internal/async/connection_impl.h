@@ -56,7 +56,7 @@ class AsyncConnectionImpl
 
   Options options() const override { return options_; }
 
-  future<StatusOr<storage::ObjectMetadata>> InsertObject(
+  future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
