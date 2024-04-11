@@ -172,9 +172,13 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     google::storage::v2::ReadObjectRequest request,
     google::cloud::internal::ImmutableOptions options);
 
-/// Convert the proto into a representation more familiar to our customers.
+/**
+ * Convert the proto into a more stable representation.
+ *
+ * The `contents()` may be an `absl::Cord` and these are not stable.
+ */
 StatusOr<storage_experimental::ReadPayload> ToResponse(
-    AsyncAccumulateReadObjectResult accumulated, Options const& options);
+    AsyncAccumulateReadObjectResult accumulated);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

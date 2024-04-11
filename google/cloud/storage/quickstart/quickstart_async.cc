@@ -53,8 +53,8 @@ int main(int argc, char* argv[]) {
                  std::exit(1);
                }
                if (payload->metadata()) {
-                 std::cout << "The object metadata is " << *payload->metadata()
-                           << "\n";
+                 std::cout << "The object metadata is "
+                           << payload->metadata()->DebugString() << "\n";
                }
                std::cout << "Object contents:\n";
                for (auto const& s : payload->contents()) {

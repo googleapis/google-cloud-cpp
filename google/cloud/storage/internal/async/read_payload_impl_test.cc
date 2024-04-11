@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/strings/string_view.h"
+#include <google/storage/v2/storage.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,12 +24,20 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
+using ::testing::Optional;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
 auto constexpr kQuick = "The quick brown fox jumps over the lazy dog";
+
+auto MakeTestObject() {
+  auto object = google::storage::v2::Object{};
+  object.set_bucket("test-bucket");
+  return object;
+}
 
 TEST(ReadPayload, Basic) {
   auto const actual = ReadPayloadImpl::Make(absl::Cord(kQuick));
@@ -55,23 +65,22 @@ TEST(ReadPayload, FromVector) {
 }
 
 TEST(ReadPayload, Modifiers) {
-  auto const metadata = storage::ObjectMetadata().set_name("test-object-name");
+  auto const resource = MakeTestObject();
   auto const actual = ReadPayloadImpl::Make(absl::Cord(kQuick))
-                          .set_metadata(metadata)
+                          .set_metadata(resource)
                           .set_headers({{"k1", "v1"}, {"k2", "v2"}})
                           .set_offset(12345);
   EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick)));
   EXPECT_THAT(actual.size(), absl::string_view(kQuick).size());
-  EXPECT_EQ(actual.metadata().value_or(storage::ObjectMetadata{}), metadata);
+  EXPECT_THAT(actual.metadata(), Optional(IsProtoEqual(resource)));
   EXPECT_THAT(actual.headers(),
               UnorderedElementsAre(Pair("k1", "v1"), Pair("k2", "v2")));
   EXPECT_EQ(actual.offset(), 12345);
 }
 
 TEST(ReadPayload, Reset) {
-  auto const metadata = storage::ObjectMetadata().set_name("test-object-name");
   auto const actual = ReadPayloadImpl::Make(absl::Cord(kQuick))
-                          .set_metadata(metadata)
+                          .set_metadata(MakeTestObject())
                           .reset_metadata()
                           .set_headers({{"k1", "v1"}, {"k2", "v2"}})
                           .clear_headers();

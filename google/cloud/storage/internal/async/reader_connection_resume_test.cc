@@ -24,6 +24,7 @@
 #include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/storage/testing/mock_hash_validator.h"
 #include "google/cloud/storage/testing/mock_resume_policy.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -42,6 +43,7 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::storage_experimental::ReadPayload;
 using ::google::cloud::storage_experimental::ResumePolicy;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
@@ -49,6 +51,7 @@ using ::testing::AtMost;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::Optional;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -77,6 +80,18 @@ auto WithoutGeneration() {
       ::testing::Eq(false));
 }
 
+auto MakeTestObject() {
+  auto constexpr kObject = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    name: "test-object"
+    generation: 1234
+    size: 4096
+  )pb";
+  auto object = google::storage::v2::Object{};
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kObject, &object));
+  return object;
+}
+
 auto constexpr kReadSize = 500;
 auto constexpr kRangeStart = 10000;
 
@@ -86,11 +101,7 @@ auto MakeMockReaderPartial(std::int64_t offset)
   EXPECT_CALL(*mock, Read)
       .WillOnce([offset] {
         auto payload = ReadPayload(std::string(kReadSize, '1'))
-                           .set_metadata(storage::ObjectMetadata{}
-                                             .set_bucket("test-bucket")
-                                             .set_name("test-object")
-                                             .set_generation(1234)
-                                             .set_size(4096))
+                           .set_metadata(MakeTestObject())
                            .set_offset(kRangeStart + offset);
         return make_ready_future(ReadResponse(std::move(payload)));
       })
@@ -112,11 +123,7 @@ auto MakeMockReaderFull(int offset)
     ::testing::InSequence sequence;
     EXPECT_CALL(*mock, Read).WillOnce([offset] {
       auto payload = ReadPayload(std::string(kReadSize, '3'))
-                         .set_metadata(storage::ObjectMetadata{}
-                                           .set_bucket("test-bucket")
-                                           .set_name("test-object")
-                                           .set_generation(1234)
-                                           .set_size(4096))
+                         .set_metadata(MakeTestObject())
                          .set_offset(kRangeStart + offset);
       return make_ready_future(ReadResponse(std::move(payload)));
     });
@@ -152,29 +159,14 @@ auto ContentsMatch(std::size_t size, char c) {
 }
 
 auto IsInitialRead() {
-  return VariantWith<ReadPayload>(AllOf(
-      ContentsMatch(kReadSize, '1'),
-      ResultOf(
-          "metadata.bucket",
-          [](ReadPayload const& p) {
-            return p.metadata().value_or(storage::ObjectMetadata()).bucket();
-          },
-          "test-bucket"),
-      ResultOf(
-          "metadata.object",
-          [](ReadPayload const& p) {
-            return p.metadata().value_or(storage::ObjectMetadata()).name();
-          },
-          "test-object"),
-      ResultOf(
-          "metadata.size",
-          [](ReadPayload const& p) {
-            return p.metadata().value_or(storage::ObjectMetadata()).size();
-          },
-          4096),
-      ResultOf(
-          "offset", [](ReadPayload const& p) { return p.offset(); },
-          kRangeStart)));
+  return VariantWith<ReadPayload>(
+      AllOf(ContentsMatch(kReadSize, '1'),
+            ResultOf(
+                "metadata", [](ReadPayload const& p) { return p.metadata(); },
+                Optional(IsProtoEqual(MakeTestObject()))),
+            ResultOf(
+                "offset", [](ReadPayload const& p) { return p.offset(); },
+                kRangeStart)));
 }
 
 TEST(AsyncReaderConnectionResume, Resume) {

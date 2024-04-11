@@ -21,6 +21,7 @@
 #include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <type_traits>
 
@@ -35,6 +36,7 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_experimental::ReadPayload;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::An;
@@ -64,19 +66,22 @@ using HashUpdateType =
                        absl::Cord const&, absl::string_view>;
 
 TEST(ReaderConnectionImpl, CleanFinish) {
+  auto constexpr kExpectedObject = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    name: "test-only-object-name"
+    generation: 1234
+    size: 4096
+  )pb";
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read)
-      .WillOnce([] {
+      .WillOnce([&] {
         google::storage::v2::ReadObjectResponse response;
         SetMutableContent(*response.mutable_checksummed_data(),
                           ContentType("test-only-1"));
         response.mutable_content_range()->set_start(1024);
         response.mutable_content_range()->set_end(2048);
-        response.mutable_metadata()->set_bucket(
-            "projects/_/buckets/test-bucket");
-        response.mutable_metadata()->set_name("test-only-object-name");
-        response.mutable_metadata()->set_generation(1234);
-        response.mutable_metadata()->set_size(4096);
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedObject,
+                                                response.mutable_metadata()));
         return make_ready_future(absl::make_optional(response));
       })
       .WillOnce([] {
@@ -103,36 +108,28 @@ TEST(ReaderConnectionImpl, CleanFinish) {
 
   AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock),
                                    std::move(hash_function));
-  EXPECT_THAT(
-      tested.Read().get(),
-      VariantWith<ReadPayload>(AllOf(
-          ResultOf(
-              "contents match",
-              [](storage_experimental::ReadPayload const& p) {
-                return p.contents();
-              },
-              ElementsAre("test-only-1")),
-          ResultOf(
-              "metadata.size",
-              [](storage_experimental::ReadPayload const& p) {
-                return p.metadata().value_or(storage::ObjectMetadata()).size();
-              },
-              4096),
-          ResultOf(
-              "metadata.self_link",
-              [](storage_experimental::ReadPayload const& p) {
-                return p.metadata()
-                    .value_or(storage::ObjectMetadata())
-                    .self_link();
-              },
-              "https://test-only.p.googleapis.com/storage/v1/b/test-bucket/o/"
-              "test-only-object-name"),
-          ResultOf(
-              "offset",
-              [](storage_experimental::ReadPayload const& p) {
-                return p.offset();
-              },
-              1024))));
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<ReadPayload>(
+                  AllOf(ResultOf(
+                            "contents match",
+                            [](storage_experimental::ReadPayload const& p) {
+                              return p.contents();
+                            },
+                            ElementsAre("test-only-1")),
+                        ResultOf(
+                            "metadata.size",
+                            [](storage_experimental::ReadPayload const& p) {
+                              return p.metadata()
+                                  .value_or(google::storage::v2::Object{})
+                                  .size();
+                            },
+                            4096),
+                        ResultOf(
+                            "offset",
+                            [](storage_experimental::ReadPayload const& p) {
+                              return p.offset();
+                            },
+                            1024))));
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ResultOf(
