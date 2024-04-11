@@ -78,10 +78,10 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
-  auto pending0 =
-      async.ReadObjectRange(bucket_name(), object_name, 0, LoremIpsum().size());
-  auto pending1 =
-      async.ReadObjectRange(bucket_name(), object_name, 0, LoremIpsum().size());
+  auto pending0 = async.ReadObjectRange(BucketName(bucket_name()), object_name,
+                                        0, LoremIpsum().size());
+  auto pending1 = async.ReadObjectRange(BucketName(bucket_name()), object_name,
+                                        0, LoremIpsum().size());
 
   for (auto* p : {&pending1, &pending0}) {
     auto response = p->get();
@@ -138,7 +138,7 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
   ScheduleForDelete(*composed);
 
   auto read = async
-                  .ReadObjectRange(bucket_name(), destination, 0,
+                  .ReadObjectRange(BucketName(bucket_name()), destination, 0,
                                    2 * LoremIpsum().size())
                   .get();
   ASSERT_STATUS_OK(read);
@@ -178,7 +178,7 @@ TEST_F(AsyncClientIntegrationTest, StreamingRead) {
 
   ASSERT_EQ(insert->size(), expected_size);
 
-  auto r = async.ReadObject(bucket_name(), object_name).get();
+  auto r = async.ReadObject(BucketName(bucket_name()), object_name).get();
   ASSERT_STATUS_OK(r);
   AsyncReader reader;
   AsyncToken token;
@@ -217,7 +217,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadEmpty) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), 0);
 }
@@ -246,7 +246,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadMultiple) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kBlockCount * kBlockSize);
 }
@@ -308,7 +308,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResume) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kDesiredSize);
 }
@@ -332,7 +332,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResumeFinalized) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kBlockSize);
 
@@ -359,7 +359,7 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadEmpty) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), 0);
 }
@@ -388,7 +388,7 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kBlockCount * kBlockSize);
 }

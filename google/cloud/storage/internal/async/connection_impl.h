@@ -89,8 +89,7 @@ class AsyncConnectionImpl
   // new `AsyncReaderConnection` instances at different offsets.
   AsyncReaderConnectionFactory MakeReaderConnectionFactory(
       google::cloud::internal::ImmutableOptions current,
-      google::cloud::storage_experimental::ReadObjectRequest request,
-      google::storage::v2::ReadObjectRequest proto_request,
+      google::storage::v2::ReadObjectRequest request,
       std::shared_ptr<storage::internal::HashFunction> hash_function);
 
  private:

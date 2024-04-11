@@ -37,7 +37,7 @@ TEST(SmokeTest, Grpc) {
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
   if (bucket_name.empty()) GTEST_SKIP();
 
-  auto client = google::cloud::storage_experimental::AsyncClient();
+  auto client = AsyncClient();
   auto gen = google::cloud::internal::MakeDefaultPRNG();
   auto object_name = google::cloud::storage::testing::MakeRandomObjectName(gen);
 
@@ -48,11 +48,11 @@ TEST(SmokeTest, Grpc) {
   ASSERT_STATUS_OK(insert);
   auto metadata = *insert;
 
-  auto payload =
-      client
-          .ReadObjectRange(bucket_name, metadata.name(), 0, 1024,
-                           storage::Generation(metadata.generation()))
-          .get();
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket(BucketName(bucket_name).FullName());
+  request.set_object(metadata.name());
+  request.set_generation(metadata.generation());
+  auto payload = client.ReadObjectRange(std::move(request), 0, 1024).get();
   ASSERT_STATUS_OK(payload);
   std::string contents;
   for (auto v : payload->contents()) contents += std::string(v);

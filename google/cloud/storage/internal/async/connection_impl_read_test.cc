@@ -44,15 +44,14 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
-using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
-using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
 using AsyncReadObjectStream = ::google::cloud::internal::AsyncStreamingReadRpc<
@@ -104,6 +103,12 @@ std::unique_ptr<AsyncReadObjectStream> MakeErrorReadStream(
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+    generation: 24
+    if_generation_match: 42
+  )pb";
   AsyncSequencer<bool> sequencer;
   auto make_success_stream = [&](AsyncSequencer<bool>& sequencer) {
     auto stream = std::make_unique<MockAsyncObjectMediaStream>();
@@ -139,20 +144,14 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
       .WillOnce(
           [&] { return MakeErrorReadStream(sequencer, TransientError()); })
       .WillOnce([&](CompletionQueue const&,
-                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                    std::shared_ptr<grpc::ClientContext> context,
-                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                    google::cloud::internal::ImmutableOptions options,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    google::cloud::internal::ImmutableOptions const& options,
                     google::storage::v2::ReadObjectRequest const& request) {
-        // Verify at least one option is initialized with the correct
-        // values.
+        // Verify at least one option is initialized with the correct value.
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
-        auto metadata = GetMetadata(*context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
-        EXPECT_THAT(request.object(), "test-object");
+        auto expected = google::storage::v2::ReadObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
         return make_success_stream(sequencer);
       });
 
@@ -172,11 +171,10 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
       MakeTestConnection(CompletionQueue(mock_cq), mock,
                          Options{}.set<storage::DownloadStallTimeoutOption>(
                              std::chrono::seconds(0)));
-  auto pending = connection->ReadObject(
-      {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::Fields("field1,field2"),
-                                 storage::QuotaUser("test-quota-user")),
-       connection->options()});
+  auto request = google::storage::v2::ReadObjectRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto pending =
+      connection->ReadObject({std::move(request), connection->options()});
 
   ASSERT_TRUE(pending.is_ready());
   auto r = pending.get();
@@ -283,10 +281,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectWithTimeout) {
           .set<storage::DownloadStallTimeoutOption>(std::chrono::seconds(1))
           .set<storage::DownloadStallMinimumRateOption>(2 * 1024 * 1024L));
   auto pending = connection->ReadObject(
-      {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::Fields("field1,field2"),
-                                 storage::QuotaUser("test-quota-user")),
-       connection->options()});
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
 
   ASSERT_TRUE(pending.is_ready());
   auto r = pending.get();
@@ -384,10 +379,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadMessageChecksum) {
       Options{}.set<storage_experimental::ResumePolicyOption>(
           mock_resume_policy_factory));
   auto pending = connection->ReadObject(
-      {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::Fields("field1,field2"),
-                                 storage::QuotaUser("test-quota-user")),
-       connection->options()});
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
 
   ASSERT_TRUE(pending.is_ready());
   auto r = pending.get();
@@ -479,13 +471,10 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadFullChecksum) {
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(
       pool.cq(), mock,
-      Options{}.set<storage_experimental::ResumePolicyOption>(
-          mock_resume_policy_factory));
+      TestOptions(Options{}.set<storage_experimental::ResumePolicyOption>(
+          mock_resume_policy_factory)));
   auto pending = connection->ReadObject(
-      {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::Fields("field1,field2"),
-                                 storage::QuotaUser("test-quota-user")),
-       connection->options()});
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
 
   ASSERT_TRUE(pending.is_ready());
   auto r = pending.get();
@@ -540,23 +529,6 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadFullChecksum) {
               VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncReadObjectMalformedRequestError) {
-  AsyncSequencer<bool> sequencer;
-  auto mock = std::make_shared<storage::testing::MockStorageStub>();
-  EXPECT_CALL(*mock, AsyncReadObject).Times(0);
-
-  internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->ReadObject(
-      {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::EncryptionKey(
-               storage::EncryptionKeyData{"invalid", "invalid", "invalid"})),
-       connection->options()});
-  ASSERT_TRUE(pending.is_ready());
-  auto r = pending.get();
-  EXPECT_THAT(r, StatusIs(StatusCode::kInvalidArgument));
-}
-
 TEST_F(AsyncConnectionImplTest, AsyncReadObjectPermanentError) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
@@ -567,8 +539,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectPermanentError) {
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
   auto pending = connection->ReadObject(
-      {storage_experimental::ReadObjectRequest("test-bucket", "test-object"),
-       connection->options()});
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
   ASSERT_TRUE(pending.is_ready());
   auto r = pending.get();
   ASSERT_STATUS_OK(r);
@@ -597,8 +568,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectTooManyTransients) {
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
   auto pending = connection->ReadObject(
-      {storage_experimental::ReadObjectRequest("test-bucket", "test-object"),
-       connection->options()});
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
   auto r = pending.get();
   ASSERT_STATUS_OK(r);
   auto reader = *std::move(r);
@@ -670,70 +640,60 @@ TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactory) {
     EXPECT_THAT(data.get(), VariantWith<Status>(IsOk()));
   };
 
+  auto constexpr kExpectedRequest1 = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "test-object"
+    read_offset: 1000
+    read_limit: 1000
+  )pb";
+  auto constexpr kExpectedRequest2 = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "test-object"
+    generation: 1234
+    read_offset: 1500
+    read_limit: 500
+  )pb";
+
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncReadObject)
       .WillOnce(
           [&] { return MakeErrorReadStream(sequencer, TransientError()); })
       .WillOnce([&](CompletionQueue const&,
-                    std::shared_ptr<grpc::ClientContext> const& context,
+                    std::shared_ptr<grpc::ClientContext> const&,
                     google::cloud::internal::ImmutableOptions const& options,
                     google::storage::v2::ReadObjectRequest const& request) {
-        // Verify at least one option is initialized with the correct
-        // values.
+        // Verify at least one option is initialized with the correct value.
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
-        auto metadata = GetMetadata(*context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
-        EXPECT_THAT(request.object(), "test-object");
-        EXPECT_THAT(request.read_offset(), 1000);
-        EXPECT_THAT(request.read_limit(), 1000);
+        auto expected = google::storage::v2::ReadObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest1, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
         return make_success_stream(sequencer);
       })
       .WillOnce(
           [&] { return MakeErrorReadStream(sequencer, TransientError()); })
       .WillOnce([&](CompletionQueue const&,
-                    std::shared_ptr<grpc::ClientContext> const& context,
+                    std::shared_ptr<grpc::ClientContext> const&,
                     google::cloud::internal::ImmutableOptions const& options,
                     google::storage::v2::ReadObjectRequest const& request) {
-        // Verify at least one option is initialized with the correct
-        // values.
+        // Verify at least one option is initialized with the correct value.
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
-        auto metadata = GetMetadata(*context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
-        EXPECT_THAT(request.object(), "test-object");
-        EXPECT_THAT(request.generation(), 1234);
-        EXPECT_THAT(request.read_offset(), 1500);
-        EXPECT_THAT(request.read_limit(), 500);
+        auto expected = google::storage::v2::ReadObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest2, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
         return make_success_stream(sequencer);
       });
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   AsyncConnectionImpl connection(
       pool.cq(), std::shared_ptr<GrpcChannelRefresh>{}, mock, TestOptions());
-  auto request =
-      storage_experimental::ReadObjectRequest("test-bucket", "test-object")
-          .set_multiple_options(storage::ReadRange(1000, 2000),
-                                storage::Fields("field1,field2"),
-                                storage::QuotaUser("test-quota-user"));
-  google::storage::v2::ReadObjectRequest proto_request;
-  EXPECT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        read_offset: 1000
-        read_limit: 1000
-      )pb",
-      &proto_request));
+
+  auto request = google::storage::v2::ReadObjectRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest1, &request));
 
   auto hash_function = std::make_shared<MockHashFunction>();
   auto factory = connection.MakeReaderConnectionFactory(
-      internal::MakeImmutableOptions(connection.options()), request,
-      proto_request, std::move(hash_function));
+      internal::MakeImmutableOptions(connection.options()), std::move(request),
+      std::move(hash_function));
 
   // Verify the factory makes the expected request and consume the output
   verify_empty_stream(sequencer, factory(storage::Generation(), 0));
@@ -752,25 +712,11 @@ TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactoryPermanentError) {
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   AsyncConnectionImpl connection(
       pool.cq(), std::shared_ptr<GrpcChannelRefresh>{}, mock, TestOptions());
-  auto request =
-      storage_experimental::ReadObjectRequest("test-bucket", "test-object")
-          .set_multiple_options(storage::ReadRange(1000, 2000),
-                                storage::Fields("field1,field2"),
-                                storage::QuotaUser("test-quota-user"));
-  google::storage::v2::ReadObjectRequest proto_request;
-  EXPECT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        read_offset: 1000
-        read_limit: 1000
-      )pb",
-      &proto_request));
 
   auto hash_function = std::make_shared<MockHashFunction>();
   auto factory = connection.MakeReaderConnectionFactory(
-      internal::MakeImmutableOptions(connection.options()), request,
-      proto_request, hash_function);
+      internal::MakeImmutableOptions(connection.options()),
+      google::storage::v2::ReadObjectRequest{}, hash_function);
 
   // Verify the factory makes the expected request.
   auto pending = factory(storage::Generation(), 0);
@@ -797,25 +743,10 @@ TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactoryTooManyTransients) {
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   AsyncConnectionImpl connection(
       pool.cq(), std::shared_ptr<GrpcChannelRefresh>{}, mock, TestOptions());
-  auto request =
-      storage_experimental::ReadObjectRequest("test-bucket", "test-object")
-          .set_multiple_options(storage::ReadRange(1000, 2000),
-                                storage::Fields("field1,field2"),
-                                storage::QuotaUser("test-quota-user"));
-  google::storage::v2::ReadObjectRequest proto_request;
-  EXPECT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        read_offset: 1000
-        read_limit: 1000
-      )pb",
-      &proto_request));
-
   auto hash_function = std::make_shared<MockHashFunction>();
   auto factory = connection.MakeReaderConnectionFactory(
-      internal::MakeImmutableOptions(connection.options()), request,
-      proto_request, hash_function);
+      internal::MakeImmutableOptions(connection.options()),
+      google::storage::v2::ReadObjectRequest{}, hash_function);
   // Verify the factory makes the expected request.
   auto pending = factory(storage::Generation(), 0);
 
