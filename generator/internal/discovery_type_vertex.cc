@@ -277,7 +277,7 @@ Status DiscoveryTypeVertex::UpdateTypeNames(
   return {};
 }
 
-Status DiscoveryTypeVertex::Helper(
+Status DiscoveryTypeVertex::Helper(  // NOLINT(misc-no-recursion)
     std::map<std::string, DiscoveryTypeVertex> const& types,
     std::string const& message_name, std::string const& qualified_message_name,
     std::string const& file_package_name, nlohmann::json const& field,
