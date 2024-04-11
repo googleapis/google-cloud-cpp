@@ -192,6 +192,45 @@ class TracingBatchCallback : public BatchCallback {
     }
   }
 
+  Span StartModackSpan(
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
+    namespace sc = opentelemetry::trace::SemanticConventions;
+    using Attributes =
+        std::vector<std::pair<opentelemetry::nostd::string_view,
+                              opentelemetry::common::AttributeValue>>;
+    using Links =
+        std::vector<std::pair<opentelemetry::trace::SpanContext, Attributes>>;
+
+    Links links;
+    std::unique_lock<std::mutex> lk(mu_);
+    for (auto const& ack_id : request.ack_ids()) {
+      auto spans = spans_by_ack_id_.find(ack_id);
+      if (spans != spans_by_ack_id_.end()) {
+        links.emplace_back(std::make_pair(
+            spans->second.subscribe_span->GetContext(), Attributes{}));
+      }
+    }
+    lk.unlock();
+
+    opentelemetry::trace::StartSpanOptions options;
+    options.kind = opentelemetry::trace::SpanKind::kClient;
+    auto span = internal::MakeSpan(
+        subscription_.subscription_id() + " modack",
+        {{sc::kMessagingSystem, "gcp_pubsub"},
+         {sc::kMessagingOperation, "extend"},
+         {sc::kMessagingBatchMessageCount,
+          static_cast<int64_t>(request.ack_ids().size())},
+         {"messaging.gcp_pubsub.message.ack_deadline_seconds",
+          static_cast<int64_t>(request.ack_deadline_seconds())},
+         {sc::kMessagingDestinationName, subscription_.subscription_id()},
+         {"gcp.project_id", subscription_.project_id()}},
+        std::move(links), options);
+
+    return Span{span};
+  }
+
+  void EndModackSpan(Span span) override { span.span->End(); }
+
   void AckStart(std::string const& ack_id) override {
     AddEvent(ack_id, "gl-cpp.ack_start");
   }

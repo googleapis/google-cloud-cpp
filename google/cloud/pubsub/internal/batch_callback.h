@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCH_CALLBACK_H
 
 #include "google/cloud/pubsub/internal/message_callback.h"
+#include "google/cloud/pubsub/internal/span.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
@@ -53,6 +54,10 @@ class BatchCallback {
 
   virtual void StartScheduler(std::string const& ack_id) = 0;
   virtual void EndScheduler(std::string const& ack_id) = 0;
+
+  virtual Span StartModackSpan(
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
+  virtual void EndModackSpan(Span span) = 0;
 
   virtual void AckStart(std::string const& ack_id) = 0;
   virtual void AckEnd(std::string const& ack_id) = 0;
