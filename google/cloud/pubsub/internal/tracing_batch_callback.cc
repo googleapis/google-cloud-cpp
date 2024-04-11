@@ -229,9 +229,7 @@ class TracingBatchCallback : public BatchCallback {
     return Span{span};
   }
 
-  void EndModackSpan(Span span) override {
-span.span->End();
-  }
+  void EndModackSpan(Span span) override { span.span->End(); }
 
   void AckStart(std::string const& ack_id) override {
     AddEvent(ack_id, "gl-cpp.ack_start");
