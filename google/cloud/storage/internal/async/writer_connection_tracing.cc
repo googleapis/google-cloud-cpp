@@ -50,7 +50,7 @@ class AsyncWriterConnectionTracing
     return impl_->UploadId();
   }
 
-  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
+  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {
     // No tracing, this is a local call without any significant work.
     return impl_->PersistedState();
@@ -74,7 +74,7 @@ class AsyncWriterConnectionTracing
         });
   }
 
-  future<StatusOr<storage::ObjectMetadata>> Finalize(
+  future<StatusOr<google::storage::v2::Object>> Finalize(
       storage_experimental::WritePayload p) override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());

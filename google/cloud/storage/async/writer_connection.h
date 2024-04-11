@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/variant.h"
+#include <google/storage/v2/storage.pb.h>
 #include <cstdint>
 #include <string>
 
@@ -102,14 +103,15 @@ class AsyncWriterConnection {
 
   /// Returns the last known state of the upload. Updated during initialization
   /// and by successful `Query()` or `Finalize()` requests.
-  virtual absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
-      const = 0;
+  virtual absl::variant<std::int64_t, google::storage::v2::Object>
+  PersistedState() const = 0;
 
   /// Uploads some data to the service.
   virtual future<Status> Write(WritePayload payload) = 0;
 
   /// Finalizes an upload.
-  virtual future<StatusOr<storage::ObjectMetadata>> Finalize(WritePayload) = 0;
+  virtual future<StatusOr<google::storage::v2::Object>> Finalize(
+      WritePayload) = 0;
 
   /// Uploads some data to the service and flushes the value.
   virtual future<Status> Flush(WritePayload payload) = 0;

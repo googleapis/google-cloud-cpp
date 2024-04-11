@@ -46,17 +46,17 @@ class AsyncWriterConnectionFinalized
     : public storage_experimental::AsyncWriterConnection {
  public:
   explicit AsyncWriterConnectionFinalized(std::string upload_id,
-                                          storage::ObjectMetadata metadata);
+                                          google::storage::v2::Object object);
   ~AsyncWriterConnectionFinalized() override;
 
   void Cancel() override;
 
   std::string UploadId() const override;
-  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
+  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override;
 
   future<Status> Write(storage_experimental::WritePayload payload) override;
-  future<StatusOr<storage::ObjectMetadata>> Finalize(
+  future<StatusOr<google::storage::v2::Object>> Finalize(
       storage_experimental::WritePayload) override;
   future<Status> Flush(storage_experimental::WritePayload payload) override;
   future<StatusOr<std::int64_t>> Query() override;
@@ -64,7 +64,7 @@ class AsyncWriterConnectionFinalized
 
  private:
   std::string upload_id_;
-  storage::ObjectMetadata metadata_;
+  google::storage::v2::Object object_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

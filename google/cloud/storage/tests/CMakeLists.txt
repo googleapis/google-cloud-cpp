@@ -110,8 +110,9 @@ foreach (fname IN LISTS storage_client_integration_tests)
                 nlohmann_json)
     if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         target_link_libraries(
-            ${target} PRIVATE google-cloud-cpp::storage
-                              google_cloud_cpp_storage_tests_conformance_protos)
+            ${target}
+            PRIVATE google-cloud-cpp::storage google_cloud_cpp_testing_grpc
+                    google_cloud_cpp_storage_tests_conformance_protos)
     endif ()
 
     add_test(NAME ${target} COMMAND ${target})

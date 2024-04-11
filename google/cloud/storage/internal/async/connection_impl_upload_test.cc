@@ -245,7 +245,7 @@ TEST_F(AsyncConnectionImplTest, StartUnbufferedUpload) {
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -481,7 +481,7 @@ TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUpload) {
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -547,12 +547,13 @@ TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUploadFinalized) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  ASSERT_TRUE(absl::holds_alternative<storage::ObjectMetadata>(
+  ASSERT_TRUE(absl::holds_alternative<google::storage::v2::Object>(
       writer->PersistedState()));
-  auto metadata = absl::get<storage::ObjectMetadata>(writer->PersistedState());
-  EXPECT_EQ(metadata.bucket(), "test-bucket");
-  EXPECT_EQ(metadata.name(), "test-object");
-  EXPECT_EQ(metadata.generation(), 123456);
+  auto object =
+      absl::get<google::storage::v2::Object>(writer->PersistedState());
+  EXPECT_EQ(object.bucket(), "projects/_/buckets/test-bucket");
+  EXPECT_EQ(object.name(), "test-object");
+  EXPECT_EQ(object.generation(), 123456);
 
   writer.reset();
 }
@@ -837,7 +838,7 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
 
   auto response = w1.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -1030,7 +1031,7 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUploadNewUploadResume) {
 
   auto response = w1.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 

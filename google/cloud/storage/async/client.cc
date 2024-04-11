@@ -58,7 +58,7 @@ AsyncClient::StartBufferedUpload(
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
-        auto t = absl::holds_alternative<storage::ObjectMetadata>(
+        auto t = absl::holds_alternative<google::storage::v2::Object>(
                      (*w)->PersistedState())
                      ? AsyncToken()
                      : storage_internal::MakeAsyncToken(w->get());
@@ -83,7 +83,7 @@ AsyncClient::ResumeBufferedUpload(
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
-        auto t = absl::holds_alternative<storage::ObjectMetadata>(
+        auto t = absl::holds_alternative<google::storage::v2::Object>(
                      (*w)->PersistedState())
                      ? AsyncToken()
                      : storage_internal::MakeAsyncToken(w->get());
@@ -111,7 +111,7 @@ AsyncClient::StartUnbufferedUpload(
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
-        auto t = absl::holds_alternative<storage::ObjectMetadata>(
+        auto t = absl::holds_alternative<google::storage::v2::Object>(
                      (*w)->PersistedState())
                      ? AsyncToken()
                      : storage_internal::MakeAsyncToken(w->get());
@@ -136,7 +136,7 @@ AsyncClient::ResumeUnbufferedUpload(
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
-        auto t = absl::holds_alternative<storage::ObjectMetadata>(
+        auto t = absl::holds_alternative<google::storage::v2::Object>(
                      (*w)->PersistedState())
                      ? AsyncToken()
                      : storage_internal::MakeAsyncToken(w->get());

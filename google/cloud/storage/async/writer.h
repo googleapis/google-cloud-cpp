@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/variant.h"
+#include <google/storage/v2/storage.pb.h>
 #include <memory>
 #include <utility>
 
@@ -82,7 +83,7 @@ class AsyncWriter {
    * and `Finalize()`.
    *
    * Applications may finalize an upload, and then try to resume the upload. In
-   * this case this function returns `storage::ObjectMetadata`.
+   * this case this function returns `google::storage::v2::Object`.
    *
    * During an upload the service will periodically persist the uploaded data.
    * Applications should not assume that all data "sent" is persisted. The
@@ -93,7 +94,7 @@ class AsyncWriter {
    * that new data starts at the correct offset.
    *
    * If an upload is resumed after it is finalized, the library will return a
-   * variant holding `storage::ObjectMetadata` value.
+   * variant holding `google::storage::v2::Object` value.
    *
    * Otherwise the variant returns the size of the persisted data. The
    * application should send the remaining data to upload, starting from this
@@ -103,19 +104,20 @@ class AsyncWriter {
    * Calling this function on a default-constructed or moved-from `AsyncWriter`
    * results in undefined behavior.
    */
-  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState() const;
+  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+      const;
 
   /// Upload @p payload returning a new token to continue the upload.
   future<StatusOr<AsyncToken>> Write(AsyncToken token, WritePayload payload);
 
   /// Finalize the upload with the existing data.
-  future<StatusOr<storage::ObjectMetadata>> Finalize(AsyncToken token);
+  future<StatusOr<google::storage::v2::Object>> Finalize(AsyncToken token);
 
   /**
    * Upload @p payload and then finalize the upload.
    */
-  future<StatusOr<storage::ObjectMetadata>> Finalize(AsyncToken token,
-                                                     WritePayload payload);
+  future<StatusOr<google::storage::v2::Object>> Finalize(AsyncToken token,
+                                                         WritePayload payload);
 
   /**
    * The headers (if any) returned by the service. For debugging only.
