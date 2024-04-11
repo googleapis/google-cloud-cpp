@@ -19,6 +19,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_async_streaming_write_rpc.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -37,10 +38,13 @@ using Response = google::storage::v2::WriteObjectResponse;
 using MockStream =
     ::google::cloud::testing_util::MockAsyncStreamingWriteRpc<Request,
                                                               Response>;
+
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::HasSubstr;
+using ::google::protobuf::TextFormat;
 
 struct StringOption {
   using Type = std::string;
@@ -118,6 +122,12 @@ Options TestOptions() {
       .set<storage::RestEndpointOption>(kTestEndpoint);
 }
 
+auto MakeExpectedObject() {
+  auto object = google::storage::v2::Object{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedProto, &object));
+  return object;
+}
+
 auto constexpr kExpectedChunkSize = 2 * 1024 * 1024L;
 
 std::string RandomData(google::cloud::internal::DefaultPRNG& generator,
@@ -150,7 +160,6 @@ TEST(InsertObject, SuccessEmpty) {
     return sequencer.PushBack("Finish").then(
         [&](auto) { return make_status_or(response); });
   });
-  EXPECT_CALL(*rpc, GetRequestMetadata);
 
   auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
   google::storage::v2::WriteObjectRequest request;
@@ -173,9 +182,7 @@ TEST(InsertObject, SuccessEmpty) {
   next.first.set_value(true);
 
   ASSERT_TRUE(result.is_ready());
-  auto metadata = result.get();
-  ASSERT_STATUS_OK(metadata);
-  EXPECT_THAT(metadata->self_link(), HasSubstr(kTestEndpoint));
+  EXPECT_THAT(result.get(), IsOkAndHolds(IsProtoEqual(MakeExpectedObject())));
 }
 
 TEST(InsertObject, SuccessChunkAligned) {
@@ -217,7 +224,6 @@ TEST(InsertObject, SuccessChunkAligned) {
     return sequencer.PushBack("Finish").then(
         [&](auto) { return make_status_or(response); });
   });
-  EXPECT_CALL(*rpc, GetRequestMetadata);
 
   auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
   Request request;
@@ -246,9 +252,7 @@ TEST(InsertObject, SuccessChunkAligned) {
   next.first.set_value(true);
 
   ASSERT_TRUE(result.is_ready());
-  auto metadata = result.get();
-  ASSERT_STATUS_OK(metadata);
-  EXPECT_THAT(metadata->self_link(), HasSubstr(kTestEndpoint));
+  EXPECT_THAT(result.get(), IsOkAndHolds(IsProtoEqual(MakeExpectedObject())));
 }
 
 TEST(InsertObject, SuccessChunkPartial) {
@@ -300,7 +304,6 @@ TEST(InsertObject, SuccessChunkPartial) {
     return sequencer.PushBack("Finish").then(
         [&](auto) { return make_status_or(response); });
   });
-  EXPECT_CALL(*rpc, GetRequestMetadata);
 
   auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
   Request request;
@@ -333,9 +336,7 @@ TEST(InsertObject, SuccessChunkPartial) {
   next.first.set_value(true);
 
   ASSERT_TRUE(result.is_ready());
-  auto metadata = result.get();
-  ASSERT_STATUS_OK(metadata);
-  EXPECT_THAT(metadata->self_link(), HasSubstr(kTestEndpoint));
+  EXPECT_THAT(result.get(), IsOkAndHolds(IsProtoEqual(MakeExpectedObject())));
 }
 
 TEST(InsertObject, ErrorStart) {

@@ -38,7 +38,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
 
   Options options() const override { return impl_->options(); }
 
-  future<StatusOr<storage::ObjectMetadata>> InsertObject(
+  future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::InsertObject");
     internal::OTelScope scope(span);

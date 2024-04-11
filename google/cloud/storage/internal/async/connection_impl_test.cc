@@ -83,7 +83,6 @@ std::shared_ptr<storage_experimental::AsyncConnection> MakeTestConnection(
                              TestOptions(std::move(options)));
 }
 
-
 TEST_F(AsyncConnectionImplTest, ComposeObject) {
   auto constexpr kExpectedRequest = R"pb(
     destination { bucket: "projects/_/buckets/test-bucket" name: "test-object" }

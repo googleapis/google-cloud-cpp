@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/hash_function.h"
-#include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_streaming_write_rpc.h"
 #include "google/cloud/options.h"
@@ -101,7 +100,7 @@ class InsertObject : public std::enable_shared_from_this<InsertObject> {
         std::move(data), std::move(options)));
   }
 
-  future<StatusOr<storage::ObjectMetadata>> Start();
+  future<StatusOr<google::storage::v2::Object>> Start();
 
  private:
   InsertObject(std::unique_ptr<StreamingWriteRpc> rpc,
@@ -127,7 +126,7 @@ class InsertObject : public std::enable_shared_from_this<InsertObject> {
   google::storage::v2::WriteObjectRequest request_;
   absl::Cord data_;
   google::cloud::internal::ImmutableOptions options_;
-  promise<StatusOr<storage::ObjectMetadata>> result_;
+  promise<StatusOr<google::storage::v2::Object>> result_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

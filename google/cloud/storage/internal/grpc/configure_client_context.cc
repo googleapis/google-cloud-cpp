@@ -43,13 +43,11 @@ void ApplyRoutingHeaders(
                                                      request.bucket_name()));
 }
 
-void ApplyRoutingHeaders(
-    grpc::ClientContext& context,
-    storage_experimental::InsertObjectRequest const& request) {
+void ApplyRoutingHeaders(grpc::ClientContext& context,
+                         google::storage::v2::WriteObjectSpec const& spec) {
   context.AddMetadata(
       "x-goog-request-params",
-      "bucket=" + google::cloud::internal::UrlEncode("projects/_/buckets/" +
-                                                     request.bucket_name()));
+      "bucket=" + google::cloud::internal::UrlEncode(spec.resource().bucket()));
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,

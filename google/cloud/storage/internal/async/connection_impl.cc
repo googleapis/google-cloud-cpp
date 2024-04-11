@@ -123,22 +123,19 @@ AsyncConnectionImpl::AsyncConnectionImpl(
       stub_(std::move(stub)),
       options_(std::move(options)) {}
 
-future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
+future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
     InsertObjectParams p) {
-  auto proto = ToProto(p.request);
-  if (!proto) {
-    return make_ready_future(
-        StatusOr<storage::ObjectMetadata>(std::move(proto).status()));
-  }
-  // We are using request ids, so the request is always idempotent.
-  auto const idempotency = Idempotency::kIdempotent;
   auto current = internal::MakeImmutableOptions(std::move(p.options));
-  auto call = [stub = stub_, params = std::move(p),
+  auto request = std::move(p.request);
+  auto payload = std::move(p.payload);
+  auto const idempotency = idempotency_policy(*current)->InsertObject(request);
+
+  auto call = [stub = stub_, payload = std::move(payload),
                id = invocation_id_generator_.MakeInvocationId()](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
-                  google::storage::v2::WriteObjectRequest const& proto) {
+                  google::storage::v2::WriteObjectRequest const& request) {
     using StreamingRpcTimeout =
         google::cloud::internal::AsyncStreamingWriteRpcTimeout<
             google::storage::v2::WriteObjectRequest,
@@ -148,24 +145,15 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
         options->get<storage::TransferStallMinimumRateOption>(),
         google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
 
-    auto hash_function =
-        [](storage_experimental::InsertObjectRequest const& r) {
-          return storage::internal::CreateHashFunction(
-              r.GetOption<storage::Crc32cChecksumValue>(),
-              r.GetOption<storage::DisableCrc32cChecksum>(),
-              r.GetOption<storage::MD5HashValue>(),
-              r.GetOption<storage::DisableMD5Hash>());
-        };
-
-    ApplyQueryParameters(*context, *options, params.request);
-    ApplyRoutingHeaders(*context, params.request);
+    auto hash_function = CreateHashFunction(*options);
+    ApplyRoutingHeaders(*context, request.write_object_spec());
     context->AddMetadata("x-goog-gcs-idempotency-token", id);
     auto rpc = stub->AsyncWriteObject(cq, std::move(context), options);
     rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
                                                 std::move(rpc));
     auto running = InsertObject::Call(
-        std::move(rpc), hash_function(params.request), proto,
-        WritePayloadImpl::GetImpl(params.payload), std::move(options));
+        std::move(rpc), std::move(hash_function), request,
+        WritePayloadImpl::GetImpl(payload), std::move(options));
     return running->Start().then([running](auto f) mutable {
       running.reset();  // extend the life of the co-routine until it co-returns
       return f.get();
@@ -175,7 +163,7 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
   auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
       std::move(retry), std::move(backoff), idempotency, cq_, std::move(call),
-      std::move(current), *std::move(proto), __func__);
+      std::move(current), std::move(request), __func__);
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>

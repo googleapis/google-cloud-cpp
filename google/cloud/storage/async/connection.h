@@ -63,7 +63,7 @@ class AsyncConnection {
     /// The bucket and object name for the new object. Includes any optional
     /// parameters, such as pre-conditions on the insert operation, or metadata
     /// attributes.
-    InsertObjectRequest request;
+    google::storage::v2::WriteObjectRequest request;
     /// The bulk payload, sometimes called the "media" or "contents".
     WritePayload payload;
     /// Any options modifying the RPC behavior, including per-client and
@@ -72,7 +72,7 @@ class AsyncConnection {
   };
 
   /// Insert a new object.
-  virtual future<StatusOr<storage::ObjectMetadata>> InsertObject(
+  virtual future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) = 0;
 
   /**
