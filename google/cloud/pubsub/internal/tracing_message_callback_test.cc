@@ -50,7 +50,6 @@ using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::Return;
-using ::testing::SizeIs;
 
 pubsub::Subscription TestSubscription() {
   return pubsub::Subscription("test-project", "test-sub");
