@@ -490,7 +490,8 @@ g::future<Result> DownloadOne(Configuration const& cfg,
   auto const transfer_start = std::chrono::system_clock::now();
   auto const start = std::chrono::steady_clock::now();
   auto [reader, token] =
-      (co_await client.ReadObject(cfg.bucket, object_name)).value();
+      (co_await client.ReadObject(gcs_ex::BucketName(cfg.bucket), object_name))
+          .value();
 
   std::int64_t generation = 0;
   std::uint64_t size = 0;
