@@ -39,6 +39,34 @@ AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
     : connection_(std::move(connection)) {}
 
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::StartBufferedUpload(BucketName const& bucket_name,
+                                 std::string object_name, Options opts) {
+  auto request = google::storage::v2::StartResumableWriteRequest{};
+  auto& resource = *request.mutable_write_object_spec()->mutable_resource();
+  resource.set_bucket(bucket_name.FullName());
+  resource.set_name(std::move(object_name));
+  return StartBufferedUpload(std::move(request), std::move(opts));
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::StartBufferedUpload(
+    google::storage::v2::StartResumableWriteRequest request, Options opts) {
+  return connection_
+      ->StartBufferedUpload(
+          {std::move(request),
+           internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        auto t = absl::holds_alternative<storage::ObjectMetadata>(
+                     (*w)->PersistedState())
+                     ? AsyncToken()
+                     : storage_internal::MakeAsyncToken(w->get());
+        return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
+      });
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
 AsyncClient::ResumeBufferedUpload(std::string upload_id, Options opts) {
   auto request = google::storage::v2::QueryWriteStatusRequest{};
   request.set_upload_id(std::move(upload_id));
@@ -50,6 +78,34 @@ AsyncClient::ResumeBufferedUpload(
     google::storage::v2::QueryWriteStatusRequest request, Options opts) {
   return connection_
       ->ResumeBufferedUpload(
+          {std::move(request),
+           internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        auto t = absl::holds_alternative<storage::ObjectMetadata>(
+                     (*w)->PersistedState())
+                     ? AsyncToken()
+                     : storage_internal::MakeAsyncToken(w->get());
+        return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
+      });
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::StartUnbufferedUpload(BucketName const& bucket_name,
+                                   std::string object_name, Options opts) {
+  auto request = google::storage::v2::StartResumableWriteRequest{};
+  auto& resource = *request.mutable_write_object_spec()->mutable_resource();
+  resource.set_bucket(bucket_name.FullName());
+  resource.set_name(std::move(object_name));
+  return StartUnbufferedUpload(std::move(request), std::move(opts));
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::StartUnbufferedUpload(
+    google::storage::v2::StartResumableWriteRequest request, Options opts) {
+  return connection_
+      ->StartUnbufferedUpload(
           {std::move(request),
            internal::MergeOptions(std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {

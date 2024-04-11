@@ -204,9 +204,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadEmpty) {
   auto object_name = MakeRandomObjectName();
 
   auto client = AsyncClient();
-  auto w = client
-               .StartUnbufferedUpload(bucket_name(), object_name,
-                                      gcs::IfGenerationMatch(0))
+  auto w = client.StartUnbufferedUpload(BucketName(bucket_name()), object_name)
                .get();
   ASSERT_STATUS_OK(w);
   AsyncWriter writer;
@@ -230,9 +228,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadMultiple) {
   auto const block = MakeRandomData(kBlockSize);
 
   auto client = AsyncClient();
-  auto w = client
-               .StartUnbufferedUpload(bucket_name(), object_name,
-                                      gcs::IfGenerationMatch(0))
+  auto w = client.StartUnbufferedUpload(BucketName(bucket_name()), object_name)
                .get();
   ASSERT_STATUS_OK(w);
   AsyncWriter writer;
@@ -263,9 +259,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResume) {
   auto const block = MakeRandomData(kBlockSize);
 
   auto client = AsyncClient();
-  auto w = client
-               .StartUnbufferedUpload(bucket_name(), object_name,
-                                      gcs::IfGenerationMatch(0))
+  auto w = client.StartUnbufferedUpload(BucketName(bucket_name()), object_name)
                .get();
   ASSERT_STATUS_OK(w);
   AsyncWriter writer;
@@ -281,10 +275,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResume) {
 
   // Reset the existing writer and resume the upload.
   writer = AsyncWriter();
-  w = client
-          .StartUnbufferedUpload(bucket_name(), object_name,
-                                 gcs::UseResumableUploadSession(upload_id))
-          .get();
+  w = client.ResumeUnbufferedUpload(upload_id).get();
   ASSERT_STATUS_OK(w);
   std::tie(writer, token) = *std::move(w);
   ASSERT_EQ(writer.UploadId(), upload_id);
@@ -327,9 +318,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResumeFinalized) {
   auto const block = MakeRandomData(kBlockSize);
 
   auto client = AsyncClient();
-  auto w = client
-               .StartUnbufferedUpload(bucket_name(), object_name,
-                                      gcs::IfGenerationMatch(0))
+  auto w = client.StartUnbufferedUpload(BucketName(bucket_name()), object_name)
                .get();
   ASSERT_STATUS_OK(w);
   AsyncWriter writer;
@@ -345,10 +334,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResumeFinalized) {
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kBlockSize);
 
-  w = client
-          .StartUnbufferedUpload(bucket_name(), object_name,
-                                 gcs::UseResumableUploadSession(upload_id))
-          .get();
+  w = client.ResumeUnbufferedUpload(upload_id).get();
   ASSERT_STATUS_OK(w);
   std::tie(writer, token) = *std::move(w);
   EXPECT_FALSE(token.valid());
@@ -362,10 +348,8 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadEmpty) {
   auto object_name = MakeRandomObjectName();
 
   auto client = AsyncClient();
-  auto w = client
-               .StartBufferedUpload(bucket_name(), object_name,
-                                    gcs::IfGenerationMatch(0))
-               .get();
+  auto w =
+      client.StartBufferedUpload(BucketName(bucket_name()), object_name).get();
   ASSERT_STATUS_OK(w);
   AsyncWriter writer;
   AsyncToken token;
@@ -388,10 +372,8 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
   auto const block = MakeRandomData(kBlockSize);
 
   auto client = AsyncClient();
-  auto w = client
-               .StartBufferedUpload(bucket_name(), object_name,
-                                    gcs::IfGenerationMatch(0))
-               .get();
+  auto w =
+      client.StartBufferedUpload(BucketName(bucket_name()), object_name).get();
   ASSERT_STATUS_OK(w);
   AsyncWriter writer;
   AsyncToken token;

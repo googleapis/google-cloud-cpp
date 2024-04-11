@@ -93,7 +93,17 @@ std::unique_ptr<AsyncBidiWriteObjectStream> MakeErrorBidiWriteStream(
   return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
 }
 
-TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {
+TEST_F(AsyncConnectionImplTest, StartUnbufferedUpload) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource {
+        bucket: "test-only-invalid"
+        name: "test-object"
+        content_type: "text/plain"
+      }
+      if_generation_match: 123
+    }
+  )pb";
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncStartResumableWrite)
@@ -106,14 +116,10 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {
       .WillOnce(
           [&](auto&, auto, auto,
               google::storage::v2::StartResumableWriteRequest const& request) {
-            auto const& spec = request.write_object_spec();
-            EXPECT_TRUE(spec.has_if_generation_match());
-            EXPECT_EQ(spec.if_generation_match(), 123);
-            auto const& resource = spec.resource();
-            EXPECT_EQ(resource.bucket(), "projects/_/buckets/test-bucket");
-            EXPECT_EQ(resource.name(), "test-object");
-            EXPECT_EQ(resource.content_type(), "text/plain");
-
+            auto expected = google::storage::v2::StartResumableWriteRequest{};
+            EXPECT_TRUE(
+                TextFormat::ParseFromString(kExpectedRequest, &expected));
+            EXPECT_THAT(request, IsProtoEqual(expected));
             return sequencer.PushBack("StartResumableWrite(2)").then([](auto) {
               auto response =
                   google::storage::v2::StartResumableWriteResponse{};
@@ -182,14 +188,10 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUpload) {
       MakeTestConnection(CompletionQueue(mock_cq), mock,
                          Options{}.set<storage::TransferStallTimeoutOption>(
                              std::chrono::seconds(0)));
+  auto request = google::storage::v2::StartResumableWriteRequest{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
   auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::WithObjectMetadata(
-                   storage::ObjectMetadata{}.set_content_type("text/plain")),
-               storage::IfGenerationMatch(123)),
-       connection->options()});
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "StartResumableWrite(1)");
@@ -307,13 +309,9 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUploadWithTimeout) {
       Options{}
           .set<storage::TransferStallTimeoutOption>(std::chrono::seconds(1))
           .set<storage::TransferStallMinimumRateOption>(2 * 1024 * 1024L));
+
   auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::WithObjectMetadata(
-                   storage::ObjectMetadata{}.set_content_type("text/plain")),
-               storage::IfGenerationMatch(123)),
+      {google::storage::v2::StartResumableWriteRequest{},
        connection->options()});
 
   auto next = sequencer.PopFrontWithName();
@@ -573,8 +571,7 @@ TEST_F(AsyncConnectionImplTest,
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
   auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
+      {google::storage::v2::StartResumableWriteRequest{},
        connection->options()});
 
   for (int i = 0; i != 3; ++i) {
@@ -601,8 +598,7 @@ TEST_F(AsyncConnectionImplTest,
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
   auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
+      {google::storage::v2::StartResumableWriteRequest{},
        connection->options()});
 
   auto next = sequencer.PopFrontWithName();
@@ -611,26 +607,6 @@ TEST_F(AsyncConnectionImplTest,
 
   auto r = pending.get();
   EXPECT_THAT(r, StatusIs(PermanentError().code()));
-}
-
-TEST_F(AsyncConnectionImplTest, UnbufferedUploadInvalidRequest) {
-  auto mock = std::make_shared<storage::testing::MockStorageStub>();
-  EXPECT_CALL(*mock, AsyncStartResumableWrite).Times(0);
-
-  internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(pool.cq(), mock);
-  // Intentionally create an invalid key. Converting this key to a proto message
-  // will fail, and that should result in an error.
-  auto key = storage::EncryptionDataFromBinaryKey("123");
-  key.sha256 = "not-a-valid-base-64-SHA256";
-  auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(storage::EncryptionKey(key)),
-       connection->options()});
-
-  auto r = pending.get();
-  EXPECT_THAT(r, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUploadTooManyTransients) {
@@ -700,8 +676,7 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadTooManyTransients) {
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
   auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
+      {google::storage::v2::StartResumableWriteRequest{},
        connection->options()});
 
   for (int i = 0; i != 3; ++i) {
@@ -733,8 +708,7 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadPermanentError) {
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
   auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
+      {google::storage::v2::StartResumableWriteRequest{},
        connection->options()});
 
   auto next = sequencer.PopFrontWithName();
@@ -750,6 +724,16 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadPermanentError) {
 }
 
 TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource {
+        bucket: "projects/_/buckets/test-bucket"
+        name: "test-object"
+        content_type: "text/plain"
+      }
+      if_generation_match: 123
+    }
+  )pb";
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncStartResumableWrite)
@@ -762,13 +746,10 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
       .WillOnce(
           [&](auto&, auto, auto,
               google::storage::v2::StartResumableWriteRequest const& request) {
-            auto const& spec = request.write_object_spec();
-            EXPECT_TRUE(spec.has_if_generation_match());
-            EXPECT_EQ(spec.if_generation_match(), 123);
-            auto const& resource = spec.resource();
-            EXPECT_EQ(resource.bucket(), "projects/_/buckets/test-bucket");
-            EXPECT_EQ(resource.name(), "test-object");
-            EXPECT_EQ(resource.content_type(), "text/plain");
+            auto expected = google::storage::v2::StartResumableWriteRequest{};
+            EXPECT_TRUE(
+                TextFormat::ParseFromString(kExpectedRequest, &expected));
+            EXPECT_THAT(request, IsProtoEqual(expected));
 
             return sequencer.PushBack("StartResumableWrite(2)").then([](auto) {
               auto response =
@@ -815,14 +796,10 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
+  auto request = google::storage::v2::StartResumableWriteRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
   auto pending = connection->StartBufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::WithObjectMetadata(
-                   storage::ObjectMetadata{}.set_content_type("text/plain")),
-               storage::IfGenerationMatch(123)),
-       connection->options()});
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "StartResumableWrite(1)");
@@ -871,6 +848,17 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
 }
 
 TEST_F(AsyncConnectionImplTest, ResumeBufferedUploadNewUploadResume) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource {
+        bucket: "projects/_/buckets/test-bucket"
+        name: "test-object"
+        content_type: "text/plain"
+      }
+      if_generation_match: 123
+    }
+  )pb";
+
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncStartResumableWrite)
@@ -883,13 +871,10 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUploadNewUploadResume) {
       .WillOnce(
           [&](auto&, auto, auto,
               google::storage::v2::StartResumableWriteRequest const& request) {
-            auto const& spec = request.write_object_spec();
-            EXPECT_TRUE(spec.has_if_generation_match());
-            EXPECT_EQ(spec.if_generation_match(), 123);
-            auto const& resource = spec.resource();
-            EXPECT_EQ(resource.bucket(), "projects/_/buckets/test-bucket");
-            EXPECT_EQ(resource.name(), "test-object");
-            EXPECT_EQ(resource.content_type(), "text/plain");
+            auto expected = google::storage::v2::StartResumableWriteRequest{};
+            EXPECT_TRUE(
+                TextFormat::ParseFromString(kExpectedRequest, &expected));
+            EXPECT_THAT(request, IsProtoEqual(expected));
 
             return sequencer.PushBack("StartResumableWrite(2)").then([](auto) {
               auto response =
@@ -982,14 +967,10 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUploadNewUploadResume) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
+  auto request = google::storage::v2::StartResumableWriteRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
   auto pending = connection->StartBufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::WithObjectMetadata(
-                   storage::ObjectMetadata{}.set_content_type("text/plain")),
-               storage::IfGenerationMatch(123)),
-       connection->options()});
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "StartResumableWrite(1)");

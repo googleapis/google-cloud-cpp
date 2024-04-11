@@ -140,7 +140,12 @@ TEST(AsyncClient, ReadObject) {
              "empty response", [](auto const& p) { return p.size(); }, 0)));
 }
 
-TEST(AsyncClient, StartBufferedUpload) {
+TEST(AsyncClient, StartBufferedUpload1) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+    }
+  )pb";
   auto mock = std::make_shared<MockAsyncConnection>();
   EXPECT_CALL(*mock, options)
       .WillRepeatedly(
@@ -151,10 +156,9 @@ TEST(AsyncClient, StartBufferedUpload) {
         EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
         EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
         EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
-        EXPECT_EQ(p.request.bucket_name(), "test-bucket");
-        EXPECT_EQ(p.request.object_name(), "test-object");
-        EXPECT_EQ(p.request.GetOption<storage::IfGenerationMatch>().value_or(0),
-                  42);
+        auto expected = google::storage::v2::StartResumableWriteRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
         auto writer = std::make_unique<MockAsyncWriterConnection>();
         EXPECT_CALL(*writer, PersistedState).WillOnce(Return(0));
         EXPECT_CALL(*writer, Finalize).WillRepeatedly([] {
@@ -166,8 +170,7 @@ TEST(AsyncClient, StartBufferedUpload) {
 
   auto client = AsyncClient(mock);
   auto wt = client
-                .StartBufferedUpload("test-bucket", "test-object",
-                                     storage::IfGenerationMatch(42),
+                .StartBufferedUpload(BucketName("test-bucket"), "test-object",
                                      Options{}
                                          .set<TestOption<1>>("O1-function")
                                          .set<TestOption<2>>("O2-function"))
@@ -181,26 +184,51 @@ TEST(AsyncClient, StartBufferedUpload) {
   EXPECT_THAT(object, IsOkAndHolds(TestObject()));
 }
 
-TEST(AsyncClient, StartBufferedUploadResumeFinalized) {
+TEST(AsyncClient, StartBufferedUpload2) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+      if_generation_match: 42
+    }
+  )pb";
   auto mock = std::make_shared<MockAsyncConnection>();
-  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
-  EXPECT_CALL(*mock, StartBufferedUpload).WillOnce([] {
-    auto writer = std::make_unique<MockAsyncWriterConnection>();
-    EXPECT_CALL(*writer, PersistedState).WillRepeatedly(Return(TestObject()));
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
 
-    return make_ready_future(make_status_or(
-        std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
-  });
+  EXPECT_CALL(*mock, StartBufferedUpload)
+      .WillOnce([](AsyncConnection::UploadParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::StartResumableWriteRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        auto writer = std::make_unique<MockAsyncWriterConnection>();
+        EXPECT_CALL(*writer, PersistedState).WillOnce(Return(0));
+        EXPECT_CALL(*writer, Finalize).WillRepeatedly([] {
+          return make_ready_future(make_status_or(TestObject()));
+        });
+        return make_ready_future(make_status_or(
+            std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
+      });
 
   auto client = AsyncClient(mock);
-  auto wt = client.StartBufferedUpload("test-bucket", "test-object").get();
+  auto request = google::storage::v2::StartResumableWriteRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto wt = client
+                .StartBufferedUpload(std::move(request),
+                                     Options{}
+                                         .set<TestOption<1>>("O1-function")
+                                         .set<TestOption<2>>("O2-function"))
+                .get();
   ASSERT_STATUS_OK(wt);
   AsyncWriter w;
   AsyncToken t;
   std::tie(w, t) = *std::move(wt);
-  EXPECT_FALSE(t.valid());
-  EXPECT_THAT(w.PersistedState(),
-              VariantWith<storage::ObjectMetadata>(TestObject()));
+  EXPECT_TRUE(t.valid());
+  auto object = w.Finalize(std::move(t)).get();
+  EXPECT_THAT(object, IsOkAndHolds(TestObject()));
 }
 
 TEST(AsyncClient, ResumeBufferedUpload1) {
@@ -289,6 +317,28 @@ TEST(AsyncClient, ResumeBufferedUpload2) {
               VariantWith<storage::ObjectMetadata>(TestObject()));
 }
 
+TEST(AsyncClient, ResumeBufferedUploadResumeFinalized) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+  EXPECT_CALL(*mock, ResumeBufferedUpload).WillOnce([] {
+    auto writer = std::make_unique<MockAsyncWriterConnection>();
+    EXPECT_CALL(*writer, PersistedState).WillRepeatedly(Return(TestObject()));
+
+    return make_ready_future(make_status_or(
+        std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
+  });
+
+  auto client = AsyncClient(mock);
+  auto wt = client.ResumeBufferedUpload("resume-upload-id").get();
+  ASSERT_STATUS_OK(wt);
+  AsyncWriter w;
+  AsyncToken t;
+  std::tie(w, t) = *std::move(wt);
+  EXPECT_FALSE(t.valid());
+  EXPECT_THAT(w.PersistedState(),
+              VariantWith<storage::ObjectMetadata>(TestObject()));
+}
+
 TEST(AsyncClient, ReadObjectRange) {
   auto mock = std::make_shared<MockAsyncConnection>();
   EXPECT_CALL(*mock, options)
@@ -323,7 +373,12 @@ TEST(AsyncClient, ReadObjectRange) {
   EXPECT_THAT(payload->metadata(), Optional(Eq(TestObject())));
 }
 
-TEST(AsyncClient, StartUnbufferedUpload) {
+TEST(AsyncClient, StartUnbufferedUpload1) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+    }
+  )pb";
   auto mock = std::make_shared<MockAsyncConnection>();
   EXPECT_CALL(*mock, options)
       .WillRepeatedly(
@@ -334,10 +389,9 @@ TEST(AsyncClient, StartUnbufferedUpload) {
         EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
         EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
         EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
-        EXPECT_EQ(p.request.bucket_name(), "test-bucket");
-        EXPECT_EQ(p.request.object_name(), "test-object");
-        EXPECT_EQ(p.request.GetOption<storage::IfGenerationMatch>().value_or(0),
-                  42);
+        auto expected = google::storage::v2::StartResumableWriteRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
         auto writer = std::make_unique<MockAsyncWriterConnection>();
         EXPECT_CALL(*writer, PersistedState).WillOnce(Return(0));
         EXPECT_CALL(*writer, Finalize).WillRepeatedly([] {
@@ -348,9 +402,10 @@ TEST(AsyncClient, StartUnbufferedUpload) {
       });
 
   auto client = AsyncClient(mock);
+  auto request = google::storage::v2::StartResumableWriteRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
   auto wt = client
-                .StartUnbufferedUpload("test-bucket", "test-object",
-                                       storage::IfGenerationMatch(42),
+                .StartUnbufferedUpload(BucketName("test-bucket"), "test-object",
                                        Options{}
                                            .set<TestOption<1>>("O1-function")
                                            .set<TestOption<2>>("O2-function"))
@@ -364,26 +419,51 @@ TEST(AsyncClient, StartUnbufferedUpload) {
   EXPECT_THAT(object, IsOkAndHolds(TestObject()));
 }
 
-TEST(AsyncClient, StartUnbufferedUploadResumeFinalized) {
+TEST(AsyncClient, StartUnbufferedUpload2) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+      if_generation_match: 42
+    }
+  )pb";
   auto mock = std::make_shared<MockAsyncConnection>();
-  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
-  EXPECT_CALL(*mock, StartUnbufferedUpload).WillOnce([] {
-    auto writer = std::make_unique<MockAsyncWriterConnection>();
-    EXPECT_CALL(*writer, PersistedState).WillRepeatedly(Return(TestObject()));
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
 
-    return make_ready_future(make_status_or(
-        std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
-  });
+  EXPECT_CALL(*mock, StartUnbufferedUpload)
+      .WillOnce([](AsyncConnection::UploadParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::StartResumableWriteRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        auto writer = std::make_unique<MockAsyncWriterConnection>();
+        EXPECT_CALL(*writer, PersistedState).WillOnce(Return(0));
+        EXPECT_CALL(*writer, Finalize).WillRepeatedly([] {
+          return make_ready_future(make_status_or(TestObject()));
+        });
+        return make_ready_future(make_status_or(
+            std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
+      });
 
   auto client = AsyncClient(mock);
-  auto wt = client.StartUnbufferedUpload("test-bucket", "test-object").get();
+  auto request = google::storage::v2::StartResumableWriteRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto wt = client
+                .StartUnbufferedUpload(std::move(request),
+                                       Options{}
+                                           .set<TestOption<1>>("O1-function")
+                                           .set<TestOption<2>>("O2-function"))
+                .get();
   ASSERT_STATUS_OK(wt);
   AsyncWriter w;
   AsyncToken t;
   std::tie(w, t) = *std::move(wt);
-  EXPECT_FALSE(t.valid());
-  EXPECT_THAT(w.PersistedState(),
-              VariantWith<storage::ObjectMetadata>(TestObject()));
+  EXPECT_TRUE(t.valid());
+  auto object = w.Finalize(std::move(t)).get();
+  EXPECT_THAT(object, IsOkAndHolds(TestObject()));
 }
 
 TEST(AsyncClient, ResumeUnbufferedUpload1) {
@@ -462,6 +542,28 @@ TEST(AsyncClient, ResumeUnbufferedUpload2) {
                                             .set<TestOption<1>>("O1-function")
                                             .set<TestOption<2>>("O2-function"))
                 .get();
+  ASSERT_STATUS_OK(wt);
+  AsyncWriter w;
+  AsyncToken t;
+  std::tie(w, t) = *std::move(wt);
+  EXPECT_FALSE(t.valid());
+  EXPECT_THAT(w.PersistedState(),
+              VariantWith<storage::ObjectMetadata>(TestObject()));
+}
+
+TEST(AsyncClient, ResumeUnbufferedUploadResumeFinalized) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(Options{}));
+  EXPECT_CALL(*mock, ResumeUnbufferedUpload).WillOnce([] {
+    auto writer = std::make_unique<MockAsyncWriterConnection>();
+    EXPECT_CALL(*writer, PersistedState).WillRepeatedly(Return(TestObject()));
+
+    return make_ready_future(make_status_or(
+        std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
+  });
+
+  auto client = AsyncClient(mock);
+  auto wt = client.ResumeUnbufferedUpload("resume-upload-id").get();
   ASSERT_STATUS_OK(wt);
   AsyncWriter w;
   AsyncToken t;
