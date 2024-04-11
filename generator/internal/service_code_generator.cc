@@ -217,6 +217,11 @@ bool ServiceCodeGenerator::HasRequestId(
   return method_vars.find("request_id_field_name") != method_vars.end();
 }
 
+bool ServiceCodeGenerator::HasApiVersion() const {
+  auto iter = service_vars_.find("api_version");
+  return iter != service_vars_.end() && !iter->second.empty();
+}
+
 std::vector<std::string>
 ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   std::vector<std::string> include_paths;

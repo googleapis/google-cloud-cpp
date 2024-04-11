@@ -43,8 +43,10 @@ using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanKindIsConsumer;
 using ::google::cloud::testing_util::SpanKindIsInternal;
+using ::google::cloud::testing_util::SpanLinksSizeIs;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::Contains;
@@ -130,6 +132,100 @@ TEST(TracingBatchCallback, VerifySpanIsSetInUserCallback) {
       spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
                             SpanNamed("test-sub subscribe"),
                             SpanHasEvents(EventNamed("gl-cpp.ack_end")))));
+}
+
+TEST(TracingBatchCallback, StartAndEndModackSpanForOneMessage) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(1));
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  *request.add_ack_ids() = "ack-id-0";
+  request.set_ack_deadline_seconds(10);
+  request.set_subscription(TestSubscription().FullName());
+  auto s = batch_callback->StartModackSpan(request);
+  batch_callback->EndModackSpan(s);
+  batch_callback->AckEnd("ack-id-0");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("test-sub modack"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>("gcp.project_id", "test-project"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "extend"),
+              OTelAttribute<int64_t>(sc::kMessagingBatchMessageCount, 1),
+              OTelAttribute<int64_t>(
+                  "messaging.gcp_pubsub.message.ack_deadline_seconds", 10),
+              OTelAttribute<std::string>(sc::kMessagingDestinationName,
+                                         "test-sub")),
+          SpanLinksSizeIs(1))));
+}
+
+TEST(TracingBatchCallback, StartAndEndModackSpanForMultipleMessages) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+  auto batch_callback = MakeTestBatchCallback(std::move(mock));
+
+  batch_callback->callback(MakeResponse(2));
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  *request.add_ack_ids() = "ack-id-0";
+  *request.add_ack_ids() = "ack-id-1";
+  request.set_ack_deadline_seconds(10);
+  request.set_subscription(TestSubscription().FullName());
+  auto s = batch_callback->StartModackSpan(request);
+  batch_callback->EndModackSpan(s);
+  batch_callback->AckEnd("ack-id-0");
+  batch_callback->AckEnd("ack-id-1");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("test-sub modack"),
+          SpanHasAttributes(
+              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>("gcp.project_id", "test-project"),
+              OTelAttribute<std::string>(sc::kMessagingOperation, "extend"),
+              OTelAttribute<int64_t>(sc::kMessagingBatchMessageCount, 2),
+              OTelAttribute<int64_t>(
+                  "messaging.gcp_pubsub.message.ack_deadline_seconds", 10),
+              OTelAttribute<std::string>(sc::kMessagingDestinationName,
+                                         "test-sub")),
+          SpanLinksSizeIs(2))));
+}
+
+TEST(TracingBatchCallback, VerifyModackSpansAreEndedInDestructor) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock, callback).Times(1);
+
+  // Create batch callback within the scope, so it is destroyed before the
+  // `GetSpans` call. This will trigger the destructor call and the spans to be
+  // ended.
+  {
+    auto batch_callback = MakeTestBatchCallback(std::move(mock));
+    batch_callback->callback(MakeResponse(1));
+    google::pubsub::v1::ModifyAckDeadlineRequest request;
+    *request.add_ack_ids() = "ack-id-0";
+    request.set_ack_deadline_seconds(10);
+    request.set_subscription(TestSubscription().FullName());
+    batch_callback->StartModackSpan(request);
+  }
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                             SpanNamed("test-sub modack"))));
 }
 
 TEST(TracingBatchCallback, SubscribeAttributes) {

@@ -106,8 +106,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
-  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1009}
+  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L969}
+  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1010}
   ///
   // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
@@ -153,8 +153,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
-  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1009}
+  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L969}
+  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1010}
   ///
   // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
@@ -183,8 +183,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
-  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1009}
+  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L969}
+  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1010}
   ///
   // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
@@ -225,8 +225,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1018}
-  /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1051}
+  /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1019}
+  /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1052}
   ///
   // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
@@ -255,8 +255,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1018}
-  /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1051}
+  /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1019}
+  /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1052}
   ///
   // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
@@ -306,9 +306,9 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.LogEntry]: @googleapis_reference_link{generator/integration_tests/test.proto#L1146}
-  /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1057}
-  /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1088}
+  /// [google.test.admin.database.v1.LogEntry]: @googleapis_reference_link{generator/integration_tests/test.proto#L1147}
+  /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1058}
+  /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1089}
   ///
   // clang-format on
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
@@ -343,8 +343,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1057}
-  /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1088}
+  /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1058}
+  /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1089}
   ///
   // clang-format on
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
@@ -381,7 +381,7 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1091}
+  /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1092}
   ///
   // clang-format on
   StreamRange<std::string>
@@ -418,7 +418,7 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1091}
+  /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1092}
   ///
   // clang-format on
   StreamRange<std::string>
@@ -451,8 +451,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1324}
-  /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1354}
+  /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1325}
+  /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1355}
   ///
   // clang-format on
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
@@ -482,8 +482,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1324}
-  /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1354}
+  /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1325}
+  /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1355}
   ///
   // clang-format on
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
@@ -552,7 +552,7 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
+  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L969}
   ///
   // clang-format on
   Status
@@ -579,7 +579,7 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
+  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L969}
   ///
   // clang-format on
   Status
@@ -603,8 +603,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.Request]: @googleapis_reference_link{generator/integration_tests/test.proto#L957}
-  /// [google.test.admin.database.v1.Response]: @googleapis_reference_link{generator/integration_tests/test.proto#L963}
+  /// [google.test.admin.database.v1.Request]: @googleapis_reference_link{generator/integration_tests/test.proto#L958}
+  /// [google.test.admin.database.v1.Response]: @googleapis_reference_link{generator/integration_tests/test.proto#L964}
   ///
   // clang-format on
   StreamRange<google::test::admin::database::v1::Response>
@@ -633,8 +633,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.Request]: @googleapis_reference_link{generator/integration_tests/test.proto#L957}
-  /// [google.test.admin.database.v1.Response]: @googleapis_reference_link{generator/integration_tests/test.proto#L963}
+  /// [google.test.admin.database.v1.Request]: @googleapis_reference_link{generator/integration_tests/test.proto#L958}
+  /// [google.test.admin.database.v1.Response]: @googleapis_reference_link{generator/integration_tests/test.proto#L964}
   ///
   // clang-format on
   StreamRange<google::test::admin::database::v1::Response>
@@ -661,8 +661,8 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.Request]: @googleapis_reference_link{generator/integration_tests/test.proto#L957}
-  /// [google.test.admin.database.v1.Response]: @googleapis_reference_link{generator/integration_tests/test.proto#L963}
+  /// [google.test.admin.database.v1.Request]: @googleapis_reference_link{generator/integration_tests/test.proto#L958}
+  /// [google.test.admin.database.v1.Response]: @googleapis_reference_link{generator/integration_tests/test.proto#L964}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -706,7 +706,7 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.ExplicitRoutingRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1361}
+  /// [google.test.admin.database.v1.ExplicitRoutingRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1362}
   ///
   // clang-format on
   Status
@@ -734,7 +734,7 @@ class GoldenKitchenSinkClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.admin.database.v1.ExplicitRoutingRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1361}
+  /// [google.test.admin.database.v1.ExplicitRoutingRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1362}
   ///
   // clang-format on
   Status

@@ -676,6 +676,8 @@ VarsDictionary CreateServiceVars(
   auto const& service_name = GetEffectiveServiceName(vars, descriptor.name());
   vars["product_options_page"] = OptionsGroup(vars["product_path"]);
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
+  vars["api_version"] =
+      descriptor.options().GetExtension(google::api::api_version);
   vars["class_comment_block"] = FormatClassCommentsFromServiceComments(
       descriptor, service_name, GetReplacementComment(vars, service_name));
   vars["client_class_name"] = absl::StrCat(service_name, "Client");

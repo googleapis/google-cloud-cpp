@@ -320,6 +320,11 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
       "\n}\n");
 }
 
+std::string DiscoveryResource::DebugString() const {
+  return absl::StrCat("name: ", name_, "; package_name: ", package_name_,
+                      "; json_: ", json_.dump());
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

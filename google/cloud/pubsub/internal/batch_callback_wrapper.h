@@ -71,6 +71,12 @@ class BatchCallbackWrapper : public BatchCallback {
     child_->EndScheduler(ack_id);
   }
 
+  Span StartModackSpan(
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
+    return child_->StartModackSpan(request);
+  }
+  void EndModackSpan(Span span) override { child_->EndModackSpan(span); }
+
   void AckStart(std::string const& ack_id) override {
     child_->AckStart(ack_id);
   }

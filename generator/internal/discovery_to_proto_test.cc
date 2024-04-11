@@ -155,11 +155,11 @@ TEST_F(ExtractTypesFromSchemaTest, SchemaMissingType) {
   ASSERT_TRUE(parsed_json.is_object());
   auto types = ExtractTypesFromSchema({}, parsed_json, &pool());
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
-                              HasSubstr("contains non object schema")));
+                              HasSubstr("unrecognized schema type")));
   auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(
-      log_lines,
-      Contains(HasSubstr("MissingType not type:object; is instead untyped")));
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("MissingType type is not in "
+                                 "`recognized_types`; is instead untyped")));
 }
 
 TEST_F(ExtractTypesFromSchemaTest, SchemaNonObject) {
@@ -180,11 +180,33 @@ TEST_F(ExtractTypesFromSchemaTest, SchemaNonObject) {
   ASSERT_TRUE(parsed_json.is_object());
   auto types = ExtractTypesFromSchema({}, parsed_json, &pool());
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
-                              HasSubstr("contains non object schema")));
+                              HasSubstr("unrecognized schema type")));
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(
       log_lines,
-      Contains(HasSubstr("NonObject not type:object; is instead array")));
+      Contains(HasSubstr(
+          "NonObject type is not in `recognized_types`; is instead array")));
+}
+
+TEST_F(ExtractTypesFromSchemaTest, SchemaAnyType) {
+  auto constexpr kDiscoveryDocWithAnyTypeSchema = R"""(
+{
+  "schemas": {
+    "Foo": {
+      "id": "Foo",
+      "type": "any"
+    }
+  }
+}
+)""";
+
+  testing_util::ScopedLog log;
+  auto parsed_json =
+      nlohmann::json::parse(kDiscoveryDocWithAnyTypeSchema, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto types = ExtractTypesFromSchema({}, parsed_json, &pool());
+  ASSERT_THAT(types, IsOk());
+  EXPECT_THAT(*types, UnorderedElementsAre(Key("Foo")));
 }
 
 TEST(ExtractResourcesTest, EmptyResources) {
@@ -1592,6 +1614,101 @@ TEST_F(ApplyResourceLabelsToTypesTest,
   EXPECT_THAT(label2->needed_by_resource(), ElementsAre("resource_name"));
   EXPECT_THAT(localized_message->needed_by_resource(),
               ElementsAre("other_resource_name", "resource_name"));
+}
+
+TEST_F(ApplyResourceLabelsToTypesTest, HandleCirclularDependency) {
+  // Create the nested schema dependency. The following jsons establish a
+  // recursive relationship in the TableFieldSchema.
+  auto constexpr kTableSchemaJson = R"""({
+      "description": "Schema of a table",
+      "id": "TableSchema",
+      "properties": {
+        "fields": {
+          "description": "Describes the fields in a table.",
+          "items": {
+            "$ref": "TableFieldSchema"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+})""";
+  auto const table_schema_json =
+      nlohmann::json::parse(kTableSchemaJson, nullptr, false);
+  ASSERT_TRUE(table_schema_json.is_object());
+
+  auto constexpr kTableFieldSchemaJson = R"""({
+        "id": "TableFieldSchema",
+        "type": "object",
+        "properties": {
+            "fields": {
+            "items": {
+              "$ref": "TableFieldSchema"
+            },
+            "type": "array"
+          }
+        }
+  })""";
+  auto const table_field_schema_json =
+      nlohmann::json::parse(kTableFieldSchemaJson, nullptr, false);
+  ASSERT_TRUE(table_field_schema_json.is_object());
+
+  // Create a map of the types to establish the type dependencies.
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto add_to_types = [&](DiscoveryTypeVertex t,
+                          DiscoveryTypeVertex*& return_val) {
+    auto iter = types.emplace(t.name(), std::move(t));
+    ASSERT_TRUE(iter.second);
+    return_val = &(iter.first->second);
+  };
+
+  DiscoveryTypeVertex* table_schema;
+  add_to_types(DiscoveryTypeVertex{"TableSchema", "package_name",
+                                   table_schema_json, &pool()},
+               table_schema);
+  DiscoveryTypeVertex* table_field_schema;
+  add_to_types(DiscoveryTypeVertex{"TableFieldSchema", "package_name",
+                                   table_field_schema_json, &pool()},
+               table_field_schema);
+
+  // Create the corresponding resource that refers to the problematic schema.
+  auto constexpr kQueryResponseJson = R"""({
+        "id": "QueryResponse",
+        "properties": {
+          "schema": {
+            "$ref": "TableSchema"
+          }
+        },
+        "type": "object"
+  })""";
+  auto const query_response_json =
+      nlohmann::json::parse(kQueryResponseJson, nullptr, false);
+  ASSERT_TRUE(query_response_json.is_object());
+  // Add the QueryResponse schema which references the recursive schema.s
+  auto response_iter = types.emplace(
+      "QueryResponse", DiscoveryTypeVertex{"QueryResponse", "package_name",
+                                           query_response_json, &pool()});
+  ASSERT_TRUE(response_iter.second);
+  DiscoveryTypeVertex* response = &response_iter.first->second;
+  // Establish the type dependencies based on the given jsons. This will add
+  // metadata to each node based on the "$ref" tag in the json.
+  auto result = EstablishTypeDependencies(types);
+  ASSERT_STATUS_OK(result);
+
+  // Create a DiscoveryResource with the QueryResponse type.
+  std::map<std::string, DiscoveryResource> resources;
+  auto resource_iter = resources.emplace(
+      "resource_name", DiscoveryResource("resource_name", "package_name", {}));
+  ASSERT_TRUE(resource_iter.second);
+  auto& resource = resource_iter.first->second;
+  resource.AddResponseType("QueryResponse", response);
+
+  ApplyResourceLabelsToTypes(resources);
+
+  EXPECT_THAT(response->needed_by_resource(), ElementsAre("resource_name"));
+  EXPECT_THAT(table_schema->needed_by_resource(), ElementsAre("resource_name"));
+  EXPECT_THAT(table_field_schema->needed_by_resource(),
+              ElementsAre("resource_name"));
 }
 
 class AssignResourcesAndTypesToFilesTest
