@@ -17,6 +17,7 @@
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -31,6 +32,7 @@ using ::google::cloud::storage_experimental::AsyncWriterConnection;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::AtMost;
@@ -51,15 +53,16 @@ Options TestOptions() {
       .set<storage_experimental::BufferedUploadHwmOption>(32 * 1024);
 }
 
-absl::variant<std::int64_t, storage::ObjectMetadata> MakePersistedState(
+absl::variant<std::int64_t, google::storage::v2::Object> MakePersistedState(
     std::int64_t persisted_size) {
   return persisted_size;
 }
 
-storage::ObjectMetadata TestObject() {
-  return storage::ObjectMetadata()
-      .set_bucket("test-bucket")
-      .set_name("test-object");
+auto TestObject() {
+  auto object = google::storage::v2::Object{};
+  object.set_bucket("projects/_/buckets/test-bucket");
+  object.set_name("test-object");
+  return object;
 }
 
 storage_experimental::WritePayload TestPayload(std::size_t n) {
@@ -74,7 +77,7 @@ TEST(WriteConnectionBuffered, FinalizeEmpty) {
       .WillRepeatedly(Return(MakePersistedState(0)));
   EXPECT_CALL(*mock, Finalize).WillRepeatedly([&](auto) {
     return sequencer.PushBack("Finalize")
-        .then([](auto f) -> StatusOr<storage::ObjectMetadata> {
+        .then([](auto f) -> StatusOr<google::storage::v2::Object> {
           if (!f.get()) return TransientError();
           return TestObject();
         });
@@ -91,7 +94,7 @@ TEST(WriteConnectionBuffered, FinalizeEmpty) {
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finalize");
   next.first.set_value(true);
-  EXPECT_THAT(finalize.get(), IsOkAndHolds(TestObject()));
+  EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
 }
 
 TEST(WriteConnectionBuffered, FinalizeEmptyResumes) {
@@ -103,7 +106,7 @@ TEST(WriteConnectionBuffered, FinalizeEmptyResumes) {
         .WillRepeatedly(Return(MakePersistedState(0)));
     EXPECT_CALL(*mock, Finalize).Times(AtMost(1)).WillRepeatedly([&](auto) {
       return sequencer.PushBack("Finalize")
-          .then([](auto f) -> StatusOr<storage::ObjectMetadata> {
+          .then([](auto f) -> StatusOr<google::storage::v2::Object> {
             if (!f.get()) return TransientError();
             return TestObject();
           });
@@ -135,7 +138,7 @@ TEST(WriteConnectionBuffered, FinalizeEmptyResumes) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finalize");
   next.first.set_value(true);
-  EXPECT_THAT(finalize.get(), IsOkAndHolds(TestObject()));
+  EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
 }
 
 TEST(WriteConnectionBuffered, FinalizedOnConstruction) {
@@ -151,12 +154,13 @@ TEST(WriteConnectionBuffered, FinalizedOnConstruction) {
   auto connection = MakeWriterConnectionBuffered(
       mock_factory.AsStdFunction(), std::move(mock), TestOptions());
   EXPECT_EQ(connection->UploadId(), "test-upload-id");
-  EXPECT_THAT(connection->PersistedState(),
-              VariantWith<storage::ObjectMetadata>(TestObject()));
+  EXPECT_THAT(
+      connection->PersistedState(),
+      VariantWith<google::storage::v2::Object>(IsProtoEqual(TestObject())));
 
   auto finalize = connection->Finalize({});
   EXPECT_TRUE(finalize.is_ready());
-  EXPECT_THAT(finalize.get(), IsOkAndHolds(TestObject()));
+  EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
 }
 
 TEST(WriteConnectionBuffered, FinalizedOnResume) {
@@ -167,7 +171,7 @@ TEST(WriteConnectionBuffered, FinalizedOnResume) {
       .WillRepeatedly(Return(MakePersistedState(0)));
   EXPECT_CALL(*mock, Finalize).Times(AtMost(1)).WillRepeatedly([&](auto) {
     return sequencer.PushBack("Finalize").then([](auto) {
-      return StatusOr<storage::ObjectMetadata>(TransientError());
+      return StatusOr<google::storage::v2::Object>(TransientError());
     });
   });
 
@@ -198,7 +202,7 @@ TEST(WriteConnectionBuffered, FinalizedOnResume) {
   next.first.set_value(true);
 
   EXPECT_TRUE(finalize.is_ready());
-  EXPECT_THAT(finalize.get(), IsOkAndHolds(TestObject()));
+  EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
 }
 
 TEST(WriteConnectionBuffered, WriteResumes) {
@@ -381,7 +385,7 @@ TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
   EXPECT_EQ(next.second, "Finalize");
   next.first.set_value(true);
 
-  EXPECT_THAT(finalize.get(), IsOkAndHolds(TestObject()));
+  EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
 }
 
 TEST(WriteConnectionBuffered, ReconnectError) {

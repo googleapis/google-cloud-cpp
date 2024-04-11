@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/writer_connection_finalized.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,23 +24,20 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
 using ::testing::VariantWith;
 
 auto MakeTestObject() {
-  return storage::ObjectMetadata{}
-      .set_size(2048)
-      .set_bucket("test-bucket")
-      .set_name("test-object")
-      .set_self_link(
-          "https://test-only.p.googleapis.com/storage/v1/b/test-bucket/o/"
-          "test-object")
-      .set_media_link(
-          "https://test-only.p.googleapis.com/download/storage/v1/b/"
-          "test-bucket/o/test-object?generation=0&alt=media")
-      .set_id("test-bucket/test-object/0")
-      .set_kind("storage#object");
+  auto constexpr kText = R"pb(
+    size: 2048
+    bucket: "projects/_/buckets/test-bucket"
+    name: "test-object"
+  )pb";
+  auto object = google::storage::v2::Object{};
+  google::protobuf::TextFormat::ParseFromString(kText, &object);
+  return object;
 }
 
 TEST(AsyncWriterConnectionFinalized, Basic) {
@@ -47,7 +46,7 @@ TEST(AsyncWriterConnectionFinalized, Basic) {
 
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
   EXPECT_THAT(tested.PersistedState(),
-              VariantWith<storage::ObjectMetadata>(expected));
+              VariantWith<google::storage::v2::Object>(IsProtoEqual(expected)));
 
   EXPECT_THAT(tested.Write({}).get(),
               StatusIs(StatusCode::kFailedPrecondition));

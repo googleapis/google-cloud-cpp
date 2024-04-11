@@ -29,8 +29,8 @@ Status MakeError(google::cloud::internal::ErrorInfoBuilder eib) {
 }  // namespace
 
 AsyncWriterConnectionFinalized::AsyncWriterConnectionFinalized(
-    std::string upload_id, storage::ObjectMetadata metadata)
-    : upload_id_(std::move(upload_id)), metadata_(std::move(metadata)) {}
+    std::string upload_id, google::storage::v2::Object object)
+    : upload_id_(std::move(upload_id)), object_(std::move(object)) {}
 
 AsyncWriterConnectionFinalized::~AsyncWriterConnectionFinalized() = default;
 
@@ -40,9 +40,9 @@ std::string AsyncWriterConnectionFinalized::UploadId() const {
   return upload_id_;
 }
 
-absl::variant<std::int64_t, storage::ObjectMetadata>
+absl::variant<std::int64_t, google::storage::v2::Object>
 AsyncWriterConnectionFinalized::PersistedState() const {
-  return metadata_;
+  return object_;
 }
 
 future<Status> AsyncWriterConnectionFinalized::Write(
@@ -50,10 +50,10 @@ future<Status> AsyncWriterConnectionFinalized::Write(
   return make_ready_future(MakeError(GCP_ERROR_INFO()));
 }
 
-future<StatusOr<storage::ObjectMetadata>>
+future<StatusOr<google::storage::v2::Object>>
 AsyncWriterConnectionFinalized::Finalize(storage_experimental::WritePayload) {
   return make_ready_future(
-      StatusOr<storage::ObjectMetadata>(MakeError(GCP_ERROR_INFO())));
+      StatusOr<google::storage::v2::Object>(MakeError(GCP_ERROR_INFO())));
 }
 
 future<Status> AsyncWriterConnectionFinalized::Flush(

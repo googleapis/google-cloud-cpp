@@ -48,17 +48,17 @@ class AsyncWriterConnectionImpl
       google::storage::v2::BidiWriteObjectRequest request,
       std::unique_ptr<StreamingRpc> impl,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
-      storage::ObjectMetadata metadata);
+      google::storage::v2::Object metadata);
   ~AsyncWriterConnectionImpl() override;
 
   void Cancel() override { return impl_->Cancel(); }
 
   std::string UploadId() const override;
-  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
+  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override;
 
   future<Status> Write(storage_experimental::WritePayload payload) override;
-  future<StatusOr<storage::ObjectMetadata>> Finalize(
+  future<StatusOr<google::storage::v2::Object>> Finalize(
       storage_experimental::WritePayload) override;
   future<Status> Flush(storage_experimental::WritePayload payload) override;
   future<StatusOr<std::int64_t>> Query() override;
@@ -66,7 +66,7 @@ class AsyncWriterConnectionImpl
 
  private:
   using PersistedStateType =
-      absl::variant<std::int64_t, storage::ObjectMetadata>;
+      absl::variant<std::int64_t, google::storage::v2::Object>;
   AsyncWriterConnectionImpl(
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::BidiWriteObjectRequest request,
@@ -78,7 +78,7 @@ class AsyncWriterConnectionImpl
 
   future<Status> OnPartialUpload(std::size_t upload_size,
                                  StatusOr<bool> success);
-  future<StatusOr<storage::ObjectMetadata>> OnFinalUpload(
+  future<StatusOr<google::storage::v2::Object>> OnFinalUpload(
       std::size_t upload_size, StatusOr<bool> success);
   future<StatusOr<std::int64_t>> OnQuery(
       absl::optional<google::storage::v2::BidiWriteObjectResponse> response);

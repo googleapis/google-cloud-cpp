@@ -55,7 +55,7 @@ TEST(AsyncWriterTest, Basic) {
       .WillOnce([] { return make_ready_future(Status{}); });
   EXPECT_CALL(*mock, Finalize(WritePayloadContents(ElementsAre("ccc"))))
       .WillOnce([] {
-        return make_ready_future(make_status_or(storage::ObjectMetadata()));
+        return make_ready_future(make_status_or(google::storage::v2::Object{}));
       });
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
@@ -90,7 +90,7 @@ TEST(AsyncWriterTest, FinalizeEmpty) {
   EXPECT_CALL(*mock, Write(WritePayloadContents(ElementsAre("bbb"))))
       .WillOnce([] { return make_ready_future(Status{}); });
   EXPECT_CALL(*mock, Finalize(WritePayloadContents(IsEmpty()))).WillOnce([] {
-    return make_ready_future(make_status_or(storage::ObjectMetadata()));
+    return make_ready_future(make_status_or(google::storage::v2::Object{}));
   });
 
   auto token = storage_internal::MakeAsyncToken(mock.get());
@@ -121,7 +121,7 @@ TEST(AsyncWriterTest, ErrorOnFinalize) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, Finalize).WillOnce([] {
     return make_ready_future(
-        StatusOr<storage::ObjectMetadata>(PermanentError()));
+        StatusOr<google::storage::v2::Object>(PermanentError()));
   });
 
   auto token = storage_internal::MakeAsyncToken(mock.get());

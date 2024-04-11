@@ -132,51 +132,6 @@ class InsertObjectRequest {
 };
 
 /**
- * A request to start or resume a resumable upload.
- *
- * This class can hold all the mandatory and optional parameters to start or
- * resume a resumable upload. Resumable uploads can be used to stream large
- * objects as they can recover when the upload is interrupted. This request
- * does not contain any of the payload for the object; that is provided via a
- * `storage_experimental::AsyncWriter`.
- *
- * This class is in the public API for the library because it is required for
- * mocking.
- */
-class ResumableUploadRequest {
- public:
-  ResumableUploadRequest() = default;
-  ResumableUploadRequest(std::string bucket_name, std::string object_name)
-      : impl_(std::move(bucket_name), std::move(object_name)) {}
-
-  std::string const& bucket_name() const { return impl_.bucket_name(); }
-  std::string const& object_name() const { return impl_.object_name(); }
-
-  template <typename... T>
-  ResumableUploadRequest& set_multiple_options(T&&... o) & {
-    impl_.set_multiple_options(std::forward<T>(o)...);
-    return *this;
-  }
-  template <typename... T>
-  ResumableUploadRequest&& set_multiple_options(T&&... o) && {
-    return std::move(set_multiple_options(std::forward<T>(o)...));
-  }
-
-  template <typename T>
-  bool HasOption() const {
-    return impl_.HasOption<T>();
-  }
-  template <typename T>
-  T GetOption() const {
-    return impl_.GetOption<T>();
-  }
-
- protected:
-  friend class storage_internal::AsyncConnectionImpl;
-  storage::internal::ResumableUploadRequest impl_;
-};
-
-/**
  * A request to read an object.
  *
  * This class can hold all the mandatory and optional parameters to read an

@@ -72,9 +72,9 @@ class AsyncWriterConnectionBufferedState
         impl_(std::move(impl)) {
     finalized_future_ = finalized_.get_future();
     auto state = impl_->PersistedState();
-    if (absl::holds_alternative<storage::ObjectMetadata>(state)) {
+    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
       SetFinalized(std::unique_lock<std::mutex>(mu_),
-                   absl::get<storage::ObjectMetadata>(std::move(state)));
+                   absl::get<google::storage::v2::Object>(std::move(state)));
       cancelled_ = true;
       resume_status_ = internal::CancelledError("upload already finalized",
                                                 GCP_ERROR_INFO());
@@ -95,7 +95,8 @@ class AsyncWriterConnectionBufferedState
     return UploadId(std::unique_lock<std::mutex>(mu_));
   }
 
-  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState() const {
+  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
+      const {
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
   }
 
@@ -105,7 +106,7 @@ class AsyncWriterConnectionBufferedState
     return HandleNewData(std::move(lk));
   }
 
-  future<StatusOr<storage::ObjectMetadata>> Finalize(
+  future<StatusOr<google::storage::v2::Object>> Finalize(
       storage_experimental::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
@@ -188,7 +189,7 @@ class AsyncWriterConnectionBufferedState
         });
   }
 
-  void OnFinalize(StatusOr<storage::ObjectMetadata> result) {
+  void OnFinalize(StatusOr<google::storage::v2::Object> result) {
     if (!result) return Resume(std::move(result).status());
     SetFinalized(std::unique_lock<std::mutex>(mu_), std::move(result));
   }
@@ -290,27 +291,27 @@ class AsyncWriterConnectionBufferedState
     if (!impl) return SetError(std::move(lk), std::move(impl).status());
     impl_ = *std::move(impl);
     auto state = impl_->PersistedState();
-    if (absl::holds_alternative<storage::ObjectMetadata>(state)) {
-      return SetFinalized(std::move(lk),
-                          absl::get<storage::ObjectMetadata>(std::move(state)));
+    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+      return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
+                                             std::move(state)));
     }
     OnQuery(std::move(lk), absl::get<std::int64_t>(state));
   }
 
   void SetFinalized(std::unique_lock<std::mutex> lk,
-                    StatusOr<storage::ObjectMetadata> r) {
+                    StatusOr<google::storage::v2::Object> r) {
     if (!r) return SetError(std::move(lk), std::move(r).status());
     SetFinalized(std::move(lk), *std::move(r));
   }
 
   void SetFinalized(std::unique_lock<std::mutex> lk,
-                    storage::ObjectMetadata object) {
+                    google::storage::v2::Object object) {
     resend_buffer_.Clear();
     writing_ = false;
     finalize_ = false;
     flush_ = false;
     auto handlers = ClearHandlers(lk);
-    promise<StatusOr<storage::ObjectMetadata>> finalized{null_promise_t{}};
+    promise<StatusOr<google::storage::v2::Object>> finalized{null_promise_t{}};
     finalized.swap(finalized_);
     lk.unlock();
     for (auto& h : handlers) h->Execute(Status{});
@@ -323,7 +324,7 @@ class AsyncWriterConnectionBufferedState
     finalize_ = false;
     flush_ = false;
     auto handlers = ClearHandlers(lk);
-    promise<StatusOr<storage::ObjectMetadata>> finalized{null_promise_t{}};
+    promise<StatusOr<google::storage::v2::Object>> finalized{null_promise_t{}};
     finalized.swap(finalized_);
     lk.unlock();
     for (auto& h : handlers) h->Execute(status);
@@ -366,11 +367,11 @@ class AsyncWriterConnectionBufferedState
 
   // The result of calling `Finalize()`. Note that only one such call is ever
   // made.
-  promise<StatusOr<storage::ObjectMetadata>> finalized_;
+  promise<StatusOr<google::storage::v2::Object>> finalized_;
 
   // Retrieve the future in the constructor, as some operations reset
   // finalized_.
-  future<StatusOr<storage::ObjectMetadata>> finalized_future_;
+  future<StatusOr<google::storage::v2::Object>> finalized_future_;
 
   // The resend buffer. If there is an error, this will have all the data since
   // the last persisted byte and will be resent.
@@ -460,7 +461,7 @@ class AsyncWriterConnectionBuffered
 
   std::string UploadId() const override { return state_->UploadId(); }
 
-  absl::variant<std::int64_t, storage::ObjectMetadata> PersistedState()
+  absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {
     return state_->PersistedState();
   }
@@ -469,7 +470,7 @@ class AsyncWriterConnectionBuffered
     return state_->Write(std::move(p));
   }
 
-  future<StatusOr<storage::ObjectMetadata>> Finalize(
+  future<StatusOr<google::storage::v2::Object>> Finalize(
       storage_experimental::WritePayload p) override {
     return state_->Finalize(std::move(p));
   }
