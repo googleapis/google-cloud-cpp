@@ -103,11 +103,13 @@ jobs:
         fi
     - name: Install bash >= 5.x and Ninja
       run: brew install bash ninja
-    - name: Download cmake formula(3.27.2) and install
+    - name: Install CMake==3.27.2
+      working-directory: "${{runner.temp}}"
       run: |
-        brew install wget
+        # Remove the older CMake version
         brew unlink cmake
-        wget https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
+        # Download the Homebrew formula for CMake==3.27.2
+        curl -fsSL -o cmake.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/fd21fcf239bcd0231c9fed5719403ec128151af4/Formula/cmake.rb
         brew install cmake.rb
     - name: Download and Install sccache
       working-directory: "${{runner.temp}}"
