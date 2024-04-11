@@ -107,7 +107,7 @@ class AsyncConnection {
   struct UploadParams {
     /// The bucket name and object name for the new object. Includes optional
     /// parameters such as pre-conditions on the new object.
-    ResumableUploadRequest request;
+    google::storage::v2::StartResumableWriteRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
     Options options;

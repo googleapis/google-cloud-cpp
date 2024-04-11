@@ -211,24 +211,9 @@ future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartUnbufferedUpload(UploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
 
-  auto start_request = ToProto(p.request.impl_);
-  if (!start_request) {
-    return make_ready_future(
-        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-            std::move(start_request).status()));
-  }
-  if (p.request.HasOption<storage::UseResumableUploadSession>()) {
-    auto query = google::storage::v2::QueryWriteStatusRequest{};
-    query.set_upload_id(
-        p.request.GetOption<storage::UseResumableUploadSession>().value());
-    *query.mutable_common_object_request_params() =
-        std::move(*start_request->mutable_common_object_request_params());
-    return ResumeUpload(current, std::move(query));
-  }
-
-  auto response = StartResumableWrite(current, *start_request);
+  auto response = StartResumableWrite(current, p.request);
   return response.then([w = WeakFromThis(), current = std::move(current),
-                        request = *std::move(start_request)](auto f) mutable {
+                        request = std::move(p.request)](auto f) mutable {
     auto self = w.lock();
     if (auto self = w.lock()) {
       return self->StartUnbufferedUploadImpl(std::move(current),
@@ -243,13 +228,7 @@ AsyncConnectionImpl::StartUnbufferedUpload(UploadParams p) {
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
   auto current = internal::MakeImmutableOptions(p.options);
-  auto start_request = ToProto(p.request.impl_);
-  if (!start_request) {
-    return make_ready_future(
-        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
-            std::move(start_request).status()));
-  }
-  auto async_write_object = [c = current, start = *start_request,
+  auto async_write_object = [c = current, start = p.request,
                              w = WeakFromThis()](
                                 std::string const& upload_id) mutable {
     auto query = google::storage::v2::QueryWriteStatusRequest{};
