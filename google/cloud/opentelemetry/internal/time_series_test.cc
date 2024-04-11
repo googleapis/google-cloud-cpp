@@ -493,6 +493,8 @@ TEST(ToRequest, Sum) {
   md.point_data_attr_.push_back(std::move(pda));
   md.instrument_descriptor.name_ = "metric-name";
   md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.type_ = {};
+  md.instrument_descriptor.value_type_ = {};
 
   opentelemetry::sdk::metrics::ScopeMetrics sm;
   sm.metric_data_.push_back(md);
@@ -520,6 +522,8 @@ TEST(ToRequest, Gauge) {
   md.point_data_attr_.push_back(std::move(pda));
   md.instrument_descriptor.name_ = "metric-name";
   md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.type_ = {};
+  md.instrument_descriptor.value_type_ = {};
 
   opentelemetry::sdk::metrics::ScopeMetrics sm;
   sm.metric_data_.push_back(md);
@@ -547,6 +551,8 @@ TEST(ToRequest, Histogram) {
   md.point_data_attr_.push_back(std::move(pda));
   md.instrument_descriptor.name_ = "metric-name";
   md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.type_ = {};
+  md.instrument_descriptor.value_type_ = {};
 
   opentelemetry::sdk::metrics::ScopeMetrics sm;
   sm.metric_data_.push_back(md);
@@ -574,6 +580,8 @@ TEST(ToRequest, DropIgnored) {
   md.point_data_attr_.push_back(std::move(pda));
   md.instrument_descriptor.name_ = "metric-name";
   md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.type_ = {};
+  md.instrument_descriptor.value_type_ = {};
 
   opentelemetry::sdk::metrics::ScopeMetrics sm;
   sm.metric_data_.push_back(md);
@@ -605,6 +613,8 @@ TEST(ToRequest, Combined) {
   md.point_data_attr_.push_back(std::move(drop_pda));
   md.instrument_descriptor.name_ = "metric-name";
   md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.type_ = {};
+  md.instrument_descriptor.value_type_ = {};
 
   opentelemetry::sdk::metrics::ScopeMetrics sm;
   sm.metric_data_.push_back(std::move(md));
