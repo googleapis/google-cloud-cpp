@@ -48,7 +48,7 @@ StatusOr<BucketName> MakeBucketName(absl::string_view full_name) {
   if (!absl::ConsumePrefix(&full_name, kPrefix)) {
     return internal::InvalidArgumentError(
         absl::StrCat("missing prefix (", kPrefix,
-                     ") for in bucket name: ", full_name),
+                     ") in bucket name: ", full_name),
         GCP_ERROR_INFO());
   }
   return BucketName(std::string(full_name));
