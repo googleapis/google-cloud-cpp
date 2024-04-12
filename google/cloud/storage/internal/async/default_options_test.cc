@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/default_options.h"
+#include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/common_options.h"
@@ -28,18 +29,36 @@ using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::NotNull;
 
-TEST(DefaultOptionsAsync, Basic) {
+TEST(DefaultOptionsAsync, BufferedWaterMarks) {
   auto const options = DefaultOptionsAsync({});
   auto const lwm = options.get<storage_experimental::BufferedUploadLwmOption>();
   auto const hwm = options.get<storage_experimental::BufferedUploadHwmOption>();
   EXPECT_GE(lwm, 256 * 1024);
   EXPECT_LT(lwm, hwm);
+}
+
+TEST(DefaultOptionsAsync, Endpoint) {
+  auto const options = DefaultOptionsAsync({});
   // We use EndpointOption as a canary to test that most options are set.
   EXPECT_TRUE(options.has<EndpointOption>());
   EXPECT_THAT(options.get<EndpointOption>(), Not(IsEmpty()));
+}
+
+TEST(DefaultOptionsAsync, ResumePolicy) {
+  auto const options = DefaultOptionsAsync({});
   // Verify the ResumePolicyOption is set and it creates valid policies.
   EXPECT_TRUE(options.has<storage_experimental::ResumePolicyOption>());
   auto factory = options.get<storage_experimental::ResumePolicyOption>();
+  EXPECT_TRUE(static_cast<bool>(factory));
+  auto policy = factory();
+  EXPECT_THAT(policy, NotNull());
+}
+
+TEST(DefaultOptionsAsync, IdempotencyPolicy) {
+  auto const options = DefaultOptionsAsync({});
+  // Verify the IdempotencyPolicyOption is set and it creates valid policies.
+  EXPECT_TRUE(options.has<storage_experimental::IdempotencyPolicyOption>());
+  auto factory = options.get<storage_experimental::IdempotencyPolicyOption>();
   EXPECT_TRUE(static_cast<bool>(factory));
   auto policy = factory();
   EXPECT_THAT(policy, NotNull());
