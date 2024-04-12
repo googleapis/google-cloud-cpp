@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_REQUEST_PARSER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_REQUEST_PARSER_H
 
-#include "google/cloud/storage/async/object_requests.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/rpc_metadata.h"

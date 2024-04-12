@@ -12,16 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_REQUESTS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_REQUESTS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITE_PAYLOAD_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITE_PAYLOAD_H
 
-#include "google/cloud/storage/internal/async/connection_fwd.h"
 #include "google/cloud/storage/internal/async/write_payload_fwd.h"
 #include "google/cloud/storage/internal/grpc/make_cord.h"
-#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "absl/strings/cord.h"
-#include "absl/types/optional.h"
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -88,4 +85,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_REQUESTS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITE_PAYLOAD_H

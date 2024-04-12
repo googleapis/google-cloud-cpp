@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_IMPL_H
 
 #include "google/cloud/storage/async/connection.h"
-#include "google/cloud/storage/async/object_requests.h"
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/async/rewriter_connection.h"
 #include "google/cloud/storage/idempotency_policy.h"

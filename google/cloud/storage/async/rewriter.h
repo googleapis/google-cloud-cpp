@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_REWRITER_H
 
 #include "google/cloud/storage/async/connection.h"
-#include "google/cloud/storage/async/object_requests.h"
 #include "google/cloud/storage/async/rewriter_connection.h"
 #include "google/cloud/storage/async/token.h"
 #include "google/cloud/storage/object_metadata.h"
