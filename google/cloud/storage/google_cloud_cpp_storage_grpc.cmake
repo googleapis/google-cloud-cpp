@@ -193,6 +193,7 @@ else ()
         google_cloud_cpp_storage_grpc
         PUBLIC google-cloud-cpp::storage
                google-cloud-cpp::storage_protos
+               google-cloud-cpp::opentelemetry
                google-cloud-cpp::grpc_utils
                google-cloud-cpp::common
                nlohmann_json::nlohmann_json
