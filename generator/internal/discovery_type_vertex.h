@@ -145,6 +145,17 @@ class DiscoveryTypeVertex {
       TypeInfo const& type_and_synthesize, std::string& type_name,
       std::string& qualified_type_name) const;
 
+  Status FormatPropertiesHelper(
+      std::map<std::string, DiscoveryTypeVertex> const& types,
+      std::string const& message_name,
+      std::string const& qualified_message_name,
+      std::string const& file_package_name, nlohmann::json const& field,
+      std::string json_field_name, int indent_level,
+      MessageProperties& message_properties,
+      google::protobuf::Descriptor const* message_descriptor,
+      std::set<std::string>& current_field_names,
+      std::string const& indent) const;
+
   std::string name_;
   std::string package_name_;
   nlohmann::json json_;

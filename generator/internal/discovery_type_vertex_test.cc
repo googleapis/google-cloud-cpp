@@ -465,6 +465,34 @@ TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufMapType) {
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufBigQueryMapType) {
+  auto constexpr kSchemaJson = R"""({
+      "additionalProperties": {
+        "$ref": "JsonValue"
+      },
+      "description": "Represents a single JSON object.",
+      "id": "JsonObject",
+      "type": "object"
+})""";
+
+  auto constexpr kExpectedProto = R"""(// Represents a single JSON object.
+message JsonObject {
+  // Represents a single JSON object.
+  map<string, JsonValue> json_object = 1 [json_name="JsonObject"];
+}
+)""";
+
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("JsonObject", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("JsonValue",
+                DiscoveryTypeVertex{"JsonValue", "test.package", {}, &pool()});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
 TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufArrayTypes) {
   auto constexpr kSchemaJson = R"""(
 {
