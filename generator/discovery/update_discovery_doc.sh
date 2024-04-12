@@ -21,7 +21,7 @@ source module ci/lib/io.sh
 
 function print_service_textproto() {
   service_proto_path="${1#protos/}"
-  product_path="${service_proto_path%/*\.proto}"
+  product_path="${service_proto_path%/*.proto}"
   initial_copyright_year=$(date +"%Y")
   cat <<_EOF_
   rest_services {
@@ -36,12 +36,13 @@ _EOF_
 }
 
 function add_service_directory() {
-  service_dir=$(echo "${1}" | sed -En 's/protos\/google\/cloud\/compute\/(.*\/v[[:digit:]]\/).*\.proto/\1/p')
+  compute_proto_path="${1#protos/google/cloud/compute/}"
+  service_dir="${compute_proto_path%/*.proto}/"
   echo "    \"${service_dir}\""
   # Inserting at line 19 puts the new service just after the "sort" directive
   # for cmake-format.
   # TODO(#13972): A more robust solution would be to search for the
-  #  "cmake-format: sort" and insert after that.
+  # "cmake-format: sort" and insert after that.
   sed -i "19i\    \"${service_dir}\"" "${PROJECT_ROOT}/google/cloud/compute/service_dirs.cmake"
 }
 
