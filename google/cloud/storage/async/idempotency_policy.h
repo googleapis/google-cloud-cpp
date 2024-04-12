@@ -39,7 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Even operations that "add" data can result in data loss. Consider, as another
  * example, inserting a new object. If called without pre-conditions retrying
  * this operation will insert multiple new versions. If the bucket is configured
- * to only keep the las N versions of each object. Then the retry would have
+ * to only keep the last N versions of each object, then the retry would have
  * deleted more data than desired.
  *
  * Some applications are designed to handle duplicate requests without data
