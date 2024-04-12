@@ -97,12 +97,6 @@ class DiscoveryTypeVertex {
     int next_available_field_number;
   };
 
-  // Examines the message Descriptor to determine the reserved field numbers
-  // and the next available field number based on the currently used and/or
-  // reserved field numbers.
-  static MessageProperties DetermineReservedAndMaxFieldNumbers(
-      google::protobuf::Descriptor const& message_descriptor);
-
   // Formats the properties of the json into proto message fields.
   StatusOr<MessageProperties> FormatProperties(
       std::map<std::string, DiscoveryTypeVertex> const& types,
@@ -145,7 +139,7 @@ class DiscoveryTypeVertex {
       TypeInfo const& type_and_synthesize, std::string& type_name,
       std::string& qualified_type_name) const;
 
-  Status Helper(std::map<std::string, DiscoveryTypeVertex> const& types,
+  Status FormatPropertiesHelper(std::map<std::string, DiscoveryTypeVertex> const& types,
                 std::string const& message_name,
                 std::string const& qualified_message_name,
                 std::string const& file_package_name,
