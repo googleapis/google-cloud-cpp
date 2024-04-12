@@ -22,7 +22,6 @@
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/internal/time_utils.h"
-#include "google/cloud/log.h"
 #include <algorithm>
 
 namespace google {

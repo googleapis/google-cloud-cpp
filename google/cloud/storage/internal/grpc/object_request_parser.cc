@@ -22,7 +22,6 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/time_utils.h"
-#include "google/cloud/log.h"
 #include <iterator>
 
 namespace google {
