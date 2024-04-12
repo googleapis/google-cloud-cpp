@@ -60,7 +60,7 @@ inline std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<storage::BackoffPolicyOption>()->clone();
 }
 
-inline std::unique_ptr<storage::IdempotencyPolicy> idempotency_policy(
+inline std::unique_ptr<storage::IdempotencyPolicy> legacy_idempotency_policy(
     Options const& options) {
   return options.get<storage::IdempotencyPolicyOption>()->clone();
 }
@@ -243,7 +243,7 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::ComposeObject(
         StatusOr<storage::ObjectMetadata>(std::move(proto).status()));
   }
   auto const idempotency =
-      idempotency_policy(*current)->IsIdempotent(p.request.impl_)
+      legacy_idempotency_policy(*current)->IsIdempotent(p.request.impl_)
           ? Idempotency::kIdempotent
           : Idempotency::kNonIdempotent;
   auto call = [stub = stub_, request = std::move(p.request)](
@@ -271,7 +271,7 @@ future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto proto = ToProto(p.request.impl_);
   auto const idempotency =
-      idempotency_policy(*current)->IsIdempotent(p.request.impl_)
+      legacy_idempotency_policy(*current)->IsIdempotent(p.request.impl_)
           ? Idempotency::kIdempotent
           : Idempotency::kNonIdempotent;
   auto retry = retry_policy(*current);

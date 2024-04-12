@@ -17,8 +17,10 @@
 """Automatically generated source lists for google_cloud_cpp_storage_grpc - DO NOT EDIT."""
 
 google_cloud_cpp_storage_grpc_hdrs = [
+    "async/bucket_name.h",
     "async/client.h",
     "async/connection.h",
+    "async/idempotency_policy.h",
     "async/object_requests.h",
     "async/object_responses.h",
     "async/reader.h",
@@ -86,7 +88,9 @@ google_cloud_cpp_storage_grpc_hdrs = [
 ]
 
 google_cloud_cpp_storage_grpc_srcs = [
+    "async/bucket_name.cc",
     "async/client.cc",
+    "async/idempotency_policy.cc",
     "async/object_responses.cc",
     "async/reader.cc",
     "async/resume_policy.cc",

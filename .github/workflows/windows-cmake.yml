@@ -93,6 +93,10 @@ jobs:
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
           echo "features=__ga_libraries__,__experimental_libraries__,${skipped:2}" >> "${GITHUB_OUTPUT}"
         fi
+    - name: Download and Install CMake
+      shell: bash
+      run: |
+        choco install -y cmake --version 3.29.0
     - name: Download and Install sccache
       working-directory: "${{runner.temp}}"
       shell: bash
