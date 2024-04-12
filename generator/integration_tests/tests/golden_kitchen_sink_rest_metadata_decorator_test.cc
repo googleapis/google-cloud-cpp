@@ -113,6 +113,8 @@ TEST(KitchenSinkRestMetadataDecoratorTest, CustomHeaders) {
       .WillOnce([](rest_internal::RestContext& context, Options const&,
                    google::test::admin::database::v1::
                        GenerateAccessTokenRequest const&) {
+        EXPECT_THAT(context.GetHeader("x-goog-api-version"),
+                    ElementsAre("test-api-version"));
         EXPECT_THAT(context.GetHeader("header-key0"),
                     ElementsAre("header-value0"));
         EXPECT_THAT(context.GetHeader("header-key1"),
