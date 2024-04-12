@@ -110,11 +110,8 @@ class TracingBatchCallback : public BatchCallback {
         }
         auto subscribe_span = StartSubscribeSpan(
             message, subscription_, propagator_, exactly_once_delivery_enabled);
-        auto scope = internal::OTelScope(subscribe_span);
-        {
-          std::lock_guard<std::mutex> lk(mu_);
-          spans_by_ack_id_[message.ack_id()].subscribe_span = subscribe_span;
-        }
+        std::lock_guard<std::mutex> lk(mu_);
+        spans_by_ack_id_[message.ack_id()].subscribe_span = subscribe_span;
       }
     }
     child_->callback(std::move(response));
@@ -141,16 +138,14 @@ class TracingBatchCallback : public BatchCallback {
     namespace sc = opentelemetry::trace::SemanticConventions;
     std::lock_guard<std::mutex> lk(mu_);
     auto it = spans_by_ack_id_.find(ack_id);
-    if (it != spans_by_ack_id_.end()) {
-      auto subscribe_span = it->second.subscribe_span;
-      if (subscribe_span) {
-        opentelemetry::trace::StartSpanOptions options;
-        options.parent = subscribe_span->GetContext();
-        it->second.concurrency_control_span =
-            internal::MakeSpan("subscriber concurrency control",
-                               {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
-      }
-    }
+    if (it == spans_by_ack_id_.end()) return;
+    auto subscribe_span = it->second.subscribe_span;
+    if (!subscribe_span) return;
+    opentelemetry::trace::StartSpanOptions options;
+    options.parent = subscribe_span->GetContext();
+    it->second.concurrency_control_span =
+        internal::MakeSpan("subscriber concurrency control",
+                           {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
   }
 
   void EndConcurrencyControl(std::string const& ack_id) override {
@@ -169,27 +164,22 @@ class TracingBatchCallback : public BatchCallback {
     namespace sc = opentelemetry::trace::SemanticConventions;
     std::lock_guard<std::mutex> lk(mu_);
     auto spans = spans_by_ack_id_.find(ack_id);
-    if (spans != spans_by_ack_id_.end()) {
-      auto subscribe_span = spans->second.subscribe_span;
-      if (subscribe_span) {
-        opentelemetry::trace::StartSpanOptions options;
-        options.parent = subscribe_span->GetContext();
-        spans->second.scheduler_span =
-            internal::MakeSpan("subscriber scheduler",
-                               {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
-      }
-    }
+    if (spans == spans_by_ack_id_.end()) return;
+    auto subscribe_span = spans->second.subscribe_span;
+    if (!subscribe_span) return;
+    opentelemetry::trace::StartSpanOptions options;
+    options.parent = subscribe_span->GetContext();
+    spans->second.scheduler_span =
+        internal::MakeSpan("subscriber scheduler",
+                           {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
   }
 
   void EndScheduler(std::string const& ack_id) override {
     std::lock_guard<std::mutex> lk(mu_);
     auto spans = spans_by_ack_id_.find(ack_id);
-    if (spans != spans_by_ack_id_.end()) {
-      auto scheduler_span = std::move(spans->second.scheduler_span);
-      if (scheduler_span) {
-        scheduler_span->End();
-      }
-    }
+    if (spans == spans_by_ack_id_.end()) return;
+    auto scheduler_span = std::move(spans->second.scheduler_span);
+    if (scheduler_span) scheduler_span->End();
   }
 
   Span StartModackSpan(
@@ -269,20 +259,19 @@ class TracingBatchCallback : public BatchCallback {
     std::lock_guard<std::mutex> lk(mu_);
     // Use the ack_id to find the subscribe span and add an event to it.
     auto it = spans_by_ack_id_.find(ack_id);
-    if (it != spans_by_ack_id_.end()) {
-      auto subscribe_span = it->second.subscribe_span;
-      subscribe_span->AddEvent(event);
-      if (event == "gl-cpp.ack_end") {
-        subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "ack");
-      } else if (event == "gl-cpp.nack_end") {
-        subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "nack");
-      } else if (event == "gl-cpp.expired") {
-        subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "expired");
-      }
-      if (end_event) {
-        subscribe_span->End();
-        spans_by_ack_id_.erase(it);
-      }
+    if (it == spans_by_ack_id_.end()) return;
+    auto subscribe_span = it->second.subscribe_span;
+    subscribe_span->AddEvent(event);
+    if (event == "gl-cpp.ack_end") {
+      subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "ack");
+    } else if (event == "gl-cpp.nack_end") {
+      subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "nack");
+    } else if (event == "gl-cpp.expired") {
+      subscribe_span->SetAttribute("messaging.gcp_pubsub.result", "expired");
+    }
+    if (end_event) {
+      subscribe_span->End();
+      spans_by_ack_id_.erase(it);
     }
   }
 
