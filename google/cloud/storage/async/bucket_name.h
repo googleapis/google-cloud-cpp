@@ -17,6 +17,7 @@
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <iosfwd>
 #include <string>
 
@@ -33,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @note This class makes no effort to validate the bucket id. The service
  *     imposes some restrictions on [bucket names], such as length and the
  *     character set. The application must ensure the bucket name meets these
- *     restrictions, this class performs no validation on its inputs.
+ *     restrictions, as this class performs no validation on its inputs.
  *
  * [bucket names]: https://cloud.google.com/storage/docs/buckets#naming
  */
@@ -75,7 +76,7 @@ class BucketName {
  * Constructs a `BucketName` from the given @p full_name.
  * Returns a non-OK Status if `full_name` is improperly formed.
  */
-StatusOr<BucketName> MakeBucketName(std::string const& full_name);
+StatusOr<BucketName> MakeBucketName(absl::string_view full_name);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental

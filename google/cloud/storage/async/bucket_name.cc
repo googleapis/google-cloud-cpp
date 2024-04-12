@@ -44,14 +44,14 @@ std::ostream& operator<<(std::ostream& os, BucketName const& p) {
   return os << p.FullName();
 }
 
-StatusOr<BucketName> MakeBucketName(std::string const& full_name) {
-  if (!absl::StartsWith(full_name, kPrefix)) {
+StatusOr<BucketName> MakeBucketName(absl::string_view full_name) {
+  if (!absl::ConsumePrefix(&full_name, kPrefix)) {
     return internal::InvalidArgumentError(
         absl::StrCat("missing prefix (", kPrefix,
                      ") for in bucket name: ", full_name),
         GCP_ERROR_INFO());
   }
-  return BucketName(std::string(absl::StripPrefix(full_name, kPrefix)));
+  return BucketName(std::string(full_name));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
