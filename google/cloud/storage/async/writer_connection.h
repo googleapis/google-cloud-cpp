@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITER_CONNECTION_H
 
-#include "google/cloud/storage/async/object_requests.h"
+#include "google/cloud/storage/async/write_payload.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rpc_metadata.h"
