@@ -54,6 +54,7 @@ opentelemetry::sdk::metrics::ResourceMetrics MakeResourceMetrics(
   }
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
+  rm.resource_ = nullptr;
   rm.scope_metric_data_.push_back(std::move(sm));
 
   return rm;
