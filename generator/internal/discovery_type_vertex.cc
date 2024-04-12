@@ -277,7 +277,8 @@ Status DiscoveryTypeVertex::UpdateTypeNames(
   return {};
 }
 
-Status DiscoveryTypeVertex::FormatPropertiesHelper(  // NOLINT(misc-no-recursion)
+Status
+DiscoveryTypeVertex::FormatPropertiesHelper(  // NOLINT(misc-no-recursion)
     std::map<std::string, DiscoveryTypeVertex> const& types,
     std::string const& message_name, std::string const& qualified_message_name,
     std::string const& file_package_name, nlohmann::json const& field,
@@ -367,10 +368,10 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
       for (auto p = properties->begin(); p != properties->end(); ++p) {
         auto const& field = p.value();
         auto const& field_key = p.key();
-        auto result = FormatPropertiesHelper(types, message_name, qualified_message_name,
-                             file_package_name, field, field_key, indent_level,
-                             message_properties, message_descriptor,
-                             current_field_names, indent);
+        auto result = FormatPropertiesHelper(
+            types, message_name, qualified_message_name, file_package_name,
+            field, field_key, indent_level, message_properties,
+            message_descriptor, current_field_names, indent);
         if (!result.ok()) return result;
       }
     }
@@ -378,10 +379,10 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     // This checks for a BigQuery style map field.
     if (json.contains("additionalProperties") &&
         json.value("type", "untyped") == "object") {
-      auto result =
-          FormatPropertiesHelper(types, message_name, qualified_message_name, file_package_name,
-                 json, message_name, indent_level, message_properties,
-                 message_descriptor, current_field_names, indent);
+      auto result = FormatPropertiesHelper(
+          types, message_name, qualified_message_name, file_package_name, json,
+          message_name, indent_level, message_properties, message_descriptor,
+          current_field_names, indent);
       if (!result.ok()) return result;
     }
 
