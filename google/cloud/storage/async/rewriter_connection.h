@@ -19,6 +19,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/storage/v2/storage.pb.h>
 
 namespace google {
 namespace cloud {
@@ -45,7 +46,7 @@ class AsyncRewriterConnection {
   virtual ~AsyncRewriterConnection() = default;
 
   /// Uploads some data to the service.
-  virtual future<StatusOr<RewriteObjectResponse>> Iterate() = 0;
+  virtual future<StatusOr<google::storage::v2::RewriteResponse>> Iterate() = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

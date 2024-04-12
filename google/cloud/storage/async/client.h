@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CLIENT_H
 
+#include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/rewriter.h"
@@ -26,6 +27,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/group_options.h"
 #include "google/cloud/status_or.h"
+#include <google/storage/v2/storage.pb.h>
 
 namespace google {
 namespace cloud {
@@ -43,7 +45,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * latest version:
  *
  * @code
- * auto pending = gcs.DeleteObject("my-bucket", "my-object");
+ * auto pending = client.DeleteObject("my-bucket", "my-object");
  * @endcode
  *
  * Some applications may want to delete a specific version. In this case just
@@ -82,7 +84,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * of the library.  For example, you can override the local retry policy:
  *
  * @code
- * auto pending = gcs.DeleteObject(
+ * auto pending = client.DeleteObject(
  *     "my-bucket", "my-object",
  *      google::cloud::Options{}
  *          .set<gcs::RetryPolicyOption>(
@@ -562,121 +564,143 @@ class AsyncClient {
          /*.options=*/std::move(options)});
   }
 
+  /*
+  [start-rewrite-common]
+  Applications use this function to reliably copy objects across [location
+  boundaries](https://cloud.google.com/storage/docs/locations), and to rewrite
+  objects with different encryption keys. The operation returns an
+  `AsyncRewriter`, which the application can use to initiate the copy and to
+  iterate if the copy requires more than one call to complete.
+
+  @par Example
+  @snippet storage_async_samples.cc rewrite-object
+
+  @note Application developers should be aware that rewriting large objects
+      may take many calls to `AsyncRewriter::Iterate()`. Simple experiments
+      often complete with a single call because they use small objects, or
+      use objects where rewrites do not require moving data. For more
+      information, see the [Object: rewrite] documentation.
+
+  @par Idempotency
+  This operation is purely local, and always succeeds. The `Iterate()` calls
+  are always treated as idempotent. Their only observable side effect is the
+  creation of the object, and this can only succeed once.
+
+  [Object: rewrite]:
+  https://cloud.google.com/storage/docs/json_api/v1/objects/rewrite
+  [start-rewrite-common]
+  */
+
   /**
    * Creates an `AsyncRewriter` to copy the source object.
    *
-   * Applications use this function to reliably copy objects across [location
-   * boundaries](https://cloud.google.com/storage/docs/locations), and to
-   * rewrite objects with different encryption keys. The operation returns an
-   * `AsyncRewriter`, which the application can use to initiate the copy and to
-   * iterate if the copy requires more than one call to complete.
+   * @snippet{doc} async/client.h start-rewrite-common
    *
-   * @note Application developers should be aware that rewriting large objects
-   *     may take many calls to `AsyncRewriter::Iterate()`. Simple experiments
-   *     rewriting an object within the same bucket or rewriting small objects
-   *     often complete with a single call. For more information, see the
-   *     [Object: rewrite] documentation.
-   *
-   * @param source_bucket_name the name of the bucket containing the source
-   *     object.
+   * @param source_bucket the name of the bucket containing the source object.
    * @param source_object_name the name of the source object.
-   * @param destination_bucket_name where the destination object will be
-   *     located.
+   * @param destination_bucket the name of the bucket for the new object.
    * @param destination_object_name what to name the destination object.
-   * @param args a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `DestinationKmsKeyName`,
-   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
-   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
-   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
-   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
-   *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
-   *
-   * @par Idempotency
-   * This operation is purely local, and always succeeds.  The `Iterate()` calls
-   * might fail and are only idempotent if restricted by pre-conditions. In this
-   * call the most relevant pre-condition is `IfGenerationMatch`.
-   *
-   * @par Example
-   * @snippet storage_async_samples.cc rewrite-object
-   *
-   * @see
-   * [Object: rewrite]:
-   * https://cloud.google.com/storage/docs/json_api/v1/objects/rewrite
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
    */
-  template <typename... Args>
   std::pair<AsyncRewriter, AsyncToken> StartRewrite(
-      std::string source_bucket_name, std::string source_object_name,
-      std::string destination_bucket_name, std::string destination_object_name,
-      Args&&... args) {
-    return ResumeRewrite(
-        std::move(source_bucket_name), std::move(source_object_name),
-        std::move(destination_bucket_name), std::move(destination_object_name),
-        /*rewrite_token=*/"", std::forward<Args>(args)...);
-  }
+      BucketName const& source_bucket, std::string source_object_name,
+      BucketName const& destination_bucket, std::string destination_object_name,
+      Options opts = {});
+
+  /**
+   * Creates an `AsyncRewriter` to copy the source object.
+   *
+   * @snippet{doc} async/client.h start-rewrite-common
+   *
+   * @param source_bucket the name of the bucket containing the source object.
+   * @param source_object_name the name of the source object.
+   * @param destination_bucket the name of the bucket for the new object.
+   * @param destination_object_name what to name the destination object.
+   * @param request any additional parameters modifying the request, such as
+   *   pre-conditions, and overrides for the destination object metadata.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  std::pair<AsyncRewriter, AsyncToken> StartRewrite(
+      BucketName const& source_bucket, std::string source_object_name,
+      BucketName const& destination_bucket, std::string destination_object_name,
+      google::storage::v2::RewriteObjectRequest request, Options opts = {});
+
+  /**
+   * Creates an `AsyncRewriter` to copy the source object.
+   *
+   * @snippet{doc} async/client.h start-rewrite-common
+   *
+   * @param request any additional parameters modifying the request, such as
+   *   pre-conditions, and overrides for the destination object metadata.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  std::pair<AsyncRewriter, AsyncToken> StartRewrite(
+      google::storage::v2::RewriteObjectRequest request, Options opts = {});
+
+  /*
+     [resume-rewrite-common]
+     Applications use this function to reliably copy objects across [location
+     boundaries](https://cloud.google.com/storage/docs/locations), and to
+     rewrite objects with different encryption keys. The operation returns an
+     `AsyncRewriter`, which the application can use to continue an existing copy
+     operation until it completes.
+
+     @par Example
+     @snippet storage_async_samples.cc resume-rewrite
+
+     @note Application developers should be aware that rewriting large objects
+         may take many calls to `AsyncRewriter::Iterate()`. Simple experiments
+         often complete with a single call because they use small objects, or
+         use objects where rewrites do not require moving data. For more
+         information, see the [Object: rewrite] documentation.
+
+     @par Idempotency
+     This operation is purely local, and always succeeds. The `Iterate()` calls
+     are always treated as idempotent. Their only observable side effect is the
+     creation of the object, and this can only succeed once.
+
+     [Object: rewrite]:
+     https://cloud.google.com/storage/docs/json_api/v1/objects/rewrite
+     [resume-rewrite-common]
+   */
 
   /**
    * Creates an `AsyncRewriter` to resume copying the source object.
    *
-   * Applications use this function to reliably copy objects across [location
-   * boundaries](https://cloud.google.com/storage/docs/locations), and to
-   * rewrite objects with different encryption keys. The operation returns an
-   * `AsyncRewriter`, which the application can use to initiate the copy and to
-   * iterate if the copy requires more than one call to complete.
+   * @snippet{doc} async/client.h resume-rewrite-common
    *
-   * @note Application developers should be aware that rewriting large objects
-   *     may take many calls to `AsyncRewriter::Iterate()`. Simple experiments
-   *     rewriting an object within the same bucket or rewriting small objects
-   *     often complete with a single call. For more information, see the
-   *     [Object: rewrite] documentation.
-   *
-   * @param source_bucket_name the name of the bucket containing the source
-   *     object.
+   * @param source_bucket the name of the bucket containing the source object.
    * @param source_object_name the name of the source object.
-   * @param destination_bucket_name where the destination object will be
-   *     located.
+   * @param destination_bucket the name of the bucket for the new object.
    * @param destination_object_name what to name the destination object.
    * @param rewrite_token the token from a previous successful rewrite
    *     iteration. Can be the empty string, in which case this starts a new
    *     rewrite operation.
-   * @param args a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `DestinationKmsKeyName`,
-   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
-   *      `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
-   *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
-   *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
-   *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
-   *
-   * @par Idempotency
-   * This operation is purely local, and always succeeds.  The `Iterate()` calls
-   * might fail and are only idempotent if restricted by pre-conditions. In this
-   * call the most relevant pre-condition is `IfGenerationMatch`.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
    *
    * @par Example
    * @snippet storage_async_samples.cc resume-rewrite
-   *
-   * @see
-   * [Object: rewrite]:
-   * https://cloud.google.com/storage/docs/json_api/v1/objects/rewrite
    */
-  template <typename... Args>
   std::pair<AsyncRewriter, AsyncToken> ResumeRewrite(
-      std::string source_bucket_name, std::string source_object_name,
-      std::string destination_bucket_name, std::string destination_object_name,
-      std::string rewrite_token, Args&&... args) {
-    auto options = SpanOptions(std::forward<Args>(args)...);
-    auto c = connection_->RewriteObject(
-        {RewriteObjectRequest(std::move(source_bucket_name),
-                              std::move(source_object_name),
-                              std::move(destination_bucket_name),
-                              std::move(destination_object_name))
-             .set_rewrite_token(std::move(rewrite_token))
-             .set_multiple_options(std::forward<Args>(args)...),
-         /*.options=*/std::move(options)});
-    auto t = storage_internal::MakeAsyncToken(c.get());
-    return std::make_pair(AsyncRewriter(std::move(c)), std::move(t));
-  }
+      BucketName const& source_bucket, std::string source_object_name,
+      BucketName const& destination_bucket, std::string destination_object_name,
+      std::string rewrite_token, Options opts = {});
+
+  /**
+   * Creates an `AsyncRewriter` to resume copying the source object.
+   *
+   * @snippet{doc} async/client.h resume-rewrite-common
+   *
+   * @param request the full specification for the request.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  std::pair<AsyncRewriter, AsyncToken> ResumeRewrite(
+      google::storage::v2::RewriteObjectRequest request, Options opts = {});
 
  private:
   explicit AsyncClient(

@@ -54,9 +54,8 @@ using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
-using ::testing::Field;
 using ::testing::IsEmpty;
-using ::testing::Optional;
+using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::VariantWith;
 
@@ -360,8 +359,37 @@ TEST(ConnectionTracing, DeleteObject) {
                          SpanHasInstrumentationScope(), SpanKindIsClient())));
 }
 
+using ::google::storage::v2::RewriteResponse;
+
+auto MakeRewriteResponse() {
+  RewriteResponse response;
+  response.set_total_bytes_rewritten(3000);
+  response.set_object_size(3000);
+  response.mutable_resource()->set_size(3000);
+  return response;
+}
+
+auto MatchRewriteResponse() {
+  return AllOf(
+      ResultOf(
+          "total bytes",
+          [](RewriteResponse const& v) { return v.total_bytes_rewritten(); },
+          3000),
+      ResultOf(
+          "size", [](RewriteResponse const& v) { return v.object_size(); },
+          3000),
+      ResultOf(
+          "token", [](RewriteResponse const& v) { return v.rewrite_token(); },
+          IsEmpty()),
+      ResultOf(
+          "has_resource",
+          [](RewriteResponse const& v) { return v.has_resource(); }, true),
+      ResultOf(
+          "resource.size",
+          [](RewriteResponse const& v) { return v.resource().size(); }, 3000));
+}
+
 TEST(ConnectionTracing, RewriteObject) {
-  using ::google::cloud::storage_experimental::RewriteObjectResponse;
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_unique<MockAsyncConnection>();
@@ -371,8 +399,7 @@ TEST(ConnectionTracing, RewriteObject) {
     EXPECT_CALL(*rewriter, Iterate).WillOnce([] {
       EXPECT_TRUE(ThereIsAnActiveSpan());
       EXPECT_TRUE(OTelContextCaptured());
-      return make_ready_future(make_status_or(RewriteObjectResponse{
-          3000, 3000, "", storage::ObjectMetadata().set_size(3000)}));
+      return make_ready_future(make_status_or(MakeRewriteResponse()));
     });
     return rewriter;
   });
@@ -380,13 +407,7 @@ TEST(ConnectionTracing, RewriteObject) {
   auto rewriter = connection->RewriteObject(
       AsyncConnection::RewriteObjectParams{{}, connection->options()});
   auto r1 = rewriter->Iterate().get();
-  EXPECT_THAT(r1,
-              IsOkAndHolds(AllOf(
-                  Field(&RewriteObjectResponse::total_bytes_rewritten, 3000),
-                  Field(&RewriteObjectResponse::object_size, 3000),
-                  Field(&RewriteObjectResponse::rewrite_token, IsEmpty()),
-                  Field(&RewriteObjectResponse::metadata,
-                        Optional(storage::ObjectMetadata().set_size(3000))))));
+  EXPECT_THAT(r1, IsOkAndHolds(MatchRewriteResponse()));
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(

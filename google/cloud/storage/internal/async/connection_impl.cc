@@ -294,7 +294,7 @@ AsyncConnectionImpl::RewriteObject(RewriteObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
 
   return std::make_shared<RewriterConnectionImpl>(
-      cq_, stub_, std::move(current), std::move(p.request.impl_));
+      cq_, stub_, std::move(current), std::move(p.request));
 }
 
 AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(

@@ -335,19 +335,19 @@ void RewriteObject(google::cloud::storage_experimental::AsyncClient& client,
   namespace g = google::cloud;
   namespace gcs = g::storage;
   namespace gcs_ex = g::storage_experimental;
-  auto coro =
-      [](gcs_ex::AsyncClient& client, std::string bucket_name,
-         std::string object_name,
-         std::string destination_name) -> g::future<gcs::ObjectMetadata> {
-    auto [rewriter, token] = client.StartRewrite(bucket_name, object_name,
-                                                 bucket_name, destination_name);
+  auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
+                 std::string object_name, std::string destination_name)
+      -> g::future<google::storage::v2::Object> {
+    auto [rewriter, token] =
+        client.StartRewrite(gcs_ex::BucketName(bucket_name), object_name,
+                            gcs_ex::BucketName(bucket_name), destination_name);
     while (token.valid()) {
       auto [progress, t] =
           (co_await rewriter.Iterate(std::move(token))).value();
       token = std::move(t);
-      std::cout << progress.total_bytes_rewritten << " of "
-                << progress.object_size << " bytes rewritten\n";
-      if (progress.metadata) co_return *std::move(progress.metadata);
+      std::cout << progress.total_bytes_rewritten() << " of "
+                << progress.object_size() << " bytes rewritten\n";
+      if (progress.has_resource()) co_return std::move(progress.resource());
     }
     throw std::runtime_error("rewrite failed before completion");
   };
@@ -355,8 +355,8 @@ void RewriteObject(google::cloud::storage_experimental::AsyncClient& client,
 
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
-  auto const metadata = coro(client, argv.at(0), argv.at(1), argv.at(2)).get();
-  std::cout << "Object successfully rewritten " << metadata << "\n";
+  auto const object = coro(client, argv.at(0), argv.at(1), argv.at(2)).get();
+  std::cout << "Object successfully rewritten " << object.DebugString() << "\n";
 }
 
 void ResumeRewrite(google::cloud::storage_experimental::AsyncClient& client,
@@ -369,30 +369,38 @@ void ResumeRewrite(google::cloud::storage_experimental::AsyncClient& client,
                   std::string object_name,
                   std::string destination_name) -> g::future<std::string> {
     // First start a rewrite. In this example we will limit the number of bytes
-    // rewritten by each iteration to capture then token and resume the rewrite
-    // later.
+    // rewritten by each iteration, then capture the token, and then resume the
+    // rewrite operation.
+    auto bucket = gcs_ex::BucketName(bucket_name);
+    auto request = google::storage::v2::RewriteObjectRequest();
+    request.set_max_bytes_rewritten_per_call(1024 * 1024);
     auto [rewriter, token] = client.StartRewrite(
-        bucket_name, object_name, bucket_name, destination_name,
-        gcs::MaxBytesRewrittenPerCall(1024 * 1024));
+        bucket, object_name, bucket, destination_name, std::move(request));
     auto [progress, t] = (co_await rewriter.Iterate(std::move(token))).value();
-    co_return progress.rewrite_token;
+    co_return progress.rewrite_token();
   };
   auto resume =
       [](gcs_ex::AsyncClient& client, std::string bucket_name,
          std::string object_name, std::string destination_name,
-         std::string rewrite_token) -> g::future<gcs::ObjectMetadata> {
+         std::string rewrite_token) -> g::future<google::storage::v2::Object> {
     // Continue rewriting, this could happen on a separate process, or even
     // after the application restarts.
-    auto [rewriter, token] = client.ResumeRewrite(
-        bucket_name, object_name, bucket_name, destination_name, rewrite_token,
-        gcs::MaxBytesRewrittenPerCall(1024 * 1024));
+    auto bucket = gcs_ex::BucketName(bucket_name);
+    auto request = google::storage::v2::RewriteObjectRequest();
+    request.set_destination_bucket(bucket.FullName());
+    request.set_destination_name(destination_name);
+    request.set_source_bucket(bucket.FullName());
+    request.set_source_object(object_name);
+    request.set_rewrite_token(std::move(rewrite_token));
+    request.set_max_bytes_rewritten_per_call(1024 * 1024);
+    auto [rewriter, token] = client.ResumeRewrite(std::move(request));
     while (token.valid()) {
       auto [progress, t] =
           (co_await rewriter.Iterate(std::move(token))).value();
       token = std::move(t);
-      std::cout << progress.total_bytes_rewritten << " of "
-                << progress.object_size << " bytes rewritten\n";
-      if (progress.metadata) co_return *std::move(progress.metadata);
+      std::cout << progress.total_bytes_rewritten() << " of "
+                << progress.object_size() << " bytes rewritten\n";
+      if (progress.has_resource()) co_return progress.resource();
     }
     throw std::runtime_error("rewrite failed before completion");
   };
@@ -401,9 +409,9 @@ void ResumeRewrite(google::cloud::storage_experimental::AsyncClient& client,
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
   auto const rt = start(client, argv.at(0), argv.at(1), argv.at(2)).get();
-  auto const metadata =
+  auto const object =
       resume(client, argv.at(0), argv.at(1), argv.at(2), rt).get();
-  std::cout << "Object successfully rewritten " << metadata << "\n";
+  std::cout << "Object successfully rewritten " << object.DebugString() << "\n";
 }
 
 #else

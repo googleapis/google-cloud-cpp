@@ -33,7 +33,8 @@ future<StatusOr<T>> NullImpl(internal::ErrorInfoBuilder eib) {
       StatusOr<T>(internal::CancelledError("null impl", std::move(eib))));
 }
 
-using IterateResponse = std::pair<RewriteObjectResponse, AsyncToken>;
+using IterateResponse =
+    std::pair<google::storage::v2::RewriteResponse, AsyncToken>;
 
 }  // namespace
 
@@ -47,14 +48,13 @@ future<StatusOr<IterateResponse>> AsyncRewriter::Iterate(AsyncToken token) {
   auto t = storage_internal::MakeAsyncToken(impl_.get());
   if (token != t) return TokenError<IterateResponse>(GCP_ERROR_INFO());
 
-  return impl_->Iterate().then(
-      [t = std::move(t),
-       impl = impl_](auto f) mutable -> StatusOr<IterateResponse> {
-        auto r = f.get();
-        if (!r) return std::move(r).status();
-        if (r->metadata) return std::make_pair(*std::move(r), AsyncToken());
-        return std::make_pair(*std::move(r), std::move(t));
-      });
+  return impl_->Iterate().then([t = std::move(t), impl = impl_](auto f) mutable
+                               -> StatusOr<IterateResponse> {
+    auto r = f.get();
+    if (!r) return std::move(r).status();
+    auto const done = r->has_resource();
+    return std::make_pair(*std::move(r), done ? AsyncToken() : std::move(t));
+  });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

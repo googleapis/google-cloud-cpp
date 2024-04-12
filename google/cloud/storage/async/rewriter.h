@@ -24,6 +24,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
+#include <google/storage/v2/storage.pb.h>
 #include <cstdint>
 #include <memory>
 #include <utility>
@@ -67,8 +68,8 @@ class AsyncRewriter {
    * Calling this function on a default-constructed or moved-from
    * `AsyncRewriter` results in undefined behavior.
    */
-  future<StatusOr<std::pair<RewriteObjectResponse, AsyncToken>>> Iterate(
-      AsyncToken token);
+  future<StatusOr<std::pair<google::storage::v2::RewriteResponse, AsyncToken>>>
+  Iterate(AsyncToken token);
 
  private:
   std::shared_ptr<AsyncRewriterConnection> impl_;

@@ -36,8 +36,7 @@ class AsyncRewriterTracingConnection
       : impl_(std::move(impl)), span_(std::move(span)) {}
   ~AsyncRewriterTracingConnection() override { EndSpan(*span_, Status{}); }
 
-  future<StatusOr<storage_experimental::RewriteObjectResponse>> Iterate()
-      override {
+  future<StatusOr<google::storage::v2::RewriteResponse>> Iterate() override {
     internal::OTelScope scope(span_);
     return impl_->Iterate().then(
         [span = span_,
@@ -53,9 +52,9 @@ class AsyncRewriterTracingConnection
           span->AddEvent("gl-cpp.storage.rewrite.iterate",
                          {{"gl-cpp.status_code",
                            static_cast<std::int32_t>(StatusCode::kOk)},
-                          {"total_bytes_rewritten", r->total_bytes_rewritten},
-                          {"object_size", r->object_size}});
-          if (r->metadata) return EndSpan(*span, std::move(r));
+                          {"total_bytes_rewritten", r->total_bytes_rewritten()},
+                          {"object_size", r->object_size()}});
+          if (r->has_resource()) return EndSpan(*span, std::move(r));
           return r;
         });
   }
