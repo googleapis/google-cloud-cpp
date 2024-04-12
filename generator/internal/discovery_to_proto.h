@@ -38,7 +38,7 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
 
 // Creates a DiscoveryResource for every resource defined in the Discovery
 // Document.
-std::map<std::string, DiscoveryResource> ExtractResources(
+StatusOr<std::map<std::string, DiscoveryResource>> ExtractResources(
     DiscoveryDocumentProperties const& document_properties,
     nlohmann::json const& discovery_doc);
 
