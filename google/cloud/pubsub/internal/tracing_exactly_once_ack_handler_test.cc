@@ -39,6 +39,7 @@ using ::google::cloud::testing_util::SpanKindIsInternal;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -62,8 +63,12 @@ MakeTestExactlyOnceAckHandler(
 TEST(TracingExactlyOnceAckHandlerTest, AckSuccess) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
-  EXPECT_CALL(*mock, ack())
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  EXPECT_CALL(*mock, ack()).WillOnce([&]() {
+    ThereIsAnActiveSpan();
+    auto spans = span_catcher->GetSpans();
+    EXPECT_THAT(spans, testing::IsEmpty());
+    return make_ready_future(Status{});
+  });
   auto handler = MakeTestExactlyOnceAckHandler(std::move(mock));
 
   EXPECT_STATUS_OK(std::move(handler)->ack().get());

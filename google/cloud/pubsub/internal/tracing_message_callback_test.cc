@@ -48,7 +48,6 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithParent;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
-using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::Return;
 
