@@ -19,6 +19,7 @@
 #include "google/cloud/log.h"
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
+#include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <cctype>
 
 namespace google {
@@ -164,6 +165,54 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
   counts.Reserve(static_cast<int>(histogram_data.counts_.size()));
   for (auto c : histogram_data.counts_) counts.Add(c);
   return ts;
+}
+
+google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+  google::monitoring::v3::CreateTimeSeriesRequest request;
+
+  google::api::MonitoredResource resource;
+  if (data.resource_) {
+    auto mr = ToMonitoredResource(data.resource_->GetAttributes());
+    resource.set_type(std::move(mr.type));
+    for (auto& label : mr.labels) {
+      (*resource.mutable_labels())[std::move(label.first)] =
+          std::move(label.second);
+    }
+  }
+
+  for (auto const& scope_metric : data.scope_metric_data_) {
+    for (auto const& metric_data : scope_metric.metric_data_) {
+      for (auto const& pda : metric_data.point_data_attr_) {
+        struct Visitor {
+          opentelemetry::sdk::metrics::MetricData const& metric_data;
+
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::SumPointData const& point) {
+            return ToTimeSeries(metric_data, point);
+          }
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::LastValuePointData const& point) {
+            return ToTimeSeries(metric_data, point);
+          }
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::HistogramPointData const& point) {
+            return ToTimeSeries(metric_data, point);
+          }
+          absl::optional<google::monitoring::v3::TimeSeries> operator()(
+              opentelemetry::sdk::metrics::DropPointData const&) {
+            return absl::nullopt;
+          }
+        };
+        auto ts = absl::visit(Visitor{metric_data}, pda.point_data);
+        if (!ts) continue;
+        *ts->mutable_resource() = resource;
+        *ts->mutable_metric() = ToMetric(metric_data, pda.attributes);
+        *request.add_time_series() = *std::move(ts);
+      }
+    }
+  }
+  return request;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
