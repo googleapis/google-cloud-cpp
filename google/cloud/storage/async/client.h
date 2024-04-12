@@ -565,31 +565,31 @@ class AsyncClient {
   }
 
   /*
-     [start-rewrite-common]
-     Applications use this function to reliably copy objects across [location
-     boundaries](https://cloud.google.com/storage/docs/locations), and to
-     rewrite objects with different encryption keys. The operation returns an
-     `AsyncRewriter`, which the application can use to initiate the copy and to
-     iterate if the copy requires more than one call to complete.
+  [start-rewrite-common]
+  Applications use this function to reliably copy objects across [location
+  boundaries](https://cloud.google.com/storage/docs/locations), and to rewrite
+  objects with different encryption keys. The operation returns an
+  `AsyncRewriter`, which the application can use to initiate the copy and to
+  iterate if the copy requires more than one call to complete.
 
-     @par Example
-     @snippet storage_async_samples.cc rewrite-object
+  @par Example
+  @snippet storage_async_samples.cc rewrite-object
 
-     @note Application developers should be aware that rewriting large objects
-         may take many calls to `AsyncRewriter::Iterate()`. Simple experiments
-         often complete with a single call because they use small objects, or
-         use objects where rewrites do not require moving data. For more
-         information, see the [Object: rewrite] documentation.
+  @note Application developers should be aware that rewriting large objects
+      may take many calls to `AsyncRewriter::Iterate()`. Simple experiments
+      often complete with a single call because they use small objects, or
+      use objects where rewrites do not require moving data. For more
+      information, see the [Object: rewrite] documentation.
 
-     @par Idempotency
-     This operation is purely local, and always succeeds. The `Iterate()` calls
-     are always treated as idempotent. Their only observable side effect is the
-     creation of the object, and this can only succeed once.
+  @par Idempotency
+  This operation is purely local, and always succeeds. The `Iterate()` calls
+  are always treated as idempotent. Their only observable side effect is the
+  creation of the object, and this can only succeed once.
 
-     [Object: rewrite]:
-     https://cloud.google.com/storage/docs/json_api/v1/objects/rewrite
-     [start-rewrite-common]
-   */
+  [Object: rewrite]:
+  https://cloud.google.com/storage/docs/json_api/v1/objects/rewrite
+  [start-rewrite-common]
+  */
 
   /**
    * Creates an `AsyncRewriter` to copy the source object.
