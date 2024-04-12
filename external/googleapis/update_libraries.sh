@@ -71,7 +71,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc"
+      "@com_google_googleapis//google/cloud/bigquery/storage:v1_storage_cc_grpc"
   )"
   ["bigtable"]="$(
     printf ",%s" \
