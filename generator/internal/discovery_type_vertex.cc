@@ -108,6 +108,11 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
                     properties_for_synthesis, false, false};
   }
 
+  if (type == "any") {
+    return TypeInfo{"google.protobuf.Any", compare_package_name,
+                    properties_for_synthesis, false, false};
+  }
+
   if (type == "object" &&
       !(v.contains("properties") || v.contains("additionalProperties"))) {
     return internal::InvalidArgumentError(
@@ -139,6 +144,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
         map_type = CapitalizeFirstLetter(field_name + "Item");
         properties_for_synthesis = &additional_properties;
         is_message = true;
+      } else if (map_type == "any") {
+        map_type = "google.protobuf.Any";
       } else {
         return internal::InvalidArgumentError(
             absl::StrFormat("field: %s unknown type: %s for map field.",
@@ -458,9 +465,9 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
     } else {
       // TODO(#13587): We use the FieldDescriptorProto to access the literal
       // proto definition of the field in order to determine if the optional
-      // keyword was used. Adding/removing the optional keyword may not actually
-      // indicate that we cannot reuse the field. If we determine that's the
-      // case the check for has_proto3_optional can be removed.
+      // keyword was used. Adding/removing the optional keyword may not
+      // actually indicate that we cannot reuse the field. If we determine
+      // that's the case the check for has_proto3_optional can be removed.
       google::protobuf::FieldDescriptorProto field_descriptor_proto;
       field_descriptor->CopyTo(&field_descriptor_proto);
       if (field_descriptor->is_repeated()) {

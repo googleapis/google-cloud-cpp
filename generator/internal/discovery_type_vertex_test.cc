@@ -207,6 +207,8 @@ INSTANTIATE_TEST_SUITE_P(
                               false, true, true},
         DetermineTypesSuccess{"string", R"""({"type":"string"})""", "string",
                               true, false, false, false},
+        DetermineTypesSuccess{"any", R"""({"type":"any"})""",
+                              "google.protobuf.Any", true, false, false, false},
         DetermineTypesSuccess{"boolean", R"""({"type":"boolean"})""", "bool",
                               true, false, false, false},
         DetermineTypesSuccess{"integer_no_format", R"""({"type":"integer"})""",
@@ -248,6 +250,10 @@ INSTANTIATE_TEST_SUITE_P(
             "map_string",
             R"""({"type":"object","additionalProperties":{"type":"string"}})""",
             "string", true, true, false, false},
+        DetermineTypesSuccess{
+            "map_any",
+            R"""({"type":"object","additionalProperties":{"type":"any"}})""",
+            "google.protobuf.Any", true, true, false, false},
         DetermineTypesSuccess{
             "map_nested_message",
             R"""({"type":"object","additionalProperties":{"type":"object", "properties":{}}})""",
