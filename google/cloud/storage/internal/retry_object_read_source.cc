@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/retry_object_read_source.h"
-#include "google/cloud/log.h"
 #include <algorithm>
 #include <string>
 #include <thread>
@@ -110,16 +109,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
 }
 
 bool RetryObjectReadSource::HandleResult(StatusOr<ReadSourceResult> const& r) {
-  if (!r) {
-    GCP_LOG(INFO) << "current_offset=" << current_offset_
-                  << ", is_gunzipped=" << is_gunzipped_
-                  << ", status=" << r.status();
-    return false;
-  }
-  GCP_LOG(INFO) << "current_offset=" << current_offset_
-                << ", is_gunzipped=" << is_gunzipped_
-                << ", response=" << r->response;
-
+  if (!r) return false;
   if (r->generation) generation_ = *r->generation;
   if (r->transformation.value_or("") == "gunzipped") is_gunzipped_ = true;
   // Since decompressive transcoding does not respect `ReadLast()` we need
@@ -136,9 +126,6 @@ bool RetryObjectReadSource::HandleResult(StatusOr<ReadSourceResult> const& r) {
 // NOLINTNEXTLINE(misc-no-recursion)
 Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
                                         BackoffPolicy& backoff_policy) {
-  GCP_LOG(INFO) << "current_offset=" << current_offset_
-                << ", is_gunzipped=" << is_gunzipped_;
-
   auto on_success = [this](std::unique_ptr<ObjectReadSource> child) {
     child_ = std::move(child);
     return Status{};
@@ -165,7 +152,6 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryObjectReadSource::ReadDiscard(
     std::unique_ptr<ObjectReadSource> child, std::int64_t count) const {
-  GCP_LOG(INFO) << "discarding " << count << " bytes to reach previous offset";
   // Discard data until we are at the same offset as before.
   std::vector<char> buffer(128 * 1024);
   while (count > 0) {

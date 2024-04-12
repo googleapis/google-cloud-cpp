@@ -40,7 +40,6 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/service_endpoint.h"
-#include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/time/time.h"
 #include <grpcpp/grpcpp.h>
