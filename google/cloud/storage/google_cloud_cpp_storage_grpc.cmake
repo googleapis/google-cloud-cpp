@@ -198,6 +198,7 @@ else ()
         google_cloud_cpp_storage_grpc
         PUBLIC google-cloud-cpp::storage
                google-cloud-cpp::storage_protos
+               google-cloud-cpp::opentelemetry
                google-cloud-cpp::grpc_utils
                google-cloud-cpp::common
                nlohmann_json::nlohmann_json
@@ -238,6 +239,7 @@ google_cloud_cpp_add_pkgconfig(
     "An extension to the GCS C++ client library using gRPC for transport."
     "google_cloud_cpp_storage"
     "google_cloud_cpp_storage_protos"
+    "google_cloud_cpp_opentelemetry"
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
     "grpc++"
