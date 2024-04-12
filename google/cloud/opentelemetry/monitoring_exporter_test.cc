@@ -143,7 +143,7 @@ TEST(MonitoringExporter, ExportFailureWithInvalidArgument) {
   EXPECT_THAT(
       log.ExtractLines(),
       Contains(AllOf(HasSubstr("Cloud Monitoring Export failed"),
-                     HasSubstr("PERMISSION_DENIED"), HasSubstr("nope"))));
+                     HasSubstr("INVALID_ARGUMENT"), HasSubstr("nope"))));
 }
 
 }  // namespace
