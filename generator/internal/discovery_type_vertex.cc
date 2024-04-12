@@ -277,17 +277,16 @@ Status DiscoveryTypeVertex::UpdateTypeNames(
   return {};
 }
 
-Status DiscoveryTypeVertex::Helper(  // NOLINT(misc-no-recursion)
+Status DiscoveryTypeVertex::FormatPropertiesHelper(  // NOLINT(misc-no-recursion)
     std::map<std::string, DiscoveryTypeVertex> const& types,
     std::string const& message_name, std::string const& qualified_message_name,
     std::string const& file_package_name, nlohmann::json const& field,
-    std::string const& field_key, int indent_level,
+    std::string json_field_name, int indent_level,
     MessageProperties& message_properties,
     google::protobuf::Descriptor const* message_descriptor,
     std::set<std::string>& current_field_names,
     std::string const& indent) const {
   try {
-    std::string json_field_name = field_key;
     if (field.contains("id")) {
       json_field_name = field["id"];
     }
@@ -368,7 +367,7 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
       for (auto p = properties->begin(); p != properties->end(); ++p) {
         auto const& field = p.value();
         auto const& field_key = p.key();
-        auto result = Helper(types, message_name, qualified_message_name,
+        auto result = FormatPropertiesHelper(types, message_name, qualified_message_name,
                              file_package_name, field, field_key, indent_level,
                              message_properties, message_descriptor,
                              current_field_names, indent);
@@ -380,7 +379,7 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     if (json.contains("additionalProperties") &&
         json.value("type", "untyped") == "object") {
       auto result =
-          Helper(types, message_name, qualified_message_name, file_package_name,
+          FormatPropertiesHelper(types, message_name, qualified_message_name, file_package_name,
                  json, message_name, indent_level, message_properties,
                  message_descriptor, current_field_names, indent);
       if (!result.ok()) return result;
