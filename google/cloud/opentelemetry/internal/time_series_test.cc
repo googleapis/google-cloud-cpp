@@ -267,7 +267,6 @@ TEST(SumPointData, Simple) {
   auto const end = start + std::chrono::seconds(5);
 
   opentelemetry::sdk::metrics::MetricData md;
-  md.instrument_descriptor.unit_ = "unit";
   md.instrument_descriptor.value_type_ =
       opentelemetry::sdk::metrics::InstrumentValueType::kInt;
   md.start_ts = start;
@@ -277,7 +276,6 @@ TEST(SumPointData, Simple) {
   point.value_ = std::int64_t{42};
 
   auto ts = ToTimeSeries(md, point);
-  EXPECT_EQ(ts.unit(), "unit");
   EXPECT_EQ(ts.metric_kind(), google::api::MetricDescriptor::CUMULATIVE);
   EXPECT_THAT(ts.points(),
               ElementsAre(AllOf(Int64TypedValue(42), Interval(start, end))));
@@ -342,7 +340,6 @@ TEST(LastValuePointData, Simple) {
   auto const now = std::chrono::system_clock::now();
 
   opentelemetry::sdk::metrics::MetricData md;
-  md.instrument_descriptor.unit_ = "unit";
   md.instrument_descriptor.value_type_ =
       opentelemetry::sdk::metrics::InstrumentValueType::kInt;
   md.start_ts = now;
@@ -368,7 +365,6 @@ TEST(LastValuePointData, Simple) {
   };
 
   auto ts = ToTimeSeries(md, point);
-  EXPECT_EQ(ts.unit(), "unit");
   EXPECT_EQ(ts.metric_kind(), google::api::MetricDescriptor::GAUGE);
   EXPECT_THAT(ts.points(),
               ElementsAre(AllOf(Int64TypedValue(42), interval(now))));
@@ -415,7 +411,6 @@ TEST(HistogramPointData, SimpleWithInt64Sum) {
   auto const end = start + std::chrono::seconds(5);
 
   opentelemetry::sdk::metrics::MetricData md;
-  md.instrument_descriptor.unit_ = "unit";
   md.instrument_descriptor.value_type_ =
       opentelemetry::sdk::metrics::InstrumentValueType::kInt;
   md.start_ts = start;
@@ -428,7 +423,6 @@ TEST(HistogramPointData, SimpleWithInt64Sum) {
   point.count_ = 16;
 
   auto ts = ToTimeSeries(md, point);
-  EXPECT_EQ(ts.unit(), "unit");
   EXPECT_EQ(ts.metric_kind(), google::api::MetricDescriptor::CUMULATIVE);
   EXPECT_THAT(
       ts.points(),
