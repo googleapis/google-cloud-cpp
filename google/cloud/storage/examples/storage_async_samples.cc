@@ -623,15 +623,15 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   namespace g = ::google::cloud;
   std::vector<g::future<g::Status>> pending;
-  auto name = google::cloud::storage_experimental::BucketName(bucket_name);
-  pending.push_back(client.DeleteObject(name, o1));
-  pending.push_back(client.DeleteObject(name, o2));
-  pending.push_back(client.DeleteObject(name, o3));
-  pending.push_back(client.DeleteObject(name, o4));
-  pending.push_back(client.DeleteObject(name, o5));
-  pending.push_back(client.DeleteObject(name, o6));
-  pending.push_back(client.DeleteObject(name, o7));
-  pending.push_back(client.DeleteObject(name, o8));
+  auto bucket = google::cloud::storage_experimental::BucketName(bucket_name);
+  pending.push_back(client.DeleteObject(bucket, o1));
+  pending.push_back(client.DeleteObject(bucket, o2));
+  pending.push_back(client.DeleteObject(bucket, o3));
+  pending.push_back(client.DeleteObject(bucket, o4));
+  pending.push_back(client.DeleteObject(bucket, o5));
+  pending.push_back(client.DeleteObject(bucket, o6));
+  pending.push_back(client.DeleteObject(bucket, o7));
+  pending.push_back(client.DeleteObject(bucket, o8));
   for (auto& f : pending) (void)f.get();
 }
 
