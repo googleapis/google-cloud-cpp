@@ -117,8 +117,8 @@ Matcher<v2::AttributeValue const&> AttributeValue(
 }
 
 Matcher<v2::Span::Attributes const&> Attributes(
-    Matcher<protobuf::Map<std::string, v2::AttributeValue> const&> const&
-        attribute_map_matcher,
+    Matcher<google::protobuf::Map<
+        std::string, v2::AttributeValue> const&> const& attribute_map_matcher,
     int dropped_attributes_count = 0) {
   return AllOf(
       ResultOf(
