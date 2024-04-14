@@ -371,11 +371,14 @@ void ResumeRewrite(google::cloud::storage_experimental::AsyncClient& client,
     // First start a rewrite. In this example we will limit the number of bytes
     // rewritten by each iteration, then capture the token, and then resume the
     // rewrite operation.
-    auto bucket = gcs_ex::BucketName(bucket_name);
-    auto request = google::storage::v2::RewriteObjectRequest();
+    auto bucket = gcs_ex::BucketName(std::move(bucket_name));
+    auto request = google::storage::v2::RewriteObjectRequest{};
+    request.set_destination_name(destination_name);
+    request.set_destination_bucket(bucket.FullName());
+    request.set_source_object(std::move(object_name));
+    request.set_source_bucket(bucket.FullName());
     request.set_max_bytes_rewritten_per_call(1024 * 1024);
-    auto [rewriter, token] = client.StartRewrite(
-        bucket, object_name, bucket, destination_name, std::move(request));
+    auto [rewriter, token] = client.StartRewrite(std::move(request));
     auto [progress, t] = (co_await rewriter.Iterate(std::move(token))).value();
     co_return progress.rewrite_token();
   };
@@ -385,12 +388,12 @@ void ResumeRewrite(google::cloud::storage_experimental::AsyncClient& client,
          std::string rewrite_token) -> g::future<google::storage::v2::Object> {
     // Continue rewriting, this could happen on a separate process, or even
     // after the application restarts.
-    auto bucket = gcs_ex::BucketName(bucket_name);
+    auto bucket = gcs_ex::BucketName(std::move(bucket_name));
     auto request = google::storage::v2::RewriteObjectRequest();
     request.set_destination_bucket(bucket.FullName());
-    request.set_destination_name(destination_name);
+    request.set_destination_name(std::move(destination_name));
     request.set_source_bucket(bucket.FullName());
-    request.set_source_object(object_name);
+    request.set_source_object(std::move(object_name));
     request.set_rewrite_token(std::move(rewrite_token));
     request.set_max_bytes_rewritten_per_call(1024 * 1024);
     auto [rewriter, token] = client.ResumeRewrite(std::move(request));

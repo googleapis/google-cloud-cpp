@@ -42,22 +42,13 @@ std::pair<AsyncRewriter, AsyncToken> AsyncClient::StartRewrite(
     BucketName const& source_bucket, std::string source_object_name,
     BucketName const& destination_bucket, std::string destination_object_name,
     Options opts) {
-  return StartRewrite(source_bucket, std::move(source_object_name),
-                      destination_bucket, std::move(destination_object_name),
-                      google::storage::v2::RewriteObjectRequest{},
-                      std::move(opts));
-}
-
-std::pair<AsyncRewriter, AsyncToken> AsyncClient::StartRewrite(
-    BucketName const& source_bucket, std::string source_object_name,
-    BucketName const& destination_bucket, std::string destination_object_name,
-    google::storage::v2::RewriteObjectRequest request, Options opts) {
+  auto request = google::storage::v2::RewriteObjectRequest{};
   request.set_destination_name(std::move(destination_object_name));
   request.set_destination_bucket(destination_bucket.FullName());
   request.set_source_object(std::move(source_object_name));
   request.set_source_bucket(source_bucket.FullName());
   request.mutable_rewrite_token()->clear();
-  return ResumeRewrite(std::move(request), std::move(opts));
+  return StartRewrite(std::move(request), std::move(opts));
 }
 
 std::pair<AsyncRewriter, AsyncToken> AsyncClient::StartRewrite(

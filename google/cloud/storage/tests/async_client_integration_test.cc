@@ -419,10 +419,12 @@ TEST_F(AsyncClientIntegrationTest, RewriteObject) {
   AsyncRewriter rewriter;
   AsyncToken token;
   google::storage::v2::RewriteObjectRequest request;
+  request.set_destination_name(o2);
+  request.set_destination_bucket(BucketName(bucket_name()).FullName());
+  request.set_source_object(o1);
+  request.set_source_bucket(BucketName(bucket_name()).FullName());
   request.set_max_bytes_rewritten_per_call(1024 * 1024);
-  std::tie(rewriter, token) =
-      async.StartRewrite(BucketName(bucket_name()), o1,
-                         BucketName(bucket_name()), o2, std::move(request));
+  std::tie(rewriter, token) = async.StartRewrite(std::move(request));
   while (token.valid()) {
     auto rt = rewriter.Iterate(std::move(token)).get();
     ASSERT_STATUS_OK(rt);
@@ -464,10 +466,12 @@ TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
   AsyncToken token;
   auto const expected_name = MakeRandomObjectName();
   google::storage::v2::RewriteObjectRequest start_request;
+  start_request.set_destination_name(expected_name);
+  start_request.set_destination_bucket(BucketName(*destination).FullName());
+  start_request.set_source_object(source->name());
+  start_request.set_source_bucket(BucketName(bucket_name()).FullName());
   start_request.set_max_bytes_rewritten_per_call(1024 * 1024);
-  std::tie(rewriter, token) = async.StartRewrite(
-      BucketName(source->bucket()), source->name(), BucketName(*destination),
-      expected_name, start_request);
+  std::tie(rewriter, token) = async.StartRewrite(start_request);
 
   auto rt = rewriter.Iterate(std::move(token)).get();
   ASSERT_STATUS_OK(rt);
