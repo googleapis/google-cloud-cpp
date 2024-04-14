@@ -637,25 +637,6 @@ class AsyncClient {
    *
    * @snippet{doc} async/client.h start-rewrite-common
    *
-   * @param source_bucket the name of the bucket containing the source object.
-   * @param source_object_name the name of the source object.
-   * @param destination_bucket the name of the bucket for the new object.
-   * @param destination_object_name what to name the destination object.
-   * @param request any additional parameters modifying the request, such as
-   *   pre-conditions, and overrides for the destination object metadata.
-   * @param opts options controlling the behavior of this RPC, for example
-   *     the application may change the retry policy.
-   */
-  std::pair<AsyncRewriter, AsyncToken> StartRewrite(
-      BucketName const& source_bucket, std::string source_object_name,
-      BucketName const& destination_bucket, std::string destination_object_name,
-      google::storage::v2::RewriteObjectRequest request, Options opts = {});
-
-  /**
-   * Creates an `AsyncRewriter` to copy the source object.
-   *
-   * @snippet{doc} async/client.h start-rewrite-common
-   *
    * @param request any additional parameters modifying the request, such as
    *   pre-conditions, and overrides for the destination object metadata.
    * @param opts options controlling the behavior of this RPC, for example

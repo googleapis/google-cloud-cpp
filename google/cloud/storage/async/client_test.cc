@@ -512,53 +512,6 @@ TEST(AsyncClient, StartRewrite2) {
         EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
         EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
         auto constexpr kExpected = R"pb(
-          source_bucket: "projects/_/buckets/src-bucket"
-          source_object: "src-object"
-          destination_bucket: "projects/_/buckets/dst-bucket"
-          destination_name: "dst-object"
-          if_generation_match: 42
-        )pb";
-        EXPECT_THAT(p.request, MatchRewriteRequest(kExpected));
-        auto rewriter = std::make_shared<MockAsyncRewriterConnection>();
-        EXPECT_CALL(*rewriter, Iterate).WillOnce([] {
-          RewriteResponse response;
-          response.set_total_bytes_rewritten(3000);
-          response.set_object_size(3000);
-          response.mutable_resource()->set_size(3000);
-          return make_ready_future(make_status_or(MakeRewriteResponse()));
-        });
-        return rewriter;
-      });
-
-  auto client = AsyncClient(mock);
-  AsyncRewriter rewriter;
-  AsyncToken token;
-  RewriteObjectRequest request;
-  request.set_if_generation_match(42);
-  std::tie(rewriter, token) =
-      client.StartRewrite(BucketName("src-bucket"), "src-object",
-                          BucketName("dst-bucket"), "dst-object", request,
-                          Options{}
-                              .set<TestOption<1>>("O1-function")
-                              .set<TestOption<2>>("O2-function"));
-  auto rt = rewriter.Iterate(std::move(token)).get();
-  ASSERT_STATUS_OK(rt);
-  EXPECT_FALSE(rt->second.valid());
-  EXPECT_THAT(rt->first, MatchRewriteResponse());
-}
-
-TEST(AsyncClient, StartRewrite3) {
-  auto mock = std::make_shared<MockAsyncConnection>();
-  EXPECT_CALL(*mock, options)
-      .WillRepeatedly(
-          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
-
-  EXPECT_CALL(*mock, RewriteObject)
-      .WillOnce([](AsyncConnection::RewriteObjectParams const& p) {
-        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
-        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
-        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
-        auto constexpr kExpected = R"pb(
           source_bucket: "src-invalid-test-only"
           source_object: "src-object"
           destination_bucket: "dst-invalid-test-only"
