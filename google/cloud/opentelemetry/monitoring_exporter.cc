@@ -15,6 +15,7 @@
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/monitoring/v3/metric_client.h"
 #include "google/cloud/opentelemetry/internal/time_series.h"
+#include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
 #include <memory>
@@ -41,7 +42,21 @@ class MonitoringExporter final
   opentelemetry::sdk::common::ExportResult Export(
       opentelemetry::sdk::metrics::ResourceMetrics const& data) noexcept
       override {
-    // TODO(#13869) - Respect `noexcept` qualifier
+    auto result =
+        internal::NoExceptAction<opentelemetry::sdk::common::ExportResult>(
+            [&] { return ExportImpl(data); });
+    if (result) return *std::move(result);
+    GCP_LOG(WARNING) << "Exception thrown while exporting metrics.";
+    return opentelemetry::sdk::common::ExportResult::kFailure;
+  }
+
+  bool ForceFlush(std::chrono::microseconds) noexcept override { return false; }
+
+  bool Shutdown(std::chrono::microseconds) noexcept override { return true; }
+
+ private:
+  opentelemetry::sdk::common::ExportResult ExportImpl(
+      opentelemetry::sdk::metrics::ResourceMetrics const& data) {
     auto request = ToRequest(data);
     request.set_name(project_.FullName());
     if (request.time_series().empty()) {
@@ -62,11 +77,6 @@ class MonitoringExporter final
     return opentelemetry::sdk::common::ExportResult::kFailure;
   }
 
-  bool ForceFlush(std::chrono::microseconds) noexcept override { return false; }
-
-  bool Shutdown(std::chrono::microseconds) noexcept override { return true; }
-
- private:
   Project project_;
   monitoring_v3::MetricServiceClient client_;
 };
