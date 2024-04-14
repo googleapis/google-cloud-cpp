@@ -29,6 +29,7 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/chrono_output.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -52,6 +53,7 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
@@ -1870,6 +1872,12 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUploadResume) {
 }
 
 TEST_F(AsyncConnectionImplTest, DeleteObject) {
+  auto constexpr kRequestText = R"pb(
+    bucket: "invalid-test-only"
+    object: "test-object"
+    generation: 12345
+    if_metageneration_match: 42
+  )pb";
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncDeleteObject)
@@ -1878,18 +1886,14 @@ TEST_F(AsyncConnectionImplTest, DeleteObject) {
           return TransientError();
         });
       })
-      .WillOnce([&](CompletionQueue&, auto context,
+      .WillOnce([&](CompletionQueue&, auto,
                     google::cloud::internal::ImmutableOptions const& options,
                     google::storage::v2::DeleteObjectRequest const& request) {
-        // Verify at least one option is initialized with the correct
-        // values.
+        // Verify at least one option is initialized with the correct values.
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
-        auto metadata = GetMetadata(*context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
-        EXPECT_THAT(request.object(), "test-object");
+        google::storage::v2::DeleteObjectRequest expected;
+        EXPECT_TRUE(TextFormat::ParseFromString(kRequestText, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
         return sequencer.PushBack("DeleteObject(2)").then([](auto) {
           return Status{};
         });
@@ -1897,11 +1901,10 @@ TEST_F(AsyncConnectionImplTest, DeleteObject) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->DeleteObject(
-      {storage_experimental::DeleteObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::Fields("field1,field2"),
-                                 storage::QuotaUser("test-quota-user")),
-       connection->options()});
+  google::storage::v2::DeleteObjectRequest request;
+  EXPECT_TRUE(TextFormat::ParseFromString(kRequestText, &request));
+  auto pending =
+      connection->DeleteObject({std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "DeleteObject(1)");
@@ -1927,8 +1930,7 @@ TEST_F(AsyncConnectionImplTest, DeleteObjectPermanentError) {
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
   auto pending = connection->DeleteObject(
-      {storage_experimental::DeleteObjectRequest("test-bucket", "test-object"),
-       connection->options()});
+      {google::storage::v2::DeleteObjectRequest{}, connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "DeleteObject");
@@ -1939,6 +1941,11 @@ TEST_F(AsyncConnectionImplTest, DeleteObjectPermanentError) {
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncDeleteObjectTooManyTransients) {
+  auto constexpr kRequestText =
+      R"pb(
+    bucket: "invalid-test-only" object: "test-object" generation: 12345
+      )pb";
+
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncDeleteObject).Times(3).WillRepeatedly([&] {
@@ -1949,9 +1956,10 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObjectTooManyTransients) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->DeleteObject(
-      {storage_experimental::DeleteObjectRequest("test-bucket", "test-object"),
-       connection->options()});
+  google::storage::v2::DeleteObjectRequest request;
+  EXPECT_TRUE(TextFormat::ParseFromString(kRequestText, &request));
+  auto pending =
+      connection->DeleteObject({std::move(request), connection->options()});
 
   for (int i = 0; i != 3; ++i) {
     auto next = sequencer.PopFrontWithName();

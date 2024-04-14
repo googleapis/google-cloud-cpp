@@ -760,8 +760,9 @@ void RunBenchmark(Configuration const& cfg) {
                        std::vector<std::string> names) -> g::future<void> {
     std::vector<g::future<g::Status>> pending(names.size());
     std::transform(
-        names.begin(), names.end(), pending.begin(),
-        [&](auto const& name) { return client.DeleteObject(bucket, name); });
+        names.begin(), names.end(), pending.begin(), [&](auto const& name) {
+          return client.DeleteObject(gcs_ex::BucketName(bucket), name);
+        });
     names.clear();
     for (auto& p : pending) co_await std::move(p);
   };

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/connection_impl.h"
+#include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/internal/async/accumulate_read_object.h"
 #include "google/cloud/storage/internal/async/default_options.h"
@@ -63,6 +64,11 @@ inline std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
 inline std::unique_ptr<storage::IdempotencyPolicy> legacy_idempotency_policy(
     Options const& options) {
   return options.get<storage::IdempotencyPolicyOption>()->clone();
+}
+
+inline std::unique_ptr<storage_experimental::IdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<storage_experimental::IdempotencyPolicyOption>()();
 }
 
 }  // namespace
@@ -269,24 +275,20 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::ComposeObject(
 
 future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
-  auto proto = ToProto(p.request.impl_);
   auto const idempotency =
-      legacy_idempotency_policy(*current)->IsIdempotent(p.request.impl_)
-          ? Idempotency::kIdempotent
-          : Idempotency::kNonIdempotent;
+      idempotency_policy(*current)->DeleteObject(p.request);
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
       std::move(retry), std::move(backoff), idempotency, cq_,
-      [stub = stub_, request = std::move(p.request)](
-          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::storage::v2::DeleteObjectRequest const& proto) {
-        ApplyQueryParameters(*context, *options, request);
+      [stub = stub_](CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::storage::v2::DeleteObjectRequest const& proto) {
         return stub->AsyncDeleteObject(cq, std::move(context),
                                        std::move(options), proto);
       },
-      std::move(current), proto, __func__);
+      std::move(current), std::move(p.request), __func__);
 }
 
 std::shared_ptr<storage_experimental::AsyncRewriterConnection>

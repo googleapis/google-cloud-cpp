@@ -535,34 +535,58 @@ class AsyncClient {
          std::move(options)});
   }
 
+  /*
+  [delete-object-common]
+  @par Example
+  @snippet storage_async_samples.cc delete-object
+
+  @par Idempotency
+  This operation is only idempotent if:
+  - restricted by pre-conditions, in this case, `IfGenerationMatch`
+  - or, if it applies to only one object version via `Generation`.
+  [delete-object-common]
+  */
   /**
-   * Deletes an object.
+   * @brief Deletes an object
+   *
+   * @snippet{doc} async/client.h delete-object-common
    *
    * @param bucket_name the name of the bucket that contains the object.
-   * @param object_name the name of the object to be deleted.
-   * @param args a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `Generation`,
-   *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, and `UserProject`.
-   *     See the class description for common request options.
-   *
-   * @par Idempotency
-   * This operation is only idempotent if:
-   * - restricted by pre-conditions, in this case, `IfGenerationMatch`
-   * - or, if it applies to only one object version via `Generation`.
-   *
-   * @par Example
-   * @snippet storage_async_samples.cc delete-object
+   * @param object_name the name of the object to delete.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
    */
-  template <typename... Args>
-  future<Status> DeleteObject(std::string bucket_name, std::string object_name,
-                              Args&&... args) {
-    auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_->DeleteObject(
-        {DeleteObjectRequest(std::move(bucket_name), std::move(object_name))
-             .set_multiple_options(std::forward<Args>(args)...),
-         /*.options=*/std::move(options)});
-  }
+  future<Status> DeleteObject(BucketName const& bucket_name,
+                              std::string object_name, Options opts = {});
+
+  /**
+   * @brief Deletes an object
+   *
+   * @snippet{doc} async/client.h delete-object-common
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to delete.
+   * @param generation the object generation to delete.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<Status> DeleteObject(BucketName const& bucket_name,
+                              std::string object_name, std::int64_t generation,
+                              Options opts = {});
+
+  /**
+   * @brief Deletes an object
+   *
+   * @snippet{doc} async/client.h delete-object-common
+   *
+   * @param request the full request describing what object to delete. It may
+   *     also include any preconditions the object must satisfy, and other
+   *     parameters that are necessary to complete the RPC.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<Status> DeleteObject(google::storage::v2::DeleteObjectRequest request,
+                              Options opts = {});
 
   /*
   [start-rewrite-common]

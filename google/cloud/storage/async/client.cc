@@ -38,6 +38,33 @@ AsyncClient::AsyncClient(Options options) {
 AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
     : connection_(std::move(connection)) {}
 
+future<Status> AsyncClient::DeleteObject(BucketName const& bucket_name,
+                                         std::string object_name,
+                                         Options opts) {
+  google::storage::v2::DeleteObjectRequest request;
+  request.set_bucket(bucket_name.FullName());
+  request.set_object(object_name);
+  return DeleteObject(std::move(request), std::move(opts));
+}
+
+future<Status> AsyncClient::DeleteObject(BucketName const& bucket_name,
+                                         std::string object_name,
+                                         std::int64_t generation,
+                                         Options opts) {
+  google::storage::v2::DeleteObjectRequest request;
+  request.set_bucket(bucket_name.FullName());
+  request.set_object(object_name);
+  request.set_generation(generation);
+  return DeleteObject(std::move(request), std::move(opts));
+}
+
+future<Status> AsyncClient::DeleteObject(
+    google::storage::v2::DeleteObjectRequest request, Options opts) {
+  return connection_->DeleteObject(
+      {std::move(request),
+       internal::MergeOptions(std::move(opts), connection_->options())});
+}
+
 std::pair<AsyncRewriter, AsyncToken> AsyncClient::StartRewrite(
     BucketName const& source_bucket, std::string source_object_name,
     BucketName const& destination_bucket, std::string destination_object_name,

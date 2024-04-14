@@ -334,7 +334,7 @@ TEST(AsyncClient, ComposeObject) {
   EXPECT_THAT(response, IsOkAndHolds(TestObject()));
 }
 
-TEST(AsyncClient, DeleteObject) {
+TEST(AsyncClient, DeleteObject1) {
   auto mock = std::make_shared<MockAsyncConnection>();
   EXPECT_CALL(*mock, options)
       .WillRepeatedly(
@@ -345,17 +345,88 @@ TEST(AsyncClient, DeleteObject) {
         EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
         EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
         EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
-        EXPECT_EQ(p.request.bucket_name(), "test-bucket");
-        EXPECT_EQ(p.request.object_name(), "test-object");
-        EXPECT_EQ(p.request.GetOption<storage::IfGenerationMatch>().value_or(0),
-                  42);
+        auto constexpr kExpected = R"pb(
+          bucket: "projects/_/buckets/test-bucket"
+          object: "test-object"
+        )pb";
+        google::storage::v2::DeleteObjectRequest expected;
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpected, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
         return make_ready_future(Status{});
       });
 
   auto client = AsyncClient(mock);
   auto response = client
-                      .DeleteObject("test-bucket", "test-object",
-                                    storage::IfGenerationMatch(42),
+                      .DeleteObject(BucketName("test-bucket"), "test-object",
+                                    Options{}
+                                        .set<TestOption<1>>("O1-function")
+                                        .set<TestOption<2>>("O2-function"))
+                      .get();
+  EXPECT_THAT(response, IsOk());
+}
+
+TEST(AsyncClient, DeleteObject2) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, DeleteObject)
+      .WillOnce([](AsyncConnection::DeleteObjectParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto constexpr kExpected = R"pb(
+          bucket: "projects/_/buckets/test-bucket"
+          object: "test-object"
+          generation: 12345
+        )pb";
+        google::storage::v2::DeleteObjectRequest expected;
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpected, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(Status{});
+      });
+
+  auto client = AsyncClient(mock);
+  auto response =
+      client
+          .DeleteObject(BucketName("test-bucket"), "test-object", 12345,
+                        Options{}
+                            .set<TestOption<1>>("O1-function")
+                            .set<TestOption<2>>("O2-function"))
+          .get();
+  EXPECT_THAT(response, IsOk());
+}
+
+TEST(AsyncClient, DeleteObject3) {
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, DeleteObject)
+      .WillOnce([](AsyncConnection::DeleteObjectParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto constexpr kExpected = R"pb(
+          bucket: "test-only-invalid"
+          object: "test-object"
+          if_generation_match: 42
+        )pb";
+        google::storage::v2::DeleteObjectRequest expected;
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpected, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(Status{});
+      });
+
+  auto client = AsyncClient(mock);
+  google::storage::v2::DeleteObjectRequest request;
+  request.set_bucket("test-only-invalid");
+  request.set_object("test-object");
+  request.set_if_generation_match(42);
+  auto response = client
+                      .DeleteObject(std::move(request),
                                     Options{}
                                         .set<TestOption<1>>("O1-function")
                                         .set<TestOption<2>>("O2-function"))

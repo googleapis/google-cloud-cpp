@@ -488,7 +488,9 @@ void AsyncDeleteObject(google::cloud::storage_experimental::AsyncClient& client,
   namespace gcs_ex = google::cloud::storage_experimental;
   [](gcs_ex::AsyncClient& client, std::string bucket_name,
      std::string object_name) {
-    client.DeleteObject(std::move(bucket_name), std::move(object_name))
+    client
+        .DeleteObject(gcs_ex::BucketName(std::move(bucket_name)),
+                      std::move(object_name))
         .then([](auto f) {
           auto status = f.get();
           if (!status.ok()) throw g::Status(std::move(status));
@@ -621,14 +623,15 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   namespace g = ::google::cloud;
   std::vector<g::future<g::Status>> pending;
-  pending.push_back(client.DeleteObject(bucket_name, o1));
-  pending.push_back(client.DeleteObject(bucket_name, o2));
-  pending.push_back(client.DeleteObject(bucket_name, o3));
-  pending.push_back(client.DeleteObject(bucket_name, o4));
-  pending.push_back(client.DeleteObject(bucket_name, o5));
-  pending.push_back(client.DeleteObject(bucket_name, o6));
-  pending.push_back(client.DeleteObject(bucket_name, o7));
-  pending.push_back(client.DeleteObject(bucket_name, o8));
+  auto bucket = google::cloud::storage_experimental::BucketName(bucket_name);
+  pending.push_back(client.DeleteObject(bucket, o1));
+  pending.push_back(client.DeleteObject(bucket, o2));
+  pending.push_back(client.DeleteObject(bucket, o3));
+  pending.push_back(client.DeleteObject(bucket, o4));
+  pending.push_back(client.DeleteObject(bucket, o5));
+  pending.push_back(client.DeleteObject(bucket, o6));
+  pending.push_back(client.DeleteObject(bucket, o7));
+  pending.push_back(client.DeleteObject(bucket, o8));
   for (auto& f : pending) (void)f.get();
 }
 
