@@ -47,23 +47,13 @@ std::pair<AsyncRewriter, AsyncToken> AsyncClient::StartRewrite(
   request.set_destination_bucket(destination_bucket.FullName());
   request.set_source_object(std::move(source_object_name));
   request.set_source_bucket(source_bucket.FullName());
-  request.mutable_rewrite_token()->clear();
-  return StartRewrite(std::move(request), std::move(opts));
+  return ResumeRewrite(std::move(request), std::move(opts));
 }
 
 std::pair<AsyncRewriter, AsyncToken> AsyncClient::StartRewrite(
     google::storage::v2::RewriteObjectRequest request, Options opts) {
   request.mutable_rewrite_token()->clear();
   return ResumeRewrite(std::move(request), std::move(opts));
-}
-
-std::pair<AsyncRewriter, AsyncToken> AsyncClient::ResumeRewrite(
-    google::storage::v2::RewriteObjectRequest request, Options opts) {
-  auto c = connection_->RewriteObject(
-      {std::move(request),
-       internal::MergeOptions(std::move(opts), connection_->options())});
-  auto token = storage_internal::MakeAsyncToken(c.get());
-  return std::make_pair(AsyncRewriter(std::move(c)), std::move(token));
 }
 
 std::pair<AsyncRewriter, AsyncToken> AsyncClient::ResumeRewrite(
@@ -77,6 +67,15 @@ std::pair<AsyncRewriter, AsyncToken> AsyncClient::ResumeRewrite(
   request.set_source_bucket(source_bucket.FullName());
   request.set_rewrite_token(std::move(rewrite_token));
   return ResumeRewrite(std::move(request), std::move(opts));
+}
+
+std::pair<AsyncRewriter, AsyncToken> AsyncClient::ResumeRewrite(
+    google::storage::v2::RewriteObjectRequest request, Options opts) {
+  auto c = connection_->RewriteObject(
+      {std::move(request),
+       internal::MergeOptions(std::move(opts), connection_->options())});
+  auto token = storage_internal::MakeAsyncToken(c.get());
+  return std::make_pair(AsyncRewriter(std::move(c)), std::move(token));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
