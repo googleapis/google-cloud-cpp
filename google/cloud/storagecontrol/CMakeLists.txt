@@ -22,7 +22,7 @@ google_cloud_cpp_add_gapic_library(storagecontrol "Cloud Storage API" TRANSITION
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(storagecontrol_quickstart "quickstart/quickstart.cc")
     target_link_libraries(storagecontrol_quickstart
-                          PRIVATE google-cloud-cpp::experimental-storagecontrol)
+                          PRIVATE google-cloud-cpp::storagecontrol)
     google_cloud_cpp_add_common_options(storagecontrol_quickstart)
     add_test(
         NAME storagecontrol_quickstart
