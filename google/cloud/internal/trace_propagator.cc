@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "absl/strings/numbers.h"
 #include <opentelemetry/context/propagation/composite_propagator.h>
+#include <opentelemetry/nostd/span.h>
 #include <opentelemetry/trace/context.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <cstdlib>
@@ -65,7 +66,9 @@ class CloudTraceContext
     // the oldest version of Abseil we support. So we use `std::strtoull`, which
     // requires the input to be null-terminated.
     std::array<char, 2 * SpanId::kSize + 1> span_id;
-    span_context.span_id().ToLowerBase16({span_id.data(), span_id.size() - 1});
+    span_context.span_id().ToLowerBase16(
+        opentelemetry::nostd::span<char, 2 * SpanId::kSize>{
+            span_id.data(), span_id.size() - 1});
     span_id[2 * SpanId::kSize] = '\0';
     char* end = nullptr;
     std::uint64_t span_id_dec = std::strtoull(span_id.data(), &end, 16);
