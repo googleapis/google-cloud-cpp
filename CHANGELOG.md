@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.23.0 - TBD
+## v2.24.0 - TBD
 
 ## v2.23.0 - 2024-04
 
@@ -16,15 +16,55 @@ the APIs in these libraries are stable, and are ready for production use.
 - [App Hub API](/google/cloud/apphub/README.md)
 - [Backup and DR Service API](/google/cloud/backupdr/README.md)
 - [Sovereign Controls by Partners](/google/cloud/cloudcontrolspartner/README.md)
+- [Cloud Storage Control API](/google/cloud/storagecontrol/README.md) is now GA.
 
 ### Updated Libraries
 
+- [AI Platform API](/google/cloud/aiplatform/README.md) - new
+  `NotebookServiceClient` and `PersistentResourceServiceClient`
 - [Cloud Dataplex API](/google/cloud/dataplex/README.md) - new
   `CatalogServiceClient`
 - [Network Services API](/google/cloud/networkservices/README.md) - new
   `DepServiceClient`
-- [AI Platform API](/google/cloud/aiplatform/README.md) - new
-  `NotebookServiceClient` and `PersistentResourceServiceClient`
+- [SecurityCenter](/google/cloud/securitycenter/README.md) - add v2 version of the library
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- fix(bigtable): respect GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING ([#13748](https://github.com/googleapis/google-cloud-cpp/pull/13748))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- docs(pubsub): add kinesis sample ([#13593](https://github.com/googleapis/google-cloud-cpp/pull/13593))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add ExcludeTransactionFromChangeStreamsOption ([#13898](https://github.com/googleapis/google-cloud-cpp/pull/13898))
+- feat(spanner): add spanner::Value support for TypeCode::FLOAT32 ([#13862](https://github.com/googleapis/google-cloud-cpp/pull/13862))
+- feat(spanner): add samples for proto columns ([#13759](https://github.com/googleapis/google-cloud-cpp/pull/13759))
+- feat(spanner): add integration tests for proto columns ([#13756](https://github.com/googleapis/google-cloud-cpp/pull/13756))
+- feat(spanner): add spanner::Value support for ProtoEnum/ProtoMessage ([#13747](https://github.com/googleapis/google-cloud-cpp/pull/13747))
+- feat(spanner): add representations for the Spanner PROTO/ENUM types ([#13743](https://github.com/googleapis/google-cloud-cpp/pull/13743))
+- feat(spanner): add sample for instance-admin managed autoscaler ([#13740](https://github.com/googleapis/google-cloud-cpp/pull/13740))
+
+### [Speech](/google/cloud/speech/README.md)
+
+- fix(speech): enable location specific connections ([#13757](https://github.com/googleapis/google-cloud-cpp/pull/13757))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): preserve full Status in default creds ([#13897](https://github.com/googleapis/google-cloud-cpp/pull/13897))
+- fix(storage): respect `GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING` ([#13766](https://github.com/googleapis/google-cloud-cpp/pull/13766))
+- feat(storage): support HNS-enabled buckets ([#13753](https://github.com/googleapis/google-cloud-cpp/pull/13753))
+- feat(storage): support soft delete timestamps ([#13728](https://github.com/googleapis/google-cloud-cpp/pull/13728))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(common): introduce `FieldMaskOption` ([#13936](https://github.com/googleapis/google-cloud-cpp/pull/13936))
+- docs(common): link to system parameters page ([#13937](https://github.com/googleapis/google-cloud-cpp/pull/13937))
+- feat(common): `QuotaUserOption` for gRPC-based libs ([#13933](https://github.com/googleapis/google-cloud-cpp/pull/13933))
+- fix(common): `clang-cl` needs a `const_cast<>` ([#13891](https://github.com/googleapis/google-cloud-cpp/pull/13891))
+- fix(compute): shorten paths for Bazel+MSVC ([#13836](https://github.com/googleapis/google-cloud-cpp/pull/13836))
+- feat(common): support injecting custom headers ([#13829](https://github.com/googleapis/google-cloud-cpp/pull/13829))
 
 ## v2.22.0 - 2024-03
 
