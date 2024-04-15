@@ -14,10 +14,10 @@ the APIs in these libraries are stable, and are ready for production use.
 - [App Hub API](/google/cloud/apphub/README.md)
 - [Backup and DR Service API](/google/cloud/backupdr/README.md)
 - [Sovereign Controls by Partners](/google/cloud/cloudcontrolspartner/README.md)
+- [Cloud Storage Control API](/google/cloud/storagecontrol/README.md) is now GA.
 
 ### Updated Libraries
 
-- [Storage Control API](/google/cloud/storagecontrol/README.md) is now GA.
 - [Cloud Dataplex API](/google/cloud/dataplex/README.md) - new
   `CatalogServiceClient`
 - [Network Services API](/google/cloud/networkservices/README.md) - new
