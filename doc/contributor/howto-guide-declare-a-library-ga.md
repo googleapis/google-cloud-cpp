@@ -85,10 +85,11 @@ for lib in "${ga[@]}"; do sed -i 's/^Please note that the Google Cloud C/While t
 
 ### `google/cloud/${library}/CMakeLists.txt`:
 
-Update the CMake library targets.
+Update the CMake library targets and the quickstart runner.
 
 ```shell
 for lib in "${ga[@]}"; do sed -i 's/EXPERIMENTAL/TRANSITION/' google/cloud/${lib}/CMakeLists.txt; done
+for lib in "${ga[@]}"; do sed -i 's/experimental-//' google/cloud/${lib}/CMakeLists.txt; done
 ```
 
 ## Reference the GA targets in the quickstarts
