@@ -253,6 +253,22 @@ function (google_cloud_cpp_add_gapic_library library display_name)
 
     add_library(${library_alias} ALIAS ${library_target})
 
+    unset(transition_target)
+    if (_opt_TRANSITION)
+        # Define an interface library to allow for a smoother transition from
+        # `experimental-foo` -> `foo`.
+        set(transition_target "google_cloud_cpp_experimental_${library}")
+        set(transition_alias "google-cloud-cpp::experimental-${library}")
+        add_library(${transition_target} INTERFACE)
+        set_target_properties(${transition_target}
+                              PROPERTIES EXPORT_NAME ${transition_alias})
+        target_link_libraries(
+            ${transition_target}
+            PUBLIC
+            INTERFACE ${library_alias})
+        add_library(${transition_alias} ALIAS ${transition_target})
+    endif ()
+
     # Get the destination directories based on the GNU recommendations.
     include(GNUInstallDirs)
 
@@ -266,7 +282,7 @@ function (google_cloud_cpp_add_gapic_library library display_name)
     # GNUInstallDirs
     install(
         TARGETS ${library_target} ${protos_target}
-                ${backwards_compat_proto_targets}
+                ${backwards_compat_proto_targets} ${transition_target}
         EXPORT ${library_target}-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 COMPONENT google_cloud_cpp_runtime
@@ -296,14 +312,6 @@ function (google_cloud_cpp_add_gapic_library library display_name)
     endforeach ()
     string(JOIN "\n" GOOGLE_CLOUD_CPP_ADDITIONAL_FIND_DEPENDENCIES
            ${find_dependencies})
-    if (_opt_TRANSITION)
-        set(cmake_config_transition_lines
-            "if (NOT TARGET ${experimental_alias})"
-            "    add_library(${experimental_alias} ALIAS ${library_alias})"
-            "endif ()")
-        string(JOIN "\n" GOOGLE_CLOUD_CPP_CONFIG_TRANSITION_TARGETS
-               ${cmake_config_transition_lines})
-    endif ()
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.cmake.in"
                    "${library_target}-config.cmake" @ONLY)
     write_basic_package_version_file(
