@@ -57,7 +57,7 @@ TEST(TracedStreamRange, Success) {
   auto reader = bigtable_mocks::MakeRowReader(Rows({"r1", "r2", "r3"}));
   auto traced = MakeTestRowReader(std::move(reader));
 
-  std::vector<std::string> actual;
+  std::vector<bigtable::RowKeyType> actual;
   for (auto& v : traced) {
     ASSERT_STATUS_OK(v);
     actual.push_back(std::move(v->row_key()));
