@@ -4246,8 +4246,11 @@ void PartitionQuery(google::cloud::spanner::Client client) {
   RemoteConnectionFake remote_connection;
 
   //! [analyze-query]
-  // Only SQL queries with a Distributed Union as the first operator in the
-  // `ExecutionPlan` can be partitioned.
+  // For a SQL query to be partitionable, it has to satisfy some conditions.
+  // For example, if it has a Distributed Union operator, the Distributed
+  // Union operator must be the first operator in the `ExecutionPlan`.
+  // For detailed definition, please refer to
+  // https://cloud.google.com/spanner/docs/reads#read_data_in_parallel
   auto is_partitionable = [](spanner::ExecutionPlan const& plan) {
     return (!plan.plan_nodes().empty() &&
             plan.plan_nodes(0).kind() ==
