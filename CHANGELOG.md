@@ -51,12 +51,8 @@ the APIs in these libraries are stable, and are ready for production use.
 ### [Storage](/google/cloud/storage/README.md)
 
 - fix(storage): preserve full Status in default creds ([#13897](https://github.com/googleapis/google-cloud-cpp/pull/13897))
-- docs(GCS+gRPC): quickstart for `AsyncClient` ([#13809](https://github.com/googleapis/google-cloud-cpp/pull/13809))
-- fix(GCS+gRPC): test compilation with MSVC ([#13806](https://github.com/googleapis/google-cloud-cpp/pull/13806))
-- feat(GCS+gRPC): resume asynchronous downloads ([#13784](https://github.com/googleapis/google-cloud-cpp/pull/13784))
 - fix(storage): respect `GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING` ([#13766](https://github.com/googleapis/google-cloud-cpp/pull/13766))
 - feat(storage): support HNS-enabled buckets ([#13753](https://github.com/googleapis/google-cloud-cpp/pull/13753))
-- feat(GCS+gRPC): support listing folders as prefixes ([#13754](https://github.com/googleapis/google-cloud-cpp/pull/13754))
 - feat(storage): support soft delete timestamps ([#13728](https://github.com/googleapis/google-cloud-cpp/pull/13728))
 
 ### [Common Libraries](/google/cloud/README.md)
