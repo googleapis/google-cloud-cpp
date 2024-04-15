@@ -19,26 +19,20 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### Updated Libraries
 
+- [AI Platform API](/google/cloud/aiplatform/README.md) - new
+  `NotebookServiceClient` and `PersistentResourceServiceClient`
 - [Cloud Dataplex API](/google/cloud/dataplex/README.md) - new
   `CatalogServiceClient`
 - [Network Services API](/google/cloud/networkservices/README.md) - new
   `DepServiceClient`
-- [AI Platform API](/google/cloud/aiplatform/README.md) - new
-  `NotebookServiceClient` and `PersistentResourceServiceClient`
-
-
-### [BigQuery](/google/cloud/bigquery/README.md)
-
-- feat(generator): add polling policy sample ([#13797](https://github.com/googleapis/google-cloud-cpp/pull/13797))
+- [SecurityCenter](/google/cloud/securitycenter/README.md) - add v2 version of the library
 
 ### [Bigtable](/google/cloud/bigtable/README.md)
 
-- feat(generator): add polling policy sample ([#13797](https://github.com/googleapis/google-cloud-cpp/pull/13797))
 - fix(bigtable): respect GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING ([#13748](https://github.com/googleapis/google-cloud-cpp/pull/13748))
 
 ### [Pub/Sub](/google/cloud/pubsub/README.md)
 
-- fix(pubsub): fix flakey test by checking for at least N acks ([#13954](https://github.com/googleapis/google-cloud-cpp/pull/13954))
 - docs(pubsub): add kinesis sample ([#13593](https://github.com/googleapis/google-cloud-cpp/pull/13593))
 
 ### [Spanner](/google/cloud/spanner/README.md)
@@ -52,11 +46,13 @@ the APIs in these libraries are stable, and are ready for production use.
 - feat(spanner): add representations for the Spanner PROTO/ENUM types ([#13743](https://github.com/googleapis/google-cloud-cpp/pull/13743))
 - feat(spanner): add sample for instance-admin managed autoscaler ([#13740](https://github.com/googleapis/google-cloud-cpp/pull/13740))
 
+### [Speech](/google/cloud/speech/README.md)
+
+- fix(speech): enable location specific connections ([#13757](https://github.com/googleapis/google-cloud-cpp/pull/13757))
+
 ### [Storage](/google/cloud/storage/README.md)
 
 - fix(storage): preserve full Status in default creds ([#13897](https://github.com/googleapis/google-cloud-cpp/pull/13897))
-- fix(GCS+gRPC): I said > 23.x I meant >= 23 ([#13887](https://github.com/googleapis/google-cloud-cpp/pull/13887))
-- feat(cmake): automatically set `ctype=CORD` workarounds ([#13877](https://github.com/googleapis/google-cloud-cpp/pull/13877))
 - docs(GCS+gRPC): quickstart for `AsyncClient` ([#13809](https://github.com/googleapis/google-cloud-cpp/pull/13809))
 - fix(GCS+gRPC): test compilation with MSVC ([#13806](https://github.com/googleapis/google-cloud-cpp/pull/13806))
 - feat(GCS+gRPC): resume asynchronous downloads ([#13784](https://github.com/googleapis/google-cloud-cpp/pull/13784))
@@ -70,21 +66,9 @@ the APIs in these libraries are stable, and are ready for production use.
 - feat(common): introduce `FieldMaskOption` ([#13936](https://github.com/googleapis/google-cloud-cpp/pull/13936))
 - docs(common): link to system parameters page ([#13937](https://github.com/googleapis/google-cloud-cpp/pull/13937))
 - feat(common): `QuotaUserOption` for gRPC-based libs ([#13933](https://github.com/googleapis/google-cloud-cpp/pull/13933))
-- feat(backupdr): generate library ([#13927](https://github.com/googleapis/google-cloud-cpp/pull/13927))
-- feat(aiplatform): add notebook and persistent_resource ([#13903](https://github.com/googleapis/google-cloud-cpp/pull/13903))
 - fix(common): `clang-cl` needs a `const_cast<>` ([#13891](https://github.com/googleapis/google-cloud-cpp/pull/13891))
-- docs(storagecontrol): region tags for quickstart ([#13874](https://github.com/googleapis/google-cloud-cpp/pull/13874))
-- feat(dataplex): add `CatalogServiceClient` ([#13845](https://github.com/googleapis/google-cloud-cpp/pull/13845))
-- feat(networkservices): add `DepServiceClient` ([#13843](https://github.com/googleapis/google-cloud-cpp/pull/13843))
 - fix(compute): shorten paths for Bazel+MSVC ([#13836](https://github.com/googleapis/google-cloud-cpp/pull/13836))
 - feat(common): support injecting custom headers ([#13829](https://github.com/googleapis/google-cloud-cpp/pull/13829))
-- fix(compute): regenerate samples ([#13821](https://github.com/googleapis/google-cloud-cpp/pull/13821))
-- feat(generator): add polling policy sample ([#13797](https://github.com/googleapis/google-cloud-cpp/pull/13797))
-- fix(speech): enable location specific connections ([#13757](https://github.com/googleapis/google-cloud-cpp/pull/13757))
-- feat(securitycenter): add v2 version of library ([#13745](https://github.com/googleapis/google-cloud-cpp/pull/13745))
-- feat(cloudcontrolspartner): generate library ([#13744](https://github.com/googleapis/google-cloud-cpp/pull/13744))
-- feat(apphub): generate library ([#13738](https://github.com/googleapis/google-cloud-cpp/pull/13738))
-- feat(generator): add `request_id` fields to traces ([#13710](https://github.com/googleapis/google-cloud-cpp/pull/13710))
 
 ## v2.22.0 - 2024-03
 
