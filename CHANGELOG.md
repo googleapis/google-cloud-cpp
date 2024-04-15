@@ -37,8 +37,6 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - feat(spanner): add ExcludeTransactionFromChangeStreamsOption ([#13898](https://github.com/googleapis/google-cloud-cpp/pull/13898))
 - feat(spanner): add spanner::Value support for TypeCode::FLOAT32 ([#13862](https://github.com/googleapis/google-cloud-cpp/pull/13862))
-- feat(generator): add polling policy sample ([#13797](https://github.com/googleapis/google-cloud-cpp/pull/13797))
-- feat(spanner): add samples for proto columns ([#13759](https://github.com/googleapis/google-cloud-cpp/pull/13759))
 - feat(spanner): add integration tests for proto columns ([#13756](https://github.com/googleapis/google-cloud-cpp/pull/13756))
 - feat(spanner): add spanner::Value support for ProtoEnum/ProtoMessage ([#13747](https://github.com/googleapis/google-cloud-cpp/pull/13747))
 - feat(spanner): add representations for the Spanner PROTO/ENUM types ([#13743](https://github.com/googleapis/google-cloud-cpp/pull/13743))
