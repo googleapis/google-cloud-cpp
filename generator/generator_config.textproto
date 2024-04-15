@@ -3351,7 +3351,6 @@ service {
     "kInternal",
     "kUnknown"
   ]
-  omit_repo_metadata: true
   idempotency_overrides: [
     {rpc_name: "StorageControl.GetFolder", idempotency: IDEMPOTENT},
     {rpc_name: "StorageControl.ListFolders", idempotency: IDEMPOTENT},

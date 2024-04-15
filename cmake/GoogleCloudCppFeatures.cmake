@@ -34,10 +34,10 @@ set(GOOGLE_CLOUD_CPP_NO_GRPC_FEATURES
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sort
     "pubsublite" # This is WIP, it needs a number of hand-crafted APIs.
-    "storagecontrol")
+)
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
-)
+                                          "storagecontrol")
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sort

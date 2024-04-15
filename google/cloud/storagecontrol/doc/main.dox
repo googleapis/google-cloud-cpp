@@ -5,9 +5,8 @@
 An idiomatic C++ client library for the [Cloud Storage Control API][cloud-service-docs], a service
 to Lets you store and retrieve potentially-large, immutable data objects.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please, note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 [Semantic Versioning](https://semver.org/).
 
 @tableofcontents{HTML:2}
