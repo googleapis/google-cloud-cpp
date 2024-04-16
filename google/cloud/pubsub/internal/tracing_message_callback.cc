@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/message_callback.h"
+#include "google/cloud/pubsub/internal/tracing_exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
@@ -50,7 +51,8 @@ class TracingMessageCallback : public MessageCallback {
     auto span =
         internal::MakeSpan(subscription_id_ + " process",
                            {{sc::kMessagingSystem, "gcp_pubsub"}}, options);
-
+    m.ack_handler = MakeTracingExactlyOnceAckHandler(std::move(m.ack_handler),
+                                                     m.subscribe_span);
     child_->user_callback(std::move(m));
     span->End();
   }
