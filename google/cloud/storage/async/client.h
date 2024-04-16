@@ -536,7 +536,7 @@ class AsyncClient {
    * @snippet storage_async_samples.cc compose-object-request
    *
    * @par Idempotency
-   * This operation is idempotent if the are pre-conditions on the destination
+   * This operation is idempotent if there are pre-conditions on the destination
    * object. Set the `if_generation_match()` or `if_metageneration_match()`
    * fields.
    *
