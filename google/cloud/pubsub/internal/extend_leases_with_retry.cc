@@ -233,11 +233,13 @@ std::shared_ptr<ExtendLeasesWithRetryImpl> MakeTracingExtendLeasesWithRetryImpl(
 future<Status> ExtendLeasesWithRetry(
     std::shared_ptr<SubscriberStub> stub, CompletionQueue cq,
     google::pubsub::v1::ModifyAckDeadlineRequest request,
-    std::shared_ptr<BatchCallback> callback) {
+    std::shared_ptr<BatchCallback> callback, bool enable_otel) {
   std::shared_ptr<ExtendLeasesWithRetryImpl> impl =
-      MakeTracingExtendLeasesWithRetryImpl(
-          std::make_shared<DefaultExtendLeasesWithRetryImpl>(std::move(stub)),
-          std::move(callback));
+      std::make_shared<DefaultExtendLeasesWithRetryImpl>(std::move(stub));
+  if (enable_otel) {
+    impl = MakeTracingExtendLeasesWithRetryImpl(std::move(impl),
+                                                std::move(callback));
+  }
   std::shared_ptr<ExtendLeasesWithRetryHandle> handle =
       std::make_shared<ExtendLeasesWithRetryHandle>(
           std::move(impl), std::move(cq), std::move(request));

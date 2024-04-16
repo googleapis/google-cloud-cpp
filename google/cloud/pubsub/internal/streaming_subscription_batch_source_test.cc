@@ -21,6 +21,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
@@ -124,7 +125,8 @@ std::shared_ptr<StreamingSubscriptionBatchSource> MakeTestBatchSource(
           .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
           .set<pubsub::MaxOutstandingMessagesOption>(100)
           .set<pubsub::MaxOutstandingBytesOption>(100 * 1024 * 1024L)
-          .set<pubsub::MaxHoldTimeOption>(std::chrono::seconds(300))));
+          .set<pubsub::MaxHoldTimeOption>(std::chrono::seconds(300))
+          .set<OpenTelemetryTracingOption>(true)));
   return std::make_shared<StreamingSubscriptionBatchSource>(
       std::move(cq), std::move(shutdown), std::move(mock),
       std::move(subscription).FullName(), "test-client-id", std::move(opts));
@@ -1131,10 +1133,13 @@ TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, callback).Times(1);
+  EXPECT_CALL(*mock_batch_callback, StartModackSpan).Times(3);
+  EXPECT_CALL(*mock_batch_callback, EndModackSpan).Times(3);
   EXPECT_CALL(*mock_batch_callback, ModackStart("fake-001")).Times(1);
   EXPECT_CALL(*mock_batch_callback, ModackStart("fake-002")).Times(1);
-  EXPECT_CALL(*mock_batch_callback, ModackEnd("fake-001")).Times(1);
-  EXPECT_CALL(*mock_batch_callback, ModackEnd("fake-002")).Times(1);
+  EXPECT_CALL(*mock_batch_callback, ModackEnd("fake-001")).Times(2);
+  EXPECT_CALL(*mock_batch_callback, ModackEnd("fake-002")).Times(3);
+
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);

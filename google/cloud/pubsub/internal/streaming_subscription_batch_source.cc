@@ -18,6 +18,7 @@
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
 #include <iterator>
 #include <ostream>
 
@@ -223,7 +224,8 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   if (exactly_once_delivery_enabled_.value_or(false)) {
     lk.unlock();
     for (auto& r : split) {
-      (void)ExtendLeasesWithRetry(stub_, cq_, r, callback_);
+      (void)ExtendLeasesWithRetry(stub_, cq_, r, callback_,
+                                  options_->get<OpenTelemetryTracingOption>());
     }
     return;
   }

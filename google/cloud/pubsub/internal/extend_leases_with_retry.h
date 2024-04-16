@@ -41,7 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 future<Status> ExtendLeasesWithRetry(
     std::shared_ptr<SubscriberStub> stub, CompletionQueue cq,
     google::pubsub::v1::ModifyAckDeadlineRequest request,
-    std::shared_ptr<BatchCallback> callback);
+    std::shared_ptr<BatchCallback> callback, bool enable_otel);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
