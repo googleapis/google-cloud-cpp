@@ -442,9 +442,11 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     ApplyResumableUploadRoutingHeader(context, upload);
   };
 
+  auto proto = google::storage::v2::BidiWriteObjectRequest{};
+  proto.set_upload_id(*response->mutable_upload_id());
+
   return UnbufferedUploadImpl(std::move(current), std::move(configure),
-                              std::move(*response->mutable_upload_id()),
-                              std::move(hash_function), 0);
+                              std::move(proto), std::move(hash_function), 0);
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
@@ -457,14 +459,14 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
         StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
             std::move(response).status()));
   }
-  auto id =
+  auto upload_id =
       request.GetOption<storage::UseResumableUploadSession>().value_or("");
   if (response->has_resource()) {
     auto metadata = FromProto(response->resource(), *current);
     return make_ready_future(
         StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
             std::make_unique<AsyncWriterConnectionFinalized>(
-                std::move(id), std::move(metadata))));
+                std::move(upload_id), std::move(metadata))));
   }
 
   auto hash_function =
@@ -476,12 +478,14 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
                 request.GetOption<storage::DisableMD5Hash>())
           : storage::internal::CreateNullHashFunction();
   auto configure = [current, request = std::move(request),
-                    upload = id](grpc::ClientContext& context) {
+                    upload_id](grpc::ClientContext& context) {
     ApplyQueryParameters(context, *current, request);
-    ApplyResumableUploadRoutingHeader(context, upload);
+    ApplyResumableUploadRoutingHeader(context, upload_id);
   };
+  auto proto = google::storage::v2::BidiWriteObjectRequest{};
+  proto.set_upload_id(upload_id);
   return UnbufferedUploadImpl(std::move(current), std::move(configure),
-                              std::move(id), std::move(hash_function),
+                              std::move(proto), std::move(hash_function),
                               response->persisted_size());
 }
 
@@ -489,7 +493,7 @@ future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::UnbufferedUploadImpl(
     internal::ImmutableOptions current,
     std::function<void(grpc::ClientContext&)> configure_context,
-    std::string upload_id,
+    google::storage::v2::BidiWriteObjectRequest request,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
     std::int64_t persisted_size) {
   using StreamingRpc = AsyncWriterConnectionImpl::StreamingRpc;
@@ -527,7 +531,7 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     });
   };
 
-  auto transform = [current, id = std::move(upload_id), persisted_size,
+  auto transform = [current, request = std::move(request), persisted_size,
                     hash = std::move(hash_function)](auto f) mutable
       -> StatusOr<
           std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
@@ -535,7 +539,7 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     if (!rpc) return std::move(rpc).status();
     return std::unique_ptr<storage_experimental::AsyncWriterConnection>(
         std::make_unique<AsyncWriterConnectionImpl>(
-            current, *std::move(rpc), std::move(id), std::move(hash),
+            current, std::move(request), *std::move(rpc), std::move(hash),
             persisted_size));
   };
 
