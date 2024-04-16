@@ -70,14 +70,7 @@ class TracingExactlyOnceAckHandler
          {sc::kMessagingOperation, "settle"}},
         options);
     auto scope = internal::OTelScope(span);
-
-    return child_->ack().then(
-        [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-         span = std::move(span)](auto f) {
-          auto result = f.get();
-          internal::DetachOTelContext(oc);
-          return internal::EndSpan(*span, std::move(result));
-        });
+    return internal::EndSpan(std::move(span), child_->ack());
   }
 
   future<Status> nack() override {
@@ -104,13 +97,7 @@ class TracingExactlyOnceAckHandler
         options);
 
     auto scope = internal::OTelScope(span);
-    return child_->nack().then(
-        [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-         span = std::move(span)](auto f) {
-          auto result = f.get();
-          internal::DetachOTelContext(oc);
-          return internal::EndSpan(*span, std::move(result));
-        });
+    return internal::EndSpan(std::move(span), child_->nack());
   }
 
   std::int32_t delivery_attempt() const override {

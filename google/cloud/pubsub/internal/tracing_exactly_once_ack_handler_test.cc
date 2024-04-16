@@ -67,9 +67,8 @@ TEST(TracingExactlyOnceAckHandlerTest, AckSuccess) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, ack()).WillOnce([&]() {
-    ThereIsAnActiveSpan();
-    auto spans = span_catcher->GetSpans();
-    EXPECT_THAT(spans, testing::IsEmpty());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
     return make_ready_future(Status{});
   });
   auto handler = MakeTestExactlyOnceAckHandler(std::move(mock));
