@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/extend_leases_with_retry.h"
+#include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/log.h"
@@ -56,6 +57,32 @@ google::pubsub::v1::ModifyAckDeadlineRequest UpdateRequest(
   return request;
 }
 
+class ExtendLeasesWithRetryImpl {
+ public:
+  virtual ~ExtendLeasesWithRetryImpl() = default;
+  virtual future<Status> MakeRpc(
+      CompletionQueue& cq,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
+};
+
+class DefaultExtendLeasesWithRetryImpl : public ExtendLeasesWithRetryImpl {
+ public:
+  explicit DefaultExtendLeasesWithRetryImpl(
+      std::shared_ptr<SubscriberStub> stub)
+      : stub_(std::move(stub)) {}
+
+  future<Status> MakeRpc(
+      CompletionQueue& cq,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
+    auto context = std::make_shared<grpc::ClientContext>();
+    auto options = google::cloud::internal::MakeImmutableOptions({});
+    return stub_->AsyncModifyAckDeadline(cq, std::move(context),
+                                         std::move(options), request);
+  }
+
+  std::shared_ptr<SubscriberStub> stub_;
+};
+
 /**
  * Implements `ExtendLeasesWithRetry()`.
  *
@@ -92,9 +119,9 @@ class ExtendLeasesWithRetryHandle
     : public std::enable_shared_from_this<ExtendLeasesWithRetryHandle> {
  public:
   ExtendLeasesWithRetryHandle(
-      std::shared_ptr<SubscriberStub> stub, CompletionQueue cq,
+      std::shared_ptr<ExtendLeasesWithRetryImpl> impl, CompletionQueue cq,
       google::pubsub::v1::ModifyAckDeadlineRequest request)
-      : stub_(std::move(stub)),
+      : impl_(std::move(impl)),
         cq_(std::move(cq)),
         request_(std::move(request)) {}
 
@@ -104,19 +131,12 @@ class ExtendLeasesWithRetryHandle
     return result;
   }
 
-  future<Status> MakeRpc(
-      google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-    auto context = std::make_shared<grpc::ClientContext>();
-    auto options = google::cloud::internal::MakeImmutableOptions({});
-    return stub_->AsyncModifyAckDeadline(cq_, std::move(context),
-                                         std::move(options), request);
-  }
-
  private:
   void MakeAttempt() {
     ++attempts_;
-    MakeRpc(request_).then(
-        [self = shared_from_this()](auto f) { self->OnAttempt(f.get()); });
+    impl_->MakeRpc(cq_, request_).then([self = shared_from_this()](auto f) {
+      self->OnAttempt(f.get());
+    });
   }
 
   void OnAttempt(Status status) {
@@ -154,7 +174,7 @@ class ExtendLeasesWithRetryHandle
   }
 
   promise<Status> promise_;
-  std::shared_ptr<SubscriberStub> stub_;
+  std::shared_ptr<ExtendLeasesWithRetryImpl> impl_;
   CompletionQueue cq_;
   google::pubsub::v1::ModifyAckDeadlineRequest request_;
   std::unique_ptr<pubsub::BackoffPolicy> backoff_ = ExactlyOnceBackoffPolicy();
@@ -162,13 +182,65 @@ class ExtendLeasesWithRetryHandle
   int attempts_ = 0;
 };
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class TracingExtendLeasesWithRetryImpl : public ExtendLeasesWithRetryImpl {
+ public:
+  TracingExtendLeasesWithRetryImpl(
+      std::shared_ptr<ExtendLeasesWithRetryImpl> child,
+      std::shared_ptr<BatchCallback> callback)
+      : child_(std::move(child)), callback_(std::move(callback)) {}
+
+  future<Status> MakeRpc(
+      CompletionQueue& cq,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
+    Span modack_span = callback_->StartModackSpan(request);
+
+    return child_->MakeRpc(cq, request)
+        .then([cb = callback_, modack_span, request](auto f) {
+          auto result = f.get();
+          for (auto const& ack_id : request.ack_ids()) {
+            cb->ModackEnd(ack_id);
+          }
+          cb->EndModackSpan(modack_span);
+          return result;
+        });
+  }
+
+  std::shared_ptr<ExtendLeasesWithRetryImpl> child_;
+  std::shared_ptr<BatchCallback> callback_;
+};
+
+std::shared_ptr<ExtendLeasesWithRetryImpl> MakeTracingExtendLeasesWithRetryImpl(
+    std::shared_ptr<ExtendLeasesWithRetryImpl> impl,
+    std::shared_ptr<BatchCallback> batch_callback) {
+  return std::make_shared<TracingExtendLeasesWithRetryImpl>(
+      std::move(impl), std::move(batch_callback));
+}
+
+#else  // #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<ExtendLeasesWithRetryImpl> MakeTracingExtendLeasesWithRetryImpl(
+    std::shared_ptr<ExtendLeasesWithRetryImpl> impl,
+    std::shared_ptr<BatchCallback>) {
+  return impl;
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 }  // namespace
 
 future<Status> ExtendLeasesWithRetry(
     std::shared_ptr<SubscriberStub> stub, CompletionQueue cq,
-    google::pubsub::v1::ModifyAckDeadlineRequest request) {
-  auto handle = std::make_shared<ExtendLeasesWithRetryHandle>(
-      std::move(stub), std::move(cq), std::move(request));
+    google::pubsub::v1::ModifyAckDeadlineRequest request,
+    std::shared_ptr<BatchCallback> callback) {
+  std::shared_ptr<ExtendLeasesWithRetryImpl> impl =
+      MakeTracingExtendLeasesWithRetryImpl(
+          std::make_shared<DefaultExtendLeasesWithRetryImpl>(std::move(stub)),
+          std::move(callback));
+  std::shared_ptr<ExtendLeasesWithRetryHandle> handle =
+      std::make_shared<ExtendLeasesWithRetryHandle>(
+          std::move(impl), std::move(cq), std::move(request));
   return handle->Start();
 }
 

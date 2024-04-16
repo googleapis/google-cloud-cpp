@@ -223,14 +223,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   if (exactly_once_delivery_enabled_.value_or(false)) {
     lk.unlock();
     for (auto& r : split) {
-      (void)ExtendLeasesWithRetry(stub_, cq_, r)
-          .then([cb = callback_, r](auto f) {
-            auto result = f.get();
-            for (auto const& ack_id : r.ack_ids()) {
-              cb->ModackEnd(ack_id);
-            }
-            return result;
-          });
+      (void)ExtendLeasesWithRetry(stub_, cq_, r, callback_);
     }
     return;
   }
