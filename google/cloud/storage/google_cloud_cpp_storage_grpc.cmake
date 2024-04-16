@@ -79,6 +79,7 @@ else ()
         async/object_requests.h
         async/object_responses.cc
         async/object_responses.h
+        async/options.h
         async/reader.cc
         async/reader.h
         async/reader_connection.h

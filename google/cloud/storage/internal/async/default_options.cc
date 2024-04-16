@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/async/idempotency_policy.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
@@ -66,7 +67,8 @@ Options DefaultOptionsAsync(Options opts) {
           .set<storage_experimental::ResumePolicyOption>(
               storage_experimental::UnlimitedErrorCountResumePolicy())
           .set<storage_experimental::IdempotencyPolicyOption>(
-              storage_experimental::MakeStrictIdempotencyPolicy));
+              storage_experimental::MakeStrictIdempotencyPolicy)
+          .set<storage_experimental::EnableCrc32cValidationOption>(true));
   return Adjust(DefaultOptionsGrpc(std::move(opts)));
 }
 

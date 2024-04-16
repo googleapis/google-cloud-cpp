@@ -23,6 +23,7 @@ google_cloud_cpp_storage_grpc_hdrs = [
     "async/idempotency_policy.h",
     "async/object_requests.h",
     "async/object_responses.h",
+    "async/options.h",
     "async/reader.h",
     "async/reader_connection.h",
     "async/resume_policy.h",
