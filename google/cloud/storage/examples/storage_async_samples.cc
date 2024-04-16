@@ -461,24 +461,57 @@ void ComposeObject(google::cloud::storage_experimental::AsyncClient& client,
                    std::vector<std::string> const& argv) {
   //! [compose-object]
   namespace g = google::cloud;
-  namespace gcs = g::storage;
   namespace gcs_ex = g::storage_experimental;
   [](gcs_ex::AsyncClient& client, std::string bucket_name,
-     std::string object_name, std::string o1, std::string o2) {
-    std::vector<gcs::ComposeSourceObject> sources;
-    sources.push_back({std::move(o1), absl::nullopt, absl::nullopt});
-    sources.push_back({std::move(o2), absl::nullopt, absl::nullopt});
+     std::string object_name, std::string name1, std::string name2) {
+    auto make_source = [](std::string name) {
+      google::storage::v2::ComposeObjectRequest::SourceObject source;
+      source.set_name(std::move(name));
+      return source;
+    };
     client
-        .ComposeObject(std::move(bucket_name), std::move(sources),
-                       std::move(object_name))
+        .ComposeObject(
+            gcs_ex::BucketName(std::move(bucket_name)), std::move(object_name),
+            {make_source(std::move(name1)), make_source(std::move(name2))})
         .then([](auto f) {
           auto metadata = f.get();
           if (!metadata) throw std::move(metadata).status();
-          std::cout << "Object successfully composed: " << *metadata << "\n";
+          std::cout << "Object successfully composed: "
+                    << metadata->DebugString() << "\n";
         })
         .get();
   }
   //! [compose-object]
+  (client, argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+void ComposeObjectRequest(
+    google::cloud::storage_experimental::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [compose-object-request]
+  namespace g = google::cloud;
+  namespace gcs_ex = g::storage_experimental;
+  [](gcs_ex::AsyncClient& client, std::string bucket_name,
+     std::string object_name, std::string name1, std::string name2) {
+    google::storage::v2::ComposeObjectRequest request;
+    request.mutable_destination()->set_bucket(
+        gcs_ex::BucketName(std::move(bucket_name)).FullName());
+    request.mutable_destination()->set_name(std::move(object_name));
+    // Only create the destination object if it does not already exist.
+    request.set_if_generation_match(0);
+    request.add_source_objects()->set_name(std::move(name1));
+    request.add_source_objects()->set_name(std::move(name2));
+
+    client.ComposeObject(std::move(request))
+        .then([](auto f) {
+          auto metadata = f.get();
+          if (!metadata) throw std::move(metadata).status();
+          std::cout << "Object successfully composed: "
+                    << metadata->DebugString() << "\n";
+        })
+        .get();
+  }
+  //! [compose-object-request]
   (client, argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
@@ -621,6 +654,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const o8 = examples::MakeRandomObjectName(generator, "object-");
   ResumeRewrite(client, {bucket_name, object_name, o8});
 
+  std::cout << "Running ComposeObjectRequest() example" << std::endl;
+  auto const o9 = examples::MakeRandomObjectName(generator, "object-");
+  ComposeObjectRequest(client, {bucket_name, o9, o1, o2});
+
   std::cout << "Running DeleteObject() example" << std::endl;
   AsyncDeleteObject(client, {bucket_name, object_name});
 
@@ -635,6 +672,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   pending.push_back(client.DeleteObject(bucket, o6));
   pending.push_back(client.DeleteObject(bucket, o7));
   pending.push_back(client.DeleteObject(bucket, o8));
+  pending.push_back(client.DeleteObject(bucket, o9));
   for (auto& f : pending) (void)f.get();
 }
 
@@ -676,6 +714,7 @@ int main(int argc, char* argv[]) try {
       make_entry("read-object-with-options", {"<generation>"},
                  ReadObjectWithOptions),
       make_entry("compose-object", {"<o1> <o2>"}, ComposeObject),
+      make_entry("compose-object-request", {"<o1> <o2>"}, ComposeObjectRequest),
       make_entry("delete-object", {}, AsyncDeleteObject),
       make_entry("write-object", {"<filename>"}, WriteObject),
       make_entry("write-object-with-retry", {"<filename>"},

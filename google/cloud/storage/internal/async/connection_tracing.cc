@@ -109,7 +109,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
-  future<StatusOr<storage::ObjectMetadata>> ComposeObject(
+  future<StatusOr<google::storage::v2::Object>> ComposeObject(
       ComposeObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ComposeObject");
     internal::OTelScope scope(span);
