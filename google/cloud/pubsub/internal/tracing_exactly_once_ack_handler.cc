@@ -48,6 +48,8 @@ class TracingExactlyOnceAckHandler
 
   ~TracingExactlyOnceAckHandler() override = default;
   future<Status> ack() override {
+    // Check that the subscribe span exists. A span could not exist if it
+    // expired before the ack or has already been acked/nacked.
     if (subscribe_span_) {
       subscribe_span_->AddEvent("gl-cpp.message_ack");
     }
@@ -67,12 +69,23 @@ class TracingExactlyOnceAckHandler
           static_cast<int32_t>(delivery_attempt())},
          {sc::kMessagingOperation, "settle"}},
         options);
+    auto scope = internal::OTelScope(span);
 
-    return internal::EndSpan(std::move(span), child_->ack());
+    return child_->ack().then(
+        [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+         span = std::move(span)](auto f) {
+          auto result = f.get();
+          internal::DetachOTelContext(oc);
+          return internal::EndSpan(*span, std::move(result));
+        });
   }
 
   future<Status> nack() override {
-    subscribe_span_->AddEvent("gl-cpp.message_nack");
+    // Check that the subscribe span exists. A span could not exist if it
+    // expired before the ack or has already been acked/nacked.
+    if (subscribe_span_) {
+      subscribe_span_->AddEvent("gl-cpp.message_nack");
+    }
     namespace sc = opentelemetry::trace::SemanticConventions;
     opentelemetry::trace::StartSpanOptions options = RootStartSpanOptions();
     options.kind = opentelemetry::trace::SpanKind::kInternal;
@@ -91,7 +104,13 @@ class TracingExactlyOnceAckHandler
         options);
 
     auto scope = internal::OTelScope(span);
-    return internal::EndSpan(std::move(span), child_->nack());
+    return child_->nack().then(
+        [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+         span = std::move(span)](auto f) {
+          auto result = f.get();
+          internal::DetachOTelContext(oc);
+          return internal::EndSpan(*span, std::move(result));
+        });
   }
 
   std::int32_t delivery_attempt() const override {

@@ -32,7 +32,9 @@ namespace {
 
 using ::google::cloud::pubsub_testing::MockExactlyOnceAckHandlerImpl;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsInternal;
@@ -44,6 +46,7 @@ using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::ElementsAre;
+using ::testing::Not;
 using ::testing::Return;
 
 pubsub::Subscription const kTestSubscription =
@@ -75,6 +78,49 @@ TEST(TracingExactlyOnceAckHandlerTest, AckSuccess) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(AllOf(
+                         SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanNamed("test-subscription ack"))));
+}
+
+TEST(TracingExactlyOnceAckHandlerTest, AckSuccessWithNoSubscribeSpan) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
+  EXPECT_CALL(*mock, ack())
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  EXPECT_CALL(*mock, delivery_attempt()).WillRepeatedly(Return(42));
+  EXPECT_CALL(*mock, ack_id()).WillRepeatedly(Return(kTestAckId));
+  EXPECT_CALL(*mock, subscription()).WillRepeatedly(Return(kTestSubscription));
+  auto handler = MakeTracingExactlyOnceAckHandler(std::move(mock), {});
+
+  EXPECT_STATUS_OK(std::move(handler)->ack().get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanNamed("test-subscription ack"))));
+}
+
+TEST(TracingExactlyOnceAckHandlerTest, AckActiveSpan) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto sub_span = internal::MakeSpan("test-subscription subscribe");
+  EXPECT_CALL(*mock, ack()).WillOnce([sub_span] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
+    EXPECT_THAT(sub_span, Not(IsActive()));
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, delivery_attempt()).WillRepeatedly(Return(42));
+  EXPECT_CALL(*mock, ack_id()).WillRepeatedly(Return(kTestAckId));
+  EXPECT_CALL(*mock, subscription()).WillRepeatedly(Return(kTestSubscription));
+  auto handler = MakeTracingExactlyOnceAckHandler(std::move(mock), {sub_span});
+
+  EXPECT_STATUS_OK(std::move(handler)->ack().get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(
                          SpanHasInstrumentationScope(), SpanKindIsInternal(),
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                          SpanNamed("test-subscription ack"))));
@@ -142,6 +188,30 @@ TEST(TracingExactlyOnceAckHandlerTest, NackSuccess) {
                          SpanNamed("test-subscription nack"))));
 }
 
+TEST(TracingExactlyOnceAckHandlerTest, NackActiveSpan) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto sub_span = internal::MakeSpan("test-subscription subscribe");
+  EXPECT_CALL(*mock, nack()).WillOnce([sub_span] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_TRUE(OTelContextCaptured());
+    EXPECT_THAT(sub_span, Not(IsActive()));
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, delivery_attempt()).WillRepeatedly(Return(42));
+  EXPECT_CALL(*mock, ack_id()).WillRepeatedly(Return(kTestAckId));
+  EXPECT_CALL(*mock, subscription()).WillRepeatedly(Return(kTestSubscription));
+  auto handler = MakeTracingExactlyOnceAckHandler(std::move(mock), {sub_span});
+
+  EXPECT_STATUS_OK(std::move(handler)->nack().get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanNamed("test-subscription nack"))));
+}
+
 TEST(TracingExactlyOnceAckHandlerTest, NackError) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
@@ -159,6 +229,25 @@ TEST(TracingExactlyOnceAckHandlerTest, NackError) {
       Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
                      SpanWithStatus(opentelemetry::trace::StatusCode::kError),
                      SpanNamed("test-subscription nack"))));
+}
+
+TEST(TracingExactlyOnceAckHandlerTest, NackSuccessWithNoSubscribeSpan) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
+  EXPECT_CALL(*mock, nack())
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  EXPECT_CALL(*mock, delivery_attempt()).WillRepeatedly(Return(42));
+  EXPECT_CALL(*mock, ack_id()).WillRepeatedly(Return(kTestAckId));
+  EXPECT_CALL(*mock, subscription()).WillRepeatedly(Return(kTestSubscription));
+  auto handler = MakeTracingExactlyOnceAckHandler(std::move(mock), {});
+
+  EXPECT_STATUS_OK(std::move(handler)->nack().get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanNamed("test-subscription nack"))));
 }
 
 TEST(TracingAckHandlerTest, NackAttributes) {
