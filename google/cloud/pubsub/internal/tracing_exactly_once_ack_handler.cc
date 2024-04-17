@@ -86,9 +86,7 @@ class TracingExactlyOnceAckHandler
     // expired before the ack or has already been acked/nacked.
     Links links;
     if (subscribe_span_) {
-      if (subscribe_span_) {
-        subscribe_span_->AddEvent("gl-cpp.message_nack");
-      }
+      subscribe_span_->AddEvent("gl-cpp.message_nack");
       links.emplace_back(
           std::make_pair(subscribe_span_->GetContext(), Attributes{}));
     }
