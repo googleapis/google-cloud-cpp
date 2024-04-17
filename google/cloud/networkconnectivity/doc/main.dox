@@ -23,12 +23,18 @@ which should give you a taste of the Network Connectivity API C++ client library
 ## Main classes
 
 <!-- inject-client-list-start -->
-The main class in this library is
-[`networkconnectivity_v1::HubServiceClient`](@ref google::cloud::networkconnectivity_v1::HubServiceClient). All RPCs are exposed
-as member functions of this class. Other classes provide helpers, configuration
-parameters, and infrastructure to mock
-[`networkconnectivity_v1::HubServiceClient`](@ref google::cloud::networkconnectivity_v1::HubServiceClient) when testing your
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
+
+- [\c networkconnectivity_v1::HubServiceClient](@ref google::cloud::networkconnectivity_v1::HubServiceClient)
+- [\c networkconnectivity_v1::PolicyBasedRoutingServiceClient](@ref google::cloud::networkconnectivity_v1::PolicyBasedRoutingServiceClient)
 <!-- inject-client-list-end -->
 
 ## More Information

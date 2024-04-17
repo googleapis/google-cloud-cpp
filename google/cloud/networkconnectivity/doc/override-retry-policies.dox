@@ -81,6 +81,11 @@ This will override the polling policies for `networkconnectivity_v1::HubServiceC
 @snippet hub_client_samples.cc set-polling-policy
 
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c networkconnectivity_v1::HubServiceClient](@ref networkconnectivity_v1::HubServiceClient-retry-snippet)
+- [\c networkconnectivity_v1::PolicyBasedRoutingServiceClient](@ref networkconnectivity_v1::PolicyBasedRoutingServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section networkconnectivity-override-retry-more-information More Information
@@ -104,6 +109,18 @@ This shows how to override the retry policies for networkconnectivity_v1::HubSer
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/networkconnectivity/v1/samples/hub_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page networkconnectivity_v1::PolicyBasedRoutingServiceClient-retry-snippet Override networkconnectivity_v1::PolicyBasedRoutingServiceClient Retry Policies
+
+This shows how to override the retry policies for networkconnectivity_v1::PolicyBasedRoutingServiceClient:
+
+@snippet google/cloud/networkconnectivity/v1/samples/policy_based_routing_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/networkconnectivity/v1/samples/policy_based_routing_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->
