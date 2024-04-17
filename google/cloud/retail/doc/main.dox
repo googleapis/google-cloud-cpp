@@ -32,6 +32,7 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
+- [\c retail_v2::AnalyticsServiceClient](@ref google::cloud::retail_v2::AnalyticsServiceClient)
 - [\c retail_v2::CatalogServiceClient](@ref google::cloud::retail_v2::CatalogServiceClient)
 - [\c retail_v2::CompletionServiceClient](@ref google::cloud::retail_v2::CompletionServiceClient)
 - [\c retail_v2::ControlServiceClient](@ref google::cloud::retail_v2::ControlServiceClient)

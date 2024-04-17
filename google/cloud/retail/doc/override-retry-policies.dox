@@ -68,17 +68,22 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section retail-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
-For example, this will override the retry policies for `retail_v2::CatalogServiceClient`:
+For example, this will override the retry policies for `retail_v2::AnalyticsServiceClient`:
 
-@snippet catalog_client_samples.cc set-retry-policy
+@snippet analytics_client_samples.cc set-retry-policy
 
 This assumes you have created a custom idempotency policy. Such as:
 
-@snippet catalog_client_samples.cc custom-idempotency-policy
+@snippet analytics_client_samples.cc custom-idempotency-policy
+
+This will override the polling policies for `retail_v2::AnalyticsServiceClient`
+
+@snippet analytics_client_samples.cc set-polling-policy
 
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c retail_v2::AnalyticsServiceClient](@ref retail_v2::AnalyticsServiceClient-retry-snippet)
 - [\c retail_v2::CatalogServiceClient](@ref retail_v2::CatalogServiceClient-retry-snippet)
 - [\c retail_v2::CompletionServiceClient](@ref retail_v2::CompletionServiceClient-retry-snippet)
 - [\c retail_v2::ControlServiceClient](@ref retail_v2::ControlServiceClient-retry-snippet)
@@ -102,6 +107,18 @@ Follow these links to find examples for other \c *Client classes:
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page retail_v2::AnalyticsServiceClient-retry-snippet Override retail_v2::AnalyticsServiceClient Retry Policies
+
+This shows how to override the retry policies for retail_v2::AnalyticsServiceClient:
+
+@snippet google/cloud/retail/v2/samples/analytics_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/retail/v2/samples/analytics_client_samples.cc custom-idempotency-policy
+
+*/
 
 /*! @page retail_v2::CatalogServiceClient-retry-snippet Override retail_v2::CatalogServiceClient Retry Policies
 
