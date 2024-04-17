@@ -2591,6 +2591,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/networkconnectivity/v1/policy_based_routing.proto"
+  product_path: "google/cloud/networkconnectivity/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Network Management
 service {
   service_proto_path: "google/cloud/networkmanagement/v1/reachability.proto"
