@@ -10,6 +10,10 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_SQL_AVAILABLE_DATABASE_VERSIONS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "sqladmin.googleapis.com")
+  used by `MakeSqlAvailableDatabaseVersionsServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_SQL_BACKUP_RUNS_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlBackupRunsServiceConnection()`.
@@ -22,17 +26,33 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlDatabasesServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_SQL_EVENTS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "sqladmin.googleapis.com")
+  used by `MakeSqlEventsServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_SQL_FLAGS_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlFlagsServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SQL_IAM_POLICIES_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "sqladmin.googleapis.com")
+  used by `MakeSqlIamPoliciesServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SQL_INSTANCES_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlInstancesServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_SQL_INSTANCE_NAMES_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "sqladmin.googleapis.com")
+  used by `MakeSqlInstanceNamesServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_SQL_OPERATIONS_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")
   used by `MakeSqlOperationsServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SQL_REGIONS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "sqladmin.googleapis.com")
+  used by `MakeSqlRegionsServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SQL_SSL_CERTS_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "sqladmin.googleapis.com")

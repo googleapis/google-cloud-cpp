@@ -3229,6 +3229,16 @@ service {
 
 # Sql
 service {
+  service_proto_path: "google/cloud/sql/v1/cloud_sql_available_database_versions.proto"
+  product_path: "google/cloud/sql/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
+}
+
+service {
   service_proto_path: "google/cloud/sql/v1/cloud_sql_backup_runs.proto"
   product_path: "google/cloud/sql/v1"
   initial_copyright_year: "2023"
@@ -3259,9 +3269,39 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/sql/v1/cloud_sql_events.proto"
+  product_path: "google/cloud/sql/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
+}
+
+service {
   service_proto_path: "google/cloud/sql/v1/cloud_sql_flags.proto"
   product_path: "google/cloud/sql/v1"
   initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
+}
+
+service {
+  service_proto_path: "google/cloud/sql/v1/cloud_sql_iam_policies.proto"
+  product_path: "google/cloud/sql/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
+}
+
+service {
+  service_proto_path: "google/cloud/sql/v1/cloud_sql_instance_names.proto"
+  product_path: "google/cloud/sql/v1"
+  initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
   generate_grpc_transport: false
@@ -3282,6 +3322,16 @@ service {
   service_proto_path: "google/cloud/sql/v1/cloud_sql_operations.proto"
   product_path: "google/cloud/sql/v1"
   initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
+}
+
+service {
+  service_proto_path: "google/cloud/sql/v1/cloud_sql_regions.proto"
+  product_path: "google/cloud/sql/v1"
+  initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
   generate_grpc_transport: false

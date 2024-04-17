@@ -31,12 +31,17 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
+- [\c sql_v1::SqlAvailableDatabaseVersionsServiceClient](@ref google::cloud::sql_v1::SqlAvailableDatabaseVersionsServiceClient)
 - [\c sql_v1::SqlBackupRunsServiceClient](@ref google::cloud::sql_v1::SqlBackupRunsServiceClient)
 - [\c sql_v1::SqlConnectServiceClient](@ref google::cloud::sql_v1::SqlConnectServiceClient)
 - [\c sql_v1::SqlDatabasesServiceClient](@ref google::cloud::sql_v1::SqlDatabasesServiceClient)
+- [\c sql_v1::SqlEventsServiceClient](@ref google::cloud::sql_v1::SqlEventsServiceClient)
 - [\c sql_v1::SqlFlagsServiceClient](@ref google::cloud::sql_v1::SqlFlagsServiceClient)
+- [\c sql_v1::SqlIamPoliciesServiceClient](@ref google::cloud::sql_v1::SqlIamPoliciesServiceClient)
+- [\c sql_v1::SqlInstanceNamesServiceClient](@ref google::cloud::sql_v1::SqlInstanceNamesServiceClient)
 - [\c sql_v1::SqlInstancesServiceClient](@ref google::cloud::sql_v1::SqlInstancesServiceClient)
 - [\c sql_v1::SqlOperationsServiceClient](@ref google::cloud::sql_v1::SqlOperationsServiceClient)
+- [\c sql_v1::SqlRegionsServiceClient](@ref google::cloud::sql_v1::SqlRegionsServiceClient)
 - [\c sql_v1::SqlSslCertsServiceClient](@ref google::cloud::sql_v1::SqlSslCertsServiceClient)
 - [\c sql_v1::SqlTiersServiceClient](@ref google::cloud::sql_v1::SqlTiersServiceClient)
 - [\c sql_v1::SqlUsersServiceClient](@ref google::cloud::sql_v1::SqlUsersServiceClient)

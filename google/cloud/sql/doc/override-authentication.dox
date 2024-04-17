@@ -9,16 +9,21 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet sql_backup_runs_client_samples.cc with-service-account
+@snippet sql_available_database_versions_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c sql_v1::SqlAvailableDatabaseVersionsServiceClient](@ref sql_v1::SqlAvailableDatabaseVersionsServiceClient-service-account-snippet)
 - [\c sql_v1::SqlBackupRunsServiceClient](@ref sql_v1::SqlBackupRunsServiceClient-service-account-snippet)
 - [\c sql_v1::SqlConnectServiceClient](@ref sql_v1::SqlConnectServiceClient-service-account-snippet)
 - [\c sql_v1::SqlDatabasesServiceClient](@ref sql_v1::SqlDatabasesServiceClient-service-account-snippet)
+- [\c sql_v1::SqlEventsServiceClient](@ref sql_v1::SqlEventsServiceClient-service-account-snippet)
 - [\c sql_v1::SqlFlagsServiceClient](@ref sql_v1::SqlFlagsServiceClient-service-account-snippet)
+- [\c sql_v1::SqlIamPoliciesServiceClient](@ref sql_v1::SqlIamPoliciesServiceClient-service-account-snippet)
+- [\c sql_v1::SqlInstanceNamesServiceClient](@ref sql_v1::SqlInstanceNamesServiceClient-service-account-snippet)
 - [\c sql_v1::SqlInstancesServiceClient](@ref sql_v1::SqlInstancesServiceClient-service-account-snippet)
 - [\c sql_v1::SqlOperationsServiceClient](@ref sql_v1::SqlOperationsServiceClient-service-account-snippet)
+- [\c sql_v1::SqlRegionsServiceClient](@ref sql_v1::SqlRegionsServiceClient-service-account-snippet)
 - [\c sql_v1::SqlSslCertsServiceClient](@ref sql_v1::SqlSslCertsServiceClient-service-account-snippet)
 - [\c sql_v1::SqlTiersServiceClient](@ref sql_v1::SqlTiersServiceClient-service-account-snippet)
 - [\c sql_v1::SqlUsersServiceClient](@ref sql_v1::SqlUsersServiceClient-service-account-snippet)
@@ -39,6 +44,12 @@ guide for more details.
 
 // <!-- inject-authentication-pages-start -->
 
+/*! @page sql_v1::SqlAvailableDatabaseVersionsServiceClient-service-account-snippet Override sql_v1::SqlAvailableDatabaseVersionsServiceClient Authentication Defaults
+
+@snippet google/cloud/sql/v1/samples/sql_available_database_versions_client_samples.cc with-service-account
+
+*/
+
 /*! @page sql_v1::SqlBackupRunsServiceClient-service-account-snippet Override sql_v1::SqlBackupRunsServiceClient Authentication Defaults
 
 @snippet google/cloud/sql/v1/samples/sql_backup_runs_client_samples.cc with-service-account
@@ -57,9 +68,27 @@ guide for more details.
 
 */
 
+/*! @page sql_v1::SqlEventsServiceClient-service-account-snippet Override sql_v1::SqlEventsServiceClient Authentication Defaults
+
+@snippet google/cloud/sql/v1/samples/sql_events_client_samples.cc with-service-account
+
+*/
+
 /*! @page sql_v1::SqlFlagsServiceClient-service-account-snippet Override sql_v1::SqlFlagsServiceClient Authentication Defaults
 
 @snippet google/cloud/sql/v1/samples/sql_flags_client_samples.cc with-service-account
+
+*/
+
+/*! @page sql_v1::SqlIamPoliciesServiceClient-service-account-snippet Override sql_v1::SqlIamPoliciesServiceClient Authentication Defaults
+
+@snippet google/cloud/sql/v1/samples/sql_iam_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page sql_v1::SqlInstanceNamesServiceClient-service-account-snippet Override sql_v1::SqlInstanceNamesServiceClient Authentication Defaults
+
+@snippet google/cloud/sql/v1/samples/sql_instance_names_client_samples.cc with-service-account
 
 */
 
@@ -72,6 +101,12 @@ guide for more details.
 /*! @page sql_v1::SqlOperationsServiceClient-service-account-snippet Override sql_v1::SqlOperationsServiceClient Authentication Defaults
 
 @snippet google/cloud/sql/v1/samples/sql_operations_client_samples.cc with-service-account
+
+*/
+
+/*! @page sql_v1::SqlRegionsServiceClient-service-account-snippet Override sql_v1::SqlRegionsServiceClient Authentication Defaults
+
+@snippet google/cloud/sql/v1/samples/sql_regions_client_samples.cc with-service-account
 
 */
 
