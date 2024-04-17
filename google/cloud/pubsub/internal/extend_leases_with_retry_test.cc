@@ -192,45 +192,6 @@ TEST(ExtendLeasesWithRetry, FailureTooManyTransients) {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-TEST(ExtendLeasesWithRetry, OtelSuccess) {
-  auto mock = std::make_shared<MockSubscriberStub>();
-
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-
-  {
-    ::testing::InSequence sequence;
-    EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                           _, _, _,
-                           Property(&ModifyAckDeadlineRequest::ack_ids,
-                                    ElementsAre("test-001", "test-002"))))
-        .WillOnce(Return(ByMove(make_ready_future(MakeTransient()))));
-    EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-        .WillOnce(Return(ByMove(make_ready_future(
-            make_status_or(std::chrono::system_clock::now())))));
-    EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                           _, _, _,
-                           Property(&ModifyAckDeadlineRequest::ack_ids,
-                                    ElementsAre("test-001", "test-002"))))
-        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
-  }
-  auto mock_batch_callback =
-      std::make_shared<pubsub_testing::MockBatchCallback>();
-  EXPECT_CALL(*mock_batch_callback, StartModackSpan).Times(2);
-  EXPECT_CALL(*mock_batch_callback, EndModackSpan).Times(2);
-  EXPECT_CALL(*mock_batch_callback, ModackEnd("test-001")).Times(2);
-  EXPECT_CALL(*mock_batch_callback, ModackEnd("test-002")).Times(2);
-
-  ModifyAckDeadlineRequest request;
-  request.add_ack_ids("test-001");
-  request.add_ack_ids("test-002");
-
-  auto result =
-      ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request,
-                            mock_batch_callback, /*enable_otel=*/true);
-
-  EXPECT_STATUS_OK(result.get());
-}
-
 TEST(ExtendLeasesWithRetry, SuccessWithOtelEnabled) {
   auto mock = std::make_shared<MockSubscriberStub>();
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
