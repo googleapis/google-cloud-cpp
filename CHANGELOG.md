@@ -6,6 +6,15 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.24.0 - TBD
 
+### Updated Libraries
+
+- [Cloud SQL Admin API](/google/cloud/sql/README.md) - several new clients:
+  - `SqlAvailableDatabaseVersionsServiceClient`
+  - `SqlEventsServiceClient`
+  - `SqlIamPoliciesServiceClient`
+  - `SqlInstanceNamesServiceClient`
+  - `SqlRegionsServiceClient`
+
 ## v2.23.0 - 2024-04
 
 ### New Libraries
