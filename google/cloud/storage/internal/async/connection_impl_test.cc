@@ -1902,7 +1902,7 @@ TEST_F(AsyncConnectionImplTest, ComposeObject) {
         auto expected = google::storage::v2::ComposeObjectRequest{};
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
         EXPECT_THAT(request, IsProtoEqual(expected));
-        return sequencer.PushBack("ComposeObject(2)").then([](auto) {
+        return sequencer.PushBack("ComposeObject(2)").then([&](auto) {
           auto result = google::storage::v2::Object{};
           EXPECT_TRUE(TextFormat::ParseFromString(kExpectedObject, &result));
           return make_status_or(std::move(result));
