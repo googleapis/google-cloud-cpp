@@ -94,27 +94,28 @@ class AsyncConnectionImpl
 
   future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
   StartResumableWrite(internal::ImmutableOptions current,
-                      storage::internal::ResumableUploadRequest request);
+                      google::storage::v2::StartResumableWriteRequest request);
+
+  future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
+  QueryWriteStatus(internal::ImmutableOptions current,
+                   google::storage::v2::QueryWriteStatusRequest request);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   ResumeUpload(internal::ImmutableOptions current,
                storage_experimental::ResumableUploadRequest request,
-               storage::internal::QueryResumableUploadRequest query);
-
-  future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
-  QueryWriteStatus(internal::ImmutableOptions current,
-                   storage::internal::QueryResumableUploadRequest request);
+               google::storage::v2::QueryWriteStatusRequest query);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  UnbufferedUploadImpl(
+  StartUnbufferedUploadImpl(
       internal::ImmutableOptions current,
       storage_experimental::ResumableUploadRequest request,
       StatusOr<google::storage::v2::StartResumableWriteResponse> response);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
-  UnbufferedUploadImpl(
+  ResumeUnbufferedUploadImpl(
       internal::ImmutableOptions current,
-      storage_experimental::ResumableUploadRequest request,
+      storage_experimental::ResumableUploadRequest const& request,
+      google::storage::v2::QueryWriteStatusRequest query,
       StatusOr<google::storage::v2::QueryWriteStatusResponse> response);
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
