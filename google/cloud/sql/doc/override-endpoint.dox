@@ -7,18 +7,23 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `sql_v1::SqlBackupRunsServiceClient`:
+For example, this will override the default endpoint for `sql_v1::SqlAvailableDatabaseVersionsServiceClient`:
 
-@snippet sql_backup_runs_client_samples.cc set-client-endpoint
+@snippet sql_available_database_versions_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c sql_v1::SqlAvailableDatabaseVersionsServiceClient](@ref sql_v1::SqlAvailableDatabaseVersionsServiceClient-endpoint-snippet)
 - [\c sql_v1::SqlBackupRunsServiceClient](@ref sql_v1::SqlBackupRunsServiceClient-endpoint-snippet)
 - [\c sql_v1::SqlConnectServiceClient](@ref sql_v1::SqlConnectServiceClient-endpoint-snippet)
 - [\c sql_v1::SqlDatabasesServiceClient](@ref sql_v1::SqlDatabasesServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlEventsServiceClient](@ref sql_v1::SqlEventsServiceClient-endpoint-snippet)
 - [\c sql_v1::SqlFlagsServiceClient](@ref sql_v1::SqlFlagsServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlIamPoliciesServiceClient](@ref sql_v1::SqlIamPoliciesServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlInstanceNamesServiceClient](@ref sql_v1::SqlInstanceNamesServiceClient-endpoint-snippet)
 - [\c sql_v1::SqlInstancesServiceClient](@ref sql_v1::SqlInstancesServiceClient-endpoint-snippet)
 - [\c sql_v1::SqlOperationsServiceClient](@ref sql_v1::SqlOperationsServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlRegionsServiceClient](@ref sql_v1::SqlRegionsServiceClient-endpoint-snippet)
 - [\c sql_v1::SqlSslCertsServiceClient](@ref sql_v1::SqlSslCertsServiceClient-endpoint-snippet)
 - [\c sql_v1::SqlTiersServiceClient](@ref sql_v1::SqlTiersServiceClient-endpoint-snippet)
 - [\c sql_v1::SqlUsersServiceClient](@ref sql_v1::SqlUsersServiceClient-endpoint-snippet)
@@ -28,6 +33,12 @@ Follow these links to find examples for other \c *Client classes:
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page sql_v1::SqlAvailableDatabaseVersionsServiceClient-endpoint-snippet Override sql_v1::SqlAvailableDatabaseVersionsServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_available_database_versions_client_samples.cc set-client-endpoint
+
+*/
 
 /*! @page sql_v1::SqlBackupRunsServiceClient-endpoint-snippet Override sql_v1::SqlBackupRunsServiceClient Endpoint Configuration
 
@@ -47,9 +58,27 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page sql_v1::SqlEventsServiceClient-endpoint-snippet Override sql_v1::SqlEventsServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_events_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page sql_v1::SqlFlagsServiceClient-endpoint-snippet Override sql_v1::SqlFlagsServiceClient Endpoint Configuration
 
 @snippet google/cloud/sql/v1/samples/sql_flags_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlIamPoliciesServiceClient-endpoint-snippet Override sql_v1::SqlIamPoliciesServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_iam_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlInstanceNamesServiceClient-endpoint-snippet Override sql_v1::SqlInstanceNamesServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_instance_names_client_samples.cc set-client-endpoint
 
 */
 
@@ -62,6 +91,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page sql_v1::SqlOperationsServiceClient-endpoint-snippet Override sql_v1::SqlOperationsServiceClient Endpoint Configuration
 
 @snippet google/cloud/sql/v1/samples/sql_operations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlRegionsServiceClient-endpoint-snippet Override sql_v1::SqlRegionsServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_regions_client_samples.cc set-client-endpoint
 
 */
 
