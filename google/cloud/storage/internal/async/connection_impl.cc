@@ -76,14 +76,14 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
       !options.has<storage_experimental::UseMD5ValueOption>() ||
       options.get<storage_experimental::EnableMD5ValidationOption>();
 
-  if (!crc32c && !md5) return storage::internal::CreateNullHashFunction();
   if (crc32c && md5) {
     return std::make_unique<storage::internal::CompositeFunction>(
         std::make_unique<storage::internal::Crc32cHashFunction>(),
         storage::internal::MD5HashFunction::Create());
   }
-  if (crc32c) std::make_unique<storage::internal::Crc32cHashFunction>();
-  return storage::internal::MD5HashFunction::Create();
+  if (crc32c) return std::make_unique<storage::internal::Crc32cHashFunction>();
+  if (md5) return storage::internal::MD5HashFunction::Create();
+  return storage::internal::CreateNullHashFunction();
 }
 
 }  // namespace
