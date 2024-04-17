@@ -439,7 +439,7 @@ void ResumeUnbufferedUpload(
     }
     co_return (co_await writer.Finalize(std::move(token))).value();
   };
-  //! [resume-buffered-upload]
+  //! [resume-unbuffered-upload]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
   auto const metadata = coro(client, argv.at(0)).get();
