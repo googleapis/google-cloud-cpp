@@ -14,6 +14,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   - `SqlIamPoliciesServiceClient`
   - `SqlInstanceNamesServiceClient`
   - `SqlRegionsServiceClient`
+- [Retail](/google/cloud/retail/README.md) - new `AnalyticsServiceClient`
 
 ## v2.23.0 - 2024-04
 

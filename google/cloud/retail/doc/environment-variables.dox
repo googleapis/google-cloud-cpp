@@ -10,6 +10,10 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_ANALYTICS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "retail.googleapis.com")
+  used by `MakeAnalyticsServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_CATALOG_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "retail.googleapis.com")
   used by `MakeCatalogServiceConnection()`.

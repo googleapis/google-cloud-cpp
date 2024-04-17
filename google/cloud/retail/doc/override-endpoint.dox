@@ -7,12 +7,13 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `retail_v2::CatalogServiceClient`:
+For example, this will override the default endpoint for `retail_v2::AnalyticsServiceClient`:
 
-@snippet catalog_client_samples.cc set-client-endpoint
+@snippet analytics_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c retail_v2::AnalyticsServiceClient](@ref retail_v2::AnalyticsServiceClient-endpoint-snippet)
 - [\c retail_v2::CatalogServiceClient](@ref retail_v2::CatalogServiceClient-endpoint-snippet)
 - [\c retail_v2::CompletionServiceClient](@ref retail_v2::CompletionServiceClient-endpoint-snippet)
 - [\c retail_v2::ControlServiceClient](@ref retail_v2::ControlServiceClient-endpoint-snippet)
@@ -28,6 +29,12 @@ Follow these links to find examples for other \c *Client classes:
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page retail_v2::AnalyticsServiceClient-endpoint-snippet Override retail_v2::AnalyticsServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/v2/samples/analytics_client_samples.cc set-client-endpoint
+
+*/
 
 /*! @page retail_v2::CatalogServiceClient-endpoint-snippet Override retail_v2::CatalogServiceClient Endpoint Configuration
 
