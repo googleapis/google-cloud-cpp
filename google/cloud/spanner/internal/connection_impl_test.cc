@@ -2479,13 +2479,14 @@ TEST(ConnectionImplTest, CommitCommitInvalidatedTransaction) {
   EXPECT_CALL(*mock, BeginTransaction).Times(0);
   EXPECT_CALL(*mock, Commit).Times(0);
 
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+
   // Committing an invalidated transaction is a unilateral error.
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionInvalid(txn,
                         Status(StatusCode::kAlreadyExists, "constraint error"));
 
-  auto conn = MakeConnectionImpl(db, mock);
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({txn});
   EXPECT_THAT(commit, StatusIs(StatusCode::kAlreadyExists,
                                HasSubstr("constraint error")));
@@ -2506,12 +2507,13 @@ TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(MakeCommitResponse(commit_timestamp)));
 
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+
   // Set the id because that makes the commit idempotent.
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
 
-  auto conn = MakeConnectionImpl(db, mock);
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({txn});
   ASSERT_STATUS_OK(commit);
   EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
@@ -2534,12 +2536,13 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
 
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+
   // Set the id because that makes the commit idempotent.
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
 
-  auto conn = MakeConnectionImpl(db, mock);
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({txn,
                               {},
                               spanner::CommitOptions{}.set_request_priority(
@@ -2988,13 +2991,14 @@ TEST(ConnectionImplTest, RollbackInvalidatedTransaction) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, Rollback).Times(0);
 
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+
   // Rolling back an invalidated transaction is a unilateral success.
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionInvalid(txn,
                         Status(StatusCode::kAlreadyExists, "constraint error"));
 
-  auto conn = MakeConnectionImpl(db, mock);
-  internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto rollback_status = conn->Rollback({txn});
   EXPECT_THAT(rollback_status, StatusIs(StatusCode::kAlreadyExists,
                                         HasSubstr("constraint error")));
@@ -3765,11 +3769,11 @@ TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {
   internal::OptionsSpan span(MakeLimitedTimeOptions());
 
   // Committing an invalidated transaction is a unilateral error.
+  // All operations on an invalid transaction should return the
+  // error that invalidated it, without actually making a RPC.
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionInvalid(
       txn, Status(StatusCode::kInvalidArgument, "BeginTransaction failed"));
-  // All operations on an invalid transaction should return the error that
-  // invalidated it, without actually making a RPC.
 
   EXPECT_THAT(conn->Read({txn, "table", spanner::KeySet::All(), {"Column"}})
                   .begin()
