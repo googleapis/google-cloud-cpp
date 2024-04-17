@@ -293,13 +293,10 @@ TEST_P(AsyncConnectionImplUploadHashTest,
 
   auto connection = MakeAsyncConnection(CompletionQueue(mock_cq),
                                         std::move(mock), std::move(options));
-
-  auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::UseResumableUploadSession("resume-upload-id")),
-       connection->options()});
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  request.set_upload_id("resume-upload-id");
+  auto pending = connection->ResumeUnbufferedUpload(
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "QueryWriteStatus(1)");
@@ -394,13 +391,10 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeUnbufferedWithPersistedData) {
 
   auto connection = MakeAsyncConnection(CompletionQueue(mock_cq),
                                         std::move(mock), std::move(options));
-
-  auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::UseResumableUploadSession("resume-upload-id")),
-       connection->options()});
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  request.set_upload_id("resume-upload-id");
+  auto pending = connection->ResumeUnbufferedUpload(
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "QueryWriteStatus(1)");
@@ -594,13 +588,10 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithoutPersistedData) {
 
   auto connection = MakeAsyncConnection(CompletionQueue(mock_cq),
                                         std::move(mock), std::move(options));
-
-  auto pending = connection->StartBufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::UseResumableUploadSession("resume-upload-id")),
-       connection->options()});
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  request.set_upload_id("resume-upload-id");
+  auto pending = connection->ResumeUnbufferedUpload(
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "QueryWriteStatus(1)");
@@ -695,13 +686,10 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
 
   auto connection = MakeAsyncConnection(CompletionQueue(mock_cq),
                                         std::move(mock), std::move(options));
-
-  auto pending = connection->StartBufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object")
-           .set_multiple_options(
-               storage::UseResumableUploadSession("resume-upload-id")),
-       connection->options()});
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  request.set_upload_id("resume-upload-id");
+  auto pending = connection->ResumeUnbufferedUpload(
+      {std::move(request), connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "QueryWriteStatus(1)");
