@@ -97,6 +97,13 @@ SessionPool::~SessionPool() {
   // `weak_ptr` to `this` they hold. Any in-progress or subsequent `lock()`
   // will now return `nullptr`, in which case no work is done.
   current_timer_.cancel();
+
+  // Send fire-and-forget `AsyncDeleteSession()` calls for all sessions.
+  for (auto const& session : sessions_) {
+    if (session->is_bad()) continue;
+    AsyncDeleteSession(cq_, session->channel()->stub, session->session_name())
+        .then([](auto result) { auto status = result.get(); });
+  }
 }
 
 void SessionPool::ScheduleBackgroundWork(std::chrono::seconds relative_time) {

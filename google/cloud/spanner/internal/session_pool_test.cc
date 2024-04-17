@@ -97,6 +97,12 @@ MATCHER_P(SessionCountIs, session_count,
   return arg.session_count() == session_count;
 }
 
+// Matches a DeleteSessionRequest with the specified `name`.
+MATCHER_P(SessionNameIs, name,
+          "DeleteSessionRequest has expected session name") {
+  return arg.name() == name;
+}
+
 google::protobuf::Timestamp Now() {
   auto now = spanner::MakeTimestamp(absl::Now()).value();
   return now.get<google::protobuf::Timestamp>().value();
@@ -142,6 +148,8 @@ TEST_F(SessionPoolTest, AllocateRouteToLeader) {
                     Contains(Pair(kRouteToLeader, "true")));
         return MakeSessionsResponse({"session1"});
       });
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool =
@@ -168,6 +176,8 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
                           Not(Contains(Pair(kRouteToLeader, _)))));
         return MakeSessionsResponse({"session1"});
       });
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool =
@@ -192,6 +202,10 @@ TEST_F(SessionPoolTest, ReleaseBadSession) {
               BatchCreateSessions(
                   _, _, AllOf(DatabaseIs(db.FullName()), SessionCountIs(2))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session2"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+      .Times(0);
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session2")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -221,6 +235,7 @@ TEST_F(SessionPoolTest, CreateError) {
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "init failure"))))
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "some failure"))));
+  EXPECT_CALL(*mock, AsyncDeleteSession).Times(0);
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
@@ -234,6 +249,8 @@ TEST_F(SessionPoolTest, ReuseSession) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
@@ -253,6 +270,10 @@ TEST_F(SessionPoolTest, Lifo) {
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session2"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session2")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
@@ -284,6 +305,12 @@ TEST_F(SessionPoolTest, MinSessionsEagerAllocation) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, _, SessionCountIs(min_sessions)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s3")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -303,6 +330,20 @@ TEST_F(SessionPoolTest, MinSessionsMultipleAllocations) {
   EXPECT_CALL(*mock,
               BatchCreateSessions(_, _, SessionCountIs(min_sessions + 1)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s7", "s6", "s5", "s4"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s3")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s4")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s5")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s6")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s7")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -328,6 +369,12 @@ TEST_F(SessionPoolTest, MaxSessionsFailOnExhaustion) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s3")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -357,6 +404,8 @@ TEST_F(SessionPoolTest, MaxSessionsBlockUntilRelease) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -388,6 +437,8 @@ TEST_F(SessionPoolTest, Labels) {
       {"k1", "v1"}, {"k2", "v2"}, {"k3", "v3"}};
   EXPECT_CALL(*mock, BatchCreateSessions(_, _, LabelsAre(labels)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -406,6 +457,8 @@ TEST_F(SessionPoolTest, CreatorRole) {
               BatchCreateSessions(
                   _, _, AllOf(DatabaseIs(db.FullName()), CreatorRoleIs(role))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}, role))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
@@ -424,10 +477,22 @@ TEST_F(SessionPoolTest, MultipleChannels) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s3"}))));
+  EXPECT_CALL(*mock1, AsyncDeleteSession(_, _, _, SessionNameIs("c1s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock1, AsyncDeleteSession(_, _, _, SessionNameIs("c1s2")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock1, AsyncDeleteSession(_, _, _, SessionNameIs("c1s3")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock2, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s3"}))));
+  EXPECT_CALL(*mock2, AsyncDeleteSession(_, _, _, SessionNameIs("c2s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock2, AsyncDeleteSession(_, _, _, SessionNameIs("c2s2")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock2, AsyncDeleteSession(_, _, _, SessionNameIs("c2s3")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock1, mock2}, threads.cq());
@@ -450,10 +515,28 @@ TEST_F(SessionPoolTest, MultipleChannelsPreAllocation) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock1, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s1", "c1s2", "c1s3"}))));
+  EXPECT_CALL(*mock1, AsyncDeleteSession(_, _, _, SessionNameIs("c1s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock1, AsyncDeleteSession(_, _, _, SessionNameIs("c1s2")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock1, AsyncDeleteSession(_, _, _, SessionNameIs("c1s3")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock2, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s1", "c2s2", "c2s3"}))));
+  EXPECT_CALL(*mock2, AsyncDeleteSession(_, _, _, SessionNameIs("c2s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock2, AsyncDeleteSession(_, _, _, SessionNameIs("c2s2")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock2, AsyncDeleteSession(_, _, _, SessionNameIs("c2s3")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock3, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c3s1", "c3s2", "c3s3"}))));
+  EXPECT_CALL(*mock3, AsyncDeleteSession(_, _, _, SessionNameIs("c3s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock3, AsyncDeleteSession(_, _, _, SessionNameIs("c3s2")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock3, AsyncDeleteSession(_, _, _, SessionNameIs("c3s3")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   // note that min_sessions will effectively be reduced to 9
@@ -497,6 +580,10 @@ TEST_F(SessionPoolTest, SessionRefresh) {
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   google::spanner::v1::ResultSet result;
   auto constexpr kResultSetText = R"pb(
@@ -567,6 +654,11 @@ TEST_F(SessionPoolTest, SessionRefreshNotFound) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2"))).Times(0);
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s3")))
+      .WillOnce(Return(make_ready_future(Status{})));
 
   EXPECT_CALL(*mock, AsyncExecuteSql)
       .WillOnce([](CompletionQueue&, auto, auto,
