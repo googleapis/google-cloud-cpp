@@ -15,9 +15,12 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c discoveryengine_v1::CompletionServiceClient](@ref discoveryengine_v1::CompletionServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref discoveryengine_v1::ConversationalSearchServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::DataStoreServiceClient](@ref discoveryengine_v1::DataStoreServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::EngineServiceClient](@ref discoveryengine_v1::EngineServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::SchemaServiceClient](@ref discoveryengine_v1::SchemaServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::SearchServiceClient](@ref discoveryengine_v1::SearchServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::SiteSearchEngineServiceClient](@ref discoveryengine_v1::SiteSearchEngineServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::UserEventServiceClient](@ref discoveryengine_v1::UserEventServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
@@ -38,9 +41,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page discoveryengine_v1::DataStoreServiceClient-endpoint-snippet Override discoveryengine_v1::DataStoreServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/data_store_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page discoveryengine_v1::DocumentServiceClient-endpoint-snippet Override discoveryengine_v1::DocumentServiceClient Endpoint Configuration
 
 @snippet google/cloud/discoveryengine/v1/samples/document_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::EngineServiceClient-endpoint-snippet Override discoveryengine_v1::EngineServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/engine_client_samples.cc set-client-endpoint
 
 */
 
@@ -53,6 +68,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page discoveryengine_v1::SearchServiceClient-endpoint-snippet Override discoveryengine_v1::SearchServiceClient Endpoint Configuration
 
 @snippet google/cloud/discoveryengine/v1/samples/search_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::SiteSearchEngineServiceClient-endpoint-snippet Override discoveryengine_v1::SiteSearchEngineServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/site_search_engine_client_samples.cc set-client-endpoint
 
 */
 

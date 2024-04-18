@@ -34,9 +34,12 @@ application.
 
 - [\c discoveryengine_v1::CompletionServiceClient](@ref google::cloud::discoveryengine_v1::CompletionServiceClient)
 - [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref google::cloud::discoveryengine_v1::ConversationalSearchServiceClient)
+- [\c discoveryengine_v1::DataStoreServiceClient](@ref google::cloud::discoveryengine_v1::DataStoreServiceClient)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref google::cloud::discoveryengine_v1::DocumentServiceClient)
+- [\c discoveryengine_v1::EngineServiceClient](@ref google::cloud::discoveryengine_v1::EngineServiceClient)
 - [\c discoveryengine_v1::SchemaServiceClient](@ref google::cloud::discoveryengine_v1::SchemaServiceClient)
 - [\c discoveryengine_v1::SearchServiceClient](@ref google::cloud::discoveryengine_v1::SearchServiceClient)
+- [\c discoveryengine_v1::SiteSearchEngineServiceClient](@ref google::cloud::discoveryengine_v1::SiteSearchEngineServiceClient)
 - [\c discoveryengine_v1::UserEventServiceClient](@ref google::cloud::discoveryengine_v1::UserEventServiceClient)
 <!-- inject-client-list-end -->
 

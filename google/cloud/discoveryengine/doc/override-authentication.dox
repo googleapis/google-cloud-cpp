@@ -15,9 +15,12 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c discoveryengine_v1::CompletionServiceClient](@ref discoveryengine_v1::CompletionServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref discoveryengine_v1::ConversationalSearchServiceClient-service-account-snippet)
+- [\c discoveryengine_v1::DataStoreServiceClient](@ref discoveryengine_v1::DataStoreServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-service-account-snippet)
+- [\c discoveryengine_v1::EngineServiceClient](@ref discoveryengine_v1::EngineServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::SchemaServiceClient](@ref discoveryengine_v1::SchemaServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::SearchServiceClient](@ref discoveryengine_v1::SearchServiceClient-service-account-snippet)
+- [\c discoveryengine_v1::SiteSearchEngineServiceClient](@ref discoveryengine_v1::SiteSearchEngineServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::UserEventServiceClient](@ref discoveryengine_v1::UserEventServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
@@ -48,9 +51,21 @@ guide for more details.
 
 */
 
+/*! @page discoveryengine_v1::DataStoreServiceClient-service-account-snippet Override discoveryengine_v1::DataStoreServiceClient Authentication Defaults
+
+@snippet google/cloud/discoveryengine/v1/samples/data_store_client_samples.cc with-service-account
+
+*/
+
 /*! @page discoveryengine_v1::DocumentServiceClient-service-account-snippet Override discoveryengine_v1::DocumentServiceClient Authentication Defaults
 
 @snippet google/cloud/discoveryengine/v1/samples/document_client_samples.cc with-service-account
+
+*/
+
+/*! @page discoveryengine_v1::EngineServiceClient-service-account-snippet Override discoveryengine_v1::EngineServiceClient Authentication Defaults
+
+@snippet google/cloud/discoveryengine/v1/samples/engine_client_samples.cc with-service-account
 
 */
 
@@ -63,6 +78,12 @@ guide for more details.
 /*! @page discoveryengine_v1::SearchServiceClient-service-account-snippet Override discoveryengine_v1::SearchServiceClient Authentication Defaults
 
 @snippet google/cloud/discoveryengine/v1/samples/search_client_samples.cc with-service-account
+
+*/
+
+/*! @page discoveryengine_v1::SiteSearchEngineServiceClient-service-account-snippet Override discoveryengine_v1::SiteSearchEngineServiceClient Authentication Defaults
+
+@snippet google/cloud/discoveryengine/v1/samples/site_search_engine_client_samples.cc with-service-account
 
 */
 
