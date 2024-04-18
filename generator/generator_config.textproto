@@ -1864,6 +1864,14 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/dialogflow/cx/v3/generator.proto"
+  product_path: "google/cloud/dialogflow_cx"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/session_entity_type.proto"
   product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"

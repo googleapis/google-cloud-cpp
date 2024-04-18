@@ -16,6 +16,8 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   - `SqlRegionsServiceClient`
 - [Content Warehouse](/google/cloud/contentwarehouse/README.md) - new
   `PipelineServiceClient`
+- [Dialogflow CX API](/google/cloud/dialogflow_cx/README.md) - new
+  `GeneratorsClient`
 - [Network Connectivity API](/google/cloud/networkconnectivity/README.md) - new
   `PolicyBasedRoutingServiceClient`
 - [Retail](/google/cloud/retail/README.md) - new `AnalyticsServiceClient`
