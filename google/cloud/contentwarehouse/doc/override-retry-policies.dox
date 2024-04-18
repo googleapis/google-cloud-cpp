@@ -82,6 +82,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c contentwarehouse_v1::DocumentServiceClient](@ref contentwarehouse_v1::DocumentServiceClient-retry-snippet)
 - [\c contentwarehouse_v1::DocumentLinkServiceClient](@ref contentwarehouse_v1::DocumentLinkServiceClient-retry-snippet)
 - [\c contentwarehouse_v1::DocumentSchemaServiceClient](@ref contentwarehouse_v1::DocumentSchemaServiceClient-retry-snippet)
+- [\c contentwarehouse_v1::PipelineServiceClient](@ref contentwarehouse_v1::PipelineServiceClient-retry-snippet)
 - [\c contentwarehouse_v1::RuleSetServiceClient](@ref contentwarehouse_v1::RuleSetServiceClient-retry-snippet)
 - [\c contentwarehouse_v1::SynonymSetServiceClient](@ref contentwarehouse_v1::SynonymSetServiceClient-retry-snippet)
 
@@ -132,6 +133,18 @@ This shows how to override the retry policies for contentwarehouse_v1::DocumentS
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/contentwarehouse/v1/samples/document_schema_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page contentwarehouse_v1::PipelineServiceClient-retry-snippet Override contentwarehouse_v1::PipelineServiceClient Retry Policies
+
+This shows how to override the retry policies for contentwarehouse_v1::PipelineServiceClient:
+
+@snippet google/cloud/contentwarehouse/v1/samples/pipeline_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/contentwarehouse/v1/samples/pipeline_client_samples.cc custom-idempotency-policy
 
 */
 

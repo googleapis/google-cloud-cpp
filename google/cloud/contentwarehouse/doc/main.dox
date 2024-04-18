@@ -36,6 +36,7 @@ application.
 - [\c contentwarehouse_v1::DocumentServiceClient](@ref google::cloud::contentwarehouse_v1::DocumentServiceClient)
 - [\c contentwarehouse_v1::DocumentLinkServiceClient](@ref google::cloud::contentwarehouse_v1::DocumentLinkServiceClient)
 - [\c contentwarehouse_v1::DocumentSchemaServiceClient](@ref google::cloud::contentwarehouse_v1::DocumentSchemaServiceClient)
+- [\c contentwarehouse_v1::PipelineServiceClient](@ref google::cloud::contentwarehouse_v1::PipelineServiceClient)
 - [\c contentwarehouse_v1::RuleSetServiceClient](@ref google::cloud::contentwarehouse_v1::RuleSetServiceClient)
 - [\c contentwarehouse_v1::SynonymSetServiceClient](@ref google::cloud::contentwarehouse_v1::SynonymSetServiceClient)
 <!-- inject-client-list-end -->
