@@ -38,6 +38,8 @@ application.
 - [\c dataproc_v1::ClusterControllerClient](@ref google::cloud::dataproc_v1::ClusterControllerClient)
 - [\c dataproc_v1::JobControllerClient](@ref google::cloud::dataproc_v1::JobControllerClient)
 - [\c dataproc_v1::NodeGroupControllerClient](@ref google::cloud::dataproc_v1::NodeGroupControllerClient)
+- [\c dataproc_v1::SessionControllerClient](@ref google::cloud::dataproc_v1::SessionControllerClient)
+- [\c dataproc_v1::SessionTemplateControllerClient](@ref google::cloud::dataproc_v1::SessionTemplateControllerClient)
 - [\c dataproc_v1::WorkflowTemplateServiceClient](@ref google::cloud::dataproc_v1::WorkflowTemplateServiceClient)
 <!-- inject-client-list-end -->
 

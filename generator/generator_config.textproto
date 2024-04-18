@@ -1794,6 +1794,22 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/dataproc/v1/session_templates.proto"
+  product_path: "google/cloud/dataproc/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/dataproc/v1/sessions.proto"
+  product_path: "google/cloud/dataproc/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
   service_proto_path: "google/cloud/dataproc/v1/workflow_templates.proto"
   product_path: "google/cloud/dataproc/v1"
   forwarding_product_path: "google/cloud/dataproc"

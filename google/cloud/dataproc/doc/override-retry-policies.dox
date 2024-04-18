@@ -84,6 +84,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-retry-snippet)
 - [\c dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-retry-snippet)
 - [\c dataproc_v1::NodeGroupControllerClient](@ref dataproc_v1::NodeGroupControllerClient-retry-snippet)
+- [\c dataproc_v1::SessionControllerClient](@ref dataproc_v1::SessionControllerClient-retry-snippet)
+- [\c dataproc_v1::SessionTemplateControllerClient](@ref dataproc_v1::SessionTemplateControllerClient-retry-snippet)
 - [\c dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
@@ -157,6 +159,30 @@ This shows how to override the retry policies for dataproc_v1::NodeGroupControll
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/dataproc/v1/samples/node_group_controller_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataproc_v1::SessionControllerClient-retry-snippet Override dataproc_v1::SessionControllerClient Retry Policies
+
+This shows how to override the retry policies for dataproc_v1::SessionControllerClient:
+
+@snippet google/cloud/dataproc/v1/samples/session_controller_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataproc/v1/samples/session_controller_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataproc_v1::SessionTemplateControllerClient-retry-snippet Override dataproc_v1::SessionTemplateControllerClient Retry Policies
+
+This shows how to override the retry policies for dataproc_v1::SessionTemplateControllerClient:
+
+@snippet google/cloud/dataproc/v1/samples/session_template_controller_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataproc/v1/samples/session_template_controller_client_samples.cc custom-idempotency-policy
 
 */
 

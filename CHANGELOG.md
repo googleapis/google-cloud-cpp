@@ -16,6 +16,8 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   - `SqlRegionsServiceClient`
 - [Content Warehouse](/google/cloud/contentwarehouse/README.md) - new
   `PipelineServiceClient`
+- [Dataproc](/google/cloud/dataproc/README.md) - new `SessionControllerClient`
+  and `SessionTemplateControllerClient`
 - [Dialogflow CX API](/google/cloud/dialogflow_cx/README.md) - new
   `GeneratorsClient`
 - [Discovery Engine](/google/cloud/discoveryengine/README.md) - several new
