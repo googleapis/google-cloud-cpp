@@ -311,6 +311,57 @@ TEST(ExtractResourcesTest, SomeApiVersionsSpecified) {
           StatusCode::kInvalidArgument,
           HasSubstr(
               "resource contains methods with different apiVersion values")));
+
+  auto constexpr kMethodOrderReversedResourceJson = R"""({
+  "resources": {
+    "resource1": {
+      "methods": {
+        "emptyResponseMethod2": {
+        },
+        "emptyResponseMethod1": {
+          "apiVersion": "test-api-version"
+        }
+      }
+    }
+  }
+})""";
+  resource_json =
+      nlohmann::json::parse(kMethodOrderReversedResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  resources = ExtractResources({}, resource_json);
+  EXPECT_THAT(
+      resources,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "resource contains methods with different apiVersion values")));
+}
+
+TEST(ExtractResourcesTest, OnlyLastMethodApiVersionsSpecified) {
+  auto constexpr kResourceJson = R"""({
+  "resources": {
+    "resource1": {
+      "methods": {
+        "emptyResponseMethod1": {
+        },
+        "emptyResponseMethod2": {
+        },
+        "emptyResponseMethod3": {
+          "apiVersion": "test-api-version"
+        }
+      }
+    }
+  }
+})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto resources = ExtractResources({}, resource_json);
+  EXPECT_THAT(
+      resources,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "resource contains methods with different apiVersion values")));
 }
 
 class DetermineAndVerifyResponseTypeNameTest

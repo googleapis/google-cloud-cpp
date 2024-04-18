@@ -22,6 +22,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -71,13 +72,8 @@ TEST_F(DiscoveryResourceTest, GetServiceApiVersionEmpty) {
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myTests", "", resource_json);
-  auto service_api_version = r.GetServiceApiVersion();
-  ASSERT_STATUS_OK(service_api_version);
-  EXPECT_THAT(*service_api_version, IsEmpty());
-  // Exercise code path using result of lazy initialization.
-  service_api_version = r.GetServiceApiVersion();
-  ASSERT_STATUS_OK(service_api_version);
-  EXPECT_THAT(*service_api_version, IsEmpty());
+  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.GetServiceApiVersion(), IsOkAndHolds(IsEmpty()));
 }
 
 TEST_F(DiscoveryResourceTest, GetServiceApiVersionSameVersion) {
@@ -94,9 +90,8 @@ TEST_F(DiscoveryResourceTest, GetServiceApiVersionSameVersion) {
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myTests", "", resource_json);
-  auto service_api_version = r.GetServiceApiVersion();
-  ASSERT_STATUS_OK(service_api_version);
-  EXPECT_THAT(*service_api_version, Eq("test-api-version"));
+  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.GetServiceApiVersion(), IsOkAndHolds("test-api-version"));
 }
 
 TEST_F(DiscoveryResourceTest, GetServiceApiVersionDifferentVersion) {
@@ -113,7 +108,7 @@ TEST_F(DiscoveryResourceTest, GetServiceApiVersionDifferentVersion) {
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myTests", "", resource_json);
-  auto service_api_version = r.GetServiceApiVersion();
+  auto service_api_version = r.SetServiceApiVersion();
   EXPECT_THAT(
       service_api_version,
       StatusIs(
@@ -127,7 +122,7 @@ TEST_F(DiscoveryResourceTest, GetServiceApiVersionNoMethods) {
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myTests", "", resource_json);
-  auto service_api_version = r.GetServiceApiVersion();
+  auto service_api_version = r.SetServiceApiVersion();
   EXPECT_THAT(service_api_version,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("resource contains no methods")));
@@ -751,9 +746,9 @@ service MyResources {
   r.AddResponseType("Operation", &t3);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
+  ASSERT_STATUS_OK(r.SetServiceApiVersion());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
-  ASSERT_STATUS_OK(emitted_proto);
-  EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
+  EXPECT_THAT(emitted_proto, IsOkAndHolds(kExpectedProto));
 }
 
 TEST_F(DiscoveryResourceTest, JsonToProtobufServiceNoApiVersion) {
@@ -860,6 +855,7 @@ service MyResources {
   r.AddResponseType("Operation", &t3);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
+  ASSERT_STATUS_OK(r.SetServiceApiVersion());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   ASSERT_STATUS_OK(emitted_proto);
   EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
@@ -891,6 +887,7 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufServiceMissingOAuthScopes) {
   r.AddRequestType("GetMyResourcesRequest", &t);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
+  ASSERT_STATUS_OK(r.SetServiceApiVersion());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(
       emitted_proto,
@@ -928,6 +925,7 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufServiceMissingRequestType) {
   DiscoveryResource r("myResources", "this.package", resource_json);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
+  ASSERT_STATUS_OK(r.SetServiceApiVersion());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(
       emitted_proto,
@@ -969,6 +967,7 @@ service MyResources {
   DiscoveryResource r("myResources", "this.package", resource_json);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
+  ASSERT_STATUS_OK(r.SetServiceApiVersion());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   ASSERT_STATUS_OK(emitted_proto);
   EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
@@ -1002,11 +1001,46 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufServiceErrorFormattingRpcOptions) {
   r.AddRequestType("GetMyResourcesRequest", &t);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
+  ASSERT_STATUS_OK(r.SetServiceApiVersion());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(
       emitted_proto,
       StatusIs(StatusCode::kInvalidArgument,
                HasSubstr("Method does not define httpMethod and/or path.")));
+}
+
+TEST_F(DiscoveryResourceTest, JsonToProtobufServiceCalledWithoutApiVersionSet) {
+  auto constexpr kGetRequestTypeJson = R"""({})""";
+  auto constexpr kResourceJson = R"""({
+    "methods": {
+      "get": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ],
+        "path": "projects/{project}/regions/{region}/myResources/{foo}",
+        "parameterOrder": [
+          "project",
+          "region",
+          "foo"
+        ]
+      }
+    }
+})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto get_request_type_json =
+      nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
+  ASSERT_TRUE(get_request_type_json.is_object());
+  DiscoveryResource r("myResources", "this.package", resource_json);
+  DiscoveryTypeVertex t("GetMyResourcesRequest", "this.package",
+                        get_request_type_json, &pool());
+  r.AddRequestType("GetMyResourcesRequest", &t);
+  DiscoveryDocumentProperties document_properties{
+      "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
+  EXPECT_THAT(r.JsonToProtobufService(document_properties),
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("SetServiceApiVersion must be called before "
+                                 "JsonToProtobufService is called")));
 }
 
 }  // namespace

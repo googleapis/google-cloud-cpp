@@ -91,33 +91,34 @@ std::vector<DiscoveryTypeVertex*> DiscoveryResource::GetRequestTypesList()
 }
 
 StatusOr<std::string> DiscoveryResource::GetServiceApiVersion() const {
-  if (service_api_version_.has_value()) return *service_api_version_;
+  return *service_api_version_;
+}
 
+Status DiscoveryResource::SetServiceApiVersion() {
   if (!json_.contains("methods")) {
     service_api_version_ = internal::InvalidArgumentError(
         "resource contains no methods",
         GCP_ERROR_INFO().WithMetadata("json", json_.dump()));
-    return *service_api_version_;
+    return service_api_version_->status();
   }
 
-  std::string service_api_version;
   for (auto const& m : *json_.find("methods")) {
     std::string method_api_version = m.value("apiVersion", "");
     // We expect well formed JSON and anticipate this is the usual case.
-    if (service_api_version == method_api_version) {
+    if (service_api_version_.has_value() &&
+        **service_api_version_ == method_api_version) {
       continue;
     }
-    if (service_api_version.empty()) {
-      service_api_version = method_api_version;
+    if (!service_api_version_.has_value()) {
+      service_api_version_ = method_api_version;
     } else {
       service_api_version_ = internal::InvalidArgumentError(
           "resource contains methods with different apiVersion values",
           GCP_ERROR_INFO().WithMetadata("json", json_.dump()));
-      return *service_api_version_;
+      return service_api_version_->status();
     }
   }
-  service_api_version_ = service_api_version;
-  return *service_api_version_;
+  return {};
 }
 
 std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
@@ -270,6 +271,12 @@ std::string DiscoveryResource::FormatMethodName(std::string method_name) const {
 
 StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
     DiscoveryDocumentProperties const& document_properties) const {
+  if (!service_api_version_.has_value()) {
+    return internal::InternalError(
+        "SetServiceApiVersion must be called before JsonToProtobufService is "
+        "called",
+        GCP_ERROR_INFO().WithMetadata("json", json_.dump()));
+  }
   std::vector<std::string> service_text;
   auto constexpr kServiceComments =
       R"""(Service for the %s resource. https://cloud.google.com/$product_name$/docs/reference/rest/$version$/%s

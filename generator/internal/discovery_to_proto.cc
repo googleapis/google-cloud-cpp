@@ -193,9 +193,9 @@ StatusOr<std::map<std::string, DiscoveryResource>> ExtractResources(
                                           CamelCaseToSnakeCase(resource_name),
                                           document_properties.version),
                           r.value()});
-    auto verify_service_api_version = iter.first->second.GetServiceApiVersion();
+    auto verify_service_api_version = iter.first->second.SetServiceApiVersion();
     if (!verify_service_api_version.ok()) {
-      return std::move(verify_service_api_version).status();
+      return verify_service_api_version;
     }
   }
 
