@@ -14,6 +14,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "networkconnectivity.googleapis.com")
   used by `MakeHubServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_POLICY_BASED_ROUTING_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networkconnectivity.googleapis.com")
+  used by `MakePolicyBasedRoutingServiceConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

@@ -11,6 +11,11 @@ For example, this will override the default endpoint for `networkconnectivity_v1
 
 @snippet hub_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c networkconnectivity_v1::HubServiceClient](@ref networkconnectivity_v1::HubServiceClient-endpoint-snippet)
+- [\c networkconnectivity_v1::PolicyBasedRoutingServiceClient](@ref networkconnectivity_v1::PolicyBasedRoutingServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
@@ -20,6 +25,12 @@ For example, this will override the default endpoint for `networkconnectivity_v1
 /*! @page networkconnectivity_v1::HubServiceClient-endpoint-snippet Override networkconnectivity_v1::HubServiceClient Endpoint Configuration
 
 @snippet google/cloud/networkconnectivity/v1/samples/hub_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networkconnectivity_v1::PolicyBasedRoutingServiceClient-endpoint-snippet Override networkconnectivity_v1::PolicyBasedRoutingServiceClient Endpoint Configuration
+
+@snippet google/cloud/networkconnectivity/v1/samples/policy_based_routing_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->

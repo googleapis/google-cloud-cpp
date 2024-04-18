@@ -14,6 +14,8 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   - `SqlIamPoliciesServiceClient`
   - `SqlInstanceNamesServiceClient`
   - `SqlRegionsServiceClient`
+- [Network Connectivity API](/google/cloud/networkconnectivity/README.md) - new
+  `PolicyBasedRoutingServiceClient`
 - [Retail](/google/cloud/retail/README.md) - new `AnalyticsServiceClient`
 
 ## v2.23.0 - 2024-04

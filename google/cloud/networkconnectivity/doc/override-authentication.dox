@@ -11,6 +11,11 @@ The following example shows how to explicitly load a service account key file:
 <!-- inject-service-account-snippet-start -->
 @snippet hub_client_samples.cc with-service-account
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c networkconnectivity_v1::HubServiceClient](@ref networkconnectivity_v1::HubServiceClient-service-account-snippet)
+- [\c networkconnectivity_v1::PolicyBasedRoutingServiceClient](@ref networkconnectivity_v1::PolicyBasedRoutingServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -30,6 +35,12 @@ guide for more details.
 /*! @page networkconnectivity_v1::HubServiceClient-service-account-snippet Override networkconnectivity_v1::HubServiceClient Authentication Defaults
 
 @snippet google/cloud/networkconnectivity/v1/samples/hub_client_samples.cc with-service-account
+
+*/
+
+/*! @page networkconnectivity_v1::PolicyBasedRoutingServiceClient-service-account-snippet Override networkconnectivity_v1::PolicyBasedRoutingServiceClient Authentication Defaults
+
+@snippet google/cloud/networkconnectivity/v1/samples/policy_based_routing_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->
