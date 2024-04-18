@@ -19,6 +19,33 @@ set -euo pipefail
 source "$(dirname "$0")/../../ci/lib/init.sh"
 source module ci/lib/io.sh
 
+function print_service_textproto() {
+  service_proto_path="${1#protos/}"
+  product_path="${service_proto_path%/*.proto}"
+  initial_copyright_year=$(date +"%Y")
+  cat <<_EOF_
+  rest_services {
+    service_proto_path: "${service_proto_path}"
+    product_path: "${product_path}"
+    initial_copyright_year: "${initial_copyright_year}"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+_EOF_
+}
+
+function add_service_directory() {
+  compute_proto_path="${1#protos/google/cloud/compute/}"
+  service_dir="${compute_proto_path%/*.proto}/"
+  echo "    \"${service_dir}\""
+  # Inserting at line 19 puts the new service just after the "sort" directive
+  # for cmake-format.
+  # TODO(#13972): A more robust solution would be to search for the
+  # "cmake-format: sort" and insert after that.
+  sed -i "19i\    \"${service_dir}\"" "${PROJECT_ROOT}/google/cloud/compute/service_dirs.cmake"
+}
+
 if (($# > 0)); then
   cat 1>&2 <<EOM
 Usage: $(basename "$0")
@@ -51,11 +78,13 @@ if [[ -n "${NEW_FILES}" ]]; then
   echo "${NEW_FILES}"
   mapfile -t proto_array < <(echo "${NEW_FILES}")
   io::log_red "Add rest_services definitions to the generator_config.textproto and re-run this script."
-  git add protos
-  io::log_red "Add new directories to google/cloud/compute/service_dirs.cmake"
   for i in "${proto_array[@]}"; do
-    service_dir=$(echo "${i}" | sed -En 's/protos\/google\/cloud\/compute\/(.*\/v[[:digit:]]\/).*\.proto/\1/p')
-    echo "    \"${service_dir}\""
+    print_service_textproto "${i}"
+  done
+  git add protos
+  io::log_yellow "Adding new directories to google/cloud/compute/service_dirs.cmake"
+  for i in "${proto_array[@]}"; do
+    add_service_directory "${i}"
   done
   exit 1
 fi
