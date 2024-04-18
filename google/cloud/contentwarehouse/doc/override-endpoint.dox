@@ -16,6 +16,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c contentwarehouse_v1::DocumentServiceClient](@ref contentwarehouse_v1::DocumentServiceClient-endpoint-snippet)
 - [\c contentwarehouse_v1::DocumentLinkServiceClient](@ref contentwarehouse_v1::DocumentLinkServiceClient-endpoint-snippet)
 - [\c contentwarehouse_v1::DocumentSchemaServiceClient](@ref contentwarehouse_v1::DocumentSchemaServiceClient-endpoint-snippet)
+- [\c contentwarehouse_v1::PipelineServiceClient](@ref contentwarehouse_v1::PipelineServiceClient-endpoint-snippet)
 - [\c contentwarehouse_v1::RuleSetServiceClient](@ref contentwarehouse_v1::RuleSetServiceClient-endpoint-snippet)
 - [\c contentwarehouse_v1::SynonymSetServiceClient](@ref contentwarehouse_v1::SynonymSetServiceClient-endpoint-snippet)
 
@@ -40,6 +41,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page contentwarehouse_v1::DocumentSchemaServiceClient-endpoint-snippet Override contentwarehouse_v1::DocumentSchemaServiceClient Endpoint Configuration
 
 @snippet google/cloud/contentwarehouse/v1/samples/document_schema_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page contentwarehouse_v1::PipelineServiceClient-endpoint-snippet Override contentwarehouse_v1::PipelineServiceClient Endpoint Configuration
+
+@snippet google/cloud/contentwarehouse/v1/samples/pipeline_client_samples.cc set-client-endpoint
 
 */
 

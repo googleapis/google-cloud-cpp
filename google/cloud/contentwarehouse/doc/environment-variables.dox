@@ -22,6 +22,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "contentwarehouse.googleapis.com")
   used by `MakeDocumentServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_PIPELINE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "contentwarehouse.googleapis.com")
+  used by `MakePipelineServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_RULE_SET_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "contentwarehouse.googleapis.com")
   used by `MakeRuleSetServiceConnection()`.
