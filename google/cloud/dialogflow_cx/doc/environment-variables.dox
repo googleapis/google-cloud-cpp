@@ -42,6 +42,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeFlowsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_GENERATORS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeGeneratorsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_INTENTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeIntentsConnection()`.

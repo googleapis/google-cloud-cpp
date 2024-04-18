@@ -20,6 +20,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-endpoint-snippet)
 - [\c dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-endpoint-snippet)
 - [\c dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-endpoint-snippet)
+- [\c dialogflow_cx::GeneratorsClient](@ref dialogflow_cx::GeneratorsClient-endpoint-snippet)
 - [\c dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-endpoint-snippet)
 - [\c dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-endpoint-snippet)
 - [\c dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-endpoint-snippet)
@@ -75,6 +76,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page dialogflow_cx::FlowsClient-endpoint-snippet Override dialogflow_cx::FlowsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::GeneratorsClient-endpoint-snippet Override dialogflow_cx::GeneratorsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/generators_client_samples.cc set-client-endpoint
 
 */
 

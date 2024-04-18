@@ -40,6 +40,7 @@ application.
 - [\c dialogflow_cx::EnvironmentsClient](@ref google::cloud::dialogflow_cx::EnvironmentsClient)
 - [\c dialogflow_cx::ExperimentsClient](@ref google::cloud::dialogflow_cx::ExperimentsClient)
 - [\c dialogflow_cx::FlowsClient](@ref google::cloud::dialogflow_cx::FlowsClient)
+- [\c dialogflow_cx::GeneratorsClient](@ref google::cloud::dialogflow_cx::GeneratorsClient)
 - [\c dialogflow_cx::IntentsClient](@ref google::cloud::dialogflow_cx::IntentsClient)
 - [\c dialogflow_cx::PagesClient](@ref google::cloud::dialogflow_cx::PagesClient)
 - [\c dialogflow_cx::SecuritySettingsServiceClient](@ref google::cloud::dialogflow_cx::SecuritySettingsServiceClient)
