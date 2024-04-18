@@ -207,7 +207,7 @@ void ReadObjectWithOptions(
 void StartBufferedUpload(
     google::cloud::storage_experimental::AsyncClient& client,
     std::vector<std::string> const& argv) {
-  //! [buffered-upload]
+  //! [start-buffered-upload]
   namespace gcs = google::cloud::storage;
   namespace gcs_ex = google::cloud::storage_experimental;
   auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
@@ -225,7 +225,7 @@ void StartBufferedUpload(
     }
     co_return (co_await writer.Finalize(std::move(token))).value();
   };
-  //! [buffered-upload]
+  //! [start-buffered-upload]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
   auto const metadata = coro(client, argv.at(0), argv.at(1)).get();

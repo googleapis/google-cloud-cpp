@@ -348,7 +348,7 @@ class AsyncClient {
    * Starts a new resumable upload session with client-side buffering and
    * automatic recovery from transient failures.
    *
-   * @snippet{doc} async/client start-buffered-upload-common
+   * @snippet{doc} async/client.h start-buffered-upload-common
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
@@ -363,7 +363,7 @@ class AsyncClient {
    * Starts a new resumable upload session with client-side buffering and
    * automatic recovery from transient failures.
    *
-   * @snippet{doc} async/client start-buffered-upload-common
+   * @snippet{doc} async/client.h start-buffered-upload-common
    *
    * @param request the request contents, it must include the bucket name and
    *     object names. Many other fields are optional.
@@ -398,7 +398,7 @@ class AsyncClient {
 
   Then continue the upload using:
   @snippet storage_async_samples.cc resume-buffered-upload
-  @endpartblock
+  @endparblock
 
   @par Idempotency
   The client library always retries the RPCs used to resume uploads. These are
@@ -514,7 +514,7 @@ class AsyncClient {
 
   Then continue the upload using:
   @snippet storage_async_samples.cc resume-unbuffered-upload
-  @endpartblock
+  @endparblock
 
   @par Idempotency
   The client library always retries the RPCs used to resume uploads. These are
