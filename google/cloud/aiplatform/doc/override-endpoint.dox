@@ -18,6 +18,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::FeatureRegistryServiceClient](@ref aiplatform_v1::FeatureRegistryServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeaturestoreServiceClient](@ref aiplatform_v1::FeaturestoreServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref aiplatform_v1::FeaturestoreOnlineServingServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::IndexServiceClient](@ref aiplatform_v1::IndexServiceClient-endpoint-snippet)
@@ -71,6 +72,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page aiplatform_v1::FeatureOnlineStoreServiceClient-endpoint-snippet Override aiplatform_v1::FeatureOnlineStoreServiceClient Endpoint Configuration
 
 @snippet google/cloud/aiplatform/v1/samples/feature_online_store_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::FeatureRegistryServiceClient-endpoint-snippet Override aiplatform_v1::FeatureRegistryServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/feature_registry_client_samples.cc set-client-endpoint
 
 */
 

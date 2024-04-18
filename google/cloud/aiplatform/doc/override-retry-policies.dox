@@ -88,6 +88,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-retry-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-retry-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-retry-snippet)
+- [\c aiplatform_v1::FeatureRegistryServiceClient](@ref aiplatform_v1::FeatureRegistryServiceClient-retry-snippet)
 - [\c aiplatform_v1::FeaturestoreServiceClient](@ref aiplatform_v1::FeaturestoreServiceClient-retry-snippet)
 - [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref aiplatform_v1::FeaturestoreOnlineServingServiceClient-retry-snippet)
 - [\c aiplatform_v1::IndexServiceClient](@ref aiplatform_v1::IndexServiceClient-retry-snippet)
@@ -179,6 +180,18 @@ This shows how to override the retry policies for aiplatform_v1::FeatureOnlineSt
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/aiplatform/v1/samples/feature_online_store_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::FeatureRegistryServiceClient-retry-snippet Override aiplatform_v1::FeatureRegistryServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::FeatureRegistryServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/feature_registry_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/feature_registry_client_samples.cc custom-idempotency-policy
 
 */
 

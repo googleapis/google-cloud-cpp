@@ -37,6 +37,7 @@ application.
 - [\c aiplatform_v1::EndpointServiceClient](@ref google::cloud::aiplatform_v1::EndpointServiceClient)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref google::cloud::aiplatform_v1::FeatureOnlineStoreAdminServiceClient)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref google::cloud::aiplatform_v1::FeatureOnlineStoreServiceClient)
+- [\c aiplatform_v1::FeatureRegistryServiceClient](@ref google::cloud::aiplatform_v1::FeatureRegistryServiceClient)
 - [\c aiplatform_v1::FeaturestoreServiceClient](@ref google::cloud::aiplatform_v1::FeaturestoreServiceClient)
 - [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient)
 - [\c aiplatform_v1::IndexServiceClient](@ref google::cloud::aiplatform_v1::IndexServiceClient)
