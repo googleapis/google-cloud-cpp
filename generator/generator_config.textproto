@@ -84,6 +84,14 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/aiplatform/v1/feature_registry_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
   service_proto_path: "google/cloud/aiplatform/v1/featurestore_online_service.proto"
   product_path: "google/cloud/aiplatform/v1"
   initial_copyright_year: "2023"
