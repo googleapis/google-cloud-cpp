@@ -1645,6 +1645,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/pipeline_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/contentwarehouse/v1/ruleset_service.proto"
   product_path: "google/cloud/contentwarehouse/v1"
   initial_copyright_year: "2023"
