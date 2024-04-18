@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/extend_leases_with_retry.h"
+#include "google/cloud/pubsub/internal/batch_callback.h"
+#include "google/cloud/pubsub/testing/mock_batch_callback.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -48,25 +50,34 @@ TEST(ExtendLeasesWithRetry, Success) {
   auto mock = std::make_shared<MockSubscriberStub>();
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
 
-  ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _, _,
-                         Property(&ModifyAckDeadlineRequest::ack_ids,
-                                  ElementsAre("test-001", "test-002"))))
-      .WillOnce(Return(ByMove(make_ready_future(MakeTransient()))));
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .WillOnce(Return(ByMove(make_ready_future(
-          make_status_or(std::chrono::system_clock::now())))));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _, _,
-                         Property(&ModifyAckDeadlineRequest::ack_ids,
-                                  ElementsAre("test-001", "test-002"))))
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock, AsyncModifyAckDeadline(
+                           _, _, _,
+                           Property(&ModifyAckDeadlineRequest::ack_ids,
+                                    ElementsAre("test-001", "test-002"))))
+        .WillOnce(Return(ByMove(make_ready_future(MakeTransient()))));
+    EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+        .WillOnce(Return(ByMove(make_ready_future(
+            make_status_or(std::chrono::system_clock::now())))));
+    EXPECT_CALL(*mock, AsyncModifyAckDeadline(
+                           _, _, _,
+                           Property(&ModifyAckDeadlineRequest::ack_ids,
+                                    ElementsAre("test-001", "test-002"))))
+        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  }
+
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
 
   ModifyAckDeadlineRequest request;
   request.add_ack_ids("test-001");
   request.add_ack_ids("test-002");
-  auto result = ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request);
+
+  auto result =
+      ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request,
+                            mock_batch_callback, /*enable_otel=*/false);
+
   EXPECT_STATUS_OK(result.get());
 }
 
@@ -74,32 +85,39 @@ TEST(ExtendLeasesWithRetry, SuccessWithPartials) {
   auto mock = std::make_shared<MockSubscriberStub>();
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
 
-  ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _, _,
-                         Property(&ModifyAckDeadlineRequest::ack_ids,
-                                  ElementsAre("test-001", "test-002",
-                                              "test-003", "test-004"))))
-      .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({
-          {"test-001", "TRANSIENT_FAILURE_1"},
-          {"test-002", "TRANSIENT_FAILURE_2"},
-          {"test-003", "PERMANENT_BADNESS"},
-      })))));
-  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .WillOnce(Return(ByMove(make_ready_future(
-          make_status_or(std::chrono::system_clock::now())))));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _, _,
-                         Property(&ModifyAckDeadlineRequest::ack_ids,
-                                  ElementsAre("test-001", "test-002"))))
-      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock, AsyncModifyAckDeadline(
+                           _, _, _,
+                           Property(&ModifyAckDeadlineRequest::ack_ids,
+                                    ElementsAre("test-001", "test-002",
+                                                "test-003", "test-004"))))
+        .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({
+            {"test-001", "TRANSIENT_FAILURE_1"},
+            {"test-002", "TRANSIENT_FAILURE_2"},
+            {"test-003", "PERMANENT_BADNESS"},
+        })))));
+    EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+        .WillOnce(Return(ByMove(make_ready_future(
+            make_status_or(std::chrono::system_clock::now())))));
+    EXPECT_CALL(*mock, AsyncModifyAckDeadline(
+                           _, _, _,
+                           Property(&ModifyAckDeadlineRequest::ack_ids,
+                                    ElementsAre("test-001", "test-002"))))
+        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  }
+
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
 
   ModifyAckDeadlineRequest request;
   request.add_ack_ids("test-001");
   request.add_ack_ids("test-002");
   request.add_ack_ids("test-003");
   request.add_ack_ids("test-004");
-  auto result = ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request);
+  auto result =
+      ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request,
+                            mock_batch_callback, /*enable_otel=*/false);
   EXPECT_STATUS_OK(result.get());
 }
 
@@ -112,11 +130,15 @@ TEST(ExtendLeasesWithRetry, FailurePermanentError) {
                          Property(&ModifyAckDeadlineRequest::ack_ids,
                                   ElementsAre("test-001", "test-002"))))
       .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({})))));
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
 
   ModifyAckDeadlineRequest request;
   request.add_ack_ids("test-001");
   request.add_ack_ids("test-002");
-  auto result = ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request);
+  auto result =
+      ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request,
+                            mock_batch_callback, /*enable_otel=*/false);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kUnknown));
 }
 
@@ -124,18 +146,63 @@ TEST(ExtendLeasesWithRetry, FailureTooManyTransients) {
   auto mock = std::make_shared<MockSubscriberStub>();
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
 
-  ::testing::InSequence sequence;
-  EXPECT_CALL(*mock,
-              AsyncModifyAckDeadline(
-                  _, _, _,
-                  Property(&ModifyAckDeadlineRequest::ack_ids,
-                           ElementsAre("test-001", "test-002", "test-003"))))
-      .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({
-          {"test-001", "TRANSIENT_FAILURE_1"},
-          {"test-002", "TRANSIENT_FAILURE_2"},
-          {"test-003", "PERMANENT_ERROR_INVALID_BLAH"},
-      })))));
-  for (int i = 0; i != 2; ++i) {
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock,
+                AsyncModifyAckDeadline(
+                    _, _, _,
+                    Property(&ModifyAckDeadlineRequest::ack_ids,
+                             ElementsAre("test-001", "test-002", "test-003"))))
+        .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({
+            {"test-001", "TRANSIENT_FAILURE_1"},
+            {"test-002", "TRANSIENT_FAILURE_2"},
+            {"test-003", "PERMANENT_ERROR_INVALID_BLAH"},
+        })))));
+    for (int i = 0; i != 2; ++i) {
+      EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+          .WillOnce(Return(ByMove(make_ready_future(
+              make_status_or(std::chrono::system_clock::now())))));
+      EXPECT_CALL(*mock, AsyncModifyAckDeadline(
+                             _, _, _,
+                             Property(&ModifyAckDeadlineRequest::ack_ids,
+                                      ElementsAre("test-001", "test-002"))))
+          .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({
+              {"test-001", "TRANSIENT_FAILURE_1"},
+              {"test-002", "TRANSIENT_FAILURE_2"},
+          })))));
+    }
+  }
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+
+  google::cloud::testing_util::ScopedLog log;
+  ModifyAckDeadlineRequest request;
+  request.add_ack_ids("test-001");
+  request.add_ack_ids("test-002");
+  request.add_ack_ids("test-003");
+  auto result =
+      ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request,
+                            mock_batch_callback, /*enable_otel=*/false);
+  EXPECT_THAT(result.get(), StatusIs(StatusCode::kUnknown));
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ack_id=test-001")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ack_id=test-002")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ack_id=test-003")));
+}
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(ExtendLeasesWithRetry, SuccessWithOtelEnabled) {
+  auto mock = std::make_shared<MockSubscriberStub>();
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*mock, AsyncModifyAckDeadline(
+                           _, _, _,
+                           Property(&ModifyAckDeadlineRequest::ack_ids,
+                                    ElementsAre("test-001", "test-002"))))
+        .WillOnce(Return(ByMove(make_ready_future(MakeTransient()))));
     EXPECT_CALL(*mock_cq, MakeRelativeTimer)
         .WillOnce(Return(ByMove(make_ready_future(
             make_status_or(std::chrono::system_clock::now())))));
@@ -143,24 +210,28 @@ TEST(ExtendLeasesWithRetry, FailureTooManyTransients) {
                            _, _, _,
                            Property(&ModifyAckDeadlineRequest::ack_ids,
                                     ElementsAre("test-001", "test-002"))))
-        .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({
-            {"test-001", "TRANSIENT_FAILURE_1"},
-            {"test-002", "TRANSIENT_FAILURE_2"},
-        })))));
+        .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   }
 
-  google::cloud::testing_util::ScopedLog log;
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, StartModackSpan).Times(2);
+  EXPECT_CALL(*mock_batch_callback, EndModackSpan).Times(2);
+  EXPECT_CALL(*mock_batch_callback, ModackEnd("test-001")).Times(2);
+  EXPECT_CALL(*mock_batch_callback, ModackEnd("test-002")).Times(2);
+
   ModifyAckDeadlineRequest request;
   request.add_ack_ids("test-001");
   request.add_ack_ids("test-002");
-  request.add_ack_ids("test-003");
-  auto result = ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request);
-  EXPECT_THAT(result.get(), StatusIs(StatusCode::kUnknown));
-  auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("ack_id=test-001")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("ack_id=test-002")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("ack_id=test-003")));
+
+  auto result =
+      ExtendLeasesWithRetry(mock, CompletionQueue(mock_cq), request,
+                            mock_batch_callback, /*enable_otel=*/true);
+
+  EXPECT_STATUS_OK(result.get());
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_EXTEND_LEASES_WITH_RETRY_H
 
 #include "google/cloud/pubsub/backoff_policy.h"
+#include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
@@ -39,7 +40,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 future<Status> ExtendLeasesWithRetry(
     std::shared_ptr<SubscriberStub> stub, CompletionQueue cq,
-    google::pubsub::v1::ModifyAckDeadlineRequest request);
+    google::pubsub::v1::ModifyAckDeadlineRequest request,
+    std::shared_ptr<BatchCallback> callback, bool enable_otel);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

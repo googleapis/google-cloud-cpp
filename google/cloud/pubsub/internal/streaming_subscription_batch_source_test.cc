@@ -21,6 +21,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
@@ -1131,10 +1132,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, callback).Times(1);
-  EXPECT_CALL(*mock_batch_callback, ModackStart("fake-001")).Times(1);
-  EXPECT_CALL(*mock_batch_callback, ModackStart("fake-002")).Times(1);
-  EXPECT_CALL(*mock_batch_callback, ModackEnd("fake-001")).Times(1);
-  EXPECT_CALL(*mock_batch_callback, ModackEnd("fake-002")).Times(1);
+
   uut->Start(mock_batch_callback);
   auto run_async = WaitForExactlyOnceStreamInitialRunAsync(aseq);
   run_async.set_value(true);
@@ -1348,9 +1346,9 @@ void CheckExtendLeasesMultipleRequests(bool enable_exactly_once) {
   auto mock_batch_callback =
       std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock_batch_callback, callback).Times(AtLeast(1));
-  EXPECT_CALL(*mock_batch_callback, ModackStart).Times(kMaxIds + kMaxIds + 2);
-  EXPECT_CALL(*mock_batch_callback, ModackEnd).Times(kMaxIds + kMaxIds + 2);
   if (!enable_exactly_once) {
+    EXPECT_CALL(*mock_batch_callback, ModackStart).Times(kMaxIds + kMaxIds + 2);
+    EXPECT_CALL(*mock_batch_callback, ModackEnd).Times(kMaxIds + kMaxIds + 2);
     EXPECT_CALL(*mock_batch_callback, StartModackSpan).Times(3);
     EXPECT_CALL(*mock_batch_callback, EndModackSpan).Times(3);
   }
