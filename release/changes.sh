@@ -26,6 +26,15 @@ set -euo pipefail
 source "$(dirname "$0")/../ci/lib/init.sh"
 cd "${PROJECT_ROOT}"
 
+# Check that `gh` is installed so that we can give a more specific error message.
+if ! command -v gh >/dev/null; then
+  cat <<EOF 1>&2
+${BASH_ARGV0}: line ${LINENO}: command: gh: not found
+You can build from source or download a binary from https://github.com/cli/cli/releases
+EOF
+  exit 1
+fi
+
 # Lists all the changes between the given tag and HEAD.
 function list_changes() {
   local since_tag="$1"
@@ -117,3 +126,15 @@ for section in "${sections[@]}"; do
   mapfile -t changelog < <(filter_messages "${filter}" "${messages[@]}")
   print_changelog "${title}" "${url}" "${changelog[@]}"
 done
+
+# Adds a section for "Google APIs interface definitions".
+googleapis='googleapis/googleapis'
+url="https://github.com/${googleapis}"
+commit=$(sed -n -e "s:.*/${googleapis}/archive/\([a-f0-9]*\)\.tar.*:\1:p" bazel/workspace0.bzl)
+when=$(gh search commits --json=commit --jq '.[].commit.committer.date' --repo=${googleapis} "${commit}")
+cat <<EOF
+
+### [Google APIs interface definitions](${url})
+
+- This release is based on definitions as of [${when}](${url}/tree/${commit})
+EOF
