@@ -20,6 +20,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-service-account-snippet)
 - [\c dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-service-account-snippet)
 - [\c dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-service-account-snippet)
+- [\c dialogflow_cx::GeneratorsClient](@ref dialogflow_cx::GeneratorsClient-service-account-snippet)
 - [\c dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-service-account-snippet)
 - [\c dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-service-account-snippet)
 - [\c dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-service-account-snippet)
@@ -85,6 +86,12 @@ guide for more details.
 /*! @page dialogflow_cx::FlowsClient-service-account-snippet Override dialogflow_cx::FlowsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::GeneratorsClient-service-account-snippet Override dialogflow_cx::GeneratorsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/generators_client_samples.cc with-service-account
 
 */
 
