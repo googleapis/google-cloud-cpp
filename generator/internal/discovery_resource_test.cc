@@ -22,6 +22,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
@@ -72,7 +73,7 @@ TEST_F(DiscoveryResourceTest, GetServiceApiVersionEmpty) {
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myTests", "", resource_json);
-  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   EXPECT_THAT(r.GetServiceApiVersion(), IsOkAndHolds(IsEmpty()));
 }
 
@@ -90,7 +91,7 @@ TEST_F(DiscoveryResourceTest, GetServiceApiVersionSameVersion) {
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myTests", "", resource_json);
-  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   EXPECT_THAT(r.GetServiceApiVersion(), IsOkAndHolds("test-api-version"));
 }
 
@@ -746,7 +747,7 @@ service MyResources {
   r.AddResponseType("Operation", &t3);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
-  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(emitted_proto, IsOkAndHolds(kExpectedProto));
 }
@@ -855,7 +856,7 @@ service MyResources {
   r.AddResponseType("Operation", &t3);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
-  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   ASSERT_STATUS_OK(emitted_proto);
   EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
@@ -887,7 +888,7 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufServiceMissingOAuthScopes) {
   r.AddRequestType("GetMyResourcesRequest", &t);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
-  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(
       emitted_proto,
@@ -925,7 +926,7 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufServiceMissingRequestType) {
   DiscoveryResource r("myResources", "this.package", resource_json);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
-  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(
       emitted_proto,
@@ -967,7 +968,7 @@ service MyResources {
   DiscoveryResource r("myResources", "this.package", resource_json);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
-  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   ASSERT_STATUS_OK(emitted_proto);
   EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
@@ -1001,7 +1002,7 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufServiceErrorFormattingRpcOptions) {
   r.AddRequestType("GetMyResourcesRequest", &t);
   DiscoveryDocumentProperties document_properties{
       "base/path", "https://my.endpoint.com", "", "", "", "", {}, "2023"};
-  ASSERT_STATUS_OK(r.SetServiceApiVersion());
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   auto emitted_proto = r.JsonToProtobufService(document_properties);
   EXPECT_THAT(
       emitted_proto,

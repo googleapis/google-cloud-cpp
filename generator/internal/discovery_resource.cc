@@ -91,6 +91,13 @@ std::vector<DiscoveryTypeVertex*> DiscoveryResource::GetRequestTypesList()
 }
 
 StatusOr<std::string> DiscoveryResource::GetServiceApiVersion() const {
+  if (!service_api_version_) {
+    return internal::InternalError(
+        "SetServiceApiVersion must be called before JsonToProtobufService is "
+        "called",
+        GCP_ERROR_INFO().WithMetadata("json", json_.dump()));
+  }
+
   return *service_api_version_;
 }
 
@@ -104,14 +111,8 @@ Status DiscoveryResource::SetServiceApiVersion() {
 
   for (auto const& m : *json_.find("methods")) {
     std::string method_api_version = m.value("apiVersion", "");
-    // We expect well formed JSON and anticipate this is the usual case.
-    if (service_api_version_.has_value() &&
-        **service_api_version_ == method_api_version) {
-      continue;
-    }
-    if (!service_api_version_.has_value()) {
-      service_api_version_ = method_api_version;
-    } else {
+    if (!service_api_version_) service_api_version_ = method_api_version;
+    if (**service_api_version_ != method_api_version) {
       service_api_version_ = internal::InvalidArgumentError(
           "resource contains methods with different apiVersion values",
           GCP_ERROR_INFO().WithMetadata("json", json_.dump()));
@@ -271,12 +272,6 @@ std::string DiscoveryResource::FormatMethodName(std::string method_name) const {
 
 StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
     DiscoveryDocumentProperties const& document_properties) const {
-  if (!service_api_version_.has_value()) {
-    return internal::InternalError(
-        "SetServiceApiVersion must be called before JsonToProtobufService is "
-        "called",
-        GCP_ERROR_INFO().WithMetadata("json", json_.dump()));
-  }
   std::vector<std::string> service_text;
   auto constexpr kServiceComments =
       R"""(Service for the %s resource. https://cloud.google.com/$product_name$/docs/reference/rest/$version$/%s
@@ -287,7 +282,8 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
       absl::StrFormat("  option (google.api.default_host) = \"%s\";",
                       document_properties.default_hostname));
   auto service_api_version = GetServiceApiVersion();
-  if (service_api_version.ok() && !service_api_version->empty()) {
+  if (!service_api_version) return service_api_version.status();
+  if (!service_api_version->empty()) {
     service_text.push_back(absl::StrFormat(
         "  option (google.api.api_version) = \"%s\";", *service_api_version));
   }
