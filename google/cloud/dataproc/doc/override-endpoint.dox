@@ -18,6 +18,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-endpoint-snippet)
 - [\c dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-endpoint-snippet)
 - [\c dataproc_v1::NodeGroupControllerClient](@ref dataproc_v1::NodeGroupControllerClient-endpoint-snippet)
+- [\c dataproc_v1::SessionControllerClient](@ref dataproc_v1::SessionControllerClient-endpoint-snippet)
+- [\c dataproc_v1::SessionTemplateControllerClient](@ref dataproc_v1::SessionTemplateControllerClient-endpoint-snippet)
 - [\c dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
@@ -53,6 +55,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page dataproc_v1::NodeGroupControllerClient-endpoint-snippet Override dataproc_v1::NodeGroupControllerClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/v1/samples/node_group_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataproc_v1::SessionControllerClient-endpoint-snippet Override dataproc_v1::SessionControllerClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/v1/samples/session_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataproc_v1::SessionTemplateControllerClient-endpoint-snippet Override dataproc_v1::SessionTemplateControllerClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/v1/samples/session_template_controller_client_samples.cc set-client-endpoint
 
 */
 

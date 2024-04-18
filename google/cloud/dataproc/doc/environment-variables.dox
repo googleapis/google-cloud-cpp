@@ -30,6 +30,14 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "<location>-dataproc.googleapis.com")
   used by `MakeNodeGroupControllerConnection()`.
 
+- `GOOGLE_CLOUD_CPP_SESSION_CONTROLLER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dataproc.googleapis.com")
+  used by `MakeSessionControllerConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SESSION_TEMPLATE_CONTROLLER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dataproc.googleapis.com")
+  used by `MakeSessionTemplateControllerConnection()`.
+
 - `GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dataproc.googleapis.com")
   used by `MakeWorkflowTemplateServiceConnection()`.

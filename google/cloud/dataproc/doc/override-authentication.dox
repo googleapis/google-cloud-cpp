@@ -18,6 +18,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-service-account-snippet)
 - [\c dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-service-account-snippet)
 - [\c dataproc_v1::NodeGroupControllerClient](@ref dataproc_v1::NodeGroupControllerClient-service-account-snippet)
+- [\c dataproc_v1::SessionControllerClient](@ref dataproc_v1::SessionControllerClient-service-account-snippet)
+- [\c dataproc_v1::SessionTemplateControllerClient](@ref dataproc_v1::SessionTemplateControllerClient-service-account-snippet)
 - [\c dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
@@ -63,6 +65,18 @@ guide for more details.
 /*! @page dataproc_v1::NodeGroupControllerClient-service-account-snippet Override dataproc_v1::NodeGroupControllerClient Authentication Defaults
 
 @snippet google/cloud/dataproc/v1/samples/node_group_controller_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataproc_v1::SessionControllerClient-service-account-snippet Override dataproc_v1::SessionControllerClient Authentication Defaults
+
+@snippet google/cloud/dataproc/v1/samples/session_controller_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataproc_v1::SessionTemplateControllerClient-service-account-snippet Override dataproc_v1::SessionTemplateControllerClient Authentication Defaults
+
+@snippet google/cloud/dataproc/v1/samples/session_template_controller_client_samples.cc with-service-account
 
 */
 
