@@ -194,8 +194,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
                                         std::move(mock), std::move(options));
 
   auto pending = connection->StartUnbufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
+      {google::storage::v2::StartResumableWriteRequest{},
        connection->options()});
 
   auto next = sequencer.PopFrontWithName();
@@ -490,8 +489,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
                                         std::move(mock), std::move(options));
 
   auto pending = connection->StartBufferedUpload(
-      {storage_experimental::ResumableUploadRequest("test-bucket",
-                                                    "test-object"),
+      {google::storage::v2::StartResumableWriteRequest{},
        connection->options()});
 
   auto next = sequencer.PopFrontWithName();

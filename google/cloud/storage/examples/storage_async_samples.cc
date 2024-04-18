@@ -204,106 +204,18 @@ void ReadObjectWithOptions(
   std::cout << "The object contains " << count << " lines\n";
 }
 
-void WriteObject(google::cloud::storage_experimental::AsyncClient& client,
-                 std::vector<std::string> const& argv) {
-  //! [write-object]
-  namespace gcs = google::cloud::storage;
-  namespace gcs_ex = google::cloud::storage_experimental;
-  auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
-                 std::string object_name, std::string const& filename)
-      -> google::cloud::future<gcs::ObjectMetadata> {
-    std::ifstream is(filename);
-    if (is.bad()) throw std::runtime_error("Cannot read " + filename);
-    auto [writer, token] = (co_await client.StartUnbufferedUpload(
-                                std::move(bucket_name), std::move(object_name)))
-                               .value();
-    is.seekg(0);  // clear EOF bit
-    while (token.valid() && !is.eof()) {
-      std::vector<char> buffer(1024 * 1024);
-      is.read(buffer.data(), buffer.size());
-      buffer.resize(is.gcount());
-      token = (co_await writer.Write(std::move(token),
-                                     gcs_ex::WritePayload(std::move(buffer))))
-                  .value();
-    }
-    co_return (co_await writer.Finalize(std::move(token))).value();
-  };
-  //! [write-object]
-  // The example is easier to test and run if we call the coroutine and block
-  // until it completes.
-  auto const metadata = coro(client, argv.at(0), argv.at(1), argv.at(2)).get();
-  std::cout << "File successfully uploaded " << metadata << "\n";
-}
-
-void WriteObjectWithRetry(
-    google::cloud::storage_experimental::AsyncClient& client,
-    std::vector<std::string> const& argv) {
-  //! [write-object-with-retry]
-  namespace gcs = google::cloud::storage;
-  namespace gcs_ex = google::cloud::storage_experimental;
-  // Make one attempt to upload `is` using `writer`:
-  auto attempt =
-      [](gcs_ex::AsyncWriter& writer, gcs_ex::AsyncToken& token,
-         std::istream& is) -> google::cloud::future<google::cloud::Status> {
-    while (token.valid() && !is.eof()) {
-      std::vector<char> buffer(1024 * 1024);
-      is.read(buffer.data(), buffer.size());
-      buffer.resize(is.gcount());
-      auto w = co_await writer.Write(std::move(token),
-                                     gcs_ex::WritePayload(std::move(buffer)));
-      if (!w) co_return std::move(w).status();
-      token = *std::move(w);
-    }
-    co_return google::cloud::Status{};
-  };
-  // Make multiple attempts to upload the file contents, restarting from the
-  // last checkpoint on (partial) failures.
-  auto coro = [&attempt](
-                  gcs_ex::AsyncClient& client, std::string const& bucket_name,
-                  std::string const& object_name, std::string const& filename)
-      -> google::cloud::future<gcs::ObjectMetadata> {
-    std::ifstream is(filename);
-    if (is.bad()) throw std::runtime_error("Cannot read " + filename);
-    // The first attempt will create a resumable upload session.
-    auto upload_id = gcs::UseResumableUploadSession();
-    for (int i = 0; i != 3; ++i) {
-      // Start or resume the upload.
-      auto [writer, token] = (co_await client.StartUnbufferedUpload(
-                                  bucket_name, object_name, upload_id))
-                                 .value();
-      // If the upload already completed, there is nothing left to do.
-      auto state = writer.PersistedState();
-      if (absl::holds_alternative<gcs::ObjectMetadata>(state)) {
-        co_return absl::get<gcs::ObjectMetadata>(std::move(state));
-      }
-      // Refresh the upload id and reset the input source to the right offset.
-      upload_id = gcs::UseResumableUploadSession(writer.UploadId());
-      is.seekg(absl::get<std::int64_t>(std::move(state)));
-      auto status = co_await attempt(writer, token, is);
-      if (!status.ok()) continue;  // Error in upload, try again.
-      auto f = co_await writer.Finalize(std::move(token));
-      if (f) co_return *std::move(f);  // Return immediately on success.
-    }
-    throw std::runtime_error("Too many upload attempts");
-  };
-  //! [write-object-with-retry]
-  // The example is easier to test and run if we call the coroutine and block
-  // until it completes.
-  auto const metadata = coro(client, argv.at(0), argv.at(1), argv.at(2)).get();
-  std::cout << "File successfully uploaded " << metadata << "\n";
-}
-
 void StartBufferedUpload(
     google::cloud::storage_experimental::AsyncClient& client,
     std::vector<std::string> const& argv) {
-  //! [buffered-upload]
+  //! [start-buffered-upload]
   namespace gcs = google::cloud::storage;
   namespace gcs_ex = google::cloud::storage_experimental;
   auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
                  std::string object_name)
       -> google::cloud::future<gcs::ObjectMetadata> {
     auto [writer, token] = (co_await client.StartBufferedUpload(
-                                std::move(bucket_name), std::move(object_name)))
+                                gcs_ex::BucketName(std::move(bucket_name)),
+                                std::move(object_name)))
                                .value();
     for (int i = 0; i != 1000; ++i) {
       auto line = gcs_ex::WritePayload(std::vector<std::string>{
@@ -313,7 +225,7 @@ void StartBufferedUpload(
     }
     co_return (co_await writer.Finalize(std::move(token))).value();
   };
-  //! [buffered-upload]
+  //! [start-buffered-upload]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
   auto const metadata = coro(client, argv.at(0), argv.at(1)).get();
@@ -329,9 +241,20 @@ std::string SuspendBufferedUpload(
   auto coro =
       [](gcs_ex::AsyncClient& client, std::string bucket_name,
          std::string object_name) -> google::cloud::future<std::string> {
-    auto [writer, token] = (co_await client.StartBufferedUpload(
-                                std::move(bucket_name), std::move(object_name)))
-                               .value();
+    // Use the overload consuming
+    // `google::storage::v2::StartResumableWriteRequest` and show how to set
+    // additional parameters in the request.
+    auto request = google::storage::v2::StartResumableWriteRequest{};
+    auto& spec = *request.mutable_write_object_spec();
+    spec.mutable_resource()->set_bucket(
+        gcs_ex::BucketName(bucket_name).FullName());
+    spec.mutable_resource()->set_name(std::move(object_name));
+    spec.mutable_resource()->mutable_metadata()->emplace("custom-field",
+                                                         "example");
+    spec.mutable_resource()->set_content_type("text/plain");
+    spec.set_if_generation_match(0);
+    auto [writer, token] =
+        (co_await client.StartBufferedUpload(std::move(request))).value();
     // This example does not finalize the upload, so it can be resumed in a
     // separate example.
     co_return writer.UploadId();
@@ -383,26 +306,85 @@ void ResumeBufferedUpload(
   std::cout << "Object successfully uploaded " << metadata << "\n";
 }
 
+void StartUnbufferedUpload(
+    google::cloud::storage_experimental::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [start-unbuffered-upload]
+  namespace gcs = google::cloud::storage;
+  namespace gcs_ex = google::cloud::storage_experimental;
+  auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
+                 std::string object_name, std::string const& filename)
+      -> google::cloud::future<gcs::ObjectMetadata> {
+    std::ifstream is(filename);
+    if (is.bad()) throw std::runtime_error("Cannot read " + filename);
+
+    auto [writer, token] = (co_await client.StartUnbufferedUpload(
+                                gcs_ex::BucketName(std::move(bucket_name)),
+                                std::move(object_name)))
+                               .value();
+    is.seekg(0);  // clear EOF bit
+    while (token.valid() && !is.eof()) {
+      std::vector<char> buffer(1024 * 1024);
+      is.read(buffer.data(), buffer.size());
+      buffer.resize(is.gcount());
+      token = (co_await writer.Write(std::move(token),
+                                     gcs_ex::WritePayload(std::move(buffer))))
+                  .value();
+    }
+    co_return (co_await writer.Finalize(std::move(token))).value();
+  };
+  //! [start-unbuffered-upload]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes..
+  auto const metadata = coro(client, argv.at(0), argv.at(1), argv.at(2)).get();
+  std::cout << "File successfully uploaded " << metadata << "\n";
+}
+
 std::string SuspendUnbufferedUpload(
     google::cloud::storage_experimental::AsyncClient& client,
     std::vector<std::string> const& argv) {
-  //! [suspend-buffered-upload]
+  //! [suspend-unbuffered-upload]
   namespace gcs = google::cloud::storage;
   namespace gcs_ex = google::cloud::storage_experimental;
   auto coro =
       [](gcs_ex::AsyncClient& client, std::string bucket_name,
-         std::string object_name) -> google::cloud::future<std::string> {
-    auto [writer, token] = (co_await client.StartBufferedUpload(
-                                std::move(bucket_name), std::move(object_name)))
-                               .value();
+         std::string object_name,
+         std::string const& filename) -> google::cloud::future<std::string> {
+    std::ifstream is(filename);
+    if (is.bad()) throw std::runtime_error("Cannot read " + filename);
+
+    // Use the overload consuming
+    // `google::storage::v2::StartResumableWriteRequest` and show how to set
+    // additional parameters in the request.
+    auto request = google::storage::v2::StartResumableWriteRequest{};
+    auto& spec = *request.mutable_write_object_spec();
+    spec.mutable_resource()->set_bucket(
+        gcs_ex::BucketName(bucket_name).FullName());
+    spec.mutable_resource()->set_name(std::move(object_name));
+    spec.mutable_resource()->mutable_metadata()->emplace("custom-field",
+                                                         "example");
+    spec.mutable_resource()->set_content_type("text/plain");
+    spec.set_if_generation_match(0);  // Create the object if it does not exist
+    auto [writer, token] =
+        (co_await client.StartUnbufferedUpload(std::move(request))).value();
+
+    // Write some data and then return. That data may or may not be received
+    // and persisted by the service.
+    std::vector<char> buffer(1024 * 1024);
+    is.read(buffer.data(), buffer.size());
+    buffer.resize(is.gcount());
+    token = (co_await writer.Write(std::move(token),
+                                   gcs_ex::WritePayload(std::move(buffer))))
+                .value();
+
     // This example does not finalize the upload, so it can be resumed in a
     // separate example.
     co_return writer.UploadId();
   };
-  //! [suspend-buffered-upload]
+  //! [suspend-unbuffered-upload]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
-  auto upload_id = coro(client, argv.at(0), argv.at(1)).get();
+  auto upload_id = coro(client, argv.at(0), argv.at(1), argv.at(2)).get();
   std::cout << "Object upload successfully created " << upload_id << "\n";
   return upload_id;
 }
@@ -414,35 +396,36 @@ void ResumeUnbufferedUpload(
   namespace gcs = google::cloud::storage;
   namespace gcs_ex = google::cloud::storage_experimental;
   auto coro =
-      [](gcs_ex::AsyncClient& client,
-         std::string upload_id) -> google::cloud::future<gcs::ObjectMetadata> {
+      [](gcs_ex::AsyncClient& client, std::string upload_id,
+         std::string filename) -> google::cloud::future<gcs::ObjectMetadata> {
+    std::ifstream is(filename);
+    if (is.bad()) throw std::runtime_error("Cannot read " + filename);
     auto [writer, token] =
         (co_await client.ResumeUnbufferedUpload(std::move(upload_id))).value();
+
     auto state = writer.PersistedState();
     if (std::holds_alternative<gcs::ObjectMetadata>(state)) {
       std::cout << "The upload " << writer.UploadId()
                 << " was already finalized\n";
       co_return std::get<gcs::ObjectMetadata>(std::move(state));
     }
+
     auto persisted_bytes = std::get<std::int64_t>(state);
-    if (persisted_bytes != 0) {
-      // This example naively assumes it will resume from the beginning of the
-      // object. Applications should be prepared to handle partially uploaded
-      // objects.
-      throw std::invalid_argument("example cannot resume after partial upload");
-    }
-    for (int i = 0; i != 1000; ++i) {
-      auto line = gcs_ex::WritePayload(std::vector<std::string>{
-          std::string("line number "), std::to_string(i), std::string("\n")});
-      token =
-          (co_await writer.Write(std::move(token), std::move(line))).value();
+    is.seekg(persisted_bytes);
+    while (token.valid() && !is.eof()) {
+      std::vector<char> buffer(1024 * 1024);
+      is.read(buffer.data(), buffer.size());
+      buffer.resize(is.gcount());
+      token = (co_await writer.Write(std::move(token),
+                                     gcs_ex::WritePayload(std::move(buffer))))
+                  .value();
     }
     co_return (co_await writer.Finalize(std::move(token))).value();
   };
   //! [resume-unbuffered-upload]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
-  auto const metadata = coro(client, argv.at(0)).get();
+  auto const metadata = coro(client, argv.at(0), argv.at(1)).get();
   std::cout << "Object successfully uploaded " << metadata << "\n";
 }
 
@@ -545,18 +528,6 @@ void ReadObjectWithOptions(google::cloud::storage_experimental::AsyncClient&,
   std::cerr << "AsyncClient::ReadObject() example requires coroutines\n";
 }
 
-void WriteObject(google::cloud::storage_experimental::AsyncClient&,
-                 std::vector<std::string> const&) {
-  std::cerr
-      << "AsyncClient::StartUnbufferedUpload() example requires coroutines\n";
-}
-
-void WriteObjectWithRetry(google::cloud::storage_experimental::AsyncClient&,
-                          std::vector<std::string> const&) {
-  std::cerr
-      << "AsyncClient::StartUnbufferedUpload() example requires coroutines\n";
-}
-
 void StartBufferedUpload(google::cloud::storage_experimental::AsyncClient&,
                          std::vector<std::string> const&) {
   std::cerr
@@ -567,7 +538,7 @@ std::string SuspendBufferedUpload(
     google::cloud::storage_experimental::AsyncClient&,
     std::vector<std::string> const&) {
   std::cerr
-      << "AsyncClient::SuspendBufferedUpload() example requires coroutines\n";
+      << "AsyncClient::StartBufferedUpload() example requires coroutines\n";
   return {};
 }
 
@@ -577,11 +548,17 @@ void ResumeBufferedUpload(google::cloud::storage_experimental::AsyncClient&,
       << "AsyncClient::ResumeBufferedUpload() example requires coroutines\n";
 }
 
+void StartUnbufferedUpload(google::cloud::storage_experimental::AsyncClient&,
+                           std::vector<std::string> const&) {
+  std::cerr
+      << "AsyncClient::StartUnbufferedUpload() example requires coroutines\n";
+}
+
 std::string SuspendUnbufferedUpload(
     google::cloud::storage_experimental::AsyncClient&,
     std::vector<std::string> const&) {
   std::cerr
-      << "AsyncClient::SuspendUnbufferedUpload() example requires coroutines\n";
+      << "AsyncClient::StartUnbufferedUpload() example requires coroutines\n";
   return {};
 }
 
@@ -789,16 +766,6 @@ void AutoRun(std::vector<std::string> const& argv) {
     }
     of.close();
 
-    std::cout << "Running the WriteObject() example" << std::endl;
-    WriteObject(client, {bucket_name, object_name, filename});
-    scheduled_for_delete.push_back(std::move(object_name));
-    object_name = examples::MakeRandomObjectName(generator, "object-");
-
-    std::cout << "Running the WriteObjectWithRetry() example" << std::endl;
-    WriteObjectWithRetry(client, {bucket_name, object_name, filename});
-    scheduled_for_delete.push_back(std::move(object_name));
-    object_name = examples::MakeRandomObjectName(generator, "object-");
-
     std::cout << "Running the StartBufferedUpload() example" << std::endl;
     StartBufferedUpload(client, {bucket_name, object_name});
     scheduled_for_delete.push_back(std::move(object_name));
@@ -812,11 +779,17 @@ void AutoRun(std::vector<std::string> const& argv) {
     scheduled_for_delete.push_back(std::move(object_name));
     object_name = examples::MakeRandomObjectName(generator, "object-");
 
+    std::cout << "Running the StartUnbufferedUpload() example" << std::endl;
+    StartUnbufferedUpload(client, {bucket_name, object_name, filename});
+    scheduled_for_delete.push_back(std::move(object_name));
+    object_name = examples::MakeRandomObjectName(generator, "object-");
+
     std::cout << "Running the SuspendUnbufferedUpload() example" << std::endl;
-    upload_id = SuspendUnbufferedUpload(client, {bucket_name, object_name});
+    upload_id =
+        SuspendUnbufferedUpload(client, {bucket_name, object_name, filename});
 
     std::cout << "Running the ResumeUnbufferedUpload() example" << std::endl;
-    ResumeUnbufferedUpload(client, {upload_id});
+    ResumeUnbufferedUpload(client, {upload_id, filename});
     scheduled_for_delete.push_back(std::move(object_name));
     object_name = examples::MakeRandomObjectName(generator, "object-");
 
@@ -924,15 +897,17 @@ int main(int argc, char* argv[]) try {
       make_entry("compose-object", {"<o1> <o2>"}, ComposeObject),
       make_entry("compose-object-request", {"<o1> <o2>"}, ComposeObjectRequest),
       make_entry("delete-object", {}, AsyncDeleteObject),
-      make_entry("write-object", {"<filename>"}, WriteObject),
-      make_entry("write-object-with-retry", {"<filename>"},
-                 WriteObjectWithRetry),
-      make_entry("buffered-upload", {}, StartBufferedUpload),
 
+      make_entry("buffered-upload", {}, StartBufferedUpload),
       make_entry("suspend-buffered-upload", {}, SuspendBufferedUpload),
       make_resume_entry("resume-buffered-upload", {}, ResumeBufferedUpload),
+
+      make_entry("start-unbuffered-upload", {"<filename>"},
+                 StartBufferedUpload),
       make_entry("suspend-unbuffered-upload", {}, SuspendUnbufferedUpload),
-      make_resume_entry("resume-unbuffered-upload", {}, ResumeUnbufferedUpload),
+      make_resume_entry("resume-unbuffered-upload", {"<filename>"},
+                        ResumeUnbufferedUpload),
+
       make_entry("rewrite-object", {"<destination>"}, RewriteObject),
       make_entry("resume-rewrite-object", {"<destination>"}, ResumeRewrite),
       {"auto", AutoRun},

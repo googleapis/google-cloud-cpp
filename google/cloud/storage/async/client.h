@@ -314,54 +314,65 @@ class AsyncClient {
          std::move(options)});
   }
 
+  /*
+  [start-buffered-upload-common]
+  This function always uses [resumable uploads][resumable-link]. The objects
+  returned by this function buffer data until it is persisted on the service.
+  If the buffer becomes full, they stop accepting new data until the service
+  has persisted enough data.
+
+  Because these object buffer data they can recover from most transient
+  errors, including an unexpected closure of the streaming RPC used for the
+  upload. The downside is that these objects must periodically flush these
+  buffers, and this may not achieve the highest possible throughput.
+
+  @par Example
+  @snippet storage_async_samples.cc start-buffered-upload
+
+  @par Example
+  @snippet storage_async_samples.cc suspend-buffered-upload
+
+  @par Idempotency
+  This function is always treated as idempotent, and the library will
+  automatically retry the function on transient errors. Note that this may
+  create multiple upload ids. This is safe as any additional upload ids have no
+  cost and are not visible to any application.
+
+  @snippet{doc} async/client.h selecting-an-upload-function
+
+  [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
+  [start-buffered-upload-common]
+  */
+
   /**
-   * Uploads a new object with buffering and automatic recovery from transient
-   * failures.
+   * Starts a new resumable upload session with client-side buffering and
+   * automatic recovery from transient failures.
    *
-   * This function always uses [resumable uploads][resumable-link]. The objects
-   * returned by this function buffer data until it is persisted on the service.
-   * If the buffer becomes full, they stop accepting new data until the service
-   * has persisted enough data.
-   *
-   * @snippet{doc} async/client.h selecting-an-upload-function
+   * @snippet{doc} async/client.h start-buffered-upload-common
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
-   * @param args a list of optional query parameters and/or request headers.
-   *   Valid types for this operation include `ContentEncoding`, `ContentType`,
-   *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
-   *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
-   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
-   *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
-   *   `UseResumableUploadSession`, `UserProject`, and `WithObjectMetadata`.
-   *
-   * @par Idempotency
-   * The client library always retries (a) any RPCs to create a resumable upload
-   * session, and (b) any RPCs to query the status of a resumable upload
-   * session.
-   *
-   * [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
    */
-  template <typename... Args>
   future<StatusOr<std::pair<AsyncWriter, AsyncToken>>> StartBufferedUpload(
-      std::string bucket_name, std::string object_name, Args&&... args) {
-    auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_
-        ->StartBufferedUpload(
-            {ResumableUploadRequest(std::move(bucket_name),
-                                    std::move(object_name))
-                 .set_multiple_options(std::forward<Args>(args)...),
-             std::move(options)})
-        .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
-          auto impl = f.get();
-          if (!impl) return std::move(impl).status();
-          auto t = absl::holds_alternative<storage::ObjectMetadata>(
-                       (*impl)->PersistedState())
-                       ? AsyncToken()
-                       : storage_internal::MakeAsyncToken(impl->get());
-          return std::make_pair(AsyncWriter(*std::move(impl)), std::move(t));
-        });
-  }
+      BucketName const& bucket_name, std::string object_name,
+      Options opts = {});
+
+  /**
+   * Starts a new resumable upload session with client-side buffering and
+   * automatic recovery from transient failures.
+   *
+   * @snippet{doc} async/client.h start-buffered-upload-common
+   *
+   * @param request the request contents, it must include the bucket name and
+   *     object names. Many other fields are optional.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<std::pair<AsyncWriter, AsyncToken>>> StartBufferedUpload(
+      google::storage::v2::StartResumableWriteRequest request,
+      Options opts = {});
 
   /*
   [resume-buffered-common]
@@ -381,7 +392,13 @@ class AsyncClient {
   @snippet{doc} async/client.h selecting-an-upload-function
 
   @par Example
+  @parblock
+  First use this example to partially upload an object:
+  @snippet storage_async_samples.cc suspend-buffered-upload
+
+  Then continue the upload using:
   @snippet storage_async_samples.cc resume-buffered-upload
+  @endparblock
 
   @par Idempotency
   The client library always retries the RPCs used to resume uploads. These are
@@ -416,78 +433,62 @@ class AsyncClient {
   future<StatusOr<std::pair<AsyncWriter, AsyncToken>>> ResumeBufferedUpload(
       google::storage::v2::QueryWriteStatusRequest request, Options opts = {});
 
+  /*
+  [start-unbuffered-upload-common]
+  This function always uses [resumable uploads][resumable-link]. The objects
+  returned by this function do not buffer data and, therefore, cannot
+  automatically recover from transient failures. On the other hand, they do not
+  need to periodically flush any buffers, so they can achieve maximum throughput
+  for a single upload stream.
+
+  Use `#AsyncWriter::UploadId()` to save the upload id if you are planning to
+  resume the upload.
+
+  @snippet{doc} async/client.h selecting-an-upload-function
+
+  @par Example
+  @snippet storage_async_samples.cc start-unbuffered-upload
+
+  @par Example
+  @snippet storage_async_samples.cc suspend-unbuffered-upload
+
+  @par Idempotency
+  This function is always treated as idempotent, and the library will
+  automatically retry the function on transient errors. Note that this may
+  create multiple upload ids. This is safe as any additional upload ids have no
+  cost and are not visible to any application.
+
+  [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
+  [start-unbuffered-upload-common]
+  */
+
   /**
-   * Uploads a new object without buffering or automatic recovery from transient
-   * failures.
+   * Starts a new resumable upload session without client-side buffering.
    *
-   * This function always uses [resumable uploads][resumable-link]. Use
-   * `#AsyncWriter::UploadId()` to save the upload id if you are planning to
-   * resume the upload.
+   * @snippet{doc} async/client.h start-unbuffered-upload-common
    *
-   * Because the objects returned by this function do not buffer any data, they
-   * cannot automatically recovery if the upload RPC is disconnected.
-   *
-   * When resuming uploads it is the application's responsibility to save
-   * the session ID to restart the upload later. Likewise, it is the
-   * application's responsibility to query the amount of data already persisted
-   * and to send the remaining data **without gaps or duplications**.
-   *
-   * If the application does not provide a `#RestoreResumableUploadSession()`
-   * option, or it provides the `#NewResumableUploadSession()` option, then this
-   * function will create a new resumable upload session.
-   *
-   * @snippet{doc} async/client.h selecting-an-upload-function
-   *
-   * @param bucket_name the name of the bucket that contains the object.
+   * @param bucket_name the name of the bucket that will contain the object.
    * @param object_name the name of the object to be read.
-   * @param args a list of optional query parameters and/or request headers.
-   *   Valid types for this operation include `ContentEncoding`, `ContentType`,
-   *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
-   *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
-   *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
-   *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
-   *   `UseResumableUploadSession`, `UserProject`, and `WithObjectMetadata`.
-   *
-   * @par Idempotency
-   * The client library always retries (a) any RPCs to create a resumable upload
-   * session, and (b) any RPCs to query the status of a resumable upload
-   * session. The client library never retries functions to upload more data
-   * or to finalize the upload. The caller can retry these functions if it is
-   * safe to do so.
-   *
-   * @par Example
-   * @snippet storage_async_samples.cc write-object
-   *
-   * @par Example
-   * @snippet storage_async_samples.cc write-object-with-retry
-   *
-   * @see [Resumable Uploads][resumable-link] for more information about
-   *     resumable uploads.
-   *
-   * [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
-   * [service documentation]:
-   * https://cloud.google.com/storage/docs/uploads-downloads#size
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
    */
-  template <typename... Args>
   future<StatusOr<std::pair<AsyncWriter, AsyncToken>>> StartUnbufferedUpload(
-      std::string bucket_name, std::string object_name, Args&&... args) {
-    auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_
-        ->StartUnbufferedUpload(
-            {ResumableUploadRequest(std::move(bucket_name),
-                                    std::move(object_name))
-                 .set_multiple_options(std::forward<Args>(args)...),
-             std::move(options)})
-        .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
-          auto impl = f.get();
-          if (!impl) return std::move(impl).status();
-          auto t = absl::holds_alternative<storage::ObjectMetadata>(
-                       (*impl)->PersistedState())
-                       ? AsyncToken()
-                       : storage_internal::MakeAsyncToken(impl->get());
-          return std::make_pair(AsyncWriter(*std::move(impl)), std::move(t));
-        });
-  }
+      BucketName const& bucket_name, std::string object_name,
+      Options opts = {});
+
+  /**
+   * Starts a new resumable upload session without client-side buffering.
+   *
+   * @snippet{doc} async/client.h start-unbuffered-upload-common
+   *
+   * @param request the request contents, it must include the bucket name and
+   *     object names. Many other fields are optional.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<std::pair<AsyncWriter, AsyncToken>>> StartUnbufferedUpload(
+      google::storage::v2::StartResumableWriteRequest request,
+      Options opts = {});
 
   /*
   [resume-unbuffered-common]
@@ -507,7 +508,13 @@ class AsyncClient {
   @snippet{doc} async/client.h selecting-an-upload-function
 
   @par Example
+  @parblock
+  First use this example to partially upload an object:
+  @snippet storage_async_samples.cc suspend-unbuffered-upload
+
+  Then continue the upload using:
   @snippet storage_async_samples.cc resume-unbuffered-upload
+  @endparblock
 
   @par Idempotency
   The client library always retries the RPCs used to resume uploads. These are
