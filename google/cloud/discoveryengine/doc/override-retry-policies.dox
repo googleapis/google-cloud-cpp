@@ -84,9 +84,12 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c discoveryengine_v1::CompletionServiceClient](@ref discoveryengine_v1::CompletionServiceClient-retry-snippet)
 - [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref discoveryengine_v1::ConversationalSearchServiceClient-retry-snippet)
+- [\c discoveryengine_v1::DataStoreServiceClient](@ref discoveryengine_v1::DataStoreServiceClient-retry-snippet)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-retry-snippet)
+- [\c discoveryengine_v1::EngineServiceClient](@ref discoveryengine_v1::EngineServiceClient-retry-snippet)
 - [\c discoveryengine_v1::SchemaServiceClient](@ref discoveryengine_v1::SchemaServiceClient-retry-snippet)
 - [\c discoveryengine_v1::SearchServiceClient](@ref discoveryengine_v1::SearchServiceClient-retry-snippet)
+- [\c discoveryengine_v1::SiteSearchEngineServiceClient](@ref discoveryengine_v1::SiteSearchEngineServiceClient-retry-snippet)
 - [\c discoveryengine_v1::UserEventServiceClient](@ref discoveryengine_v1::UserEventServiceClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
@@ -127,6 +130,18 @@ Assuming you have created a custom idempotency policy. Such as:
 
 */
 
+/*! @page discoveryengine_v1::DataStoreServiceClient-retry-snippet Override discoveryengine_v1::DataStoreServiceClient Retry Policies
+
+This shows how to override the retry policies for discoveryengine_v1::DataStoreServiceClient:
+
+@snippet google/cloud/discoveryengine/v1/samples/data_store_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/discoveryengine/v1/samples/data_store_client_samples.cc custom-idempotency-policy
+
+*/
+
 /*! @page discoveryengine_v1::DocumentServiceClient-retry-snippet Override discoveryengine_v1::DocumentServiceClient Retry Policies
 
 This shows how to override the retry policies for discoveryengine_v1::DocumentServiceClient:
@@ -136,6 +151,18 @@ This shows how to override the retry policies for discoveryengine_v1::DocumentSe
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/discoveryengine/v1/samples/document_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page discoveryengine_v1::EngineServiceClient-retry-snippet Override discoveryengine_v1::EngineServiceClient Retry Policies
+
+This shows how to override the retry policies for discoveryengine_v1::EngineServiceClient:
+
+@snippet google/cloud/discoveryengine/v1/samples/engine_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/discoveryengine/v1/samples/engine_client_samples.cc custom-idempotency-policy
 
 */
 
@@ -160,6 +187,18 @@ This shows how to override the retry policies for discoveryengine_v1::SearchServ
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/discoveryengine/v1/samples/search_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page discoveryengine_v1::SiteSearchEngineServiceClient-retry-snippet Override discoveryengine_v1::SiteSearchEngineServiceClient Retry Policies
+
+This shows how to override the retry policies for discoveryengine_v1::SiteSearchEngineServiceClient:
+
+@snippet google/cloud/discoveryengine/v1/samples/site_search_engine_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/discoveryengine/v1/samples/site_search_engine_client_samples.cc custom-idempotency-policy
 
 */
 

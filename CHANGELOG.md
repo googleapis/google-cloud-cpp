@@ -18,6 +18,11 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   `PipelineServiceClient`
 - [Dialogflow CX API](/google/cloud/dialogflow_cx/README.md) - new
   `GeneratorsClient`
+- [Discovery Engine](/google/cloud/discoveryengine/README.md) - several new
+  clients:
+  - `DataStoreServiceClient`
+  - `EngineServiceClient`
+  - `SiteSearchEngineServiceClient`
 - [Network Connectivity API](/google/cloud/networkconnectivity/README.md) - new
   `PolicyBasedRoutingServiceClient`
 - [Retail](/google/cloud/retail/README.md) - new `AnalyticsServiceClient`

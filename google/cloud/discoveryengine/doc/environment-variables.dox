@@ -18,9 +18,17 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
   used by `MakeConversationalSearchServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_DATA_STORE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
+  used by `MakeDataStoreServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_DOCUMENT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
   used by `MakeDocumentServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ENGINE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
+  used by `MakeEngineServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SCHEMA_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
@@ -29,6 +37,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_SEARCH_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
   used by `MakeSearchServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SITE_SEARCH_ENGINE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
+  used by `MakeSiteSearchEngineServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
