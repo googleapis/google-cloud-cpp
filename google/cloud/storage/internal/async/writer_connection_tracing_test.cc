@@ -94,7 +94,7 @@ TEST(WriterConnectionTracing, FullCycle) {
     return make_ready_future(StatusOr<std::int64_t>(1024));
   });
   EXPECT_CALL(*mock, Finalize).WillOnce([] {
-    return make_ready_future(make_status_or(storage::ObjectMetadata{}));
+    return make_ready_future(make_status_or(google::storage::v2::Object{}));
   });
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
@@ -136,7 +136,7 @@ TEST(WriterConnectionTracing, FinalizeError) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, Finalize).WillOnce([] {
     return make_ready_future(
-        StatusOr<storage::ObjectMetadata>(PermanentError()));
+        StatusOr<google::storage::v2::Object>(PermanentError()));
   });
   auto actual = MakeTracingWriterConnection(
       internal::MakeSpan("test-span-name"), std::move(mock));
@@ -227,7 +227,7 @@ TEST(WriterConnectionTracing, Cancel) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, Cancel).Times(1);
   EXPECT_CALL(*mock, Finalize).WillOnce([] {
-    return make_ready_future(make_status_or(storage::ObjectMetadata{}));
+    return make_ready_future(make_status_or(google::storage::v2::Object{}));
   });
   auto actual = MakeTracingWriterConnection(
       internal::MakeSpan("test-span-name"), std::move(mock));

@@ -237,7 +237,7 @@ TEST(ConnectionTracing, StartUnbufferedUploadSuccess) {
   auto mock_reader = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock_reader, Finalize)
       .WillOnce(Return(ByMove(
-          make_ready_future(make_status_or(storage::ObjectMetadata{})))));
+          make_ready_future(make_status_or(google::storage::v2::Object{})))));
   p.set_value(
       StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
           std::move(mock_reader)));
@@ -299,7 +299,7 @@ TEST(ConnectionTracing, StartBufferedUploadSuccess) {
   auto mock_reader = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock_reader, Finalize)
       .WillOnce(Return(ByMove(
-          make_ready_future(make_status_or(storage::ObjectMetadata{})))));
+          make_ready_future(make_status_or(google::storage::v2::Object{})))));
   p.set_value(
       StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
           std::move(mock_reader)));
@@ -362,7 +362,7 @@ TEST(ConnectionTracing, ResumeUnbufferedUploadSuccess) {
   auto mock_reader = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock_reader, Finalize)
       .WillOnce(Return(ByMove(
-          make_ready_future(make_status_or(storage::ObjectMetadata{})))));
+          make_ready_future(make_status_or(google::storage::v2::Object{})))));
   p.set_value(
       StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
           std::move(mock_reader)));
@@ -425,7 +425,7 @@ TEST(ConnectionTracing, ResumeBufferedUploadSuccess) {
   auto mock_reader = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock_reader, Finalize)
       .WillOnce(Return(ByMove(
-          make_ready_future(make_status_or(storage::ObjectMetadata{})))));
+          make_ready_future(make_status_or(google::storage::v2::Object{})))));
   p.set_value(
       StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
           std::move(mock_reader)));

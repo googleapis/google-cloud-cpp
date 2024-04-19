@@ -40,11 +40,13 @@ using ::google::cloud::storage::testing::MockAsyncBidiWriteObjectStream;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::protobuf::TextFormat;
+using ::testing::VariantWith;
 
 using AsyncBidiWriteObjectStream = ::google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiWriteObjectRequest,
@@ -91,6 +93,18 @@ std::unique_ptr<AsyncBidiWriteObjectStream> MakeErrorBidiWriteStream(
     return sequencer.PushBack("Finish").then([status](auto) { return status; });
   });
   return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
+}
+
+auto TestProtoObject() {
+  auto constexpr kText = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    name: "test-object"
+    generation: 123456
+    size: 4096
+  )pb";
+  auto object = google::storage::v2::Object{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kText, &object));
+  return object;
 }
 
 TEST_F(AsyncConnectionImplTest, StartUnbufferedUpload) {
@@ -245,7 +259,7 @@ TEST_F(AsyncConnectionImplTest, StartUnbufferedUpload) {
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -481,7 +495,7 @@ TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUpload) {
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -519,10 +533,7 @@ TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUploadFinalized) {
 
             return sequencer.PushBack("QueryWriteStatus(2)").then([](auto) {
               auto response = google::storage::v2::QueryWriteStatusResponse{};
-              response.mutable_resource()->set_bucket(
-                  "projects/_/buckets/test-bucket");
-              response.mutable_resource()->set_name("test-object");
-              response.mutable_resource()->set_generation(123456);
+              *response.mutable_resource() = TestProtoObject();
               return make_status_or(response);
             });
           });
@@ -547,12 +558,9 @@ TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUploadFinalized) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  ASSERT_TRUE(absl::holds_alternative<storage::ObjectMetadata>(
-      writer->PersistedState()));
-  auto metadata = absl::get<storage::ObjectMetadata>(writer->PersistedState());
-  EXPECT_EQ(metadata.bucket(), "test-bucket");
-  EXPECT_EQ(metadata.name(), "test-object");
-  EXPECT_EQ(metadata.generation(), 123456);
+  EXPECT_THAT(writer->PersistedState(),
+              VariantWith<google::storage::v2::Object>(
+                  IsProtoEqual(TestProtoObject())));
 
   writer.reset();
 }
@@ -837,7 +845,7 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
 
   auto response = w1.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -1030,7 +1038,7 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUploadNewUploadResume) {
 
   auto response = w1.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -1103,10 +1111,7 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUpload) {
         EXPECT_CALL(*stream, Read).WillOnce([&] {
           return sequencer.PushBack("Read").then([](auto) {
             auto response = google::storage::v2::BidiWriteObjectResponse{};
-            response.mutable_resource()->set_bucket(
-                "projects/_/buckets/test-bucket");
-            response.mutable_resource()->set_name("test-object");
-            response.mutable_resource()->set_generation(123456);
+            *response.mutable_resource() = TestProtoObject();
             return absl::make_optional(std::move(response));
           });
         });
@@ -1166,10 +1171,7 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUpload) {
   next.first.set_value(true);
 
   auto response = w2.get();
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
-  EXPECT_EQ(response->name(), "test-object");
-  EXPECT_EQ(response->generation(), 123456);
+  EXPECT_THAT(response, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
 
   writer.reset();
   next = sequencer.PopFrontWithName();
@@ -1205,10 +1207,7 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUploadFinalized) {
 
             return sequencer.PushBack("QueryWriteStatus(2)").then([](auto) {
               auto response = google::storage::v2::QueryWriteStatusResponse{};
-              response.mutable_resource()->set_bucket(
-                  "projects/_/buckets/test-bucket");
-              response.mutable_resource()->set_name("test-object");
-              response.mutable_resource()->set_generation(123456);
+              *response.mutable_resource() = TestProtoObject();
               return make_status_or(response);
             });
           });
@@ -1233,12 +1232,9 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUploadFinalized) {
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
   EXPECT_EQ(writer->UploadId(), "test-upload-id");
-  ASSERT_TRUE(absl::holds_alternative<storage::ObjectMetadata>(
-      writer->PersistedState()));
-  auto metadata = absl::get<storage::ObjectMetadata>(writer->PersistedState());
-  EXPECT_EQ(metadata.bucket(), "test-bucket");
-  EXPECT_EQ(metadata.name(), "test-object");
-  EXPECT_EQ(metadata.generation(), 123456);
+  EXPECT_THAT(writer->PersistedState(),
+              VariantWith<google::storage::v2::Object>(
+                  IsProtoEqual(TestProtoObject())));
 
   writer.reset();
 }

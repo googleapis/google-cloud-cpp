@@ -29,11 +29,11 @@ class MockAsyncWriterConnection
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(std::string, UploadId, (), (const, override));
-  MOCK_METHOD((absl::variant<std::int64_t, storage::ObjectMetadata>),
+  MOCK_METHOD((absl::variant<std::int64_t, google::storage::v2::Object>),
               PersistedState, (), (const, override));
   MOCK_METHOD(future<Status>, Write, (storage_experimental::WritePayload),
               (override));
-  MOCK_METHOD(future<StatusOr<storage::ObjectMetadata>>, Finalize,
+  MOCK_METHOD(future<StatusOr<google::storage::v2::Object>>, Finalize,
               (storage_experimental::WritePayload), (override));
   MOCK_METHOD(future<Status>, Flush, (storage_experimental::WritePayload),
               (override));

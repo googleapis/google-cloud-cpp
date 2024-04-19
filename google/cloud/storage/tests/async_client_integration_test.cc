@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -31,6 +32,7 @@ namespace {
 
 namespace gcs = ::google::cloud::storage;
 using ::google::cloud::internal::GetEnv;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
 using ::testing::Le;
@@ -215,7 +217,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadEmpty) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), 0);
 }
@@ -244,7 +246,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadMultiple) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kBlockCount * kBlockSize);
 }
@@ -306,7 +308,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResume) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kDesiredSize);
 }
@@ -330,7 +332,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResumeFinalized) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kBlockSize);
 
@@ -338,10 +340,8 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResumeFinalized) {
   ASSERT_STATUS_OK(w);
   std::tie(writer, token) = *std::move(w);
   EXPECT_FALSE(token.valid());
-  ASSERT_TRUE(absl::holds_alternative<storage::ObjectMetadata>(
-      writer.PersistedState()));
-  auto finalized = absl::get<storage::ObjectMetadata>(writer.PersistedState());
-  EXPECT_EQ(*metadata, finalized);
+  EXPECT_THAT(writer.PersistedState(), VariantWith<google::storage::v2::Object>(
+                                           IsProtoEqual(*metadata)));
 }
 
 TEST_F(AsyncClientIntegrationTest, StartBufferedUploadEmpty) {
@@ -359,7 +359,7 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadEmpty) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), 0);
 }
@@ -388,7 +388,7 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  EXPECT_EQ(metadata->bucket(), bucket_name());
+  EXPECT_EQ(metadata->bucket(), BucketName(bucket_name()).FullName());
   EXPECT_EQ(metadata->name(), object_name);
   EXPECT_EQ(metadata->size(), kBlockCount * kBlockSize);
 }

@@ -508,11 +508,11 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
             std::move(response).status()));
   }
   if (response->has_resource()) {
-    auto metadata = FromProto(response->resource(), *current);
     return make_ready_future(
         StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
             std::make_unique<AsyncWriterConnectionFinalized>(
-                std::move(*query.mutable_upload_id()), std::move(metadata))));
+                std::move(*query.mutable_upload_id()),
+                std::move(*response->mutable_resource()))));
   }
 
   // In most cases computing a hash for a resumed upload is not feasible. We

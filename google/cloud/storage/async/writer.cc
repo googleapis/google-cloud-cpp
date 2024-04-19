@@ -45,7 +45,7 @@ std::string AsyncWriter::UploadId() const {
   return {};
 }
 
-absl::variant<std::int64_t, storage::ObjectMetadata>
+absl::variant<std::int64_t, google::storage::v2::Object>
 AsyncWriter::PersistedState() const {
   if (impl_) return impl_->PersistedState();
   return -1;
@@ -65,18 +65,20 @@ future<StatusOr<AsyncToken>> AsyncWriter::Write(AsyncToken token,
       });
 }
 
-future<StatusOr<storage::ObjectMetadata>> AsyncWriter::Finalize(
+future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
     AsyncToken token, WritePayload payload) {
-  if (!impl_) return StreamError<storage::ObjectMetadata>(GCP_ERROR_INFO());
+  if (!impl_) return StreamError<google::storage::v2::Object>(GCP_ERROR_INFO());
   auto t = storage_internal::MakeAsyncToken(impl_.get());
-  if (token != t) return TokenError<storage::ObjectMetadata>(GCP_ERROR_INFO());
+  if (token != t) {
+    return TokenError<google::storage::v2::Object>(GCP_ERROR_INFO());
+  }
 
   return impl_->Finalize(std::move(payload)).then([impl = impl_](auto f) {
     return f.get();
   });
 }
 
-future<StatusOr<storage::ObjectMetadata>> AsyncWriter::Finalize(
+future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
     AsyncToken token) {
   return Finalize(std::move(token), WritePayload{});
 }

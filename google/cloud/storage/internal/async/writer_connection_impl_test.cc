@@ -21,6 +21,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -35,6 +36,7 @@ using ::google::cloud::storage_experimental::WritePayload;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::An;
@@ -63,18 +65,11 @@ auto MakeTestResponse() {
 }
 
 auto MakeTestObject() {
-  return storage::ObjectMetadata{}
-      .set_size(2048)
-      .set_bucket("test-bucket")
-      .set_name("test-object")
-      .set_self_link(
-          "https://test-only.p.googleapis.com/storage/v1/b/test-bucket/o/"
-          "test-object")
-      .set_media_link(
-          "https://test-only.p.googleapis.com/download/storage/v1/b/"
-          "test-bucket/o/test-object?generation=0&alt=media")
-      .set_id("test-bucket/test-object/0")
-      .set_kind("storage#object");
+  auto object = google::storage::v2::Object{};
+  object.set_size(2048);
+  object.set_bucket("projects/_/buckets/test-bucket");
+  object.set_name("test-object");
+  return object;
 }
 
 auto MakeRequest() {
@@ -124,8 +119,8 @@ TEST(AsyncWriterConnectionTest, ResumeFinalized) {
   AsyncWriterConnectionImpl tested(TestOptions(), MakeRequest(),
                                    std::move(mock), hash, MakeTestObject());
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
-  EXPECT_THAT(tested.PersistedState(),
-              VariantWith<storage::ObjectMetadata>(MakeTestObject()));
+  EXPECT_THAT(tested.PersistedState(), VariantWith<google::storage::v2::Object>(
+                                           IsProtoEqual(MakeTestObject())));
 }
 
 TEST(AsyncWriterConnectionTest, Cancel) {
@@ -301,7 +296,8 @@ TEST(AsyncWriterConnectionTest, FinalizeEmpty) {
   ASSERT_THAT(next.second, "Read");
   next.first.set_value(true);
   auto object = response.get();
-  EXPECT_THAT(object, IsOkAndHolds(MakeTestObject())) << "=" << *object;
+  EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(MakeTestObject())))
+      << "=" << object->DebugString();
 
   tested = {};
   next = sequencer.PopFrontWithName();

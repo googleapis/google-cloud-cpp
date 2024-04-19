@@ -221,7 +221,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -321,7 +321,7 @@ TEST_P(AsyncConnectionImplUploadHashTest,
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -419,7 +419,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeUnbufferedWithPersistedData) {
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -516,7 +516,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -615,7 +615,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithoutPersistedData) {
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
@@ -713,7 +713,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
   EXPECT_EQ(response->name(), "test-object");
   EXPECT_EQ(response->generation(), 123456);
 
