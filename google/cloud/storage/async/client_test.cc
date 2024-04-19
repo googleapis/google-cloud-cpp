@@ -407,7 +407,7 @@ TEST(AsyncClient, ReadObjectRange1) {
           Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
 
   EXPECT_CALL(*mock, ReadObjectRange)
-      .WillOnce([](AsyncConnection::ReadObjectParams const& p) {
+      .WillOnce([&](AsyncConnection::ReadObjectParams const& p) {
         EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
         EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
         EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
