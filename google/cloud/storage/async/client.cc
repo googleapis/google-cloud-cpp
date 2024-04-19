@@ -66,12 +66,8 @@ future<StatusOr<ReadPayload>> AsyncClient::ReadObjectRange(
   auto request = google::storage::v2::ReadObjectRequest{};
   request.set_bucket(bucket_name.FullName());
   request.set_object(std::move(object_name));
-  request.set_read_offset(offset);
-  request.set_read_limit(limit);
 
-  return connection_->ReadObjectRange(
-      {std::move(request),
-       internal::MergeOptions(std::move(opts), connection_->options())});
+  return ReadObjectRange(std::move(request), offset, limit, std::move(opts));
 }
 
 future<StatusOr<ReadPayload>> AsyncClient::ReadObjectRange(
