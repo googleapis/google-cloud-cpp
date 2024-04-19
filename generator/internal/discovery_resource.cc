@@ -62,8 +62,6 @@ absl::optional<std::string> DetermineLongRunningOperationService(
 
 DiscoveryResource::DiscoveryResource() : json_("") {}
 
-// TODO(#11377): remove default_host and base_path as member variables and pass
-// DiscoveryDocumentProperties as an argument to JsonToProtobufService.
 DiscoveryResource::DiscoveryResource(std::string name, std::string package_name,
                                      nlohmann::json json)
     : name_(std::move(name)),
@@ -90,6 +88,38 @@ std::vector<DiscoveryTypeVertex*> DiscoveryResource::GetRequestTypesList()
                    return p.second;
                  });
   return v;
+}
+
+StatusOr<std::string> DiscoveryResource::GetServiceApiVersion() const {
+  if (!service_api_version_) {
+    return internal::InternalError(
+        "SetServiceApiVersion must be called before JsonToProtobufService is "
+        "called",
+        GCP_ERROR_INFO().WithMetadata("json", json_.dump()));
+  }
+
+  return *service_api_version_;
+}
+
+Status DiscoveryResource::SetServiceApiVersion() {
+  if (!json_.contains("methods")) {
+    service_api_version_ = internal::InvalidArgumentError(
+        "resource contains no methods",
+        GCP_ERROR_INFO().WithMetadata("json", json_.dump()));
+    return service_api_version_->status();
+  }
+
+  for (auto const& m : *json_.find("methods")) {
+    std::string method_api_version = m.value("apiVersion", "");
+    if (!service_api_version_) service_api_version_ = method_api_version;
+    if (**service_api_version_ != method_api_version) {
+      service_api_version_ = internal::InvalidArgumentError(
+          "resource contains methods with different apiVersion values",
+          GCP_ERROR_INFO().WithMetadata("json", json_.dump()));
+      return service_api_version_->status();
+    }
+  }
+  return {};
 }
 
 std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
@@ -251,6 +281,12 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
   service_text.push_back(
       absl::StrFormat("  option (google.api.default_host) = \"%s\";",
                       document_properties.default_hostname));
+  auto service_api_version = GetServiceApiVersion();
+  if (!service_api_version) return service_api_version.status();
+  if (!service_api_version->empty()) {
+    service_text.push_back(absl::StrFormat(
+        "  option (google.api.api_version) = \"%s\";", *service_api_version));
+  }
   auto scopes = FormatOAuthScopes();
   if (!scopes) return std::move(scopes).status();
   service_text.push_back(

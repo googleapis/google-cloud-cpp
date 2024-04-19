@@ -211,23 +211,157 @@ TEST_F(ExtractTypesFromSchemaTest, SchemaAnyType) {
 
 TEST(ExtractResourcesTest, EmptyResources) {
   auto resources = ExtractResources({}, {});
-  EXPECT_THAT(resources, IsEmpty());
+  EXPECT_THAT(resources,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("No resources found in Discovery Document.")));
 }
 
 TEST(ExtractResourcesTest, NonEmptyResources) {
   auto constexpr kResourceJson = R"""({
   "resources": {
     "resource1": {
+      "methods": {
+        "method0": {
+        }
+      }
     },
     "resource2": {
+      "methods": {
+        "method0": {
+        }
+      }
     }
   }
 })""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   auto resources = ExtractResources({}, resource_json);
-  EXPECT_THAT(resources,
+  ASSERT_STATUS_OK(resources);
+  EXPECT_THAT(*resources,
               UnorderedElementsAre(Key("resource1"), Key("resource2")));
+}
+
+TEST(ExtractResourcesTest, SameApiVersionsSpecified) {
+  auto constexpr kResourceJson = R"""({
+  "resources": {
+    "resource1": {
+      "methods": {
+        "emptyResponseMethod1": {
+          "apiVersion": "test-api-version"
+        },
+        "emptyResponseMethod2": {
+          "apiVersion": "test-api-version"
+        }
+      }
+    }
+  }
+})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto resources = ExtractResources({}, resource_json);
+  EXPECT_THAT(resources, IsOk());
+}
+
+TEST(ExtractResourcesTest, DifferentApiVersionsSpecified) {
+  auto constexpr kResourceJson = R"""({
+  "resources": {
+    "resource1": {
+      "methods": {
+        "emptyResponseMethod1": {
+          "apiVersion": "test-api-version"
+        },
+        "emptyResponseMethod2": {
+          "apiVersion": "other-test-api-version"
+        }
+      }
+    }
+  }
+})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto resources = ExtractResources({}, resource_json);
+  EXPECT_THAT(
+      resources,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "resource contains methods with different apiVersion values")));
+}
+
+TEST(ExtractResourcesTest, SomeApiVersionsSpecified) {
+  auto constexpr kResourceJson = R"""({
+  "resources": {
+    "resource1": {
+      "methods": {
+        "emptyResponseMethod1": {
+          "apiVersion": "test-api-version"
+        },
+        "emptyResponseMethod2": {
+        }
+      }
+    }
+  }
+})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto resources = ExtractResources({}, resource_json);
+  EXPECT_THAT(
+      resources,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "resource contains methods with different apiVersion values")));
+
+  auto constexpr kMethodOrderReversedResourceJson = R"""({
+  "resources": {
+    "resource1": {
+      "methods": {
+        "emptyResponseMethod2": {
+        },
+        "emptyResponseMethod1": {
+          "apiVersion": "test-api-version"
+        }
+      }
+    }
+  }
+})""";
+  resource_json =
+      nlohmann::json::parse(kMethodOrderReversedResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  resources = ExtractResources({}, resource_json);
+  EXPECT_THAT(
+      resources,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "resource contains methods with different apiVersion values")));
+}
+
+TEST(ExtractResourcesTest, OnlyLastMethodApiVersionsSpecified) {
+  auto constexpr kResourceJson = R"""({
+  "resources": {
+    "resource1": {
+      "methods": {
+        "emptyResponseMethod1": {
+        },
+        "emptyResponseMethod2": {
+        },
+        "emptyResponseMethod3": {
+          "apiVersion": "test-api-version"
+        }
+      }
+    }
+  }
+})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto resources = ExtractResources({}, resource_json);
+  EXPECT_THAT(
+      resources,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "resource contains methods with different apiVersion values")));
 }
 
 class DetermineAndVerifyResponseTypeNameTest
@@ -2452,14 +2586,14 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
       ExtractTypesFromSchema(document_properties, discovery_json, &pool());
   ASSERT_STATUS_OK(types);
   auto resources = ExtractResources(document_properties, discovery_json);
-  ASSERT_THAT(resources, Not(IsEmpty()));
+  ASSERT_STATUS_OK(resources);
   auto method_status =
-      ProcessMethodRequestsAndResponses(resources, *types, &pool());
+      ProcessMethodRequestsAndResponses(*resources, *types, &pool());
   ASSERT_STATUS_OK(method_status);
   EstablishTypeDependencies(*types);
-  ApplyResourceLabelsToTypes(resources);
+  ApplyResourceLabelsToTypes(*resources);
   auto files =
-      AssignResourcesAndTypesToFiles(resources, *types, document_properties,
+      AssignResourcesAndTypesToFiles(*resources, *types, document_properties,
                                      "output_path", "export_output_path");
   ASSERT_STATUS_OK(files);
 

@@ -172,15 +172,19 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
   return types;
 }
 
-std::map<std::string, DiscoveryResource> ExtractResources(
+StatusOr<std::map<std::string, DiscoveryResource>> ExtractResources(
     DiscoveryDocumentProperties const& document_properties,
     nlohmann::json const& discovery_doc) {
-  if (!discovery_doc.contains("resources")) return {};
+  if (!discovery_doc.contains("resources") ||
+      discovery_doc.find("resources")->empty()) {
+    return internal::InvalidArgumentError(
+        "No resources found in Discovery Document.");
+  }
   std::map<std::string, DiscoveryResource> resources;
   auto const& resources_json = discovery_doc.find("resources");
   for (auto r = resources_json->begin(); r != resources_json->end(); ++r) {
     std::string resource_name = r.key();
-    resources.emplace(
+    auto iter = resources.emplace(
         resource_name,
         DiscoveryResource{resource_name,
                           absl::StrFormat(kResourcePackageNameFormat,
@@ -189,7 +193,12 @@ std::map<std::string, DiscoveryResource> ExtractResources(
                                           CamelCaseToSnakeCase(resource_name),
                                           document_properties.version),
                           r.value()});
+    auto verify_service_api_version = iter.first->second.SetServiceApiVersion();
+    if (!verify_service_api_version.ok()) {
+      return verify_service_api_version;
+    }
   }
+
   return resources;
 }
 
@@ -623,19 +632,16 @@ Status GenerateProtosFromDiscoveryDoc(
   if (!types) return std::move(types).status();
 
   auto resources = ExtractResources(document_properties, discovery_doc);
-  if (resources.empty()) {
-    return internal::InvalidArgumentError(
-        "No resources found in Discovery Document.");
-  }
+  if (!resources.ok()) return std::move(resources).status();
 
   auto method_status =
-      ProcessMethodRequestsAndResponses(resources, *types, &descriptor_pool);
+      ProcessMethodRequestsAndResponses(*resources, *types, &descriptor_pool);
   if (!method_status.ok()) return method_status;
 
   EstablishTypeDependencies(*types);
-  ApplyResourceLabelsToTypes(resources);
+  ApplyResourceLabelsToTypes(*resources);
   auto files = AssignResourcesAndTypesToFiles(
-      resources, *types, document_properties, output_path, export_output_path);
+      *resources, *types, document_properties, output_path, export_output_path);
   if (!files) return std::move(files).status();
 
   // google::protobuf::DescriptorPool lazily initializes itself. Searching for

@@ -24,6 +24,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -245,6 +246,7 @@ message GetMyResourceRequest {
   DiscoveryTypeVertex get_response("MyResource", "other.package", {}, &pool());
   r.AddResponseType("Operation", &operation_type);
   r.AddResponseType("MyResource", &get_response);
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
@@ -366,6 +368,7 @@ message GetMyResourceRequest {
   DiscoveryTypeVertex get_response("MyResource", "other.package", {}, &pool());
   r.AddResponseType("Operation", &operation_type);
   r.AddResponseType("MyResource", &get_response);
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
                   r.GetRequestTypesList());
   std::map<std::string, DiscoveryTypeVertex> types;
@@ -520,6 +523,7 @@ service MyResources {
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myResources", "", resource_json);
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
                   r.GetRequestTypesList());
   std::map<std::string, DiscoveryTypeVertex> types;
@@ -584,6 +588,7 @@ TEST_F(DiscoveryFileTest, FormatFileResourceScopeError) {
                                        get_request_type_json, &pool());
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourceRequest", &get_request_type);
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
@@ -643,6 +648,7 @@ TEST_F(DiscoveryFileTest, FormatFileTypeMissingError) {
   DiscoveryTypeVertex get_response("MyResource", "other.package", {}, &pool());
   r.AddResponseType("Operation", &operation_type);
   r.AddResponseType("MyResource", &get_response);
+  EXPECT_THAT(r.SetServiceApiVersion(), IsOk());
   DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");

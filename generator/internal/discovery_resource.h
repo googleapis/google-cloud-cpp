@@ -53,6 +53,12 @@ class DiscoveryResource {
 
   std::vector<DiscoveryTypeVertex*> GetRequestTypesList() const;
 
+  // "apiVersion" is an optional field that can be specified per method in a
+  // Discovery Document. These must all be equal to qualify a resource for proto
+  // generation.
+  StatusOr<std::string> GetServiceApiVersion() const;
+  Status SetServiceApiVersion();
+
   // Examines the provided path and converts any parameter names in curly braces
   // to snake case, e.g. "projects/{projectId}/zone/{zone}" yields
   // "projects/{project_id}/zone/{zone}".
@@ -97,6 +103,7 @@ class DiscoveryResource {
   nlohmann::json json_;
   std::map<std::string, DiscoveryTypeVertex*> request_types_;
   std::map<std::string, DiscoveryTypeVertex*> response_types_;
+  absl::optional<StatusOr<std::string>> service_api_version_;
 };
 
 }  // namespace generator_internal
