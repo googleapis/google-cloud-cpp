@@ -38,6 +38,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeFeatureOnlineStoreServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_FEATURE_REGISTRY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
+  used by `MakeFeatureRegistryServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_INDEX_ENDPOINT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeIndexEndpointServiceConnection()`.

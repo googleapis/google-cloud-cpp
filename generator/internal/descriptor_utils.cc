@@ -429,6 +429,10 @@ ParameterCommentSubstitution substitutions[] = {
     {" projects/<project-id>/locations/<region>/azureClusters/<cluster-id>",
      " `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`"},
 
+    // From google/cloud/aiplatform/v1/feature_registry_service.proto
+    {"`projects/{project}/locations/{location}'`",
+     "`projects/{project}/locations/{location}`"},
+
     // Some comments include multiple newlines in a row. We need to preserve
     // these because they are paragraph separators. When used in `@param`
     // commands we need to represent them as `@n` or they do would terminate the
