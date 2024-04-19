@@ -58,8 +58,9 @@ void InstrumentedClient(std::vector<std::string> const& argv) {
       if (!metadata) throw std::move(metadata).status();
 
       std::int64_t count = 0;
-      auto [reader, token] =
-          (co_await client.ReadObject(bucket_name, object_name)).value();
+      auto [reader, token] = (co_await client.ReadObject(
+                                  gcs_ex::BucketName(bucket_name), object_name))
+                                 .value();
       while (token.valid()) {
         auto [payload, t] = (co_await reader.Read(std::move(token))).value();
         token = std::move(t);

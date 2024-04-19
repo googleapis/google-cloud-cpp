@@ -38,6 +38,49 @@ AsyncClient::AsyncClient(Options options) {
 AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
     : connection_(std::move(connection)) {}
 
+future<StatusOr<std::pair<AsyncReader, AsyncToken>>> AsyncClient::ReadObject(
+    BucketName const& bucket_name, std::string object_name, Options opts) {
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket(bucket_name.FullName());
+  request.set_object(std::move(object_name));
+  return ReadObject(std::move(request), std::move(opts));
+}
+
+future<StatusOr<std::pair<AsyncReader, AsyncToken>>> AsyncClient::ReadObject(
+    google::storage::v2::ReadObjectRequest request, Options opts) {
+  return connection_
+      ->ReadObject(
+          {std::move(request),
+           internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<std::pair<AsyncReader, AsyncToken>> {
+        auto impl = f.get();
+        if (!impl) return std::move(impl).status();
+        auto t = storage_internal::MakeAsyncToken(impl->get());
+        return std::make_pair(AsyncReader(*std::move(impl)), std::move(t));
+      });
+}
+
+future<StatusOr<ReadPayload>> AsyncClient::ReadObjectRange(
+    BucketName const& bucket_name, std::string object_name, std::int64_t offset,
+    std::int64_t limit, Options opts) {
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket(bucket_name.FullName());
+  request.set_object(std::move(object_name));
+
+  return ReadObjectRange(std::move(request), offset, limit, std::move(opts));
+}
+
+future<StatusOr<ReadPayload>> AsyncClient::ReadObjectRange(
+    google::storage::v2::ReadObjectRequest request, std::int64_t offset,
+    std::int64_t limit, Options opts) {
+  request.set_read_offset(offset);
+  request.set_read_limit(limit);
+
+  return connection_->ReadObjectRange(
+      {std::move(request),
+       internal::MergeOptions(std::move(opts), connection_->options())});
+}
+
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
 AsyncClient::StartBufferedUpload(BucketName const& bucket_name,
                                  std::string object_name, Options opts) {

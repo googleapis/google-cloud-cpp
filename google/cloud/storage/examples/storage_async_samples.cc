@@ -152,9 +152,10 @@ void ReadObject(google::cloud::storage_experimental::AsyncClient& client,
   auto coro =
       [](gcs_ex::AsyncClient& client, std::string bucket_name,
          std::string object_name) -> google::cloud::future<std::uint64_t> {
-    auto [reader, token] = (co_await client.ReadObject(std::move(bucket_name),
-                                                       std::move(object_name)))
-                               .value();
+    auto [reader, token] =
+        (co_await client.ReadObject(gcs_ex::BucketName(std::move(bucket_name)),
+                                    std::move(object_name)))
+            .value();
     std::uint64_t count = 0;
     while (token.valid()) {
       auto [payload, t] = (co_await reader.Read(std::move(token))).value();
@@ -182,10 +183,12 @@ void ReadObjectWithOptions(
       [](gcs_ex::AsyncClient& client, std::string bucket_name,
          std::string object_name,
          std::int64_t generation) -> google::cloud::future<std::uint64_t> {
-    auto [reader, token] = (co_await client.ReadObject(
-                                std::move(bucket_name), std::move(object_name),
-                                gcs::Generation(generation)))
-                               .value();
+    auto request = google::storage::v2::ReadObjectRequest{};
+    request.set_bucket(gcs_ex::BucketName(std::move(bucket_name)).FullName());
+    request.set_object(std::move(object_name));
+    request.set_generation(generation);
+    auto [reader, token] =
+        (co_await client.ReadObject(std::move(request))).value();
     std::uint64_t count = 0;
     while (token.valid()) {
       auto [payload, t] = (co_await reader.Read(std::move(token))).value();
@@ -202,6 +205,32 @@ void ReadObjectWithOptions(
   auto const count =
       coro(client, argv.at(0), argv.at(1), std::stoll(argv.at(2))).get();
   std::cout << "The object contains " << count << " lines\n";
+}
+
+void ReadObjectRange(google::cloud::storage_experimental::AsyncClient& client,
+                     std::vector<std::string> const& argv) {
+  //! [read-object-range]
+  namespace gcs_ex = google::cloud::storage_experimental;
+  auto coro =
+      [](gcs_ex::AsyncClient& client, std::string bucket_name,
+         std::string object_name) -> google::cloud::future<std::uint64_t> {
+    // Read the first 8 bytes of the object.
+    auto payload = (co_await client.ReadObjectRange(
+                        gcs_ex::BucketName(std::move(bucket_name)),
+                        std::move(object_name), /*offset=*/0, /*limit=*/8))
+                       .value();
+    auto contents = payload.contents();
+    std::uint64_t count = 0;
+    for (auto buffer : contents) {
+      count += std::count(buffer.begin(), buffer.end(), '\n');
+    }
+    co_return count;
+  };
+  //! [read-object-range]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const count = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "The object range contains " << count << " lines\n";
 }
 
 void StartBufferedUpload(
@@ -522,6 +551,11 @@ void ReadObject(google::cloud::storage_experimental::AsyncClient&,
   std::cerr << "AsyncClient::ReadObject() example requires coroutines\n";
 }
 
+void ReadObjectRange(google::cloud::storage_experimental::AsyncClient&,
+                     std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::ReadObjectRange() example requires coroutines\n";
+}
+
 void ReadObjectWithOptions(google::cloud::storage_experimental::AsyncClient&,
                            std::vector<std::string> const&) {
   std::cerr << "AsyncClient::ReadObject() example requires coroutines\n";
@@ -745,9 +779,16 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running the ReadObject() example" << std::endl;
   ReadObject(client, {bucket_name, composed_name});
 
+  std::cout << "Running the ReadObjectRange() example" << std::endl;
+  ReadObjectRange(client, {bucket_name, composed_name});
+
   std::cout << "Retrieving object metadata" << std::endl;
   auto response =
-      client.ReadObjectRange(bucket_name, composed_name, 0, 1).get();
+      client
+          .ReadObjectRange(
+              google::cloud::storage_experimental::BucketName(bucket_name),
+              composed_name, 0, 1)
+          .get();
   if (!response.ok()) throw std::move(response).status();
 
   auto const metadata = response->metadata();
@@ -891,13 +932,14 @@ int main(int argc, char* argv[]) try {
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),
       make_entry("insert-object-vector-vectors", {}, InsertObjectVectorVectors),
       make_entry("read-object", {}, ReadObject),
+      make_entry("read-object-range", {}, ReadObjectRange),
       make_entry("read-object-with-options", {"<generation>"},
                  ReadObjectWithOptions),
       make_entry("compose-object", {"<o1> <o2>"}, ComposeObject),
       make_entry("compose-object-request", {"<o1> <o2>"}, ComposeObjectRequest),
       make_entry("delete-object", {}, AsyncDeleteObject),
 
-      make_entry("buffered-upload", {}, StartBufferedUpload),
+      make_entry("start-buffered-upload", {}, StartBufferedUpload),
       make_entry("suspend-buffered-upload", {}, SuspendBufferedUpload),
       make_resume_entry("resume-buffered-upload", {}, ResumeBufferedUpload),
 

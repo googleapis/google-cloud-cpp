@@ -85,7 +85,7 @@ class AsyncConnection {
     /// The name of the bucket and object to read. Includes optional parameters,
     /// such as pre-conditions on the read operation, or the range within the
     /// object to read.
-    ReadObjectRequest request;
+    google::storage::v2::ReadObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
     Options options;

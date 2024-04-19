@@ -92,20 +92,24 @@ TEST(AsyncClient, InsertObject) {
   EXPECT_THAT(response, IsOkAndHolds(TestObject()));
 }
 
-TEST(AsyncClient, ReadObject) {
+TEST(AsyncClient, ReadObject1) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "test-object"
+  )pb";
   auto mock = std::make_shared<MockAsyncConnection>();
   EXPECT_CALL(*mock, options)
       .WillRepeatedly(
           Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
 
   EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([](AsyncConnection::ReadObjectParams const& p) {
+      .WillOnce([&](AsyncConnection::ReadObjectParams const& p) {
         EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
         EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
         EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
-        EXPECT_EQ(p.request.bucket_name(), "test-bucket");
-        EXPECT_EQ(p.request.object_name(), "test-object");
-        EXPECT_EQ(p.request.GetOption<storage::Generation>().value_or(0), 42);
+        auto expected = google::storage::v2::ReadObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
         auto reader = std::make_unique<MockAsyncReaderConnection>();
         EXPECT_CALL(*reader, Read).WillOnce([] {
           return make_ready_future(
@@ -116,13 +120,63 @@ TEST(AsyncClient, ReadObject) {
       });
 
   auto client = AsyncClient(mock);
-  auto rt =
-      client
-          .ReadObject("test-bucket", "test-object", storage::Generation(42),
-                      Options{}
-                          .set<TestOption<1>>("O1-function")
-                          .set<TestOption<2>>("O2-function"))
-          .get();
+  auto rt = client
+                .ReadObject(BucketName("test-bucket"), "test-object",
+                            Options{}
+                                .set<TestOption<1>>("O1-function")
+                                .set<TestOption<2>>("O2-function"))
+                .get();
+  ASSERT_STATUS_OK(rt);
+  AsyncReader r;
+  AsyncToken t;
+  std::tie(r, t) = *std::move(rt);
+  EXPECT_TRUE(t.valid());
+
+  auto pt = r.Read(std::move(t)).get();
+  AsyncReaderConnection::ReadResponse p;
+  AsyncToken t2;
+  ASSERT_STATUS_OK(pt);
+  std::tie(p, t2) = *std::move(pt);
+  EXPECT_FALSE(t2.valid());
+  EXPECT_THAT(
+      p, VariantWith<ReadPayload>(ResultOf(
+             "empty response", [](auto const& p) { return p.size(); }, 0)));
+}
+
+TEST(AsyncClient, ReadObject2) {
+  auto constexpr kExpectedRequest =
+      R"pb(bucket: "test-only-invalid" object: "test-object" generation: 42)pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([&](AsyncConnection::ReadObjectParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::ReadObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        auto reader = std::make_unique<MockAsyncReaderConnection>();
+        EXPECT_CALL(*reader, Read).WillOnce([] {
+          return make_ready_future(
+              AsyncReaderConnection::ReadResponse{Status{}});
+        });
+        return make_ready_future(make_status_or(
+            std::unique_ptr<AsyncReaderConnection>(std::move(reader))));
+      });
+
+  auto client = AsyncClient(mock);
+  auto request = google::storage::v2::ReadObjectRequest{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto rt = client
+                .ReadObject(std::move(request),
+                            Options{}
+                                .set<TestOption<1>>("O1-function")
+                                .set<TestOption<2>>("O2-function"))
+                .get();
   ASSERT_STATUS_OK(rt);
   AsyncReader r;
   AsyncToken t;
@@ -340,32 +394,73 @@ TEST(AsyncClient, ResumeBufferedUploadResumeFinalized) {
                                       IsProtoEqual(TestProtoObject())));
 }
 
-TEST(AsyncClient, ReadObjectRange) {
+TEST(AsyncClient, ReadObjectRange1) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "test-object"
+    read_offset: 100
+    read_limit: 42
+  )pb";
   auto mock = std::make_shared<MockAsyncConnection>();
   EXPECT_CALL(*mock, options)
       .WillRepeatedly(
           Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
 
   EXPECT_CALL(*mock, ReadObjectRange)
-      .WillOnce([](AsyncConnection::ReadObjectParams const& p) {
+      .WillOnce([&](AsyncConnection::ReadObjectParams const& p) {
         EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
         EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
         EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
-        EXPECT_EQ(p.request.bucket_name(), "test-bucket");
-        EXPECT_EQ(p.request.object_name(), "test-object");
-        EXPECT_EQ(p.request.GetOption<storage::Generation>().value_or(0), 42);
-        auto const range = p.request.GetOption<storage::ReadRange>().value_or(
-            storage::ReadRangeData{0, 0});
-        EXPECT_EQ(range.begin, 100);
-        EXPECT_EQ(range.end, 142);
+        auto expected = google::storage::v2::ReadObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
         return make_ready_future(
             make_status_or(ReadPayload{}.set_metadata(TestObject())));
       });
 
   auto client = AsyncClient(mock);
+  auto payload =
+      client
+          .ReadObjectRange(BucketName("test-bucket"), "test-object", 100, 42,
+                           Options{}
+                               .set<TestOption<1>>("O1-function")
+                               .set<TestOption<2>>("O2-function"))
+          .get();
+  ASSERT_STATUS_OK(payload);
+  EXPECT_THAT(payload->metadata(), Optional(Eq(TestObject())));
+}
+
+TEST(AsyncClient, ReadObjectRange2) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+    read_offset: 100
+    read_limit: 42
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, ReadObjectRange)
+      .WillOnce([&](AsyncConnection::ReadObjectParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::ReadObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(
+            make_status_or(ReadPayload{}.set_metadata(TestObject())));
+      });
+
+  auto client = AsyncClient(mock);
+  auto request = google::storage::v2::ReadObjectRequest{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  // Set the offset to verify the client library overrides it.
+  request.set_read_offset(23456);
   auto payload = client
-                     .ReadObjectRange("test-bucket", "test-object", 100, 42,
-                                      storage::Generation(42),
+                     .ReadObjectRange(std::move(request), 100, 42,
                                       Options{}
                                           .set<TestOption<1>>("O1-function")
                                           .set<TestOption<2>>("O2-function"))

@@ -218,44 +218,52 @@ class AsyncClient {
   }
 
   /**
-   * Reads the contents of an object.
+   * A streaming download for the contents of an object.
    *
    * When satisfied, the returned future has a reader to asynchronously download
    * the contents of the given object.
    *
-   * @param bucket_name the name of the bucket that contains the object.
-   * @param object_name the name of the object to be read.
-   * @param args a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `DisableCrc32cChecksum`,
-   *     `DisableMD5Hash`, `EncryptionKey`, `Generation`, `IfGenerationMatch`,
-   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `UserProject`, and `AcceptEncoding`.
-   *
-   * @par Idempotency
-   * This is a read-only operation and is always idempotent.
-   *
    * @par Example
    * @snippet storage_async_samples.cc read-object
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. Once the download
+   * starts, this operation will automatically resume the download if is
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
    */
-  template <typename... Args>
   future<StatusOr<std::pair<AsyncReader, AsyncToken>>> ReadObject(
-      std::string bucket_name, std::string object_name, Args&&... args) {
-    auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_
-        ->ReadObject(
-            {ReadObjectRequest(std::move(bucket_name), std::move(object_name))
-                 .set_multiple_options(std::forward<Args>(args)...),
-             std::move(options)})
-        .then([](auto f) -> StatusOr<std::pair<AsyncReader, AsyncToken>> {
-          auto impl = f.get();
-          if (!impl) return std::move(impl).status();
-          auto t = storage_internal::MakeAsyncToken(impl->get());
-          return std::make_pair(AsyncReader(*std::move(impl)), std::move(t));
-        });
-  }
+      BucketName const& bucket_name, std::string object_name,
+      Options opts = {});
 
   /**
-   * Reads the contents of an object.
+   * A streaming download for the contents of an object.
+   *
+   * When satisfied, the returned future has a reader to asynchronously download
+   * the contents of the given object.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc read-object-with-options
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. Once the download
+   * starts, this operation will automatically resume the download if is
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this
+   *
+   * @param request the request contents, it must include the bucket name and
+   *     object names. Many other fields are optional.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<std::pair<AsyncReader, AsyncToken>>> ReadObject(
+      google::storage::v2::ReadObjectRequest request, Options opts = {});
+
+  /**
+   * Downloads a range of bytes in an object.
    *
    * When satisfied, the returned future has the contents of the given object
    * between @p offset and @p offset + @p limit (exclusive).
@@ -263,56 +271,54 @@ class AsyncClient {
    * Be aware that this will accumulate all the bytes in memory, you need to
    * consider whether @p limit is too large for your deployment environment.
    *
+   * @par Example
+   * @snippet storage_async_samples.cc read-object-range
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param offset where to begin reading from the object, results in an error
    *     if the offset is larger than the object
    * @param limit how much data to read starting at @p offset
-   * @param args a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `DisableCrc32cChecksum`,
-   *     `DisableMD5Hash`, `EncryptionKey`, `Generation`, `IfGenerationMatch`,
-   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `UserProject`, and `AcceptEncoding`.
-   *
-   * @par Idempotency
-   * This is a read-only operation and is always idempotent.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
    */
-  template <typename... Args>
-  future<StatusOr<ReadPayload>> ReadObjectRange(std::string bucket_name,
+  future<StatusOr<ReadPayload>> ReadObjectRange(BucketName const& bucket_name,
                                                 std::string object_name,
                                                 std::int64_t offset,
                                                 std::int64_t limit,
-                                                Args&&... args) {
-    struct HasReadRange
-        : public absl::disjunction<
-              std::is_same<storage::ReadRange, std::decay_t<Args>>...> {};
-    struct HasReadFromOffset
-        : public absl::disjunction<
-              std::is_same<storage::ReadFromOffset, std::decay_t<Args>>...> {};
-    struct HasReadLast
-        : public absl::disjunction<
-              std::is_same<storage::ReadLast, std::decay_t<Args>>...> {};
+                                                Options opts = {});
 
-    static_assert(!HasReadRange::value,
-                  "Cannot use `ReadRange()` as a request option in "
-                  "`AsyncClient::ReadObject()`, use the `offset` and `limit` "
-                  "parameters instead.");
-    static_assert(!HasReadFromOffset::value,
-                  "Cannot use `ReadFromOffset()` as a request option in "
-                  "`AsyncClient::ReadObject()`, use the `offset` and `limit` "
-                  "parameters instead.");
-    static_assert(!HasReadLast::value,
-                  "Cannot use `ReadLast()` as a request option in "
-                  "`AsyncClient::ReadObject()`, use the `offset` and `limit` "
-                  "parameters instead.");
-
-    auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_->ReadObjectRange(
-        {ReadObjectRequest(std::move(bucket_name), std::move(object_name))
-             .set_multiple_options(std::forward<Args>(args)...,
-                                   storage::ReadRange(offset, offset + limit)),
-         std::move(options)});
-  }
+  /**
+   * Downloads a range of bytes in an object.
+   *
+   * When satisfied, the returned future has the contents of the given object
+   * between @p offset and @p offset + @p limit (exclusive).
+   *
+   * Be aware that this will accumulate all the bytes in memory, you need to
+   * consider whether @p limit is too large for your deployment environment.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc read-object-range
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @param request the request contents, it must include the bucket name and
+   *     object names. Many other fields are optional. Any values for
+   *     `read_offset()` and `read_limit()` are overridden by the @p offset and
+   *     @p limit.
+   * @param offset where to begin reading from the object, results in an error
+   *     if the offset is larger than the object
+   * @param limit how much data to read starting at @p offset
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<ReadPayload>> ReadObjectRange(
+      google::storage::v2::ReadObjectRequest request, std::int64_t offset,
+      std::int64_t limit, Options opts = {});
 
   /*
   [start-buffered-upload-common]

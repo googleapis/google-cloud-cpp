@@ -41,7 +41,10 @@ int main(int argc, char* argv[]) {
           });
   done.get();
 
-  done = client.ReadObjectRange(bucket_name, kObjectName, 0, 1000)
+  done = client
+             .ReadObjectRange(
+                 google::cloud::storage_experimental::BucketName(bucket_name),
+                 kObjectName, 0, 1000)
              .then([](auto f) {
                auto payload = f.get();
                if (!payload) {

@@ -37,6 +37,7 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/hash_validator.h"
+#include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
@@ -89,6 +90,27 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
   if (crc32c) return std::make_unique<storage::internal::Crc32cHashFunction>();
   if (md5) return storage::internal::MD5HashFunction::Create();
   return storage::internal::CreateNullHashFunction();
+}
+
+std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
+    Options const& options) {
+  auto const enable_crc32c =
+      options.get<storage_experimental::EnableCrc32cValidationOption>();
+  auto const enable_md5 =
+      options.get<storage_experimental::EnableMD5ValidationOption>();
+
+  if (enable_crc32c && enable_md5) {
+    return std::make_unique<storage::internal::CompositeValidator>(
+        std::make_unique<storage::internal::Crc32cHashValidator>(),
+        std::make_unique<storage::internal::MD5HashValidator>());
+  }
+  if (!enable_crc32c && !enable_md5) {
+    return std::make_unique<storage::internal::NullHashValidator>();
+  }
+  if (enable_crc32c) {
+    return std::make_unique<storage::internal::Crc32cHashValidator>();
+  }
+  return std::make_unique<storage::internal::MD5HashValidator>();
 }
 
 }  // namespace
@@ -161,8 +183,6 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   using ReturnType =
       StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>;
   auto current = internal::MakeImmutableOptions(std::move(p.options));
-  auto proto = ToProto(p.request.impl_);
-  if (!proto) return make_ready_future(ReturnType(std::move(proto).status()));
 
   // Get the policy factory and immediately create a policy.
   auto resume_policy =
@@ -172,12 +192,11 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   // this function.
   auto hash_function =
       std::make_shared<storage::internal::Crc32cMessageHashFunction>(
-          storage::internal::CreateHashFunction(p.request.impl_));
-  auto hash_validator = storage::internal::CreateHashValidator(p.request.impl_);
+          CreateHashFunction(*current));
+  auto hash_validator = CreateHashValidator(*current);
 
-  auto connection_factory =
-      MakeReaderConnectionFactory(std::move(current), std::move(p.request),
-                                  *std::move(proto), hash_function);
+  auto connection_factory = MakeReaderConnectionFactory(
+      std::move(current), std::move(p.request), hash_function);
   auto connection = std::make_unique<AsyncReaderConnectionResume>(
       std::move(resume_policy), std::move(hash_function),
       std::move(hash_validator), std::move(connection_factory));
@@ -187,20 +206,13 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
 
 future<StatusOr<storage_experimental::ReadPayload>>
 AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
-  auto proto = ToProto(p.request.impl_);
-  if (!proto) {
-    return make_ready_future(
-        StatusOr<storage_experimental::ReadPayload>(std::move(proto).status()));
-  }
-
   auto const current = internal::MakeImmutableOptions(std::move(p.options));
-  auto context_factory = [current, request = std::move(p.request)]() {
-    auto context = std::make_shared<grpc::ClientContext>();
-    ApplyQueryParameters(*context, *current, request);
-    return context;
+  auto context_factory = []() {
+    return std::make_shared<grpc::ClientContext>();
   };
   return storage_internal::AsyncAccumulateReadObjectFull(
-             cq_, stub_, std::move(context_factory), *std::move(proto), current)
+             cq_, stub_, std::move(context_factory), std::move(p.request),
+             current)
       .then([current](
                 future<storage_internal::AsyncAccumulateReadObjectResult> f) {
         return ToResponse(f.get(), *current);
@@ -338,8 +350,7 @@ AsyncConnectionImpl::RewriteObject(RewriteObjectParams p) {
 
 AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
     google::cloud::internal::ImmutableOptions current,
-    google::cloud::storage_experimental::ReadObjectRequest request,
-    google::storage::v2::ReadObjectRequest proto_request,
+    google::storage::v2::ReadObjectRequest request,
     std::shared_ptr<storage::internal::HashFunction> hash_function) {
   using StreamingRpc = google::cloud::internal::AsyncStreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
@@ -347,13 +358,12 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
       google::cloud::internal::AsyncStreamingReadRpcTimeout<
           google::storage::v2::ReadObjectResponse>;
 
-  auto make_rpc = [stub = stub_, request = std::move(request)](
+  auto make_rpc = [stub = stub_](
                       CompletionQueue& cq,
                       std::shared_ptr<grpc::ClientContext> context,
                       google::cloud::internal::ImmutableOptions options,
                       google::storage::v2::ReadObjectRequest const& proto)
       -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
-    ApplyQueryParameters(*context, *options, request);
     auto timeout = ScaleStallTimeout(
         options->get<storage::DownloadStallTimeoutOption>(),
         options->get<storage::DownloadStallMinimumRateOption>(),
@@ -377,11 +387,10 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
   return [caller, cq = cq_, current = std::move(current),
           make_rpc = std::move(make_rpc),
           hash_function = std::move(hash_function),
-          proto_request = std::move(proto_request)](
-             storage::Generation generation,
-             std::int64_t received_bytes) mutable {
-    UpdateGeneration(proto_request, std::move(generation));
-    UpdateReadRange(proto_request, received_bytes);
+          request = std::move(request)](storage::Generation generation,
+                                        std::int64_t received_bytes) mutable {
+    UpdateGeneration(request, std::move(generation));
+    UpdateReadRange(request, received_bytes);
 
     // Make this mutable, because it is called only once and we can
     // `std::move()` the captured values.
@@ -401,7 +410,7 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
     // such variables valid for all factory invocations.
     return google::cloud::internal::AsyncRetryLoop(
                std::move(retry), std::move(backoff), Idempotency::kIdempotent,
-               cq, make_rpc, current, proto_request, caller)
+               cq, make_rpc, current, request, caller)
         .then(std::move(transform));
   };
 }
