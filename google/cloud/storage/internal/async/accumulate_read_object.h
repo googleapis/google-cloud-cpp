@@ -175,10 +175,10 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
 /**
  * Convert the proto into a more stable representation.
  *
- * The `contents()` may be an `absl::Cord` or an `std::string`. Depending on the
+ * The `contents()` may be an `absl::Cord` or an `std::string`, depending on the
  * Protobuf version. We don't want to expose that complexity to customers.
- * Furthermore, as all APIs in `absl::` there is no backwards compatibility
- * guarantee, we don't want to expose customers to these (potential) breaking
+ * Furthermore, like all APIs in `absl::`, there is no backwards compatibility
+ * guarantee, so we don't want to expose customers to these (potential) breaking
  * changes.
  */
 StatusOr<storage_experimental::ReadPayload> ToResponse(
