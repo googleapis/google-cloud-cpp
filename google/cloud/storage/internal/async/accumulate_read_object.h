@@ -172,9 +172,17 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     google::storage::v2::ReadObjectRequest request,
     google::cloud::internal::ImmutableOptions options);
 
-/// Convert the proto into a representation more familiar to our customers.
+/**
+ * Convert the proto into a more stable representation.
+ *
+ * The `contents()` may be an `absl::Cord` or an `std::string`, depending on the
+ * Protobuf version. We don't want to expose that complexity to customers.
+ * Furthermore, like all APIs in `absl::`, there is no backwards compatibility
+ * guarantee, so we don't want to expose customers to these (potential) breaking
+ * changes.
+ */
 StatusOr<storage_experimental::ReadPayload> ToResponse(
-    AsyncAccumulateReadObjectResult accumulated, Options const& options);
+    AsyncAccumulateReadObjectResult accumulated);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

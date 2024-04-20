@@ -18,11 +18,11 @@
 #include "google/cloud/storage/headers_map.h"
 #include "google/cloud/storage/internal/async/read_payload_fwd.h"
 #include "google/cloud/storage/internal/hash_values.h"
-#include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
+#include <google/storage/v2/storage.pb.h>
 #include <cstdint>
 #include <map>
 #include <string>
@@ -56,7 +56,9 @@ class ReadPayload {
   }
 
   /// The object metadata.
-  absl::optional<storage::ObjectMetadata> metadata() const { return metadata_; }
+  absl::optional<google::storage::v2::Object> metadata() const {
+    return metadata_;
+  }
 
   /// The starting offset of the current message.
   std::int64_t offset() const { return offset_; }
@@ -74,21 +76,18 @@ class ReadPayload {
 
   ///@{
   /// Modifiers. Applications may need these in mocks.
-  ReadPayload& set_metadata(storage::ObjectMetadata v) & {
+  ReadPayload& set_metadata(google::storage::v2::Object v) & {
     metadata_ = std::move(v);
     return *this;
   }
-  ReadPayload&& set_metadata(storage::ObjectMetadata v) && {
+  ReadPayload&& set_metadata(google::storage::v2::Object v) && {
     return std::move(set_metadata(std::move(v)));
   }
   ReadPayload& reset_metadata() & {
     metadata_.reset();
     return *this;
   }
-  ReadPayload&& reset_metadata() && {
-    metadata_.reset();
-    return std::move(*this);
-  }
+  ReadPayload&& reset_metadata() && { return (std::move(reset_metadata())); }
 
   ReadPayload& set_headers(storage::HeadersMap v) & {
     headers_ = std::move(v);
@@ -121,7 +120,7 @@ class ReadPayload {
 
   absl::Cord impl_;
   std::int64_t offset_ = 0;
-  absl::optional<storage::ObjectMetadata> metadata_;
+  absl::optional<google::storage::v2::Object> metadata_;
   storage::HeadersMap headers_;
   // The full object checksums (aka hash values), if known.
   absl::optional<storage::internal::HashValues> object_hash_values_;

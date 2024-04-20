@@ -504,9 +504,7 @@ TEST(AsyncAccumulateReadObjectTest, ToResponse) {
   accumulated.metadata.trailers.emplace("tk", "v0");
   accumulated.metadata.trailers.emplace("tk", "v1");
 
-  auto const actual =
-      ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
-                                  "https://storage.googleapis.com"));
+  auto const actual = ToResponse(accumulated);
   ASSERT_STATUS_OK(actual);
   auto const contents = actual->contents();
   auto const merged =
@@ -518,14 +516,15 @@ TEST(AsyncAccumulateReadObjectTest, ToResponse) {
   EXPECT_THAT(actual->headers(),
               UnorderedElementsAre(Pair("key", "v0"), Pair("key", "v1"),
                                    Pair("tk", "v0"), Pair("tk", "v1")));
-  EXPECT_THAT(actual->metadata(),
-              Optional(AllOf(
-                  ResultOf(
-                      "metadata bucket value",
-                      [](auto const& m) { return m.bucket(); }, "bucket-name"),
-                  ResultOf(
-                      "metadata bucket value",
-                      [](auto const& m) { return m.name(); }, "object-name"))));
+  EXPECT_THAT(
+      actual->metadata(),
+      Optional(AllOf(
+          ResultOf(
+              "metadata bucket value", [](auto const& m) { return m.bucket(); },
+              "projects/_/buckets/bucket-name"),
+          ResultOf(
+              "metadata bucket value", [](auto const& m) { return m.name(); },
+              "object-name"))));
   EXPECT_THAT(actual->offset(), 1024);
 }
 
@@ -551,9 +550,7 @@ TEST(AsyncAccumulateReadObjectTest, ToResponseDataLoss) {
   accumulated.metadata.trailers.emplace("tk0", "v0");
   accumulated.metadata.trailers.emplace("tk1", "v1");
 
-  auto const actual =
-      ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
-                                  "https://storage.googleapis.com"));
+  auto const actual = ToResponse(accumulated);
   EXPECT_THAT(actual, StatusIs(StatusCode::kDataLoss));
 }
 
@@ -565,9 +562,7 @@ TEST(AsyncAccumulateReadObjectTest, ToResponseError) {
   accumulated.metadata.trailers.emplace("tk0", "v0");
   accumulated.metadata.trailers.emplace("tk1", "v1");
 
-  auto const actual =
-      ToResponse(accumulated, Options{}.set<storage::RestEndpointOption>(
-                                  "https://storage.googleapis.com"));
+  auto const actual = ToResponse(accumulated);
   EXPECT_THAT(actual, StatusIs(StatusCode::kNotFound, "not found"));
 }
 

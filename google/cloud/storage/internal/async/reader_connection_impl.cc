@@ -62,7 +62,7 @@ AsyncReaderConnectionImpl::OnRead(absl::optional<ProtoPayload> r) {
     ReadPayloadImpl::SetObjectHashes(result, std::move(hashes));
   }
   if (response.has_metadata()) {
-    result.set_metadata(FromProto(response.metadata(), *options_));
+    result.set_metadata(std::move(*response.mutable_metadata()));
   }
   if (response.has_content_range()) {
     result.set_offset(response.content_range().start());
