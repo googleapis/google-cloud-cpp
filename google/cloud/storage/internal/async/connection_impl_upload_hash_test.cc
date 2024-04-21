@@ -50,14 +50,18 @@ struct HashTestCase {
   std::string expected_md5;
 };
 
+auto BinaryMD5(std::string const& md5) {
+  auto binary = google::cloud::internal::HexDecode(md5);
+  return std::string{binary.begin(), binary.end()};
+}
+
 auto ExpectedObjectChecksums(HashTestCase const& tc) {
   auto expected_checksums = google::storage::v2::ObjectChecksums{};
   if (tc.expected_crc32c.has_value()) {
     expected_checksums.set_crc32c(*tc.expected_crc32c);
   }
   if (!tc.expected_md5.empty()) {
-    auto binary = google::cloud::internal::HexDecode(tc.expected_md5);
-    expected_checksums.set_md5_hash(std::string(binary.begin(), binary.end()));
+    expected_checksums.set_md5_hash(BinaryMD5(tc.expected_md5));
   }
   return expected_checksums;
 }
@@ -127,6 +131,38 @@ INSTANTIATE_TEST_SUITE_P(
             Options{}
                 .set<storage_experimental::EnableCrc32cValidationOption>(false)
                 .set<storage_experimental::EnableMD5ValidationOption>(true),
+            absl::nullopt, kQuickFoxMD5Hash},
+        HashTestCase{
+            Options{}
+                .set<storage_experimental::EnableCrc32cValidationOption>(false)
+                .set<storage_experimental::EnableMD5ValidationOption>(false),
+            absl::nullopt, ""}));
+
+INSTANTIATE_TEST_SUITE_P(
+    PreComputed, AsyncConnectionImplUploadHashTest,
+    ::testing::Values(
+        HashTestCase{
+            Options{}
+                .set<storage_experimental::EnableCrc32cValidationOption>(false)
+                .set<storage_experimental::EnableMD5ValidationOption>(false)
+                .set<storage_experimental::UseCrc32cValueOption>(
+                    kQuickFoxCrc32cChecksum)
+                .set<storage_experimental::UseMD5ValueOption>(
+                    BinaryMD5(kQuickFoxMD5Hash)),
+            kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
+        HashTestCase{
+            Options{}
+                .set<storage_experimental::EnableCrc32cValidationOption>(false)
+                .set<storage_experimental::EnableMD5ValidationOption>(false)
+                .set<storage_experimental::UseCrc32cValueOption>(
+                    kQuickFoxCrc32cChecksum),
+            kQuickFoxCrc32cChecksum, ""},
+        HashTestCase{
+            Options{}
+                .set<storage_experimental::EnableCrc32cValidationOption>(false)
+                .set<storage_experimental::EnableMD5ValidationOption>(false)
+                .set<storage_experimental::UseMD5ValueOption>(
+                    BinaryMD5(kQuickFoxMD5Hash)),
             absl::nullopt, kQuickFoxMD5Hash},
         HashTestCase{
             Options{}
