@@ -102,7 +102,7 @@ std::unique_ptr<AsyncReadObjectStream> MakeErrorReadStream(
   return std::unique_ptr<AsyncReadObjectStream>(std::move(stream));
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
+TEST_F(AsyncConnectionImplTest, ReadObject) {
   auto constexpr kExpectedRequest = R"pb(
     bucket: "test-only-invalid"
     object: "test-object"
@@ -227,7 +227,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
   EXPECT_THAT(data.get(), VariantWith<Status>(IsOk()));
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncReadObjectWithTimeout) {
+TEST_F(AsyncConnectionImplTest, ReadObjectWithTimeout) {
   AsyncSequencer<bool> sequencer;
 
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
@@ -331,7 +331,91 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectWithTimeout) {
   EXPECT_THAT(data.get(), VariantWith<Status>(IsOk()));
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadMessageChecksum) {
+TEST_F(AsyncConnectionImplTest, ReadObjectPermanentError) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([&] {
+    return MakeErrorReadStream(sequencer, PermanentError());
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->ReadObject(
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
+  ASSERT_TRUE(pending.is_ready());
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  auto response = data.get();
+  EXPECT_THAT(response, VariantWith<Status>(StatusIs(PermanentError().code())));
+}
+
+TEST_F(AsyncConnectionImplTest, ReadObjectTooManyTransients) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).Times(3).WillRepeatedly([&] {
+    return MakeErrorReadStream(sequencer, TransientError());
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->ReadObject(
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
+
+  for (int i = 0; i != 3; ++i) {
+    auto next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Start");
+    next.first.set_value(false);
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Finish");
+    next.first.set_value(true);
+  }
+
+  auto response = data.get();
+  EXPECT_THAT(response, VariantWith<Status>(StatusIs(TransientError().code())));
+}
+
+// Only one test for ReadObjectRange(). The tests for
+// `AsyncAccumulateReadObjectFull()` cover most other cases.
+TEST_F(AsyncConnectionImplTest, ReadObjectRangePermanentError) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([&] {
+    return MakeErrorReadStream(sequencer, PermanentError());
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->ReadObjectRange(
+      {google::storage::v2::ReadObjectRequest{}, connection->options()});
+  ASSERT_FALSE(pending.is_ready());
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  EXPECT_THAT(pending.get(), StatusIs(PermanentError().code()));
+}
+
+TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadMessageChecksum) {
   AsyncSequencer<bool> sequencer;
   auto make_bad_checksum_stream = [&](AsyncSequencer<bool>& sequencer) {
     auto stream = std::make_unique<MockAsyncObjectMediaStream>();
@@ -406,7 +490,7 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadMessageChecksum) {
   next.first.set_value(true);
 }
 
-TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadFullChecksum) {
+TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
   auto constexpr kQuick = "The quick brown fox jumps over the lazy dog";
   AsyncSequencer<bool> sequencer;
   auto make_bad_checksum_stream = [&](AsyncSequencer<bool>& sequencer) {
@@ -527,65 +611,6 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObjectDetectBadFullChecksum) {
   response = data.get();
   EXPECT_THAT(response,
               VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
-}
-
-TEST_F(AsyncConnectionImplTest, AsyncReadObjectPermanentError) {
-  AsyncSequencer<bool> sequencer;
-  auto mock = std::make_shared<storage::testing::MockStorageStub>();
-  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([&] {
-    return MakeErrorReadStream(sequencer, PermanentError());
-  });
-
-  internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->ReadObject(
-      {google::storage::v2::ReadObjectRequest{}, connection->options()});
-  ASSERT_TRUE(pending.is_ready());
-  auto r = pending.get();
-  ASSERT_STATUS_OK(r);
-  auto reader = *std::move(r);
-  auto data = reader->Read();
-
-  auto next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Start");
-  next.first.set_value(false);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
-
-  auto response = data.get();
-  EXPECT_THAT(response, VariantWith<Status>(StatusIs(PermanentError().code())));
-}
-
-TEST_F(AsyncConnectionImplTest, AsyncReadObjectTooManyTransients) {
-  AsyncSequencer<bool> sequencer;
-  auto mock = std::make_shared<storage::testing::MockStorageStub>();
-  EXPECT_CALL(*mock, AsyncReadObject).Times(3).WillRepeatedly([&] {
-    return MakeErrorReadStream(sequencer, TransientError());
-  });
-
-  internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->ReadObject(
-      {google::storage::v2::ReadObjectRequest{}, connection->options()});
-  auto r = pending.get();
-  ASSERT_STATUS_OK(r);
-  auto reader = *std::move(r);
-  auto data = reader->Read();
-
-  for (int i = 0; i != 3; ++i) {
-    auto next = sequencer.PopFrontWithName();
-    EXPECT_EQ(next.second, "Start");
-    next.first.set_value(false);
-
-    next = sequencer.PopFrontWithName();
-    EXPECT_EQ(next.second, "Finish");
-    next.first.set_value(true);
-  }
-
-  auto response = data.get();
-  EXPECT_THAT(response, VariantWith<Status>(StatusIs(TransientError().code())));
 }
 
 TEST_F(AsyncConnectionImplTest, MakeReaderConnectionFactory) {
