@@ -145,10 +145,11 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObject) {
-  storage_experimental::InsertObjectRequest req("test-bucket", "test-object");
+  auto spec = google::storage::v2::WriteObjectSpec{};
+  spec.mutable_resource()->set_bucket("projects/_/buckets/test-bucket");
 
   grpc::ClientContext context;
-  ApplyRoutingHeaders(context, req);
+  ApplyRoutingHeaders(context, spec);
   auto metadata = GetMetadata(context);
   EXPECT_THAT(metadata,
               Contains(Pair("x-goog-request-params",

@@ -83,54 +83,6 @@ class WritePayload {
   absl::Cord impl_;
 };
 
-/**
- * A request to insert object sans the data payload.
- *
- * This class can hold all the mandatory and optional parameters to insert an
- * object **except** for the data payload. The ideal representation for the data
- * payload depends on the type of request. For asynchronous requests the data
- * must be in an owning type, such as `WritePayload`. For blocking request, a
- * non-owning type (such as `absl::string_view`) can reduce data copying.
- *
- * This class is in the public API for the library because it is required for
- * mocking.
- */
-class InsertObjectRequest {
- public:
-  InsertObjectRequest() = default;
-  InsertObjectRequest(std::string bucket_name, std::string object_name)
-      : impl_(std::move(bucket_name), std::move(object_name)) {}
-
-  std::string const& bucket_name() const { return impl_.bucket_name(); }
-  std::string const& object_name() const { return impl_.object_name(); }
-
-  template <typename... T>
-  InsertObjectRequest& set_multiple_options(T&&... o) & {
-    impl_.set_multiple_options(std::forward<T>(o)...);
-    return *this;
-  }
-  template <typename... T>
-  InsertObjectRequest&& set_multiple_options(T&&... o) && {
-    return std::move(set_multiple_options(std::forward<T>(o)...));
-  }
-
-  template <typename T>
-  bool HasOption() const {
-    return impl_.HasOption<T>();
-  }
-  template <typename T>
-  T GetOption() const {
-    return impl_.GetOption<T>();
-  }
-
- protected:
-  struct Impl : public storage::internal::InsertObjectRequestImpl<Impl> {
-    using storage::internal::InsertObjectRequestImpl<
-        Impl>::InsertObjectRequestImpl;
-  };
-  Impl impl_;
-};
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud

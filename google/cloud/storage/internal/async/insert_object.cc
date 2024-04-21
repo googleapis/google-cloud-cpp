@@ -22,7 +22,7 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-future<StatusOr<storage::ObjectMetadata>> InsertObject::Start() {
+future<StatusOr<google::storage::v2::Object>> InsertObject::Start() {
   auto future = result_.get_future();
   (void)rpc_->Start().then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnStart(f.get());
@@ -89,8 +89,7 @@ void InsertObject::OnWrite(std::size_t n, bool ok) {
 void InsertObject::OnFinish(
     StatusOr<google::storage::v2::WriteObjectResponse> response) {
   if (!response) return result_.set_value(std::move(response).status());
-  auto r = FromProto(*response, *options_, rpc_->GetRequestMetadata());
-  result_.set_value(r.payload.value_or(storage::ObjectMetadata()));
+  result_.set_value(std::move(*response->mutable_resource()));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

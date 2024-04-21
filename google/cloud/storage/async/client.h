@@ -39,43 +39,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @note This class is experimental, it is subject to change without notice.
  *
- * @par Optional Request Options
- * Most of the member functions in this class can receive optional request
- * options. For example, the default when deleting an object is to delete the
- * latest version:
+ * @par Example: create a client instance
+ * @snippet storage_async_samples.cc async-client
  *
- * @code
- * auto pending = client.DeleteObject("my-bucket", "my-object");
- * @endcode
- *
- * Some applications may want to delete a specific version. In this case just
- * provide the `Generation` request option:
- *
- * @code
- * auto pending = gcs.DeleteObject(
- *     "my-bucket", "my-object", gcs::Generation(generation));
- * @endcode
- *
- * Each function documents the types accepted as optional request options. These
- * parameters can be specified in any order. Specifying a request option that is
- * not applicable to a member function results in a compile-time error.
- *
- * All operations support the following common request options:
- *
- * - `Fields`: return a [partial response], which includes only the desired
- *   fields.
- * - `QuotaUser`: attribute the request to this specific label for quota
- *   purposes.
- * - `UserProject`: change the request costs (if applicable) to this GCP
- *   project.
- * - `CustomHeader`: include a custom header with the request. These are
- *   typically used for testing, though they are sometimes helpful if
- *   environments where HTTPS traffic is mediated by a proxy.
- * - `UserIp`: attribute the request to this specific IP address for quota
- *   purpose. Not recommended, prefer `QuotaUser` instead.
- *
- * [partial response]:
- * https://cloud.google.com/storage/docs/json_api#partial-response
+ * @par Example: read an object range
+ * @snippet storage_async_samples.cc read-object-range
  *
  * @par Per-operation Overrides
  *
@@ -167,55 +135,91 @@ class AsyncClient {
   [selecting-an-upload-function]
   */
 
+  /*
+  [insert-object-common]
+  This function always uses [single-request uploads][single-request-link].
+  As the name implies, these uploads use a single RPC to upload all the data.
+  There is no way to restart or resume these uploads if there is a partial
+  failure. All the data must be sent again in that case.
+
+  @snippet{doc} async/client.h selecting-an-upload-function
+
+  @par Example
+  @snippet storage_async_samples.cc insert-object
+
+  @par Idempotency
+  This operation is only idempotent if restricted by pre-conditions.
+
+  [single-request-link]:
+  https://cloud.google.com/storage/docs/uploads-downloads#uploads
+  [insert-object-common]
+  */
   /**
    * Creates an object given its name and contents.
    *
-   * This function always uses [single-request uploads][single-request-link].
-   * As the name implies, these uploads use a single RPC to upload all the data.
-   * There is no way to restart or resume these uploads if there is a partial
-   * failure. All the data must be sent again in that case.
-   *
-   * @snippet{doc} async/client.h selecting-an-upload-function
+   * @snippet{doc} async/client.h insert-object-common
    *
    * @param bucket_name the name of the bucket that will contain the object.
    * @param object_name the name of the object to be created.
    * @param contents the contents (media) for the new object.
-   * @param args a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `ContentEncoding`,
-   *     `ContentType`, `Crc32cChecksumValue`, `DisableCrc32cChecksum`,
-   *     `DisableMD5Hash`, `EncryptionKey`, `IfGenerationMatch`,
-   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
-   *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
    * @tparam Collection the type for the payload. This must be convertible to
    *   `std::string`, `std::vector<CharType>`, `std::vector<std::string>`, or
    *   `std::vector<std::vector<ChartType>>`. Where `ChartType` is a `char`,
    *   `signed char`, `unsigned char`, or `std::uint8_t`.
-   * @tparam Args the types of any optional arguments.
-   *
-   * @par Idempotency
-   * This operation is only idempotent if restricted by pre-conditions, in this
-   * case, `IfGenerationMatch`.
-   *
-   * @par Example
-   * @snippet storage_async_samples.cc insert-object
-   *
-   * [single-request-link]:
-   * https://cloud.google.com/storage/docs/uploads-downloads#uploads
    */
-  template <typename Collection, typename... Args>
-  future<StatusOr<storage::ObjectMetadata>> InsertObject(
-      std::string bucket_name, std::string object_name, Collection&& contents,
-      Args&&... args) {
-    auto options = SpanOptions(std::forward<Args>(args)...);
-    return connection_->InsertObject(
-        {/*.request=*/InsertObjectRequest(std::move(bucket_name),
-                                          std::move(object_name))
-             .set_multiple_options(std::forward<Args>(args)...),
-         /*.payload=*/
-         WritePayload(std::forward<Collection>(contents)),
-         /*.options=*/std::move(options)});
+  template <typename Collection>
+  future<StatusOr<google::storage::v2::Object>> InsertObject(
+      BucketName const& bucket_name, std::string object_name,
+      Collection&& contents, Options opts = {}) {
+    auto request = google::storage::v2::WriteObjectRequest{};
+    auto& resource = *request.mutable_write_object_spec()->mutable_resource();
+    resource.set_bucket(bucket_name.FullName());
+    resource.set_name(std::move(object_name));
+    return InsertObject(std::move(request),
+                        WritePayload{std::forward<Collection>(contents)},
+                        std::move(opts));
   }
+
+  /**
+   * Creates an object given its name and contents.
+   *
+   * @snippet{doc} async/client.h insert-object-common
+   *
+   * @param request the request contents, it must include the bucket name and
+   *     object names. Many other fields are optional.
+   * @param contents the contents (media) for the new object.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   * @tparam Collection the type for the payload. This must be convertible to
+   *   `std::string`, `std::vector<CharType>`, `std::vector<std::string>`, or
+   *   `std::vector<std::vector<ChartType>>`. Where `ChartType` is a `char`,
+   *   `signed char`, `unsigned char`, or `std::uint8_t`.
+   */
+  template <typename Collection>
+  future<StatusOr<google::storage::v2::Object>> InsertObject(
+      google::storage::v2::WriteObjectRequest request, Collection&& contents,
+      Options opts = {}) {
+    return InsertObject(std::move(request),
+                        WritePayload{std::forward<Collection>(contents)},
+                        std::move(opts));
+  }
+
+  /**
+   * Creates an object given its name and contents.
+   *
+   * @snippet{doc} async/client.h insert-object-common
+   *
+   * @param request the request contents, it must include the bucket name and
+   *     object names. Many other fields are optional.
+   * @param contents the contents (media) for the new object.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<google::storage::v2::Object>> InsertObject(
+      google::storage::v2::WriteObjectRequest request, WritePayload contents,
+      Options opts = {});
 
   /**
    * A streaming download for the contents of an object.

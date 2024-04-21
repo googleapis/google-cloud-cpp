@@ -41,10 +41,13 @@ TEST(SmokeTest, Grpc) {
   auto gen = google::cloud::internal::MakeDefaultPRNG();
   auto object_name = google::cloud::storage::testing::MakeRandomObjectName(gen);
 
-  auto insert = client
-                    .InsertObject(bucket_name, object_name, "Hello World!",
-                                  storage::IfGenerationMatch(0))
-                    .get();
+  auto insert_request = google::storage::v2::WriteObjectRequest{};
+  auto& spec = *insert_request.mutable_write_object_spec();
+  spec.mutable_resource()->set_bucket(BucketName(bucket_name).FullName());
+  spec.mutable_resource()->set_name(object_name);
+  spec.set_if_generation_match(0);
+  auto insert =
+      client.InsertObject(std::move(insert_request), "Hello World!").get();
   ASSERT_STATUS_OK(insert);
   auto metadata = *insert;
 
@@ -58,10 +61,11 @@ TEST(SmokeTest, Grpc) {
   for (auto v : payload->contents()) contents += std::string(v);
   EXPECT_EQ(contents, "Hello World!");
 
-  auto deleted = client
-                     .DeleteObject(BucketName(metadata.bucket()),
-                                   metadata.name(), metadata.generation())
-                     .get();
+  auto delete_request = google::storage::v2::DeleteObjectRequest{};
+  delete_request.set_bucket(metadata.bucket());
+  delete_request.set_object(metadata.name());
+  delete_request.set_generation(metadata.generation());
+  auto deleted = client.DeleteObject(std::move(delete_request)).get();
   EXPECT_STATUS_OK(deleted);
 }
 

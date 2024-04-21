@@ -53,8 +53,8 @@ void InstrumentedClient(std::vector<std::string> const& argv) {
       std::vector<std::string> data(1'000'000);
       std::generate(data.begin(), data.end(),
                     [n = 0]() mutable { return std::to_string(++n) + "\n"; });
-      auto metadata = co_await client.InsertObject(bucket_name, object_name,
-                                                   std::move(data));
+      auto metadata = co_await client.InsertObject(
+          gcs_ex::BucketName(bucket_name), object_name, std::move(data));
       if (!metadata) throw std::move(metadata).status();
 
       std::int64_t count = 0;

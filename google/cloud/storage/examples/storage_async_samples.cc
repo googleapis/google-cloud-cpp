@@ -57,14 +57,15 @@ void InsertObject(google::cloud::storage_experimental::AsyncClient& client,
   namespace gcs_ex = google::cloud::storage_experimental;
   [](gcs_ex::AsyncClient& client, std::string bucket_name,
      std::string object_name) {
-    auto object =
-        client.InsertObject(std::move(bucket_name), std::move(object_name),
-                            std::string("Hello World!\n"));
+    auto object = client.InsertObject(
+        gcs_ex::BucketName(std::move(bucket_name)), std::move(object_name),
+        std::string("Hello World!\n"));
     // Attach a callback, this is called when the upload completes.
     auto done = object.then([](auto f) {
       auto metadata = f.get();
       if (!metadata) throw std::move(metadata).status();
-      std::cerr << "Object successfully inserted " << *metadata << "\n";
+      std::cerr << "Object successfully inserted " << metadata->DebugString()
+                << "\n";
     });
     // To simplify example, block until the operation completes.
     done.get();
@@ -81,13 +82,15 @@ void InsertObjectVectorStrings(
   [](gcs_ex::AsyncClient& client, std::string bucket_name,
      std::string object_name) {
     auto contents = std::vector<std::string>{"Hello", " ", "World!"};
-    auto object = client.InsertObject(
-        std::move(bucket_name), std::move(object_name), std::move(contents));
+    auto object =
+        client.InsertObject(gcs_ex::BucketName(std::move(bucket_name)),
+                            std::move(object_name), std::move(contents));
     // Attach a callback, this is called when the upload completes.
     auto done = object.then([](auto f) {
       auto metadata = f.get();
       if (!metadata) throw std::move(metadata).status();
-      std::cerr << "Object successfully inserted " << *metadata << "\n";
+      std::cerr << "Object successfully inserted " << metadata->DebugString()
+                << "\n";
     });
     // To simplify example, block until the operation completes.
     done.get();
@@ -104,13 +107,15 @@ void InsertObjectVector(
   [](gcs_ex::AsyncClient& client, std::string bucket_name,
      std::string object_name) {
     auto contents = std::vector<std::uint8_t>(1024, 0xFF);
-    auto object = client.InsertObject(
-        std::move(bucket_name), std::move(object_name), std::move(contents));
+    auto object =
+        client.InsertObject(gcs_ex::BucketName(std::move(bucket_name)),
+                            std::move(object_name), std::move(contents));
     // Attach a callback, this is called when the upload completes.
     auto done = object.then([](auto f) {
       auto metadata = f.get();
       if (!metadata) throw std::move(metadata).status();
-      std::cerr << "Object successfully inserted " << *metadata << "\n";
+      std::cerr << "Object successfully inserted " << metadata->DebugString()
+                << "\n";
     });
     // To simplify example, block until the operation completes.
     done.get();
@@ -129,13 +134,15 @@ void InsertObjectVectorVectors(
     using Buffer = std::vector<char>;
     auto contents = std::vector<Buffer>{Buffer(1024, 'a'), Buffer(1024, 'b'),
                                         Buffer(1024, 'c')};
-    auto object = client.InsertObject(
-        std::move(bucket_name), std::move(object_name), std::move(contents));
+    auto object =
+        client.InsertObject(gcs_ex::BucketName(std::move(bucket_name)),
+                            std::move(object_name), std::move(contents));
     // Attach a callback, this is called when the upload completes.
     auto done = object.then([](auto f) {
       auto metadata = f.get();
       if (!metadata) throw std::move(metadata).status();
-      std::cerr << "Object successfully inserted " << *metadata << "\n";
+      std::cerr << "Object successfully inserted " << metadata->DebugString()
+                << "\n";
     });
     // To simplify example, block until the operation completes.
     done.get();
@@ -845,7 +852,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running the ResumeRewrite() example" << std::endl;
   auto const rewrite_source = object_name;
   (void)client
-      .InsertObject(bucket_name, object_name, std::string(4 * 1024 * 1024, 'A'))
+      .InsertObject(
+          google::cloud::storage_experimental::BucketName(bucket_name),
+          object_name, std::string(4 * 1024 * 1024, 'A'))
       .get()
       .value();
   scheduled_for_delete.push_back(std::move(object_name));

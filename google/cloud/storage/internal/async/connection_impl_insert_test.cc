@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -19,6 +20,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -36,11 +38,13 @@ using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::google::protobuf::TextFormat;
 using ::testing::_;
-using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
@@ -96,7 +100,24 @@ std::unique_ptr<AsyncWriteObjectStream> MakeErrorInsertStream(
   return std::unique_ptr<AsyncWriteObjectStream>(std::move(stream));
 }
 
+auto MakeTestObject() {
+  auto constexpr kExpectedResponse = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    name: "test-object"
+    size: 123456
+  )pb";
+  auto object = google::storage::v2::Object{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedResponse, &object));
+  return object;
+}
+
 TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+      if_generation_match: 0
+    }
+  )pb";
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, AsyncWriteObject)
@@ -106,16 +127,12 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
         return MakeErrorInsertStream(sequencer, TransientError());
       })
       .WillOnce([&](CompletionQueue const&,
-                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                    std::shared_ptr<grpc::ClientContext> context,
-                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                    internal::ImmutableOptions options) {
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    internal::ImmutableOptions const& options) {
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
-                        Pair("x-goog-quota-user", "test-quota-user"),
-                        Pair("x-goog-fieldmask", "field1,field2"),
                         Pair("x-goog-request-params",
                              "bucket=projects%2F_%2Fbuckets%2Ftest-bucket"),
                         Pair("x-goog-gcs-idempotency-token", _)));
@@ -124,23 +141,19 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
           return sequencer.PushBack("Start");
         });
         EXPECT_CALL(*stream, Write).WillOnce([&](auto const& request, auto) {
-          EXPECT_TRUE(request.has_write_object_spec());
-          auto const& resource = request.write_object_spec().resource();
-          EXPECT_THAT(resource.bucket(), "projects/_/buckets/test-bucket");
-          EXPECT_THAT(resource.name(), "test-object");
+          auto expected = google::storage::v2::WriteObjectRequest{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+          EXPECT_THAT(request.write_object_spec(),
+                      IsProtoEqual(expected.write_object_spec()));
           return sequencer.PushBack("Write");
         });
         EXPECT_CALL(*stream, Finish).WillOnce([&] {
           return sequencer.PushBack("Finish").then([](auto) {
             google::storage::v2::WriteObjectResponse response;
-            response.mutable_resource()->set_bucket(
-                "projects/_/buckets/test-bucket");
-            response.mutable_resource()->set_name("test-object");
-            response.mutable_resource()->set_size(123456);
+            *response.mutable_resource() = MakeTestObject();
             return make_status_or(response);
           });
         });
-        EXPECT_CALL(*stream, GetRequestMetadata);
         return std::unique_ptr<AsyncWriteObjectStream>(std::move(stream));
       });
 
@@ -161,12 +174,11 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
                          // Disable transfer timeouts in this test.
                          Options{}.set<storage::TransferStallTimeoutOption>(
                              std::chrono::seconds(0)));
-  auto pending = connection->InsertObject(
-      {storage_experimental::InsertObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::Fields("field1,field2"),
-                                 storage::QuotaUser("test-quota-user")),
-       storage_experimental::WritePayload(),
-       /*.options=*/connection->options()});
+  auto request = google::storage::v2::WriteObjectRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto pending = connection->InsertObject({std::move(request),
+                                           storage_experimental::WritePayload(),
+                                           /*.options=*/connection->options()});
 
   // Simulate a transient failure.
   auto next = sequencer.PopFrontWithName();
@@ -195,12 +207,7 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
-  auto response = pending.get();
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
-  EXPECT_EQ(response->name(), "test-object");
-  EXPECT_EQ(response->size(), 123456);
-  EXPECT_THAT(response->self_link(), HasSubstr("test-object"));
+  EXPECT_THAT(pending.get(), IsOkAndHolds(IsProtoEqual(MakeTestObject())));
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncInsertObjectWithTimeout) {
@@ -211,24 +218,16 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectWithTimeout) {
     EXPECT_CALL(*stream, Start).WillOnce([&] {
       return sequencer.PushBack("Start");
     });
-    EXPECT_CALL(*stream, Write).WillOnce([&](auto const& request, auto) {
-      EXPECT_TRUE(request.has_write_object_spec());
-      auto const& resource = request.write_object_spec().resource();
-      EXPECT_THAT(resource.bucket(), "projects/_/buckets/test-bucket");
-      EXPECT_THAT(resource.name(), "test-object");
+    EXPECT_CALL(*stream, Write).WillOnce([&](auto const&, auto) {
       return sequencer.PushBack("Write");
     });
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
       return sequencer.PushBack("Finish").then([](auto) {
         google::storage::v2::WriteObjectResponse response;
-        response.mutable_resource()->set_bucket(
-            "projects/_/buckets/test-bucket");
-        response.mutable_resource()->set_name("test-object");
-        response.mutable_resource()->set_size(123456);
+        *response.mutable_resource() = MakeTestObject();
         return make_status_or(response);
       });
     });
-    EXPECT_CALL(*stream, GetRequestMetadata);
     return std::unique_ptr<AsyncWriteObjectStream>(std::move(stream));
   });
 
@@ -253,12 +252,10 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectWithTimeout) {
       Options{}
           .set<storage::TransferStallTimeoutOption>(std::chrono::seconds(1))
           .set<storage::TransferStallMinimumRateOption>(2 * 1024 * 1024L));
-  auto pending = connection->InsertObject(
-      {storage_experimental::InsertObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::Fields("field1,field2"),
-                                 storage::QuotaUser("test-quota-user")),
-       storage_experimental::WritePayload(),
-       /*.options=*/connection->options()});
+  auto pending =
+      connection->InsertObject({google::storage::v2::WriteObjectRequest{},
+                                storage_experimental::WritePayload(),
+                                /*.options=*/connection->options()});
 
   // Because the timeout parameters are configured, the first thing to happen is
   // that a timer is set.
@@ -283,12 +280,7 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectWithTimeout) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
-  auto response = pending.get();
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->bucket(), "test-bucket");
-  EXPECT_EQ(response->name(), "test-object");
-  EXPECT_EQ(response->size(), 123456);
-  EXPECT_THAT(response->self_link(), HasSubstr("test-object"));
+  EXPECT_THAT(pending.get(), IsOkAndHolds(IsProtoEqual(MakeTestObject())));
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncInsertObjectPermanentError) {
@@ -300,12 +292,10 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectPermanentError) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->InsertObject(
-      {storage_experimental::InsertObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::Fields("field1,field2"),
-                                 storage::QuotaUser("test-quota-user")),
-       storage_experimental::WritePayload(),
-       /*.options=*/connection->options()});
+  auto pending =
+      connection->InsertObject({google::storage::v2::WriteObjectRequest{},
+                                storage_experimental::WritePayload(),
+                                /*.options=*/connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
@@ -327,13 +317,14 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectTooManyTransients) {
   });
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending = connection->InsertObject(
-      {storage_experimental::InsertObjectRequest("test-bucket", "test-object")
-           .set_multiple_options(storage::Fields("field1,field2"),
-                                 storage::QuotaUser("test-quota-user")),
-       storage_experimental::WritePayload(),
-       /*.options=*/connection->options()});
+  auto connection = MakeTestConnection(
+      pool.cq(), mock,
+      Options{}.set<storage_experimental::IdempotencyPolicyOption>(
+          storage_experimental::MakeAlwaysRetryIdempotencyPolicy));
+  auto pending =
+      connection->InsertObject({google::storage::v2::WriteObjectRequest{},
+                                storage_experimental::WritePayload(),
+                                /*.options=*/connection->options()});
 
   for (int i = 0; i != 3; ++i) {
     auto next = sequencer.PopFrontWithName();
