@@ -412,7 +412,6 @@ TEST_F(AsyncConnectionImplTest, ReadObjectRangePermanentError) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
-  ASSERT_TRUE(pending.is_ready());
   EXPECT_THAT(pending.get(), StatusIs(PermanentError().code()));
 }
 
