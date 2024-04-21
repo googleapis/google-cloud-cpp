@@ -76,7 +76,6 @@ else ()
         async/connection.h
         async/idempotency_policy.cc
         async/idempotency_policy.h
-        async/object_requests.h
         async/object_responses.cc
         async/object_responses.h
         async/options.h
@@ -89,6 +88,7 @@ else ()
         async/rewriter.h
         async/rewriter_connection.h
         async/token.h
+        async/write_payload.h
         async/writer.cc
         async/writer.h
         async/writer_connection.h

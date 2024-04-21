@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITE_PAYLOAD_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITE_PAYLOAD_IMPL_H
 
-#include "google/cloud/storage/async/object_requests.h"
+#include "google/cloud/storage/async/write_payload.h"
 #include "google/cloud/storage/internal/grpc/make_cord.h"
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
