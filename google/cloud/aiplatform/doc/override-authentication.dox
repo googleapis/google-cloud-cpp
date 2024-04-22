@@ -21,6 +21,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::FeatureRegistryServiceClient](@ref aiplatform_v1::FeatureRegistryServiceClient-service-account-snippet)
 - [\c aiplatform_v1::FeaturestoreServiceClient](@ref aiplatform_v1::FeaturestoreServiceClient-service-account-snippet)
 - [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref aiplatform_v1::FeaturestoreOnlineServingServiceClient-service-account-snippet)
+- [\c aiplatform_v1::GenAiTuningServiceClient](@ref aiplatform_v1::GenAiTuningServiceClient-service-account-snippet)
 - [\c aiplatform_v1::IndexServiceClient](@ref aiplatform_v1::IndexServiceClient-service-account-snippet)
 - [\c aiplatform_v1::IndexEndpointServiceClient](@ref aiplatform_v1::IndexEndpointServiceClient-service-account-snippet)
 - [\c aiplatform_v1::JobServiceClient](@ref aiplatform_v1::JobServiceClient-service-account-snippet)
@@ -100,6 +101,12 @@ guide for more details.
 /*! @page aiplatform_v1::FeaturestoreOnlineServingServiceClient-service-account-snippet Override aiplatform_v1::FeaturestoreOnlineServingServiceClient Authentication Defaults
 
 @snippet google/cloud/aiplatform/v1/samples/featurestore_online_serving_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::GenAiTuningServiceClient-service-account-snippet Override aiplatform_v1::GenAiTuningServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/gen_ai_tuning_client_samples.cc with-service-account
 
 */
 

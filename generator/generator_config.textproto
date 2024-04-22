@@ -108,6 +108,14 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/aiplatform/v1/genai_tuning_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
   service_proto_path: "google/cloud/aiplatform/v1/index_endpoint_service.proto"
   product_path: "google/cloud/aiplatform/v1"
   initial_copyright_year: "2023"
