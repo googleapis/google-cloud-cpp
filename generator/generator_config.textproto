@@ -2190,6 +2190,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/discoveryengine/v1/recommendation_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/discoveryengine/v1/schema_service.proto"
   product_path: "google/cloud/discoveryengine/v1"
   initial_copyright_year: "2023"
