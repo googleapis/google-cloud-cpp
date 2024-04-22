@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.discoveryengine.v1.DataStore]:
-/// @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+/// @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
 ///
 class DataStoreServiceClient {
  public:
@@ -134,7 +134,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CreateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L125}
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
@@ -180,7 +180,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CreateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L125}
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
@@ -215,7 +215,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L160}
   ///
   // clang-format on
@@ -245,7 +245,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L160}
   ///
   // clang-format on
@@ -287,7 +287,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L195}
   ///
   // clang-format on
@@ -327,7 +327,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L195}
   ///
   // clang-format on
@@ -369,7 +369,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L297}
   /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L251}
   ///
@@ -407,7 +407,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L297}
   /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L251}
   ///
@@ -448,7 +448,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L273}
   ///
   // clang-format on
@@ -479,7 +479,7 @@ class DataStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L34}
+  /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L35}
   /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L273}
   ///
   // clang-format on
