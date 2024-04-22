@@ -70,25 +70,35 @@ idempotency_policy(Options const& options) {
 
 std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
     Options const& options) {
-  auto const has_precomputed_crc32c =
-      options.has<storage_experimental::UseCrc32cValueOption>();
-  auto const enable_crc32c =
-      options.get<storage_experimental::EnableCrc32cValidationOption>();
-  auto const has_precomputed_md5 =
-      options.has<storage_experimental::UseMD5ValueOption>();
-  auto const enable_md5 =
-      options.get<storage_experimental::EnableMD5ValidationOption>();
+  auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
+  if (options.has<storage_experimental::UseCrc32cValueOption>()) {
+    crc32c = std::make_unique<storage::internal::PrecomputedHashFunction>(
+        storage::internal::HashValues{
+            Crc32cFromProto(
+                options.get<storage_experimental::UseCrc32cValueOption>()),
+            /*.md5=*/{}});
+  } else if (options
+                 .get<storage_experimental::EnableCrc32cValidationOption>()) {
+    crc32c = std::make_unique<storage::internal::Crc32cHashFunction>();
+  }
 
-  auto const crc32c = !has_precomputed_crc32c && enable_crc32c;
-  auto const md5 = !has_precomputed_md5 && enable_md5;
+  auto md5 = std::unique_ptr<storage::internal::HashFunction>();
+  if (options.has<storage_experimental::UseMD5ValueOption>()) {
+    md5 = std::make_unique<storage::internal::PrecomputedHashFunction>(
+        storage::internal::HashValues{
+            /*.crc32=*/{},
+            MD5FromProto(
+                options.get<storage_experimental::UseMD5ValueOption>())});
+  } else if (options.get<storage_experimental::EnableMD5ValidationOption>()) {
+    md5 = storage::internal::MD5HashFunction::Create();
+  }
 
   if (crc32c && md5) {
     return std::make_unique<storage::internal::CompositeFunction>(
-        std::make_unique<storage::internal::Crc32cHashFunction>(),
-        storage::internal::MD5HashFunction::Create());
+        std::move(crc32c), std::move(md5));
   }
-  if (crc32c) return std::make_unique<storage::internal::Crc32cHashFunction>();
-  if (md5) return storage::internal::MD5HashFunction::Create();
+  if (crc32c) return crc32c;
+  if (md5) return md5;
   return storage::internal::CreateNullHashFunction();
 }
 
