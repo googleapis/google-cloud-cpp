@@ -34,7 +34,7 @@ namespace monitoring_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// The QueryService API is used to manage time series data in Stackdriver
+/// The QueryService API is used to manage time series data in Cloud
 /// Monitoring. Time series data is a collection of data points that describes
 /// the time-varying values of a metric.
 ///
@@ -89,7 +89,7 @@ class QueryServiceClient {
 
   // clang-format off
   ///
-  /// Queries time series using Monitoring Query Language. This method does not require a Workspace.
+  /// Queries time series using Monitoring Query Language.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -119,7 +119,7 @@ class QueryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.QueryTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L474}
+  /// [google.monitoring.v3.QueryTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L493}
   /// [google.monitoring.v3.TimeSeriesData]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L133}
   ///
   // clang-format on

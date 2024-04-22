@@ -69,7 +69,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// [google.cloud.secretmanager.v1.Secret]:
 /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
 /// [google.cloud.secretmanager.v1.SecretVersion]:
-/// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+/// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
 ///
 class SecretManagerServiceClient {
  public:
@@ -104,7 +104,8 @@ class SecretManagerServiceClient {
   /// Lists [Secrets][google.cloud.secretmanager.v1.Secret].
   ///
   /// @param parent  Required. The resource name of the project associated with the
-  ///  [Secrets][google.cloud.secretmanager.v1.Secret], in the format `projects/*`.
+  ///  [Secrets][google.cloud.secretmanager.v1.Secret], in the format `projects/*`
+  ///  or `projects/*/locations/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -127,7 +128,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.ListSecretsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L206}
+  /// [google.cloud.secretmanager.v1.ListSecretsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L274}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   // clang-format on
@@ -166,7 +167,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.ListSecretsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L206}
+  /// [google.cloud.secretmanager.v1.ListSecretsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L274}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   // clang-format on
@@ -176,16 +177,19 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
+  /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no
+  /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
   ///
   /// @param parent  Required. The resource name of the project to associate with the
-  ///  [Secret][google.cloud.secretmanager.v1.Secret], in the format `projects/*`.
+  ///  [Secret][google.cloud.secretmanager.v1.Secret], in the format `projects/*`
+  ///  or `projects/*/locations/*`.
   /// @param secret_id  Required. This must be unique within the project.
   ///  @n
   ///  A secret ID is a string with a maximum length of 255 characters and can
   ///  contain uppercase and lowercase letters, numerals, and the hyphen (`-`) and
   ///  underscore (`_`) characters.
-  /// @param secret  Required. A [Secret][google.cloud.secretmanager.v1.Secret] with initial field values.
+  /// @param secret  Required. A [Secret][google.cloud.secretmanager.v1.Secret] with initial
+  ///  field values.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -199,9 +203,9 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.CreateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L248}
+  /// [google.cloud.secretmanager.v1.CreateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L323}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
@@ -211,7 +215,8 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
+  /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no
+  /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -232,9 +237,9 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.CreateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L248}
+  /// [google.cloud.secretmanager.v1.CreateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L323}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
@@ -243,12 +248,16 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] containing secret data and attaches
-  /// it to an existing [Secret][google.cloud.secretmanager.v1.Secret].
+  /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
+  /// containing secret data and attaches it to an existing
+  /// [Secret][google.cloud.secretmanager.v1.Secret].
   ///
-  /// @param parent  Required. The resource name of the [Secret][google.cloud.secretmanager.v1.Secret] to associate with the
-  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format `projects/*/secrets/*`.
-  /// @param payload  Required. The secret payload of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// @param parent  Required. The resource name of the
+  ///  [Secret][google.cloud.secretmanager.v1.Secret] to associate with the
+  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
+  ///  `projects/*/secrets/*` or `projects/*/locations/*/secrets/*`.
+  /// @param payload  Required. The secret payload of the
+  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -262,9 +271,9 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L270}
+  /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L348}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
@@ -274,8 +283,9 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] containing secret data and attaches
-  /// it to an existing [Secret][google.cloud.secretmanager.v1.Secret].
+  /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
+  /// containing secret data and attaches it to an existing
+  /// [Secret][google.cloud.secretmanager.v1.Secret].
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -296,9 +306,9 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L270}
+  /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L348}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
@@ -309,7 +319,9 @@ class SecretManagerServiceClient {
   ///
   /// Gets metadata for a given [Secret][google.cloud.secretmanager.v1.Secret].
   ///
-  /// @param name  Required. The resource name of the [Secret][google.cloud.secretmanager.v1.Secret], in the format `projects/*/secrets/*`.
+  /// @param name  Required. The resource name of the
+  ///  [Secret][google.cloud.secretmanager.v1.Secret], in the format
+  ///  `projects/*/secrets/*` or `projects/*/locations/*/secrets/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -323,7 +335,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.GetSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L285}
+  /// [google.cloud.secretmanager.v1.GetSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L367}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   // clang-format on
@@ -353,7 +365,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.GetSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L285}
+  /// [google.cloud.secretmanager.v1.GetSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L367}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   // clang-format on
@@ -363,9 +375,11 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Updates metadata of an existing [Secret][google.cloud.secretmanager.v1.Secret].
+  /// Updates metadata of an existing
+  /// [Secret][google.cloud.secretmanager.v1.Secret].
   ///
-  /// @param secret  Required. [Secret][google.cloud.secretmanager.v1.Secret] with updated field values.
+  /// @param secret  Required. [Secret][google.cloud.secretmanager.v1.Secret] with updated field
+  ///  values.
   /// @param update_mask  Required. Specifies the fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -381,7 +395,7 @@ class SecretManagerServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L452}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
@@ -390,7 +404,8 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Updates metadata of an existing [Secret][google.cloud.secretmanager.v1.Secret].
+  /// Updates metadata of an existing
+  /// [Secret][google.cloud.secretmanager.v1.Secret].
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -412,7 +427,7 @@ class SecretManagerServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L452}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
@@ -423,7 +438,8 @@ class SecretManagerServiceClient {
   ///
   /// Deletes a [Secret][google.cloud.secretmanager.v1.Secret].
   ///
-  /// @param name  Required. The resource name of the [Secret][google.cloud.secretmanager.v1.Secret] to delete in the format
+  /// @param name  Required. The resource name of the
+  ///  [Secret][google.cloud.secretmanager.v1.Secret] to delete in the format
   ///  `projects/*/secrets/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -436,7 +452,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
+  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L499}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   // clang-format on
@@ -463,7 +479,7 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
+  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L499}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   // clang-format on
@@ -473,12 +489,13 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This call does not return secret
-  /// data.
+  /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This
+  /// call does not return secret data.
   ///
-  /// @param parent  Required. The resource name of the [Secret][google.cloud.secretmanager.v1.Secret] associated with the
-  ///  [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] to list, in the format
-  ///  `projects/*/secrets/*`.
+  /// @param parent  Required. The resource name of the
+  ///  [Secret][google.cloud.secretmanager.v1.Secret] associated with the
+  ///  [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] to list, in
+  ///  the format `projects/*/secrets/*` or `projects/*/locations/*/secrets/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -501,9 +518,9 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L296}
+  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L381}
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
@@ -511,8 +528,8 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This call does not return secret
-  /// data.
+  /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This
+  /// call does not return secret data.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -542,8 +559,8 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L296}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L381}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
@@ -553,16 +570,21 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Gets metadata for a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// Gets metadata for a
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
   /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
   /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
-  /// @param name  Required. The resource name of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
-  ///  `projects/*/secrets/*/versions/*`.
+  /// @param name  Required. The resource name of the
+  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
+  ///  `projects/*/secrets/*/versions/*` or
+  ///  `projects/*/locations/*/secrets/*/versions/*`.
   ///  @n
-  ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
-  ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  ///  `projects/*/secrets/*/versions/latest` or
+  ///  `projects/*/locations/*/secrets/*/versions/latest` is an alias to the most
+  ///  recently created
+  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -576,8 +598,8 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L339}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L432}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
@@ -585,7 +607,8 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Gets metadata for a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// Gets metadata for a
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
   /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
   /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -609,8 +632,8 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L339}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L432}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
@@ -619,16 +642,21 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]. This call returns the secret data.
+  /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// This call returns the secret data.
   ///
   /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
   /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
-  /// @param name  Required. The resource name of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
-  ///  `projects/*/secrets/*/versions/*`.
+  /// @param name  Required. The resource name of the
+  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
+  ///  `projects/*/secrets/*/versions/*` or
+  ///  `projects/*/locations/*/secrets/*/versions/*`.
   ///  @n
-  ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
-  ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  ///  `projects/*/secrets/*/versions/latest` or
+  ///  `projects/*/locations/*/secrets/*/versions/latest` is an alias to the most
+  ///  recently created
+  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -642,9 +670,9 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L363}
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L378}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L464}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L484}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
@@ -652,7 +680,8 @@ class SecretManagerServiceClient {
 
   // clang-format off
   ///
-  /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]. This call returns the secret data.
+  /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// This call returns the secret data.
   ///
   /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
   /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -676,9 +705,9 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L363}
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L378}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L464}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L484}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
@@ -691,11 +720,14 @@ class SecretManagerServiceClient {
   ///
   /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
-  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
+  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
   /// [DISABLED][google.cloud.secretmanager.v1.SecretVersion.State.DISABLED].
   ///
-  /// @param name  Required. The resource name of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to disable in the format
-  ///  `projects/*/secrets/*/versions/*`.
+  /// @param name  Required. The resource name of the
+  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to disable in
+  ///  the format `projects/*/secrets/*/versions/*` or
+  ///  `projects/*/locations/*/secrets/*/versions/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -709,10 +741,10 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
-  /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L166}
-  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
+  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L518}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L193}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L225}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
@@ -722,7 +754,8 @@ class SecretManagerServiceClient {
   ///
   /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
-  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
+  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
   /// [DISABLED][google.cloud.secretmanager.v1.SecretVersion.State.DISABLED].
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -744,10 +777,10 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
-  /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L166}
-  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
+  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L518}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L193}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L225}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
@@ -760,11 +793,14 @@ class SecretManagerServiceClient {
   ///
   /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
-  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
+  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
   /// [ENABLED][google.cloud.secretmanager.v1.SecretVersion.State.ENABLED].
   ///
-  /// @param name  Required. The resource name of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to enable in the format
-  ///  `projects/*/secrets/*/versions/*`.
+  /// @param name  Required. The resource name of the
+  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to enable in
+  ///  the format `projects/*/secrets/*/versions/*` or
+  ///  `projects/*/locations/*/secrets/*/versions/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -778,10 +814,10 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
-  /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L159}
-  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
+  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L539}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L186}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L225}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
@@ -791,7 +827,8 @@ class SecretManagerServiceClient {
   ///
   /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
-  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
+  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
   /// [ENABLED][google.cloud.secretmanager.v1.SecretVersion.State.ENABLED].
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -813,10 +850,10 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
-  /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L159}
-  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
+  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L539}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L186}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L225}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
@@ -828,12 +865,15 @@ class SecretManagerServiceClient {
   ///
   /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
-  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
-  /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED] and irrevocably destroys the
-  /// secret data.
+  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
+  /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]
+  /// and irrevocably destroys the secret data.
   ///
-  /// @param name  Required. The resource name of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to destroy in the format
-  ///  `projects/*/secrets/*/versions/*`.
+  /// @param name  Required. The resource name of the
+  ///  [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to destroy in
+  ///  the format `projects/*/secrets/*/versions/*` or
+  ///  `projects/*/locations/*/secrets/*/versions/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -847,10 +887,10 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
-  /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L171}
-  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
+  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L560}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L225}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
@@ -860,9 +900,10 @@ class SecretManagerServiceClient {
   ///
   /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
-  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
-  /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED] and irrevocably destroys the
-  /// secret data.
+  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
+  /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]
+  /// and irrevocably destroys the secret data.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -883,10 +924,10 @@ class SecretManagerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
-  /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L171}
-  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
+  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L560}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L225}
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
@@ -900,8 +941,10 @@ class SecretManagerServiceClient {
   /// Sets the access control policy on the specified secret. Replaces any
   /// existing policy.
   ///
-  /// Permissions on [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] are enforced according
-  /// to the policy set on the associated [Secret][google.cloud.secretmanager.v1.Secret].
+  /// Permissions on
+  /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] are enforced
+  /// according to the policy set on the associated
+  /// [Secret][google.cloud.secretmanager.v1.Secret].
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -923,7 +966,7 @@ class SecretManagerServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L168}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///

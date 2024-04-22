@@ -11,6 +11,7 @@
 @com_google_googleapis//google/cloud/discoveryengine/v1:engine_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:import_config.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:purge_config.proto
+@com_google_googleapis//google/cloud/discoveryengine/v1:recommendation_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:schema.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:schema_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:search_service.proto

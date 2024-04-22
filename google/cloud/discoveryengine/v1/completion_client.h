@@ -151,8 +151,8 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L344}
-  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L381}
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L606}
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L643}
   /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
   ///
   // clang-format on
@@ -195,8 +195,8 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L92}
-  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L106}
+  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L95}
+  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L109}
   /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
   ///
   // clang-format on

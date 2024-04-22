@@ -103,8 +103,9 @@ class GroupServiceClient {
   ///
   /// Lists the existing groups.
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name)
-  ///  whose groups are to be listed. The format is:
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) whose
+  ///  groups are to be listed. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -130,7 +131,7 @@ class GroupServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
-  /// [google.monitoring.v3.ListGroupsRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L108}
+  /// [google.monitoring.v3.ListGroupsRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L109}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::Group> ListGroups(std::string const& name,
@@ -169,7 +170,7 @@ class GroupServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
-  /// [google.monitoring.v3.ListGroupsRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L108}
+  /// [google.monitoring.v3.ListGroupsRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L109}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::Group> ListGroups(
@@ -195,7 +196,7 @@ class GroupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L179}
+  /// [google.monitoring.v3.GetGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L181}
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   // clang-format on
@@ -225,7 +226,7 @@ class GroupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L179}
+  /// [google.monitoring.v3.GetGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L181}
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   // clang-format on
@@ -237,12 +238,13 @@ class GroupServiceClient {
   ///
   /// Creates a new group.
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) in
-  ///  which to create the group. The format is:
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) in which
+  ///  to create the group. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
-  /// @param group  Required. A group definition. It is an error to define the `name` field because
-  ///  the system assigns the name.
+  /// @param group  Required. A group definition. It is an error to define the `name` field
+  ///  because the system assigns the name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -256,7 +258,7 @@ class GroupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L192}
+  /// [google.monitoring.v3.CreateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L194}
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   // clang-format on
@@ -287,7 +289,7 @@ class GroupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L192}
+  /// [google.monitoring.v3.CreateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L194}
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   // clang-format on
@@ -300,8 +302,9 @@ class GroupServiceClient {
   /// Updates an existing group.
   /// You can change any group attributes except `name`.
   ///
-  /// @param group  Required. The new definition of the group.  All fields of the existing group,
-  ///  excepting `name`, are replaced with the corresponding fields of this group.
+  /// @param group  Required. The new definition of the group.  All fields of the existing
+  ///  group, excepting `name`, are replaced with the corresponding fields of this
+  ///  group.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -316,7 +319,7 @@ class GroupServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
-  /// [google.monitoring.v3.UpdateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L213}
+  /// [google.monitoring.v3.UpdateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L216}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
@@ -347,7 +350,7 @@ class GroupServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
-  /// [google.monitoring.v3.UpdateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L213}
+  /// [google.monitoring.v3.UpdateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L216}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
@@ -372,7 +375,7 @@ class GroupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L224}
+  /// [google.monitoring.v3.DeleteGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L228}
   ///
   // clang-format on
   Status DeleteGroup(std::string const& name, Options opts = {});
@@ -398,7 +401,7 @@ class GroupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L224}
+  /// [google.monitoring.v3.DeleteGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L228}
   ///
   // clang-format on
   Status DeleteGroup(google::monitoring::v3::DeleteGroupRequest const& request,
@@ -434,7 +437,7 @@ class GroupServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MonitoredResource]: @googleapis_reference_link{google/api/monitored_resource.proto#L93}
-  /// [google.monitoring.v3.ListGroupMembersRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
+  /// [google.monitoring.v3.ListGroupMembersRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L246}
   ///
   // clang-format on
   StreamRange<google::api::MonitoredResource> ListGroupMembers(
@@ -473,7 +476,7 @@ class GroupServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MonitoredResource]: @googleapis_reference_link{google/api/monitored_resource.proto#L93}
-  /// [google.monitoring.v3.ListGroupMembersRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
+  /// [google.monitoring.v3.ListGroupMembersRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L246}
   ///
   // clang-format on
   StreamRange<google::api::MonitoredResource> ListGroupMembers(
