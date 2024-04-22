@@ -30,6 +30,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
   used by `MakeEngineServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_RECOMMENDATION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
+  used by `MakeRecommendationServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_SCHEMA_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
   used by `MakeSchemaServiceConnection()`.

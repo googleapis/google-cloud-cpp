@@ -28,6 +28,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   clients:
   - `DataStoreServiceClient`
   - `EngineServiceClient`
+  - `RecommendationServiceClient`
   - `SiteSearchEngineServiceClient`
 - [Network Connectivity API](/google/cloud/networkconnectivity/README.md) - new
   `PolicyBasedRoutingServiceClient`
