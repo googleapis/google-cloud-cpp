@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/secret-manager/docs
+[cloud-service-docs]: https://cloud.google.com/secret-manager/docs/overview
 [cloud-service-root]: https://cloud.google.com/secret-manager
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/secretmanager/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/secretmanager
