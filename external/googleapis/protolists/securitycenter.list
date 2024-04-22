@@ -3,6 +3,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:asset.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:backup_disaster_recovery.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:bigquery_export.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:cloud_armor.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:cloud_dlp_data_profile.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:cloud_dlp_inspection.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:compliance.proto
