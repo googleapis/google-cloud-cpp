@@ -22,6 +22,14 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "dataplex.googleapis.com")
   used by `MakeDataplexServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_DATA_SCAN_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataplex.googleapis.com")
+  used by `MakeDataScanServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DATA_TAXONOMY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataplex.googleapis.com")
+  used by `MakeDataTaxonomyServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_METADATA_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "dataplex.googleapis.com")
   used by `MakeMetadataServiceConnection()`.

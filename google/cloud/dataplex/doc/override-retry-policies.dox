@@ -85,6 +85,8 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c dataplex_v1::CatalogServiceClient](@ref dataplex_v1::CatalogServiceClient-retry-snippet)
 - [\c dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-retry-snippet)
+- [\c dataplex_v1::DataScanServiceClient](@ref dataplex_v1::DataScanServiceClient-retry-snippet)
+- [\c dataplex_v1::DataTaxonomyServiceClient](@ref dataplex_v1::DataTaxonomyServiceClient-retry-snippet)
 - [\c dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-retry-snippet)
 - [\c dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-retry-snippet)
 
@@ -123,6 +125,30 @@ This shows how to override the retry policies for dataplex_v1::ContentServiceCli
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/dataplex/v1/samples/content_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataplex_v1::DataScanServiceClient-retry-snippet Override dataplex_v1::DataScanServiceClient Retry Policies
+
+This shows how to override the retry policies for dataplex_v1::DataScanServiceClient:
+
+@snippet google/cloud/dataplex/v1/samples/data_scan_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataplex/v1/samples/data_scan_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataplex_v1::DataTaxonomyServiceClient-retry-snippet Override dataplex_v1::DataTaxonomyServiceClient Retry Policies
+
+This shows how to override the retry policies for dataplex_v1::DataTaxonomyServiceClient:
+
+@snippet google/cloud/dataplex/v1/samples/data_taxonomy_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataplex/v1/samples/data_taxonomy_client_samples.cc custom-idempotency-policy
 
 */
 

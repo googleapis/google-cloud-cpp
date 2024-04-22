@@ -33,6 +33,8 @@ application.
 
 - [\c dataplex_v1::CatalogServiceClient](@ref google::cloud::dataplex_v1::CatalogServiceClient)
 - [\c dataplex_v1::ContentServiceClient](@ref google::cloud::dataplex_v1::ContentServiceClient)
+- [\c dataplex_v1::DataScanServiceClient](@ref google::cloud::dataplex_v1::DataScanServiceClient)
+- [\c dataplex_v1::DataTaxonomyServiceClient](@ref google::cloud::dataplex_v1::DataTaxonomyServiceClient)
 - [\c dataplex_v1::DataplexServiceClient](@ref google::cloud::dataplex_v1::DataplexServiceClient)
 - [\c dataplex_v1::MetadataServiceClient](@ref google::cloud::dataplex_v1::MetadataServiceClient)
 <!-- inject-client-list-end -->
