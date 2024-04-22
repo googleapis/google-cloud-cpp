@@ -15,6 +15,8 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c dataplex_v1::CatalogServiceClient](@ref dataplex_v1::CatalogServiceClient-endpoint-snippet)
 - [\c dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-endpoint-snippet)
+- [\c dataplex_v1::DataScanServiceClient](@ref dataplex_v1::DataScanServiceClient-endpoint-snippet)
+- [\c dataplex_v1::DataTaxonomyServiceClient](@ref dataplex_v1::DataTaxonomyServiceClient-endpoint-snippet)
 - [\c dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-endpoint-snippet)
 - [\c dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-endpoint-snippet)
 
@@ -33,6 +35,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page dataplex_v1::ContentServiceClient-endpoint-snippet Override dataplex_v1::ContentServiceClient Endpoint Configuration
 
 @snippet google/cloud/dataplex/v1/samples/content_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataplex_v1::DataScanServiceClient-endpoint-snippet Override dataplex_v1::DataScanServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/v1/samples/data_scan_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataplex_v1::DataTaxonomyServiceClient-endpoint-snippet Override dataplex_v1::DataTaxonomyServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/v1/samples/data_taxonomy_client_samples.cc set-client-endpoint
 
 */
 

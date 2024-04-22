@@ -15,6 +15,8 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c dataplex_v1::CatalogServiceClient](@ref dataplex_v1::CatalogServiceClient-service-account-snippet)
 - [\c dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-service-account-snippet)
+- [\c dataplex_v1::DataScanServiceClient](@ref dataplex_v1::DataScanServiceClient-service-account-snippet)
+- [\c dataplex_v1::DataTaxonomyServiceClient](@ref dataplex_v1::DataTaxonomyServiceClient-service-account-snippet)
 - [\c dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-service-account-snippet)
 - [\c dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-service-account-snippet)
 
@@ -43,6 +45,18 @@ guide for more details.
 /*! @page dataplex_v1::ContentServiceClient-service-account-snippet Override dataplex_v1::ContentServiceClient Authentication Defaults
 
 @snippet google/cloud/dataplex/v1/samples/content_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataplex_v1::DataScanServiceClient-service-account-snippet Override dataplex_v1::DataScanServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/data_scan_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataplex_v1::DataTaxonomyServiceClient-service-account-snippet Override dataplex_v1::DataTaxonomyServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/data_taxonomy_client_samples.cc with-service-account
 
 */
 
