@@ -1,8 +1,8 @@
 /*!
 
-@mainpage Cloud Storage Control API C++ Client Library
+@mainpage Storage Control API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Storage Control API][cloud-service-docs], a service
+An idiomatic C++ client library for the [Storage Control API][cloud-service-docs], a service
 to Lets you store and retrieve potentially-large, immutable data objects.
 
 While this library is **GA**, please note that the Google Cloud C++ client
