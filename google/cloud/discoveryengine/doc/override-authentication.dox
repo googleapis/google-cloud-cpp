@@ -18,6 +18,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c discoveryengine_v1::DataStoreServiceClient](@ref discoveryengine_v1::DataStoreServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::EngineServiceClient](@ref discoveryengine_v1::EngineServiceClient-service-account-snippet)
+- [\c discoveryengine_v1::RecommendationServiceClient](@ref discoveryengine_v1::RecommendationServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::SchemaServiceClient](@ref discoveryengine_v1::SchemaServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::SearchServiceClient](@ref discoveryengine_v1::SearchServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::SiteSearchEngineServiceClient](@ref discoveryengine_v1::SiteSearchEngineServiceClient-service-account-snippet)
@@ -66,6 +67,12 @@ guide for more details.
 /*! @page discoveryengine_v1::EngineServiceClient-service-account-snippet Override discoveryengine_v1::EngineServiceClient Authentication Defaults
 
 @snippet google/cloud/discoveryengine/v1/samples/engine_client_samples.cc with-service-account
+
+*/
+
+/*! @page discoveryengine_v1::RecommendationServiceClient-service-account-snippet Override discoveryengine_v1::RecommendationServiceClient Authentication Defaults
+
+@snippet google/cloud/discoveryengine/v1/samples/recommendation_client_samples.cc with-service-account
 
 */
 
