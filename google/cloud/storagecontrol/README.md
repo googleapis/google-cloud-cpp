@@ -25,16 +25,16 @@ int main(int argc, char* argv[]) try {
     std::cerr << "Usage: " << argv[0] << " bucket-id\n";
     return 1;
   }
-  std::string const bucket_name = std::string{"projects/_/buckets/"} + argv[1];
+  auto const name =
+      std::string{"projects/_/buckets/"} + argv[1] + "/storageLayout";
 
   namespace storagecontrol = ::google::cloud::storagecontrol_v2;
   auto client = storagecontrol::StorageControlClient(
       storagecontrol::MakeStorageControlConnection());
 
-  for (auto r : client.ListFolders(bucket_name)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
-  }
+  auto layout = client.GetStorageLayout(name);
+  if (!layout) throw std::move(layout).status();
+  std::cout << layout->DebugString() << "\n";
 
   return 0;
 } catch (google::cloud::Status const& status) {
