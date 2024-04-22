@@ -1,7 +1,7 @@
-# Cloud Storage Control API C++ Client Library
+# Storage Control API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Storage Control API][cloud-service-docs], a service to manage GCS
+[Storage Control API][cloud-service-docs], a service to manage GCS
 configuration.
 
 While this library is **GA**, please note that the Google Cloud C++ client
@@ -47,8 +47,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the
-  [Cloud Storage Control API][cloud-service-docs] service
+- Official documentation about the [Storage Control API][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

@@ -415,7 +415,7 @@ See each library's `README.md` file for more information about:
 - [Google Cloud Storage](google/cloud/storage/README.md)
   [\[quickstart\]](google/cloud/storage/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/storage/latest)
-- [Cloud Storage Control API](google/cloud/storagecontrol/README.md)
+- [Storage Control API](google/cloud/storagecontrol/README.md)
   [\[quickstart\]](google/cloud/storagecontrol/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/storagecontrol/latest)
 - [Storage Insights API](google/cloud/storageinsights/README.md)
