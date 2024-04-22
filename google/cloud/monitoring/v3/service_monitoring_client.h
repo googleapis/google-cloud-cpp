@@ -36,8 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
 /// The Cloud Monitoring Service-Oriented Monitoring API has endpoints for
-/// managing and querying aspects of a workspace's services. These include the
-/// `Service`'s monitored resources, its Service-Level Objectives, and a
+/// managing and querying aspects of a Metrics Scope's services. These include
+/// the `Service`'s monitored resources, its Service-Level Objectives, and a
 /// taxonomy of categorized Health Metrics.
 ///
 /// @par Equality
@@ -97,8 +97,9 @@ class ServiceMonitoringServiceClient {
   ///
   /// Create a `Service`.
   ///
-  /// @param parent  Required. Resource [name](https://cloud.google.com/monitoring/api/v3#project_name) of
-  ///  the parent workspace. The format is:
+  /// @param parent  Required. Resource
+  ///  [name](https://cloud.google.com/monitoring/api/v3#project_name) of the
+  ///  parent Metrics Scope. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param service  Required. The `Service` to create.
@@ -115,8 +116,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L132}
-  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.CreateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L137}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Service> CreateService(
@@ -146,8 +147,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L132}
-  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.CreateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L137}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Service> CreateService(
@@ -174,8 +175,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L153}
-  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.GetServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L159}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Service> GetService(std::string const& name,
@@ -204,8 +205,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L153}
-  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.GetServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L159}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Service> GetService(
@@ -214,11 +215,11 @@ class ServiceMonitoringServiceClient {
 
   // clang-format off
   ///
-  /// List `Service`s for this workspace.
+  /// List `Service`s for this Metrics Scope.
   ///
-  /// @param parent  Required. Resource name of the parent containing the listed services, either a
-  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) or a
-  ///  Monitoring Workspace. The formats are:
+  /// @param parent  Required. Resource name of the parent containing the listed services,
+  ///  either a [project](https://cloud.google.com/monitoring/api/v3#project_name)
+  ///  or a Monitoring Metrics Scope. The formats are:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   ///      workspaces/[HOST_PROJECT_ID_OR_NUMBER]
@@ -244,8 +245,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ListServicesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L166}
-  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.ListServicesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L172}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::Service> ListServices(
@@ -253,7 +254,7 @@ class ServiceMonitoringServiceClient {
 
   // clang-format off
   ///
-  /// List `Service`s for this workspace.
+  /// List `Service`s for this Metrics Scope.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -283,8 +284,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ListServicesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L166}
-  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.ListServicesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L172}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::Service> ListServices(
@@ -309,8 +310,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
-  /// [google.monitoring.v3.UpdateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
+  /// [google.monitoring.v3.UpdateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L228}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Service> UpdateService(
@@ -339,8 +340,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
-  /// [google.monitoring.v3.UpdateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
+  /// [google.monitoring.v3.UpdateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L228}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::Service> UpdateService(
@@ -365,7 +366,7 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L233}
+  /// [google.monitoring.v3.DeleteServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L238}
   ///
   // clang-format on
   Status DeleteService(std::string const& name, Options opts = {});
@@ -391,7 +392,7 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L233}
+  /// [google.monitoring.v3.DeleteServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L238}
   ///
   // clang-format on
   Status DeleteService(
@@ -421,8 +422,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L246}
-  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L251}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L300}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
@@ -455,8 +456,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L246}
-  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L251}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L300}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
@@ -468,7 +469,8 @@ class ServiceMonitoringServiceClient {
   ///
   /// Get a `ServiceLevelObjective` by name.
   ///
-  /// @param name  Required. Resource name of the `ServiceLevelObjective` to get. The format is:
+  /// @param name  Required. Resource name of the `ServiceLevelObjective` to get. The format
+  ///  is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -484,8 +486,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L269}
-  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L275}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L300}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
@@ -514,8 +516,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L269}
-  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L275}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L300}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
@@ -528,7 +530,7 @@ class ServiceMonitoringServiceClient {
   /// List the `ServiceLevelObjective`s for the given `Service`.
   ///
   /// @param parent  Required. Resource name of the parent containing the listed SLOs, either a
-  ///  project or a Monitoring Workspace. The formats are:
+  ///  project or a Monitoring Metrics Scope. The formats are:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
   ///      workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-
@@ -554,8 +556,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L288}
-  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L295}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L300}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
@@ -593,8 +595,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L288}
-  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L295}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L300}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
@@ -621,8 +623,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
-  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L300}
+  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L339}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
@@ -654,8 +656,8 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
-  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L300}
+  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L339}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
@@ -667,7 +669,8 @@ class ServiceMonitoringServiceClient {
   ///
   /// Delete the given `ServiceLevelObjective`.
   ///
-  /// @param name  Required. Resource name of the `ServiceLevelObjective` to delete. The format is:
+  /// @param name  Required. Resource name of the `ServiceLevelObjective` to delete. The
+  ///  format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -681,7 +684,7 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L342}
+  /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L350}
   ///
   // clang-format on
   Status DeleteServiceLevelObjective(std::string const& name,
@@ -708,7 +711,7 @@ class ServiceMonitoringServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L342}
+  /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L350}
   ///
   // clang-format on
   Status DeleteServiceLevelObjective(

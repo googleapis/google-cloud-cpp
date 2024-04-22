@@ -648,7 +648,7 @@ class DataTransferServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L853}
-  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L895}
+  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L898}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::
@@ -1018,7 +1018,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.EnrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L902}
+  /// [google.cloud.bigquery.datatransfer.v1.EnrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L905}
   ///
   // clang-format on
   Status EnrollDataSources(
@@ -1051,7 +1051,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.UnenrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L913}
+  /// [google.cloud.bigquery.datatransfer.v1.UnenrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L917}
   ///
   // clang-format on
   Status UnenrollDataSources(google::cloud::bigquery::datatransfer::v1::

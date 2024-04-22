@@ -88,10 +88,11 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Lists monitored resource descriptors that match a filter. This method does not require a Workspace.
+  /// Lists monitored resource descriptors that match a filter.
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
-  ///  which to execute the request. The format is:
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) on which
+  ///  to execute the request. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -117,7 +118,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
-  /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
+  /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L183}
   ///
   // clang-format on
   StreamRange<google::api::MonitoredResourceDescriptor>
@@ -125,7 +126,7 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Lists monitored resource descriptors that match a filter. This method does not require a Workspace.
+  /// Lists monitored resource descriptors that match a filter.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -156,7 +157,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
-  /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
+  /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L183}
   ///
   // clang-format on
   StreamRange<google::api::MonitoredResourceDescriptor>
@@ -166,7 +167,7 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Gets a single monitored resource descriptor. This method does not require a Workspace.
+  /// Gets a single monitored resource descriptor.
   ///
   /// @param name  Required. The monitored resource descriptor to get.  The format is:
   ///  @n
@@ -188,7 +189,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
-  /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
+  /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L226}
   ///
   // clang-format on
   StatusOr<google::api::MonitoredResourceDescriptor>
@@ -196,7 +197,7 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Gets a single monitored resource descriptor. This method does not require a Workspace.
+  /// Gets a single monitored resource descriptor.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -218,7 +219,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
-  /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
+  /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L226}
   ///
   // clang-format on
   StatusOr<google::api::MonitoredResourceDescriptor>
@@ -229,10 +230,11 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Lists metric descriptors that match a filter. This method does not require a Workspace.
+  /// Lists metric descriptors that match a filter.
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
-  ///  which to execute the request. The format is:
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) on which
+  ///  to execute the request. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -258,7 +260,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.ListMetricDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L233}
+  /// [google.monitoring.v3.ListMetricDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L242}
   ///
   // clang-format on
   StreamRange<google::api::MetricDescriptor> ListMetricDescriptors(
@@ -266,7 +268,7 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Lists metric descriptors that match a filter. This method does not require a Workspace.
+  /// Lists metric descriptors that match a filter.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -297,7 +299,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.ListMetricDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L233}
+  /// [google.monitoring.v3.ListMetricDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L242}
   ///
   // clang-format on
   StreamRange<google::api::MetricDescriptor> ListMetricDescriptors(
@@ -306,9 +308,10 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Gets a single metric descriptor. This method does not require a Workspace.
+  /// Gets a single metric descriptor.
   ///
-  /// @param name  Required. The metric descriptor on which to execute the request. The format is:
+  /// @param name  Required. The metric descriptor on which to execute the request. The format
+  ///  is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
   ///  @n
@@ -328,7 +331,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L277}
+  /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L289}
   ///
   // clang-format on
   StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
@@ -336,7 +339,7 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Gets a single metric descriptor. This method does not require a Workspace.
+  /// Gets a single metric descriptor.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -358,7 +361,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L277}
+  /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L289}
   ///
   // clang-format on
   StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
@@ -368,17 +371,19 @@ class MetricServiceClient {
   // clang-format off
   ///
   /// Creates a new metric descriptor.
-  /// The creation is executed asynchronously and callers may check the returned
-  /// operation to track its progress.
+  /// The creation is executed asynchronously.
   /// User-created metric descriptors define
   /// [custom metrics](https://cloud.google.com/monitoring/custom-metrics).
+  /// The metric descriptor is updated if it already exists,
+  /// except that metric labels are never removed.
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
-  ///  which to execute the request. The format is:
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) on which
+  ///  to execute the request. The format is:
   ///  4
   ///      projects/[PROJECT_ID_OR_NUMBER]
-  /// @param metric_descriptor  Required. The new [custom metric](https://cloud.google.com/monitoring/custom-metrics)
-  ///  descriptor.
+  /// @param metric_descriptor  Required. The new [custom
+  ///  metric](https://cloud.google.com/monitoring/custom-metrics) descriptor.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -393,7 +398,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L293}
+  /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L306}
   ///
   // clang-format on
   StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
@@ -404,10 +409,11 @@ class MetricServiceClient {
   // clang-format off
   ///
   /// Creates a new metric descriptor.
-  /// The creation is executed asynchronously and callers may check the returned
-  /// operation to track its progress.
+  /// The creation is executed asynchronously.
   /// User-created metric descriptors define
   /// [custom metrics](https://cloud.google.com/monitoring/custom-metrics).
+  /// The metric descriptor is updated if it already exists,
+  /// except that metric labels are never removed.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -429,7 +435,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L293}
+  /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L306}
   ///
   // clang-format on
   StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
@@ -442,7 +448,8 @@ class MetricServiceClient {
   /// [custom metrics](https://cloud.google.com/monitoring/custom-metrics) can be
   /// deleted.
   ///
-  /// @param name  Required. The metric descriptor on which to execute the request. The format is:
+  /// @param name  Required. The metric descriptor on which to execute the request. The format
+  ///  is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
   ///  @n
@@ -459,7 +466,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L311}
+  /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L326}
   ///
   // clang-format on
   Status DeleteMetricDescriptor(std::string const& name, Options opts = {});
@@ -487,7 +494,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L311}
+  /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L326}
   ///
   // clang-format on
   Status DeleteMetricDescriptor(
@@ -496,24 +503,26 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Lists time series that match a filter. This method does not require a Workspace.
+  /// Lists time series that match a filter.
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name),
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name),
   ///  organization or folder on which to execute the request. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   ///      organizations/[ORGANIZATION_ID]
   ///      folders/[FOLDER_ID]
-  /// @param filter  Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
-  ///  that specifies which time series should be returned.  The filter must
-  ///  specify a single metric type, and can additionally specify metric labels
-  ///  and other information. For example:
+  /// @param filter  Required. A [monitoring
+  ///  filter](https://cloud.google.com/monitoring/api/v3/filters) that specifies
+  ///  which time series should be returned.  The filter must specify a single
+  ///  metric type, and can additionally specify metric labels and other
+  ///  information. For example:
   ///  @n
   ///      metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
   ///          metric.labels.instance_name = "my-instance-name"
-  /// @param interval  Required. The time interval for which results should be returned. Only time series
-  ///  that contain data points in the specified interval are included
-  ///  in the response.
+  /// @param interval  Required. The time interval for which results should be returned. Only time
+  ///  series that contain data points in the specified interval are included in
+  ///  the response.
   /// @param view  Required. Specifies which information is returned about the time series.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -537,7 +546,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ListTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L327}
+  /// [google.monitoring.v3.ListTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L343}
   /// [google.monitoring.v3.TimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L53}
   ///
   // clang-format on
@@ -549,7 +558,7 @@ class MetricServiceClient {
 
   // clang-format off
   ///
-  /// Lists time series that match a filter. This method does not require a Workspace.
+  /// Lists time series that match a filter.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -579,7 +588,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ListTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L327}
+  /// [google.monitoring.v3.ListTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L343}
   /// [google.monitoring.v3.TimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L53}
   ///
   // clang-format on
@@ -592,9 +601,13 @@ class MetricServiceClient {
   /// The response is empty if all time series in the request were written.
   /// If any time series could not be written, a corresponding failure message is
   /// included in the error response.
+  /// This method does not support
+  /// [resource locations constraint of an organization
+  /// policy](https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations#setting_the_organization_policy).
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
-  ///  which to execute the request. The format is:
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) on which
+  ///  to execute the request. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param time_series  Required. The new data to be added to a list of time series.
@@ -615,7 +628,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L439}
   ///
   // clang-format on
   Status CreateTimeSeries(
@@ -629,6 +642,9 @@ class MetricServiceClient {
   /// The response is empty if all time series in the request were written.
   /// If any time series could not be written, a corresponding failure message is
   /// included in the error response.
+  /// This method does not support
+  /// [resource locations constraint of an organization
+  /// policy](https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations#setting_the_organization_policy).
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -647,7 +663,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L439}
   ///
   // clang-format on
   Status CreateTimeSeries(
@@ -666,8 +682,9 @@ class MetricServiceClient {
   /// [projects.timeSeries.create][google.monitoring.v3.MetricService.CreateTimeSeries]
   /// instead.
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
-  ///  which to execute the request. The format is:
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) on which
+  ///  to execute the request. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param time_series  Required. The new data to be added to a list of time series.
@@ -688,8 +705,8 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
-  /// [google.monitoring.v3.MetricService.CreateTimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L148}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L439}
+  /// [google.monitoring.v3.MetricService.CreateTimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L154}
   ///
   // clang-format on
   Status CreateServiceTimeSeries(
@@ -726,8 +743,8 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
-  /// [google.monitoring.v3.MetricService.CreateTimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L148}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L439}
+  /// [google.monitoring.v3.MetricService.CreateTimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L154}
   ///
   // clang-format on
   Status CreateServiceTimeSeries(
@@ -740,9 +757,13 @@ class MetricServiceClient {
   /// The response is empty if all time series in the request were written.
   /// If any time series could not be written, a corresponding failure message is
   /// included in the error response.
+  /// This method does not support
+  /// [resource locations constraint of an organization
+  /// policy](https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations#setting_the_organization_policy).
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
-  ///  which to execute the request. The format is:
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) on which
+  ///  to execute the request. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param time_series  Required. The new data to be added to a list of time series.
@@ -763,7 +784,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L439}
   ///
   // clang-format on
   future<Status> AsyncCreateTimeSeries(
@@ -777,6 +798,9 @@ class MetricServiceClient {
   /// The response is empty if all time series in the request were written.
   /// If any time series could not be written, a corresponding failure message is
   /// included in the error response.
+  /// This method does not support
+  /// [resource locations constraint of an organization
+  /// policy](https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations#setting_the_organization_policy).
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -795,7 +819,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L439}
   ///
   // clang-format on
   future<Status> AsyncCreateTimeSeries(

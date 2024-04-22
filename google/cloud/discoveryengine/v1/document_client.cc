@@ -87,6 +87,17 @@ DocumentServiceClient::CreateDocument(
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceClient::UpdateDocument(
+    google::cloud::discoveryengine::v1::Document const& document,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::UpdateDocumentRequest request;
+  *request.mutable_document() = document;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDocument(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Document>
+DocumentServiceClient::UpdateDocument(
     google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

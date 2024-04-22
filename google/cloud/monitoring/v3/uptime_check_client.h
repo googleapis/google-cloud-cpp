@@ -128,7 +128,7 @@ class UptimeCheckServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.ListUptimeCheckConfigsRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L113}
-  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L90}
+  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L123}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::UptimeCheckConfig> ListUptimeCheckConfigs(
@@ -168,7 +168,7 @@ class UptimeCheckServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.ListUptimeCheckConfigsRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L113}
-  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L90}
+  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L123}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::UptimeCheckConfig> ListUptimeCheckConfigs(
@@ -196,7 +196,7 @@ class UptimeCheckServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.GetUptimeCheckConfigRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L163}
-  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L90}
+  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L123}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
@@ -226,7 +226,7 @@ class UptimeCheckServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.GetUptimeCheckConfigRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L163}
-  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L90}
+  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L123}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
@@ -257,7 +257,7 @@ class UptimeCheckServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.CreateUptimeCheckConfigRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L176}
-  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L90}
+  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L123}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
@@ -289,7 +289,7 @@ class UptimeCheckServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.CreateUptimeCheckConfigRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L176}
-  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L90}
+  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L123}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
@@ -328,7 +328,7 @@ class UptimeCheckServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.UpdateUptimeCheckConfigRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L195}
-  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L90}
+  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L123}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
@@ -362,7 +362,7 @@ class UptimeCheckServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.UpdateUptimeCheckConfigRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L195}
-  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L90}
+  /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L123}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
@@ -457,7 +457,7 @@ class UptimeCheckServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.ListUptimeCheckIpsRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L231}
-  /// [google.monitoring.v3.UptimeCheckIp]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L499}
+  /// [google.monitoring.v3.UptimeCheckIp]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L566}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::UptimeCheckIp> ListUptimeCheckIps(

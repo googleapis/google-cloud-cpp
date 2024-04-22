@@ -191,8 +191,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L137}
-  /// [google.cloud.discoveryengine.v1.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L173}
+  /// [google.cloud.discoveryengine.v1.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L365}
+  /// [google.cloud.discoveryengine.v1.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L401}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
