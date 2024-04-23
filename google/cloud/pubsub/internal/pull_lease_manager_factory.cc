@@ -38,9 +38,6 @@ std::shared_ptr<PullLeaseManager> MakePullLeaseManager(
       std::make_shared<pubsub_internal::DefaultPullLeaseManager>(
           std::move(cq), std::move(stub), options, std::move(subscription),
           std::move(ack_id), std::move(manager_impl), std::move(clock));
-  if (internal::TracingEnabled(options)) {
-    manager = MakeTracingPullLeaseManager(std::move(manager));
-  }
   return manager;
 }
 

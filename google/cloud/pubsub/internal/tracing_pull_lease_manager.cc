@@ -83,67 +83,6 @@ class TracingPullLeaseManagerImpl : public PullLeaseManagerImpl {
   opentelemetry::trace::SpanContext consumer_span_context_;
 };
 
-class TracingPullLeaseManager : public PullLeaseManager {
- public:
-  explicit TracingPullLeaseManager(std::shared_ptr<PullLeaseManager> child)
-      : child_(std::move(child)),
-        consumer_span_context_(
-            opentelemetry::trace::GetSpan(
-                opentelemetry::context::RuntimeContext::GetCurrent())
-                ->GetContext()) {}
-
-  void StartLeaseLoop() override { child_->StartLeaseLoop(); };
-
-  std::chrono::milliseconds LeaseRefreshPeriod() const override {
-    return child_->LeaseRefreshPeriod();
-  }
-
-  future<Status> ExtendLease(std::shared_ptr<SubscriberStub> stub,
-                             std::chrono::system_clock::time_point time_now,
-                             std::chrono::seconds extension) override {
-    namespace sc = opentelemetry::trace::SemanticConventions;
-    opentelemetry::trace::StartSpanOptions options;
-    options.kind = opentelemetry::trace::SpanKind::kClient;
-    auto span = internal::MakeSpan(
-        child_->subscription().subscription_id() + " modack",
-        {{sc::kMessagingSystem, "gcp_pubsub"},
-         {sc::kMessagingOperation, "modack"},
-         {sc::kCodeFunction, "pubsub::PullLeaseManager::ExtendLease"},
-         {"messaging.gcp_pubsub.message.ack_id", child_->ack_id()},
-         {"messaging.gcp_pubsub.message.ack_deadline_seconds",
-          static_cast<std::int32_t>(extension.count())},
-         {"gcp.project_id", child_->subscription().project_id()},
-         {sc::kMessagingDestinationName,
-          child_->subscription().subscription_id()}},
-        CreateLinks(consumer_span_context_), options);
-    auto scope = internal::OTelScope(span);
-    MaybeAddLinkAttributes(*span, consumer_span_context_, "receive");
-    return child_
-        ->ExtendLease(std::move(stub), std::move(time_now),
-                      std::move(extension))
-        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-               span = std::move(span)](auto f) {
-          auto result = f.get();
-          internal::DetachOTelContext(oc);
-          return internal::EndSpan(*span, std::move(result));
-        });
-  }
-
-  std::string ack_id() const override { return child_->ack_id(); }
-
-  pubsub::Subscription subscription() const override {
-    return child_->subscription();
-  }
-
-  std::shared_ptr<PullLeaseManager> child_;
-  opentelemetry::trace::SpanContext consumer_span_context_;
-};
-
-std::shared_ptr<PullLeaseManager> MakeTracingPullLeaseManager(
-    std::shared_ptr<PullLeaseManager> manager) {
-  return std::make_shared<TracingPullLeaseManager>(std::move(manager));
-}
-
 std::shared_ptr<PullLeaseManagerImpl> MakeTracingPullLeaseManagerImpl(
     std::shared_ptr<PullLeaseManagerImpl> manager, std::string ack_id,
     pubsub::Subscription subscription) {
@@ -152,11 +91,6 @@ std::shared_ptr<PullLeaseManagerImpl> MakeTracingPullLeaseManagerImpl(
 }
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<PullLeaseManager> MakeTracingPullLeaseManager(
-    std::shared_ptr<PullLeaseManager> manager) {
-  return manager;
-}
 
 std::shared_ptr<PullLeaseManagerImpl> MakeTracingPullLeaseManagerImpl(
     std::shared_ptr<PullLeaseManagerImpl> manager, std::string,

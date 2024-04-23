@@ -27,9 +27,6 @@ std::shared_ptr<PullLeaseManagerImpl> MakeTracingPullLeaseManagerImpl(
     std::shared_ptr<PullLeaseManagerImpl> manager, std::string ack_id,
     pubsub::Subscription subscription);
 
-std::shared_ptr<PullLeaseManager> MakeTracingPullLeaseManager(
-    std::shared_ptr<PullLeaseManager> manager);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
