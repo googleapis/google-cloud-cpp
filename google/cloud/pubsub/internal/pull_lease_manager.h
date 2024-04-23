@@ -53,6 +53,19 @@ class PullLeaseManager {
   }
 };
 
+/**
+ * Interface to make a modify ack deadline rpc request.
+ */
+class PullLeaseManagerImpl {
+ public:
+  virtual ~PullLeaseManagerImpl() = default;
+  virtual future<Status> AsyncModifyAckDeadline(
+      std::shared_ptr<SubscriberStub> stub, google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud

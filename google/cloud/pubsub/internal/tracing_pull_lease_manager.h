@@ -23,6 +23,10 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::shared_ptr<PullLeaseManagerImpl> MakeTracingPullLeaseManagerImpl(
+    std::shared_ptr<PullLeaseManagerImpl> manager, std::string ack_id,
+    pubsub::Subscription subscription);
+
 std::shared_ptr<PullLeaseManager> MakeTracingPullLeaseManager(
     std::shared_ptr<PullLeaseManager> manager);
 

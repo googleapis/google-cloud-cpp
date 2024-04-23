@@ -41,13 +41,14 @@ std::chrono::seconds DefaultLeaseExtension(Options const& options) {
 DefaultPullLeaseManager::DefaultPullLeaseManager(
     CompletionQueue cq, std::weak_ptr<SubscriberStub> w, Options options,
     pubsub::Subscription subscription, std::string ack_id,
-    std::shared_ptr<Clock> clock)
+    std::shared_ptr<PullLeaseManagerImpl> impl, std::shared_ptr<Clock> clock)
     : cq_(std::move(cq)),
       stub_(std::move(w)),
       options_(
           google::cloud::internal::MakeImmutableOptions(std::move(options))),
       subscription_(std::move(subscription)),
       ack_id_(std::move(ack_id)),
+      impl_(std::move(impl)),
       clock_(std::move(clock)),
       lease_deadline_(DefaultLeaseDeadline(clock_->Now(), *options_)),
       lease_extension_(DefaultLeaseExtension(*options_)),
@@ -94,14 +95,14 @@ future<Status> DefaultPullLeaseManager::ExtendLease(
       options_->get<pubsub::RetryPolicyOption>()->clone(),
       options_->get<pubsub::BackoffPolicyOption>()->clone(),
       google::cloud::Idempotency::kIdempotent, cq_,
-      [stub = std::move(stub), deadline = now + extension, clock = clock_](
-          auto cq, auto context, auto options, auto const& request) {
+      [stub = std::move(stub), deadline = now + extension, clock = clock_,
+       impl = impl_](auto cq, auto context, auto options, auto const& request) {
         if (deadline < clock->Now()) {
           return make_ready_future(
               Status(StatusCode::kDeadlineExceeded, "lease already expired"));
         }
         context->set_deadline((std::min)(deadline, context->deadline()));
-        return stub->AsyncModifyAckDeadline(cq, std::move(context),
+        return impl->AsyncModifyAckDeadline(stub, cq, std::move(context),
                                             std::move(options), request);
       },
       options_, request, __func__);
