@@ -40,6 +40,7 @@ application.
 - [\c aiplatform_v1::FeatureRegistryServiceClient](@ref google::cloud::aiplatform_v1::FeatureRegistryServiceClient)
 - [\c aiplatform_v1::FeaturestoreServiceClient](@ref google::cloud::aiplatform_v1::FeaturestoreServiceClient)
 - [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient)
+- [\c aiplatform_v1::GenAiTuningServiceClient](@ref google::cloud::aiplatform_v1::GenAiTuningServiceClient)
 - [\c aiplatform_v1::IndexServiceClient](@ref google::cloud::aiplatform_v1::IndexServiceClient)
 - [\c aiplatform_v1::IndexEndpointServiceClient](@ref google::cloud::aiplatform_v1::IndexEndpointServiceClient)
 - [\c aiplatform_v1::JobServiceClient](@ref google::cloud::aiplatform_v1::JobServiceClient)

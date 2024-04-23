@@ -9,7 +9,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 ### Updated Libraries
 
 - [AI Platform API](/google/cloud/aiplatform/README.md) - new
-  `FeatureRegistryServiceClient`
+  `FeatureRegistryServiceClient` and `GenAiTuningServiceClient`
 - [Cloud Dataplex API](/google/cloud/dataplex/README.md) - new
   `DataScanServiceClient` and `DataTaxonomyServiceClient`
 - [Cloud SQL Admin API](/google/cloud/sql/README.md) - several new clients:
