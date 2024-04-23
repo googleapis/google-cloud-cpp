@@ -43,6 +43,17 @@ class MockPullLeaseManager : public pubsub_internal::PullLeaseManager {
   MOCK_METHOD(pubsub::Subscription, subscription, (), (const, override));
 };
 
+class MockPullLeaseManagerImpl : public pubsub_internal::PullLeaseManagerImpl {
+ public:
+  MOCK_METHOD(future<Status>, AsyncModifyAckDeadline,
+              (std::shared_ptr<pubsub_internal::SubscriberStub> stub,
+               google::cloud::CompletionQueue& cq,
+               std::shared_ptr<grpc::ClientContext> context,
+               google::cloud::internal::ImmutableOptions options,
+               google::pubsub::v1::ModifyAckDeadlineRequest const& request),
+              (override));
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_testing
 }  // namespace cloud
