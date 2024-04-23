@@ -404,6 +404,35 @@ TEST(DefaultPullLeaseManager, AckId) {
   EXPECT_EQ(manager->ack_id(), "test-ack-id");
 }
 
+TEST(DefaultPullLeaseManagerImpl, AsyncModifyAckDeadline) {
+  auto impl = std::make_shared<DefaultPullLeaseManagerImpl>();
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  auto constexpr kLeaseExtension = std::chrono::seconds(10);
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  request.set_subscription(subscription.FullName());
+  request.set_ack_deadline_seconds(
+      static_cast<std::int32_t>(kLeaseExtension.count()));
+  request.add_ack_ids("test-ack-id");
+  auto stub = std::make_shared<MockSubscriberStub>();
+  auto request_matcher = AllOf(
+      Property(&ModifyAckDeadlineRequest::ack_ids, ElementsAre("test-ack-id")),
+      Property(&ModifyAckDeadlineRequest::ack_deadline_seconds,
+               kLeaseExtension.count()),
+      Property(&ModifyAckDeadlineRequest::subscription,
+               subscription.FullName()));
+  EXPECT_CALL(*stub, AsyncModifyAckDeadline(_, _, _, request_matcher))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  auto mock_cq = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  CompletionQueue cq = CompletionQueue(std::move(mock_cq));
+  std::shared_ptr<grpc::ClientContext> context;
+  auto options = google::cloud::internal::MakeImmutableOptions(
+      google::cloud::pubsub_testing::MakeTestOptions());
+
+  auto status =
+      impl->AsyncModifyAckDeadline(stub, cq, context, options, request);
+  EXPECT_STATUS_OK(status.get());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
