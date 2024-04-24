@@ -28,13 +28,16 @@ std::shared_ptr<PullLeaseManager> MakePullLeaseManager(
     CompletionQueue cq, std::weak_ptr<SubscriberStub> stub,
     pubsub::Subscription subscription, std::string ack_id,
     Options const& options, std::shared_ptr<Clock> clock) {
+  std::shared_ptr<PullLeaseManagerImpl> manager_impl =
+      std::make_shared<pubsub_internal::DefaultPullLeaseManagerImpl>();
+  if (internal::TracingEnabled(options)) {
+    manager_impl = MakeTracingPullLeaseManagerImpl(std::move(manager_impl),
+                                                   ack_id, subscription);
+  }
   std::shared_ptr<PullLeaseManager> manager =
       std::make_shared<pubsub_internal::DefaultPullLeaseManager>(
           std::move(cq), std::move(stub), options, std::move(subscription),
-          std::move(ack_id), std::move(clock));
-  if (internal::TracingEnabled(options)) {
-    manager = MakeTracingPullLeaseManager(std::move(manager));
-  }
+          std::move(ack_id), std::move(manager_impl), std::move(clock));
   return manager;
 }
 

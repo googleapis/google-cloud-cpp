@@ -33,6 +33,20 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+class DefaultPullLeaseManagerImpl : public PullLeaseManagerImpl {
+ public:
+  DefaultPullLeaseManagerImpl() = default;
+
+  future<Status> AsyncModifyAckDeadline(
+      std::shared_ptr<SubscriberStub> stub, google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
+    return stub->AsyncModifyAckDeadline(cq, std::move(context),
+                                        std::move(options), request);
+  }
+};
+
 /**
  * Maintains the lease for a single message.
  */
@@ -45,6 +59,7 @@ class DefaultPullLeaseManager
   DefaultPullLeaseManager(
       CompletionQueue cq, std::weak_ptr<SubscriberStub> w, Options options,
       pubsub::Subscription subscription, std::string ack_id,
+      std::shared_ptr<PullLeaseManagerImpl> impl,
       std::shared_ptr<Clock> clock = std::make_shared<Clock>());
   ~DefaultPullLeaseManager() override;
 
@@ -76,6 +91,7 @@ class DefaultPullLeaseManager
   google::cloud::internal::ImmutableOptions options_;
   pubsub::Subscription subscription_;
   std::string ack_id_;
+  std::shared_ptr<PullLeaseManagerImpl> impl_;
   std::shared_ptr<Clock> clock_;
   // The absolute deadline to complete processing the message.
   // The application can configure this value using

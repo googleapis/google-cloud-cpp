@@ -18,8 +18,10 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/testing/mock_pull_lease_manager.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
+#include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -31,7 +33,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::pubsub_testing::MockPullLeaseManager;
+using ::google::cloud::pubsub_testing::MockPullLeaseManagerImpl;
 using ::google::cloud::pubsub_testing::MockSubscriberStub;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
@@ -45,7 +47,6 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
-using ::testing::IsEmpty;
 using ::testing::Return;
 
 pubsub::Subscription const kTestSubscription =
@@ -54,23 +55,25 @@ auto constexpr kTestAckId = "test-ack-id";
 auto constexpr kLeaseExtension = std::chrono::seconds(10);
 auto const kCurrentTime = std::chrono::system_clock::now();
 
-std::shared_ptr<PullLeaseManager> MakeTestPullLeaseManager(
-    std::shared_ptr<MockPullLeaseManager> mock) {
-  EXPECT_CALL(*mock, ack_id()).WillRepeatedly(Return(kTestAckId));
-  EXPECT_CALL(*mock, subscription()).WillRepeatedly(Return(kTestSubscription));
-
-  return MakeTracingPullLeaseManager(std::move(mock));
-}
-
-TEST(TracingPullLeaseManagerTest, ExtendSuccess) {
+TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineSuccess) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock = std::make_unique<MockPullLeaseManager>();
-  EXPECT_CALL(*mock, ExtendLease(_, _, _))
+  auto mock = std::make_shared<MockPullLeaseManagerImpl>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, _, _))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
-  auto manager = MakeTestPullLeaseManager(std::move(mock));
+  auto manager = MakeTracingPullLeaseManagerImpl(std::move(mock), kTestAckId,
+                                                 kTestSubscription);
   auto stub = std::make_shared<MockSubscriberStub>();
+  auto impl = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  CompletionQueue cq = CompletionQueue(std::move(impl));
+  std::shared_ptr<grpc::ClientContext> context;
+  auto options = google::cloud::internal::MakeImmutableOptions(
+      google::cloud::pubsub_testing::MakeTestOptions());
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_ack_deadline_seconds(
+      static_cast<std::int32_t>(kLeaseExtension.count()));
 
-  auto status = manager->ExtendLease(stub, kCurrentTime, kLeaseExtension);
+  auto status =
+      manager->AsyncModifyAckDeadline(stub, cq, context, options, request);
   EXPECT_STATUS_OK(status.get());
 
   auto spans = span_catcher->GetSpans();
@@ -80,16 +83,26 @@ TEST(TracingPullLeaseManagerTest, ExtendSuccess) {
                          SpanNamed("test-subscription modack"))));
 }
 
-TEST(TracingPullLeaseManagerTest, ExtendError) {
+TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineError) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock = std::make_unique<MockPullLeaseManager>();
-  EXPECT_CALL(*mock, ExtendLease(_, _, _))
+  auto mock = std::make_shared<MockPullLeaseManagerImpl>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, _, _))
       .WillOnce(Return(ByMove(
           make_ready_future(Status{StatusCode::kPermissionDenied, "uh-oh"}))));
-  auto manager = MakeTestPullLeaseManager(std::move(mock));
+  auto manager = MakeTracingPullLeaseManagerImpl(std::move(mock), kTestAckId,
+                                                 kTestSubscription);
   auto stub = std::make_shared<MockSubscriberStub>();
+  auto impl = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  CompletionQueue cq = CompletionQueue(std::move(impl));
+  std::shared_ptr<grpc::ClientContext> context;
+  auto options = google::cloud::internal::MakeImmutableOptions(
+      google::cloud::pubsub_testing::MakeTestOptions());
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_ack_deadline_seconds(
+      static_cast<std::int32_t>(kLeaseExtension.count()));
 
-  auto status = manager->ExtendLease(stub, kCurrentTime, kLeaseExtension);
+  auto status =
+      manager->AsyncModifyAckDeadline(stub, cq, context, options, request);
   EXPECT_THAT(status.get(), StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
 
   auto spans = span_catcher->GetSpans();
@@ -99,16 +112,26 @@ TEST(TracingPullLeaseManagerTest, ExtendError) {
                      SpanNamed("test-subscription modack"))));
 }
 
-TEST(TracingPullLeaseManagerTest, ExtendAttributes) {
+TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineAttributes) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
-  auto mock = std::make_unique<MockPullLeaseManager>();
-  EXPECT_CALL(*mock, ExtendLease(_, _, _))
+  auto mock = std::make_shared<MockPullLeaseManagerImpl>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, _, _))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
-  auto manager = MakeTestPullLeaseManager(std::move(mock));
+  auto manager = MakeTracingPullLeaseManagerImpl(std::move(mock), kTestAckId,
+                                                 kTestSubscription);
   auto stub = std::make_shared<MockSubscriberStub>();
+  auto impl = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  CompletionQueue cq = CompletionQueue(std::move(impl));
+  std::shared_ptr<grpc::ClientContext> context;
+  auto options = google::cloud::internal::MakeImmutableOptions(
+      google::cloud::pubsub_testing::MakeTestOptions());
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_ack_deadline_seconds(
+      static_cast<std::int32_t>(kLeaseExtension.count()));
 
-  auto status = manager->ExtendLease(stub, kCurrentTime, kLeaseExtension);
+  auto status =
+      manager->AsyncModifyAckDeadline(stub, cq, context, options, request);
   EXPECT_STATUS_OK(status.get());
 
   auto spans = span_catcher->GetSpans();
@@ -151,18 +174,28 @@ TEST(TracingPullLeaseManagerTest, ExtendAttributes) {
 
 using ::google::cloud::testing_util::SpanLinksSizeIs;
 
-TEST(TracingPullLeaseManagerTest, ExtendAddsLink) {
+TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineAddsLink) {
   auto span_catcher = InstallSpanCatcher();
   auto consumer_span = internal::MakeSpan("receive");
   auto scope = internal::OTelScope(consumer_span);
-  auto mock = std::make_unique<MockPullLeaseManager>();
-  EXPECT_CALL(*mock, ExtendLease(_, _, _))
+  auto mock = std::make_shared<MockPullLeaseManagerImpl>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, _, _))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
-  auto manager = MakeTestPullLeaseManager(std::move(mock));
+  auto manager = MakeTracingPullLeaseManagerImpl(std::move(mock), kTestAckId,
+                                                 kTestSubscription);
   auto stub = std::make_shared<MockSubscriberStub>();
+  auto impl = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  CompletionQueue cq = CompletionQueue(std::move(impl));
+  std::shared_ptr<grpc::ClientContext> context;
+  auto options = google::cloud::internal::MakeImmutableOptions(
+      google::cloud::pubsub_testing::MakeTestOptions());
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_ack_deadline_seconds(
+      static_cast<std::int32_t>(kLeaseExtension.count()));
   consumer_span->End();
 
-  auto status = manager->ExtendLease(stub, kCurrentTime, kLeaseExtension);
+  auto status =
+      manager->AsyncModifyAckDeadline(stub, cq, context, options, request);
   EXPECT_STATUS_OK(status.get());
 
   auto spans = span_catcher->GetSpans();
@@ -172,18 +205,28 @@ TEST(TracingPullLeaseManagerTest, ExtendAddsLink) {
 
 #else
 
-TEST(TracingPullLeaseManagerTest, ExtendAddsSpanIdAndTraceIdAttribute) {
+TEST(TracingPullLeaseManagerImplTest, ExtendAddsSpanIdAndTraceIdAttribute) {
   auto span_catcher = InstallSpanCatcher();
   auto consumer_span = internal::MakeSpan("receive");
   auto scope = internal::OTelScope(consumer_span);
-  auto mock = std::make_unique<MockPullLeaseManager>();
-  EXPECT_CALL(*mock, ExtendLease(_, _, _))
+  auto mock = std::make_shared<MockPullLeaseManagerImpl>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, _, _))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
-  auto manager = MakeTestPullLeaseManager(std::move(mock));
+  auto manager = MakeTracingPullLeaseManagerImpl(std::move(mock), kTestAckId,
+                                                 kTestSubscription);
   auto stub = std::make_shared<MockSubscriberStub>();
+  auto impl = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  CompletionQueue cq = CompletionQueue(std::move(impl));
+  std::shared_ptr<grpc::ClientContext> context;
+  auto options = google::cloud::internal::MakeImmutableOptions(
+      google::cloud::pubsub_testing::MakeTestOptions());
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_ack_deadline_seconds(
+      static_cast<std::int32_t>(kLeaseExtension.count()));
   consumer_span->End();
 
-  auto status = manager->ExtendLease(stub, kCurrentTime, kLeaseExtension);
+  auto status =
+      manager->AsyncModifyAckDeadline(stub, cq, context, options, request);
   EXPECT_STATUS_OK(status.get());
 
   auto spans = span_catcher->GetSpans();
@@ -197,28 +240,6 @@ TEST(TracingPullLeaseManagerTest, ExtendAddsSpanIdAndTraceIdAttribute) {
 }
 
 #endif
-
-TEST(TracingPullLeaseManagerTest, AckIdNoSpans) {
-  auto span_catcher = InstallSpanCatcher();
-  auto mock = std::make_unique<MockPullLeaseManager>();
-  auto manager = MakeTestPullLeaseManager(std::move(mock));
-
-  EXPECT_EQ(kTestAckId, manager->ack_id());
-
-  auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, IsEmpty());
-}
-
-TEST(TracingPullLeaseManagerTest, SubscriptionNoSpans) {
-  auto span_catcher = InstallSpanCatcher();
-  auto mock = std::make_unique<MockPullLeaseManager>();
-  auto manager = MakeTestPullLeaseManager(std::move(mock));
-
-  EXPECT_EQ(kTestSubscription, manager->subscription());
-
-  auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, IsEmpty());
-}
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
