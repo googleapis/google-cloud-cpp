@@ -145,6 +145,9 @@ TEST_F(DiscoveryResourceTest, FormatUrlPath) {
           "projects/{project}/zones/{zoneName}/myTests/{fooId}:method1"),
       Eq("projects/{project}/zones/{zone_name}/myTests/"
          "{foo_id}:method1"));
+  EXPECT_THAT(
+      DiscoveryResource::FormatUrlPath("projects/{+project}/zones/{+zoneName}"),
+      Eq("projects/{project}/zones/{zone_name}"));
 }
 
 TEST_F(DiscoveryResourceTest, FormatRpcOptionsGetRegion) {
