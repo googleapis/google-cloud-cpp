@@ -96,9 +96,9 @@ jobs:
     - name: Download and Install CMake
       shell: bash
       run: |
-        choco install -y cmake --version 3.29.0 || \
-        (sleep 60  ; choco install -y cmake --version 3.29.0) || \
-        (sleep 120 ; choco install -y cmake --version 3.29.0)
+        choco install -y cmake --version 3.29.2 || \
+        (sleep 60  ; choco install -y cmake --version 3.29.2) || \
+        (sleep 120 ; choco install -y cmake --version 3.29.2)
     - name: Download and Install sccache
       working-directory: "${{runner.temp}}"
       shell: bash
