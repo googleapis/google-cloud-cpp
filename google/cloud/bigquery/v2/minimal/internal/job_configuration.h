@@ -20,6 +20,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
+#include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
@@ -30,12 +31,12 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct JobConfiguration {
-  std::string job_type;
-  bool dry_run = false;
-  std::chrono::milliseconds job_timeout = std::chrono::milliseconds(0);
-  std::map<std::string, std::string> labels;
+  absl::optional<std::string> job_type;
+  absl::optional<bool> dry_run;
+  absl::optional<std::chrono::milliseconds> job_timeout;
+  absl::optional<std::map<std::string, std::string>> labels;
 
-  JobConfigurationQuery query;
+  absl::optional<JobConfigurationQuery> query;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},

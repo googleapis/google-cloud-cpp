@@ -25,25 +25,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::string JobReference::DebugString(absl::string_view name,
                                       TracingOptions const& options,
                                       int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id)
-      .StringField("job_id", job_id)
-      .StringField("location", location)
-      .Build();
+  auto f = internal::DebugFormatter(name, options, indent);
+  if (project_id) f.StringField("project_id", *project_id);
+  if (job_id) f.StringField("job_id", *job_id);
+  if (location) f.StringField("location", *location);
+  return f.Build();
 }
 
 std::string Job::DebugString(absl::string_view name,
                              TracingOptions const& options, int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("etag", etag)
-      .StringField("kind", kind)
-      .StringField("self_link", self_link)
-      .StringField("id", id)
-      .SubMessage("configuration", configuration)
-      .SubMessage("reference", job_reference)
-      .SubMessage("status", status)
-      .SubMessage("statistics", statistics)
-      .Build();
+  auto f = internal::DebugFormatter(name, options, indent);
+  if (kind) f.StringField("kind", *kind);
+  if (etag) f.StringField("etag", *etag);
+  if (self_link) f.StringField("self_link", *self_link);
+  if (id) f.StringField("id", *id);
+  if (configuration) f.SubMessage("configuration", *configuration);
+  if (job_reference) f.SubMessage("reference", *job_reference);
+  if (status) f.SubMessage("status", *status);
+  if (statistics) f.SubMessage("statistics", *statistics);
+  return f.Build();
 }
 
 std::string ListFormatJob::DebugString(absl::string_view name,
@@ -83,9 +83,9 @@ void from_json(nlohmann::json const& j, JobStatus& jb) {
 }
 
 void to_json(nlohmann::json& j, JobReference const& jb) {
-  j = nlohmann::json{{"projectId", jb.project_id},
-                     {"jobId", jb.job_id},
-                     {"location", jb.location}};
+  if (jb.project_id) j["projectId"] = *jb.project_id;
+  if (jb.job_id) j["jobId"] = *jb.job_id;
+  if (jb.location) j["location"] = *jb.location;
 }
 void from_json(nlohmann::json const& j, JobReference& jb) {
   SafeGetTo(jb.project_id, j, "projectId");
@@ -94,15 +94,15 @@ void from_json(nlohmann::json const& j, JobReference& jb) {
 }
 
 void to_json(nlohmann::json& j, Job const& jb) {
-  j = nlohmann::json{{"kind", jb.kind},
-                     {"etag", jb.etag},
-                     {"id", jb.id},
-                     {"selfLink", jb.self_link},
-                     {"user_email", jb.user_email},
-                     {"status", jb.status},
-                     {"jobReference", jb.job_reference},
-                     {"configuration", jb.configuration},
-                     {"statistics", jb.statistics}};
+  if (jb.kind) j["kind"] = *jb.kind;
+  if (jb.etag) j["etag"] = *jb.etag;
+  if (jb.id) j["id"] = *jb.id;
+  if (jb.self_link) j["selfLink"] = *jb.self_link;
+  if (jb.user_email) j["user_email"] = *jb.user_email;
+  if (jb.status) j["status"] = *jb.status;
+  if (jb.job_reference) j["jobReference"] = *jb.job_reference;
+  if (jb.configuration) j["configuration"] = *jb.configuration;
+  if (jb.statistics) j["statistics"] = *jb.statistics;
 }
 void from_json(nlohmann::json const& j, Job& jb) {
   SafeGetTo(jb.kind, j, "kind");

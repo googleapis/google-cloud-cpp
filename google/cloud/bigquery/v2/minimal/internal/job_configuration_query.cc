@@ -25,60 +25,58 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::string JobConfigurationQuery::DebugString(absl::string_view name,
                                                TracingOptions const& options,
                                                int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("query", query)
-      .StringField("create_disposition", create_disposition)
-      .StringField("write_disposition", write_disposition)
-      .StringField("priority", priority)
-      .StringField("parameter_mode", parameter_mode)
-      .Field("preserve_nulls", preserve_nulls)
-      .Field("allow_large_results", allow_large_results)
-      .Field("use_query_cache", use_query_cache)
-      .Field("flatten_results", flatten_results)
-      .Field("use_legacy_sql", use_legacy_sql)
-      .Field("create_session", create_session)
-      .Field("maximum_bytes_billed", maximum_bytes_billed)
-      .Field("schema_update_options", schema_update_options)
-      .Field("connection_properties", connection_properties)
-      .Field("query_parameters", query_parameters)
-      .SubMessage("default_dataset", default_dataset)
-      .SubMessage("destination_table", destination_table)
-      .SubMessage("time_partitioning", time_partitioning)
-      .SubMessage("range_partitioning", range_partitioning)
-      .SubMessage("clustering", clustering)
-      .SubMessage("destination_encryption_configuration",
-                  destination_encryption_configuration)
-      .SubMessage("script_options", script_options)
-      .SubMessage("system_variables", system_variables)
-      .Build();
+  auto f = internal::DebugFormatter(name, options, indent);
+  if (query) f.StringField("query", *query);
+  if (create_disposition) f.StringField("create_disposition", *create_disposition);
+  if (write_disposition) f.StringField("write_disposition", *write_disposition);
+  if (priority) f.StringField("priority", *priority);
+  if (parameter_mode) f.StringField("parameter_mode", *parameter_mode);
+  if (preserve_nulls) f.Field("preserve_nulls", *preserve_nulls);
+  if (allow_large_results) f.Field("allow_large_results", *allow_large_results);
+  if (use_query_cache) f.Field("use_query_cache", *use_query_cache);
+  if (flatten_results) f.Field("flatten_results", *flatten_results);
+  if (use_legacy_sql) f.Field("use_legacy_sql", *use_legacy_sql);
+  if (create_session) f.Field("create_session", *create_session);
+  if (maximum_bytes_billed) f.Field("maximum_bytes_billed", *maximum_bytes_billed);
+  if (schema_update_options) f.Field("schema_update_options", *schema_update_options);
+  if (connection_properties) f.Field("connection_properties", *connection_properties);
+  if (query_parameters) f.Field("query_parameters", *query_parameters);
+  if (default_dataset) f.SubMessage("default_dataset", *default_dataset);
+  if (destination_table) f.SubMessage("destination_table", *destination_table);
+  if (time_partitioning) f.SubMessage("time_partitioning", *time_partitioning);
+  if (range_partitioning) f.SubMessage("range_partitioning", *range_partitioning);
+  if (clustering) f.SubMessage("clustering", *clustering);
+  if (destination_encryption_configuration) f.SubMessage("destination_encryption_configuration",
+                                                        *destination_encryption_configuration);
+  if (script_options) f.SubMessage("script_options", *script_options);
+  if (system_variables) f.SubMessage("system_variables", *system_variables);
+  return f.Build();
 }
 
 void to_json(nlohmann::json& j, JobConfigurationQuery const& c) {
-  j = nlohmann::json{
-      {"query", c.query},
-      {"createDisposition", c.create_disposition},
-      {"writeDisposition", c.write_disposition},
-      {"priority", c.priority},
-      {"parameterMode", c.parameter_mode},
-      {"preserveNulls", c.preserve_nulls},
-      {"allowLargeResults", c.allow_large_results},
-      {"useQueryCache", c.use_query_cache},
-      {"flattenResults", c.flatten_results},
-      {"useLegacySql", c.use_legacy_sql},
-      {"createSession", c.create_session},
-      {"maximumBytesBilled", std::to_string(c.maximum_bytes_billed)},
-      {"queryParameters", c.query_parameters},
-      {"schemaUpdateOptions", c.schema_update_options},
-      {"connectionProperties", c.connection_properties},
-      {"defaultDataset", c.default_dataset},
-      {"destinationTable", c.destination_table},
-      {"timePartitioning", c.time_partitioning},
-      {"rangePartitioning", c.range_partitioning},
-      {"clustering", c.clustering},
-      {"destinationEncryptionConfiguration",
-       c.destination_encryption_configuration},
-      {"scriptOptions", c.script_options},
-      {"systemVariables", c.system_variables}};
+  if (c.query) j["query"] = *c.query;
+  if (c.create_disposition) j["createDisposition"] = *c.create_disposition;
+  if (c.write_disposition) j["writeDisposition"] = *c.write_disposition;
+  if (c.priority) j["priority"] = *c.priority;
+  if (c.parameter_mode) j["parameterMode"] = *c.parameter_mode;
+  if (c.preserve_nulls) j["preserveNulls"] = *c.preserve_nulls;
+  if (c.allow_large_results) j["allowLargeResults"] = *c.allow_large_results;
+  if (c.use_query_cache) j["useQueryCache"] = *c.use_query_cache;
+  if (c.flatten_results) j["flattenResults"] = *c.flatten_results;
+  if (c.use_legacy_sql) j["useLegacySql"] = *c.use_legacy_sql;
+  if (c.create_session) j["createSession"] = *c.create_session;
+  if (c.maximum_bytes_billed) j["maximumBytesBilled"] = std::to_string(*c.maximum_bytes_billed);
+  if (c.query_parameters) j["queryParameters"] = *c.query_parameters;
+  if (c.schema_update_options) j["schemaUpdateOptions"] = *c.schema_update_options;
+  if (c.connection_properties) j["connectionProperties"] = *c.connection_properties;
+  if (c.default_dataset) j["defaultDataset"] = *c.default_dataset;
+  if (c.destination_table) j["destinationTable"] = *c.destination_table;
+  if (c.time_partitioning) j["timePartitioning"] = *c.time_partitioning;
+  if (c.range_partitioning) j["rangePartitioning"] = *c.range_partitioning;
+  if (c.clustering) j["clustering"] = *c.clustering;
+  if (c.destination_encryption_configuration) j["destinationEncryptionConfiguration"] = *c.destination_encryption_configuration;
+  if (c.script_options) j["scriptOptions"] = *c.script_options;
+  if (c.system_variables) j["systemVariables"] = *c.system_variables;
 }
 void from_json(nlohmann::json const& j, JobConfigurationQuery& c) {
   SafeGetTo(c.query, j, "query");

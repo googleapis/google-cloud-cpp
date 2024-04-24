@@ -58,6 +58,28 @@ void ToIntJson(std::chrono::milliseconds const& field, nlohmann::json& j,
   j[name] = m;
 }
 
+void FromJson(absl::optional<std::chrono::milliseconds>& field, nlohmann::json const& j,
+              char const* name) {
+  auto const m = GetNumberFromJson(j, name);
+  if (m >= 0) {
+    field = std::chrono::milliseconds(m);
+  }
+}
+
+void ToJson(absl::optional<std::chrono::milliseconds> const& field, nlohmann::json& j,
+            char const* name) {
+  if (field) {
+    ToJson(*field, j, name);
+  }
+}
+
+void ToIntJson(absl::optional<std::chrono::milliseconds> const& field, nlohmann::json& j,
+               char const* name) {
+  if (field) {
+    ToIntJson(*field, j, name);
+  }
+}
+
 void FromJson(std::chrono::hours& field, nlohmann::json const& j,
               char const* name) {
   auto const m = GetNumberFromJson(j, name);
@@ -72,6 +94,21 @@ void ToJson(std::chrono::hours const& field, nlohmann::json& j,
       std::chrono::duration_cast<std::chrono::hours>(field).count());
 
   j[name] = std::to_string(m);
+}
+
+void FromJson(absl::optional<std::chrono::hours>& field, nlohmann::json const& j,
+              char const* name) {
+  auto const m = GetNumberFromJson(j, name);
+  if (m >= 0) {
+    field = std::chrono::hours(m);
+  }
+}
+
+void ToJson(absl::optional<std::chrono::hours> const& field, nlohmann::json& j,
+            char const* name) {
+  if (field) {
+    ToJson(*field, j, name);
+  }
 }
 
 void FromJson(std::chrono::system_clock::time_point& field,
@@ -91,6 +128,22 @@ void ToJson(std::chrono::system_clock::time_point const& field,
           .count());
 
   j[name] = std::to_string(m);
+}
+
+void FromJson(absl::optional<std::chrono::system_clock::time_point>& field, nlohmann::json const& j,
+              char const* name) {
+  auto const m = GetNumberFromJson(j, name);
+  if (m >= 0) {
+    field = std::chrono::system_clock::from_time_t(0) +
+            std::chrono::milliseconds(m);
+  }
+}
+
+void ToJson(absl::optional<std::chrono::system_clock::time_point> const& field, nlohmann::json& j,
+            char const* name) {
+  if (field) {
+    ToJson(*field, j, name);
+  }
 }
 
 nlohmann::json RemoveJsonKeysAndEmptyFields(

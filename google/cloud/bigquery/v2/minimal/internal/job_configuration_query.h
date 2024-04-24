@@ -20,6 +20,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
+#include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -29,31 +30,31 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct JobConfigurationQuery {
-  std::string query;
-  std::string create_disposition;
-  std::string write_disposition;
-  std::string priority;
-  std::string parameter_mode;
-  bool preserve_nulls = false;
-  bool allow_large_results = false;
-  bool use_query_cache = false;
-  bool flatten_results = false;
-  bool use_legacy_sql = false;
-  bool create_session = false;
-  std::int64_t maximum_bytes_billed = 0;
+  absl::optional<std::string> query;
+  absl::optional<std::string> create_disposition;
+  absl::optional<std::string> write_disposition;
+  absl::optional<std::string> priority;
+  absl::optional<std::string> parameter_mode;
+  absl::optional<bool> preserve_nulls;
+  absl::optional<bool> allow_large_results;
+  absl::optional<bool> use_query_cache;
+  absl::optional<bool> flatten_results;
+  absl::optional<bool> use_legacy_sql;
+  absl::optional<bool> create_session;
+  absl::optional<std::int64_t> maximum_bytes_billed;
 
-  std::vector<QueryParameter> query_parameters;
-  std::vector<std::string> schema_update_options;
-  std::vector<ConnectionProperty> connection_properties;
+  absl::optional<std::vector<QueryParameter>> query_parameters;
+  absl::optional<std::vector<std::string>> schema_update_options;
+  absl::optional<std::vector<ConnectionProperty>> connection_properties;
 
-  DatasetReference default_dataset;
-  TableReference destination_table;
-  TimePartitioning time_partitioning;
-  RangePartitioning range_partitioning;
-  Clustering clustering;
-  EncryptionConfiguration destination_encryption_configuration;
-  ScriptOptions script_options;
-  SystemVariables system_variables;
+  absl::optional<DatasetReference> default_dataset;
+  absl::optional<TableReference> destination_table;
+  absl::optional<TimePartitioning> time_partitioning;
+  absl::optional<RangePartitioning> range_partitioning;
+  absl::optional<Clustering> clustering;
+  absl::optional<EncryptionConfiguration> destination_encryption_configuration;
+  absl::optional<ScriptOptions> script_options;
+  absl::optional<SystemVariables> system_variables;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},

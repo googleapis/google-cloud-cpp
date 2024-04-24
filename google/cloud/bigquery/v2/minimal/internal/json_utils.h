@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JSON_UTILS_H
 
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 
@@ -34,16 +35,36 @@ void ToJson(std::chrono::milliseconds const& field, nlohmann::json& j,
 void ToIntJson(std::chrono::milliseconds const& field, nlohmann::json& j,
                char const* name);
 
+void FromJson(absl::optional<std::chrono::milliseconds>& field, nlohmann::json const& j,
+              char const* name);
+
+void ToJson(absl::optional<std::chrono::milliseconds> const& field, nlohmann::json& j,
+            char const* name);
+void ToIntJson(absl::optional<std::chrono::milliseconds> const& field, nlohmann::json& j,
+               char const* name);
+
 void FromJson(std::chrono::system_clock::time_point& field,
               nlohmann::json const& j, char const* name);
 
 void ToJson(std::chrono::system_clock::time_point const& field,
             nlohmann::json& j, char const* name);
 
+void FromJson(absl::optional<std::chrono::system_clock::time_point>& field,
+              nlohmann::json const& j, char const* name);
+
+void ToJson(absl::optional<std::chrono::system_clock::time_point> const& field,
+            nlohmann::json& j, char const* name);
+
 void FromJson(std::chrono::hours& field, nlohmann::json const& j,
               char const* name);
 
 void ToJson(std::chrono::hours const& field, nlohmann::json& j,
+            char const* name);
+
+void FromJson(absl::optional<std::chrono::hours>& field, nlohmann::json const& j,
+              char const* name);
+
+void ToJson(absl::optional<std::chrono::hours> const& field, nlohmann::json& j,
             char const* name);
 
 // Removes not needed keys and empty arrays and objects from the json
@@ -72,6 +93,18 @@ bool SafeGetTo(std::shared_ptr<T>& value, nlohmann::json const& j,
   if (i == j.end()) return false;
   if (value == nullptr) {
     value = std::make_shared<T>();
+  }
+  i->get_to(*value);
+  return true;
+}
+
+template <typename T>
+bool SafeGetTo(absl::optional<T>& value, nlohmann::json const& j,
+               std::string const& key) {
+  auto i = j.find(key);
+  if (i == j.end()) return false;
+  if (value == absl::nullopt) {
+    value = absl::optional<T>(T{});
   }
   i->get_to(*value);
   return true;

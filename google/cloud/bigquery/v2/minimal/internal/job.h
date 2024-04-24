@@ -42,9 +42,9 @@ void to_json(nlohmann::json& j, JobStatus const& jb);
 void from_json(nlohmann::json const& j, JobStatus& jb);
 
 struct JobReference {
-  std::string project_id;
-  std::string job_id;
-  std::string location;
+  absl::optional<std::string> project_id;
+  absl::optional<std::string> job_id;
+  absl::optional<std::string> location;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
@@ -54,16 +54,16 @@ void to_json(nlohmann::json& j, JobReference const& jb);
 void from_json(nlohmann::json const& j, JobReference& jb);
 
 struct Job {
-  std::string kind;
-  std::string etag;
-  std::string id;
-  std::string self_link;
-  std::string user_email;
+  absl::optional<std::string> kind;
+  absl::optional<std::string> etag;
+  absl::optional<std::string> id;
+  absl::optional<std::string> self_link;
+  absl::optional<std::string> user_email;
 
-  JobStatus status;
-  JobReference job_reference;
-  JobConfiguration configuration;
-  JobStatistics statistics;
+  absl::optional<JobStatus> status;
+  absl::optional<JobReference> job_reference;
+  absl::optional<JobConfiguration> configuration;
+  absl::optional<JobStatistics> statistics;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
