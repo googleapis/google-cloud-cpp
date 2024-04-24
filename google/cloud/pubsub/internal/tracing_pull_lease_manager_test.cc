@@ -91,15 +91,13 @@ TEST(TracingPullLeaseManagerImplTest, CreateRootSpan) {
   auto span_catcher = InstallSpanCatcher();
   auto active_span = MakeSpan("active span");
   auto active_scope = opentelemetry::trace::Scope(active_span);
-  active_span->End();
   auto mock = std::make_shared<MockPullLeaseManagerImpl>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, _, _))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   auto manager = MakeTracingPullLeaseManagerImpl(std::move(mock), kTestAckId,
                                                  kTestSubscription);
   auto stub = std::make_shared<MockSubscriberStub>();
-  auto impl = std::make_shared<testing_util::MockCompletionQueueImpl>();
-  CompletionQueue cq = CompletionQueue(std::move(impl));
+  CompletionQueue cq;
   std::shared_ptr<grpc::ClientContext> context;
   auto options = google::cloud::internal::MakeImmutableOptions(
       google::cloud::pubsub_testing::MakeTestOptions());
@@ -110,9 +108,9 @@ TEST(TracingPullLeaseManagerImplTest, CreateRootSpan) {
   auto status =
       manager->AsyncModifyAckDeadline(stub, cq, context, options, request);
   EXPECT_STATUS_OK(status.get());
+  active_span->End();
 
   auto spans = span_catcher->GetSpans();
-
   EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription modack"),
                                     SpanIsRoot())));
 }
