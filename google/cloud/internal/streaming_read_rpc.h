@@ -99,7 +99,8 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
 
   RpcMetadata GetRequestMetadata() const override {
     if (!context_) return {};
-    return GetRequestMetadataFromContext(*context_);
+    return GetRequestMetadataFromContext(*context_,
+                                         /*is_initial_metadata_ready=*/true);
   }
 
  private:

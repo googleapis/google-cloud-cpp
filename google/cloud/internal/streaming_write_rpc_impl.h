@@ -75,7 +75,8 @@ class StreamingWriteRpcImpl
   }
 
   RpcMetadata GetRequestMetadata() const override {
-    return GetRequestMetadataFromContext(*context_);
+    return GetRequestMetadataFromContext(*context_,
+                                         /*is_initial_metadata_ready=*/true);
   }
 
  private:

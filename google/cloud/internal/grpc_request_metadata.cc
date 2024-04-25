@@ -34,16 +34,20 @@ std::string ToString(grpc_compression_algorithm algo) {
 }
 
 void AddServerRequestMetadata(grpc::ClientContext const& context,
-                              RpcMetadata& metadata) {
+                              RpcMetadata& metadata,
+                              bool is_initial_metadata_ready) {
   auto hint = metadata.headers.end();
-  for (auto const& kv : context.GetServerInitialMetadata()) {
-    // gRPC metadata is stored in `grpc::string_ref`, a type inspired by
-    // `std::string_view`. We need to explicitly convert these to `std::string`.
-    // In addition, we use a prefix to distinguish initial vs. trailing headers.
-    auto key = std::string{kv.first.data(), kv.first.size()};
-    auto value = std::string{kv.second.data(), kv.second.size()};
-    hint = std::next(
-        metadata.headers.emplace_hint(hint, std::move(key), std::move(value)));
+  if (is_initial_metadata_ready) {
+    for (auto const& kv : context.GetServerInitialMetadata()) {
+      // gRPC metadata is stored in `grpc::string_ref`, a type inspired by
+      // `std::string_view`. We need to explicitly convert these to
+      // `std::string`. In addition, we use a prefix to distinguish initial vs.
+      // trailing headers.
+      auto key = std::string{kv.first.data(), kv.first.size()};
+      auto value = std::string{kv.second.data(), kv.second.size()};
+      hint = std::next(metadata.headers.emplace_hint(hint, std::move(key),
+                                                     std::move(value)));
+    }
   }
   hint = metadata.trailers.end();
   for (auto const& kv : context.GetServerTrailingMetadata()) {
@@ -66,10 +70,11 @@ void AddContextMetadata(grpc::ClientContext const& context,
 
 }  // namespace
 
-RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context) {
+RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context,
+                                          bool is_initial_metadata_ready) {
   RpcMetadata metadata;
   AddContextMetadata(context, metadata);
-  AddServerRequestMetadata(context, metadata);
+  AddServerRequestMetadata(context, metadata, is_initial_metadata_ready);
   return metadata;
 }
 

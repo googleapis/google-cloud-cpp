@@ -37,7 +37,8 @@ namespace testing_util {
  *   cannot reuse @p context for other RPCs or other calls to this function.
  */
 void SetServerMetadata(grpc::ClientContext& context,
-                       RpcMetadata const& server_metadata);
+                       RpcMetadata const& server_metadata,
+                       bool is_initial_metadata_ready = true);
 
 /**
  * Keep the test required to test metadata contents in a grpc::Context object.
@@ -88,7 +89,8 @@ class ValidateMetadataFixture {
    *   cannot reuse @p context for other RPCs or other calls to this function.
    */
   void SetServerMetadata(grpc::ClientContext& client_context,
-                         RpcMetadata const& server_metadata = {});
+                         RpcMetadata const& server_metadata = {},
+                         bool is_initial_metadata_ready = true);
 
   /**
    * Verify that the metadata in the context is appropriate for a gRPC method.

@@ -248,9 +248,10 @@ RoutingHeaders ExtractRoutingHeaders(
  *   cannot reuse @p context for other RPCs or other calls to this function.
  */
 void SetServerMetadata(grpc::ClientContext& context,
-                       RpcMetadata const& server_metadata) {
+                       RpcMetadata const& server_metadata,
+                       bool is_initial_metadata_ready) {
   ValidateMetadataFixture f;
-  f.SetServerMetadata(context, server_metadata);
+  f.SetServerMetadata(context, server_metadata, is_initial_metadata_ready);
 }
 
 ValidateMetadataFixture::ValidateMetadataFixture() {
@@ -333,11 +334,14 @@ absl::optional<std::string> ValidateMetadataFixture::GetAuthority(
 }
 
 void ValidateMetadataFixture::SetServerMetadata(
-    grpc::ClientContext& client_context, RpcMetadata const& server_metadata) {
+    grpc::ClientContext& client_context, RpcMetadata const& server_metadata,
+    bool is_initial_metadata_ready) {
   // Create a server context with the given server metadata.
   grpc::GenericServerContext server_context;
-  for (auto const& kv : server_metadata.headers) {
-    server_context.AddInitialMetadata(kv.first, kv.second);
+  if (is_initial_metadata_ready) {
+    for (auto const& kv : server_metadata.headers) {
+      server_context.AddInitialMetadata(kv.first, kv.second);
+    }
   }
   for (auto const& kv : server_metadata.trailers) {
     server_context.AddTrailingMetadata(kv.first, kv.second);
