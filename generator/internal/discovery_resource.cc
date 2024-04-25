@@ -39,8 +39,8 @@ absl::optional<std::string> DetermineLongRunningOperationService(
     std::set<std::string> const& operation_services,
     std::string const& resource_name) {
   // Only services NOT considered operation_services should be generated
-  // using the asynchronous LRO framework, even if they have a response of type
-  // Operation.
+  // using the asynchronous LRO framework, even if they have a response of
+  // type Operation.
   if (method_json.contains("response") &&
       method_json["response"].value("$ref", "") == "Operation" &&
       !internal::Contains(operation_services,
@@ -133,6 +133,7 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
     auto close = path.find('}', current);
     absl::StrAppend(
         &output, CamelCaseToSnakeCase(path.substr(current, close - current)));
+    absl::StrReplaceAll({{"{+", "{"}}, &output);
     current = close;
   }
   absl::StrAppend(&output, path.substr(current));
@@ -172,8 +173,9 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
   std::vector<std::string> parameter_order =
       method_json.value("parameterOrder", std::vector<std::string>{});
   if (!parameter_order.empty()) {
-    // Workaround for necessary, but not marked REQUIRED, mask field for update
-    // methods. AIP-134 indicates that the update mask should be provided.
+    // Workaround for necessary, but not marked REQUIRED, mask field for
+    // update methods. AIP-134 indicates that the update mask should be
+    // provided.
     if (verb == "patch" && !internal::Contains(parameter_order, "updateMask")) {
       nlohmann::json parameters =
           method_json.value("parameters", nlohmann::json());
