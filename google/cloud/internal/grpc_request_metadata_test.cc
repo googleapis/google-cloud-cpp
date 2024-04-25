@@ -34,10 +34,32 @@ TEST(GrpcRequestMetadata, GetRequestMetadataFromContext) {
   grpc::ClientContext context;
   testing_util::SetServerMetadata(context, server_metadata);
 
-  auto md = GetRequestMetadataFromContext(context);
+  auto md = GetRequestMetadataFromContext(context,
+                                          /*is_initial_metadata_ready=*/true);
   EXPECT_THAT(md.headers,
               UnorderedElementsAre(
                   Pair("header1", "value1"), Pair("header2", "value2"),
+                  // This function also returns the peer and compression
+                  // algorithm as synthetic headers.
+                  Pair(":grpc-context-peer", _),
+                  Pair(":grpc-context-compression-algorithm", "identity")));
+  EXPECT_THAT(md.trailers, UnorderedElementsAre(Pair("trailer1", "value3"),
+                                                Pair("trailer2", "value4")));
+}
+
+TEST(GrpcRequestMetadata,
+     GetRequestMetadataFromContextWhenInitialMetadataIsNotReady) {
+  auto const server_metadata =
+      RpcMetadata{{{"header1", "value1"}, {"header2", "value2"}},
+                  {{"trailer1", "value3"}, {"trailer2", "value4"}}};
+  grpc::ClientContext context;
+  testing_util::SetServerMetadata(context, server_metadata,
+                                  /*is_initial_metadata_ready*/ false);
+
+  auto md = GetRequestMetadataFromContext(context,
+                                          /*is_initial_metadata_ready*/ false);
+  EXPECT_THAT(md.headers,
+              UnorderedElementsAre(
                   // This function also returns the peer and compression
                   // algorithm as synthetic headers.
                   Pair(":grpc-context-peer", _),
