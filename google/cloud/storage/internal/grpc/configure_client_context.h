@@ -79,6 +79,10 @@ void ApplyRoutingHeaders(
 void ApplyRoutingHeaders(grpc::ClientContext& context,
                          google::storage::v2::WriteObjectSpec const& spec);
 
+/// @copydoc ApplyRoutingHeaders(grpc::ClientContext&,)
+void ApplyRoutingHeaders(grpc::ClientContext& context,
+                         google::storage::v2::AppendObjectSpec const& spec);
+
 /**
  * The generated `StorageMetadata` stub can not handle dynamic routing headers
  * for client side streaming. So we manually match and extract the headers in
