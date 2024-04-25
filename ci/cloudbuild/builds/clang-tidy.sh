@@ -26,8 +26,8 @@ source module ci/lib/shard.sh
 
 export CC=clang
 export CXX=clang++
-# Use a directory *not* saved by the ci/lib/cache.sh script, but is preserved
-# in local builds (i.e., with build.sh --docker)
+# Use a directory *not* saved by the CI builds, but is preserved in local
+# builds. For example, when using `build.sh --docker`.
 export CTCACHE_DIR=~/.ctcache
 
 mapfile -t cmake_args < <(cmake::common_args)

@@ -110,21 +110,6 @@ steps:
   id: 'download-runner-image-attempt-2'
   entrypoint: '/bin/true'
 
-  # Restores the homedir cache into /h in parallel with the previous step.
-  # Won't break the build if this step fails.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  waitFor: [ '-' ]
-  entrypoint: 'bash'
-  dir: '/h'
-  args:
-    - '-c'
-    - >
-      /workspace/ci/cloudbuild/cache.sh restore
-      --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
-      --key=${_TRIGGER_SOURCE}/${_DISTRO}/${_BUILD_NAME}/${_SHARD}/h
-      --fallback_key=main/${_DISTRO}/${_BUILD_NAME}/${_SHARD}/h
-      || true
-
   # Runs the specified build in the image that was created in the first step.
 - name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
@@ -141,24 +126,6 @@ steps:
     'CTCACHE_GCS_FOLDER=ctcache/${_DISTRO}/${_BUILD_NAME}',
     'VCPKG_BINARY_SOURCES=x-gcs,gs://${_CACHE_BUCKET}/vcpkg-cache/${_DISTRO}-${_BUILD_NAME},readwrite'
   ]
-
-  # Caches some directories in the homedir, in the specified GCS bucket.
-  # Won't break the build if this step fails.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  allowFailure: true
-  entrypoint: 'bash'
-  dir: '/h'
-  args:
-    - '-c'
-    - >
-      /workspace/ci/cloudbuild/cache.sh save
-      --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
-      --key=${_TRIGGER_SOURCE}/${_DISTRO}/${_BUILD_NAME}/${_SHARD}/h
-      --path=.cache/bazelisk
-      --path=.cache/ctcache
-      --path=.cache/vcpkg
-      --path=.cache/google-cloud-cpp
-      --path=.local
 
   # Remove the images created by this build.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
