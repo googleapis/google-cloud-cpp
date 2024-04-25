@@ -134,7 +134,7 @@ time {
   expressions+=("-e" "':x;/^\n*$/{\$d;N;bx;}'")
   # Adds a trailing newline if one doesn't already exist
   expressions+=("-e" "'\$a\'")
-  git_files -z | grep -zv 'googleapis.patch$' |
+  git_files -z | grep -zv '\.patch$' |
     grep -zv '\.gz$' |
     grep -zv '\.pb$' |
     grep -zv '\.png$' |
