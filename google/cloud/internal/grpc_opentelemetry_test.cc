@@ -53,6 +53,9 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
+using ::testing::TestParamInfo;
+using ::testing::TestWithParam;
+using ::testing::ValuesIn;
 
 TEST(OpenTelemetry, MakeSpanGrpc) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
@@ -104,6 +107,44 @@ TEST(OpenTelemetry, InjectTraceContextGrpc) {
   testing_util::ValidatePropagator(context);
 }
 
+struct IsInitialMetadataReadyTestCase {
+  StatusCode code;
+  bool expected;
+};
+using IsInitialMetadataReadyTest =
+    TestWithParam<IsInitialMetadataReadyTestCase>;
+
+TEST_P(IsInitialMetadataReadyTest, Validate) {
+  IsInitialMetadataReadyTestCase const& test_case = GetParam();
+
+  ASSERT_EQ(IsInitialMetadataReady(test_case.code), test_case.expected);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    IsInitialMetadataReadyInstantiation, IsInitialMetadataReadyTest,
+    ValuesIn<IsInitialMetadataReadyTestCase>(
+        {{StatusCode::kOk, true},
+         {StatusCode::kCancelled, false},
+         {StatusCode::kUnknown, true},
+         {StatusCode::kInvalidArgument, true},
+         {StatusCode::kDeadlineExceeded, true},
+         {StatusCode::kNotFound, true},
+         {StatusCode::kAlreadyExists, true},
+         {StatusCode::kPermissionDenied, true},
+         {StatusCode::kResourceExhausted, true},
+         {StatusCode::kFailedPrecondition, true},
+         {StatusCode::kAborted, true},
+         {StatusCode::kOutOfRange, true},
+         {StatusCode::kUnimplemented, true},
+         {StatusCode::kInternal, true},
+         {StatusCode::kUnavailable, true},
+         {StatusCode::kDataLoss, true},
+         {StatusCode::kUnauthenticated, true}}),
+    [](TestParamInfo<IsInitialMetadataReadyTest::ParamType> const& info) {
+      return StatusCodeToString(info.param.code) + "_returns_" +
+             (info.param.expected ? "true" : "false");
+    });
+
 TEST(OpenTelemetry, EndSpan) {
   auto span_catcher = InstallSpanCatcher();
 
@@ -152,8 +193,8 @@ TEST(OpenTelemetry, EndSpanFuture) {
   EXPECT_STATUS_OK(f.get());
 
   auto spans = span_catcher->GetSpans();
-  // It is too hard to mock a `grpc::ClientContext`. We will just check that the
-  // expected attribute key is set.
+  // It is too hard to mock a `grpc::ClientContext`. We will just check that
+  // the expected attribute key is set.
   EXPECT_THAT(
       spans,
       ElementsAre(AllOf(

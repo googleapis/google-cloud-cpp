@@ -18,6 +18,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
+#include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -69,6 +70,11 @@ void InjectTraceContext(
  */
 void ExtractAttributes(grpc::ClientContext& context,
                        opentelemetry::trace::Span& span);
+
+/**
+ * Returns true if the status `code` suggests the initial metadata is available.
+ */
+bool IsInitialMetadataReady(StatusCode code);
 
 /**
  * Extracts information from the `grpc::ClientContext`, and adds it to a span.

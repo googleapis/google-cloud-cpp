@@ -145,6 +145,13 @@ void ExtractAttributes(grpc::ClientContext& context,
   }
 }
 
+bool IsInitialMetadataReady(StatusCode code) {
+  // We assume that if the status code is one of the following
+  // the initial metadata *might* not be ready.
+  // See go/cloud-cxx:grpc-workaround for details.
+  return (code != StatusCode::kCancelled);
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace internal
