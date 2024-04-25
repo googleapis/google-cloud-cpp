@@ -13,7 +13,7 @@
 # limitations under the License.
 
 options:
-  workerPool: 'projects/cloud-cpp-testing-resources/locations/us-east1/workerPools/google-cloud-cpp-pool'
+  workerPool: 'projects/${PROJECT_ID}/locations/${_POOL_REGION}/workerPools/${_POOL_ID}'
   dynamic_substitutions: true
   env: [
     'HOME=/h',
@@ -27,7 +27,7 @@ options:
     'TRIGGER_TYPE=${_TRIGGER_TYPE}',
     'GENERATE_GOLDEN_ONLY=',
     'UPDATED_DISCOVERY_DOCUMENT=',
-    'CONSOLE_LOG_URL=https://console.cloud.google.com/cloud-build/builds;region=us-east1/${BUILD_ID};tab=detail?project=${PROJECT_ID}',
+    'CONSOLE_LOG_URL=https://console.cloud.google.com/cloud-build/builds;region=${_POOL_REGION}/${BUILD_ID};tab=detail?project=${PROJECT_ID}',
     'RAW_LOG_URL=https://storage.googleapis.com/${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}/log-${BUILD_ID}.txt'
   ]
   substitutionOption: 'ALLOW_LOOSE'
@@ -38,13 +38,15 @@ options:
 # Variables that can be overridden from the `gcloud builds ...` command using
 # the `--substitutions=_FOO=bar` flag.
 substitutions:
+  _POOL_REGION: 'us-east1'                         # Adjust by project
+  _POOL_ID: 'google-cloud-cpp-pool'                # Adjust by project
+  _CACHE_BUCKET: '${PROJECT_ID}_cloudbuild'        # Adjust by project
+  _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'   # Adjust by project
+  _IMAGE: 'cloudbuild/${_DISTRO}'
   _DISTRO: 'unknown'
   _BUILD_NAME: 'unknown'
-  _CACHE_BUCKET: '${PROJECT_ID}_cloudbuild'
-  _IMAGE: 'cloudbuild/${_DISTRO}'
   _TRIGGER_SOURCE: '${_PR_NUMBER:-main}'
   _TRIGGER_TYPE: 'manual'
-  _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'
   _TAG1: 'team-only'
   _LIBRARIES: 'all_bar_compute'
   _SHARD: '__default__'
