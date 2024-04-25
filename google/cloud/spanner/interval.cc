@@ -67,7 +67,7 @@ struct {
 void Normalize(std::int64_t& months, std::int64_t& days,
                absl::Duration& offset) {
   auto const precision = absl::Microseconds(1);
-  offset += ((offset < absl::ZeroDuration()) ? -precision : precision) / 2,
+  offset += ((offset < absl::ZeroDuration()) ? -precision : precision) / 2;
   offset = absl::Trunc(offset, precision);
   days += absl::IDivDuration(offset, absl::Hours(24), &offset);
   if (offset < absl::ZeroDuration()) {
