@@ -32,20 +32,9 @@ std::string ToString(grpc_compression_algorithm algo) {
   }
   return name;
 }
-}  // namespace
 
-RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context) {
-  RpcMetadata metadata{
-      /*.headers=*/{
-          // Use invalid header names (starting with ':') to store the
-          // grpc::ClientContext metadata.
-          {":grpc-context-peer", context.peer()},
-          {":grpc-context-compression-algorithm",
-           ToString(context.compression_algorithm())},
-
-      },
-      /*.trailers=*/{},
-  };
+void AddServerRequestMetadata(grpc::ClientContext const& context,
+                              RpcMetadata& metadata) {
   auto hint = metadata.headers.end();
   for (auto const& kv : context.GetServerInitialMetadata()) {
     // gRPC metadata is stored in `grpc::string_ref`, a type inspired by
@@ -64,6 +53,23 @@ RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context) {
     hint = std::next(
         metadata.trailers.emplace_hint(hint, std::move(key), std::move(value)));
   }
+}
+
+void AddContextMetadata(grpc::ClientContext const& context,
+                        RpcMetadata& metadata) {
+  // Use invalid header names (starting with ':') to store the
+  // grpc::ClientContext metadata.
+  metadata.headers.emplace(":grpc-context-peer", context.peer());
+  metadata.headers.emplace(":grpc-context-compression-algorithm",
+                           ToString(context.compression_algorithm()));
+}
+
+}  // namespace
+
+RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context) {
+  RpcMetadata metadata;
+  AddContextMetadata(context, metadata);
+  AddServerRequestMetadata(context, metadata);
   return metadata;
 }
 
