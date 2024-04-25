@@ -1,0 +1,205 @@
+// Copyright 2024 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/spanner/interval.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include <gtest/gtest.h>
+#include <limits>
+#include <string>
+#include <utility>
+#include <vector>
+
+namespace google {
+namespace cloud {
+namespace spanner {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+TEST(Interval, RegularSemantics) {
+  Interval const intvl(0, 1, 2, absl::Hours(3));
+
+  Interval const copy1(intvl);
+  EXPECT_EQ(copy1, intvl);
+
+  Interval const copy2 = intvl;
+  EXPECT_EQ(copy2, intvl);
+
+  Interval assign;
+  assign = intvl;
+  EXPECT_EQ(assign, intvl);
+}
+
+// https://gist.github.com/henryivesjones/ebd653acbf61cb408380a49659e2be97
+// is the source of some of the relational/arithmetic test cases.
+
+TEST(Interval, RelationalOperators) {
+  EXPECT_EQ(Interval(), Interval());
+
+  EXPECT_LT(Interval(0, 1, 0), Interval(0, 2, 0));
+  EXPECT_EQ(Interval(0, 1, 30), Interval(0, 2, 0));
+  EXPECT_GT(Interval(0, 0, 365), Interval(1, 0, 0));
+  EXPECT_GT(Interval(0, 0, 52 * 7), Interval(1, 0, 0));
+
+  EXPECT_EQ(Interval(0, 2, -90, -absl::Hours(12)),
+            Interval(0, -1, -1, absl::Hours(12)));
+
+  // Check microsecond rounding.
+  EXPECT_EQ(Interval(absl::Microseconds(1.25)),
+            Interval(absl::Microseconds(1)));
+  EXPECT_EQ(Interval(-absl::Microseconds(1.25)),
+            Interval(-absl::Microseconds(1)));
+  EXPECT_EQ(Interval(absl::Microseconds(1.5)), Interval(absl::Microseconds(2)));
+  EXPECT_EQ(Interval(-absl::Microseconds(1.5)),
+            Interval(-absl::Microseconds(2)));
+
+  // Check that the logical value of an Interval used during comparison
+  // is able to represent values greater that (2^63-1) nanoseconds.
+  auto const max64 = std::numeric_limits<std::int64_t>::max();
+  EXPECT_GT(Interval(296, 6, 12), Interval(absl::Nanoseconds(max64)));
+}
+
+TEST(Interval, ArithmeticOperators) {
+  // Negation.
+  EXPECT_EQ(-Interval(), Interval());
+  EXPECT_EQ(-Interval(0, 10, 11, absl::Hours(12)),
+            Interval(0, -10, -11, -absl::Hours(12)));
+
+  // Addition/subtraction.
+  EXPECT_EQ(Interval(0, 1, 0) + Interval(0, 2, 0), Interval(0, 3, 0));
+  EXPECT_EQ(Interval(1, 0, 0, absl::Hours(24)) + Interval(1, 0, 3),
+            Interval(2, 0, 3, absl::Hours(24)));
+  EXPECT_EQ(Interval(1, 0, 1) - Interval(absl::Hours(24)),
+            Interval(1, 0, 1, -absl::Hours(24)));
+  EXPECT_EQ(Interval(0, 11, 0) + Interval(0, 1, 1), Interval(1, 0, 1));
+  EXPECT_EQ(Interval(absl::Hours(2) + absl::Minutes(50)) +
+                Interval(absl::Minutes(10)),
+            Interval(absl::Hours(3)));
+  EXPECT_EQ(Interval(absl::Hours(2) + absl::Minutes(50)) -
+                Interval(absl::Minutes(50)),
+            Interval(absl::Hours(2)));
+
+  // Multiplication/division.
+  EXPECT_EQ(Interval(0, 1, 0) * 2, Interval(0, 2, 0));
+  EXPECT_EQ(Interval(1, 6, 0) * 2, Interval(3, 0, 0));
+  EXPECT_EQ(Interval(absl::Hours(5) + absl::Minutes(5)) * 2,
+            Interval(absl::Hours(10) + absl::Minutes(10)));
+  EXPECT_EQ(Interval(0, 0, 15, absl::Hours(24)) * 3,
+            Interval(0, 1, 15, absl::Hours(72)));
+  EXPECT_EQ(Interval(0, 1, 15) * 3, Interval(0, 3, 45));
+  EXPECT_EQ(Interval(0, 1, 15) * 12, Interval(1, 0, 180));
+  EXPECT_EQ(Interval(0, 1, 0) / 30, Interval(0, 0, 1));
+  EXPECT_EQ(Interval(1, 0, 0) / 365, Interval(absl::Hours(24) * (360.0 / 365)));
+  EXPECT_EQ(Interval(1, 0, 0) / 12, Interval(0, 1, 0));
+  EXPECT_EQ(Interval(0, 1, 0) / 4, Interval(0, 0, 7, absl::Hours(12)));
+  EXPECT_EQ(Interval(0, 1, 0) * 0.5, Interval(0, 0, 15));
+  EXPECT_EQ(Interval(absl::Minutes(1)) * 0.5, Interval(absl::Seconds(30)));
+  EXPECT_EQ(Interval(0, 3, 30) / 30, Interval(0, 0, 4));
+  EXPECT_EQ(Interval(absl::Milliseconds(1001)) / 1'000'000 * 1'000,
+            Interval(absl::Microseconds(1001)));
+  EXPECT_EQ(Interval(absl::Minutes(1)) * 600, Interval(absl::Hours(10)));
+}
+
+TEST(Interval, Range) {
+  auto huge = Interval(178'000'000, 0, 0);
+  EXPECT_LT(-huge, huge);
+  EXPECT_EQ(std::string(huge), "178000000 years");
+  EXPECT_EQ(std::string(-huge), "-178000000 years");
+}
+
+TEST(Interval, RoundTrip) {
+  std::vector<Interval> test_cases = {
+      Interval(),
+      Interval(1, 0, 0),
+      Interval(0, 2, 0),
+      Interval(0, 2, 3),
+      Interval(absl::Hours(4)),
+      Interval(absl::Minutes(5)),
+      Interval(absl::Seconds(6)),
+      Interval(absl::Seconds(7.5)),
+  };
+
+  for (auto const& tc : test_cases) {
+    auto intvl = MakeInterval(std::string(tc));
+    EXPECT_STATUS_OK(intvl) << tc;
+    if (intvl) {
+      EXPECT_EQ(*intvl, tc);
+    }
+    intvl = MakeInterval(std::string(-tc));
+    EXPECT_STATUS_OK(intvl) << -tc;
+    if (intvl) {
+      EXPECT_EQ(*intvl, -tc);
+    }
+  }
+}
+
+// https://www.postgresql.org/docs/current/datatype-datetime.html and
+// https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-interval
+// are the sources of some of the MakeInterval() test cases.
+
+TEST(Interval, MakeInterval) {
+  auto hms = [](int h, int m, int s) {
+    return absl::Hours(h) + absl::Minutes(m) + absl::Seconds(s);
+  };
+  std::vector<std::pair<std::string, Interval>> test_cases = {
+      {"1.5 years", Interval(1, 6, 0)},
+      {"1.75 months", Interval(0, 1, 22, hms(12, 0, 0))},
+      {"@-1.5 years", Interval(-1, -6, 0)},
+
+      {"@ 1 year 2 mons", Interval(1, 2, 0)},
+      {"1 year 2 mons", Interval(1, 2, 0)},
+      {"1-2", Interval(1, 2, 0)},
+
+      {"@ 3 days 4 hours 5 mins 6 secs", Interval(0, 0, 3, hms(4, 5, 6))},
+      {"3 days 04:05:06", Interval(0, 0, 3, hms(4, 5, 6))},
+      {"3 4:05:06", Interval(0, 0, 3, hms(4, 5, 6))},
+
+      {" 6 years 5 months 4 days 3 hours 2 minutes 1 second ",
+       Interval(6, 5, 4, hms(3, 2, 1))},
+      {" @ 6 years 5 mons 4 days 3 hours 2 mins 1 sec ",
+       Interval(6, 5, 4, hms(3, 2, 1))},
+      {" 6 years 5 mons 4 days 03:02:01 ", Interval(6, 5, 4, hms(3, 2, 1))},
+      {" +6-5 +4 +3:02:01 ", Interval(6, 5, 4, hms(3, 2, 1))},
+
+      {"1 year 2 months 3 days 4 hours 5 minutes 6 seconds",
+       Interval(1, 2, 3, hms(4, 5, 6))},
+      {"-1 year -2 mons +3 days -04:05:06",
+       Interval(-1, -2, 3, hms(-4, -5, -6))},
+      {"-1-2 +3 -4:05:06", Interval(-1, 2, 3, hms(-4, -5, -6))},
+
+      {"@ 1 year 2 mons -3 days 4 hours 5 mins 6 secs ago",
+       Interval(-2, 10, 3, hms(-4, -5, -6))},
+
+      {"17h 20m 05s", Interval(hms(17, 20, 5))},
+
+      {"-42 microseconds", Interval(-absl::Microseconds(42))},
+      {"+87 milliseconds", Interval(absl::Milliseconds(87))},
+
+      {"4 decades", Interval(40, 0, 0)},
+      {"3 centuries", Interval(300, 0, 0)},
+      {"2 millennia", Interval(2'000, 0, 0)},
+  };
+
+  for (auto const& tc : test_cases) {
+    auto intvl = MakeInterval(tc.first);
+    EXPECT_STATUS_OK(intvl) << tc.first;
+    if (!intvl) continue;
+    EXPECT_EQ(*intvl, tc.second);
+  }
+}
+
+}  // namespace
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner
+}  // namespace cloud
+}  // namespace google
