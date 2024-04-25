@@ -19,15 +19,21 @@
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/internal/async/default_options.h"
+#include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
+#include "google/cloud/storage/internal/async/object_descriptor_impl.h"
+#include "google/cloud/storage/internal/async/open_object.h"
+#include "google/cloud/storage/internal/async/open_stream.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
 #include "google/cloud/storage/internal/async/rewriter_connection_impl.h"
+#include "google/cloud/storage/internal/async/write_object.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/async/writer_connection_buffered.h"
 #include "google/cloud/storage/internal/async/writer_connection_finalized.h"
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
+#include "google/cloud/storage/internal/async/writer_connection_resumed.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/channel_refresh.h"
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
@@ -49,6 +55,7 @@
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -183,6 +190,67 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
       std::move(current), std::move(request), __func__);
 }
 
+future<
+    StatusOr<std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
+AsyncConnectionImpl::Open(OpenParams p) {
+  auto initial_request = google::storage::v2::BidiReadObjectRequest{};
+  *initial_request.mutable_read_object_spec() = p.read_spec;
+  auto current = internal::MakeImmutableOptions(p.options);
+  // Get the policy factory and immediately create a policy.
+  auto resume_policy =
+      current->get<storage_experimental::ResumePolicyOption>()();
+
+  auto retry = std::shared_ptr<storage::RetryPolicy>(retry_policy(*current));
+  auto backoff =
+      std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
+  auto const* function_name = __func__;
+  auto factory = OpenStreamFactory(
+      [stub = stub_, cq = cq_, retry = std::move(retry),
+       backoff = std::move(backoff), current = std::move(current),
+       function_name](google::storage::v2::BidiReadObjectRequest request) {
+        struct DummyRequest {};
+
+        auto call = [stub, request = std::move(request)](
+                        CompletionQueue& cq,
+                        std::shared_ptr<grpc::ClientContext> context,
+                        google::cloud::internal::ImmutableOptions options,
+                        DummyRequest const&) mutable {
+          auto open = std::make_shared<OpenObject>(
+              *stub, cq, std::move(context), std::move(options), request);
+          // Extend the lifetime of the coroutine until it finishes.
+          return open->Call().then([open, &request](auto f) mutable {
+            open.reset();
+            auto response = f.get();
+            if (response) return response;
+            ApplyRedirectErrors(*request.mutable_read_object_spec(),
+                                ExtractGrpcStatus(response.status()));
+            return response;
+          });
+        };
+
+        return google::cloud::internal::AsyncRetryLoop(
+            retry->clone(), backoff->clone(), Idempotency::kIdempotent, cq,
+            std::move(call), current, DummyRequest{}, function_name);
+      });
+
+  auto pending = factory(std::move(initial_request));
+  using ReturnType =
+      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>;
+  return pending.then(
+      [rp = std::move(resume_policy), fa = std::move(factory),
+       rs = std::move(p.read_spec),
+       options = std::move(p.options)](auto f) mutable -> StatusOr<ReturnType> {
+        auto result = f.get();
+        if (!result) return std::move(result).status();
+
+        auto impl = std::make_shared<ObjectDescriptorImpl>(
+            std::move(rp), std::move(fa), std::move(rs),
+            std::move(result->stream), std::move(options));
+        impl->Start(std::move(result->first_response));
+        return ReturnType(impl);
+      });
+}
+
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
 AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   using ReturnType =
@@ -221,6 +289,101 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
         auto token = storage_internal::MakeAsyncToken(r->get());
         return storage_experimental::ReadAll(
             storage_experimental::AsyncReader(*std::move(r)), std::move(token));
+      });
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
+  return AppendableObjectUploadImpl(std::move(p));
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::ResumeAppendableObjectUpload(AppendableUploadParams p) {
+  return AppendableObjectUploadImpl(std::move(p), true);
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
+                                                bool takeover) {
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  auto request = p.request;
+  std::int64_t persisted_size = 0;
+  std::shared_ptr<storage::internal::HashFunction> hash_function =
+      CreateHashFunction(*current);
+  auto retry = std::shared_ptr<storage::RetryPolicy>(retry_policy(*current));
+  auto backoff =
+      std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
+  using StreamingRpcTimeout =
+      google::cloud::internal::AsyncStreamingReadWriteRpcTimeout<
+          google::storage::v2::BidiWriteObjectRequest,
+          google::storage::v2::BidiWriteObjectResponse>;
+  struct RequestPlaceholder {};
+
+  using WriteResultFactory =
+      std::function<future<StatusOr<WriteObject::WriteResult>>(
+          google::storage::v2::BidiWriteObjectRequest)>;
+
+  auto factory = WriteResultFactory(
+      [stub = stub_, cq = cq_, retry = std::move(retry),
+       // NOLINTNEXTLINE(bugprone-lambda-function-name)
+       backoff = std::move(backoff), current, function_name = __func__,
+       takeover](google::storage::v2::BidiWriteObjectRequest req) {
+        auto call = [stub, request = std::move(req), takeover](
+                        google::cloud::CompletionQueue& cq,
+                        std::shared_ptr<grpc::ClientContext> context,
+                        google::cloud::internal::ImmutableOptions options,
+                        RequestPlaceholder const&) mutable
+            -> future<StatusOr<WriteObject::WriteResult>> {
+          auto timeout = ScaleStallTimeout(
+              options->get<storage::TransferStallTimeoutOption>(),
+              options->get<storage::TransferStallMinimumRateOption>(),
+              google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+
+          // Apply the routing header
+          if (takeover)
+            ApplyRoutingHeaders(*context, request.append_object_spec());
+          else
+            ApplyRoutingHeaders(*context, request.write_object_spec());
+
+          auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
+                                                std::move(options));
+          rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
+                                                      timeout, std::move(rpc));
+          request.set_state_lookup(true);
+          auto open = std::make_shared<WriteObject>(std::move(rpc), request);
+          return open->Call().then([open, &request](auto f) mutable {
+            open.reset();
+            auto response = f.get();
+            if (!response) {
+              EnsureFirstMessageAppendObjectSpec(request);
+              ApplyWriteRedirectErrors(*request.mutable_append_object_spec(),
+                                       ExtractGrpcStatus(response.status()));
+            }
+            return response;
+          });
+        };
+
+        return google::cloud::internal::AsyncRetryLoop(
+            retry->clone(), backoff->clone(), Idempotency::kIdempotent, cq,
+            std::move(call), std::move(current), RequestPlaceholder{},
+            function_name);
+      });
+
+  auto pending = factory(std::move(request));
+  return pending.then(
+      [current, request = std::move(p.request), persisted_size,
+       hash = std::move(hash_function), fa = std::move(factory)](auto f) mutable
+      -> StatusOr<
+          std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
+        auto rpc = f.get();
+        if (!rpc) return std::move(rpc).status();
+        persisted_size = rpc->first_response.resource().size();
+        auto impl = std::make_unique<AsyncWriterConnectionImpl>(
+            current, request, std::move(rpc->stream), hash, persisted_size,
+            false);
+        return MakeWriterConnectionResumed(std::move(fa), std::move(impl),
+                                           std::move(request), std::move(hash),
+                                           *current);
       });
 }
 
@@ -603,7 +766,7 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     return std::unique_ptr<storage_experimental::AsyncWriterConnection>(
         std::make_unique<AsyncWriterConnectionImpl>(
             current, std::move(request), *std::move(rpc), std::move(hash),
-            persisted_size));
+            persisted_size, true));
   };
 
   auto retry = retry_policy(*current);

@@ -68,7 +68,9 @@ Options DefaultOptionsAsync(Options opts) {
               storage_experimental::StopOnConsecutiveErrorsResumePolicy())
           .set<storage_experimental::IdempotencyPolicyOption>(
               storage_experimental::MakeStrictIdempotencyPolicy)
-          .set<storage_experimental::EnableCrc32cValidationOption>(true));
+          .set<storage_experimental::EnableCrc32cValidationOption>(true)
+          .set<storage_experimental::MaximumRangeSizeOption>(128 * 1024 *
+                                                             1024L));
   return Adjust(DefaultOptionsGrpc(std::move(opts)));
 }
 

@@ -75,6 +75,9 @@ add_library(
     async/connection.h
     async/idempotency_policy.cc
     async/idempotency_policy.h
+    async/object_descriptor.cc
+    async/object_descriptor.h
+    async/object_descriptor_connection.h
     async/object_responses.cc
     async/object_responses.h
     async/options.h
@@ -102,12 +105,28 @@ add_library(
     internal/async/connection_tracing.h
     internal/async/default_options.cc
     internal/async/default_options.h
+    internal/async/handle_redirect_error.cc
+    internal/async/handle_redirect_error.h
     internal/async/insert_object.cc
     internal/async/insert_object.h
+    internal/async/object_descriptor_connection_tracing.cc
+    internal/async/object_descriptor_connection_tracing.h
+    internal/async/object_descriptor_impl.cc
+    internal/async/object_descriptor_impl.h
+    internal/async/object_descriptor_reader.cc
+    internal/async/object_descriptor_reader.h
+    internal/async/object_descriptor_reader_tracing.cc
+    internal/async/object_descriptor_reader_tracing.h
+    internal/async/open_object.cc
+    internal/async/open_object.h
+    internal/async/open_stream.cc
+    internal/async/open_stream.h
     internal/async/partial_upload.cc
     internal/async/partial_upload.h
     internal/async/read_payload_fwd.h
     internal/async/read_payload_impl.h
+    internal/async/read_range.cc
+    internal/async/read_range.h
     internal/async/reader_connection_factory.cc
     internal/async/reader_connection_factory.h
     internal/async/reader_connection_impl.cc
@@ -122,6 +141,8 @@ add_library(
     internal/async/rewriter_connection_tracing.h
     internal/async/token_impl.cc
     internal/async/token_impl.h
+    internal/async/write_object.cc
+    internal/async/write_object.h
     internal/async/write_payload_fwd.h
     internal/async/write_payload_impl.h
     internal/async/writer_connection_buffered.cc
@@ -130,6 +151,8 @@ add_library(
     internal/async/writer_connection_finalized.h
     internal/async/writer_connection_impl.cc
     internal/async/writer_connection_impl.h
+    internal/async/writer_connection_resumed.cc
+    internal/async/writer_connection_resumed.h
     internal/async/writer_connection_tracing.cc
     internal/async/writer_connection_tracing.h
     internal/grpc/bucket_access_control_parser.cc
@@ -315,6 +338,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     set(google_cloud_cpp_storage_grpc_mocks_hdrs
         # cmake-format: sort
         mocks/mock_async_connection.h
+        mocks/mock_async_object_descriptor_connection.h
         mocks/mock_async_reader_connection.h
         mocks/mock_async_rewriter_connection.h
         mocks/mock_async_writer_connection.h)
@@ -396,6 +420,7 @@ set(storage_client_grpc_unit_tests
     async/bucket_name_test.cc
     async/client_test.cc
     async/idempotency_policy_test.cc
+    async/object_descriptor_test.cc
     async/read_all_test.cc
     async/reader_test.cc
     async/resume_policy_test.cc
@@ -404,6 +429,7 @@ set(storage_client_grpc_unit_tests
     async/writer_test.cc
     grpc_plugin_test.cc
     internal/async/connection_impl_insert_test.cc
+    internal/async/connection_impl_open_test.cc
     internal/async/connection_impl_read_hash_test.cc
     internal/async/connection_impl_read_test.cc
     internal/async/connection_impl_test.cc
@@ -412,18 +438,27 @@ set(storage_client_grpc_unit_tests
     internal/async/connection_tracing_test.cc
     internal/async/default_options_test.cc
     internal/async/insert_object_test.cc
+    internal/async/object_descriptor_connection_tracing_test.cc
+    internal/async/object_descriptor_impl_test.cc
+    internal/async/object_descriptor_reader_test.cc
+    internal/async/object_descriptor_reader_tracing_test.cc
+    internal/async/open_object_test.cc
+    internal/async/open_stream_test.cc
     internal/async/partial_upload_test.cc
     internal/async/read_payload_impl_test.cc
+    internal/async/read_range_test.cc
     internal/async/reader_connection_factory_test.cc
     internal/async/reader_connection_impl_test.cc
     internal/async/reader_connection_resume_test.cc
     internal/async/reader_connection_tracing_test.cc
     internal/async/rewriter_connection_impl_test.cc
     internal/async/rewriter_connection_tracing_test.cc
+    internal/async/write_object_test.cc
     internal/async/write_payload_impl_test.cc
     internal/async/writer_connection_buffered_test.cc
     internal/async/writer_connection_finalized_test.cc
     internal/async/writer_connection_impl_test.cc
+    internal/async/writer_connection_resumed_test.cc
     internal/async/writer_connection_tracing_test.cc
     internal/grpc/bucket_access_control_parser_test.cc
     internal/grpc/bucket_metadata_parser_test.cc
