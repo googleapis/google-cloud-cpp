@@ -20,6 +20,7 @@
 #include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/flags/flag.h"
@@ -372,24 +373,26 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";
 
-    tasks.push_back(std::async(std::launch::async, [args] {
-      google::protobuf::compiler::CommandLineInterface cli;
-      google::cloud::generator::Generator generator;
-      cli.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt",
-                            &generator, "Codegen C++ Generator");
-      std::vector<char const*> c_args;
-      c_args.reserve(args.size());
-      for (auto const& arg : args) {
-        c_args.push_back(arg.c_str());
-      }
+    tasks.push_back(std::async(
+        std::launch::async, [args, proto_file = service.service_proto_path()] {
+          google::protobuf::compiler::CommandLineInterface cli;
+          google::cloud::generator::Generator generator;
+          cli.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt",
+                                &generator, "Codegen C++ Generator");
+          std::vector<char const*> c_args;
+          c_args.reserve(args.size());
+          for (auto const& arg : args) {
+            c_args.push_back(arg.c_str());
+          }
 
-      if (cli.Run(static_cast<int>(c_args.size()), c_args.data()) != 0)
-        return google::cloud::Status(google::cloud::StatusCode::kInternal,
-                                     absl::StrCat("Generating service from ",
-                                                  c_args.back(), " failed."));
-
-      return google::cloud::Status{};
-    }));
+          if (cli.Run(static_cast<int>(c_args.size()), c_args.data()) != 0) {
+            return google::cloud::internal::InternalError(
+                absl::StrCat("Generating service from ", proto_file,
+                             " failed."),
+                GCP_ERROR_INFO());
+          }
+          return google::cloud::Status{};
+        }));
   }
   return tasks;
 }

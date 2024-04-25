@@ -16,6 +16,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/ascii.h"
@@ -185,12 +186,12 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
     if (!request_resource_field_name.empty()) {
       parameter_order.push_back(request_resource_field_name);
     }
-    rpc_options.push_back(
-        absl::StrFormat("    option (google.api.method_signature) = \"%s\";",
-                        absl::StrJoin(parameter_order, ",",
-                                      [](std::string* s, std::string const& p) {
-                                        *s += CamelCaseToSnakeCase(p);
-                                      })));
+    rpc_options.push_back(absl::StrFormat(
+        "    option (google.api.method_signature) = \"%s\";",
+        absl::StrJoin(parameter_order, ",", [](std::string* s, std::string p) {
+          absl::StrReplaceAll({{".", "_"}}, &p);
+          *s += CamelCaseToSnakeCase(p);
+        })));
   }
 
   auto longrunning_operation_service = DetermineLongRunningOperationService(

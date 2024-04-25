@@ -33,12 +33,14 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::MakeSpan;
 using ::google::cloud::pubsub_testing::MockPullLeaseManagerImpl;
 using ::google::cloud::pubsub_testing::MockSubscriberStub;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanIsRoot;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
@@ -82,6 +84,37 @@ TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineSuccess) {
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                          SpanNamed("test-subscription modack"))));
 }
+
+#if OPENTELEMETRY_VERSION_MAJOR >= 2 || \
+    (OPENTELEMETRY_VERSION_MAJOR == 1 && OPENTELEMETRY_VERSION_MINOR >= 13)
+TEST(TracingPullLeaseManagerImplTest, CreateRootSpan) {
+  auto span_catcher = InstallSpanCatcher();
+  auto active_span = MakeSpan("active span");
+  auto active_scope = opentelemetry::trace::Scope(active_span);
+  auto mock = std::make_shared<MockPullLeaseManagerImpl>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, _, _))
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  auto manager = MakeTracingPullLeaseManagerImpl(std::move(mock), kTestAckId,
+                                                 kTestSubscription);
+  auto stub = std::make_shared<MockSubscriberStub>();
+  CompletionQueue cq;
+  std::shared_ptr<grpc::ClientContext> context;
+  auto options = google::cloud::internal::MakeImmutableOptions(
+      google::cloud::pubsub_testing::MakeTestOptions());
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_ack_deadline_seconds(
+      static_cast<std::int32_t>(kLeaseExtension.count()));
+
+  auto status =
+      manager->AsyncModifyAckDeadline(stub, cq, context, options, request);
+  EXPECT_STATUS_OK(status.get());
+  active_span->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(SpanNamed("test-subscription modack"),
+                                    SpanIsRoot())));
+}
+#endif
 
 TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineError) {
   auto span_catcher = InstallSpanCatcher();

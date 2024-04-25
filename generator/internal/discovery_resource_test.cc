@@ -216,6 +216,45 @@ TEST_F(DiscoveryResourceTest, FormatRpcOptionsPatchZoneNoUpdateMaskParam) {
   EXPECT_THAT(*options, Eq(kExpectedProto));
 }
 
+TEST_F(DiscoveryResourceTest, FormatRpcOptionsReplacePeriodsWithUnderscore) {
+  auto constexpr kTypeJson = R"""({
+  "request_resource_field_name": "my_request_resource"
+})""";
+  auto constexpr kMethodJson = R"""({
+  "path": "projects/{project}/zones/{zone}/myTests/{fooId}/method1",
+  "httpMethod": "PATCH",
+  "response": {
+    "$ref": "Operation"
+  },
+  "parameters":  {
+    "project.snakeCaseName": {},
+    "zone": {},
+    "fooId": {}
+  },
+  "parameterOrder": [
+    "project.snakeCaseName",
+    "zone",
+    "fooId"
+  ]
+})""";
+  auto constexpr kExpectedProto =
+      R"""(    option (google.api.http) = {
+      patch: "base/path/projects/{project}/zones/{zone}/myTests/{foo_id}/method1"
+      body: "my_request_resource"
+    };
+    option (google.api.method_signature) = "project_snake_case_name,zone,foo_id,my_request_resource";
+    option (google.cloud.operation_service) = "ZoneOperations";)""";
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(type_json.is_object());
+  DiscoveryResource r("myTests", "", method_json);
+  DiscoveryTypeVertex t("myType", "", type_json, &pool());
+  auto options = r.FormatRpcOptions(method_json, "base/path", {}, &t);
+  ASSERT_STATUS_OK(options);
+  EXPECT_THAT(*options, Eq(kExpectedProto));
+}
+
 TEST_F(DiscoveryResourceTest, FormatRpcOptionsPatchZoneUpdateMaskParam) {
   auto constexpr kTypeJson = R"""({
   "request_resource_field_name": "my_request_resource"
