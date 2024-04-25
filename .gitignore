@@ -37,3 +37,8 @@ CMakeUserPresets.json
 
 # Lock files created by bzlmod. We do not want to accidentally commit these.
 MODULE.bazel.lock
+
+# Terraform lock files and local state
+.terraform.lock.hcl
+terraform.tfstate
+.terraform/
