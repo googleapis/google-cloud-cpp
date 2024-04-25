@@ -46,6 +46,10 @@ resource "google_cloudbuild_trigger" "pull-request" {
     _DISTRO       = "${each.value.distro}"
     _SHARD        = "${each.value.shard}"
     _TRIGGER_TYPE = "pr"
+    _POOL_REGION  = var.region
+    _POOL_ID      = "cpp-pool"
+    _CACHE_BUCKET = "${var.project}-ci-cache"
+    _LOGS_BUCKET  = "${var.project}-publiclogs"
   }
 
   include_build_logs = "INCLUDE_BUILD_LOGS_WITH_STATUS"
