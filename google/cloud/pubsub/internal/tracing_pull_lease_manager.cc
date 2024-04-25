@@ -52,7 +52,8 @@ class TracingPullLeaseManagerImpl : public PullLeaseManagerImpl {
       google::cloud::internal::ImmutableOptions options,
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) override {
     namespace sc = opentelemetry::trace::SemanticConventions;
-    opentelemetry::trace::StartSpanOptions start_span_options;
+    opentelemetry::trace::StartSpanOptions start_span_options =
+        RootStartSpanOptions();
     start_span_options.kind = opentelemetry::trace::SpanKind::kClient;
     auto span = internal::MakeSpan(
         subscription_.subscription_id() + " modack",
