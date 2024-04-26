@@ -121,14 +121,16 @@ function integration::bazel_args() {
   key_base="key-$(date +"%Y-%m")"
   readonly KEY_DIR="/dev/shm"
   readonly SECRETS_BUCKET="gs://cloud-cpp-testing-resources-secrets"
-  gsutil cp "${SECRETS_BUCKET}/${key_base}.json" "${KEY_DIR}/${key_base}.json"
-  gsutil cp "${SECRETS_BUCKET}/${key_base}.p12" "${KEY_DIR}/${key_base}.p12"
-  args+=(
-    "--test_env=GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
-    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${KEY_DIR}/${key_base}.p12"
-  )
+  gcloud storage cp --quiet "${SECRETS_BUCKET}/${key_base}.json" "${KEY_DIR}/${key_base}.json" >/dev/null 2>&1 || true
+  gcloud storage cp --quiet "${SECRETS_BUCKET}/${key_base}.p12" "${KEY_DIR}/${key_base}.p12" >/dev/null 2>&1 || true
+  if [[ -r "${KEY_DIR}/${key_base}.json" ]] && [[ -r "${KEY_DIR}/${key_base}.p12" ]]; then
+    args+=(
+      "--test_env=GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
+      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${KEY_DIR}/${key_base}.p12"
+    )
+  fi
   printf "%s\n" "${args[@]}"
 }
 
