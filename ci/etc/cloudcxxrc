@@ -20,8 +20,8 @@ ALWAYS_RESET_CMAKE_CACHE=NO
 # By default compile most features.
 ENABLED_FEATURES=__ga_libraries__,__experimental_libraries__,opentelemetry
 
-# By default compile all the code.
-BAZEL_TARGETS=("...")
+# By default compile only the storage library.
+BAZEL_TARGETS=("//google/cloud/storage/...")
 
 # Set to `YES` to run the unit tests.
 RUN_UNIT_TESTS=YES
