@@ -169,14 +169,14 @@ steps:
     - |
       set -xe
       test -z "${_PR_NUMBER}" && exit 0
-      ctime="$(gcloud builds describe --region 'us-east1' --format 'value(create_time)' '${BUILD_ID}')"
+      ctime="$(gcloud builds describe --region '${_POOL_REGION}' --format 'value(create_time)' '${BUILD_ID}')"
       query="tags=pr"
       query+=" AND tags=${_PR_NUMBER}"
       query+=" AND tags=${_BUILD_NAME}"
       query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
       query+=" AND create_time > ${ctime}"
-      gcloud builds list --region 'us-east1' --limit 1 --format='value(id)' --filter "${query}" | \
-        grep . && gcloud builds cancel --region 'us-east1' '${BUILD_ID}'
+      gcloud builds list --region '${_POOL_REGION}' --limit 1 --format='value(id)' --filter "${query}" | \
+        grep . && gcloud builds cancel --region '${_POOL_REGION}' '${BUILD_ID}'
 
   # Cancels in-progress builds for previous commits in the current PR so we can
   # free up resources to start running the builds for the new commit.
@@ -189,10 +189,10 @@ steps:
     - |
       set -xe
       test -z "${_PR_NUMBER}" && exit 0
-      ctime="$(gcloud builds describe --region 'us-east1' --format 'value(create_time)' '${BUILD_ID}')"
+      ctime="$(gcloud builds describe --region '${_POOL_REGION}' --format 'value(create_time)' '${BUILD_ID}')"
       query="tags=pr"
       query+=" AND tags=${_PR_NUMBER}"
       query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
       query+=" AND create_time < ${ctime}"
-      gcloud builds list --region 'us-east1' --ongoing --format='value(id)' --filter "${query}" | \
-        xargs -r -t gcloud builds cancel --region 'us-east1'
+      gcloud builds list --region '${_POOL_REGION}' --ongoing --format='value(id)' --filter "${query}" | \
+        xargs -r -t gcloud builds cancel --region '${_POOL_REGION}'
