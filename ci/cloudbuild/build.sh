@@ -92,7 +92,7 @@ function die() {
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="t:c:ldsh" \
-  --longoptions="arch:,build:,distro:,trigger:,cloud:,local,docker,docker-shell,docker-clean,verbose,help" \
+  --longoptions="arch:,build:,distro:,trigger:,cloud:,pool-region:,pool-id:,cache-bucket:,logs-bucket:,local,docker,docker-shell,docker-clean,verbose,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
@@ -102,6 +102,10 @@ BUILD_FLAG=""
 DISTRO_FLAG=""
 TRIGGER_FLAG=""
 CLOUD_FLAG=""
+POOL_REGION_FLAG="us-east1"
+POOL_ID_FLAG="google-cloud-cpp-pool"
+CACHE_BUCKET_FLAG=""
+LOGS_BUCKET_FLAG=""
 CLEAN_FLAG="false"
 LOCAL_FLAG="false"
 DOCKER_FLAG="false"
@@ -127,6 +131,22 @@ while true; do
       ;;
     -c | --cloud)
       CLOUD_FLAG="$2"
+      shift 2
+      ;;
+    --pool-region)
+      POOL_REGION_FLAG="$2"
+      shift 2
+      ;;
+    --pool-id)
+      POOL_ID_FLAG="$2"
+      shift 2
+      ;;
+    --cache-bucket)
+      CACHE_BUCKET_FLAG="$2"
+      shift 2
+      ;;
+    --logs-bucket)
+      LOGS_BUCKET_FLAG="$2"
       shift 2
       ;;
     -l | --local)
@@ -277,7 +297,14 @@ if [[ -n "${CLOUD_FLAG}" ]]; then
   subs+=("_BUILD_NAME=${BUILD_FLAG}")
   subs+=("_TRIGGER_SOURCE=manual-${account}")
   subs+=("_PR_NUMBER=") # Must be empty or a number, and this is not a PR
-  subs+=("_LOGS_BUCKET=${CLOUD_FLAG}_cloudbuild")
+  subs+=("_POOL_REGION=${POOL_REGION_FLAG}")
+  subs+=("_POOL_ID=${POOL_ID_FLAG}")
+  if [[ -n "${CACHE_BUCKET_FLAG}" ]]; then
+    subs+=("_CACHE_BUCKET=${CACHE_BUCKET_FLAG}")
+  fi
+  if [[ -n "${LOGS_BUCKET_FLAG}" ]]; then
+    subs+=("_LOGS_BUCKET=${LOGS_BUCKET_FLAG}")
+  fi
   subs+=("BRANCH_NAME=${BRANCH_NAME}")
   subs+=("COMMIT_SHA=${COMMIT_SHA}")
   subs+=("_LIBRARIES=${LIBRARIES}")
@@ -289,7 +316,7 @@ if [[ -n "${CLOUD_FLAG}" ]]; then
     "--substitutions=$(printf "%s," "${subs[@]}")"
     "--project=${CLOUD_FLAG}"
     # This value must match the workerPool configured in cloudbuild.yaml
-    "--region=us-east1"
+    "--region=${POOL_REGION_FLAG}"
   )
   io::run gcloud builds submit "${args[@]}" .
   exit
