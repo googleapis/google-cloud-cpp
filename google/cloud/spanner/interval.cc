@@ -331,7 +331,7 @@ Interval& Interval::operator+=(Interval const& intvl) {
 Interval& Interval::operator*=(double d) {
   // Fractional results only flow down into smaller units. Nothing ever
   // carries up into larger units. This means that '1 month' / 2 becomes
-  // '15 days, but '1 month 15 days' * 3 is '3 months 45 days'.
+  // '15 days', but '1 month 15 days' * 3 is '3 months 45 days'.
   double i_months;
   double f_months = std::modf(months_ * d, &i_months);
   months_ = static_cast<std::int32_t>(i_months);
