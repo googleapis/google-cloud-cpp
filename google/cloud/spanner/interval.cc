@@ -38,25 +38,25 @@ namespace {
 
 // Interval factories for quantity units.
 struct {
-  absl::string_view name;
+  absl::string_view name;  // de-pluralized forms
   std::function<Interval(std::int32_t)> factory;
 } const kUnitFactories[] = {
-    // "days" is first so that it is chosen when unit is empty.
-    {"days", [](auto n) { return Interval(0, 0, n); }},
+    // "day" is first so that it is chosen when unit is empty.
+    {"day", [](auto n) { return Interval(0, 0, n); }},
 
-    // "minutes" comes before other "m"s so it is chosen for, say, "6m".
-    {"minutes", [](auto n) { return Interval(absl::Minutes(n)); }},
+    // "minute" comes before other "m"s so it is chosen for, say, "6m".
+    {"minute", [](auto n) { return Interval(absl::Minutes(n)); }},
 
-    {"microseconds", [](auto n) { return Interval(absl::Microseconds(n)); }},
-    {"milliseconds", [](auto n) { return Interval(absl::Milliseconds(n)); }},
-    {"seconds", [](auto n) { return Interval(absl::Seconds(n)); }},
-    {"hours", [](auto n) { return Interval(absl::Hours(n)); }},
-    {"weeks", [](auto n) { return Interval(0, 0, n * 7); }},
-    {"months", [](auto n) { return Interval(0, n, 0); }},
-    {"years", [](auto n) { return Interval(n, 0, 0); }},
-    {"decades", [](auto n) { return Interval(n * 10, 0, 0); }},
+    {"microsecond", [](auto n) { return Interval(absl::Microseconds(n)); }},
+    {"millisecond", [](auto n) { return Interval(absl::Milliseconds(n)); }},
+    {"second", [](auto n) { return Interval(absl::Seconds(n)); }},
+    {"hour", [](auto n) { return Interval(absl::Hours(n)); }},
+    {"week", [](auto n) { return Interval(0, 0, n * 7); }},
+    {"month", [](auto n) { return Interval(0, n, 0); }},
+    {"year", [](auto n) { return Interval(n, 0, 0); }},
+    {"decade", [](auto n) { return Interval(n * 10, 0, 0); }},
     {"century", [](auto n) { return Interval(n * 100, 0, 0); }},
-    {"centuries", [](auto n) { return Interval(n * 100, 0, 0); }},
+    {"centurie", [](auto n) { return Interval(n * 100, 0, 0); }},
     {"millennium", [](auto n) { return Interval(n * 1000, 0, 0); }},
     {"millennia", [](auto n) { return Interval(n * 1000, 0, 0); }},
 };
@@ -93,8 +93,8 @@ bool Cmp(std::int64_t a_months, std::int64_t a_days, absl::Duration a_offset,
 }
 
 // "y years m months d days H:M:S.F"
-std::string Stringify(std::int32_t months, std::int32_t days,
-                      absl::Duration offset) {
+std::string SerializeInterval(std::int32_t months, std::int32_t days,
+                              absl::Duration offset) {
   std::ostringstream ss;
   std::int32_t years = months / 12;
   months %= 12;
@@ -141,132 +141,122 @@ std::string Stringify(std::int32_t months, std::int32_t days,
   return std::move(ss).str();
 }
 
-class Parser {
- public:
-  explicit Parser(std::string s) : s_(std::move(s)) {}
+void ConsumeSpaces(absl::string_view& s) {
+  while (!s.empty() && absl::ascii_isspace(s.front())) s.remove_prefix(1);
+}
 
-  /**
-   * https://www.postgresql.org/docs/current/datatype-datetime.html
-   *
-   * [@] quantity unit [quantity unit...] [direction]
-   *
-   * where quantity is a number (possibly signed); unit is microsecond,
-   * millisecond, second, minute, hour, day, week, month, year, decade,
-   * century, millennium, or abbreviations or plurals of these units;
-   * direction can be ago or empty. The at sign (@) is optional noise.
-   *
-   * The amounts of the different units are implicitly added with
-   * appropriate sign accounting. ago negates all the fields.
-   *
-   * Quantities of days, hours, minutes, and seconds can be specified
-   * without explicit unit markings. For example, '1 12:59:10' is read
-   * the same as '1 day 12 hours 59 min 10 sec'.
-   *
-   * Also, a combination of years and months can be specified with a
-   * dash; for example '200-10' is read the same as '200 years 10 months'.
-   */
-  StatusOr<Interval> Parse();
+void ConsumeInteger(absl::string_view& s) {
+  while (!s.empty() && absl::ascii_isdigit(s.front())) s.remove_prefix(1);
+}
 
- private:
-  static void ConsumeSpaces(absl::string_view& s) {
-    while (!s.empty() && absl::ascii_isspace(s.front())) s.remove_prefix(1);
+absl::string_view ConsumeSign(absl::string_view& s) {
+  auto t = s;
+  if (!absl::ConsumePrefix(&s, "-")) absl::ConsumePrefix(&s, "+");
+  return t.substr(0, t.size() - s.size());
+}
+
+absl::string_view ConsumeWord(absl::string_view& s) {
+  auto t = s;
+  while (!s.empty() && absl::ascii_isalpha(s.front())) s.remove_prefix(1);
+  return t.substr(0, t.size() - s.size());
+}
+
+bool ParseDouble(absl::string_view& s, double& d, bool allow_sign) {
+  auto t = s;
+  if (allow_sign) ConsumeSign(t);
+  ConsumeInteger(t);
+  if (!absl::ConsumePrefix(&t, ".")) return false;
+  ConsumeInteger(t);
+  auto len = s.size() - t.size();
+  if (!absl::SimpleAtod(s.substr(0, len), &d)) return false;
+  s.remove_prefix(len);
+  return true;
+}
+
+template <typename T>
+bool ParseInteger(absl::string_view& s, T& n, bool allow_sign) {
+  auto t = s;
+  if (allow_sign) ConsumeSign(t);
+  ConsumeInteger(t);
+  auto len = s.size() - t.size();
+  if (!absl::SimpleAtoi(s.substr(0, len), &n)) return false;
+  s.remove_prefix(len);
+  return true;
+}
+
+bool ParseYearMonth(absl::string_view& s, Interval& intvl) {
+  auto t = s;
+  std::int32_t year;
+  if (!ParseInteger(t, year, true)) return false;
+  if (!absl::ConsumePrefix(&t, "-")) return false;
+  std::int32_t month;
+  if (!ParseInteger(t, month, false)) return false;
+  intvl = Interval(year, month, 0);
+  s.remove_prefix(s.size() - t.size());
+  return true;
+}
+
+bool ParseHourMinuteSecond(absl::string_view& s, Interval& intvl) {
+  auto t = s;
+  auto d = absl::ZeroDuration();
+  auto sign = ConsumeSign(t);
+  std::int64_t hour;
+  if (!ParseInteger(t, hour, false)) return false;
+  d += absl::Hours(hour);
+  if (!absl::ConsumePrefix(&t, ":")) return false;
+  std::int64_t minute;
+  if (!ParseInteger(t, minute, false)) return false;
+  d += absl::Minutes(minute);
+  if (!absl::ConsumePrefix(&t, ":")) return false;
+  double second;
+  if (ParseDouble(t, second, false)) {
+    d += absl::Seconds(second);
+  } else {
+    std::int64_t second;
+    if (!ParseInteger(t, second, false)) return false;
+    d += absl::Seconds(second);
   }
+  intvl = Interval(sign == "-" ? -d : d);
+  s.remove_prefix(s.size() - t.size());
+  return true;
+}
 
-  static void ConsumeInteger(absl::string_view& s) {
-    while (!s.empty() && absl::ascii_isdigit(s.front())) s.remove_prefix(1);
-  }
-
-  static absl::string_view ConsumeSign(absl::string_view& s) {
-    auto t = s;
-    if (!absl::ConsumePrefix(&s, "-")) absl::ConsumePrefix(&s, "+");
-    return t.substr(0, t.size() - s.size());
-  }
-
-  static absl::string_view ConsumeWord(absl::string_view& s) {
-    auto t = s;
-    while (!s.empty() && absl::ascii_isalpha(s.front())) s.remove_prefix(1);
-    return t.substr(0, t.size() - s.size());
-  }
-
-  static bool ParseDouble(absl::string_view& s, double& d, bool allow_sign) {
-    auto t = s;
-    if (allow_sign) ConsumeSign(t);
-    ConsumeInteger(t);
-    if (!absl::ConsumePrefix(&t, ".")) return false;
-    ConsumeInteger(t);
-    auto len = s.size() - t.size();
-    if (!absl::SimpleAtod(s.substr(0, len), &d)) return false;
-    s.remove_prefix(len);
-    return true;
-  }
-
-  template <typename T>
-  static bool ParseInteger(absl::string_view& s, T& n, bool allow_sign) {
-    auto t = s;
-    if (allow_sign) ConsumeSign(t);
-    ConsumeInteger(t);
-    auto len = s.size() - t.size();
-    if (!absl::SimpleAtoi(s.substr(0, len), &n)) return false;
-    s.remove_prefix(len);
-    return true;
-  }
-
-  static bool ParseYearMonth(absl::string_view& s, Interval& intvl) {
-    auto t = s;
-    std::int32_t year;
-    if (!ParseInteger(t, year, true)) return false;
-    if (!absl::ConsumePrefix(&t, "-")) return false;
-    std::int32_t month;
-    if (!ParseInteger(t, month, false)) return false;
-    intvl = Interval(year, month, 0);
-    s.remove_prefix(s.size() - t.size());
-    return true;
-  }
-
-  static bool ParseHourMinuteSecond(absl::string_view& s, Interval& intvl) {
-    auto t = s;
-    auto d = absl::ZeroDuration();
-    auto sign = ConsumeSign(t);
-    std::int64_t hour;
-    if (!ParseInteger(t, hour, false)) return false;
-    d += absl::Hours(hour);
-    if (!absl::ConsumePrefix(&t, ":")) return false;
-    std::int64_t minute;
-    if (!ParseInteger(t, minute, false)) return false;
-    d += absl::Minutes(minute);
-    if (!absl::ConsumePrefix(&t, ":")) return false;
-    double second;
-    if (ParseDouble(t, second, false)) {
-      d += absl::Seconds(second);
-    } else {
-      std::int64_t second;
-      if (!ParseInteger(t, second, false)) return false;
-      d += absl::Seconds(second);
+Interval Unit(absl::string_view& s, std::int32_t n) {
+  auto t = s;
+  auto unit = ConsumeWord(t);
+  if (unit.size() > 1) absl::ConsumeSuffix(&unit, "s");  // de-pluralize
+  for (auto const& factory : kUnitFactories) {
+    if (absl::StartsWith(factory.name, unit)) {
+      s.remove_prefix(s.size() - t.size());
+      return factory.factory(n);
     }
-    intvl = Interval(sign == "-" ? -d : d);
-    s.remove_prefix(s.size() - t.size());
-    return true;
   }
+  return Interval(0, 0, n);  // default to days without removing unit
+}
 
-  static Interval Unit(absl::string_view& s, std::int32_t n) {
-    auto t = s;
-    auto unit = ConsumeWord(t);
-    if (unit.size() > 1) absl::ConsumeSuffix(&unit, "s");  // unpluralize
-    for (auto const& factory : kUnitFactories) {
-      if (absl::StartsWith(factory.name, unit)) {
-        s.remove_prefix(s.size() - t.size());
-        return factory.factory(n);
-      }
-    }
-    return Interval(0, 0, n);  // default to days without removing unit
-  }
-
-  std::string s_;
-};
-
-StatusOr<Interval> Parser::Parse() {
+/**
+ * https://www.postgresql.org/docs/current/datatype-datetime.html
+ *
+ * [@] quantity unit [quantity unit...] [direction]
+ *
+ * where quantity is a number (possibly signed); unit is microsecond,
+ * millisecond, second, minute, hour, day, week, month, year, decade,
+ * century, millennium, or abbreviations or plurals of these units;
+ * direction can be ago or empty. The at sign (@) is optional noise.
+ *
+ * The amounts of the different units are implicitly added with
+ * appropriate sign accounting. ago negates all the fields.
+ *
+ * Quantities of days, hours, minutes, and seconds can be specified
+ * without explicit unit markings. For example, '1 12:59:10' is read
+ * the same as '1 day 12 hours 59 min 10 sec'.
+ *
+ * Also, a combination of years and months can be specified with a
+ * dash; for example '200-10' is read the same as '200 years 10 months'.
+ */
+StatusOr<Interval> ParseInterval(std::string const& str) {
   Interval intvl;
-  auto s = absl::string_view(s_);
+  absl::string_view s = str;
 
   ConsumeSpaces(s);
   if (absl::ConsumePrefix(&s, "@")) {
@@ -305,7 +295,7 @@ StatusOr<Interval> Parser::Parse() {
 
   if (!s.empty()) {
     return internal::InvalidArgumentError(
-        absl::StrCat("\"", s_, "\": Syntax error at \"", s.substr(0, 5), "\""),
+        absl::StrCat("\"", str, "\": Syntax error at \"", s.substr(0, 5), "\""),
         GCP_ERROR_INFO());
   }
   return intvl;
@@ -354,11 +344,11 @@ Interval& Interval::operator*=(double d) {
 }
 
 Interval::operator std::string() const {
-  return Stringify(months_, days_, offset_);
+  return SerializeInterval(months_, days_, offset_);
 }
 
 StatusOr<Interval> MakeInterval(absl::string_view s) {
-  return Parser(absl::AsciiStrToLower(s)).Parse();
+  return ParseInterval(absl::AsciiStrToLower(s));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

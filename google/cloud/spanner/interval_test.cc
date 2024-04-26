@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gtest/gtest.h>
 #include <limits>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -25,6 +26,8 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::google::cloud::testing_util::StatusIs;
 
 TEST(Interval, RegularSemantics) {
   Interval const intvl(0, 1, 2, absl::Hours(3));
@@ -112,21 +115,27 @@ TEST(Interval, ArithmeticOperators) {
 
 TEST(Interval, Range) {
   auto huge = Interval(178'000'000, 0, 0);
-  EXPECT_LT(-huge, huge);
   EXPECT_EQ(std::string(huge), "178000000 years");
   EXPECT_EQ(std::string(-huge), "-178000000 years");
+
+  EXPECT_LT(-huge, huge);
+  EXPECT_GT(huge, huge - Interval(absl::Microseconds(1)));
+  EXPECT_LT(-huge, -huge + Interval(absl::Microseconds(1)));
 }
 
+// Check that parsing the result of a string conversion yields the same value.
 TEST(Interval, RoundTrip) {
   std::vector<Interval> test_cases = {
       Interval(),
       Interval(1, 0, 0),
       Interval(0, 2, 0),
-      Interval(0, 2, 3),
+      Interval(0, 0, 3),
       Interval(absl::Hours(4)),
       Interval(absl::Minutes(5)),
       Interval(absl::Seconds(6)),
-      Interval(absl::Seconds(7.5)),
+      Interval(absl::Milliseconds(123)),
+      Interval(absl::Microseconds(123456)),
+      Interval(absl::Nanoseconds(123456789)),
   };
 
   for (auto const& tc : test_cases) {
@@ -152,6 +161,22 @@ TEST(Interval, MakeInterval) {
     return absl::Hours(h) + absl::Minutes(m) + absl::Seconds(s);
   };
   std::vector<std::pair<std::string, Interval>> test_cases = {
+      {"2 microseconds", Interval(absl::Microseconds(2))},
+      {"3 milliseconds", Interval(absl::Milliseconds(3))},
+      {"4 seconds", Interval(absl::Seconds(4))},
+      {"5 minutes", Interval(absl::Minutes(5))},
+      {"6 hours", Interval(absl::Hours(6))},
+      {"7 days", Interval(0, 0, 7)},
+      {"8 weeks", Interval(0, 0, 8 * 7)},
+      {"9 months", Interval(0, 9, 0)},
+      {"10 years", Interval(10, 0, 0)},
+      {"11 decades", Interval(11 * 10, 0, 0)},
+      {"12 centuries", Interval(12 * 100, 0, 0)},
+      {"13 millennia", Interval(13 * 1'000, 0, 0)},
+
+      {"1 century", Interval(100, 0, 0)},
+      {"1 millennium", Interval(1'000, 0, 0)},
+
       {"1.5 years", Interval(1, 6, 0)},
       {"1.75 months", Interval(0, 1, 22, hms(12, 0, 0))},
       {"@-1.5 years", Interval(-1, -6, 0)},
@@ -188,6 +213,9 @@ TEST(Interval, MakeInterval) {
       {"4 decades", Interval(40, 0, 0)},
       {"3 centuries", Interval(300, 0, 0)},
       {"2 millennia", Interval(2'000, 0, 0)},
+
+      {"", Interval()},
+      {"ago", Interval()},
   };
 
   for (auto const& tc : test_cases) {
@@ -196,6 +224,21 @@ TEST(Interval, MakeInterval) {
     if (!intvl) continue;
     EXPECT_EQ(*intvl, tc.second);
   }
+
+  EXPECT_THAT(MakeInterval("junk"), StatusIs(StatusCode::kInvalidArgument));
+
+  // Check that we reject double plurals.
+  EXPECT_THAT(MakeInterval("7 dayss"), StatusIs(StatusCode::kInvalidArgument));
+}
+
+// Output streaming of an Interval is defined to use the string conversion
+// operator, so here we simply verify that output streaming is available.
+TEST(Interval, OutputStreaming) {
+  std::ostringstream os;
+  os << Interval(1, 2, 3,
+                 absl::Hours(4) + absl::Minutes(5) + absl::Seconds(6) +
+                     absl::Nanoseconds(123456789));
+  EXPECT_EQ("1 year 2 months 3 days 04:05:06.123456789", os.str());
 }
 
 }  // namespace
