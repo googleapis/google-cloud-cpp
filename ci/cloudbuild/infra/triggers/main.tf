@@ -18,10 +18,13 @@ variable "repository" {}
 
 locals {
   builds = {
+    checkers = {
+      config = "ci/cloudbuild/cloudbuild.yaml"
+      distro = "checkers"
+    }
     clang-tidy = {
       config = "ci/cloudbuild/cloudbuild.yaml"
       distro = "fedora-latest-cmake"
-      shard  = "__default__"
     }
   }
 }
@@ -42,9 +45,9 @@ resource "google_cloudbuild_trigger" "pull-request" {
   }
 
   substitutions = {
-    _BUILD_NAME   = "${each.key}"
+    _BUILD_NAME   = lookup(each.value, "name", "${each.key}")
     _DISTRO       = "${each.value.distro}"
-    _SHARD        = "${each.value.shard}"
+    _SHARD        = lookup(each.value, "shard", "__default__")
     _TRIGGER_TYPE = "pr"
     _POOL_REGION  = var.region
     _POOL_ID      = "cpp-pool"
@@ -70,9 +73,9 @@ resource "google_cloudbuild_trigger" "post-merge" {
   }
 
   substitutions = {
-    _BUILD_NAME   = "${each.key}"
+    _BUILD_NAME   = lookup(each.value, "name", "${each.key}")
     _DISTRO       = "${each.value.distro}"
-    _SHARD        = "${each.value.shard}"
+    _SHARD        = lookup(each.value, "shard", "__default__")
     _TRIGGER_TYPE = "ci"
   }
 

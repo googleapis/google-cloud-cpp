@@ -32,11 +32,11 @@ locals {
   # repository. This id is hard-coded here because there is no easy way [^1] to
   # manage that installation via terraform.
   #
-  # [^1]: there is a way, described in [Connecting a Gitub host programatically]
+  # [^1]: there is a way, described in [Connecting a Gitub host programmatically]
   #     but I would not call that "easy". It requires (for example) manually
   #     creating a personally access token (PAT) on GitHub, and storing that
   #     in the Terraform file.
-  # [Connecting a Gitub host programatically]: https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#terraform
+  # [Connecting a Gitub host programmatically]: https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#terraform
   #
   gcb_app_installation_id = 1168573
 
@@ -140,9 +140,9 @@ resource "google_storage_bucket" "ci-cache" {
   location                    = var.region
   storage_class               = "STANDARD"
   uniform_bucket_level_access = true
-  # After 180 days build caches are probably expired, key depedencies like
+  # After 180 days build caches are probably expired, key dependencies like
   # Protobuf or gRPC change more often than this and invalidate most cached
-  # objects. 
+  # objects.
   lifecycle_rule {
     condition {
       age = 180
