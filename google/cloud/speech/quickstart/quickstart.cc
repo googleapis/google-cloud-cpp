@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
   std::string const project = argv[1];
-  std::string const location = argv[2];
+  std::string location = argv[2];
   auto const uri = std::string{argc == 4 ? argv[3] : kDefaultUri};
   namespace speech = ::google::cloud::speech_v2;
 
@@ -46,11 +46,12 @@ int main(int argc, char* argv[]) try {
                          "/recognizers/_");
 
   if (location == "global") {
-    connection = speech::MakeSpeechConnection();
-  } else {
-    connection = speech::MakeSpeechConnection(location);
+    // An empty location string indicates that the global endpoint of the
+    // service should be used.
+    location = "";
   }
 
+  connection = speech::MakeSpeechConnection(location);
   auto client = speech::SpeechClient(connection);
   auto response = client.Recognize(request);
   if (!response) throw std::move(response).status();
