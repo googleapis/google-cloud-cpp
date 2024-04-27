@@ -92,7 +92,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v26.1.tar.gz 
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.62.1.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.63.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
