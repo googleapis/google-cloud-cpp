@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/interval.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/time/time.h"
 #include <gtest/gtest.h>
 #include <limits>
 #include <sstream>
@@ -28,6 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+
+Timestamp MakeTimestamp(std::string const& s) {
+  return spanner_internal::TimestampFromRFC3339(s).value();
+}
 
 TEST(Interval, RegularSemantics) {
   Interval const intvl(0, 1, 2, absl::Hours(3));
@@ -239,6 +245,54 @@ TEST(Interval, OutputStreaming) {
                  absl::Hours(4) + absl::Minutes(5) + absl::Seconds(6) +
                      absl::Nanoseconds(123456789));
   EXPECT_EQ("1 year 2 months 3 days 04:05:06.123456789", os.str());
+}
+
+TEST(Interval, TimestampOperations) {
+  auto hms = [](int h, int m, int s) {
+    return absl::Hours(h) + absl::Minutes(m) + absl::Seconds(s);
+  };
+
+  auto utc = absl::UTCTimeZone();
+  absl::TimeZone nyc;
+  ASSERT_TRUE(absl::LoadTimeZone("America/New_York", &nyc));
+
+  // Some simple cases of zero-length intervals.
+  EXPECT_EQ(Timestamp(), Add(Timestamp(), Interval(), utc));
+  EXPECT_EQ(Timestamp(), Add(Timestamp(), Interval(), nyc));
+  EXPECT_EQ(Interval(), Diff(Timestamp(), Timestamp(), utc));
+  EXPECT_EQ(Interval(), Diff(Timestamp(), Timestamp(), nyc));
+
+  // Over continuous civil-time segments, Timestamp/Interval operations
+  // behave in obvious ways.
+  EXPECT_EQ(MakeTimestamp("2022-04-06T08:10:12.123457788Z"),
+            Add(MakeTimestamp("2021-02-03T04:05:06.123456789Z"),
+                Interval(1, 2, 3, hms(4, 5, 6) + absl::Nanoseconds(999)), utc));
+  EXPECT_EQ(Interval(0, 0, 427, hms(4, 5, 6) + absl::Nanoseconds(999)),
+            Diff(MakeTimestamp("2022-04-06T08:10:12.123457788Z"),
+                 MakeTimestamp("2021-02-03T04:05:06.123456789Z"), utc));
+
+  // If we cross a Feb 29 there is an extra day.
+  EXPECT_EQ(MakeTimestamp("2021-04-06T08:10:12.123457788Z"),
+            Add(MakeTimestamp("2020-02-03T04:05:06.123456789Z"),
+                Interval(1, 2, 3, hms(4, 5, 6) + absl::Nanoseconds(999)), utc));
+  EXPECT_EQ(Interval(0, 0, 428, hms(4, 5, 6) + absl::Nanoseconds(999)),
+            Diff(MakeTimestamp("2021-04-06T08:10:12.123457788Z"),
+                 MakeTimestamp("2020-02-03T04:05:06.123456789Z"), utc));
+
+  // Over civil-time discontinuities, two civil hours is either one absolute
+  // hour (skipped) or three absolute hours (repeated).
+  EXPECT_EQ(MakeTimestamp("2023-03-12T03:02:03.456789-04:00"),
+            Add(MakeTimestamp("2023-03-12T01:02:03.456789-05:00"),
+                Interval(0, 0, 0, absl::Hours(2)), nyc));
+  EXPECT_EQ(Interval(absl::Hours(2)),
+            Diff(MakeTimestamp("2023-03-12T03:02:03.456789-04:00"),
+                 MakeTimestamp("2023-03-12T01:02:03.456789-05:00"), nyc));
+  EXPECT_EQ(MakeTimestamp("2023-11-05T03:02:03.456789-05:00"),
+            Add(MakeTimestamp("2023-11-05T01:02:03.456789-04:00"),
+                Interval(0, 0, 0, absl::Hours(2)), nyc));
+  EXPECT_EQ(Interval(absl::Hours(2)),
+            Diff(MakeTimestamp("2023-11-05T03:02:03.456789-05:00"),
+                 MakeTimestamp("2023-11-05T01:02:03.456789-04:00"), nyc));
 }
 
 }  // namespace

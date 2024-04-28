@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERVAL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERVAL_H
 
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
@@ -108,6 +109,8 @@ class Interval {
   Interval(std::int32_t months, std::int32_t days, absl::Duration offset)
       : months_(months), days_(days), offset_(offset) {}
 
+  friend Timestamp Add(Timestamp const&, Interval const&, absl::TimeZone);
+
   std::int32_t months_;
   std::int32_t days_;
   absl::Duration offset_;
@@ -127,6 +130,19 @@ inline Interval operator/(Interval lhs, double rhs) { return lhs /= rhs; }
  * produced by `Interval::operator std::string()`.
  */
 StatusOr<Interval> MakeInterval(absl::string_view);
+
+/**
+ * Add the Interval to the Timestamp in the civil-time space defined by
+ * the TimeZone. Saturates the Timestamp result upon overflow.
+ */
+Timestamp Add(Timestamp const&, Interval const&, absl::TimeZone);
+
+/**
+ * Intervals constructed by subtracting two timestamps are partially
+ * justified, returning a whole number of days plus any remainder. A
+ * year/month value will never be present. Undefined on days overflow.
+ */
+Interval Diff(Timestamp const&, Timestamp const&, absl::TimeZone);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
