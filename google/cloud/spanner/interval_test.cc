@@ -254,7 +254,7 @@ TEST(Interval, TimestampOperations) {
 
   auto utc = absl::UTCTimeZone();
   absl::TimeZone nyc;
-  ASSERT_TRUE(absl::LoadTimeZone("America/New_York", &nyc));
+  if (!absl::LoadTimeZone("America/New_York", &nyc)) GTEST_SKIP();
 
   // Some simple cases of zero-length intervals.
   EXPECT_EQ(Timestamp(), Add(Timestamp(), Interval(), utc));
