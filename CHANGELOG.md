@@ -6,6 +6,16 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.24.0 - TBD
 
+### No longer testing with MSVC 2019
+
+We have stopped testing with MSVC 2019. Microsoft stopped mainstream support for
+MSVC 2019 in
+[2024-04](https://learn.microsoft.com/en-us/lifecycle/products/visual-studio-2019).
+We continue to test with MSVC 2022. We recommend that you update to this
+version. Note that, in accordance with Google's
+[Foundational C++ support policy][oss-cxx-support], other Google libraries
+have stopped (or shortly will stop) testing with MSVC 2019 too.
+
 ### Updated Libraries
 
 - [AI Platform API](/google/cloud/aiplatform/README.md) - new
