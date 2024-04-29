@@ -61,8 +61,7 @@ int main(int argc, char* argv[]) try {
     location = "";
   }
 
-  connection = speech::MakeSpeechConnection(location);
-  auto client = speech::SpeechClient(connection);
+  auto client = speech::SpeechClient(speech::MakeSpeechConnection(location));
   auto response = client.Recognize(request);
   if (!response) throw std::move(response).status();
   std::cout << response->DebugString() << "\n";
