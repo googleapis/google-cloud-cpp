@@ -158,26 +158,6 @@ steps:
         xargs -r printf "gcr.io/${PROJECT_ID}/${_IMAGE}@%s\n" | \
         xargs -r -P 4 -L 32 gcloud container images delete -q --force-delete-tags
 
-  # Cancels *this* specific build if one is already queued up for a newer
-  # commit. This frees up resources to run the build for the newer commit.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  allowFailure: true
-  waitFor: [ '-' ]
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      set -xe
-      test -z "${_PR_NUMBER}" && exit 0
-      ctime="$(gcloud builds describe --region '${_POOL_REGION}' --format 'value(create_time)' '${BUILD_ID}')"
-      query="tags=pr"
-      query+=" AND tags=${_PR_NUMBER}"
-      query+=" AND tags=${_BUILD_NAME}"
-      query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
-      query+=" AND create_time > ${ctime}"
-      gcloud builds list --region '${_POOL_REGION}' --limit 1 --format='value(id)' --filter "${query}" | \
-        grep . && gcloud builds cancel --region '${_POOL_REGION}' '${BUILD_ID}'
-
   # Cancels in-progress builds for previous commits in the current PR so we can
   # free up resources to start running the builds for the new commit.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
