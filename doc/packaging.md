@@ -236,7 +236,7 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
-<summary>Fedora (38)</summary>
+<summary>Fedora (40)</summary>
 <br>
 
 Install the minimal development tools:
@@ -244,16 +244,16 @@ Install the minimal development tools:
 ```bash
 sudo dnf makecache && \
 sudo dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
-        openssl-devel patch unzip tar wget zip zlib-devel
+        patch unzip tar wget zip
 ```
 
-Fedora 38 includes packages, with recent enough versions, for most of the direct
+Fedora:40 includes packages, with recent enough versions, for most of the direct
 dependencies of `google-cloud-cpp`.
 
 ```bash
 sudo dnf makecache && \
 sudo dnf install -y protobuf-compiler protobuf-devel grpc-cpp grpc-devel \
-        libcurl-devel google-crc32c-devel
+        json-devel libcurl-devel google-crc32c-devel openssl-devel
 ```
 
 #### Patching pkg-config
@@ -291,27 +291,6 @@ the search path.
 
 ```bash
 export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
-```
-
-#### nlohmann_json library
-
-The project depends on the nlohmann_json library. We use CMake to install it as
-this installs the necessary CMake configuration files. Note that this is a
-header-only library, and often installed manually. This leaves your environment
-without support for CMake pkg-config.
-
-```bash
-mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=yes \
-      -DBUILD_TESTING=OFF \
-      -DJSON_BuildTests=OFF \
-      -S . -B cmake-out && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
 ```
 
 #### opentelemetry-cpp
