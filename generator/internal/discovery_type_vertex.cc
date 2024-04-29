@@ -92,9 +92,14 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   nlohmann::json const* properties_for_synthesis = nullptr;
   bool compare_package_name = false;
   bool is_message = false;
-  if (v.contains("$ref"))
+  if (v.contains("$ref")) {
+    if (v["$ref"] == "JsonObject") {
+      return TypeInfo{"google.protobuf.Struct", compare_package_name,
+                      properties_for_synthesis, false, false};
+    }
     return TypeInfo{std::string(v["$ref"]), true, properties_for_synthesis,
                     false, true};
+  }
   if (!v.contains("type")) {
     return internal::InvalidArgumentError(
         absl::StrFormat("field: %s has neither $ref nor type.", field_name),
