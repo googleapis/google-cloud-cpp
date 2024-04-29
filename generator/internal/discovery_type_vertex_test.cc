@@ -225,6 +225,10 @@ INSTANTIATE_TEST_SUITE_P(
                               R"""({"type":"array","items":{"$ref":"Foo"}})""",
                               "Foo", true, false, true, true},
         DetermineTypesSuccess{
+            "array_table_row",
+            R"""({"type":"array","items":{"$ref":"TableRow"}})""",
+            "google.protobuf.Struct", true, false, false, false},
+        DetermineTypesSuccess{
             "array_string", R"""({"type":"array","items":{"type":"string"}})""",
             "string", true, false, false, false},
         DetermineTypesSuccess{

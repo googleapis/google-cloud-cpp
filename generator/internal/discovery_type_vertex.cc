@@ -173,6 +173,10 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
     auto const& items = v["items"];
     if (items.contains("$ref")) {
       type = items["$ref"];
+      if (type == "TableRow") {
+        return TypeInfo{"google.protobuf.Struct", compare_package_name,
+                        properties_for_synthesis, false, false};
+      }
       compare_package_name = true;
       is_message = true;
     } else if (items.contains("type")) {
