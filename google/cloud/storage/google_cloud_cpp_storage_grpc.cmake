@@ -148,6 +148,8 @@ else ()
         internal/grpc/configure_client_context.cc
         internal/grpc/configure_client_context.h
         internal/grpc/ctype_cord_workaround.h
+        internal/grpc/default_options.cc
+        internal/grpc/default_options.h
         internal/grpc/hmac_key_metadata_parser.cc
         internal/grpc/hmac_key_metadata_parser.h
         internal/grpc/hmac_key_request_parser.cc
@@ -396,6 +398,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc/bucket_request_parser_test.cc
         internal/grpc/buffer_read_object_data_test.cc
         internal/grpc/configure_client_context_test.cc
+        internal/grpc/default_options_test.cc
         internal/grpc/hmac_key_metadata_parser_test.cc
         internal/grpc/hmac_key_request_parser_test.cc
         internal/grpc/make_cord_test.cc

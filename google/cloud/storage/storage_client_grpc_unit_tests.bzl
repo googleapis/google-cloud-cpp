@@ -55,6 +55,7 @@ storage_client_grpc_unit_tests = [
     "internal/grpc/bucket_request_parser_test.cc",
     "internal/grpc/buffer_read_object_data_test.cc",
     "internal/grpc/configure_client_context_test.cc",
+    "internal/grpc/default_options_test.cc",
     "internal/grpc/hmac_key_metadata_parser_test.cc",
     "internal/grpc/hmac_key_request_parser_test.cc",
     "internal/grpc/make_cord_test.cc",
