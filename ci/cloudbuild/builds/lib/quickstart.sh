@@ -119,11 +119,10 @@ function quickstart::run_one_quickstart() {
 
   io::log "[ CMake ]"
   local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-${bin_dir_suffix}"
-  "${cmake_bin_dir}/quickstart" "${run_args[@]}"
+  io::run "${cmake_bin_dir}/quickstart" "${run_args[@]}"
 
   echo
   io::log "[ Make ]"
   local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/makefile-${bin_dir_suffix}"
-  LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" \
-    "${makefile_bin_dir}/quickstart" "${run_args[@]}"
+  io::run env LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" "${makefile_bin_dir}/quickstart" "${run_args[@]}"
 }
