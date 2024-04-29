@@ -120,6 +120,25 @@ TEST(DefaultOptionsGrpc, DefaultOptionsUploadBuffer) {
   EXPECT_EQ(with_override, 256 * 1024L);
 }
 
+TEST(DefaultOptionsGrpc, MetricsEnabled) {
+  auto const options = DefaultOptionsGrpc(Options{});
+  EXPECT_TRUE(options.get<storage_experimental::EnableGrpcMetrics>());
+}
+
+TEST(DefaultOptionsGrpc, MetricsPeriod) {
+  auto const options = DefaultOptionsGrpc(Options{});
+  EXPECT_GE(options.get<storage_experimental::GrpcMetricsPeriod>(),
+            std::chrono::seconds(60));
+}
+
+TEST(DefaultOptionsGrpc, MinMetricsPeriod) {
+  auto const options =
+      DefaultOptionsGrpc(Options{}.set<storage_experimental::GrpcMetricsPeriod>(
+          std::chrono::seconds(1)));
+  EXPECT_GE(options.get<storage_experimental::GrpcMetricsPeriod>(),
+            std::chrono::seconds(60));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

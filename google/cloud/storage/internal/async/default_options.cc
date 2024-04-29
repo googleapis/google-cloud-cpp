@@ -18,7 +18,6 @@
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
-#include "google/cloud/storage/internal/grpc/stub.h"
 #include <limits>
 
 namespace google {

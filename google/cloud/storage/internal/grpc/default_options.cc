@@ -31,6 +31,8 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+auto constexpr kMinMetricsPeriod = std::chrono::seconds(60);
+
 int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using DirectPath the gRPC library already does load balancing across
   // multiple sockets, it makes little sense to perform additional load
@@ -81,7 +83,14 @@ Options DefaultOptionsGrpc(Options options) {
       "storage.googleapis.com", options);
   options = google::cloud::internal::MergeOptions(
       std::move(options),
-      Options{}.set<EndpointOption>(ep).set<AuthorityOption>(ep));
+      Options{}
+          .set<EndpointOption>(ep)
+          .set<AuthorityOption>(ep)
+          .set<storage_experimental::EnableGrpcMetrics>(true));
+  if (options.get<storage_experimental::GrpcMetricsPeriod>() <
+      kMinMetricsPeriod) {
+    options.set<storage_experimental::GrpcMetricsPeriod>(kMinMetricsPeriod);
+  }
   // We can only compute this once the endpoint is known, so take an additional
   // step.
   auto const num_channels =
