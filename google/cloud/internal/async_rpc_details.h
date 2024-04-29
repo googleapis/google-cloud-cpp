@@ -19,6 +19,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
@@ -73,7 +74,8 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
     if (!ok) {
       // `Finish()` always returns `true` for unary RPCs, so the only time we
       // get `!ok` is after `Shutdown()` was called; treat that as "cancelled".
-      promise_.set_value(Status(StatusCode::kCancelled, "call cancelled"));
+      promise_.set_value(internal::CancelledError("gRPC async unary RPC failed",
+                                                  GCP_ERROR_INFO()));
       return true;
     }
     if (!status_.ok()) {
