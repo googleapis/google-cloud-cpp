@@ -61,11 +61,11 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "platforms",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/platforms/platforms-0.0.9.tar.gz",
-            "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.9/platforms-0.0.9.tar.gz",
-            "https://github.com/bazelbuild/platforms/releases/download/0.0.9/platforms-0.0.9.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/platforms/platforms-0.0.10.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.10/platforms-0.0.10.tar.gz",
+            "https://github.com/bazelbuild/platforms/releases/download/0.0.10/platforms-0.0.10.tar.gz",
         ],
-        sha256 = "5eda539c841265031c2f82d8ae7a3a6490bd62176e0c038fc469eabf91f6149b",
+        sha256 = "218efe8ee736d26a3572663b374a253c012b716d8af0c07e842e82f238a0a7ee",
     )
 
     # Load rules_cc, used by googletest
