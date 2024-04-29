@@ -35,3 +35,14 @@ cc_binary(
         "@google_cloud_cpp//:pubsub",
     ],
 )
+
+cc_binary(
+    name = "grpc_quickstart",
+    srcs = [
+        "grpc_quickstart.cc",
+    ],
+    deps = [
+         "@google_cloud_cpp//:opentelemetry",
+         "@google_cloud_cpp//:pubsub",
+    ],
+)
