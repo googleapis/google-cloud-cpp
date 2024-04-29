@@ -109,7 +109,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   }
 
   if (type == "any") {
-    return TypeInfo{"google.protobuf.Any", compare_package_name,
+    return TypeInfo{"google.protobuf.Struct", compare_package_name,
                     properties_for_synthesis, false, false};
   }
 
