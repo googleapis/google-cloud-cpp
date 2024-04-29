@@ -573,6 +573,13 @@ TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufArrayTypes) {
           }
         }
       }
+    },
+    "tableRowArray": {
+      "type": "array",
+      "description": "Description of tableRowArray.",
+      "items": {
+        "$ref": "TableRow"
+      }
     }
   }
 }
@@ -610,6 +617,9 @@ TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufArrayTypes) {
 
   // Description of synthesizedArray.
   repeated SynthesizedArrayItem synthesized_array = 8 [json_name="synthesizedArray"];
+
+  // Description of tableRowArray.
+  repeated google.protobuf.Struct table_row_array = 9 [json_name="tableRowArray"];
 }
 )""";
 
