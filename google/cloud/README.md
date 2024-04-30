@@ -19,7 +19,7 @@ notice. These include `google/cloud/internal/`, and
 
 - Windows, macOS, Linux
 - C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and MSVC
-  \>= 2019)
+  \>= 2022)
 - Environments with or without exceptions
 - Bazel (>= 6.0) and CMake (>= 3.5) builds
 
