@@ -15,6 +15,7 @@
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/connection_factory.h"
 #include "google/cloud/storage/internal/generic_stub_factory.h"
+#include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/internal/getenv.h"
 #include <memory>

@@ -33,13 +33,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GrpcChannelRefresh;
 class StorageStub;
 
-/**
- * The default options for gRPC.
- *
- * This adds some additional defaults to the options for REST.
- */
-Options DefaultOptionsGrpc(Options = {});
-
 class GrpcStub : public GenericStub {
  public:
   explicit GrpcStub(Options opts);

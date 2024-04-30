@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/grpc/bucket_request_parser.h"
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/internal/grpc/hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/hmac_key_request_parser.h"
 #include "google/cloud/storage/internal/grpc/notification_metadata_parser.h"
@@ -34,12 +35,8 @@
 #include "google/cloud/storage/internal/grpc/split_write_object_data.h"
 #include "google/cloud/storage/internal/grpc/synthetic_self_link.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/big_endian.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/service_endpoint.h"
 #include "absl/strings/match.h"
 #include "absl/time/time.h"
 #include <grpcpp/grpcpp.h>
@@ -179,63 +176,6 @@ CloseWriteObjectStream(std::chrono::milliseconds timeout,
 }  // namespace
 
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
-
-int DefaultGrpcNumChannels(std::string const& endpoint) {
-  // When using DirectPath the gRPC library already does load balancing across
-  // multiple sockets, it makes little sense to perform additional load
-  // balancing in the client library.
-  if (absl::StartsWith(endpoint, "google-c2p:///") ||
-      absl::StartsWith(endpoint, "google-c2p-experimental:///")) {
-    return 1;
-  }
-  // When not using DirectPath, there are limits to the bandwidth per channel,
-  // we want to create more channels to avoid hitting said limits.  The value
-  // here is mostly a guess: we know 1 channel is too little for most
-  // applications, but the ideal number depends on the workload.  The
-  // application can always override this default, so it is not important to
-  // have it exactly right.
-  auto constexpr kMinimumChannels = 4;
-  auto const count = std::thread::hardware_concurrency();
-  return (std::max)(kMinimumChannels, static_cast<int>(count));
-}
-
-Options DefaultOptionsGrpc(Options options) {
-  using ::google::cloud::internal::GetEnv;
-  // Experiments show that gRPC gets better upload throughput when the upload
-  // buffer is at least 32MiB.
-  auto constexpr kDefaultGrpcUploadBufferSize = 32 * 1024 * 1024L;
-  options = google::cloud::internal::MergeOptions(
-      std::move(options), Options{}.set<storage::UploadBufferSizeOption>(
-                              kDefaultGrpcUploadBufferSize));
-  options =
-      storage::internal::DefaultOptionsWithCredentials(std::move(options));
-  if (!options.has<UnifiedCredentialsOption>() &&
-      !options.has<GrpcCredentialOption>()) {
-    options.set<UnifiedCredentialsOption>(
-        google::cloud::MakeGoogleDefaultCredentials(
-            google::cloud::internal::MakeAuthOptions(options)));
-  }
-  auto const testbench =
-      GetEnv("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT");
-  if (testbench.has_value() && !testbench->empty()) {
-    options.set<EndpointOption>(*testbench);
-    // The emulator does not support HTTPS or authentication, use insecure
-    // (sometimes called "anonymous") credentials, which disable SSL.
-    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  }
-
-  auto const ep = google::cloud::internal::UniverseDomainEndpoint(
-      "storage.googleapis.com", options);
-  options = google::cloud::internal::MergeOptions(
-      std::move(options),
-      Options{}.set<EndpointOption>(ep).set<AuthorityOption>(ep));
-  // We can only compute this once the endpoint is known, so take an additional
-  // step.
-  auto const num_channels =
-      DefaultGrpcNumChannels(options.get<EndpointOption>());
-  return google::cloud::internal::MergeOptions(
-      std::move(options), Options{}.set<GrpcNumChannelsOption>(num_channels));
-}
 
 GrpcStub::GrpcStub(Options opts)
     : options_(std::move(opts)),
