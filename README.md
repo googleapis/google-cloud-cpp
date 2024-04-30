@@ -540,7 +540,7 @@ The binary artifacts, such as examples, will be placed in `cmake-out/`.
   - Language Version (>= C++14).
   - Operating Systems: Windows, macOS, and Linux.
   - Build Systems: Bazel (>= 6.0), CMake (>= 3.10).
-  - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2019), Apple Clang (>=
+  - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2022), Apple Clang (>=
     12).
 - This project uses dependencies described in
   [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
