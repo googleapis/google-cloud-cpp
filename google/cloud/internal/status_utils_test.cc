@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/status_helper.h"
+#include "google/cloud/internal/status_utils.h"
 #include "google/cloud/status.h"
 #include <gmock/gmock.h>
 

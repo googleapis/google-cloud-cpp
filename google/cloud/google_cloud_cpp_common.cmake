@@ -124,10 +124,10 @@ add_library(
     internal/sha256_hmac.cc
     internal/sha256_hmac.h
     internal/sha256_type.h
-    internal/status_helper.cc
-    internal/status_helper.h
     internal/status_payload_keys.cc
     internal/status_payload_keys.h
+    internal/status_utils.cc
+    internal/status_utils.h
     internal/strerror.cc
     internal/strerror.h
     internal/subject_token.cc
@@ -388,8 +388,8 @@ if (BUILD_TESTING)
         internal/service_endpoint_test.cc
         internal/sha256_hash_test.cc
         internal/sha256_hmac_test.cc
-        internal/status_helper_test.cc
         internal/status_payload_keys_test.cc
+        internal/status_utils_test.cc
         internal/strerror_test.cc
         internal/subject_token_test.cc
         internal/throw_delegate_test.cc
