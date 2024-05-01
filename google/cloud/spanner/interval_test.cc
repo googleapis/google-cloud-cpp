@@ -75,10 +75,10 @@ TEST(Interval, RelationalOperators) {
   EXPECT_EQ(Interval(nanoseconds(2'750)), Interval(microseconds(3)));
   EXPECT_EQ(Interval(-nanoseconds(2'750)), Interval(-microseconds(3)));
 
-  // Check that the logical value of an Interval used during comparison
-  // is able to represent values greater that (2^63-1) nanoseconds.
-  auto const max64 = std::numeric_limits<std::int64_t>::max();
-  EXPECT_GT(Interval(296, 6, 12), Interval(nanoseconds(max64)));
+  // Check that the logical value of an Interval used during comparison is
+  // able to represent values beyond the std::chrono::nanoseconds limits.
+  EXPECT_GT(Interval(296, 6, 12), Interval(nanoseconds::max()));
+  EXPECT_LT(-Interval(296, 6, 12), Interval(nanoseconds::min()));
 }
 
 TEST(Interval, ArithmeticOperators) {

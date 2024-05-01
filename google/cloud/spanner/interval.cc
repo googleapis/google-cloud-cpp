@@ -70,49 +70,46 @@ struct {
     {"millennia", [](auto n) { return Interval(n * 1000, 0, 0); }},
 };
 
-// Round d to a To{1} boundary (to even in halfway cases).
-template <class To, class Rep, class Period>
-To Round(duration<Rep, Period> const& d) {
-  auto below = duration_cast<To>(d);
-  if (below > d) below -= To{1};
-  auto above = below + To{1};
-  auto diff_below = d - below;
-  auto diff_above = above - d;
-  if (diff_below < diff_above) return below;
-  if (diff_below > diff_above) return above;
-  return (above.count() & 1) ? below : above;
+// Round d to a microsecond boundary (to even in halfway cases).
+microseconds Round(nanoseconds d) {
+  auto trunc = duration_cast<microseconds>(d);
+  auto diff = d < nanoseconds::zero() ? trunc - d : d - trunc;
+  if (diff < nanoseconds(500)) return trunc;
+  auto after = trunc + microseconds(d < nanoseconds::zero() ? -1 : 1);
+  if (diff > nanoseconds(500)) return after;
+  return (after.count() & 1) ? trunc : after;
 }
 
 // Interval comparison is done by logically combining the fields into a
 // single value by assuming that 1 month == 30 days and 1 day == 24 hours,
 // and by rounding to a microsecond boundary.
-void Normalize(std::int64_t& months, std::int64_t& days, nanoseconds& offset) {
-  offset = Round<microseconds>(offset);
-
-  auto carry_days = offset / hours(24);
+microseconds Normalize(std::int64_t& months, std::int64_t& days,
+                       nanoseconds offset) {
+  auto rounded_offset = Round(offset);
+  auto carry_days = rounded_offset / hours(24);
   days += carry_days;
-  offset -= hours(carry_days * 24);
-  if (offset < nanoseconds::zero()) {
-    offset += hours(24);
+  rounded_offset -= hours(carry_days * 24);
+  if (rounded_offset < microseconds::zero()) {
+    rounded_offset += hours(24);
     days -= 1;
   }
-
   months += days / 30;
   days %= 30;
   if (days < 0) {
     days += 30;
     months -= 1;
   }
+  return rounded_offset;
 }
 
 template <template <typename> class C>
 bool Cmp(std::int64_t a_months, std::int64_t a_days, nanoseconds a_offset,
          std::int64_t b_months, std::int64_t b_days, nanoseconds b_offset) {
-  Normalize(a_months, a_days, a_offset);
-  Normalize(b_months, b_days, b_offset);
+  auto rounded_a_offset = Normalize(a_months, a_days, a_offset);
+  auto rounded_b_offset = Normalize(b_months, b_days, b_offset);
   if (a_months != b_months) return C<std::int64_t>()(a_months, b_months);
   if (a_days != b_days) return C<std::int64_t>()(a_days, b_days);
-  return C<nanoseconds>()(a_offset, b_offset);
+  return C<microseconds>()(rounded_a_offset, rounded_b_offset);
 }
 
 // "y years m months d days H:M:S.F"
@@ -143,8 +140,16 @@ std::string SerializeInterval(std::int32_t months, std::int32_t days,
     if (*sep == '\0') ss << "0 days";
   } else {
     ss << sep;
+    nanoseconds::rep nanosecond_carry = 0;
     if (offset < nanoseconds::zero()) {
       ss << "-";
+      if (offset == nanoseconds::min()) {
+        // Handle the inability to negate the most negative value.
+        // This works because no power of 2 is a multiple of 10,
+        // so the carry will always remain within the same second.
+        offset += nanoseconds(1);
+        nanosecond_carry = 1;
+      }
       offset = -offset;
     }
     auto hour = duration_cast<hours>(offset);
@@ -156,7 +161,7 @@ std::string SerializeInterval(std::int32_t months, std::int32_t days,
     ss << std::setfill('0') << std::setw(2) << hour.count();
     ss << ':' << std::setfill('0') << std::setw(2) << min.count();
     ss << ':' << std::setfill('0') << std::setw(2) << sec.count();
-    if (auto ns = offset.count()) {
+    if (auto ns = offset.count() + nanosecond_carry) {
       ss << '.' << std::setfill('0');
       if (ns % 1000000 == 0) {
         ss << std::setw(3) << ns / 1000000;
@@ -344,6 +349,8 @@ bool operator<(Interval const& a, Interval const& b) {
 
 Interval Interval::operator-() const {
   Interval intvl;
+  // What should we do when any field is at its most
+  // negative and therefore cannot be negated?
   intvl.months_ = -months_;
   intvl.days_ = -days_;
   intvl.offset_ = -offset_;
