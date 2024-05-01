@@ -52,15 +52,16 @@ std::string RandomId() {
 
 // If this code is unfamiliar, see the "simple" metrics example:
 // https://github.com/open-telemetry/opentelemetry-cpp/tree/2d077f8ec5315e0979a236554c81f621eb61f5b3/examples/metrics_simple
-void InstallExporter(
-    std::unique_ptr<metrics_sdk::PushMetricExporter> exporter) {
+void InstallExporter(std::unique_ptr<metrics_sdk::PushMetricExporter> exporter,
+                     std::string const& run_id) {
   // GCM requires that metrics be tied to a Monitored Resource. Instead of using
   // a GCP Resource Detector, which requires that the integration test be run
   // from GCP, we set attributes that we know will map to a `generic_node`.
   auto resource = opentelemetry::sdk::resource::Resource::Create(
       {{sc::kServiceNamespace, "gl-cpp"},
        // Host ID is meant to uniquely identify a VM. We don't care, though.
-       {sc::kHostId, "monitoring_exporter_integration_test"}});
+       {sc::kServiceName, "monitoring_exporter_integration_test"},
+       {sc::kServiceInstanceId, run_id}});
 
   // Initialize and set the global MeterProvider
   metrics_sdk::PeriodicExportingMetricReaderOptions options;
@@ -106,15 +107,17 @@ TEST(MonitoringExporter, Basic) {
   auto project_id = internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty()));
 
+  // Uniquely identify the telemetry produced by this run of the test.
+  auto const run_id = RandomId();
+
+  // Create and install the GCM exporter.
   auto project = Project(project_id);
   auto conn = monitoring_v3::MakeMetricServiceConnection();
   auto client = monitoring_v3::MetricServiceClient(conn);
   auto exporter =
       otel_internal::MakeMonitoringExporter(project, std::move(conn));
-  InstallExporter(std::move(exporter));
+  InstallExporter(std::move(exporter), run_id);
 
-  // Uniquely identify the telemetry produced by this run of the test.
-  auto const run_id = RandomId();
   // Perform work which creates telemetry. An export should happen.
   DoWork(run_id);
 
