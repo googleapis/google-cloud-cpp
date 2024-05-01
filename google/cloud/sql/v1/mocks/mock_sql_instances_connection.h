@@ -216,6 +216,20 @@ class MockSqlInstancesServiceConnection
       (google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>,
+      AcquireSsrsLease,
+      (google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>,
+      ReleaseSsrsLease,
+      (google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

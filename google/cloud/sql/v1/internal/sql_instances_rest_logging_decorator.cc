@@ -451,6 +451,34 @@ SqlInstancesServiceRestLogging::GetLatestRecoveryTime(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+SqlInstancesServiceRestLogging::AcquireSsrsLease(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+                 request) {
+        return child_->AcquireSsrsLease(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+SqlInstancesServiceRestLogging::ReleaseSsrsLease(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+                 request) {
+        return child_->ReleaseSsrsLease(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal
 }  // namespace cloud

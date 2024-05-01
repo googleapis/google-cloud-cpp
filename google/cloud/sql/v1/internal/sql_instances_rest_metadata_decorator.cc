@@ -303,6 +303,24 @@ SqlInstancesServiceRestMetadata::GetLatestRecoveryTime(
   return child_->GetLatestRecoveryTime(rest_context, options, request);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+SqlInstancesServiceRestMetadata::AcquireSsrsLease(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AcquireSsrsLease(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+SqlInstancesServiceRestMetadata::ReleaseSsrsLease(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->ReleaseSsrsLease(rest_context, options, request);
+}
+
 void SqlInstancesServiceRestMetadata::SetMetadata(
     rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {
