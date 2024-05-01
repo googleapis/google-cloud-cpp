@@ -42,6 +42,7 @@ namespace metrics_api = ::opentelemetry::metrics;
 namespace metrics_sdk = ::opentelemetry::sdk::metrics;
 namespace sc = opentelemetry::sdk::resource::SemanticConventions;
 
+auto constexpr kJobName = "monitoring_exporter_integration_test";
 auto constexpr kMeterName =
     "gl-cpp/testing/monitoring_exporter_integration_test";
 
@@ -53,14 +54,14 @@ std::string RandomId() {
 // If this code is unfamiliar, see the "simple" metrics example:
 // https://github.com/open-telemetry/opentelemetry-cpp/tree/2d077f8ec5315e0979a236554c81f621eb61f5b3/examples/metrics_simple
 void InstallExporter(std::unique_ptr<metrics_sdk::PushMetricExporter> exporter,
-                     std::string const& run_id) {
+                     std::string const& task_id) {
   // GCM requires that metrics be tied to a Monitored Resource. We set
   // attributes which will map to a `generic_task`, which seems apt for this
   // workflow.
   auto resource = opentelemetry::sdk::resource::Resource::Create(
       {{sc::kServiceNamespace, "gl-cpp"},
-       {sc::kServiceName, "monitoring_exporter_integration_test"},
-       {sc::kServiceInstanceId, run_id}});
+       {sc::kServiceName, kJobName},
+       {sc::kServiceInstanceId, task_id}});
 
   // Initialize and set the global MeterProvider
   metrics_sdk::PeriodicExportingMetricReaderOptions options;
@@ -88,7 +89,7 @@ void InstallExporter(std::unique_ptr<metrics_sdk::PushMetricExporter> exporter,
   metrics_api::Provider::SetMeterProvider(provider);
 }
 
-void DoWork(std::string const& run_id) {
+void DoWork() {
   auto provider = metrics_api::Provider::GetMeterProvider();
   opentelemetry::nostd::shared_ptr<metrics_api::Meter> meter =
       provider->GetMeter(kMeterName);
@@ -97,7 +98,7 @@ void DoWork(std::string const& run_id) {
   // This takes 10s to run. That is unfortunate, but necessary because GCM has a
   // minimum update period of 5s.
   for (std::uint32_t i = 0; i < 20; ++i) {
-    double_counter->Add(i, {{"run_id", run_id}});
+    double_counter->Add(i);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
 }
@@ -107,7 +108,7 @@ TEST(MonitoringExporter, Basic) {
   ASSERT_THAT(project_id, Not(IsEmpty()));
 
   // Uniquely identify the telemetry produced by this run of the test.
-  auto const run_id = RandomId();
+  auto const task_id = RandomId();
 
   // Create and install the GCM exporter.
   auto project = Project(project_id);
@@ -115,10 +116,10 @@ TEST(MonitoringExporter, Basic) {
   auto client = monitoring_v3::MetricServiceClient(conn);
   auto exporter =
       otel_internal::MakeMonitoringExporter(project, std::move(conn));
-  InstallExporter(std::move(exporter), run_id);
+  InstallExporter(std::move(exporter), task_id);
 
   // Perform work which creates telemetry. An export should happen.
-  DoWork(run_id);
+  DoWork();
 
   // Verify that the metrics were exported to GCM, by retrieving TimeSeries.
   auto const now = std::chrono::system_clock::now();
@@ -127,8 +128,9 @@ TEST(MonitoringExporter, Basic) {
   *interval.mutable_end_time() = internal::ToProtoTimestamp(now);
   *interval.mutable_start_time() = internal::ToProtoTimestamp(then);
   auto filter = absl::StrFormat(R"(metric.type = "workload.googleapis.com/%s"
-      AND metric.labels.run_id = "%s")",
-                                kMeterName, run_id);
+      AND resource.labels.job = "%s"
+      AND resource.labels.task_id = "%s")",
+                                kMeterName, kJobName, task_id);
   auto sr = client.ListTimeSeries(
       project.FullName(), filter, interval,
       google::monitoring::v3::ListTimeSeriesRequest_TimeSeriesView_HEADERS);
