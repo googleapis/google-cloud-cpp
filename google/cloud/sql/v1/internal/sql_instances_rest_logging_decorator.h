@@ -234,6 +234,20 @@ class SqlInstancesServiceRestLogging : public SqlInstancesServiceRestStub {
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
           request) override;
 
+  StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+  AcquireSsrsLease(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+          request) override;
+
+  StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+  ReleaseSsrsLease(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+          request) override;
+
  private:
   std::shared_ptr<SqlInstancesServiceRestStub> child_;
   TracingOptions tracing_options_;

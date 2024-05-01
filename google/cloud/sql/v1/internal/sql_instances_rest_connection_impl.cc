@@ -542,6 +542,38 @@ SqlInstancesServiceRestConnectionImpl::GetLatestRecoveryTime(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+SqlInstancesServiceRestConnectionImpl::AcquireSsrsLease(
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AcquireSsrsLease(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+                 request) {
+        return stub_->AcquireSsrsLease(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+SqlInstancesServiceRestConnectionImpl::ReleaseSsrsLease(
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReleaseSsrsLease(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+                 request) {
+        return stub_->ReleaseSsrsLease(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal
 }  // namespace cloud

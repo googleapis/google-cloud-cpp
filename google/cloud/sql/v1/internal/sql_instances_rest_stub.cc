@@ -376,7 +376,11 @@ DefaultSqlInstancesServiceRestStub::VerifyExternalSyncSettings(
                           request.verify_connection_only() ? "1" : "0"),
            std::make_pair("sync_mode", std::to_string(request.sync_mode())),
            std::make_pair("verify_replication_only",
-                          request.verify_replication_only() ? "1" : "0")}));
+                          request.verify_replication_only() ? "1" : "0"),
+           std::make_pair("migration_type",
+                          std::to_string(request.migration_type())),
+           std::make_pair("sync_parallel_level",
+                          std::to_string(request.sync_parallel_level()))}));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -395,7 +399,9 @@ DefaultSqlInstancesServiceRestStub::StartExternalSync(
            std::make_pair("skip_verification",
                           request.skip_verification() ? "1" : "0"),
            std::make_pair("sync_parallel_level",
-                          std::to_string(request.sync_parallel_level()))}));
+                          std::to_string(request.sync_parallel_level())),
+           std::make_pair("migration_type",
+                          std::to_string(request.migration_type()))}));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -450,6 +456,34 @@ DefaultSqlInstancesServiceRestStub::GetLatestRecoveryTime(
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "getLatestRecoveryTime"));
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+DefaultSqlInstancesServiceRestStub::AcquireSsrsLease(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>(
+      *service_, rest_context, request.body(), true,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "acquireSsrsLease"));
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+DefaultSqlInstancesServiceRestStub::ReleaseSsrsLease(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>(
+      *service_, rest_context, request, true,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "releaseSsrsLease"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
