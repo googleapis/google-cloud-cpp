@@ -73,11 +73,8 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
     ScopedCallContext scope(call_context_);
     if (!ok) {
       // `Finish()` always returns `true` for unary RPCs, so the only time we
-      // get `!ok` is after `Shutdown()` was called; create a client-origin
-      // "cancelled". By marking the status, we can use that to determine
-      // whether it *might* not be safe to make a GetServerInitialMetadata call
-      // on the client context. This omits the grpc server initial metadata
-      // tracing information from the span attributes.
+      // get `!ok` is after `Shutdown()` was called; create a "cancelled"
+      // originating from the client.
       promise_.set_value(internal::CancelledError(
           "call cancelled",
           GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client")));
