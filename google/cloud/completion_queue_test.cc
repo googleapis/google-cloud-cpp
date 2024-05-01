@@ -43,6 +43,7 @@ namespace {
 
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -405,7 +406,11 @@ TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
           },
           r1, std::make_unique<grpc::ClientContext>())
           .then([](future<StatusOr<Response>> f) {
-            EXPECT_EQ(StatusCode::kCancelled, f.get().status().code());
+            auto status = f.get().status();
+            EXPECT_THAT(status, StatusIs(StatusCode::kCancelled));
+            auto const& metadata = status.error_info().metadata();
+            EXPECT_THAT(metadata,
+                        Contains(Pair("gl-cpp.error.origin", "client")));
           });
 
   Request r2;
