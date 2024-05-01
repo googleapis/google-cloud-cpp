@@ -18,10 +18,11 @@
 
 namespace google {
 namespace cloud {
-namespace internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
+namespace {
 
-TEST(IsClientOrigin, OriginatesFromClient) {
+TEST(IsClientOriginTest, OriginatesFromClient) {
   Status cases[] = {
       Status(StatusCode::kCancelled, "cancelled + contains origin metadata",
              ErrorInfo("test-only-reasons", "test-only-domain",
@@ -41,7 +42,7 @@ TEST(IsClientOrigin, OriginatesFromClient) {
   }
 }
 
-TEST(IsClientOrigin, DoesNotOriginateFromClient) {
+TEST(IsClientOriginTest, DoesNotOriginateFromClient) {
   Status cases[] = {
       Status(StatusCode::kAborted, "no metadata"),
       Status(StatusCode::kCancelled, "incorrect origin value",
@@ -66,7 +67,8 @@ TEST(IsClientOrigin, DoesNotOriginateFromClient) {
   }
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace
 }  // namespace internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
