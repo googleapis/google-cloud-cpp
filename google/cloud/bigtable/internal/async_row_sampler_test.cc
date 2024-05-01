@@ -379,6 +379,8 @@ TEST_F(AsyncSampleRowKeysTest, TimerError) {
   // return "call cancelled" than to pass along the exact error.
   EXPECT_THAT(sor,
               StatusIs(StatusCode::kCancelled, HasSubstr("call cancelled")));
+  EXPECT_THAT(sor.status().error_info().metadata(),
+              Contains(Pair("gl-cpp.error.origin", "client")));
 }
 
 TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {

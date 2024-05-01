@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include <chrono>
 
@@ -105,8 +106,9 @@ void AsyncRowSampler::OnFinish(Status const& status) {
         if (result.get()) {
           self->StartIteration();
         } else {
-          self->promise_.set_value(
-              Status(StatusCode::kCancelled, "call cancelled"));
+          self->promise_.set_value(internal::CancelledError(
+              "call cancelled",
+              GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client")));
         }
       });
 }
