@@ -29,8 +29,17 @@ namespace {
 
 using ::google::cloud::testing_util::StatusIs;
 
+using std::chrono::duration;
+using std::chrono::duration_cast;
+using std::chrono::hours;
+using std::chrono::microseconds;
+using std::chrono::milliseconds;
+using std::chrono::minutes;
+using std::chrono::nanoseconds;
+using std::chrono::seconds;
+
 TEST(Interval, RegularSemantics) {
-  Interval const intvl(0, 1, 2, absl::Hours(3));
+  Interval const intvl(0, 1, 2, hours(3));
 
   Interval const copy1(intvl);
   EXPECT_EQ(copy1, intvl);
@@ -54,63 +63,61 @@ TEST(Interval, RelationalOperators) {
   EXPECT_GT(Interval(0, 0, 365), Interval(1, 0, 0));
   EXPECT_GT(Interval(0, 0, 52 * 7), Interval(1, 0, 0));
 
-  EXPECT_EQ(Interval(0, 2, -90, -absl::Hours(12)),
-            Interval(0, -1, -1, absl::Hours(12)));
+  EXPECT_EQ(Interval(0, 2, -90, -hours(12)), Interval(0, -1, -1, hours(12)));
 
   // Check microsecond rounding.
-  EXPECT_EQ(Interval(absl::Microseconds(1.25)),
-            Interval(absl::Microseconds(1)));
-  EXPECT_EQ(Interval(-absl::Microseconds(1.25)),
-            Interval(-absl::Microseconds(1)));
-  EXPECT_EQ(Interval(absl::Microseconds(1.5)), Interval(absl::Microseconds(2)));
-  EXPECT_EQ(Interval(-absl::Microseconds(1.5)),
-            Interval(-absl::Microseconds(2)));
+  EXPECT_EQ(Interval(nanoseconds(1'250)), Interval(microseconds(1)));
+  EXPECT_EQ(Interval(-nanoseconds(1'250)), Interval(-microseconds(1)));
+  EXPECT_EQ(Interval(nanoseconds(1'500)), Interval(microseconds(2)));
+  EXPECT_EQ(Interval(-nanoseconds(1'500)), Interval(-microseconds(2)));
+  EXPECT_EQ(Interval(nanoseconds(2'500)), Interval(microseconds(2)));
+  EXPECT_EQ(Interval(-nanoseconds(2'500)), Interval(-microseconds(2)));
+  EXPECT_EQ(Interval(nanoseconds(2'750)), Interval(microseconds(3)));
+  EXPECT_EQ(Interval(-nanoseconds(2'750)), Interval(-microseconds(3)));
 
-  // Check that the logical value of an Interval used during comparison
-  // is able to represent values greater that (2^63-1) nanoseconds.
-  auto const max64 = std::numeric_limits<std::int64_t>::max();
-  EXPECT_GT(Interval(296, 6, 12), Interval(absl::Nanoseconds(max64)));
+  // Check that the logical value of an Interval used during comparison is
+  // able to represent values beyond the std::chrono::nanoseconds limits.
+  EXPECT_GT(Interval(296, 6, 12), Interval(nanoseconds::max()));
+  EXPECT_LT(-Interval(296, 6, 12), Interval(nanoseconds::min()));
 }
 
 TEST(Interval, ArithmeticOperators) {
   // Negation.
   EXPECT_EQ(-Interval(), Interval());
-  EXPECT_EQ(-Interval(0, 10, 11, absl::Hours(12)),
-            Interval(0, -10, -11, -absl::Hours(12)));
+  EXPECT_EQ(-Interval(0, 10, 11, hours(12)), Interval(0, -10, -11, -hours(12)));
 
   // Addition/subtraction.
   EXPECT_EQ(Interval(0, 1, 0) + Interval(0, 2, 0), Interval(0, 3, 0));
-  EXPECT_EQ(Interval(1, 0, 0, absl::Hours(24)) + Interval(1, 0, 3),
-            Interval(2, 0, 3, absl::Hours(24)));
-  EXPECT_EQ(Interval(1, 0, 1) - Interval(absl::Hours(24)),
-            Interval(1, 0, 1, -absl::Hours(24)));
+  EXPECT_EQ(Interval(1, 0, 0, hours(24)) + Interval(1, 0, 3),
+            Interval(2, 0, 3, hours(24)));
+  EXPECT_EQ(Interval(1, 0, 1) - Interval(hours(24)),
+            Interval(1, 0, 1, -hours(24)));
   EXPECT_EQ(Interval(0, 11, 0) + Interval(0, 1, 1), Interval(1, 0, 1));
-  EXPECT_EQ(Interval(absl::Hours(2) + absl::Minutes(50)) +
-                Interval(absl::Minutes(10)),
-            Interval(absl::Hours(3)));
-  EXPECT_EQ(Interval(absl::Hours(2) + absl::Minutes(50)) -
-                Interval(absl::Minutes(50)),
-            Interval(absl::Hours(2)));
+  EXPECT_EQ(Interval(hours(2) + minutes(50)) + Interval(minutes(10)),
+            Interval(hours(3)));
+  EXPECT_EQ(Interval(hours(2) + minutes(50)) - Interval(minutes(50)),
+            Interval(hours(2)));
 
   // Multiplication/division.
   EXPECT_EQ(Interval(0, 1, 0) * 2, Interval(0, 2, 0));
   EXPECT_EQ(Interval(1, 6, 0) * 2, Interval(3, 0, 0));
-  EXPECT_EQ(Interval(absl::Hours(5) + absl::Minutes(5)) * 2,
-            Interval(absl::Hours(10) + absl::Minutes(10)));
-  EXPECT_EQ(Interval(0, 0, 15, absl::Hours(24)) * 3,
-            Interval(0, 1, 15, absl::Hours(72)));
+  EXPECT_EQ(Interval(hours(5) + minutes(5)) * 2,
+            Interval(hours(10) + minutes(10)));
+  EXPECT_EQ(Interval(0, 0, 15, hours(24)) * 3, Interval(0, 1, 15, hours(72)));
   EXPECT_EQ(Interval(0, 1, 15) * 3, Interval(0, 3, 45));
   EXPECT_EQ(Interval(0, 1, 15) * 12, Interval(1, 0, 180));
   EXPECT_EQ(Interval(0, 1, 0) / 30, Interval(0, 0, 1));
-  EXPECT_EQ(Interval(1, 0, 0) / 365, Interval(absl::Hours(24) * (360.0 / 365)));
+  EXPECT_EQ(Interval(1, 0, 0) / 365,
+            Interval(duration_cast<nanoseconds>(duration<double>(hours(24)) *
+                                                (360.0 / 365))));
   EXPECT_EQ(Interval(1, 0, 0) / 12, Interval(0, 1, 0));
-  EXPECT_EQ(Interval(0, 1, 0) / 4, Interval(0, 0, 7, absl::Hours(12)));
+  EXPECT_EQ(Interval(0, 1, 0) / 4, Interval(0, 0, 7, hours(12)));
   EXPECT_EQ(Interval(0, 1, 0) * 0.5, Interval(0, 0, 15));
-  EXPECT_EQ(Interval(absl::Minutes(1)) * 0.5, Interval(absl::Seconds(30)));
+  EXPECT_EQ(Interval(minutes(1)) * 0.5, Interval(seconds(30)));
   EXPECT_EQ(Interval(0, 3, 30) / 30, Interval(0, 0, 4));
-  EXPECT_EQ(Interval(absl::Milliseconds(1001)) / 1'000'000 * 1'000,
-            Interval(absl::Microseconds(1001)));
-  EXPECT_EQ(Interval(absl::Minutes(1)) * 600, Interval(absl::Hours(10)));
+  EXPECT_EQ(Interval(milliseconds(1001)) / 1'000'000 * 1'000,
+            Interval(microseconds(1001)));
+  EXPECT_EQ(Interval(minutes(1)) * 600, Interval(hours(10)));
 }
 
 TEST(Interval, Range) {
@@ -119,8 +126,8 @@ TEST(Interval, Range) {
   EXPECT_EQ(std::string(-huge), "-178000000 years");
 
   EXPECT_LT(-huge, huge);
-  EXPECT_GT(huge, huge - Interval(absl::Microseconds(1)));
-  EXPECT_LT(-huge, -huge + Interval(absl::Microseconds(1)));
+  EXPECT_GT(huge, huge - Interval(microseconds(1)));
+  EXPECT_LT(-huge, -huge + Interval(microseconds(1)));
 }
 
 // Check that parsing the result of a string conversion yields the same value.
@@ -130,12 +137,12 @@ TEST(Interval, RoundTrip) {
       Interval(1, 0, 0),
       Interval(0, 2, 0),
       Interval(0, 0, 3),
-      Interval(absl::Hours(4)),
-      Interval(absl::Minutes(5)),
-      Interval(absl::Seconds(6)),
-      Interval(absl::Milliseconds(123)),
-      Interval(absl::Microseconds(123456)),
-      Interval(absl::Nanoseconds(123456789)),
+      Interval(hours(4)),
+      Interval(minutes(5)),
+      Interval(seconds(6)),
+      Interval(milliseconds(123)),
+      Interval(microseconds(123456)),
+      Interval(nanoseconds(123456789)),
   };
 
   for (auto const& tc : test_cases) {
@@ -158,14 +165,14 @@ TEST(Interval, RoundTrip) {
 
 TEST(Interval, MakeInterval) {
   auto hms = [](int h, int m, int s) {
-    return absl::Hours(h) + absl::Minutes(m) + absl::Seconds(s);
+    return hours(h) + minutes(m) + seconds(s);
   };
   std::vector<std::pair<std::string, Interval>> test_cases = {
-      {"2 microseconds", Interval(absl::Microseconds(2))},
-      {"3 milliseconds", Interval(absl::Milliseconds(3))},
-      {"4 seconds", Interval(absl::Seconds(4))},
-      {"5 minutes", Interval(absl::Minutes(5))},
-      {"6 hours", Interval(absl::Hours(6))},
+      {"2 microseconds", Interval(microseconds(2))},
+      {"3 milliseconds", Interval(milliseconds(3))},
+      {"4 seconds", Interval(seconds(4))},
+      {"5 minutes", Interval(minutes(5))},
+      {"6 hours", Interval(hours(6))},
       {"7 days", Interval(0, 0, 7)},
       {"8 weeks", Interval(0, 0, 8 * 7)},
       {"9 months", Interval(0, 9, 0)},
@@ -207,8 +214,8 @@ TEST(Interval, MakeInterval) {
 
       {"17h 20m 05s", Interval(hms(17, 20, 5))},
 
-      {"-42 microseconds", Interval(-absl::Microseconds(42))},
-      {"+87 milliseconds", Interval(absl::Milliseconds(87))},
+      {"-42 microseconds", Interval(-microseconds(42))},
+      {"+87 milliseconds", Interval(milliseconds(87))},
 
       {"4 decades", Interval(40, 0, 0)},
       {"3 centuries", Interval(300, 0, 0)},
@@ -236,8 +243,7 @@ TEST(Interval, MakeInterval) {
 TEST(Interval, OutputStreaming) {
   std::ostringstream os;
   os << Interval(1, 2, 3,
-                 absl::Hours(4) + absl::Minutes(5) + absl::Seconds(6) +
-                     absl::Nanoseconds(123456789));
+                 hours(4) + minutes(5) + seconds(6) + nanoseconds(123456789));
   EXPECT_EQ("1 year 2 months 3 days 04:05:06.123456789", os.str());
 }
 

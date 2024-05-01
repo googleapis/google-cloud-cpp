@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
-#include "absl/time/time.h"
 #include <cstdint>
 #include <iosfwd>
 #include <string>
@@ -40,10 +39,10 @@ class Interval {
   Interval() : Interval(0, 0, 0) {}
 
   Interval(std::int32_t years, std::int32_t months, std::int32_t days,
-           absl::Duration offset = absl::ZeroDuration())
+           std::chrono::nanoseconds offset = std::chrono::nanoseconds::zero())
       : Interval((years * 12) + months, days, offset) {}
 
-  explicit Interval(absl::Duration offset) : Interval(0, 0, offset) {}
+  explicit Interval(std::chrono::nanoseconds offset) : Interval(0, 0, offset) {}
 
   /// @name Regular value type, supporting copy, assign, move.
   ///@{
@@ -58,8 +57,8 @@ class Interval {
   /// Beware: Interval comparisons assume that 1 month == 30 days, and
   /// 1 day == 24*60*60 seconds. This may lead to counterintuitive results.
   /// It also means different Interval representations can compare equal,
-  /// e.g., Interval(0, 0, 1) == Interval(absl::Hours(24)).  Also note
-  /// that offsets are rounded to 1-microsecond boundaries during
+  /// e.g., Interval(0, 0, 1) == Interval(std::chrono::hours(24)). Also
+  /// note that offsets are rounded to 1-microsecond boundaries during
   /// comparisons (halfway cases rounding away from zero).
   ///@{
   friend bool operator==(Interval const& a, Interval const& b);
@@ -105,12 +104,13 @@ class Interval {
   }
 
  private:
-  Interval(std::int32_t months, std::int32_t days, absl::Duration offset)
+  Interval(std::int32_t months, std::int32_t days,
+           std::chrono::nanoseconds offset)
       : months_(months), days_(days), offset_(offset) {}
 
   std::int32_t months_;
   std::int32_t days_;
-  absl::Duration offset_;
+  std::chrono::nanoseconds offset_;
 };
 
 /// @name Binary operators

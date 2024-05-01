@@ -36,6 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
+using std::chrono::duration;
+using std::chrono::duration_cast;
+using std::chrono::hours;
+using std::chrono::microseconds;
+using std::chrono::milliseconds;
+using std::chrono::minutes;
+using std::chrono::nanoseconds;
+using std::chrono::seconds;
+
 // Interval factories for quantity units.
 struct {
   absl::string_view name;  // de-pluralized forms
@@ -45,12 +54,12 @@ struct {
     {"day", [](auto n) { return Interval(0, 0, n); }},
 
     // "minute" comes before other "m"s so it is chosen for, say, "6m".
-    {"minute", [](auto n) { return Interval(absl::Minutes(n)); }},
+    {"minute", [](auto n) { return Interval{minutes(n)}; }},
 
-    {"microsecond", [](auto n) { return Interval(absl::Microseconds(n)); }},
-    {"millisecond", [](auto n) { return Interval(absl::Milliseconds(n)); }},
-    {"second", [](auto n) { return Interval(absl::Seconds(n)); }},
-    {"hour", [](auto n) { return Interval(absl::Hours(n)); }},
+    {"microsecond", [](auto n) { return Interval{microseconds(n)}; }},
+    {"millisecond", [](auto n) { return Interval{milliseconds(n)}; }},
+    {"second", [](auto n) { return Interval{seconds(n)}; }},
+    {"hour", [](auto n) { return Interval{hours(n)}; }},
     {"week", [](auto n) { return Interval(0, 0, n * 7); }},
     {"month", [](auto n) { return Interval(0, n, 0); }},
     {"year", [](auto n) { return Interval(n, 0, 0); }},
@@ -61,17 +70,27 @@ struct {
     {"millennia", [](auto n) { return Interval(n * 1000, 0, 0); }},
 };
 
+// Round d to a microsecond boundary (to even in halfway cases).
+microseconds Round(nanoseconds d) {
+  auto trunc = duration_cast<microseconds>(d);
+  auto diff = d < nanoseconds::zero() ? trunc - d : d - trunc;
+  if (diff < nanoseconds(500)) return trunc;
+  auto after = trunc + microseconds(d < nanoseconds::zero() ? -1 : 1);
+  if (diff > nanoseconds(500)) return after;
+  return (after.count() & 1) ? trunc : after;
+}
+
 // Interval comparison is done by logically combining the fields into a
 // single value by assuming that 1 month == 30 days and 1 day == 24 hours,
 // and by rounding to a microsecond boundary.
-void Normalize(std::int64_t& months, std::int64_t& days,
-               absl::Duration& offset) {
-  auto const precision = absl::Microseconds(1);
-  offset += ((offset < absl::ZeroDuration()) ? -precision : precision) / 2;
-  offset = absl::Trunc(offset, precision);
-  days += absl::IDivDuration(offset, absl::Hours(24), &offset);
-  if (offset < absl::ZeroDuration()) {
-    offset += absl::Hours(24);
+microseconds Normalize(std::int64_t& months, std::int64_t& days,
+                       nanoseconds offset) {
+  auto rounded_offset = Round(offset);
+  auto carry_days = rounded_offset / hours(24);
+  days += carry_days;
+  rounded_offset -= hours(carry_days * 24);
+  if (rounded_offset < microseconds::zero()) {
+    rounded_offset += hours(24);
     days -= 1;
   }
   months += days / 30;
@@ -80,21 +99,22 @@ void Normalize(std::int64_t& months, std::int64_t& days,
     days += 30;
     months -= 1;
   }
+  return rounded_offset;
 }
 
 template <template <typename> class C>
-bool Cmp(std::int64_t a_months, std::int64_t a_days, absl::Duration a_offset,
-         std::int64_t b_months, std::int64_t b_days, absl::Duration b_offset) {
-  Normalize(a_months, a_days, a_offset);
-  Normalize(b_months, b_days, b_offset);
+bool Cmp(std::int64_t a_months, std::int64_t a_days, nanoseconds a_offset,
+         std::int64_t b_months, std::int64_t b_days, nanoseconds b_offset) {
+  auto rounded_a_offset = Normalize(a_months, a_days, a_offset);
+  auto rounded_b_offset = Normalize(b_months, b_days, b_offset);
   if (a_months != b_months) return C<std::int64_t>()(a_months, b_months);
   if (a_days != b_days) return C<std::int64_t>()(a_days, b_days);
-  return C<absl::Duration>()(a_offset, b_offset);
+  return C<microseconds>()(rounded_a_offset, rounded_b_offset);
 }
 
 // "y years m months d days H:M:S.F"
 std::string SerializeInterval(std::int32_t months, std::int32_t days,
-                              absl::Duration offset) {
+                              nanoseconds offset) {
   std::ostringstream ss;
   std::int32_t years = months / 12;
   months %= 12;
@@ -116,18 +136,32 @@ std::string SerializeInterval(std::int32_t months, std::int32_t days,
     ss << sep << days << " day" << plural(days);
     sep = " ";
   }
-  if (offset == absl::ZeroDuration()) {
+  if (offset == nanoseconds::zero()) {
     if (*sep == '\0') ss << "0 days";
   } else {
-    char const* sign = (offset < absl::ZeroDuration()) ? "-" : "";
-    offset = absl::AbsDuration(offset);
-    auto hour = absl::IDivDuration(offset, absl::Hours(1), &offset);
-    auto min = absl::IDivDuration(offset, absl::Minutes(1), &offset);
-    auto sec = absl::IDivDuration(offset, absl::Seconds(1), &offset);
-    ss << sep << sign << std::setfill('0') << std::setw(2) << hour;
-    ss << ':' << std::setfill('0') << std::setw(2) << min;
-    ss << ':' << std::setfill('0') << std::setw(2) << sec;
-    if (auto ns = absl::ToInt64Nanoseconds(offset)) {
+    ss << sep;
+    nanoseconds::rep nanosecond_carry = 0;
+    if (offset < nanoseconds::zero()) {
+      ss << "-";
+      if (offset == nanoseconds::min()) {
+        // Handle the inability to negate the most negative value.
+        // This works because no power of 2 is a multiple of 10,
+        // so the carry will always remain within the same second.
+        offset += nanoseconds(1);
+        nanosecond_carry = 1;
+      }
+      offset = -offset;
+    }
+    auto hour = duration_cast<hours>(offset);
+    offset -= hour;
+    auto min = duration_cast<minutes>(offset);
+    offset -= min;
+    auto sec = duration_cast<seconds>(offset);
+    offset -= sec;
+    ss << std::setfill('0') << std::setw(2) << hour.count();
+    ss << ':' << std::setfill('0') << std::setw(2) << min.count();
+    ss << ':' << std::setfill('0') << std::setw(2) << sec.count();
+    if (auto ns = offset.count() + nanosecond_carry) {
       ss << '.' << std::setfill('0');
       if (ns % 1000000 == 0) {
         ss << std::setw(3) << ns / 1000000;
@@ -198,23 +232,23 @@ bool ParseYearMonth(absl::string_view& s, Interval& intvl) {
 
 bool ParseHourMinuteSecond(absl::string_view& s, Interval& intvl) {
   auto t = s;
-  auto d = absl::ZeroDuration();
+  auto d = nanoseconds::zero();
   auto sign = ConsumeSign(t);
   std::int64_t hour;
   if (!ParseInteger(t, hour, false)) return false;
-  d += absl::Hours(hour);
+  d += hours(hour);
   if (!absl::ConsumePrefix(&t, ":")) return false;
   std::int64_t minute;
   if (!ParseInteger(t, minute, false)) return false;
-  d += absl::Minutes(minute);
+  d += minutes(minute);
   if (!absl::ConsumePrefix(&t, ":")) return false;
   double second;
   if (ParseDouble(t, second, false)) {
-    d += absl::Seconds(second);
+    d += duration_cast<nanoseconds>(duration<double>(second));
   } else {
     std::int64_t second;
     if (!ParseInteger(t, second, false)) return false;
-    d += absl::Seconds(second);
+    d += seconds(second);
   }
   intvl = Interval(sign == "-" ? -d : d);
   s.remove_prefix(s.size() - t.size());
@@ -315,6 +349,8 @@ bool operator<(Interval const& a, Interval const& b) {
 
 Interval Interval::operator-() const {
   Interval intvl;
+  // What should we do when any field is at its most
+  // negative and therefore cannot be negated?
   intvl.months_ = -months_;
   intvl.days_ = -days_;
   intvl.offset_ = -offset_;
@@ -338,8 +374,9 @@ Interval& Interval::operator*=(double d) {
   double i_days;
   double f_days = std::modf(days_ * d + f_months * 30, &i_days);
   days_ = static_cast<std::int32_t>(i_days);
-  offset_ *= d;
-  offset_ += absl::Hours(f_days * 24);
+  auto offset = duration<double, std::nano>(offset_) * d;
+  offset += duration<double, std::ratio<3600>>(24) * f_days;
+  offset_ = duration_cast<nanoseconds>(offset);
   return *this;
 }
 
