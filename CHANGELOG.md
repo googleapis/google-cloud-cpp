@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.24.0 - TBD
+## v2.24.0 - 2024-05
 
 ### No longer testing with MSVC 2019
 
@@ -43,6 +43,33 @@ have stopped (or shortly will stop) testing with MSVC 2019 too.
 - [Network Connectivity API](/google/cloud/networkconnectivity/README.md) - new
   `PolicyBasedRoutingServiceClient`
 - [Retail](/google/cloud/retail/README.md) - new `AnalyticsServiceClient`
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- fix(pubsub): correctly trace modacks in the unary pull ([#14049](https://github.com/googleapis/google-cloud-cpp/pull/14049))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- fix(spanner): avoid absl types in public Interval API ([#14095](https://github.com/googleapis/google-cloud-cpp/pull/14095))
+- feat(spanner): add a representation for the Spanner INTERVAL ([#14059](https://github.com/googleapis/google-cloud-cpp/pull/14059))
+- fix(spanner): delete idle sessions upon SessionPool destruction ([#14012](https://github.com/googleapis/google-cloud-cpp/pull/14012))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): missing include ([#14052](https://github.com/googleapis/google-cloud-cpp/pull/14052))
+- fix(GCS+gRPC): MSVC build problems ([#14031](https://github.com/googleapis/google-cloud-cpp/pull/14031))
+- feat(GCS+gRPC): checksum options ([#14002](https://github.com/googleapis/google-cloud-cpp/pull/14002))
+- docs(GCS+gRPC): refactor AsyncClient comments ([#14001](https://github.com/googleapis/google-cloud-cpp/pull/14001))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(datastore): emulator environment variable ([#14100](https://github.com/googleapis/google-cloud-cpp/pull/14100))
+- docs(storagecontrol): use `GetStorageLayout()` for quickstart ([#14044](https://github.com/googleapis/google-cloud-cpp/pull/14044))
+- docs(storagecontrol): update service title ([#14042](https://github.com/googleapis/google-cloud-cpp/pull/14042))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-04-30T21:03:48Z](https://github.com/googleapis/googleapis/tree/5a0ae652df1ef39b7849bf2bd6ba417376ce3204)
 
 ## v2.23.0 - 2024-04
 
