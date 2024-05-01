@@ -23,7 +23,7 @@ find_package(GTest CONFIG REQUIRED)
 set(opentelemetry_integration_tests
     # cmake-format: sort
     configure_basic_tracing_integration_test.cc
-    trace_exporter_integration_test.cc)
+    monitoring_exporter_integration_test.cc trace_exporter_integration_test.cc)
 
 # Export the list of unit tests to a .bzl file so we do not need to maintain the
 # list in two places.
