@@ -54,9 +54,9 @@ std::string RandomId() {
 // https://github.com/open-telemetry/opentelemetry-cpp/tree/2d077f8ec5315e0979a236554c81f621eb61f5b3/examples/metrics_simple
 void InstallExporter(std::unique_ptr<metrics_sdk::PushMetricExporter> exporter,
                      std::string const& run_id) {
-  // GCM requires that metrics be tied to a Monitored Resource. Instead of using
-  // a GCP Resource Detector, which requires that the integration test be run
-  // from GCP, we set attributes that we know will map to a `generic_node`.
+  // GCM requires that metrics be tied to a Monitored Resource. We set
+  // attributes which will map to a `generic_task`, which seems apt for this
+  // workflow.
   auto resource = opentelemetry::sdk::resource::Resource::Create(
       {{sc::kServiceNamespace, "gl-cpp"},
        {sc::kServiceName, "monitoring_exporter_integration_test"},
