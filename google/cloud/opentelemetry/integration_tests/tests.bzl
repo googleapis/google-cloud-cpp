@@ -18,5 +18,6 @@
 
 opentelemetry_integration_tests = [
     "configure_basic_tracing_integration_test.cc",
+    "monitoring_exporter_integration_test.cc",
     "trace_exporter_integration_test.cc",
 ]
