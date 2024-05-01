@@ -59,7 +59,6 @@ void InstallExporter(std::unique_ptr<metrics_sdk::PushMetricExporter> exporter,
   // from GCP, we set attributes that we know will map to a `generic_node`.
   auto resource = opentelemetry::sdk::resource::Resource::Create(
       {{sc::kServiceNamespace, "gl-cpp"},
-       // Host ID is meant to uniquely identify a VM. We don't care, though.
        {sc::kServiceName, "monitoring_exporter_integration_test"},
        {sc::kServiceInstanceId, run_id}});
 
