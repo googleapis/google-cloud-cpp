@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
+#include <chrono>
 #include <cstdint>
 #include <iosfwd>
 #include <string>
