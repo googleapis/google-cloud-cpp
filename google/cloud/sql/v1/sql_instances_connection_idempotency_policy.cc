@@ -199,6 +199,16 @@ SqlInstancesServiceConnectionIdempotencyPolicy::GetLatestRecoveryTime(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::AcquireSsrsLease(
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ReleaseSsrsLease(
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<SqlInstancesServiceConnectionIdempotencyPolicy>
 MakeDefaultSqlInstancesServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlInstancesServiceConnectionIdempotencyPolicy>();

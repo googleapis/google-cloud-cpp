@@ -282,6 +282,22 @@ SqlInstancesServiceClient::GetLatestRecoveryTime(
   return connection_->GetLatestRecoveryTime(request);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+SqlInstancesServiceClient::AcquireSsrsLease(
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AcquireSsrsLease(request);
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+SqlInstancesServiceClient::ReleaseSsrsLease(
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReleaseSsrsLease(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1
 }  // namespace cloud

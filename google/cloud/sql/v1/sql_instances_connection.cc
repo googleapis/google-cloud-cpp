@@ -231,6 +231,18 @@ SqlInstancesServiceConnection::GetLatestRecoveryTime(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+SqlInstancesServiceConnection::AcquireSsrsLease(
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+SqlInstancesServiceConnection::ReleaseSsrsLease(
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1
 }  // namespace cloud

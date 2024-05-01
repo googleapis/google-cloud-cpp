@@ -329,6 +329,26 @@ SqlInstancesServiceTracingConnection::GetLatestRecoveryTime(
   return internal::EndSpan(*span, child_->GetLatestRecoveryTime(request));
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+SqlInstancesServiceTracingConnection::AcquireSsrsLease(
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::AcquireSsrsLease");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AcquireSsrsLease(request));
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+SqlInstancesServiceTracingConnection::ReleaseSsrsLease(
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::ReleaseSsrsLease");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReleaseSsrsLease(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<sql_v1::SqlInstancesServiceConnection>
