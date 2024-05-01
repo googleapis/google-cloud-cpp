@@ -27,7 +27,7 @@ Options MetricsExporterOptions(Options const& options) {
   auto ep_private = std::string{"private.googleapis.com"};
   auto ep_restricted = std::string{"restricted.googleapis.com"};
   if (options.has<internal::UniverseDomainOption>()) {
-    auto const ud = options.get<internal::UniverseDomainOption>();
+    auto const& ud = options.get<internal::UniverseDomainOption>();
     result.set<internal::UniverseDomainOption>(ud);
     ep_canonical = std::string{"storage."} + ud;
     ep_private = std::string{"private."} + ud;

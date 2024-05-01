@@ -28,8 +28,6 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::ScopedEnvironment;
-
 TEST(MetricsExporterOptions, DefaultEndpoint) {
   // In all these cases there default monitoring endpoint is either the best
   // choice, or the least bad choice.
