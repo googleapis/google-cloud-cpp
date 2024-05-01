@@ -18,17 +18,15 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_format.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/metrics/provider.h>
 #include <opentelemetry/sdk/metrics/aggregation/default_aggregation.h>
-#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
+#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/meter.h>
 #include <opentelemetry/sdk/metrics/meter_provider.h>
-#include <opentelemetry/sdk/metrics/meter_provider_factory.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
-#include <opentelemetry/sdk/metrics/view/instrument_selector_factory.h>
-#include <opentelemetry/sdk/metrics/view/meter_selector_factory.h>
-#include <opentelemetry/sdk/metrics/view/view_factory.h>
+#include <opentelemetry/sdk/metrics/view/view_registry.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 
@@ -44,8 +42,6 @@ namespace metrics_api = ::opentelemetry::metrics;
 namespace metrics_sdk = ::opentelemetry::sdk::metrics;
 namespace sc = opentelemetry::sdk::resource::SemanticConventions;
 
-auto constexpr kSchemaVersion = "1.2.0";
-auto constexpr kSchema = "https://opentelemetry.io/schemas/1.2.0";
 auto constexpr kMeterName =
     "gl-cpp/testing/monitoring_exporter_integration_test";
 
@@ -64,37 +60,28 @@ void InstallExporter(
   auto resource = opentelemetry::sdk::resource::Resource::Create(
       {{sc::kServiceNamespace, "gl-cpp"},
        // Host ID is meant to uniquely identify a VM. We don't care, though.
-       {sc::kHostId, "monitoring_exporter_integration_test"}},
-      kSchemaVersion);
+       {sc::kHostId, "monitoring_exporter_integration_test"}});
 
   // Initialize and set the global MeterProvider
   metrics_sdk::PeriodicExportingMetricReaderOptions options;
   options.export_interval_millis = std::chrono::milliseconds(5000);
   options.export_timeout_millis = std::chrono::milliseconds(500);
 
-  auto reader = metrics_sdk::PeriodicExportingMetricReaderFactory::Create(
-      std::move(exporter), options);
+  // `PeriodicExportingMetricReaderFactory::Create(...)` was added in
+  // opentelemetry-cpp v1.10.0. We support >= 1.9.1.
+  std::unique_ptr<metrics_sdk::MetricReader> reader{
+      new metrics_sdk::PeriodicExportingMetricReader(std::move(exporter),
+                                                     options)};
 
-  auto u_provider = metrics_sdk::MeterProviderFactory::Create(
-      std::make_unique<opentelemetry::sdk::metrics::ViewRegistry>(), resource);
+  // `MetricProviderFactory::Create(...)` was added in opentelemetry-cpp
+  // v1.10.0. We support >= 1.9.1.
+  std::unique_ptr<opentelemetry::metrics::MeterProvider> u_provider(
+      new metrics_sdk::MeterProvider(
+          std::make_unique<opentelemetry::sdk::metrics::ViewRegistry>(),
+          resource));
   auto* p = static_cast<metrics_sdk::MeterProvider*>(u_provider.get());
 
   p->AddMetricReader(std::move(reader));
-
-  // counter view
-  std::string unit = "1";
-
-  auto instrument_selector = metrics_sdk::InstrumentSelectorFactory::Create(
-      metrics_sdk::InstrumentType::kCounter, kMeterName, unit);
-
-  auto meter_selector = metrics_sdk::MeterSelectorFactory::Create(
-      kMeterName, kSchemaVersion, kSchema);
-
-  auto sum_view = metrics_sdk::ViewFactory::Create(
-      kMeterName, "description", unit, metrics_sdk::AggregationType::kSum);
-
-  p->AddView(std::move(instrument_selector), std::move(meter_selector),
-             std::move(sum_view));
 
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider(
       std::move(u_provider));
@@ -104,12 +91,12 @@ void InstallExporter(
 void DoWork(std::string const& run_id) {
   auto provider = metrics_api::Provider::GetMeterProvider();
   opentelemetry::nostd::shared_ptr<metrics_api::Meter> meter =
-      provider->GetMeter(kMeterName, "1.2.0");
+      provider->GetMeter(kMeterName);
   auto double_counter = meter->CreateDoubleCounter(kMeterName);
 
   // This takes 10s to run. That is unfortunate, but necessary because GCM has a
   // minimum update period of 5s.
-  for (uint32_t i = 0; i < 20; ++i) {
+  for (std::uint32_t i = 0; i < 20; ++i) {
     double_counter->Add(i, {{"run_id", run_id}});
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
