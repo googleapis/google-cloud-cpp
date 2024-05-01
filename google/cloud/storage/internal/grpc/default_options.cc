@@ -31,7 +31,8 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-auto constexpr kMinMetricsPeriod = std::chrono::seconds(60);
+auto constexpr kMinMetricsPeriod = std::chrono::seconds(5);
+auto constexpr kDefaultMetricsPeriod = std::chrono::seconds(60);
 
 int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using DirectPath the gRPC library already does load balancing across
@@ -86,7 +87,8 @@ Options DefaultOptionsGrpc(Options options) {
       Options{}
           .set<EndpointOption>(ep)
           .set<AuthorityOption>(ep)
-          .set<storage_experimental::EnableGrpcMetrics>(true));
+          .set<storage_experimental::EnableGrpcMetrics>(true)
+          .set<storage_experimental::GrpcMetricsPeriod>(kDefaultMetricsPeriod));
   if (options.get<storage_experimental::GrpcMetricsPeriod>() <
       kMinMetricsPeriod) {
     options.set<storage_experimental::GrpcMetricsPeriod>(kMinMetricsPeriod);

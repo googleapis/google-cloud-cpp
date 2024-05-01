@@ -65,12 +65,12 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts = {});
  *
  * Troubleshooting problems with GCS over gRPC is difficult without some
  * telemetry indicating how the client is configured, and what load balancing
- * decisions.
+ * information was available to the gRPC library.
  *
- * When this option is enabled (the default) the GCS client will export the gRPC
- * telemetry discussed in [gRFC/66] and [gRFC/78] to [Google Cloud Monitoring].
- * Google Cloud Support can use this information to more quickly diagnose
- * problems related to GCS and gRPC.
+ * When this option is enabled (the default), the GCS client will export the
+ * gRPC telemetry discussed in [gRFC/66] and [gRFC/78] to
+ * [Google Cloud Monitoring]. Google Cloud Support can use this information to
+ * more quickly diagnose problems related to GCS and gRPC.
  *
  * Sending this data does not incur any billing charges, and requires minimal
  * CPU (a single RPC every few minutes) or memory (a few KiB to batch the
