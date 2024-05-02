@@ -27,7 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
-    opentelemetry::sdk::metrics::PointAttributes const& attributes);
+    opentelemetry::sdk::metrics::PointAttributes const& attributes,
+    std::string const& prefix);
 
 google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
@@ -60,7 +61,8 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
  * [OTLP]: https://opentelemetry.io/docs/specs/otel/protocol/
  */
 google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
-    opentelemetry::sdk::metrics::ResourceMetrics const& data);
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    std::string const& prefix);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal

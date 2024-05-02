@@ -27,10 +27,35 @@ namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * The prefix prepended to metric names.
+ *
+ * The default value is `"workload.googleapis.com/"`. Note the trailing slash.
+ *
+ * @see https://cloud.google.com/monitoring/api/v3/naming-conventions for
+ *   understanding Google's naming conventions.
+ *
+ * The typical values for [user metrics] are:
+ * - `"workload.googleapis.com/"`
+ * - `"custom.googleapis.com/"`
+ * - `"external.googleapis.com/user/"`
+ *
+ * There are many [external metrics]. A common one is [Prometheus]:
+ * - `"external.googleapis.com/prometheus/"`
+ *
+ * [external metrics]: https://cloud.google.com/monitoring/api/metrics_other
+ * [prometheus]: https://prometheus.io/
+ * [user metrics]: https://cloud.google.com/monitoring/custom-metrics#identifier
+ */
+struct MetricPrefixOption {
+  using Type = std::string;
+};
+
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
     Project project,
-    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn);
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal

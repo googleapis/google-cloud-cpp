@@ -26,13 +26,23 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+Options DefaultOptions(Options o) {
+  if (!o.has<MetricPrefixOption>()) {
+    o.set<MetricPrefixOption>("workload.googleapis.com/");
+  }
+  return o;
+}
+
 class MonitoringExporter final
     : public opentelemetry::sdk::metrics::PushMetricExporter {
  public:
   explicit MonitoringExporter(
       Project project,
-      std::shared_ptr<monitoring_v3::MetricServiceConnection> conn)
-      : project_(std::move(project)), client_(std::move(conn)) {}
+      std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+      Options const& options)
+      : project_(std::move(project)),
+        client_(std::move(conn)),
+        prefix_(options.get<MetricPrefixOption>()) {}
 
   opentelemetry::sdk::metrics::AggregationTemporality GetAggregationTemporality(
       opentelemetry::sdk::metrics::InstrumentType) const noexcept override {
@@ -57,7 +67,7 @@ class MonitoringExporter final
  private:
   opentelemetry::sdk::common::ExportResult ExportImpl(
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
-    auto request = ToRequest(data);
+    auto request = ToRequest(data, prefix_);
     request.set_name(project_.FullName());
     if (request.time_series().empty()) {
       GCP_LOG(WARNING) << "Cloud Monitoring Export skipped. No TimeSeries "
@@ -65,9 +75,6 @@ class MonitoringExporter final
       return opentelemetry::sdk::common::ExportResult::kSuccess;
     }
 
-    // TODO(#13869) - Exporters of Google-defined metrics will need to use
-    // `CreateServiceTimeSeries` instead of `CreateTimeSeries`. We will add that
-    // complexity later.
     auto status = client_.CreateTimeSeries(request);
     if (status.ok()) return opentelemetry::sdk::common::ExportResult::kSuccess;
     GCP_LOG(WARNING) << "Cloud Monitoring Export failed with status=" << status;
@@ -79,15 +86,18 @@ class MonitoringExporter final
 
   Project project_;
   monitoring_v3::MetricServiceClient client_;
+  std::string prefix_;
 };
 }  // namespace
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
     Project project,
-    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn) {
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+    Options options) {
+  options = DefaultOptions(std::move(options));
   return std::make_unique<MonitoringExporter>(std::move(project),
-                                              std::move(conn));
+                                              std::move(conn), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
