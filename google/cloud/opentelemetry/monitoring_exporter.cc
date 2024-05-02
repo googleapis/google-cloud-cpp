@@ -42,7 +42,8 @@ class MonitoringExporter final
       Options const& options)
       : project_(std::move(project)),
         client_(std::move(conn)),
-        prefix_(options.get<MetricPrefixOption>()) {}
+        prefix_(options.get<MetricPrefixOption>()),
+        use_service_time_series_(options.get<ServiceTimeSeriesOption>()) {}
 
   opentelemetry::sdk::metrics::AggregationTemporality GetAggregationTemporality(
       opentelemetry::sdk::metrics::InstrumentType) const noexcept override {
@@ -75,10 +76,9 @@ class MonitoringExporter final
       return opentelemetry::sdk::common::ExportResult::kSuccess;
     }
 
-    // TODO(#14074) - Exporters of Google-defined metrics will need to use
-    // `CreateServiceTimeSeries` instead of `CreateTimeSeries`. We will add that
-    // complexity later.
-    auto status = client_.CreateTimeSeries(request);
+    auto status = use_service_time_series_
+                      ? client_.CreateServiceTimeSeries(request)
+                      : client_.CreateTimeSeries(request);
     if (status.ok()) return opentelemetry::sdk::common::ExportResult::kSuccess;
     GCP_LOG(WARNING) << "Cloud Monitoring Export failed with status=" << status;
     if (status.code() == StatusCode::kInvalidArgument) {
@@ -90,6 +90,7 @@ class MonitoringExporter final
   Project project_;
   monitoring_v3::MetricServiceClient client_;
   std::string prefix_;
+  bool use_service_time_series_;
 };
 }  // namespace
 

@@ -183,6 +183,25 @@ TEST(MonitoringExporter, CustomPrefix) {
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
 }
 
+TEST(MonitoringExporter, CreateServiceTimeSeries) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  EXPECT_CALL(*mock, CreateServiceTimeSeries)
+      .WillOnce(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), "projects/test-project");
+            EXPECT_THAT(request.time_series(), SizeIs(2));
+            return Status();
+          });
+
+  auto options = Options{}.set<otel_internal::ServiceTimeSeriesOption>(true);
+  auto exporter = otel_internal::MakeMonitoringExporter(
+      Project("test-project"), std::move(mock), options);
+  auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
+  auto result = exporter->Export(data);
+  EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
