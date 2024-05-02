@@ -25,7 +25,7 @@ namespace internal {
 
 enum class ErrorOrigin { kUnknown, kClient };
 
-ErrorOrigin IsClient(Status const& status);
+ErrorOrigin GetErrorOrigin(Status const& status);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

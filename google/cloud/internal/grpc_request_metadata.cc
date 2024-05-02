@@ -72,7 +72,7 @@ RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context,
                                           internal::ErrorOrigin error_origin) {
   RpcMetadata metadata;
   AddContextMetadata(context, metadata);
-  // If there is a client originating error, the request never made it to the
+  // If there was a client-originated error, the request never made it to the
   // server metadata. Therefore, it doesn't exist so we should skip the call.
   if (error_origin != ErrorOrigin::kClient) {
     AddServerRequestMetadata(context, metadata);
