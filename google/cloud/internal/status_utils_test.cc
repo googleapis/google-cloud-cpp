@@ -15,6 +15,7 @@
 #include "google/cloud/internal/status_utils.h"
 #include "google/cloud/status.h"
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 namespace google {
 namespace cloud {
@@ -38,7 +39,7 @@ TEST(IsClientOriginTest, OriginatesFromClient) {
   for (auto const& status : cases) {
     SCOPED_TRACE("Testing status: " + StatusCodeToString(status.code()) +
                  " - " + status.message());
-    EXPECT_TRUE(IsClientOrigin(status));
+    EXPECT_EQ(IsClientOrigin(status), ErrorOrigin::kClient);
   }
 }
 
@@ -63,7 +64,7 @@ TEST(IsClientOriginTest, DoesNotOriginateFromClient) {
   for (auto const& status : cases) {
     SCOPED_TRACE("Testing status: " + StatusCodeToString(status.code()) +
                  " - " + status.message());
-    EXPECT_FALSE(IsClientOrigin(status));
+    EXPECT_EQ(IsClientOrigin(status), ErrorOrigin::kUnknown);
   }
 }
 

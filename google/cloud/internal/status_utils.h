@@ -23,7 +23,9 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-bool IsClientOrigin(Status const& status);
+enum class ErrorOrigin { kUnknown, kClient };
+
+ErrorOrigin IsClientOrigin(Status const& status);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
