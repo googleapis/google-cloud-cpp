@@ -18,6 +18,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/version.h"
 #include <grpcpp/support/async_stream.h>
 #include <memory>
@@ -264,8 +265,11 @@ class AsyncReadStreamImpl
 
   /// Handle the result of a Finish() request.
   void OnFinish(bool ok, Status status) {
-    on_finish_(ok ? std::move(status)
-                  : Status(StatusCode::kCancelled, "call cancelled"));
+    on_finish_(
+        ok ? std::move(status)
+           : internal::CancelledError("call cancelled",
+                                      GCP_ERROR_INFO().WithMetadata(
+                                          "gl-cpp.error.origin", "client")));
   }
 
   /**
