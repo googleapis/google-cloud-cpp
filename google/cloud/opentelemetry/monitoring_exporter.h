@@ -30,18 +30,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The prefix prepended to metric names.
  *
- * The default value is `"workload.googleapis.com/"`. Note the trailing slash.
+ * The default value is "workload.googleapis.com/". Note the trailing slash.
  *
  * @see https://cloud.google.com/monitoring/api/v3/naming-conventions for
  *   understanding Google's naming conventions.
  *
  * The typical values for [user metrics] are:
- * - `"workload.googleapis.com/"`
- * - `"custom.googleapis.com/"`
- * - `"external.googleapis.com/user/"`
+ * - "workload.googleapis.com/"
+ * - "custom.googleapis.com/"
+ * - "external.googleapis.com/user/"
  *
  * There are many [external metrics]. A common one is [Prometheus]:
- * - `"external.googleapis.com/prometheus/"`
+ * - "external.googleapis.com/prometheus/"
  *
  * [external metrics]: https://cloud.google.com/monitoring/api/metrics_other
  * [prometheus]: https://prometheus.io/

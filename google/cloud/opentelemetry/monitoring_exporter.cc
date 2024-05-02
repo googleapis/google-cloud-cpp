@@ -75,6 +75,9 @@ class MonitoringExporter final
       return opentelemetry::sdk::common::ExportResult::kSuccess;
     }
 
+    // TODO(#14074) - Exporters of Google-defined metrics will need to use
+    // `CreateServiceTimeSeries` instead of `CreateTimeSeries`. We will add that
+    // complexity later.
     auto status = client_.CreateTimeSeries(request);
     if (status.ok()) return opentelemetry::sdk::common::ExportResult::kSuccess;
     GCP_LOG(WARNING) << "Cloud Monitoring Export failed with status=" << status;
