@@ -54,10 +54,10 @@ TEST(GrpcRequestMetadata,
                   {{"trailer1", "value3"}, {"trailer2", "value4"}}};
   grpc::ClientContext context;
   testing_util::SetServerMetadata(context, server_metadata,
-                                  /*is_initial_metadata_ready*/ false);
+                                  /*is_initial_metadata_ready=*/false);
 
   auto md = GetRequestMetadataFromContext(context,
-                                          /*is_initial_metadata_ready*/ false);
+                                          /*is_initial_metadata_ready=*/false);
   EXPECT_THAT(md.headers,
               UnorderedElementsAre(
                   // This function also returns the peer and compression
