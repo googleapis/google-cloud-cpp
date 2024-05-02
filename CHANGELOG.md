@@ -44,6 +44,10 @@ have stopped (or shortly will stop) testing with MSVC 2019 too.
   `PolicyBasedRoutingServiceClient`
 - [Retail](/google/cloud/retail/README.md) - new `AnalyticsServiceClient`
 
+### [Datastore](/google/cloud/datastore/README.md)
+
+- feat(datastore): emulator environment variable ([#14100](https://github.com/googleapis/google-cloud-cpp/pull/14100))
+
 ### [Pub/Sub](/google/cloud/pubsub/README.md)
 
 - fix(pubsub): correctly trace modacks in the unary pull ([#14049](https://github.com/googleapis/google-cloud-cpp/pull/14049))
@@ -57,13 +61,9 @@ have stopped (or shortly will stop) testing with MSVC 2019 too.
 ### [Storage](/google/cloud/storage/README.md)
 
 - fix(storage): missing include ([#14052](https://github.com/googleapis/google-cloud-cpp/pull/14052))
-- fix(GCS+gRPC): MSVC build problems ([#14031](https://github.com/googleapis/google-cloud-cpp/pull/14031))
-- feat(GCS+gRPC): checksum options ([#14002](https://github.com/googleapis/google-cloud-cpp/pull/14002))
-- docs(GCS+gRPC): refactor AsyncClient comments ([#14001](https://github.com/googleapis/google-cloud-cpp/pull/14001))
 
-### [Common Libraries](/google/cloud/README.md)
+### [Storage Control](/google/cloud/storagecontrol/README.md)
 
-- feat(datastore): emulator environment variable ([#14100](https://github.com/googleapis/google-cloud-cpp/pull/14100))
 - docs(storagecontrol): use `GetStorageLayout()` for quickstart ([#14044](https://github.com/googleapis/google-cloud-cpp/pull/14044))
 - docs(storagecontrol): update service title ([#14042](https://github.com/googleapis/google-cloud-cpp/pull/14042))
 
