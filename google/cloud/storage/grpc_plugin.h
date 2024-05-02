@@ -81,7 +81,7 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts = {});
  * https://github.com/grpc/proposal/blob/master/A78-grpc-metrics-wrr-pf-xds.md
  * [Google Cloud Monitoring]: https://cloud.google.com/monitoring/docs
  */
-struct EnableGrpcMetrics {
+struct EnableGrpcMetricsOption {
   using Type = bool;
 };
 
@@ -90,11 +90,11 @@ struct EnableGrpcMetrics {
  *
  * When `EnableGrpcMetrics` is enabled, this option controls the frequency at
  * which metrics are exported to [Google Cloud Monitoring]. The default is 60
- * seconds. Values below 60 seconds are ignored.
+ * seconds. Values below 5 seconds are ignored.
  *
  * [Google Cloud Monitoring]: https://cloud.google.com/monitoring/docs
  */
-struct GrpcMetricsPeriod {
+struct GrpcMetricsPeriodOption {
   using Type = std::chrono::seconds;
 };
 
