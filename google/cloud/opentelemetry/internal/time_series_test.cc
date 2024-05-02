@@ -239,11 +239,14 @@ TEST(ToMetric, Simple) {
   opentelemetry::sdk::metrics::PointAttributes attributes = {
       {"key1", "value1"}, {"_key2", "value2"}};
 
-  auto metric = ToMetric(md, attributes);
+  auto metric = ToMetric(md, attributes, "workload.googleapis.com/");
 
   EXPECT_EQ(metric.type(), "workload.googleapis.com/test");
   EXPECT_THAT(metric.labels(), UnorderedElementsAre(Pair("key1", "value1"),
                                                     Pair("_key2", "value2")));
+
+  metric = ToMetric(md, {}, "custom.googleapis.com/");
+  EXPECT_EQ(metric.type(), "custom.googleapis.com/test");
 }
 
 TEST(ToMetric, BadLabelNames) {
@@ -252,7 +255,7 @@ TEST(ToMetric, BadLabelNames) {
   opentelemetry::sdk::metrics::PointAttributes attributes = {
       {"99", "dropped"}, {"a key-with.bad/characters", "value"}};
 
-  auto metric = ToMetric({}, attributes);
+  auto metric = ToMetric({}, attributes, "workload.googleapis.com/");
 
   EXPECT_THAT(metric.labels(),
               UnorderedElementsAre(Pair("a_key_with_bad_characters", "value")));
@@ -499,7 +502,7 @@ TEST(ToRequest, Sum) {
   rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto request = ToRequest(rm);
+  auto request = ToRequest(rm, "workload.googleapis.com/");
   EXPECT_THAT(request.time_series(),
               ElementsAre(SumTimeSeries(), SumTimeSeries()));
   EXPECT_THAT(request.time_series(),
@@ -528,7 +531,7 @@ TEST(ToRequest, Gauge) {
   rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto request = ToRequest(rm);
+  auto request = ToRequest(rm, "workload.googleapis.com/");
   EXPECT_THAT(request.time_series(),
               ElementsAre(GaugeTimeSeries(), GaugeTimeSeries()));
   EXPECT_THAT(request.time_series(),
@@ -557,7 +560,7 @@ TEST(ToRequest, Histogram) {
   rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto request = ToRequest(rm);
+  auto request = ToRequest(rm, "workload.googleapis.com/");
   EXPECT_THAT(request.time_series(),
               ElementsAre(HistogramTimeSeries(), HistogramTimeSeries()));
   EXPECT_THAT(request.time_series(),
@@ -586,7 +589,7 @@ TEST(ToRequest, DropIgnored) {
   rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto request = ToRequest(rm);
+  auto request = ToRequest(rm, "workload.googleapis.com/");
   EXPECT_THAT(request.time_series(), IsEmpty());
 }
 
@@ -618,13 +621,13 @@ TEST(ToRequest, Combined) {
   rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto request = ToRequest(rm);
+  auto request = ToRequest(rm, "custom.googleapis.com/");
   EXPECT_THAT(request.time_series(),
               UnorderedElementsAre(SumTimeSeries(), GaugeTimeSeries(),
                                    HistogramTimeSeries()));
   EXPECT_THAT(request.time_series(),
               Each(AllOf(HasTestResource(),
-                         MetricType("workload.googleapis.com/metric-name"),
+                         MetricType("custom.googleapis.com/metric-name"),
                          Unit("unit"))));
 }
 

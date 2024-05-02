@@ -68,10 +68,10 @@ double AsDouble(opentelemetry::sdk::metrics::ValueType const& v) {
 
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
-    opentelemetry::sdk::metrics::PointAttributes const& attributes) {
+    opentelemetry::sdk::metrics::PointAttributes const& attributes,
+    std::string const& prefix) {
   google::api::Metric proto;
-  auto const metric_type =
-      "workload.googleapis.com/" + metric_data.instrument_descriptor.name_;
+  auto const metric_type = prefix + metric_data.instrument_descriptor.name_;
   proto.set_type(metric_type);
 
   auto& labels = *proto.mutable_labels();
@@ -165,7 +165,8 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 }
 
 google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
-    opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    std::string const& prefix) {
   google::monitoring::v3::CreateTimeSeriesRequest request;
 
   google::api::MonitoredResource resource;
@@ -205,7 +206,7 @@ google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
         if (!ts) continue;
         ts->set_unit(metric_data.instrument_descriptor.unit_);
         *ts->mutable_resource() = resource;
-        *ts->mutable_metric() = ToMetric(metric_data, pda.attributes);
+        *ts->mutable_metric() = ToMetric(metric_data, pda.attributes, prefix);
         *request.add_time_series() = *std::move(ts);
       }
     }
