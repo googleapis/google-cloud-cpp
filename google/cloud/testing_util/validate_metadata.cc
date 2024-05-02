@@ -333,14 +333,11 @@ absl::optional<std::string> ValidateMetadataFixture::GetAuthority(
 }
 
 void ValidateMetadataFixture::SetServerMetadata(
-    grpc::ClientContext& client_context, RpcMetadata const& server_metadata,
-    bool error_origin) {
+    grpc::ClientContext& client_context, RpcMetadata const& server_metadata) {
   // Create a server context with the given server metadata.
   grpc::GenericServerContext server_context;
-  if (error_origin) {
-    for (auto const& kv : server_metadata.headers) {
-      server_context.AddInitialMetadata(kv.first, kv.second);
-    }
+  for (auto const& kv : server_metadata.headers) {
+    server_context.AddInitialMetadata(kv.first, kv.second);
   }
   for (auto const& kv : server_metadata.trailers) {
     server_context.AddTrailingMetadata(kv.first, kv.second);

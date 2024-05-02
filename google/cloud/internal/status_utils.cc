@@ -20,7 +20,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-ErrorOrigin IsClientOrigin(Status const& status) {
+ErrorOrigin IsClient(Status const& status) {
   auto const& metadata = status.error_info().metadata();
   auto kv = metadata.find("gl-cpp.error.origin");
   if (kv != metadata.end() && kv->second == "client") {

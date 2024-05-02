@@ -100,9 +100,7 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
 
   RpcMetadata GetRequestMetadata() const override {
     if (!context_) return {};
-    return GetRequestMetadataFromContext(
-        *context_,
-        /*error_origin=*/ErrorOrigin::kUnknown);
+    return GetRequestMetadataFromContext(*context_, ErrorOrigin::kUnknown);
   }
 
  private:

@@ -88,8 +88,7 @@ class ValidateMetadataFixture {
    *   cannot reuse @p context for other RPCs or other calls to this function.
    */
   void SetServerMetadata(grpc::ClientContext& client_context,
-                         RpcMetadata const& server_metadata = {},
-                         bool error_origin = true);
+                         RpcMetadata const& server_metadata = {});
 
   /**
    * Verify that the metadata in the context is appropriate for a gRPC method.

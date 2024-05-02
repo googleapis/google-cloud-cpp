@@ -164,9 +164,7 @@ class AsyncStreamingReadWriteRpcImpl
   }
 
   RpcMetadata GetRequestMetadata() const override {
-    return GetRequestMetadataFromContext(
-        *context_,
-        /*error_origin=*/ErrorOrigin::kUnknown);
+    return GetRequestMetadataFromContext(*context_, ErrorOrigin::kUnknown);
   }
 
  private:

@@ -23,7 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-TEST(IsClientOriginTest, OriginatesFromClient) {
+TEST(IsClientTest, OriginatesFromClient) {
   Status cases[] = {
       Status(StatusCode::kCancelled, "cancelled + contains origin metadata",
              ErrorInfo("test-only-reasons", "test-only-domain",
@@ -39,11 +39,11 @@ TEST(IsClientOriginTest, OriginatesFromClient) {
   for (auto const& status : cases) {
     SCOPED_TRACE("Testing status: " + StatusCodeToString(status.code()) +
                  " - " + status.message());
-    EXPECT_EQ(IsClientOrigin(status), ErrorOrigin::kClient);
+    EXPECT_EQ(IsClient(status), ErrorOrigin::kClient);
   }
 }
 
-TEST(IsClientOriginTest, DoesNotOriginateFromClient) {
+TEST(IsClientTest, DoesNotOriginateFromClient) {
   Status cases[] = {
       Status(StatusCode::kAborted, "no metadata"),
       Status(StatusCode::kCancelled, "incorrect origin value",
@@ -64,7 +64,7 @@ TEST(IsClientOriginTest, DoesNotOriginateFromClient) {
   for (auto const& status : cases) {
     SCOPED_TRACE("Testing status: " + StatusCodeToString(status.code()) +
                  " - " + status.message());
-    EXPECT_EQ(IsClientOrigin(status), ErrorOrigin::kUnknown);
+    EXPECT_EQ(IsClient(status), ErrorOrigin::kUnknown);
   }
 }
 
