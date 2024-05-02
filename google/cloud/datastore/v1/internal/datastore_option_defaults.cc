@@ -35,8 +35,9 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DatastoreDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATASTORE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DATASTORE_AUTHORITY", "datastore.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_DATASTORE_ENDPOINT",
+      "DATASTORE_EMULATOR_HOST", "GOOGLE_CLOUD_CPP_DATASTORE_AUTHORITY",
+      "datastore.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datastore_v1::DatastoreRetryPolicyOption>()) {
     options.set<datastore_v1::DatastoreRetryPolicyOption>(

@@ -33,8 +33,9 @@ file="doc/packaging.md"
   # A "map" (comma separated) of dockerfile -> summary.
   DOCKER_DISTROS=(
     "demo-alpine-stable.Dockerfile,Alpine (Stable)"
-    "demo-fedora.Dockerfile,Fedora (38)"
+    "demo-fedora.Dockerfile,Fedora (40)"
     "demo-opensuse-leap.Dockerfile,openSUSE (Leap)"
+    "demo-ubuntu-24.04.Dockerfile,Ubuntu (24.04 LTS - Noble Numbat)"
     "demo-ubuntu-jammy.Dockerfile,Ubuntu (22.04 LTS - Jammy Jellyfish)"
     "demo-ubuntu-focal.Dockerfile,Ubuntu (20.04 LTS - Focal Fossa)"
     "demo-debian-bookworm.Dockerfile,Debian (12 - Bookworm)"

@@ -16,7 +16,7 @@ jobs:
     name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }}
     runs-on:
       group: cpp-runners
-      labels: ${{ endsWith(matrix.msvc, '-2019') && 'windows-2019' || 'windows-2022' }}
+      labels: 'windows-2022'
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -24,7 +24,7 @@ jobs:
       # Continue other builds even if one fails
       fail-fast: false
       matrix:
-        msvc: [ msvc-2019 ]
+        msvc: [ msvc-2022 ]
         # - dbg creates very large debugging files and GHA has limited storage.
         # - fastbuild also takes too much storage.
         compilation_mode: [ opt ]

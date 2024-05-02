@@ -140,6 +140,14 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetLatestRecoveryTime(
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
           request);
+
+  virtual google::cloud::Idempotency AcquireSsrsLease(
+      google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ReleaseSsrsLease(
+      google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+          request);
 };
 
 std::unique_ptr<SqlInstancesServiceConnectionIdempotencyPolicy>

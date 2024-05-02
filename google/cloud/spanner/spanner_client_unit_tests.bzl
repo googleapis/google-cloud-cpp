@@ -46,6 +46,7 @@ spanner_client_unit_tests = [
     "internal/status_utils_test.cc",
     "internal/transaction_impl_test.cc",
     "internal/tuple_utils_test.cc",
+    "interval_test.cc",
     "json_test.cc",
     "keys_test.cc",
     "mutations_test.cc",

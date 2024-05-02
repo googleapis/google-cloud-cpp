@@ -295,6 +295,16 @@ class SqlInstancesServiceConnection {
   GetLatestRecoveryTime(
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
           request);
+
+  virtual StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+  AcquireSsrsLease(
+      google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+  ReleaseSsrsLease(
+      google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,7 +20,7 @@ jobs:
     name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
     runs-on:
       group: cpp-runners
-      labels: ${{ endsWith(matrix.msvc, '-2019') && 'windows-2019' || 'windows-2022' }}
+      labels: 'windows-2022'
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -29,36 +29,21 @@ jobs:
       fail-fast: false
       matrix:
         exclude-from-full-trick: [ true ]
-        msvc: [ msvc-2022, msvc-2019 ]
+        msvc: [ msvc-2022 ]
         build_type: [ Debug, Release ]
         arch: [ x64, x86 ]
         shard: [Core, Compute, Other]
         exclude:
-        # Do not run MSVC 2019 builds with pull requests. Running builds is
-        # expensive, and these rarely catch any problems.
-        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
-          msvc: msvc-2019
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Compute
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
-        # Compute is (currently) a single `.lib` file. This file is too large in
-        # Debug mode. MSVC uses COFF:
-        #     https://en.wikipedia.org/wiki/COFF
-        # and COFF offsets are 32-bits. No library or program can exceed this
-        # limit:
-        #     https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk1248
-        - build_type: Debug
-          shard: Compute
-        # No need to duplicate testing with x86 mode and MSVC 2019
-        - arch: x86
-          msvc: msvc-2019
         # No need to duplicate testing with x86 mode and Debug mode
         - arch: x86
           build_type: Debug
     steps:
-    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+    - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2

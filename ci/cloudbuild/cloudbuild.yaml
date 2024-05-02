@@ -13,7 +13,7 @@
 # limitations under the License.
 
 options:
-  workerPool: 'projects/cloud-cpp-testing-resources/locations/us-east1/workerPools/google-cloud-cpp-pool'
+  workerPool: 'projects/${PROJECT_ID}/locations/${_POOL_REGION}/workerPools/${_POOL_ID}'
   dynamic_substitutions: true
   env: [
     'HOME=/h',
@@ -27,7 +27,7 @@ options:
     'TRIGGER_TYPE=${_TRIGGER_TYPE}',
     'GENERATE_GOLDEN_ONLY=',
     'UPDATED_DISCOVERY_DOCUMENT=',
-    'CONSOLE_LOG_URL=https://console.cloud.google.com/cloud-build/builds;region=us-east1/${BUILD_ID};tab=detail?project=${PROJECT_ID}',
+    'CONSOLE_LOG_URL=https://console.cloud.google.com/cloud-build/builds;region=${_POOL_REGION}/${BUILD_ID};tab=detail?project=${PROJECT_ID}',
     'RAW_LOG_URL=https://storage.googleapis.com/${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}/log-${BUILD_ID}.txt'
   ]
   substitutionOption: 'ALLOW_LOOSE'
@@ -38,13 +38,15 @@ options:
 # Variables that can be overridden from the `gcloud builds ...` command using
 # the `--substitutions=_FOO=bar` flag.
 substitutions:
+  _POOL_REGION: 'us-east1'                         # Adjust by project
+  _POOL_ID: 'google-cloud-cpp-pool'                # Adjust by project
+  _CACHE_BUCKET: '${PROJECT_ID}_cloudbuild'        # Adjust by project
+  _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'   # Adjust by project
+  _IMAGE: 'cloudbuild/${_DISTRO}'
   _DISTRO: 'unknown'
   _BUILD_NAME: 'unknown'
-  _CACHE_BUCKET: '${PROJECT_ID}_cloudbuild'
-  _IMAGE: 'cloudbuild/${_DISTRO}'
   _TRIGGER_SOURCE: '${_PR_NUMBER:-main}'
   _TRIGGER_TYPE: 'manual'
-  _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'
   _TAG1: 'team-only'
   _LIBRARIES: 'all_bar_compute'
   _SHARD: '__default__'
@@ -110,21 +112,6 @@ steps:
   id: 'download-runner-image-attempt-2'
   entrypoint: '/bin/true'
 
-  # Restores the homedir cache into /h in parallel with the previous step.
-  # Won't break the build if this step fails.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  waitFor: [ '-' ]
-  entrypoint: 'bash'
-  dir: '/h'
-  args:
-    - '-c'
-    - >
-      /workspace/ci/cloudbuild/cache.sh restore
-      --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
-      --key=${_TRIGGER_SOURCE}/${_DISTRO}/${_BUILD_NAME}/${_SHARD}/h
-      --fallback_key=main/${_DISTRO}/${_BUILD_NAME}/${_SHARD}/h
-      || true
-
   # Runs the specified build in the image that was created in the first step.
 - name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
@@ -141,24 +128,6 @@ steps:
     'CTCACHE_GCS_FOLDER=ctcache/${_DISTRO}/${_BUILD_NAME}',
     'VCPKG_BINARY_SOURCES=x-gcs,gs://${_CACHE_BUCKET}/vcpkg-cache/${_DISTRO}-${_BUILD_NAME},readwrite'
   ]
-
-  # Caches some directories in the homedir, in the specified GCS bucket.
-  # Won't break the build if this step fails.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  allowFailure: true
-  entrypoint: 'bash'
-  dir: '/h'
-  args:
-    - '-c'
-    - >
-      /workspace/ci/cloudbuild/cache.sh save
-      --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
-      --key=${_TRIGGER_SOURCE}/${_DISTRO}/${_BUILD_NAME}/${_SHARD}/h
-      --path=.cache/bazelisk
-      --path=.cache/ctcache
-      --path=.cache/vcpkg
-      --path=.cache/google-cloud-cpp
-      --path=.local
 
   # Remove the images created by this build.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -189,26 +158,6 @@ steps:
         xargs -r printf "gcr.io/${PROJECT_ID}/${_IMAGE}@%s\n" | \
         xargs -r -P 4 -L 32 gcloud container images delete -q --force-delete-tags
 
-  # Cancels *this* specific build if one is already queued up for a newer
-  # commit. This frees up resources to run the build for the newer commit.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  allowFailure: true
-  waitFor: [ '-' ]
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      set -xe
-      test -z "${_PR_NUMBER}" && exit 0
-      ctime="$(gcloud builds describe --region 'us-east1' --format 'value(create_time)' '${BUILD_ID}')"
-      query="tags=pr"
-      query+=" AND tags=${_PR_NUMBER}"
-      query+=" AND tags=${_BUILD_NAME}"
-      query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
-      query+=" AND create_time > ${ctime}"
-      gcloud builds list --region 'us-east1' --limit 1 --format='value(id)' --filter "${query}" | \
-        grep . && gcloud builds cancel --region 'us-east1' '${BUILD_ID}'
-
   # Cancels in-progress builds for previous commits in the current PR so we can
   # free up resources to start running the builds for the new commit.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -220,10 +169,10 @@ steps:
     - |
       set -xe
       test -z "${_PR_NUMBER}" && exit 0
-      ctime="$(gcloud builds describe --region 'us-east1' --format 'value(create_time)' '${BUILD_ID}')"
+      ctime="$(gcloud builds describe --region '${_POOL_REGION}' --format 'value(create_time)' '${BUILD_ID}')"
       query="tags=pr"
       query+=" AND tags=${_PR_NUMBER}"
       query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
       query+=" AND create_time < ${ctime}"
-      gcloud builds list --region 'us-east1' --ongoing --format='value(id)' --filter "${query}" | \
-        xargs -r -t gcloud builds cancel --region 'us-east1'
+      gcloud builds list --region '${_POOL_REGION}' --ongoing --format='value(id)' --filter "${query}" | \
+        xargs -r -t gcloud builds cancel --region '${_POOL_REGION}'

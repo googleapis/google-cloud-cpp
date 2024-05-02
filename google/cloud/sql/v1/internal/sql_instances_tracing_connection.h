@@ -169,6 +169,16 @@ class SqlInstancesServiceTracingConnection
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
           request) override;
 
+  StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
+  AcquireSsrsLease(
+      google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+          request) override;
+
+  StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
+  ReleaseSsrsLease(
+      google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+          request) override;
+
  private:
   std::shared_ptr<sql_v1::SqlInstancesServiceConnection> child_;
 };
