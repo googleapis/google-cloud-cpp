@@ -16,6 +16,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/noexcept_action.h"
+#include "google/cloud/internal/status_utils.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
@@ -134,8 +135,7 @@ void InjectTraceContext(
 
 void ExtractAttributes(grpc::ClientContext& context,
                        opentelemetry::trace::Span& span) {
-  auto md = GetRequestMetadataFromContext(context,
-                                          /*is_initial_metadata_ready=*/true);
+  auto md = GetRequestMetadataFromContext(context, internal::ErrorOrigin::kUnknown);
   for (auto& kv : md.headers) {
     auto p = MakeAttribute(std::move(kv));
     span.SetAttribute(p.first, p.second);

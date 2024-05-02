@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_request_metadata.h"
+#include "google/cloud/internal/status_utils.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -24,6 +25,7 @@ namespace internal {
 namespace {
 
 using ::testing::_;
+using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
@@ -34,8 +36,9 @@ TEST(GrpcRequestMetadata, GetRequestMetadataFromContext) {
   grpc::ClientContext context;
   testing_util::SetServerMetadata(context, server_metadata);
 
-  auto md = GetRequestMetadataFromContext(context,
-                                          /*is_initial_metadata_ready=*/true);
+  auto md =
+      GetRequestMetadataFromContext(context,
+                                    /*error_origin=*/ErrorOrigin::kUnknown);
   EXPECT_THAT(md.headers,
               UnorderedElementsAre(
                   Pair("header1", "value1"), Pair("header2", "value2"),
@@ -53,19 +56,17 @@ TEST(GrpcRequestMetadata,
       RpcMetadata{{{"header1", "value1"}, {"header2", "value2"}},
                   {{"trailer1", "value3"}, {"trailer2", "value4"}}};
   grpc::ClientContext context;
-  testing_util::SetServerMetadata(context, server_metadata,
-                                  /*is_initial_metadata_ready=*/false);
 
-  auto md = GetRequestMetadataFromContext(context,
-                                          /*is_initial_metadata_ready=*/false);
+  auto md =
+      GetRequestMetadataFromContext(context,
+                                    /*error_origin=*/ErrorOrigin::kClient);
   EXPECT_THAT(md.headers,
               UnorderedElementsAre(
                   // This function also returns the peer and compression
                   // algorithm as synthetic headers.
                   Pair(":grpc-context-peer", _),
                   Pair(":grpc-context-compression-algorithm", "identity")));
-  EXPECT_THAT(md.trailers, UnorderedElementsAre(Pair("trailer1", "value3"),
-                                                Pair("trailer2", "value4")));
+  EXPECT_THAT(md.trailers, IsEmpty());
 }
 
 TEST(GrpcRequestMetadata, FormatForLoggingDecorator) {

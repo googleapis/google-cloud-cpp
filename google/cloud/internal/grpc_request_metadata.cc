@@ -15,6 +15,7 @@
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/status_utils.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -34,20 +35,17 @@ std::string ToString(grpc_compression_algorithm algo) {
 }
 
 void AddServerRequestMetadata(grpc::ClientContext const& context,
-                              RpcMetadata& metadata,
-                              bool is_initial_metadata_ready) {
+                              RpcMetadata& metadata) {
   auto hint = metadata.headers.end();
-  if (is_initial_metadata_ready) {
-    for (auto const& kv : context.GetServerInitialMetadata()) {
-      // gRPC metadata is stored in `grpc::string_ref`, a type inspired by
-      // `std::string_view`. We need to explicitly convert these to
-      // `std::string`. In addition, we use a prefix to distinguish initial vs.
-      // trailing headers.
-      auto key = std::string{kv.first.data(), kv.first.size()};
-      auto value = std::string{kv.second.data(), kv.second.size()};
-      hint = std::next(metadata.headers.emplace_hint(hint, std::move(key),
-                                                     std::move(value)));
-    }
+  for (auto const& kv : context.GetServerInitialMetadata()) {
+    // gRPC metadata is stored in `grpc::string_ref`, a type inspired by
+    // `std::string_view`. We need to explicitly convert these to
+    // `std::string`. In addition, we use a prefix to distinguish initial vs.
+    // trailing headers.
+    auto key = std::string{kv.first.data(), kv.first.size()};
+    auto value = std::string{kv.second.data(), kv.second.size()};
+    hint = std::next(
+        metadata.headers.emplace_hint(hint, std::move(key), std::move(value)));
   }
   hint = metadata.trailers.end();
   for (auto const& kv : context.GetServerTrailingMetadata()) {
@@ -71,10 +69,14 @@ void AddContextMetadata(grpc::ClientContext const& context,
 }  // namespace
 
 RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context,
-                                          bool is_initial_metadata_ready) {
+                                          internal::ErrorOrigin error_origin) {
   RpcMetadata metadata;
   AddContextMetadata(context, metadata);
-  AddServerRequestMetadata(context, metadata, is_initial_metadata_ready);
+  // If there is a client originating error, the request never made it to the
+  // server metadata. Therefore, it doesn't exist so we should skip the call.
+  if (error_origin != ErrorOrigin::kClient) {
+    AddServerRequestMetadata(context, metadata);
+  }
   return metadata;
 }
 

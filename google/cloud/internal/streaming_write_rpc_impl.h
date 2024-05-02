@@ -17,6 +17,7 @@
 
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
+#include "google/cloud/internal/status_utils.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
@@ -75,8 +76,7 @@ class StreamingWriteRpcImpl
   }
 
   RpcMetadata GetRequestMetadata() const override {
-    return GetRequestMetadataFromContext(*context_,
-                                         /*is_initial_metadata_ready=*/true);
+    return GetRequestMetadataFromContext(*context_, ErrorOrigin::kUnknown);
   }
 
  private:
