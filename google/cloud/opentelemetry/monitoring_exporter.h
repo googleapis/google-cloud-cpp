@@ -51,6 +51,17 @@ struct MetricPrefixOption {
   using Type = std::string;
 };
 
+/**
+ * Export Google-defined metrics.
+ *
+ * Set to true if exporting Google-defined metrics. This option is only relevant
+ * to Google applications and libraries. It can be ignored by external
+ * developers.
+ */
+struct ServiceTimeSeriesOption {
+  using Type = bool;
+};
+
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
     Project project,
