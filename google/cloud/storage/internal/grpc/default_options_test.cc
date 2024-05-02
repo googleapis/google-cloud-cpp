@@ -127,21 +127,21 @@ TEST(DefaultOptionsGrpc, MetricsEnabled) {
 
 TEST(DefaultOptionsGrpc, MetricsPeriod) {
   auto const options = DefaultOptionsGrpc(Options{});
-  EXPECT_GE(options.get<storage_experimental::GrpcMetricsPeriod>(),
+  EXPECT_GE(options.get<storage_experimental::GrpcMetricsPeriodOption>(),
             std::chrono::seconds(60));
 }
 
 TEST(DefaultOptionsGrpc, MinMetricsPeriod) {
   auto const o0 =
-      DefaultOptionsGrpc(Options{}.set<storage_experimental::GrpcMetricsPeriod>(
+      DefaultOptionsGrpc(Options{}.set<storage_experimental::GrpcMetricsPeriodOption>(
           std::chrono::seconds(0)));
-  EXPECT_GT(o0.get<storage_experimental::GrpcMetricsPeriod>(),
+  EXPECT_GT(o0.get<storage_experimental::GrpcMetricsPeriodOption>(),
             std::chrono::seconds(0));
 
   auto const m5 =
-      DefaultOptionsGrpc(Options{}.set<storage_experimental::GrpcMetricsPeriod>(
+      DefaultOptionsGrpc(Options{}.set<storage_experimental::GrpcMetricsPeriodOption>(
           std::chrono::seconds(-5)));
-  EXPECT_GT(m5.get<storage_experimental::GrpcMetricsPeriod>(),
+  EXPECT_GT(m5.get<storage_experimental::GrpcMetricsPeriodOption>(),
             std::chrono::seconds(0));
 }
 

@@ -88,10 +88,10 @@ Options DefaultOptionsGrpc(Options options) {
           .set<EndpointOption>(ep)
           .set<AuthorityOption>(ep)
           .set<storage_experimental::EnableGrpcMetrics>(true)
-          .set<storage_experimental::GrpcMetricsPeriod>(kDefaultMetricsPeriod));
-  if (options.get<storage_experimental::GrpcMetricsPeriod>() <
+          .set<storage_experimental::GrpcMetricsPeriodOption>(kDefaultMetricsPeriod));
+  if (options.get<storage_experimental::GrpcMetricsPeriodOption>() <
       kMinMetricsPeriod) {
-    options.set<storage_experimental::GrpcMetricsPeriod>(kMinMetricsPeriod);
+    options.set<storage_experimental::GrpcMetricsPeriodOption>(kMinMetricsPeriod);
   }
   // We can only compute this once the endpoint is known, so take an additional
   // step.
