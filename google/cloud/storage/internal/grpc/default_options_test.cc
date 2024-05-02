@@ -122,7 +122,7 @@ TEST(DefaultOptionsGrpc, DefaultOptionsUploadBuffer) {
 
 TEST(DefaultOptionsGrpc, MetricsEnabled) {
   auto const options = DefaultOptionsGrpc(Options{});
-  EXPECT_TRUE(options.get<storage_experimental::EnableGrpcMetrics>());
+  EXPECT_TRUE(options.get<storage_experimental::EnableGrpcMetricsOption>());
 }
 
 TEST(DefaultOptionsGrpc, MetricsPeriod) {

@@ -87,7 +87,7 @@ Options DefaultOptionsGrpc(Options options) {
       Options{}
           .set<EndpointOption>(ep)
           .set<AuthorityOption>(ep)
-          .set<storage_experimental::EnableGrpcMetrics>(true)
+          .set<storage_experimental::EnableGrpcMetricsOption>(true)
           .set<storage_experimental::GrpcMetricsPeriodOption>(
               kDefaultMetricsPeriod));
   if (options.get<storage_experimental::GrpcMetricsPeriodOption>() <
