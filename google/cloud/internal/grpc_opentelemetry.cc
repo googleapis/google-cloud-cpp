@@ -135,7 +135,8 @@ void InjectTraceContext(
 
 void ExtractAttributes(grpc::ClientContext& context,
                        opentelemetry::trace::Span& span) {
-  auto md = GetRequestMetadataFromContext(context, internal::ErrorOrigin::kUnknown);
+  auto md =
+      GetRequestMetadataFromContext(context, internal::ErrorOrigin::kUnknown);
   for (auto& kv : md.headers) {
     auto p = MakeAttribute(std::move(kv));
     span.SetAttribute(p.first, p.second);
