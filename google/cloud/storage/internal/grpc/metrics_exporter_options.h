@@ -24,7 +24,8 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Returns the monitoring project given the (fully populated) options.
+ * Returns the monitoring options given the (fully populated) options for
+ * Storage.
  */
 Options MetricsExporterOptions(Options const& options);
 

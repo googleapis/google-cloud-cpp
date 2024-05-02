@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(MetricsExporterOptions, DefaultEndpoint) {
-  // In all these cases there default monitoring endpoint is either the best
+  // In all these cases the default monitoring endpoint is either the best
   // choice, or the least bad choice.
   struct TestCase {
     std::string storage_endpoint;
