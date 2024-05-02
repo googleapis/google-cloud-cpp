@@ -28,8 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::AllOf;
+using ::testing::Each;
 using ::testing::HasSubstr;
+using ::testing::ResultOf;
 using ::testing::SizeIs;
+using ::testing::StartsWith;
+
+auto MetricTypePrefix(std::string const& type) {
+  return ResultOf(
+      "metric.type",
+      [](google::monitoring::v3::TimeSeries const& ts) {
+        return ts.metric().type();
+      },
+      StartsWith(type));
+}
 
 /**
  * Returns a `ResourceMetrics` composed of N TimeSeries.
@@ -68,6 +80,8 @@ TEST(MonitoringExporter, ExportSuccess) {
           [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
             EXPECT_THAT(request.name(), "projects/test-project");
             EXPECT_THAT(request.time_series(), SizeIs(2));
+            EXPECT_THAT(request.time_series(),
+                        Each(MetricTypePrefix("workload.googleapis.com/")));
             return Status();
           });
 
@@ -145,6 +159,28 @@ TEST(MonitoringExporter, ExportFailureWithInvalidArgument) {
       log.ExtractLines(),
       Contains(AllOf(HasSubstr("Cloud Monitoring Export failed"),
                      HasSubstr("INVALID_ARGUMENT"), HasSubstr("nope"))));
+}
+
+TEST(MonitoringExporter, CustomPrefix) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  EXPECT_CALL(*mock, CreateTimeSeries)
+      .WillOnce(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), "projects/test-project");
+            EXPECT_THAT(request.time_series(), SizeIs(2));
+            EXPECT_THAT(request.time_series(),
+                        Each(MetricTypePrefix("custom.googleapis.com/")));
+            return Status();
+          });
+
+  auto options = Options{}.set<otel_internal::MetricPrefixOption>(
+      "custom.googleapis.com/");
+  auto exporter = otel_internal::MakeMonitoringExporter(
+      Project("test-project"), std::move(mock), options);
+  auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
+  auto result = exporter->Export(data);
+  EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
 }
 
 }  // namespace
