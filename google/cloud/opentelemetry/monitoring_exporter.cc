@@ -43,7 +43,8 @@ class MonitoringExporter final
       : project_(std::move(project)),
         client_(std::move(conn)),
         prefix_(options.get<MetricPrefixOption>()),
-        use_service_time_series_(options.get<ServiceTimeSeriesOption>()) {}
+        use_service_time_series_(options.get<ServiceTimeSeriesOption>()),
+        mr_proto_(internal::FetchOption<MonitoredResourceOption>(options)) {}
 
   opentelemetry::sdk::metrics::AggregationTemporality GetAggregationTemporality(
       opentelemetry::sdk::metrics::InstrumentType) const noexcept override {
@@ -68,7 +69,7 @@ class MonitoringExporter final
  private:
   opentelemetry::sdk::common::ExportResult ExportImpl(
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
-    auto request = ToRequest(data, prefix_);
+    auto request = ToRequest(data, prefix_, mr_proto_);
     request.set_name(project_.FullName());
     if (request.time_series().empty()) {
       GCP_LOG(WARNING) << "Cloud Monitoring Export skipped. No TimeSeries "
@@ -91,6 +92,7 @@ class MonitoringExporter final
   monitoring_v3::MetricServiceClient client_;
   std::string prefix_;
   bool use_service_time_series_;
+  absl::optional<google::api::MonitoredResource> mr_proto_;
 };
 }  // namespace
 
