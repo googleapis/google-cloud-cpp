@@ -63,6 +63,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/grpc_async_access_token_cache.h",
     "internal/grpc_channel_credentials_authentication.h",
     "internal/grpc_impersonate_service_account.h",
+    "internal/grpc_metadata_view.h",
     "internal/grpc_opentelemetry.h",
     "internal/grpc_request_metadata.h",
     "internal/grpc_service_account_authentication.h",

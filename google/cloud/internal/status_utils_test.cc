@@ -15,7 +15,6 @@
 #include "google/cloud/internal/status_utils.h"
 #include "google/cloud/status.h"
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
 
 namespace google {
 namespace cloud {
@@ -23,7 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-TEST(GetErrorOriginTest, OriginatesFromClient) {
+TEST(IsClientOriginTest, OriginatesFromClient) {
   Status cases[] = {
       Status(StatusCode::kCancelled, "cancelled + contains origin metadata",
              ErrorInfo("test-only-reasons", "test-only-domain",
@@ -39,11 +38,11 @@ TEST(GetErrorOriginTest, OriginatesFromClient) {
   for (auto const& status : cases) {
     SCOPED_TRACE("Testing status: " + StatusCodeToString(status.code()) +
                  " - " + status.message());
-    EXPECT_EQ(GetErrorOrigin(status), ErrorOrigin::kClient);
+    EXPECT_TRUE(IsClientOrigin(status));
   }
 }
 
-TEST(GetErrorOriginTest, DoesNotOriginateFromClient) {
+TEST(IsClientOriginTest, DoesNotOriginateFromClient) {
   Status cases[] = {
       Status(StatusCode::kAborted, "no metadata"),
       Status(StatusCode::kCancelled, "incorrect origin value",
@@ -64,7 +63,7 @@ TEST(GetErrorOriginTest, DoesNotOriginateFromClient) {
   for (auto const& status : cases) {
     SCOPED_TRACE("Testing status: " + StatusCodeToString(status.code()) +
                  " - " + status.message());
-    EXPECT_EQ(GetErrorOrigin(status), ErrorOrigin::kUnknown);
+    EXPECT_FALSE(IsClientOrigin(status));
   }
 }
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_request_metadata.h"
-#include "google/cloud/internal/status_utils.h"
+#include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -36,7 +36,8 @@ TEST(GrpcRequestMetadata, GetRequestMetadataFromContext) {
   grpc::ClientContext context;
   testing_util::SetServerMetadata(context, server_metadata);
 
-  auto md = GetRequestMetadataFromContext(context, ErrorOrigin::kUnknown);
+  auto md = GetRequestMetadataFromContext(
+      context, GrpcMetadataView::kWithServerMetadata);
   EXPECT_THAT(md.headers,
               UnorderedElementsAre(
                   Pair("header1", "value1"), Pair("header2", "value2"),
@@ -55,7 +56,8 @@ TEST(GrpcRequestMetadata,
                   {{"trailer1", "value3"}, {"trailer2", "value4"}}};
   grpc::ClientContext context;
 
-  auto md = GetRequestMetadataFromContext(context, ErrorOrigin::kClient);
+  auto md = GetRequestMetadataFromContext(
+      context, GrpcMetadataView::kWithoutServerMetadata);
   EXPECT_THAT(md.headers,
               UnorderedElementsAre(
                   // This function also returns the peer and compression

@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_READ_RPC_H
 
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
-#include "google/cloud/internal/status_utils.h"
 #include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
@@ -100,7 +100,8 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
 
   RpcMetadata GetRequestMetadata() const override {
     if (!context_) return {};
-    return GetRequestMetadataFromContext(*context_, ErrorOrigin::kUnknown);
+    return GetRequestMetadataFromContext(*context_,
+                                         GrpcMetadataView::kWithServerMetadata);
   }
 
  private:

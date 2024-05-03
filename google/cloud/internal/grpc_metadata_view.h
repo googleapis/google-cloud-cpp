@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STATUS_UTILS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STATUS_UTILS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_METADATA_VIEW_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_METADATA_VIEW_H
 
-#include "google/cloud/status.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -23,11 +22,12 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-bool IsClientOrigin(Status const& status);
+// This enum determines whether to include gRPC server metadata.
+enum class GrpcMetadataView { kWithServerMetadata, kWithoutServerMetadata };
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STATUS_UTILS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_METADATA_VIEW_H

@@ -15,7 +15,7 @@
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/status_utils.h"
+#include "google/cloud/internal/grpc_metadata_view.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -69,13 +69,10 @@ void AddContextMetadata(grpc::ClientContext const& context,
 }  // namespace
 
 RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context,
-                                          internal::ErrorOrigin error_origin) {
+                                          GrpcMetadataView view) {
   RpcMetadata metadata;
   AddContextMetadata(context, metadata);
-  // If there was a client-originated error, the request never reached the
-  // server. Therefore, the server metadata doesn't exist so we should skip the
-  // call.
-  if (error_origin != ErrorOrigin::kClient) {
+  if (view == GrpcMetadataView::kWithServerMetadata) {
     AddServerRequestMetadata(context, metadata);
   }
   return metadata;

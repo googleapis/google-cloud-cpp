@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPENTELEMETRY_H
 
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
@@ -68,7 +69,7 @@ void InjectTraceContext(
  * Extracts attributes from the `context` and adds them to the `span`.
  */
 void ExtractAttributes(grpc::ClientContext& context,
-                       opentelemetry::trace::Span& span);
+                       opentelemetry::trace::Span& span, GrpcMetadataView view);
 
 /**
  * Extracts information from the `grpc::ClientContext`, and adds it to a span.
@@ -81,7 +82,7 @@ void ExtractAttributes(grpc::ClientContext& context,
 template <typename T>
 T EndSpan(grpc::ClientContext& context, opentelemetry::trace::Span& span,
           T value) {
-  ExtractAttributes(context, span);
+  ExtractAttributes(context, span, GrpcMetadataView::kWithServerMetadata);
   return EndSpan(span, std::move(value));
 }
 
@@ -93,7 +94,7 @@ future<T> EndSpan(
   return fut.then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                    c = std::move(context), s = std::move(span)](auto f) {
     auto t = f.get();
-    ExtractAttributes(*c, *s);
+    ExtractAttributes(*c, *s, GrpcMetadataView::kWithServerMetadata);
     DetachOTelContext(oc);
     return EndSpan(*s, std::move(t));
   });
