@@ -292,22 +292,52 @@ TEST(Interval, TimestampOperations) {
            MakeTimestamp("2020-02-03T04:05:06.123456789Z"), utc),
       IsOkAndHolds(Interval(0, 0, 428, hms(4, 5, 6) + nanoseconds(999))));
 
-  // Over civil-time discontinuities, two civil hours is either one absolute
-  // hour (skipped) or three absolute hours (repeated).
+  // Over civil-time discontinuities, one civil day is either 23 absolute
+  // hours (skipped) or 25 absolute hours (repeated).
   EXPECT_THAT(Add(MakeTimestamp("2023-03-12T01:02:03.456789-05:00"),
-                  Interval(0, 0, 0, hours(2)), nyc),
-              IsOkAndHolds(MakeTimestamp("2023-03-12T03:02:03.456789-04:00")));
-  auto ts1 = MakeTimestamp("2023-03-12T03:02:03.456789-04:00");
+                  Interval(0, 0, 1), nyc),
+              IsOkAndHolds(MakeTimestamp("2023-03-13T01:02:03.456789-04:00")));
+  auto ts1 = MakeTimestamp("2023-03-13T01:02:03.456789-04:00");
   auto ts2 = MakeTimestamp("2023-03-12T01:02:03.456789-05:00");
-  EXPECT_EQ(*ts1.get<absl::Time>() - *ts2.get<absl::Time>(), absl::Hours(1));
-  EXPECT_THAT(Diff(ts1, ts2, nyc), IsOkAndHolds(Interval(hours(2))));
+  EXPECT_EQ(*ts1.get<absl::Time>() - *ts2.get<absl::Time>(), absl::Hours(23));
+  EXPECT_THAT(Diff(ts1, ts2, nyc), IsOkAndHolds(Interval(0, 0, 1)));
   EXPECT_THAT(Add(MakeTimestamp("2023-11-05T01:02:03.456789-04:00"),
-                  Interval(0, 0, 0, hours(2)), nyc),
-              IsOkAndHolds(MakeTimestamp("2023-11-05T03:02:03.456789-05:00")));
-  ts1 = MakeTimestamp("2023-11-05T03:02:03.456789-05:00");
+                  Interval(0, 0, 1), nyc),
+              IsOkAndHolds(MakeTimestamp("2023-11-06T01:02:03.456789-05:00")));
+  ts1 = MakeTimestamp("2023-11-06T01:02:03.456789-05:00");
   ts2 = MakeTimestamp("2023-11-05T01:02:03.456789-04:00");
-  EXPECT_EQ(*ts1.get<absl::Time>() - *ts2.get<absl::Time>(), absl::Hours(3));
-  EXPECT_THAT(Diff(ts1, ts2, nyc), IsOkAndHolds(Interval(hours(2))));
+  EXPECT_EQ(*ts1.get<absl::Time>() - *ts2.get<absl::Time>(), absl::Hours(25));
+  EXPECT_THAT(Diff(ts1, ts2, nyc), IsOkAndHolds(Interval(0, 0, 1)));
+}
+
+// A miscellaneous bunch of Interval tests that come from the examples
+// in https://www.postgresql.org/docs/current/functions-datetime.html.
+TEST(Interval, FromPostgreSqlDocs) {
+  EXPECT_EQ(Interval(0, 0, 1) + Interval(hours(1)),
+            Interval(0, 0, 1, hours(1)));
+  EXPECT_EQ(-Interval(hours(23)), Interval(-hours(23)));
+  EXPECT_EQ(Interval(0, 0, 1) - Interval(hours(1)),
+            Interval(0, 0, 1, -hours(1)));
+  EXPECT_EQ(Interval(seconds(1)) * 900, Interval(minutes(15)));
+  EXPECT_EQ(Interval(0, 0, 1) * 21, Interval(0, 0, 21));
+  EXPECT_EQ(Interval(hours(1)) * 3.5, Interval(hours(3) + minutes(30)));
+  EXPECT_EQ(Interval(hours(1)) / 1.5, Interval(minutes(40)));
+  if (auto ts = Add(MakeTimestamp("2021-10-31T00:00:00+02:00"),
+                    Interval(0, 0, 1), "Europe/Warsaw")) {
+    EXPECT_EQ(*ts, MakeTimestamp("2021-10-31T23:00:00+00:00"));
+  }
+  if (auto ts = Add(MakeTimestamp("2021-11-01T00:00:00+01:00"),
+                    -Interval(0, 0, 1), "Europe/Warsaw")) {
+    EXPECT_EQ(*ts, MakeTimestamp("2021-10-30T22:00:00+00:00"));
+  }
+  if (auto ts = Add(MakeTimestamp("2005-04-02T12:00:00-07:00"),
+                    Interval(0, 0, 1), "America/Denver")) {
+    EXPECT_EQ(*ts, MakeTimestamp("2005-04-03T12:00:00-06:00"));
+  }
+  if (auto ts = Add(MakeTimestamp("2005-04-02T12:00:00-07:00"),
+                    Interval(hours(24)), "America/Denver")) {
+    EXPECT_EQ(*ts, MakeTimestamp("2005-04-03T13:00:00-06:00"));
+  }
 }
 
 }  // namespace
