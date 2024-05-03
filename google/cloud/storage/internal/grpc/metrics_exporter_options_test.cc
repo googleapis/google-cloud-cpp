@@ -45,6 +45,13 @@ TEST(MetricsExporterOptions, DefaultEndpoint) {
       {"private.googleapis.com", "ud.net"},
       {"restricted.googleapis.com", "ud.net"},
       {"storage-foo.p.googleapis.com", "ud.net"},
+
+      {"google-c2p:///storage.googleapis.com", ""},
+      {"google-c2p:///storage.ud.net", ""},
+      {"google-c2p:///storage.ud.net", "ud.net"},
+      {"google-c2p:///storage.googleapis.com", "ud.net"},
+      {"google-c2p:///private.googleapis.com", "ud.net"},
+      {"google-c2p:///restricted.googleapis.com", "ud.net"},
   };
 
   for (auto const& t : cases) {
@@ -67,31 +74,43 @@ TEST(MetricsExporterOptions, DefaultEndpoint) {
 }
 
 TEST(MetricsExporterOptions, PrivateDefaultUD) {
-  auto actual = MetricsExporterOptions(
-      Options{}.set<EndpointOption>("private.googleapis.com"));
-  EXPECT_THAT(actual.get<EndpointOption>(), "private.googleapis.com");
+  for (std::string prefix : {"", "google-c2p:///"}) {
+    SCOPED_TRACE("Testing with prefix = " + prefix);
+    auto actual = MetricsExporterOptions(
+        Options{}.set<EndpointOption>(prefix + "private.googleapis.com"));
+    EXPECT_THAT(actual.get<EndpointOption>(), "private.googleapis.com");
+  }
 }
 
 TEST(MetricsExporterOptions, PrivateUD) {
-  auto actual = MetricsExporterOptions(
-      Options{}
-          .set<EndpointOption>("private.ud.net")
-          .set<internal::UniverseDomainOption>("ud.net"));
-  EXPECT_THAT(actual.get<EndpointOption>(), "private.ud.net");
+  for (std::string prefix : {"", "google-c2p:///"}) {
+    SCOPED_TRACE("Testing with prefix = " + prefix);
+    auto actual = MetricsExporterOptions(
+        Options{}
+            .set<EndpointOption>(prefix + "private.ud.net")
+            .set<internal::UniverseDomainOption>("ud.net"));
+    EXPECT_THAT(actual.get<EndpointOption>(), "private.ud.net");
+  }
 }
 
 TEST(MetricsExporterOptions, RestrictedDefaultUD) {
-  auto actual = MetricsExporterOptions(
-      Options{}.set<EndpointOption>("restricted.googleapis.com"));
-  EXPECT_THAT(actual.get<EndpointOption>(), "restricted.googleapis.com");
+  for (std::string prefix : {"", "google-c2p:///"}) {
+    SCOPED_TRACE("Testing with prefix = " + prefix);
+    auto actual = MetricsExporterOptions(
+        Options{}.set<EndpointOption>(prefix + "restricted.googleapis.com"));
+    EXPECT_THAT(actual.get<EndpointOption>(), "restricted.googleapis.com");
+  }
 }
 
 TEST(MetricsExporterOptions, RestrictedUD) {
-  auto actual = MetricsExporterOptions(
-      Options{}
-          .set<EndpointOption>("restricted.ud.net")
-          .set<internal::UniverseDomainOption>("ud.net"));
-  EXPECT_THAT(actual.get<EndpointOption>(), "restricted.ud.net");
+  for (std::string prefix : {"", "google-c2p:///"}) {
+    SCOPED_TRACE("Testing with prefix = " + prefix);
+    auto actual = MetricsExporterOptions(
+        Options{}
+            .set<EndpointOption>(prefix + "restricted.ud.net")
+            .set<internal::UniverseDomainOption>("ud.net"));
+    EXPECT_THAT(actual.get<EndpointOption>(), "restricted.ud.net");
+  }
 }
 
 }  // namespace
