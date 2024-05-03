@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,31 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_METADATA_VIEW_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_METADATA_VIEW_H
 
-#include "google/cloud/internal/grpc_metadata_view.h"
-#include "google/cloud/rpc_metadata.h"
 #include "google/cloud/version.h"
-#include <grpcpp/grpcpp.h>
-#include <map>
-#include <string>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-/// Return interesting bits of metadata stored in the client context.
-RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context,
-                                          GrpcMetadataView view);
-
-/// Format metadata for logging decorators.
-std::string FormatForLoggingDecorator(RpcMetadata const& metadata);
+// This enum determines whether to include gRPC server metadata.
+enum class GrpcMetadataView { kWithServerMetadata, kWithoutServerMetadata };
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_REQUEST_METADATA_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_METADATA_VIEW_H

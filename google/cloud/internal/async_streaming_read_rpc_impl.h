@@ -20,7 +20,9 @@
 #include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
+#include "google/cloud/internal/status_utils.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
@@ -121,7 +123,8 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
   }
 
   RpcMetadata GetRequestMetadata() const override {
-    return GetRequestMetadataFromContext(*context_);
+    return GetRequestMetadataFromContext(*context_,
+                                         GrpcMetadataView::kWithServerMetadata);
   }
 
  private:

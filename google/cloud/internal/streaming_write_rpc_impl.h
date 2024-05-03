@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_WRITE_RPC_IMPL_H
 
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status.h"
@@ -75,7 +76,8 @@ class StreamingWriteRpcImpl
   }
 
   RpcMetadata GetRequestMetadata() const override {
-    return GetRequestMetadataFromContext(*context_);
+    return GetRequestMetadataFromContext(*context_,
+                                         GrpcMetadataView::kWithServerMetadata);
   }
 
  private:
