@@ -407,7 +407,7 @@ Interval JustifyDays(Interval intvl) {
 
 Interval JustifyHours(Interval intvl) {
   auto days = intvl.offset_ / hours(24);
-  intvl.days_ += days;
+  intvl.days_ += static_cast<std::int32_t>(days);
   intvl.offset_ -= hours(days * 24);
   if (intvl.offset_ < nanoseconds::zero()) {
     intvl.offset_ += hours(24);

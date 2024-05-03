@@ -330,7 +330,9 @@ TEST(Interval, TimestampOperations) {
   auto intvl = Diff(MakeTimestamp("2001-09-29T03:00:00Z"),
                     MakeTimestamp("2001-07-27T12:00:00Z"), utc);
   EXPECT_STATUS_OK(intvl);
-  if (intvl) EXPECT_EQ(std::string(*intvl), "63 days 15:00:00");
+  if (intvl) {
+    EXPECT_EQ(std::string(*intvl), "63 days 15:00:00");
+  }
 }
 
 // A miscellaneous bunch of Interval tests that come from the examples
