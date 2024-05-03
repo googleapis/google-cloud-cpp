@@ -62,7 +62,9 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
  */
 google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::string const& prefix);
+    std::string const& prefix,
+    absl::optional<google::api::MonitoredResource> const& mr_proto =
+        absl::nullopt);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal

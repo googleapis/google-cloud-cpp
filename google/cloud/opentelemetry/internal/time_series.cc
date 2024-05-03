@@ -166,18 +166,23 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
 
 google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::string const& prefix) {
+    std::string const& prefix,
+    absl::optional<google::api::MonitoredResource> const& mr_proto) {
   google::monitoring::v3::CreateTimeSeriesRequest request;
 
-  google::api::MonitoredResource resource;
-  if (data.resource_) {
-    auto mr = ToMonitoredResource(data.resource_->GetAttributes());
-    resource.set_type(std::move(mr.type));
-    for (auto& label : mr.labels) {
-      (*resource.mutable_labels())[std::move(label.first)] =
-          std::move(label.second);
+  google::api::MonitoredResource resource = [&] {
+    if (mr_proto) return *mr_proto;
+    google::api::MonitoredResource resource;
+    if (data.resource_) {
+      auto mr = ToMonitoredResource(data.resource_->GetAttributes());
+      resource.set_type(std::move(mr.type));
+      for (auto& label : mr.labels) {
+        (*resource.mutable_labels())[std::move(label.first)] =
+            std::move(label.second);
+      }
     }
-  }
+    return resource;
+  }();
 
   for (auto const& scope_metric : data.scope_metric_data_) {
     for (auto const& metric_data : scope_metric.metric_data_) {

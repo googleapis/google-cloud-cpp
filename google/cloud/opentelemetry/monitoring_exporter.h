@@ -62,6 +62,16 @@ struct ServiceTimeSeriesOption {
   using Type = bool;
 };
 
+/**
+ * Override the monitored resource to tie metrics to.
+ *
+ * This option is primarily relevant to Google applications and libraries. It
+ * can be ignored by external developers.
+ */
+struct MonitoredResourceOption {
+  using Type = google::api::MonitoredResource;
+};
+
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
     Project project,
