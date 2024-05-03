@@ -404,13 +404,12 @@ StatusOr<Timestamp> Add(Timestamp const& ts, Interval const& intvl,
   auto tz = LoadTimeZone(time_zone);
   if (!tz) return tz.status();
   auto ci = tz->At(*ts.get<absl::Time>());
-  auto offset = absl::FromChrono(intvl.offset_);
-  auto seconds = absl::IDivDuration(offset, absl::Seconds(1), &offset);
   auto cs = absl::CivilSecond(  // add the civil-time parts
       ci.cs.year(), ci.cs.month() + intvl.months_, ci.cs.day() + intvl.days_,
-      ci.cs.hour(), ci.cs.minute(), ci.cs.second() + seconds);
+      ci.cs.hour(), ci.cs.minute(), ci.cs.second());
   return *MakeTimestamp(internal::ToProtoTimestamp(  // overflow saturates
-      absl::FromCivil(cs, *tz) + ci.subsecond + offset));
+      absl::FromCivil(cs, *tz) + ci.subsecond +
+      absl::FromChrono(intvl.offset_)));
 }
 
 StatusOr<Interval> Diff(Timestamp const& ts1, Timestamp const& ts2,
