@@ -15,11 +15,13 @@
 #include "google/cloud/spanner/interval.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/time_utils.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/match.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
+#include "absl/time/time.h"
 #include <cmath>
 #include <cstdint>
 #include <functional>
@@ -335,6 +337,15 @@ StatusOr<Interval> ParseInterval(std::string const& str) {
   return intvl;
 }
 
+StatusOr<absl::TimeZone> LoadTimeZone(absl::string_view name) {
+  absl::TimeZone tz;
+  if (!absl::LoadTimeZone(name, &tz)) {
+    return internal::InvalidArgumentError(
+        absl::StrCat(name, ": Invalid time zone"), GCP_ERROR_INFO());
+  }
+  return tz;
+}
+
 }  // namespace
 
 bool operator==(Interval const& a, Interval const& b) {
@@ -386,6 +397,35 @@ Interval::operator std::string() const {
 
 StatusOr<Interval> MakeInterval(absl::string_view s) {
   return ParseInterval(absl::AsciiStrToLower(s));
+}
+
+StatusOr<Timestamp> Add(Timestamp const& ts, Interval const& intvl,
+                        absl::string_view time_zone) {
+  auto tz = LoadTimeZone(time_zone);
+  if (!tz) return tz.status();
+  auto ci = tz->At(*ts.get<absl::Time>());
+  auto offset = absl::FromChrono(intvl.offset_);
+  auto seconds = absl::IDivDuration(offset, absl::Seconds(1), &offset);
+  auto cs = absl::CivilSecond(  // add the civil-time parts
+      ci.cs.year(), ci.cs.month() + intvl.months_, ci.cs.day() + intvl.days_,
+      ci.cs.hour(), ci.cs.minute(), ci.cs.second() + seconds);
+  return *MakeTimestamp(internal::ToProtoTimestamp(  // overflow saturates
+      absl::FromCivil(cs, *tz) + ci.subsecond + offset));
+}
+
+StatusOr<Interval> Diff(Timestamp const& ts1, Timestamp const& ts2,
+                        absl::string_view time_zone) {
+  auto tz = LoadTimeZone(time_zone);
+  if (!tz) return tz.status();
+  auto ci1 = tz->At(*ts1.get<absl::Time>());
+  auto ci2 = tz->At(*ts2.get<absl::Time>());
+  auto days = absl::CivilDay(ci1.cs) - absl::CivilDay(ci2.cs);
+  auto offset = absl::Hours(ci1.cs.hour() - ci2.cs.hour()) +
+                absl::Minutes(ci1.cs.minute() - ci2.cs.minute()) +
+                absl::Seconds(ci1.cs.second() - ci2.cs.second()) +
+                (ci1.subsecond - ci2.subsecond);
+  return Interval(0, 0, static_cast<std::int32_t>(days),
+                  absl::ToChronoNanoseconds(offset));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
