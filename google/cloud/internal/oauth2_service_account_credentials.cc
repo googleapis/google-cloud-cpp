@@ -36,48 +36,90 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
   auto credentials = nlohmann::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
     return internal::InvalidArgumentError(
-        "Invalid ServiceAccountCredentials,"
-        "parsing failed on data loaded from " +
-        source);
+        absl::StrCat("Invalid ServiceAccountCredentials, parsing failed on ",
+                     "data loaded from ", source));
   }
-  std::string const private_key_id_key = "private_key_id";
-  std::string const private_key_key = "private_key";
-  std::string const token_uri_key = "token_uri";
-  std::string const client_email_key = "client_email";
-  std::string const universe_domain_key = "universe_domain";
-  for (auto const& key : {private_key_key, client_email_key}) {
-    if (credentials.count(key) == 0) {
+  using Validator =
+      std::function<Status(absl::string_view name, nlohmann::json::iterator)>;
+  auto optional_field = [](absl::string_view, nlohmann::json::iterator) {
+    return Status{};
+  };
+  auto non_empty_field = [&credentials, &source](absl::string_view name,
+                                                 nlohmann::json::iterator l) {
+    if (l == credentials.end()) return Status{};
+    if (!l->get<std::string>().empty()) return Status{};
+    return internal::InvalidArgumentError(
+        absl::StrCat("Invalid ServiceAccountCredentials, the ", name,
+                     " field is empty on data loaded from ", source));
+  };
+  auto required_field = [&](absl::string_view name,
+                            nlohmann::json::iterator l) {
+    if (l == credentials.end()) {
       return internal::InvalidArgumentError(
-          "Invalid ServiceAccountCredentials, the " + std::string(key) +
-          " field is missing on data loaded from " + source);
+          absl::StrCat("Invalid ServiceAccountCredentials, the ", name,
+                       " field is missing on data loaded from ", source));
     }
-    if (credentials.value(key, "").empty()) {
-      return internal::InvalidArgumentError(
-          "Invalid ServiceAccountCredentials, the " + std::string(key) +
-          " field is empty on data loaded from " + source);
-    }
-  }
-  // The token_uri and universe_domain fields may be missing, but may not be
-  // empty.
-  for (auto const& key : {token_uri_key, universe_domain_key}) {
-    if (credentials.count(key) != 0 && credentials.value(key, "").empty()) {
-      return internal::InvalidArgumentError(
-          "Invalid ServiceAccountCredentials, the " + std::string(key) +
-          " field is empty on data loaded from " + source);
-    }
-  }
-  return ServiceAccountCredentialsInfo{
-      credentials.value(client_email_key, ""),
-      credentials.value(private_key_id_key, ""),
-      credentials.value(private_key_key, ""),
+    return non_empty_field(name, l);
+  };
+
+  using Store = std::function<void(ServiceAccountCredentialsInfo&,
+                                   nlohmann::json::iterator)>;
+
+  struct Field {
+    std::string name;
+    Validator validator;
+    Store store;
+  };
+  std::vector<Field> fields{
+      {"client_email", required_field,
+       [](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+         info.client_email = l->get<std::string>();
+       }},
+      {"private_key", required_field,
+       [](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+         info.private_key = l->get<std::string>();
+       }},
+      {"private_key_id", optional_field,
+       [&](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+         if (l == credentials.end()) return;
+         info.private_key_id = l->get<std::string>();
+       }},
       // Some credential formats (e.g. gcloud's ADC file) don't contain a
       // "token_uri" attribute in the JSON object.  In this case, we try using
       // the default value.
-      credentials.value(token_uri_key, default_token_uri),
-      /*scopes=*/absl::nullopt,
-      /*subject=*/absl::nullopt,
-      /*enable_self_signed_jwt=*/true,
-      credentials.value(universe_domain_key, GoogleDefaultUniverseDomain())};
+      {"token_uri", non_empty_field,
+       [&](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+         info.token_uri =
+             l == credentials.end() ? default_token_uri : l->get<std::string>();
+       }},
+      {"universe_domain", non_empty_field,
+       [&](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+         info.universe_domain = l == credentials.end()
+                                    ? GoogleDefaultUniverseDomain()
+                                    : l->get<std::string>();
+       }},
+      {"project_id", non_empty_field,
+       [&](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+         if (l == credentials.end()) return;
+         info.project_id = l->get<std::string>();
+       }},
+  };
+
+  auto info = ServiceAccountCredentialsInfo{};
+  info.enable_self_signed_jwt = true;
+  for (auto& f : fields) {
+    auto l = credentials.find(f.name);
+    if (l != credentials.end() && !l->is_string()) {
+      return internal::InvalidArgumentError(absl::StrCat(
+          "Invalid ServiceAccountCredentials, the ", f.name,
+          " field is present and is not a string, on data loaded from ",
+          source));
+    }
+    auto status = f.validator(f.name, l);
+    if (!status.ok()) return status;
+    f.store(info, l);
+  }
+  return info;
 }
 
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
@@ -230,6 +272,20 @@ StatusOr<std::string> ServiceAccountCredentials::universe_domain(
     Options const&) const {
   // universe_domain is stored locally, so any retry options are unnecessary.
   return universe_domain();
+}
+
+StatusOr<std::string> ServiceAccountCredentials::project_id() const {
+  if (!info_.project_id.has_value()) {
+    return internal::NotFoundError(
+        "project_id is not present in the credentials");
+  }
+  return *info_.project_id;
+}
+
+StatusOr<std::string> ServiceAccountCredentials::project_id(
+    Options const&) const {
+  // universe_domain is stored locally, so any retry options are unnecessary.
+  return project_id();
 }
 
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {

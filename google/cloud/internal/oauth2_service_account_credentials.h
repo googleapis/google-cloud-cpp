@@ -53,6 +53,7 @@ struct ServiceAccountCredentialsInfo {
   absl::optional<std::string> subject;
   bool enable_self_signed_jwt;
   absl::optional<std::string> universe_domain;
+  absl::optional<std::string> project_id;
 };
 
 /// Indicates whether or not to use a self-signed JWT or issue a request to
@@ -231,6 +232,9 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
 
   StatusOr<std::string> universe_domain() const override;
   StatusOr<std::string> universe_domain(Options const&) const override;
+
+  StatusOr<std::string> project_id() const;
+  StatusOr<std::string> project_id(Options const&) const;
 
  private:
   bool UseOAuth();
