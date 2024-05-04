@@ -21,6 +21,7 @@
 #include "google/cloud/internal/oauth2_universe_domain.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/internal/sign_using_sha256.h"
+#include "absl/functional/function_ref.h"
 #include <nlohmann/json.hpp>
 
 namespace google {
@@ -39,13 +40,17 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
         absl::StrCat("Invalid ServiceAccountCredentials, parsing failed on ",
                      "data loaded from ", source));
   }
-  using Validator =
-      std::function<Status(absl::string_view name, nlohmann::json::iterator)>;
-  auto optional_field = [](absl::string_view, nlohmann::json::iterator) {
+
+  using Validator = absl::FunctionRef<Status(absl::string_view name,
+                                             nlohmann::json::iterator)>;
+  using Store = absl::FunctionRef<void(ServiceAccountCredentialsInfo&,
+                                       nlohmann::json::iterator const&)>;
+
+  auto optional_field = [](absl::string_view, nlohmann::json::iterator const&) {
     return Status{};
   };
-  auto non_empty_field = [&credentials, &source](absl::string_view name,
-                                                 nlohmann::json::iterator l) {
+  auto non_empty_field = [&](absl::string_view name,
+                             nlohmann::json::iterator const& l) {
     if (l == credentials.end()) return Status{};
     if (!l->get<std::string>().empty()) return Status{};
     return internal::InvalidArgumentError(
@@ -53,7 +58,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
                      " field is empty on data loaded from ", source));
   };
   auto required_field = [&](absl::string_view name,
-                            nlohmann::json::iterator l) {
+                            nlohmann::json::iterator const& l) {
     if (l == credentials.end()) {
       return internal::InvalidArgumentError(
           absl::StrCat("Invalid ServiceAccountCredentials, the ", name,
@@ -62,9 +67,6 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     return non_empty_field(name, l);
   };
 
-  using Store = std::function<void(ServiceAccountCredentialsInfo&,
-                                   nlohmann::json::iterator)>;
-
   struct Field {
     std::string name;
     Validator validator;
@@ -72,15 +74,18 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
   };
   std::vector<Field> fields{
       {"client_email", required_field,
-       [](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+       [](ServiceAccountCredentialsInfo& info,
+          nlohmann::json::iterator const& l) {
          info.client_email = l->get<std::string>();
        }},
       {"private_key", required_field,
-       [](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+       [](ServiceAccountCredentialsInfo& info,
+          nlohmann::json::iterator const& l) {
          info.private_key = l->get<std::string>();
        }},
       {"private_key_id", optional_field,
-       [&](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+       [&](ServiceAccountCredentialsInfo& info,
+           nlohmann::json::iterator const& l) {
          if (l == credentials.end()) return;
          info.private_key_id = l->get<std::string>();
        }},
@@ -88,18 +93,21 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
       // "token_uri" attribute in the JSON object.  In this case, we try using
       // the default value.
       {"token_uri", non_empty_field,
-       [&](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+       [&](ServiceAccountCredentialsInfo& info,
+           nlohmann::json::iterator const& l) {
          info.token_uri =
              l == credentials.end() ? default_token_uri : l->get<std::string>();
        }},
       {"universe_domain", non_empty_field,
-       [&](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+       [&](ServiceAccountCredentialsInfo& info,
+           nlohmann::json::iterator const& l) {
          info.universe_domain = l == credentials.end()
                                     ? GoogleDefaultUniverseDomain()
                                     : l->get<std::string>();
        }},
       {"project_id", non_empty_field,
-       [&](ServiceAccountCredentialsInfo& info, nlohmann::json::iterator l) {
+       [&](ServiceAccountCredentialsInfo& info,
+           nlohmann::json::iterator const& l) {
          if (l == credentials.end()) return;
          info.project_id = l->get<std::string>();
        }},
