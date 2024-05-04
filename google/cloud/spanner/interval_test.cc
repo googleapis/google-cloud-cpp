@@ -253,6 +253,23 @@ TEST(Interval, OutputStreaming) {
   EXPECT_EQ("1 year 2 months 3 days 04:05:06.123456789", os.str());
 }
 
+TEST(Interval, Justification) {
+  EXPECT_EQ(std::string(Interval(0, 0, 35)), "35 days");
+  EXPECT_EQ(std::string(JustifyDays(Interval(0, 0, 35))), "1 month 5 days");
+  EXPECT_EQ(std::string(Interval(0, 0, -35)), "-35 days");
+  EXPECT_EQ(std::string(JustifyDays(Interval(0, 0, -35))), "-2 months 25 days");
+
+  EXPECT_EQ(std::string(Interval(hours(27))), "27:00:00");
+  EXPECT_EQ(std::string(JustifyHours(Interval(hours(27)))),  //
+            "1 day 03:00:00");
+  EXPECT_EQ(std::string(Interval(-hours(27))), "-27:00:00");
+  EXPECT_EQ(std::string(JustifyHours(Interval(-hours(27)))),
+            "-2 days 21:00:00");
+
+  EXPECT_EQ(std::string(JustifyInterval(Interval(0, 1, 0, -hours(1)))),
+            "29 days 23:00:00");
+}
+
 TEST(Interval, TimestampOperations) {
   char const* utc = "UTC";
   char const* nyc = "America/New_York";
@@ -308,6 +325,14 @@ TEST(Interval, TimestampOperations) {
   ts2 = MakeTimestamp("2023-11-05T01:02:03.456789-04:00");
   EXPECT_EQ(*ts1.get<absl::Time>() - *ts2.get<absl::Time>(), absl::Hours(25));
   EXPECT_THAT(Diff(ts1, ts2, nyc), IsOkAndHolds(Interval(0, 0, 1)));
+
+  // Subtracting timestamps should return an interval with justified hours.
+  auto intvl = Diff(MakeTimestamp("2001-09-29T03:00:00Z"),
+                    MakeTimestamp("2001-07-27T12:00:00Z"), utc);
+  EXPECT_STATUS_OK(intvl);
+  if (intvl) {
+    EXPECT_EQ(std::string(*intvl), "63 days 15:00:00");
+  }
 }
 
 // A miscellaneous bunch of Interval tests that come from the examples

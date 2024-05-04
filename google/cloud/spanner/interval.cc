@@ -120,10 +120,6 @@ std::string SerializeInterval(std::int32_t months, std::int32_t days,
   std::ostringstream ss;
   std::int32_t years = months / 12;
   months %= 12;
-  if (months < 0) {
-    months += 12;
-    years -= 1;
-  }
   auto plural = [](std::int32_t v) { return std::abs(v) == 1 ? "" : "s"; };
   char const* sep = "";
   if (years != 0) {
@@ -399,6 +395,31 @@ StatusOr<Interval> MakeInterval(absl::string_view s) {
   return ParseInterval(absl::AsciiStrToLower(s));
 }
 
+Interval JustifyDays(Interval intvl) {
+  intvl.months_ += intvl.days_ / 30;
+  intvl.days_ %= 30;
+  if (intvl.days_ < 0) {
+    intvl.days_ += 30;
+    intvl.months_ -= 1;
+  }
+  return intvl;
+}
+
+Interval JustifyHours(Interval intvl) {
+  auto days = intvl.offset_ / hours(24);
+  intvl.days_ += static_cast<std::int32_t>(days);
+  intvl.offset_ -= hours(days * 24);
+  if (intvl.offset_ < nanoseconds::zero()) {
+    intvl.offset_ += hours(24);
+    intvl.days_ -= 1;
+  }
+  return intvl;
+}
+
+Interval JustifyInterval(Interval intvl) {
+  return JustifyDays(JustifyHours(intvl));
+}
+
 StatusOr<Timestamp> Add(Timestamp const& ts, Interval const& intvl,
                         absl::string_view time_zone) {
   auto tz = LoadTimeZone(time_zone);
@@ -423,8 +444,8 @@ StatusOr<Interval> Diff(Timestamp const& ts1, Timestamp const& ts2,
                 absl::Minutes(ci1.cs.minute() - ci2.cs.minute()) +
                 absl::Seconds(ci1.cs.second() - ci2.cs.second()) +
                 (ci1.subsecond - ci2.subsecond);
-  return Interval(0, 0, static_cast<std::int32_t>(days),
-                  absl::ToChronoNanoseconds(offset));
+  return JustifyHours(Interval(0, 0, static_cast<std::int32_t>(days),
+                               absl::ToChronoNanoseconds(offset)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

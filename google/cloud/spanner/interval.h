@@ -110,6 +110,8 @@ class Interval {
            std::chrono::nanoseconds offset)
       : months_(months), days_(days), offset_(offset) {}
 
+  friend Interval JustifyDays(Interval);
+  friend Interval JustifyHours(Interval);
   friend StatusOr<Timestamp> Add(Timestamp const&, Interval const&,
                                  absl::string_view);
 
@@ -132,6 +134,24 @@ inline Interval operator/(Interval lhs, double rhs) { return lhs /= rhs; }
  * produced by `Interval::operator std::string()`.
  */
 StatusOr<Interval> MakeInterval(absl::string_view);
+
+/**
+ * Adjust the interval so that 30-day periods are represented as months.
+ * For example, maps "35 days" to "1 month 5 days".
+ */
+Interval JustifyDays(Interval);
+
+/**
+ * Adjust the interval so that 24-hour periods are represented as days.
+ * For example, maps "27 hours" to "1 day 3 hours".
+ */
+Interval JustifyHours(Interval);
+
+/**
+ * Adjust the interval using both JustifyDays() and JustifyHours().
+ * For example, maps "1 month -1 hour" to "29 days 23 hours".
+ */
+Interval JustifyInterval(Interval);
 
 /**
  * Add the Interval to the Timestamp in the civil-time space defined by
