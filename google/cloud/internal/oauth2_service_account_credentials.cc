@@ -21,8 +21,8 @@
 #include "google/cloud/internal/oauth2_universe_domain.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/internal/sign_using_sha256.h"
-#include "absl/functional/function_ref.h"
 #include <nlohmann/json.hpp>
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -41,10 +41,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
                      "data loaded from ", source));
   }
 
-  using Validator = absl::FunctionRef<Status(absl::string_view name,
-                                             nlohmann::json::iterator)>;
-  using Store = absl::FunctionRef<void(ServiceAccountCredentialsInfo&,
-                                       nlohmann::json::iterator const&)>;
+  using Validator =
+      std::function<Status(absl::string_view name, nlohmann::json::iterator)>;
+  using Store = std::function<void(ServiceAccountCredentialsInfo&,
+                                   nlohmann::json::iterator const&)>;
 
   auto optional_field = [](absl::string_view, nlohmann::json::iterator const&) {
     return Status{};
