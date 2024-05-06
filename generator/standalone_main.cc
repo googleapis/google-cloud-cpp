@@ -17,6 +17,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/discovery_to_proto.h"
+#include "generator/internal/format_method_comments.h"
 #include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -56,8 +57,8 @@ ABSL_FLAG(std::string, scaffold, "",
 ABSL_FLAG(bool, experimental_scaffold, false,
           "Generate experimental library support files.");
 ABSL_FLAG(bool, update_ci, true, "Update the CI support files.");
-ABSL_FLAG(bool, check_parameter_comment_substitutions, false,
-          "Check that the built-in parameter comment substitutions applied.");
+ABSL_FLAG(bool, check_comment_substitutions, false,
+          "Check that the built-in comment substitutions applied.");
 ABSL_FLAG(bool, generate_discovery_protos, false,
           "Generate only .proto files, no C++ code.");
 ABSL_FLAG(bool, enable_parallel_write_for_discovery_protos, true,
@@ -65,6 +66,8 @@ ABSL_FLAG(bool, enable_parallel_write_for_discovery_protos, true,
           "for readable logs.");
 namespace {
 
+using ::google::cloud::generator_internal::CheckMethodCommentSubstitutions;
+using ::google::cloud::generator_internal::CheckParameterCommentSubstitutions;
 using ::google::cloud::generator_internal::GenerateMetadata;
 using ::google::cloud::generator_internal::GenerateScaffold;
 using ::google::cloud::generator_internal::LibraryName;
@@ -499,15 +502,17 @@ int main(int argc, char** argv) {
     }
   }
 
-  // If we were asked to check the parameter comment substitutions, and some
-  // went unused, emit a fatal error so that we might remove/fix them. The
+  // If we were asked to check the comment substitutions, and some went
+  // unused, emit a fatal error so that we might remove/fix them. The
   // substitutions should probably be part of the config file (rather than
   // being built in) so that the check could be unconditional (instead of
   // flag-based).
-  if (absl::GetFlag(FLAGS_check_parameter_comment_substitutions) &&
-      !google::cloud::generator_internal::
-          CheckParameterCommentSubstitutions()) {
-    GCP_LOG(FATAL) << "Remove unused parameter comment substitution(s)";
+  if (absl::GetFlag(FLAGS_check_comment_substitutions)) {
+    bool parameters_ok = CheckParameterCommentSubstitutions();
+    bool methods_ok = CheckMethodCommentSubstitutions();
+    if (!parameters_ok || !methods_ok) {
+      GCP_LOG(FATAL) << "Remove unused comment substitution(s)";
+    }
   }
 
   return rc;
