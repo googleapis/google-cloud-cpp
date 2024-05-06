@@ -31,7 +31,7 @@ class NoopMessageCallback : public MessageCallback {
   NoopMessageCallback() = default;
   ~NoopMessageCallback() override = default;
 
-  void user_callback(MessageAndHandler) override{};
+  void user_callback(MessageAndHandler) override {}
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

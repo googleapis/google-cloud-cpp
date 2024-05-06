@@ -43,7 +43,7 @@ class PublisherConnectionImpl
 
   void Flush(FlushParams) override;
 
-  void ResumePublish(ResumePublishParams) override{};
+  void ResumePublish(ResumePublishParams) override {}
 
  private:
   std::unique_ptr<google::cloud::pubsublite_internal::Publisher<

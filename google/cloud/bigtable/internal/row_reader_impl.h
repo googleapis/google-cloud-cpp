@@ -43,7 +43,7 @@ class StatusOnlyRowReader : public RowReaderImpl {
  public:
   explicit StatusOnlyRowReader(Status s) : status_(std::move(s)) {}
 
-  void Cancel() override{};
+  void Cancel() override {}
 
   absl::variant<Status, bigtable::Row> Advance() override { return status_; }
 
