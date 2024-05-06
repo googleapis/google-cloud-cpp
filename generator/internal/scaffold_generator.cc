@@ -64,7 +64,7 @@ std::string FormatCloudServiceDocsLink(
     std::map<std::string, std::string> const& vars) {
   return absl::StrCat("[cloud-service-docs]: ",
                       vars.find("documentation_uri") == vars.end()
-                          ? "https://cloud.google.com/$site_root$ [VERIFY HERE]"
+                          ? "https://cloud.google.com/$site_root$ [EDIT HERE]"
                           : "$documentation_uri$",
                       "\n");
 }
