@@ -78,7 +78,7 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
 /**
  * Convert from OpenTelemetry metrics to Cloud Monitoring protos.
  *
- * We return a vector of requests, because Cloud Monitoring accepts at most 200
+ * We return a vector of requests, because Cloud Monitoring limits the amount of
  * TimeSeries per request.
  *
  * See: https://cloud.google.com/monitoring/quotas

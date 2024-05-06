@@ -225,8 +225,8 @@ std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
   for (auto& ts : tss) {
     if (requests.empty() ||
         requests.back().time_series().size() == kMaxTimeSeriesPerRequest) {
-      // If the current request is full (i.e. it has 200 TimeSeries), create a
-      // new request.
+      // If the current request has hit the maximum number of TimeSeries, create
+      // a new request.
       requests.emplace_back();
       requests.back().set_name(project);
     }
