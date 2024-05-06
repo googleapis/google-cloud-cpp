@@ -48,4 +48,22 @@ git push --set-upstream origin "$(git branch --show-current)"
 
 Then use your favorite workflow to create the PR.
 
+## Next Steps
+
+Consider the output of the last command in this sequence. You may want to open
+bugs or PRs to add any new `*.proto` files to existing libraries.
+
+```shell
+bazel build //:grpc_utils
+googleapis="$(bazel info output_base)/external/com_google_googleapis/"
+time comm -23 \
+    <(git ls-files -- 'external/googleapis/protolists/*.list' | \
+        xargs sed -e 's;@com_google_googleapis//;;' -e 's;:;/;' | \
+        xargs env -C ${googleapis} grep -l '^service ' | sort) \
+    <(sed -n  '/service_proto_path:/ {s/.*_path: "//; s/"//p}' generator/generator_config.textproto | sort)
+```
+
+See [Find missing service proto files] to find out how this command works.
+
+[find missing service proto files]: /doc/contributor/howto-guide-find-missing-service-protos.md
 [googleapis-repo]: https://github.com/googleapis/googleapis.git
