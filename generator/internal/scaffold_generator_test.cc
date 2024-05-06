@@ -49,6 +49,10 @@ char const* const kHierarchy[] = {
     "/external/googleapis/",
     "/external/googleapis/protolists/",
     "/external/googleapis/protodeps/",
+    "/google/",
+    "/google/cloud/",
+    "/google/cloud/test/",
+    "/google/cloud/test/v1/",
 };
 
 TEST(ScaffoldGeneratorTest, LibraryName) {
@@ -102,6 +106,7 @@ nlohmann::json MockIndex() {
       {"hostName", "test.googleapis.com"},
       {"title", "Test Only API"},
       {"description", "Provides a placeholder to write this test."},
+      {"configFile", "test_v1.yaml"},
   };
   return nlohmann::json{{"apis", std::vector<nlohmann::json>{api}}};
 }
@@ -112,6 +117,7 @@ class ScaffoldGenerator : public ::testing::Test {
     std::remove((path_ + "/api-index-v1.json").c_str());
     std::remove((path_ + "/external/googleapis/protolists/test.list").c_str());
     std::remove((path_ + "/external/googleapis/protodeps/test.deps").c_str());
+    std::remove((path_ + "/google/cloud/test/v1/test_v1.yaml").c_str());
     // Remove in reverse order, `std::rbegin()` is a C++14 feature.
     auto const size = sizeof(kHierarchy) / sizeof(kHierarchy[0]);
     for (std::size_t i = 0; i != size; ++i) {
@@ -144,6 +150,18 @@ class ScaffoldGenerator : public ::testing::Test {
 @com_google_googleapis//google/api:client_proto
 @com_google_googleapis//google/api:annotations_proto
 @com_google_googleapis//google/api:http_proto
+)""";
+
+    std::ofstream(path_ + "/google/cloud/test/v1/test_v1.yaml")
+        << R"""(type: google.api.Service
+config_version: 1
+name: test.googleapis.com
+title: Test API
+
+publishing:
+  new_issue_uri: https://issuetracker.google.com/issues/new?component=8675309
+  documentation_uri: https://cloud.google.com/test/docs
+  api_short_name: test
 )""";
 
     google::cloud::cpp::generator::ServiceConfiguration service;
@@ -201,7 +219,55 @@ TEST_F(ScaffoldGenerator, Readme) {
   GenerateReadme(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr(R"""(
-[cloud-service-docs]: https://cloud.google.com/test
+[cloud-service-docs]: https://cloud.google.com/test/docs
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/test/latest/
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/test
+)"""));
+  EXPECT_THAT(actual, Not(HasSubstr("$construction$")));
+  EXPECT_THAT(actual, HasSubstr("**GA**"));
+  EXPECT_THAT(actual, Not(HasSubstr("$status$")));
+}
+
+TEST_F(ScaffoldGenerator, ReadmeNoPublishingDocumentationUri) {
+  std::ofstream(path() + "/google/cloud/test/v1/test_v1.yaml")
+      << R"""(type: google.api.Service
+config_version: 1
+name: test.googleapis.com
+title: Test API
+
+publishing:
+  new_issue_uri: https://issuetracker.google.com/issues/new?component=8675309
+  api_short_name: test
+)""";
+
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
+  std::ostringstream os;
+  GenerateReadme(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr(R"""(
+[cloud-service-docs]: https://cloud.google.com/test [EDIT HERE]
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/test/latest/
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/test
+)"""));
+  EXPECT_THAT(actual, Not(HasSubstr("$construction$")));
+  EXPECT_THAT(actual, HasSubstr("**GA**"));
+  EXPECT_THAT(actual, Not(HasSubstr("$status$")));
+}
+
+TEST_F(ScaffoldGenerator, ReadmeNoPublishing) {
+  std::ofstream(path() + "/google/cloud/test/v1/test_v1.yaml")
+      << R"""(type: google.api.Service
+config_version: 1
+name: test.googleapis.com
+title: Test API
+)""";
+
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
+  std::ostringstream os;
+  GenerateReadme(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr(R"""(
+[cloud-service-docs]: https://cloud.google.com/test [EDIT HERE]
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/test/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/test
 )"""));
@@ -253,7 +319,7 @@ An idiomatic C++ client library for the [Test Only API][cloud-service-docs], a s
 to Provides a placeholder to write this test.
 )"""));
   EXPECT_THAT(actual, HasSubstr(R"""(
-[cloud-service-docs]: https://cloud.google.com/test
+[cloud-service-docs]: https://cloud.google.com/test/docs
 )"""));
   EXPECT_THAT(actual, Not(HasSubstr("$status$")));
   EXPECT_THAT(actual, HasSubstr("**GA**"));

@@ -480,8 +480,8 @@ std::vector<NativeIamBinding> const& NativeIamPolicy::bindings() const {
 }
 
 std::ostream& operator<<(std::ostream& os, NativeIamPolicy const& rhs) {
-  os << "NativeIamPolicy={version=" << rhs.version() << ", bindings="
-     << "NativeIamBindings={";
+  os << "NativeIamPolicy={version=" << rhs.version()
+     << ", bindings=" << "NativeIamBindings={";
   bool first = true;
   for (auto const& binding : rhs.bindings()) {
     os << (first ? "" : ", ") << binding;

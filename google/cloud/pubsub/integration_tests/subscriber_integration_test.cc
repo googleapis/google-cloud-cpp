@@ -295,8 +295,7 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
               }
               ack_count += r.response->received_messages_size();
               std::cout << "callback(" << r.response->received_messages_size()
-                        << ")"
-                        << ", ack_count=" << ack_count
+                        << ")" << ", ack_count=" << ack_count
                         << ", received_ids.size()=" << received_ids.size()
                         << std::endl;
             }

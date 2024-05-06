@@ -339,23 +339,19 @@ TEST(FilesystemTest, PathAppend) {
     std::string expected;
   } cases[] = {
 #if _WIN32
-    {"\\tmp", "path", "\\tmp\\path"},
-    {"\\tmp", "\\path", "\\tmp\\path"},
-    {"\\tmp\\", "path", "\\tmp\\path"},
-    {"\\tmp\\", "\\path", "\\tmp\\path"},
-    {"", "path", "path"},
-    {"\\", "path", "\\path"},
-    {"\\tmp", "", "\\tmp"},
-    {"\\tmp\\", "", "\\tmp\\"},
+      {"\\tmp", "path", "\\tmp\\path"},
+      {"\\tmp", "\\path", "\\tmp\\path"},
+      {"\\tmp\\", "path", "\\tmp\\path"},
+      {"\\tmp\\", "\\path", "\\tmp\\path"},
+      {"", "path", "path"},
+      {"\\", "path", "\\path"},
+      {"\\tmp", "", "\\tmp"},
+      {"\\tmp\\", "", "\\tmp\\"},
 #else
-    {"/tmp", "path", "/tmp/path"},
-    {"/tmp", "/path", "/tmp/path"},
-    {"/tmp/", "path", "/tmp/path"},
-    {"/tmp/", "/path", "/tmp/path"},
-    {"", "path", "path"},
-    {"/", "path", "/path"},
-    {"/tmp", "", "/tmp"},
-    {"/tmp/", "", "/tmp/"},
+      {"/tmp", "path", "/tmp/path"},  {"/tmp", "/path", "/tmp/path"},
+      {"/tmp/", "path", "/tmp/path"}, {"/tmp/", "/path", "/tmp/path"},
+      {"", "path", "path"},           {"/", "path", "/path"},
+      {"/tmp", "", "/tmp"},           {"/tmp/", "", "/tmp/"},
 #endif  // _WIN32
   };
   for (auto const& test : cases) {

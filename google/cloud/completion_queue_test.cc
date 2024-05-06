@@ -690,9 +690,8 @@ TEST_P(RunAsyncTest, Torture) {
     }
   };
   std::vector<std::thread> workers(kThreads);
-  std::generate(workers.begin(), workers.end(), [&worker, &cq] {
-    return std::thread{worker, cq};
-  });
+  std::generate(workers.begin(), workers.end(),
+                [&worker, &cq] { return std::thread{worker, cq}; });
   for (auto& w : workers) w.join();
   wait();
   cq.Shutdown();
