@@ -164,26 +164,26 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
   return ts;
 }
 
-google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
+google::api::MonitoredResource ToMonitoredResource(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::string const& prefix,
     absl::optional<google::api::MonitoredResource> const& mr_proto) {
-  google::monitoring::v3::CreateTimeSeriesRequest request;
-
-  google::api::MonitoredResource resource = [&] {
-    if (mr_proto) return *mr_proto;
-    google::api::MonitoredResource resource;
-    if (data.resource_) {
-      auto mr = ToMonitoredResource(data.resource_->GetAttributes());
-      resource.set_type(std::move(mr.type));
-      for (auto& label : mr.labels) {
-        (*resource.mutable_labels())[std::move(label.first)] =
-            std::move(label.second);
-      }
+  if (mr_proto) return *mr_proto;
+  google::api::MonitoredResource resource;
+  if (data.resource_) {
+    auto mr = ToMonitoredResource(data.resource_->GetAttributes());
+    resource.set_type(std::move(mr.type));
+    for (auto& label : mr.labels) {
+      (*resource.mutable_labels())[std::move(label.first)] =
+          std::move(label.second);
     }
-    return resource;
-  }();
+  }
+  return resource;
+}
 
+std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    std::string const& prefix) {
+  std::vector<google::monitoring::v3::TimeSeries> tss;
   for (auto const& scope_metric : data.scope_metric_data_) {
     for (auto const& metric_data : scope_metric.metric_data_) {
       for (auto const& pda : metric_data.point_data_attr_) {
@@ -210,11 +210,22 @@ google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
         auto ts = absl::visit(Visitor{metric_data}, pda.point_data);
         if (!ts) continue;
         ts->set_unit(metric_data.instrument_descriptor.unit_);
-        *ts->mutable_resource() = resource;
         *ts->mutable_metric() = ToMetric(metric_data, pda.attributes, prefix);
-        *request.add_time_series() = *std::move(ts);
+        tss.push_back(*std::move(ts));
       }
     }
+  }
+  return tss;
+}
+
+google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
+    std::string const& project, google::api::MonitoredResource const& mr_proto,
+    std::vector<google::monitoring::v3::TimeSeries> tss) {
+  google::monitoring::v3::CreateTimeSeriesRequest request;
+  request.set_name(project);
+  for (auto& ts : tss) {
+    *ts.mutable_resource() = mr_proto;
+    *request.add_time_series() = std::move(ts);
   }
   return request;
 }

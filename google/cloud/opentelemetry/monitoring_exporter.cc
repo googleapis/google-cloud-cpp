@@ -69,14 +69,13 @@ class MonitoringExporter final
  private:
   opentelemetry::sdk::common::ExportResult ExportImpl(
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
-    auto request = ToRequest(data, prefix_, mr_proto_);
-    request.set_name(project_.FullName());
-    if (request.time_series().empty()) {
-      GCP_LOG(WARNING) << "Cloud Monitoring Export skipped. No TimeSeries "
-                          "added to request.";
+    auto tss = ToTimeSeries(data, prefix_);
+    if (tss.empty()) {
+      GCP_LOG(INFO) << "Cloud Monitoring Export skipped. No data.";
       return opentelemetry::sdk::common::ExportResult::kSuccess;
     }
-
+    auto mr = ToMonitoredResource(data, mr_proto_);
+    auto request = ToRequest(project_.FullName(), mr, std::move(tss));
     auto status = use_service_time_series_
                       ? client_.CreateServiceTimeSeries(request)
                       : client_.CreateTimeSeries(request);
