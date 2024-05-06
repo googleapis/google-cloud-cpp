@@ -14,6 +14,7 @@
 
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/monitoring/v3/mocks/mock_metric_connection.h"
+#include "google/cloud/opentelemetry/internal/time_series.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/version.h"
@@ -27,6 +28,7 @@ namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::otel_internal::kMaxTimeSeriesPerRequest;
 using ::testing::AllOf;
 using ::testing::Each;
 using ::testing::Eq;
@@ -89,7 +91,16 @@ TEST(MonitoringExporter, ExportSuccess) {
       .WillOnce(
           [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
             EXPECT_THAT(request.name(), "projects/test-project");
-            EXPECT_THAT(request.time_series(), SizeIs(2));
+            EXPECT_THAT(request.time_series(),
+                        SizeIs(kMaxTimeSeriesPerRequest));
+            EXPECT_THAT(request.time_series(),
+                        Each(MetricTypePrefix("workload.googleapis.com/")));
+            return Status();
+          })
+      .WillOnce(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), "projects/test-project");
+            EXPECT_THAT(request.time_series(), SizeIs(1));
             EXPECT_THAT(request.time_series(),
                         Each(MetricTypePrefix("workload.googleapis.com/")));
             return Status();
@@ -97,7 +108,8 @@ TEST(MonitoringExporter, ExportSuccess) {
 
   auto exporter = otel_internal::MakeMonitoringExporter(Project("test-project"),
                                                         std::move(mock));
-  auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
+  auto const expected_time_series_count = kMaxTimeSeriesPerRequest + 1;
+  auto data = MakeResourceMetrics(expected_time_series_count);
   auto result = exporter->Export(data);
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
 }
@@ -129,13 +141,30 @@ TEST(MonitoringExporter, ExportFailure) {
       .WillOnce(
           [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
             EXPECT_THAT(request.name(), "projects/test-project");
-            EXPECT_THAT(request.time_series(), SizeIs(2));
+            EXPECT_THAT(request.time_series(),
+                        SizeIs(kMaxTimeSeriesPerRequest));
+            return Status();
+          })
+      .WillOnce(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), "projects/test-project");
+            EXPECT_THAT(request.time_series(),
+                        SizeIs(kMaxTimeSeriesPerRequest));
+            return internal::InvalidArgumentError("nope");
+          })
+      .WillOnce(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), "projects/test-project");
+            EXPECT_THAT(request.time_series(), SizeIs(1));
+            // If an individual request fails, the export is considered a
+            // failure.
             return internal::PermissionDeniedError("nope");
           });
 
   auto exporter = otel_internal::MakeMonitoringExporter(Project("test-project"),
                                                         std::move(mock));
-  auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
+  auto const expected_time_series_count = 2 * kMaxTimeSeriesPerRequest + 1;
+  auto data = MakeResourceMetrics(expected_time_series_count);
   auto result = exporter->Export(data);
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kFailure);
 
@@ -154,13 +183,30 @@ TEST(MonitoringExporter, ExportFailureWithInvalidArgument) {
       .WillOnce(
           [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
             EXPECT_THAT(request.name(), "projects/test-project");
-            EXPECT_THAT(request.time_series(), SizeIs(2));
+            EXPECT_THAT(request.time_series(),
+                        SizeIs(kMaxTimeSeriesPerRequest));
+            return Status();
+          })
+      .WillOnce(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), "projects/test-project");
+            EXPECT_THAT(request.time_series(),
+                        SizeIs(kMaxTimeSeriesPerRequest));
+            // If an individual request fails, the export is considered a
+            // failure.
             return internal::InvalidArgumentError("nope");
+          })
+      .WillOnce(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), "projects/test-project");
+            EXPECT_THAT(request.time_series(), SizeIs(1));
+            return Status();
           });
 
   auto exporter = otel_internal::MakeMonitoringExporter(Project("test-project"),
                                                         std::move(mock));
-  auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
+  auto const expected_time_series_count = 2 * kMaxTimeSeriesPerRequest + 1;
+  auto data = MakeResourceMetrics(expected_time_series_count);
   auto result = exporter->Export(data);
   EXPECT_EQ(result,
             opentelemetry::sdk::common::ExportResult::kFailureInvalidArgument);

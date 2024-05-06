@@ -69,22 +69,35 @@ class MonitoringExporter final
  private:
   opentelemetry::sdk::common::ExportResult ExportImpl(
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+    auto result = opentelemetry::sdk::common::ExportResult::kSuccess;
+
     auto tss = ToTimeSeries(data, prefix_);
     if (tss.empty()) {
       GCP_LOG(INFO) << "Cloud Monitoring Export skipped. No data.";
-      return opentelemetry::sdk::common::ExportResult::kSuccess;
+      // Return early to save the littlest bit of processing.
+      return result;
     }
     auto mr = ToMonitoredResource(data, mr_proto_);
-    auto request = ToRequest(project_.FullName(), mr, std::move(tss));
-    auto status = use_service_time_series_
-                      ? client_.CreateServiceTimeSeries(request)
-                      : client_.CreateTimeSeries(request);
-    if (status.ok()) return opentelemetry::sdk::common::ExportResult::kSuccess;
-    GCP_LOG(WARNING) << "Cloud Monitoring Export failed with status=" << status;
-    if (status.code() == StatusCode::kInvalidArgument) {
-      return opentelemetry::sdk::common::ExportResult::kFailureInvalidArgument;
+    auto requests = ToRequests(project_.FullName(), mr, std::move(tss));
+    for (auto& request : requests) {
+      auto status = use_service_time_series_
+                        ? client_.CreateServiceTimeSeries(request)
+                        : client_.CreateTimeSeries(request);
+      if (status.ok()) continue;
+      GCP_LOG(WARNING) << "Cloud Monitoring Export failed with status="
+                       << status;
+      // Ultimately, we can only report one error, even though we may send
+      // multiple RPCs. If *all* failures are `kInvalidArgument` we should
+      // report that. Otherwise, we will report a generic failure.
+      if (status.code() == StatusCode::kInvalidArgument &&
+          result == opentelemetry::sdk::common::ExportResult::kSuccess) {
+        result =
+            opentelemetry::sdk::common::ExportResult::kFailureInvalidArgument;
+      } else if (status.code() != StatusCode::kInvalidArgument) {
+        result = opentelemetry::sdk::common::ExportResult::kFailure;
+      }
     }
-    return opentelemetry::sdk::common::ExportResult::kFailure;
+    return result;
   }
 
   Project project_;

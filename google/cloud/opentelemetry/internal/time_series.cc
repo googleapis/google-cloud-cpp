@@ -218,16 +218,22 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
   return tss;
 }
 
-google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
+std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
     std::string const& project, google::api::MonitoredResource const& mr_proto,
     std::vector<google::monitoring::v3::TimeSeries> tss) {
-  google::monitoring::v3::CreateTimeSeriesRequest request;
-  request.set_name(project);
+  std::vector<google::monitoring::v3::CreateTimeSeriesRequest> requests;
   for (auto& ts : tss) {
+    if (requests.empty() ||
+        requests.back().time_series().size() == kMaxTimeSeriesPerRequest) {
+      // If the current request has hit the maximum number of TimeSeries, create
+      // a new request.
+      requests.emplace_back();
+      requests.back().set_name(project);
+    }
     *ts.mutable_resource() = mr_proto;
-    *request.add_time_series() = std::move(ts);
+    *requests.back().add_time_series() = std::move(ts);
   }
-  return request;
+  return requests;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
