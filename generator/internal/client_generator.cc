@@ -648,7 +648,8 @@ $client_class_name$::Async$method_name$(Options opts) {
 }
 
 bool ClientGenerator::HasIamPolicyExtension() {
-  return get_iam_policy_extension_ && set_iam_policy_extension_;
+  return get_iam_policy_extension_ != nullptr &&
+         set_iam_policy_extension_ != nullptr;
 }
 
 }  // namespace generator_internal
