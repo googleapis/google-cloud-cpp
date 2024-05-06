@@ -60,6 +60,15 @@ ProductPath ParseProductPath(std::string const& product_path) {
   return make_result(std::prev(v.end()));
 }
 
+std::string FormatCloudServiceDocsLink(
+    std::map<std::string, std::string> const& vars) {
+  return absl::StrCat("[cloud-service-docs]: ",
+                      vars.find("documentation_uri") == vars.end()
+                          ? "https://cloud.google.com/$site_root$ [VERIFY HERE]"
+                          : "$documentation_uri$",
+                      "\n");
+}
+
 }  // namespace
 
 auto constexpr kApiIndexFilename = "api-index-v1.json";
@@ -335,7 +344,7 @@ void GenerateScaffold(
 
 void GenerateReadme(std::ostream& os,
                     std::map<std::string, std::string> const& variables) {
-  auto constexpr kText = R"""(# $title$ C++ Client Library
+  auto constexpr kText1 = R"""(# $title$ C++ Client Library
 $construction$
 This directory contains an idiomatic C++ client library for the
 [$title$][cloud-service-docs], a service to $description$
@@ -359,14 +368,18 @@ this library.
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
+)""";
 
-[cloud-service-docs]: https://cloud.google.com/$site_root$
-[doxygen-link]: https://cloud.google.com/cpp/docs/reference/$library$/latest/
+  auto constexpr kText2 =
+      R"""([doxygen-link]: https://cloud.google.com/cpp/docs/reference/$library$/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/$library$
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, kText);
+  printer.Print(
+      variables,
+      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2)
+          .c_str());
 }
 
 void GenerateBuild(std::ostream& os,
@@ -497,7 +510,7 @@ endif ()
 
 void GenerateDoxygenMainPage(
     std::ostream& os, std::map<std::string, std::string> const& variables) {
-  auto constexpr kText = R"""(/*!
+  auto constexpr kText1 = R"""(/*!
 
 @mainpage $title$ C++ Client Library
 
@@ -533,14 +546,17 @@ which should give you a taste of the $title$ C++ client library API.
   policies.
 - @ref $library$-env - describes environment variables that can configure the
   behavior of the library.
+)""";
 
-[cloud-service-docs]: https://cloud.google.com/$site_root$
-
+  auto constexpr kText2 = R"""(
 */
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, kText);
+  printer.Print(
+      variables,
+      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2)
+          .c_str());
 }
 
 void GenerateDoxygenEnvironmentPage(
