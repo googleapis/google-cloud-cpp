@@ -54,6 +54,8 @@ We make the following assumptions, based on how we maintain the repository:
    `generator_config.textproto` file.
 1. Recall that the list of `*.proto` file dependencies are in our `*.list`
    files. These files are automatically generated (see [`update_libraries.sh`]).
+1. By convention / coding standards, all service definitions in the Google
+   `*.proto` files start at column 0 with `service `.
 
 With these assumptions, we can explain how the script works. First gather all
 the `*.list` files:
@@ -70,7 +72,7 @@ git ls-files -- 'external/googleapis/protolists/*.list' | \
         xargs sed -e 's;@com_google_googleapis//;;' -e 's;:;/;'
 ```
 
-How we can search for any files that have a gRPC service definition:
+Now we can search for any files that have a gRPC service definition:
 
 ```shell
 git ls-files -- 'external/googleapis/protolists/*.list' | \
@@ -93,7 +95,7 @@ Separately we build the list of protofiles that are listed in
 sed -n  '/service_proto_path:/ {s/.*_path: "//; s/"//p}' generator/generator_config.textproto | sort
 ```
 
-Then just use `comm -13` to find the differences between these two lists.
+Then just use `comm -23` to find the differences between these two lists.
 
 ```shell
 time comm -23 \
