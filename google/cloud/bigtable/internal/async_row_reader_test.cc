@@ -949,6 +949,8 @@ TEST_P(AsyncRowReaderExceptionTest, CancelMidStream) {
     }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     EXPECT_THAT(status, StatusIs(StatusCode::kCancelled, HasSubstr(message)));
+    EXPECT_THAT(status.error_info().metadata(),
+                Contains(Pair("gl-cpp.error.origin", "client")));
   });
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();

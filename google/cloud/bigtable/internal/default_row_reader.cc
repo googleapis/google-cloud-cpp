@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 
 namespace google {
@@ -92,7 +93,9 @@ bool DefaultRowReader::NextChunk() {
 
 absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
   if (operation_cancelled_) {
-    return Status(StatusCode::kCancelled, "Operation cancelled.");
+    return internal::CancelledError(
+        "call cancelled",
+        GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client"));
   }
   while (true) {
     auto variant = AdvanceOrFail();
