@@ -22,6 +22,7 @@
 
 #include "google/cloud/compute/target_https_proxies/v1/target_https_proxies_rest_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"

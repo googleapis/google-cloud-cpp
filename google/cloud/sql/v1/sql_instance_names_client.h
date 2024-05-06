@@ -21,6 +21,7 @@
 
 #include "google/cloud/sql/v1/sql_instance_names_rest_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
