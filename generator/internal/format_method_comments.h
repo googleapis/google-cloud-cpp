@@ -31,6 +31,12 @@ std::string FormatMethodComments(
     std::string const& variable_parameter_comments,
     bool is_discovery_document_proto);
 
+/**
+ * If there were any method comment substitutions that went unused, log
+ * errors about them and return false. Otherwise do nothing and return true.
+ */
+bool CheckMethodCommentSubstitutions();
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

@@ -23,8 +23,10 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
+#include "absl/strings/string_view.h"
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/descriptor.h>
+#include <cstddef>
 #include <iterator>
 
 namespace google {
@@ -142,6 +144,23 @@ std::map<std::string, ProtoDefinitionLocation> Merge(
   return preferred;
 }
 
+// Apply substitutions to the comments snarfed from the proto file for
+// RPC methods. This is mostly for the benefit of Doxygen, but is also
+// to fix mismatched quotes, etc.
+struct MethodCommentSubstitution {
+  absl::string_view before;
+  absl::string_view after;
+  std::size_t uses = 0;
+};
+
+MethodCommentSubstitution substitutions[] = {
+    {"\n", "\n  ///"},
+
+    // From google/logging/v2/logging_config.proto
+    {R"""(Gets a view on a log bucket..)""",
+     R"""(Gets a view on a log bucket.)"""},
+};
+
 }  // namespace
 
 std::string FormatMethodComments(
@@ -155,15 +174,11 @@ std::string FormatMethodComments(
                    << " no leading_comments to format";
   }
   std::string doxygen_formatted_function_comments =
-      absl::StrReplaceAll(method_source_location.leading_comments,
-                          {
-                              {"\n", "\n  ///"},
-                              {"$", "$$"},
-                              // TODO(#12190) - track whether this substitution
-                              // is used. From logging/v2
-                              {R"""(Gets a view on a log bucket..)""",
-                               R"""(Gets a view on a log bucket.)"""},
-                          });
+      method_source_location.leading_comments;
+  for (auto& sub : substitutions) {
+    sub.uses += absl::StrReplaceAll({{sub.before, sub.after}},
+                                    &doxygen_formatted_function_comments);
+  }
 
   auto const options_comment = std::string{
       R"""(  /// @param opts Optional. Override the class-level options, such as retry and
@@ -216,6 +231,18 @@ std::string FormatMethodComments(
                       doxygen_formatted_function_comments, "\n",
                       variable_parameter_comments, options_comment,
                       return_comment_string, trailer, kMethodCommentsSuffix);
+}
+
+bool CheckMethodCommentSubstitutions() {
+  bool all_substitutions_used = true;
+  for (auto& sub : substitutions) {
+    if (sub.uses == 0) {
+      GCP_LOG(ERROR) << "Method comment substitution went unused ("
+                     << sub.before << ")";
+      all_substitutions_used = false;
+    }
+  }
+  return all_substitutions_used;
 }
 
 }  // namespace generator_internal
