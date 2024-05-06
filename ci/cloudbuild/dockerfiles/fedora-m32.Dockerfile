@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:39
+FROM fedora:40
 ARG NCPU=4
 
 # Install the minimal development tools:
@@ -20,7 +20,7 @@ RUN dnf makecache && \
     dnf install -y cmake curl diffutils findutils gcc-c++ git make \
         ninja-build patch tar unzip wget which zip
 
-# Fedora 39 includes packages, with recent enough versions, for most of the
+# Fedora 40 includes packages, with recent enough versions, for most of the
 # direct dependencies of `google-cloud-cpp`. We will install those.
 
 # First install the "host" (64-bit) version of the protobuf compiler and gRPC
@@ -44,7 +44,7 @@ RUN dnf makecache && \
         openssl-devel.i686 \
         protobuf-devel.i686 \
         re2-devel.i686 \
-        zlib-devel.i686
+        zlib-ng-compat-devel.i686
 
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel
