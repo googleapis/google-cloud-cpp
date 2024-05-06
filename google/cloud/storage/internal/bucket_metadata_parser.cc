@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
+#include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>
 #include <functional>
@@ -121,18 +122,18 @@ Status ParseCustomPlacementConfig(BucketMetadata& meta,
                                   nlohmann::json const& json) {
   if (!json.contains("customPlacementConfig")) return Status{};
   auto const& field = json["customPlacementConfig"];
-  auto error = [] {
-    return Status{StatusCode::kInvalidArgument,
-                  "malformed customPlacementConfig"};
+  auto error = [](auto eib) {
+    return google::cloud::internal::InvalidArgumentError(
+        "malformed customPlacementConfig", std::move(eib));
   };
-  if (!field.is_object()) return error();
+  if (!field.is_object()) return error(GCP_ERROR_INFO());
   if (!field.contains("dataLocations")) return Status{};
   auto const& locations = field["dataLocations"];
-  if (!locations.is_array()) return error();
+  if (!locations.is_array()) return error(GCP_ERROR_INFO());
 
   BucketCustomPlacementConfig value;
   for (auto const& i : locations.items()) {
-    if (!i.value().is_string()) return error();
+    if (!i.value().is_string()) return error(GCP_ERROR_INFO());
     value.data_locations.push_back(i.value().get<std::string>());
   }
   meta.set_custom_placement_config(std::move(value));
@@ -507,9 +508,7 @@ void ToJsonCustomPlacementConfig(nlohmann::json& json,
 
 StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
     nlohmann::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
+  if (!json.is_object()) return NotJsonObject(json, GCP_ERROR_INFO());
 
   using Parser = std::function<Status(BucketMetadata&, nlohmann::json const&)>;
   Parser parsers[] = {

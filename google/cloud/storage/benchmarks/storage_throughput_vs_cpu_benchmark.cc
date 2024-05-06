@@ -415,8 +415,8 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
     std::ostringstream os;
     os << "The GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME environment variable "
           "is not set or empty";
-    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
-                                 std::move(os).str());
+    return google::cloud::internal::UnknownError(std::move(os).str(),
+                                                 GCP_ERROR_INFO());
   }
   return gcs_bm::ParseThroughputOptions(
       {

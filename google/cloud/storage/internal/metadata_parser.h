@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_METADATA_PARSER_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
@@ -77,6 +78,15 @@ StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
  */
 StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
     nlohmann::json const& json, char const* field_name);
+
+/// Return an error indicating that `j` is not a JSON object (it may be a
+/// string, or other valid JSON)
+Status NotJsonObject(nlohmann::json const& j,
+                     google::cloud::internal::ErrorInfoBuilder eib);
+
+/// Return an error indicating that we expected a JSON object in @p payload.
+Status ExpectedJsonObject(std::string const& payload,
+                          google::cloud::internal::ErrorInfoBuilder eib);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

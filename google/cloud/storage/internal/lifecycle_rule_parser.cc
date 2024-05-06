@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
+#include "google/cloud/internal/make_status.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -56,9 +58,10 @@ Status ParseDateCondition(absl::optional<absl::CivilDay>& field,
   auto const date = condition.value(name, "");
   absl::CivilDay day;
   if (!absl::ParseCivilTime(date, &day)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Cannot parse " + std::string(name) + " with value=<" + date +
-                      "> as a date");
+    return google::cloud::internal::InvalidArgumentError(
+        "Cannot parse " + std::string(name) + " with value=<" + date +
+            "> as a date",
+        GCP_ERROR_INFO());
   }
   field.emplace(std::move(day));
   return Status{};
@@ -67,7 +70,7 @@ Status ParseDateCondition(absl::optional<absl::CivilDay>& field,
 StatusOr<LifecycleRuleAction> ActionFromJson(nlohmann::json const& json) {
   auto f = json.find("action");
   if (f == json.end()) return LifecycleRuleAction{};
-  if (!f->is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+  if (!f->is_object()) return NotJsonObject(*f, GCP_ERROR_INFO());
 
   LifecycleRuleAction action;
   action.type = f->value("type", "");
@@ -78,7 +81,7 @@ StatusOr<LifecycleRuleAction> ActionFromJson(nlohmann::json const& json) {
 StatusOr<LifecycleRuleCondition> ConditionFromJson(nlohmann::json const& json) {
   auto f = json.find("condition");
   if (f == json.end()) return LifecycleRuleCondition{};
-  if (!f->is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+  if (!f->is_object()) return NotJsonObject(*f, GCP_ERROR_INFO());
 
   LifecycleRuleCondition result;
   auto status = ParseIntCondition(result.age, *f, "age");
@@ -112,7 +115,7 @@ StatusOr<LifecycleRuleCondition> ConditionFromJson(nlohmann::json const& json) {
 
 StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
     nlohmann::json const& json) {
-  if (!json.is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+  if (!json.is_object()) return NotJsonObject(json, GCP_ERROR_INFO());
   auto condition = ConditionFromJson(json);
   if (!condition) return std::move(condition).status();
   auto action = ActionFromJson(json);

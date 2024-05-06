@@ -20,6 +20,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/options.h"
@@ -101,15 +102,16 @@ StatusOr<ApiName> ParseApiName(std::string const& val) {
   for (auto a : {ApiName::kApiJson, ApiName::kApiGrpc}) {
     if (val == ToString(a)) return a;
   }
-  return Status{StatusCode::kInvalidArgument, "unknown ApiName " + val};
+  return google::cloud::internal::InvalidArgumentError("unknown ApiName " + val,
+                                                       GCP_ERROR_INFO());
 }
 
 StatusOr<ExperimentLibrary> ParseExperimentLibrary(std::string const& val) {
   for (auto v : {ExperimentLibrary::kRaw, ExperimentLibrary::kCppClient}) {
     if (val == ToString(v)) return v;
   }
-  return Status{StatusCode::kInvalidArgument,
-                "unknown ExperimentLibrary " + val};
+  return google::cloud::internal::InvalidArgumentError(
+      "unknown ExperimentLibrary " + val, GCP_ERROR_INFO());
 }
 
 StatusOr<ExperimentTransport> ParseExperimentTransport(std::string const& val) {
@@ -117,8 +119,8 @@ StatusOr<ExperimentTransport> ParseExperimentTransport(std::string const& val) {
                  ExperimentTransport::kJson}) {
     if (val == ToString(v)) return v;
   }
-  return Status{StatusCode::kInvalidArgument,
-                "unknown ExperimentTransport " + val};
+  return google::cloud::internal::InvalidArgumentError(
+      "unknown ExperimentTransport " + val, GCP_ERROR_INFO());
 }
 
 std::string ToString(ExperimentLibrary v) {

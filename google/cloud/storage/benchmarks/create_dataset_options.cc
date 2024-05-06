@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/create_dataset_options.h"
+#include "google/cloud/internal/make_status.h"
 #include <sstream>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -72,8 +74,8 @@ google::cloud::StatusOr<CreateDatasetOptions> ParseCreateDatasetOptions(
   if (unparsed.size() > 2) {
     std::ostringstream os;
     os << "Unknown arguments or options\n" << usage << "\n";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
   if (unparsed.size() == 2) {
     options.bucket_name = unparsed[1];
@@ -81,8 +83,8 @@ google::cloud::StatusOr<CreateDatasetOptions> ParseCreateDatasetOptions(
   if (options.bucket_name.empty()) {
     std::ostringstream os;
     os << "Missing value for --bucket_name option" << usage << "\n";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
 
   if (options.minimum_object_size > options.maximum_object_size) {
@@ -90,24 +92,24 @@ google::cloud::StatusOr<CreateDatasetOptions> ParseCreateDatasetOptions(
     os << "Invalid object size range [" << options.minimum_object_size << ","
        << options.maximum_object_size << "), check your --minimum-object-size"
        << " and --maximum-object-size options";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
 
   if (options.object_count <= 0) {
     std::ostringstream os;
     os << "Invalid object count (" << options.object_count
        << "), check your --object-count option";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
 
   if (options.thread_count <= 0) {
     std::ostringstream os;
     os << "Invalid thread count (" << options.thread_count
        << "), check your --thread-count option";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
 
   return options;

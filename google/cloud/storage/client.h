@@ -3743,8 +3743,8 @@ StatusOr<ObjectMetadata> ComposeMany(
   std::size_t const max_num_objects = 32;
 
   if (source_objects.empty()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "ComposeMany requires at least one source object.");
+    return google::cloud::internal::InvalidArgumentError(
+        "ComposeMany requires at least one source object.", GCP_ERROR_INFO());
   }
 
   auto all_options = std::make_tuple(options...);

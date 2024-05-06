@@ -192,8 +192,8 @@ StatusOr<BucketMetadata> RestStub::CreateBucket(
   // This seems to be the only case where kAlreadyExists is a better match
   // for 409 than kAborted.
   if (!response && response.status().code() == StatusCode::kAborted) {
-    return Status(StatusCode::kAlreadyExists, response.status().message(),
-                  response.status().error_info());
+    return google::cloud::internal::AlreadyExistsError(
+        response.status().message(), response.status().error_info());
   }
   return response;
 }

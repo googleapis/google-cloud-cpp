@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/metadata_parser.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/strings/numbers.h"
@@ -37,7 +38,8 @@ StatusOr<bool> ParseBoolField(nlohmann::json const& json,
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as a boolean, json=" << json;
-  return Status(StatusCode::kInvalidArgument, std::move(os).str());
+  return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                       GCP_ERROR_INFO());
 }
 
 StatusOr<std::int32_t> ParseIntField(nlohmann::json const& json,
@@ -52,7 +54,8 @@ StatusOr<std::int32_t> ParseIntField(nlohmann::json const& json,
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as a std::int32_t, json=" << json;
-  return Status(StatusCode::kInvalidArgument, std::move(os).str());
+  return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                       GCP_ERROR_INFO());
 }
 
 StatusOr<std::uint32_t> ParseUnsignedIntField(nlohmann::json const& json,
@@ -67,7 +70,8 @@ StatusOr<std::uint32_t> ParseUnsignedIntField(nlohmann::json const& json,
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as a std::uint32_t, json=" << json;
-  return Status(StatusCode::kInvalidArgument, std::move(os).str());
+  return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                       GCP_ERROR_INFO());
 }
 
 StatusOr<std::int64_t> ParseLongField(nlohmann::json const& json,
@@ -82,7 +86,8 @@ StatusOr<std::int64_t> ParseLongField(nlohmann::json const& json,
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as a std::int64_t, json=" << json;
-  return Status(StatusCode::kInvalidArgument, std::move(os).str());
+  return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                       GCP_ERROR_INFO());
 }
 
 StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
@@ -97,7 +102,8 @@ StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as a std::uint64_t, json=" << json;
-  return Status(StatusCode::kInvalidArgument, std::move(os).str());
+  return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                       GCP_ERROR_INFO());
 }
 
 StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
@@ -110,7 +116,24 @@ StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as a timestamp, json=" << json;
-  return Status(StatusCode::kInvalidArgument, std::move(os).str());
+  return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                       GCP_ERROR_INFO());
+}
+
+Status NotJsonObject(nlohmann::json const& j,
+                     google::cloud::internal::ErrorInfoBuilder eib) {
+  return google::cloud::internal::InvalidArgumentError(
+      "json input is not an object, first 32 characters are: " +
+          j.dump().substr(0, 32),
+      std::move(eib));
+}
+
+Status ExpectedJsonObject(std::string const& payload,
+                          google::cloud::internal::ErrorInfoBuilder eib) {
+  return google::cloud::internal::InvalidArgumentError(
+      "expected payload to be a JSON object, first 32 chars are " +
+          payload.substr(0, 32),
+      std::move(eib));
 }
 
 }  // namespace internal
