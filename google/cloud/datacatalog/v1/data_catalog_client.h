@@ -22,6 +22,7 @@
 #include "google/cloud/datacatalog/v1/data_catalog_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"

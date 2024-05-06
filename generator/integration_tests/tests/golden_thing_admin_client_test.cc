@@ -40,6 +40,7 @@ using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Pair;
 
 TEST(GoldenThingAdminClientTest, CopyMoveEquality) {
   auto conn1 =
@@ -483,6 +484,8 @@ TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterCancelled) {
       });
   ASSERT_THAT(response, Not(IsOk()));
   EXPECT_THAT(response, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(response.status().error_info().metadata(),
+              Contains(Pair("gl-cpp.error.origin", "client")));
 }
 
 TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterSetFailure) {

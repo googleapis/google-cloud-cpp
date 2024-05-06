@@ -49,6 +49,8 @@ class ClientGenerator : public ServiceCodeGenerator {
   Status GenerateHeader() override;
   Status GenerateCc() override;
 
+  bool HasIamPolicyExtension();
+
   // Descriptors for IAM policy producing method_signature extensions, if any.
   google::protobuf::MethodDescriptor const* get_iam_policy_extension_ = nullptr;
   google::protobuf::MethodDescriptor const* set_iam_policy_extension_ = nullptr;
