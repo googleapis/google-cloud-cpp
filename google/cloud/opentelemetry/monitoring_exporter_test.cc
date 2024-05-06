@@ -117,7 +117,7 @@ TEST(MonitoringExporter, ExportSkippedIfNoTimeSeries) {
 
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr("Cloud Monitoring Export skipped"),
-                             HasSubstr("No TimeSeries"))));
+                             HasSubstr("No data"))));
 }
 
 TEST(MonitoringExporter, ExportFailure) {

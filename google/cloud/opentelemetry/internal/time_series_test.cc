@@ -14,9 +14,11 @@
 
 #include "google/cloud/opentelemetry/internal/time_series.h"
 #include "google/cloud/internal/time_utils.h"
+#include "google/cloud/project.h"
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <opentelemetry/sdk/resource/resource.h>
@@ -30,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::AnyOf;
@@ -137,19 +140,15 @@ auto TestResource() {
   });
 }
 
-auto HasTestResource() {
+auto IsTestResource() {
   return AllOf(
       ResultOf(
-          "resource.type",
-          [](google::monitoring::v3::TimeSeries const& ts) {
-            return ts.resource().type();
-          },
+          "type",
+          [](google::api::MonitoredResource const& mr) { return mr.type(); },
           Eq("gce_instance")),
       ResultOf(
-          "resource.labels",
-          [](google::monitoring::v3::TimeSeries const& ts) {
-            return ts.resource().labels();
-          },
+          "labels",
+          [](google::api::MonitoredResource const& mr) { return mr.labels(); },
           UnorderedElementsAre(Pair("zone", "us-central1-a"),
                                Pair("instance_id", "1020304050607080900"))));
 }
@@ -485,7 +484,29 @@ TEST(HistogramPointData, NonEmptyInterval) {
   EXPECT_THAT(ts.points(), ElementsAre(Interval(start, expected_end)));
 }
 
-TEST(ToRequest, Sum) {
+TEST(ToMonitoredResource, FromMetricData) {
+  opentelemetry::sdk::metrics::ResourceMetrics rm;
+  auto const resource = TestResource();
+  rm.resource_ = &resource;
+
+  auto mr = ToMonitoredResource(rm, absl::nullopt);
+  EXPECT_THAT(mr, IsTestResource());
+}
+
+TEST(ToMonitoredResource, Custom) {
+  opentelemetry::sdk::metrics::ResourceMetrics rm;
+  auto const resource = TestResource();
+  rm.resource_ = &resource;
+
+  // Use a custom resource, which will override the `TestResource()`
+  google::api::MonitoredResource custom;
+  custom.set_type("gcs_client");
+
+  auto mr = ToMonitoredResource(rm, custom);
+  EXPECT_THAT(mr, AllOf(IsProtoEqual(custom), Not(IsTestResource())));
+}
+
+TEST(ToTimeSeries, Sum) {
   opentelemetry::sdk::metrics::PointDataAttributes pda;
   pda.point_data = opentelemetry::sdk::metrics::SumPointData{};
 
@@ -501,20 +522,15 @@ TEST(ToRequest, Sum) {
   sm.metric_data_.push_back(std::move(md));
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
-  auto const resource = TestResource();
-  rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto request = ToRequest(rm, "workload.googleapis.com/", absl::nullopt);
-  EXPECT_THAT(request.time_series(),
-              ElementsAre(SumTimeSeries(), SumTimeSeries()));
-  EXPECT_THAT(request.time_series(),
-              Each(AllOf(HasTestResource(),
-                         MetricType("workload.googleapis.com/metric-name"),
-                         Unit("unit"))));
+  auto tss = ToTimeSeries(rm, "workload.googleapis.com/");
+  EXPECT_THAT(tss, ElementsAre(SumTimeSeries(), SumTimeSeries()));
+  EXPECT_THAT(tss, Each(AllOf(MetricType("workload.googleapis.com/metric-name"),
+                              Unit("unit"))));
 }
 
-TEST(ToRequest, Gauge) {
+TEST(ToTimeSeries, Gauge) {
   opentelemetry::sdk::metrics::PointDataAttributes pda;
   pda.point_data = opentelemetry::sdk::metrics::LastValuePointData{};
 
@@ -530,20 +546,15 @@ TEST(ToRequest, Gauge) {
   sm.metric_data_.push_back(std::move(md));
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
-  auto const resource = TestResource();
-  rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto request = ToRequest(rm, "workload.googleapis.com/", absl::nullopt);
-  EXPECT_THAT(request.time_series(),
-              ElementsAre(GaugeTimeSeries(), GaugeTimeSeries()));
-  EXPECT_THAT(request.time_series(),
-              Each(AllOf(HasTestResource(),
-                         MetricType("workload.googleapis.com/metric-name"),
-                         Unit("unit"))));
+  auto tss = ToTimeSeries(rm, "workload.googleapis.com/");
+  EXPECT_THAT(tss, ElementsAre(GaugeTimeSeries(), GaugeTimeSeries()));
+  EXPECT_THAT(tss, Each(AllOf(MetricType("workload.googleapis.com/metric-name"),
+                              Unit("unit"))));
 }
 
-TEST(ToRequest, Histogram) {
+TEST(ToTimeSeries, Histogram) {
   opentelemetry::sdk::metrics::PointDataAttributes pda;
   pda.point_data = opentelemetry::sdk::metrics::HistogramPointData{};
 
@@ -559,20 +570,15 @@ TEST(ToRequest, Histogram) {
   sm.metric_data_.push_back(std::move(md));
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
-  auto const resource = TestResource();
-  rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto request = ToRequest(rm, "workload.googleapis.com/", absl::nullopt);
-  EXPECT_THAT(request.time_series(),
-              ElementsAre(HistogramTimeSeries(), HistogramTimeSeries()));
-  EXPECT_THAT(request.time_series(),
-              Each(AllOf(HasTestResource(),
-                         MetricType("workload.googleapis.com/metric-name"),
-                         Unit("unit"))));
+  auto tss = ToTimeSeries(rm, "workload.googleapis.com/");
+  EXPECT_THAT(tss, ElementsAre(HistogramTimeSeries(), HistogramTimeSeries()));
+  EXPECT_THAT(tss, Each(AllOf(MetricType("workload.googleapis.com/metric-name"),
+                              Unit("unit"))));
 }
 
-TEST(ToRequest, DropIgnored) {
+TEST(ToTimeSeries, DropIgnored) {
   opentelemetry::sdk::metrics::PointDataAttributes pda;
   pda.point_data = opentelemetry::sdk::metrics::DropPointData{};
 
@@ -588,15 +594,13 @@ TEST(ToRequest, DropIgnored) {
   sm.metric_data_.push_back(std::move(md));
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
-  auto const resource = TestResource();
-  rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto request = ToRequest(rm, "workload.googleapis.com/", absl::nullopt);
-  EXPECT_THAT(request.time_series(), IsEmpty());
+  auto tss = ToTimeSeries(rm, "workload.googleapis.com/");
+  EXPECT_THAT(tss, IsEmpty());
 }
 
-TEST(ToRequest, CombinedWithCustomMonitoredResource) {
+TEST(ToTimeSeries, Combined) {
   opentelemetry::sdk::metrics::PointDataAttributes sum_pda;
   sum_pda.point_data = opentelemetry::sdk::metrics::SumPointData{};
   opentelemetry::sdk::metrics::PointDataAttributes gauge_pda;
@@ -620,30 +624,40 @@ TEST(ToRequest, CombinedWithCustomMonitoredResource) {
   sm.metric_data_.push_back(std::move(md));
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
-  auto const resource = TestResource();
-  rm.resource_ = &resource;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  // Use a custom resource, which will override the `TestResource()`
-  google::api::MonitoredResource custom;
-  custom.set_type("gcs_client");
+  auto tss = ToTimeSeries(rm, "custom.googleapis.com/");
+  EXPECT_THAT(tss, UnorderedElementsAre(SumTimeSeries(), GaugeTimeSeries(),
+                                        HistogramTimeSeries()));
+  EXPECT_THAT(tss, Each(AllOf(MetricType("custom.googleapis.com/metric-name"),
+                              Unit("unit"))));
+}
 
-  auto request = ToRequest(rm, "custom.googleapis.com/", custom);
-  EXPECT_THAT(request.time_series(),
-              UnorderedElementsAre(SumTimeSeries(), GaugeTimeSeries(),
-                                   HistogramTimeSeries()));
-  auto has_resource = [](auto const& resource) {
-    return ResultOf(
-        "resource",
-        [](google::monitoring::v3::TimeSeries const& ts) {
-          return ts.resource();
-        },
-        IsProtoEqual(resource));
-  };
-  EXPECT_THAT(request.time_series(),
-              Each(AllOf(has_resource(custom), Not(HasTestResource()),
-                         MetricType("custom.googleapis.com/metric-name"),
-                         Unit("unit"))));
+TEST(ToRequest, Simple) {
+  Project p("test-project");
+
+  google::api::MonitoredResource mr;
+  mr.set_type("gcs_client");
+
+  google::monitoring::v3::TimeSeries ts;
+  ts.set_unit("unit");
+
+  auto constexpr kExpectedRequest = R"pb(
+    name: "projects/test-project"
+    time_series {
+      unit: "unit"
+      resource { type: "gcs_client" }
+    }
+    time_series {
+      unit: "unit"
+      resource { type: "gcs_client" }
+    }
+  )pb";
+  google::monitoring::v3::CreateTimeSeriesRequest expected;
+  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+
+  auto request = ToRequest(p.FullName(), mr, {ts, ts});
+  EXPECT_THAT(request, IsProtoEqual(expected));
 }
 
 }  // namespace

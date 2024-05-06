@@ -44,6 +44,10 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::HistogramPointData const& histogram_data);
 
+google::api::MonitoredResource ToMonitoredResource(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    absl::optional<google::api::MonitoredResource> const& mr_proto);
+
 /**
  * We need to convert from the C++ OpenTelemetry metrics implementation to
  * Cloud Monitoring protos.
@@ -62,10 +66,16 @@ google::monitoring::v3::TimeSeries ToTimeSeries(
  * https://github.com/open-telemetry/opentelemetry-cpp/blob/fabd8cc2bc318cb47d5db7322ea9c8cd3f4b847a/exporters/otlp/src/otlp_metric_utils.cc
  * [OTLP]: https://opentelemetry.io/docs/specs/otel/protocol/
  */
-google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
+std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::string const& prefix,
-    absl::optional<google::api::MonitoredResource> const& mr_proto);
+    std::string const& prefix);
+
+/**
+ * Convert from OpenTelemetry metrics to Cloud Monitoring protos.
+ */
+google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
+    std::string const& project, google::api::MonitoredResource const& mr_proto,
+    std::vector<google::monitoring::v3::TimeSeries> tss);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal
