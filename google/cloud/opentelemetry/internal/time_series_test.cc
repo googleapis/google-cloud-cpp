@@ -39,6 +39,7 @@ using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::Each;
 using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -633,7 +634,7 @@ TEST(ToTimeSeries, Combined) {
                               Unit("unit"))));
 }
 
-TEST(ToRequest, Simple) {
+TEST(ToRequests, Simple) {
   Project p("test-project");
 
   google::api::MonitoredResource mr;
@@ -656,8 +657,35 @@ TEST(ToRequest, Simple) {
   google::monitoring::v3::CreateTimeSeriesRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
 
-  auto request = ToRequest(p.FullName(), mr, {ts, ts});
-  EXPECT_THAT(request, IsProtoEqual(expected));
+  auto requests = ToRequests(p.FullName(), mr, {ts, ts});
+  EXPECT_THAT(requests, ElementsAre(IsProtoEqual(expected)));
+}
+
+TEST(ToRequests, Batches) {
+  // Use an alias for readability.
+  auto const batch_limit = kMaxTimeSeriesPerRequest;
+
+  struct TestCase {
+    int time_series_count;
+    std::vector<int> batch_sizes;
+  };
+  std::vector<TestCase> cases = {
+      {0, {}},
+      {1, {1}},
+      {batch_limit, {batch_limit}},
+      {batch_limit + 1, {batch_limit, 1}},
+      {2 * batch_limit + 1, {batch_limit, batch_limit, 1}},
+  };
+
+  for (auto const& c : cases) {
+    std::vector<google::monitoring::v3::TimeSeries> tss(c.time_series_count);
+    auto requests = ToRequests("project", {}, std::move(tss));
+
+    std::vector<int> batch_sizes;
+    batch_sizes.reserve(requests.size());
+    for (auto& r : requests) batch_sizes.push_back(r.time_series_size());
+    EXPECT_THAT(batch_sizes, ElementsAreArray(c.batch_sizes));
+  }
 }
 
 }  // namespace

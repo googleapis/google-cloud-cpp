@@ -27,6 +27,11 @@ namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// GCM enforces a limit of 200 TimeSeries per CreateTimeSeriesRequest.
+//
+// See: https://cloud.google.com/monitoring/quotas
+auto constexpr kMaxTimeSeriesPerRequest = 200;
+
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
@@ -72,8 +77,13 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
 
 /**
  * Convert from OpenTelemetry metrics to Cloud Monitoring protos.
+ *
+ * We return a vector of requests, because Cloud Monitoring accepts at most 200
+ * TimeSeries per request.
+ *
+ * See: https://cloud.google.com/monitoring/quotas
  */
-google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
+std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
     std::string const& project, google::api::MonitoredResource const& mr_proto,
     std::vector<google::monitoring::v3::TimeSeries> tss);
 
