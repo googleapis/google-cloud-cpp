@@ -128,7 +128,8 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
                                        /*scopes=*/{},
                                        /*subject=*/{},
                                        /*enable_self_signed_jwt=*/false,
-                                       /*universe_domain=*/{}};
+                                       /*universe_domain=*/absl::nullopt,
+                                       /*project_id=*/absl::nullopt};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

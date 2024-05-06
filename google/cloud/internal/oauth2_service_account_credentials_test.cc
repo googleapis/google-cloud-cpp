@@ -437,7 +437,8 @@ TEST(ServiceAccountCredentialsTest, ParseSimple) {
       "private_key": "not-a-valid-key-just-for-testing",
       "client_email": "test-only@test-group.example.com",
       "token_uri": "https://oauth2.googleapis.com/test_endpoint",
-      "universe_domain": "test-domain.net"
+      "universe_domain": "test-domain.net",
+      "project_id": "test-only-invalid-project-id"
 })""";
 
   auto actual =
@@ -448,6 +449,7 @@ TEST(ServiceAccountCredentialsTest, ParseSimple) {
   EXPECT_EQ("test-only@test-group.example.com", actual->client_email);
   EXPECT_EQ("https://oauth2.googleapis.com/test_endpoint", actual->token_uri);
   EXPECT_EQ("test-domain.net", actual->universe_domain);
+  EXPECT_EQ("test-only-invalid-project-id", actual->project_id);
 }
 
 /// @test Verify that parsing a service account JSON string works.
@@ -506,6 +508,22 @@ TEST(ServiceAccountCredentialsTest, ParseUsesDefaultUniverseDomain) {
   EXPECT_EQ(GoogleDefaultUniverseDomain(), actual->universe_domain);
 }
 
+TEST(ServiceAccountCredentialsTest, ParseMissingProjectId) {
+  std::string contents = R"""({
+      "type": "service_account",
+      "private_key_id": "not-a-key-id-just-for-testing",
+      "private_key": "not-a-valid-key-just-for-testing",
+      "client_email": "test-only@test-group.example.com",
+      "token_uri": "https://oauth2.googleapis.com/test_endpoint",
+      "universe_domain": "test-domain.net"
+})""";
+
+  auto actual =
+      ParseServiceAccountCredentials(contents, "test-data", "unused-uri");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->project_id, absl::nullopt);
+}
+
 /// @test Verify that invalid contents result in a readable error.
 TEST(ServiceAccountCredentialsTest, ParseInvalidContentsFails) {
   std::string config = R"""( not-a-valid-json-string )""";
@@ -526,8 +544,8 @@ TEST(ServiceAccountCredentialsTest, ParseEmptyFieldFails) {
       "token_uri": "https://oauth2.googleapis.com/token"
 })""";
 
-  for (auto const& field :
-       {"private_key", "client_email", "token_uri", "universe_domain"}) {
+  for (auto const& field : {"private_key", "client_email", "token_uri",
+                            "universe_domain", "project_id"}) {
     auto json = nlohmann::json::parse(contents);
     json[field] = "";
     auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
@@ -535,6 +553,29 @@ TEST(ServiceAccountCredentialsTest, ParseEmptyFieldFails) {
                 StatusIs(Not(StatusCode::kOk),
                          AllOf(HasSubstr(field), HasSubstr(" field is empty"),
                                HasSubstr("test-data"))));
+  }
+}
+
+/// @test Parsing a service account JSON string should detect invalid fields.
+TEST(ServiceAccountCredentialsTest, ParseInvalidTypeFieldFails) {
+  std::string contents = R"""({
+      "type": "service_account",
+      "private_key": "not-a-valid-key-just-for-testing",
+      "client_email": "test-only@test-group.example.com",
+      "token_uri": "https://oauth2.googleapis.com/token"
+})""";
+
+  for (auto const& field : {"private_key", "private_key_id", "client_email",
+                            "token_uri", "universe_domain", "project_id"}) {
+    auto json = nlohmann::json::parse(contents);
+    json[field] = true;
+    auto actual = ParseServiceAccountCredentials(json.dump(), "test-data", "");
+    EXPECT_THAT(
+        actual,
+        StatusIs(Not(StatusCode::kOk),
+                 AllOf(HasSubstr(field),
+                       HasSubstr(" field is present and is not a string"),
+                       HasSubstr("test-data"))));
   }
 }
 
@@ -665,6 +706,33 @@ TEST(ServiceAccountCredentialsTest, UniverseDomainAccessorFailure) {
       actual,
       StatusIs(StatusCode::kNotFound,
                HasSubstr("universe_domain is not present in the credentials")));
+}
+
+TEST(ServiceAccountCredentialsTest, ProjectIdUndefined) {
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(info);
+  info->project_id.reset();
+  MockHttpClientFactory mock_http_client_factory;
+  EXPECT_CALL(mock_http_client_factory, Call).Times(0);
+
+  ServiceAccountCredentials credentials(
+      *info, Options{}, mock_http_client_factory.AsStdFunction());
+  EXPECT_THAT(credentials.project_id(),
+              StatusIs(StatusCode::kNotFound, HasSubstr("project_id")));
+  EXPECT_THAT(credentials.project_id({}),
+              StatusIs(StatusCode::kNotFound, HasSubstr("project_id")));
+}
+
+TEST(ServiceAccountCredentialsTest, ProjectIdDefined) {
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(info);
+  MockHttpClientFactory mock_http_client_factory;
+  EXPECT_CALL(mock_http_client_factory, Call).Times(0);
+
+  ServiceAccountCredentials credentials(
+      *info, Options{}, mock_http_client_factory.AsStdFunction());
+  EXPECT_THAT(credentials.project_id(), IsOkAndHolds("test-only-project-id"));
+  EXPECT_THAT(credentials.project_id({}), IsOkAndHolds("test-only-project-id"));
 }
 
 /// @test Verify that we can get the client id from a service account.
