@@ -78,8 +78,8 @@ Status ClientGenerator::GenerateHeader() {
                                   : vars("connection_rest_header_path"),
        IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/future.h", "google/cloud/options.h",
-       "google/cloud/polling_policy.h", "google/cloud/status_or.h",
-       "google/cloud/version.h"});
+       "google/cloud/polling_policy.h", "google/cloud/internal/make_status.h",
+       "google/cloud/status_or.h", "google/cloud/version.h"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
     HeaderLocalIncludes({"google/cloud/iam_updater.h"});
   }
@@ -507,8 +507,10 @@ $client_class_name$::Async$method_name$(Options opts) {
              "    }\n"
              "    auto policy = updater(*std::move(recent));\n"
              "    if (!policy) {\n"
-             "      return Status(StatusCode::kCancelled,"
-             " \"updater did not yield a policy\");\n"
+             "      return internal::CancelledError(\n"
+             "          \"updater did not yield a policy\",\n"
+             "          GCP_ERROR_INFO().WithMetadata("
+             "\"gl-cpp.error.origin\", \"client\"));\n"
              "    }\n"
              "    *set_request.mutable_policy() = *std::move(policy);\n"
              "    auto result = connection_->"},
