@@ -110,6 +110,47 @@ TEST(CurlHandleFactoryTest, PooledFactoryChannelOptionsCallsSetOptions) {
   EXPECT_THAT(object_under_test.set_options_, ElementsAre(expected));
 }
 
+TEST(CurlHandleFactoryTest, Bug14132Regression) {
+  auto constexpr kPoolSize = 32;
+  PooledCurlHandleFactory pool(kPoolSize);
+  std::vector<CurlPtr> handles;
+  std::generate_n(std::back_inserter(handles), 2 * kPoolSize,
+                  [&]() { return pool.CreateHandle(); });
+
+  for (int i = 4 * kPoolSize; i != 0; --i) {
+    std::vector<CurlMulti> multi;
+    std::generate_n(std::back_inserter(multi), i,
+                    [&]() { return pool.CreateMultiHandle(); });
+    for (auto& m : multi) {
+      pool.CleanupMultiHandle(std::move(m), HandleDisposition::kKeep);
+    }
+  }
+  for (auto& h : handles) {
+    pool.CleanupHandle(std::move(h), HandleDisposition::kDiscard);
+  }
+}
+
+/// @test An analog to #14132 but with CurlMulti and CurlPtr roles reversed.
+TEST(CurlHandleFactoryTest, AnalogToBug14132Regression) {
+  auto constexpr kPoolSize = 32;
+  PooledCurlHandleFactory pool(kPoolSize);
+  std::vector<CurlMulti> multi;
+  std::generate_n(std::back_inserter(multi), 2 * kPoolSize,
+                  [&]() { return pool.CreateMultiHandle(); });
+
+  for (int i = 4 * kPoolSize; i != 0; --i) {
+    std::vector<CurlPtr> handles;
+    std::generate_n(std::back_inserter(handles), i,
+                    [&]() { return pool.CreateHandle(); });
+    for (auto& h : handles) {
+      pool.CleanupHandle(std::move(h), HandleDisposition::kKeep);
+    }
+  }
+  for (auto& m : multi) {
+    pool.CleanupMultiHandle(std::move(m), HandleDisposition::kDiscard);
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
