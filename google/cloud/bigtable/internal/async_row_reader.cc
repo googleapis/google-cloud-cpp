@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/async_row_reader.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/log.h"
 
@@ -238,7 +239,8 @@ void AsyncRowReader::Cancel(std::string const& reason) {
   ready_rows_ = std::queue<bigtable::Row>();
   auto continue_reading = std::move(continue_reading_);
   continue_reading_.reset();
-  Status status(StatusCode::kCancelled, reason);
+  Status status = internal::CancelledError(
+      reason, GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client"));
   if (!continue_reading) {
     // If we're not in the middle of the stream fire some user callbacks, but
     // also override the overall status.

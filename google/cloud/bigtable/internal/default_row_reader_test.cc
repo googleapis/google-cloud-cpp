@@ -653,6 +653,8 @@ TEST_F(DefaultRowReaderTest, CancelDrainsStream) {
   it = reader.begin();
   EXPECT_NE(it, reader.end());
   EXPECT_THAT(*it, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(it->status().error_info().metadata(),
+              Contains(Pair("gl-cpp.error.origin", "client")));
   EXPECT_EQ(++it, reader.end());
 }
 
@@ -675,6 +677,8 @@ TEST_F(DefaultRowReaderTest, CancelBeforeBegin) {
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
   EXPECT_THAT(*it, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(it->status().error_info().metadata(),
+              Contains(Pair("gl-cpp.error.origin", "client")));
   EXPECT_EQ(++it, reader.end());
 }
 
