@@ -56,8 +56,7 @@ StatusOr<CreateHmacKeyResponse> CreateHmacKeyResponse::FromHttpResponse(
 
 std::ostream& operator<<(std::ostream& os, CreateHmacKeyResponse const& r) {
   return os << "CreateHmacKeyResponse={metadata=" << r.metadata
-            << ", secret=[censored]"
-            << "}";
+            << ", secret=[censored]" << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, ListHmacKeysRequest const& r) {

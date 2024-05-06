@@ -31,18 +31,16 @@ TEST(CurlWrappers, VersionToCurlCode) {
     std::string version;
     std::int64_t expected;
   } cases[] = {
-    {"", CURL_HTTP_VERSION_NONE},
-    {"default", CURL_HTTP_VERSION_NONE},
-    {"1.0", CURL_HTTP_VERSION_1_0},
-    {"1.1", CURL_HTTP_VERSION_1_1},
+      {"", CURL_HTTP_VERSION_NONE},     {"default", CURL_HTTP_VERSION_NONE},
+      {"1.0", CURL_HTTP_VERSION_1_0},   {"1.1", CURL_HTTP_VERSION_1_1},
 #if CURL_AT_LEAST_VERSION(7, 33, 0)
-    {"2.0", CURL_HTTP_VERSION_2_0},
+      {"2.0", CURL_HTTP_VERSION_2_0},
 #endif  // CURL >= 7.33.0
 #if CURL_AT_LEAST_VERSION(7, 47, 0)
-    {"2TLS", CURL_HTTP_VERSION_2TLS},
+      {"2TLS", CURL_HTTP_VERSION_2TLS},
 #endif  // CURL >= 7.47.0
 #if CURL_AT_LEAST_VERSION(7, 66, 0)
-    {"3", CURL_HTTP_VERSION_3},
+      {"3", CURL_HTTP_VERSION_3},
 #endif  // CURL >= 7.66.0
   };
   for (auto const& test : cases) {

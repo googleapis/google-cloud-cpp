@@ -476,9 +476,8 @@ TEST(BatchingPublisherConnectionTest, BatchTorture) {
     for (auto& r : results) EXPECT_STATUS_OK(r.get());
   };
   std::vector<std::thread> workers(4);
-  std::generate(workers.begin(), workers.end(), [&] {
-    return std::thread{worker, 1000};
-  });
+  std::generate(workers.begin(), workers.end(),
+                [&] { return std::thread{worker, 1000}; });
   publisher->Flush({});
   for (auto& w : workers) w.join();
 }

@@ -165,16 +165,13 @@ int main(int argc, char* argv[]) {
     if (config.wants_help) {
       config.PrintUsage();
     }
-    std::cout << "Exiting..."
-              << "\n"
-              << std::flush;
+    std::cout << "Exiting..." << "\n" << std::flush;
     ;
     return 0;
   }
   std::cout << "# Dataset Benchmark STARTED For GetDataset() and "
                "ListDatasets() APIs with test duration as ["
-            << config.test_duration.count() << "] seconds"
-            << "\n"
+            << config.test_duration.count() << "] seconds" << "\n"
             << std::flush;
 
   DatasetBenchmark benchmark(config);
@@ -233,9 +230,7 @@ int main(int argc, char* argv[]) {
                                    "GetDataset()", combined.get_results);
   Benchmark::PrintThroughputResult(std::cout, "Throughput-Results",
                                    "ListDatasets()", combined.list_results);
-  std::cout << "# Dataset Benchmark ENDED"
-            << "\n"
-            << std::flush;
+  std::cout << "# Dataset Benchmark ENDED" << "\n" << std::flush;
 
   return 0;
 }

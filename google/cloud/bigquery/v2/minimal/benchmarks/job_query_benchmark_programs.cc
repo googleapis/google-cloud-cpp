@@ -168,15 +168,12 @@ int main(int argc, char* argv[]) {
                 << std::flush;
       config.PrintUsage();
     }
-    std::cout << "Exiting..."
-              << "\n"
-              << std::flush;
+    std::cout << "Exiting..." << "\n" << std::flush;
     return 0;
   }
   std::cout << "# Job Benchmark STARTED For GetQueryResults() and "
                "Query() APIs with test duration as ["
-            << config.test_duration.count() << "] seconds"
-            << "\n"
+            << config.test_duration.count() << "] seconds" << "\n"
             << std::flush;
 
   JobBenchmark benchmark(config);
@@ -234,9 +231,7 @@ int main(int argc, char* argv[]) {
                                    combined.get_query_results);
   Benchmark::PrintThroughputResult(std::cout, "Throughput-Results", "Query()",
                                    combined.query_results);
-  std::cout << "# Job Benchmark ENDED"
-            << "\n"
-            << std::flush;
+  std::cout << "# Job Benchmark ENDED" << "\n" << std::flush;
 
   return 0;
 }

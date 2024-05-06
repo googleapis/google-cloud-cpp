@@ -59,9 +59,7 @@ TEST(ParseArguments, NoArguments) {
 
 TEST(ParseArguments, TooFewArguments) {
   EXPECT_THROW(
-      try {
-        ParseArguments({"cmd", "1"});
-      } catch (std::exception const& ex) {
+      try { ParseArguments({"cmd", "1"}); } catch (std::exception const& ex) {
         EXPECT_THAT(ex.what(), StartsWith(kExpectedUsageCmd));
         throw;
       },

@@ -419,8 +419,7 @@ StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> output) {
 
 std::size_t CurlImpl::WriteCallback(absl::Span<char> response) {
   handle_.FlushDebug(__func__);
-  TRACE_STATE() << ", begin"
-                << ", size=" << response.size();
+  TRACE_STATE() << ", begin" << ", size=" << response.size();
 
   // This transfer is closing, so just return zero. That will make libcurl
   // finish any pending work, and will return the handle_ pointer from
@@ -631,9 +630,8 @@ StatusOr<int> CurlImpl::PerformWork() {
         // is better to give a meaningful error message in this case.
         std::ostringstream os;
         os << __func__ << " unknown handle returned by curl_multi_info_read()"
-           << ", msg.msg=[" << msg->msg << "]"
-           << ", result=[" << msg->data.result
-           << "]=" << curl_easy_strerror(msg->data.result);
+           << ", msg.msg=[" << msg->msg << "]" << ", result=["
+           << msg->data.result << "]=" << curl_easy_strerror(msg->data.result);
         return internal::UnknownError(std::move(os).str());
       }
 
