@@ -106,9 +106,8 @@ TEST_F(AsyncRowReaderTest, Success) {
               return make_ready_future(
                   MakeResponse({{"r1", true}, {"r2", true}}));
             })
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r3", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r3", true}})); })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -183,9 +182,8 @@ TEST_F(AsyncRowReaderTest, SuccessDelayedFuture) {
               return make_ready_future(
                   MakeResponse({{"r1", true}, {"r2", true}}));
             })
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r3", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r3", true}})); })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -251,12 +249,10 @@ TEST_F(AsyncRowReaderTest, ResponseInMultipleChunks) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r1", false}}));
-            })
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r1", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r1", false}})); })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r1", true}})); })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -307,9 +303,8 @@ TEST_F(AsyncRowReaderTest, ParserEofFailsOnUnfinishedRow) {
             // The service returns an unfinished row, then ends the stream. This
             // should yield a kInternal error, which (by default) is not
             // retryable.
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r1", false}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r1", false}})); })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -609,9 +604,8 @@ TEST_F(AsyncRowReaderTest, RetrySkipsReadRows) {
         });
         EXPECT_CALL(*stream, Read)
             // The service returns "r1", then fails with a retryable error.
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r1", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r1", true}})); })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(TransientError());
@@ -629,9 +623,8 @@ TEST_F(AsyncRowReaderTest, RetrySkipsReadRows) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r2", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r2", true}})); })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(TransientError());
@@ -690,9 +683,8 @@ TEST_F(AsyncRowReaderTest, NoRetryIfRowSetIsEmpty) {
             // The service returns "r1", then fails with a retryable error. We
             // do not need to retry, because the row set is now empty. The
             // overall stream should succeed.
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r1", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r1", true}})); })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(TransientError());
@@ -751,9 +743,8 @@ TEST_F(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
         EXPECT_CALL(*stream, Read)
             // The service will return "r1". But it will also tell us that "r2"
             // has been scanned, before failing with a transient error.
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r1", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r1", true}})); })
             .WillOnce([] {
               v2::ReadRowsResponse r;
               r.set_last_scanned_row_key("r2");
@@ -776,9 +767,8 @@ TEST_F(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r3", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r3", true}})); })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(TransientError());
@@ -1362,9 +1352,8 @@ TEST_F(AsyncRowReaderTest, ReverseScanResumption) {
         EXPECT_CALL(*stream, Read)
             // The service will return "r3". But it will also tell us that "r2"
             // has been scanned, before failing with a transient error.
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r3", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r3", true}})); })
             .WillOnce([] {
               v2::ReadRowsResponse r;
               r.set_last_scanned_row_key("r2");
@@ -1387,9 +1376,8 @@ TEST_F(AsyncRowReaderTest, ReverseScanResumption) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read)
-            .WillOnce([] {
-              return make_ready_future(MakeResponse({{"r1", true}}));
-            })
+            .WillOnce(
+                [] { return make_ready_future(MakeResponse({{"r1", true}})); })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(TransientError());

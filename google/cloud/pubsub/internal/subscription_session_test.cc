@@ -309,9 +309,8 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
           });
         });
         EXPECT_CALL(*stream, Finish).WillOnce([&] {
-          return cq.MakeRelativeTimer(us(10)).then([](auto) {
-            return Status{StatusCode::kCancelled, "cancel"};
-          });
+          return cq.MakeRelativeTimer(us(10)).then(
+              [](auto) { return Status{StatusCode::kCancelled, "cancel"}; });
         });
 
         return stream;
@@ -370,14 +369,15 @@ TEST(SubscriptionSessionTest, ExactlyOnceAckErrors) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
-                         google::pubsub::v1::ModifyAckDeadlineRequest const&
-                             r) {
-        if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-1") {
-          return make_ready_future(Status{StatusCode::kPermissionDenied, "1"});
-        }
-        return make_ready_future(Status{});
-      });
+      .WillRepeatedly(
+          [](google::cloud::CompletionQueue&, auto, auto,
+             google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
+            if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-1") {
+              return make_ready_future(
+                  Status{StatusCode::kPermissionDenied, "1"});
+            }
+            return make_ready_future(Status{});
+          });
 
   promise<void> enough_messages;
   std::atomic<int> received_counter{0};

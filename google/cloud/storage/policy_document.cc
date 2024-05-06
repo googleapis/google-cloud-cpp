@@ -50,8 +50,8 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentV4 const& rhs) {
 }
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentResult const& rhs) {
-  return os << "PolicyDocumentResult={"
-            << "access_id=" << rhs.access_id << ", expiration="
+  return os << "PolicyDocumentResult={" << "access_id=" << rhs.access_id
+            << ", expiration="
             << google::cloud::internal::FormatRfc3339(rhs.expiration)
             << ", policy=" << rhs.policy << ", signature=" << rhs.signature
             << "}";
@@ -68,9 +68,8 @@ std::string FormatDateForForm(PolicyDocumentV4Result const&) {
 }
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Result const& rhs) {
-  return os << "PolicyDocumentV4Result={"
-            << "url=" << rhs.url << ", access_id=" << rhs.access_id
-            << ", expiration="
+  return os << "PolicyDocumentV4Result={" << "url=" << rhs.url
+            << ", access_id=" << rhs.access_id << ", expiration="
             << google::cloud::internal::FormatRfc3339(rhs.expiration)
             << ", policy=" << rhs.policy << ", signature=" << rhs.signature
             << ", signing_algorithm=" << rhs.signing_algorithm << "}";

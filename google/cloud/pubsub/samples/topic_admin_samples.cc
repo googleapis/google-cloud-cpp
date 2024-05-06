@@ -624,9 +624,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning UpdateTopic() sample" << std::endl;
   ignore_emulator_failures(
-      [&] {
-        UpdateTopic(topic_admin_client, {project_id, topic_id});
-      },
+      [&] { UpdateTopic(topic_admin_client, {project_id, topic_id}); },
       StatusCode::kInvalidArgument);
 
   std::cout << "\nRunning ListTopics() sample" << std::endl;
