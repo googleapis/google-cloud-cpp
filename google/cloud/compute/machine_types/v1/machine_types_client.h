@@ -21,7 +21,6 @@
 
 #include "google/cloud/compute/machine_types/v1/machine_types_rest_connection.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"

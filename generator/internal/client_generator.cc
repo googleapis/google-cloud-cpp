@@ -78,7 +78,8 @@ Status ClientGenerator::GenerateHeader() {
                                   : vars("connection_rest_header_path"),
        IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/future.h", "google/cloud/options.h",
-       "google/cloud/polling_policy.h", "google/cloud/internal/make_status.h",
+       "google/cloud/polling_policy.h",
+       HasIamPolicyExtension() ? "google/cloud/internal/make_status.h" : "",
        "google/cloud/status_or.h", "google/cloud/version.h"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
     HeaderLocalIncludes({"google/cloud/iam_updater.h"});
@@ -644,6 +645,10 @@ $client_class_name$::Async$method_name$(Options opts) {
 
   CcCloseNamespaces();
   return {};
+}
+
+bool ClientGenerator::HasIamPolicyExtension() {
+  return get_iam_policy_extension_ && set_iam_policy_extension_;
 }
 
 }  // namespace generator_internal

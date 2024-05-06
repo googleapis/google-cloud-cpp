@@ -22,7 +22,6 @@
 
 #include "google/cloud/compute/global_organization_operations/v1/global_organization_operations_rest_connection.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
