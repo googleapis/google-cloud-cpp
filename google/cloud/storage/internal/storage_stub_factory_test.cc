@@ -58,8 +58,8 @@ class StorageStubFactory : public ::testing::Test {
  protected:
   void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
                         google::protobuf::Message const& request) {
-    return validate_metadata_fixture_.IsContextMDValid(
-        context, method, request, storage::x_goog_api_client());
+    validate_metadata_fixture_.IsContextMDValid(context, method, request,
+                                                storage::x_goog_api_client());
   }
 
  private:
