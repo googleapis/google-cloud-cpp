@@ -353,10 +353,10 @@ class Status {
    */
   ErrorInfo const& error_info() const;
 
-  friend inline bool operator==(Status const& a, Status const& b) {
+  friend bool operator==(Status const& a, Status const& b) {
     return (a.ok() && b.ok()) || Equals(a, b);
   }
-  friend inline bool operator!=(Status const& a, Status const& b) {
+  friend bool operator!=(Status const& a, Status const& b) {
     return !(a == b);
   }
 
