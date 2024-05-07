@@ -36,6 +36,9 @@
 #  -performance-avoid-endl: we would like to turn this on, but there are too
 #      many legitimate uses in our samples.
 #
+#  -performance-enum-size: This would most likely trigger an ABI compatability issue
+#      by requiring us to reduce the int sizes for existing enums.
+#
 #  -readability-identifier-naming: We want to use invalid case style for a class
 #      if we want to differentiate it from a pre-existing class (i.e. promise vs Promise).
 #
@@ -88,6 +91,7 @@ Checks: >
   -modernize-avoid-c-arrays,
   -performance-move-const-arg,
   -performance-avoid-endl,
+  -performance-enum-size,
   -readability-braces-around-statements,
   -readability-identifier-length,
   -readability-identifier-naming,
