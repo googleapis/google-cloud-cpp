@@ -36,6 +36,9 @@
 #  -performance-avoid-endl: we would like to turn this on, but there are too
 #      many legitimate uses in our samples.
 #
+#  -readability-identifier-naming: We want to use invalid case style for a class
+#      if we want to differentiate it from a pre-existing class (i.e. promise vs Promise).
+#
 #  -readability-redundant-declaration: A friend declaration inside a class
 #      counts as a declaration, so if we also declare that friend outside the
 #      class in order to document it as part of the public API, that will
@@ -87,6 +90,7 @@ Checks: >
   -performance-avoid-endl,
   -readability-braces-around-statements,
   -readability-identifier-length,
+  -readability-identifier-naming,
   -readability-magic-numbers,
   -readability-named-parameter,
   -readability-redundant-declaration,
