@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/notification_requests.h"
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include <iostream>
@@ -32,10 +33,7 @@ std::ostream& operator<<(std::ostream& os, ListNotificationsRequest const& r) {
 StatusOr<ListNotificationsResponse> ListNotificationsResponse::FromHttpResponse(
     std::string const& payload) {
   auto json = nlohmann::json::parse(payload, nullptr, false);
-  if (!json.is_object()) {
-    return google::cloud::internal::InvalidArgumentError(
-        "json input is not an object", GCP_ERROR_INFO());
-  }
+  if (!json.is_object()) return ExpectedJsonObject(payload, GCP_ERROR_INFO());
   ListNotificationsResponse result;
   for (auto const& kv : json["items"].items()) {
     auto parsed = internal::NotificationMetadataParser::FromJson(kv.value());
