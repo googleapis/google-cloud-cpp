@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/notification_requests.h"
-#include "google/cloud/storage/internal/notification_metadata_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
+#include "google/cloud/storage/internal/notification_metadata_parser.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include <iostream>
