@@ -19,9 +19,9 @@
 
 // This function is only needed if exceptions are enabled.
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-// The constructor for `future_error` from `std::future_errc` is not
-// guaranteed to exist until C++17, but stdlibc++, MSVC are forgiving, and
-// libc++ is forgiving until version 18.1
+// The `std::future_error::future_error(std::future_errc)` constructor is not
+// guaranteed to exist until C++17. Fortunately, stdlibc++, MSVC are forgiving,
+// and libc++ is forgiving until version 18.1.
 #if GOOGLE_CLOUD_CPP_CPP_VERSION >= 201703L || _LIBCPP_VERSION < 180100
 
 namespace {
@@ -31,7 +31,8 @@ std::future_error MakeFutureErrorImpl(std::future_errc ec) {
 }  // namespace
 
 #else
-
+// We can probably tolerate this terrible hack (which depends on UB) until we
+// require C++17.
 namespace {
 struct OhTheHorrors {};
 }  // namespace
@@ -47,7 +48,6 @@ class promise<OhTheHorrors> {
 }  // namespace std
 
 namespace {
-// This function is only needed if exceptions are enabled.
 std::future_error MakeFutureErrorImpl(std::future_errc ec) {
   return std::promise<OhTheHorrors>::MakeFutureError(ec);
 }
