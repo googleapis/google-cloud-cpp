@@ -43,7 +43,7 @@ WORKDIR /var/tmp/build
 #     https://github.com/google/sanitizers/wiki/MemorySanitizerLibcxxHowTo
 # with updates from:
 #     https://github.com/google/sanitizers/issues/1685
-RUN git clone --depth=1 --branch llvmorg-17.0.3 https://github.com/llvm/llvm-project
+RUN git clone --depth=1 --branch llvmorg-18.1.5 https://github.com/llvm/llvm-project
 WORKDIR /var/tmp/build/llvm-project
 # configure cmake
 RUN cmake -GNinja -S runtimes -B build \
