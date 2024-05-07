@@ -20,6 +20,7 @@
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
@@ -52,7 +53,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   if (!ifs.is_open()) {
     // We use kUnknown here because we don't know if the file does not exist, or
     // if we were unable to open it for some other reason.
-    return Status(StatusCode::kUnknown, "Cannot open credentials file " + path);
+    return google::cloud::internal::UnknownError(
+        "Cannot open credentials file " + path, GCP_ERROR_INFO());
   }
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nlohmann::json::parse(contents, nullptr, false);
@@ -92,11 +94,11 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
         std::make_unique<ServiceAccountCredentials<>>(*info, options);
     return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
   }
-  return StatusOr<std::unique_ptr<Credentials>>(
-      Status(StatusCode::kInvalidArgument,
-             "Unsupported credential type (" + cred_type +
-                 ") when reading Application Default Credentials file from " +
-                 path + "."));
+  return google::cloud::internal::InvalidArgumentError(
+      "Unsupported credential type (" + cred_type +
+          ") when reading Application Default Credentials file from " + path +
+          ".",
+      GCP_ERROR_INFO());
 }
 
 // Tries to load the file at the path specified by the value of the Application
@@ -266,11 +268,11 @@ CreateServiceAccountCredentialsFromDefaultPaths(
   }
 
   // We've exhausted all search points, thus credentials cannot be constructed.
-  return StatusOr<std::shared_ptr<Credentials>>(
-      Status(StatusCode::kUnknown,
-             "Could not create service account credentials using Application"
-             "Default Credentials paths. For more information, please see " +
-                 std::string(kAdcLink)));
+  return google::cloud::internal::UnknownError(
+      "Could not create service account credentials using Application"
+      "Default Credentials paths. For more information, please see " +
+          std::string(kAdcLink),
+      GCP_ERROR_INFO());
 }
 
 StatusOr<std::shared_ptr<Credentials>>

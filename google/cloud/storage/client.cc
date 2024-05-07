@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/connection_factory.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
@@ -132,7 +133,8 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
     os << __func__ << "(" << request << ", " << file_name
        << "): UploadFromOffset (" << upload_offset
        << ") is bigger than the size of file source (" << file_size << ")";
-    return Status(StatusCode::kInvalidArgument, std::move(os).str());
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
   auto upload_size = (std::min)(
       request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
@@ -143,7 +145,8 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
     std::ostringstream os;
     os << __func__ << "(" << request << ", " << file_name
        << "): cannot open upload file source";
-    return Status(StatusCode::kNotFound, std::move(os).str());
+    return google::cloud::internal::NotFoundError(std::move(os).str(),
+                                                  GCP_ERROR_INFO());
   }
 
   std::string payload(static_cast<std::size_t>(upload_size), char{});
@@ -156,7 +159,8 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
     os << __func__ << "(" << request << ", " << file_name << "): Actual read ("
        << is.gcount() << ") is smaller than upload_size (" << payload.size()
        << ")";
-    return Status(StatusCode::kInternal, std::move(os).str());
+    return google::cloud::internal::InternalError(std::move(os).str(),
+                                                  GCP_ERROR_INFO());
   }
   is.close();
   request.set_payload(payload);
@@ -186,14 +190,16 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
     std::error_code size_err;
     auto file_size = google::cloud::internal::file_size(file_name, size_err);
     if (size_err) {
-      return Status(StatusCode::kNotFound, size_err.message());
+      return google::cloud::internal::NotFoundError(size_err.message(),
+                                                    GCP_ERROR_INFO());
     }
     if (file_size < upload_offset) {
       std::ostringstream os;
       os << __func__ << "(" << request << ", " << file_name
          << "): UploadFromOffset (" << upload_offset
          << ") is bigger than the size of file source (" << file_size << ")";
-      return Status(StatusCode::kInvalidArgument, std::move(os).str());
+      return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                           GCP_ERROR_INFO());
     }
 
     auto upload_size = (std::min)(
@@ -206,7 +212,8 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
     std::ostringstream os;
     os << __func__ << "(" << request << ", " << file_name
        << "): cannot open upload file source";
-    return Status(StatusCode::kNotFound, std::move(os).str());
+    return google::cloud::internal::NotFoundError(std::move(os).str(),
+                                                  GCP_ERROR_INFO());
   }
   // We set its offset before passing it to `UploadStreamResumable` so we don't
   // need to compute `UploadFromOffset` again.
@@ -230,10 +237,11 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   // If `committed_size == upload_limit`, we will upload an empty string and
   // finalize the upload.
   if (committed_size > upload_limit) {
-    return Status(StatusCode::kOutOfRange,
-                  "UploadLimit (" + std::to_string(upload_limit) +
-                      ") is not bigger than the uploaded size (" +
-                      std::to_string(committed_size) + ") on GCS server");
+    return google::cloud::internal::OutOfRangeError(
+        absl::StrCat("UploadLimit (", upload_limit,
+                     ") is not bigger than the uploaded size (", committed_size,
+                     ") on GCS server"),
+        GCP_ERROR_INFO());
   }
   source.seekg(committed_size, std::ios::cur);
 
@@ -277,43 +285,40 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     auto const actual_committed_size = upload->committed_size.value_or(0);
     if (actual_committed_size != expected) {
       // Defensive programming: unless there is a bug, this should be dead code.
-      return Status(
-          StatusCode::kInternal,
-          "Mismatch in committed size expected=" + std::to_string(expected) +
-              " got=" + std::to_string(actual_committed_size) +
+      return google::cloud::internal::InternalError(
+          absl::StrCat(
+              "Mismatch in committed size expected=", expected,
+              " got=", actual_committed_size,
               ". This is a bug, please report it at "
-              "https://github.com/googleapis/google-cloud-cpp/issues/new");
+              "https://github.com/googleapis/google-cloud-cpp/issues/new"),
+          GCP_ERROR_INFO());
     }
 
     // We only update `committed_size` when uploading is successful.
     committed_size = expected;
   }
-  return Status(StatusCode::kInternal,
-                "Upload did not complete but source is exhausted");
+  return google::cloud::internal::InternalError(
+      "Upload did not complete but source is exhausted", GCP_ERROR_INFO());
 }
 
 Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                                 std::string const& file_name) {
-  auto report_error = [&request, file_name](char const* func, char const* what,
-                                            Status const& status) {
-    std::ostringstream msg;
-    msg << func << "(" << request << ", " << file_name << "): " << what
-        << " - status.message=" << status.message();
-    return Status(status.code(), std::move(msg).str());
+  auto const* func = __func__;
+  auto msg = [&request, &file_name, func](char const* what) {
+    std::ostringstream os;
+    os << func << "(" << request << ", " << file_name << "): " << what;
+    return std::move(os).str();
   };
 
   auto stream = ReadObjectImpl(request);
-  if (stream.bad()) {
-    return report_error(__func__, "cannot open download source object",
-                        stream.status());
-  }
+  if (stream.bad()) return stream.status();
 
   // Open the destination file, and immediate raise an exception on failure.
   std::ofstream os(file_name, std::ios::binary);
   if (!os.is_open()) {
-    return report_error(
-        __func__, "cannot open download destination file",
-        Status(StatusCode::kInvalidArgument, "ofstream::open()"));
+    return google::cloud::internal::InvalidArgumentError(
+        msg("cannot open download destination file - ofstream::open()"),
+        GCP_ERROR_INFO());
   }
 
   auto const& current = google::cloud::internal::CurrentOptions();
@@ -325,13 +330,11 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   } while (os.good() && stream.good());
   os.close();
   if (!os.good()) {
-    return report_error(__func__, "cannot close download destination file",
-                        Status(StatusCode::kUnknown, "ofstream::close()"));
+    return google::cloud::internal::UnknownError(
+        msg("cannot close download destination file - ofstream::close()"),
+        GCP_ERROR_INFO());
   }
-  if (stream.bad()) {
-    return report_error(__func__, "error reading download source object",
-                        stream.status());
-  }
+  if (stream.bad()) return stream.status();
   return Status();
 }
 

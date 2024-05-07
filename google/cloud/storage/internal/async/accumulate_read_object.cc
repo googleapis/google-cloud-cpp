@@ -179,10 +179,10 @@ class AsyncAccumulateReadObjectPartialHandle
   void OnTimeout(char const* where) {
     auto finish = stream_->Finish();
     finish.then(WaitForFinish{std::move(stream_)});
-    promise_.set_value(
-        Result{std::move(accumulator_), RpcMetadata{},
-               Status(StatusCode::kDeadlineExceeded,
-                      std::string{"Timeout waiting for "} + where)});
+    promise_.set_value(Result{
+        std::move(accumulator_), RpcMetadata{},
+        google::cloud::internal::DeadlineExceededError(
+            std::string{"Timeout waiting for "} + where, GCP_ERROR_INFO())});
   }
 
   // Assume ownership of `stream` until its `Finish()` callback completes.
@@ -214,8 +214,8 @@ class AsyncAccumulateReadObjectFullHandle
         retry_(options->get<storage::RetryPolicyOption>()->clone()),
         backoff_(options->get<storage::BackoffPolicyOption>()->clone()),
         options_(std::move(options)) {
-    accumulator_.status = Status(StatusCode::kDeadlineExceeded,
-                                 "retry policy exhausted before first request");
+    accumulator_.status = google::cloud::internal::DeadlineExceededError(
+        "retry policy exhausted before first request", GCP_ERROR_INFO());
   }
 
   future<AsyncAccumulateReadObjectResult> Invoke() {
@@ -270,7 +270,8 @@ class AsyncAccumulateReadObjectFullHandle
       std::ostringstream os;
       os << "too many bytes returned in ReadObject(), expected="
          << request_.read_limit() << ", got=" << size;
-      accumulator_.status = Status(StatusCode::kInternal, os.str());
+      accumulator_.status = google::cloud::internal::InternalError(
+          std::move(os).str(), GCP_ERROR_INFO());
       promise_.set_value(std::move(accumulator_));
       return;
     }

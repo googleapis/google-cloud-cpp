@@ -111,9 +111,7 @@ std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r) {
 StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
     std::string const& payload) {
   auto json = nlohmann::json::parse(payload, nullptr, false);
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
+  if (!json.is_object()) return ExpectedJsonObject(payload, GCP_ERROR_INFO());
 
   ListObjectsResponse result;
   result.next_page_token = json.value("nextPageToken", "");
@@ -129,8 +127,9 @@ StatusOr<ListObjectsResponse> ListObjectsResponse::FromHttpResponse(
   for (auto const& prefix_iterator : json["prefixes"].items()) {
     auto const& prefix = prefix_iterator.value();
     if (!prefix.is_string()) {
-      return Status(StatusCode::kInternal,
-                    "List Objects Response's 'prefix' is not a string.");
+      return google::cloud::internal::InternalError(
+          "List Objects Response's 'prefix' is not a string.",
+          GCP_ERROR_INFO());
     }
     result.prefixes.emplace_back(prefix.get<std::string>());
   }
@@ -378,9 +377,7 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
 StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
     std::string const& payload) {
   auto object = nlohmann::json::parse(payload, nullptr, false);
-  if (!object.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
+  if (!object.is_object()) return ExpectedJsonObject(payload, GCP_ERROR_INFO());
 
   RewriteObjectResponse result;
   auto v = ParseUnsignedLongField(object, "totalBytesRewritten");
@@ -430,7 +427,8 @@ std::ostream& operator<<(std::ostream& os,
 StatusOr<CreateResumableUploadResponse>
 CreateResumableUploadResponse::FromHttpResponse(HttpResponse response) {
   if (response.headers.find("location") == response.headers.end()) {
-    return Status(StatusCode::kInternal, "Missing location header");
+    return google::cloud::internal::InternalError("Missing location header",
+                                                  GCP_ERROR_INFO());
   }
   return CreateResumableUploadResponse{
       response.headers.find("location")->second};
@@ -545,10 +543,10 @@ StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range) {
   char const prefix[] = "bytes=0-";
   auto constexpr kPrefixLen = sizeof(prefix) - 1;
   if (!absl::StartsWith(range, prefix)) {
-    return Status(
-        StatusCode::kInternal,
+    return google::cloud::internal::InternalError(
         "cannot parse Range header in resumable upload response, value=" +
-            range);
+            range,
+        GCP_ERROR_INFO());
   }
   char const* buffer = range.data() + kPrefixLen;
   char* endptr;
@@ -557,9 +555,9 @@ StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range) {
   if (buffer != endptr && *endptr == '\0' && 0 <= last) {
     return last;
   }
-  return Status(
-      StatusCode::kInternal,
-      "cannot parse Range header in resumable upload response, value=" + range);
+  return google::cloud::internal::InternalError(
+      "cannot parse Range header in resumable uload response, value=" + range,
+      GCP_ERROR_INFO());
 }
 
 StatusOr<QueryResumableUploadResponse>

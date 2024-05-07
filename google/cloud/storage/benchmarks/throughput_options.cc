@@ -16,6 +16,7 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"
 #include <sstream>
@@ -36,19 +37,22 @@ Status ValidateQuantizedRange(std::string const& name,
   if (!minimum.has_value() || !maximum.has_value()) {
     std::ostringstream os;
     os << "One of the range limits for " << name << " is missing";
-    return google::cloud::Status{StatusCode::kInvalidArgument, os.str()};
+    return google::cloud::internal::InvalidArgumentError(os.str(),
+                                                         GCP_ERROR_INFO());
   }
   if (*minimum > *maximum || *minimum < 0 || *maximum < 0) {
     std::ostringstream os;
     os << "Invalid range for " << name << " [" << *minimum << ',' << *maximum
        << "]";
-    return google::cloud::Status{StatusCode::kInvalidArgument, os.str()};
+    return google::cloud::internal::InvalidArgumentError(os.str(),
+                                                         GCP_ERROR_INFO());
   }
   if (quantum <= 0 || (quantum > *minimum && *minimum != 0)) {
     std::ostringstream os;
     os << "Invalid quantum for " << name << " (" << quantum
        << "), it should be in the (0," << *minimum << "] range";
-    return google::cloud::Status{StatusCode::kInvalidArgument, os.str()};
+    return google::cloud::internal::InvalidArgumentError(os.str(),
+                                                         GCP_ERROR_INFO());
   }
 
   return Status{};
@@ -103,8 +107,8 @@ using ::google::cloud::testing_util::OptionDescriptor;
 google::cloud::StatusOr<ThroughputOptions> ValidateParsedOptions(
     std::string const& usage, ThroughputOptions options) {
   auto make_status = [](std::ostringstream& os) {
-    auto const code = google::cloud::StatusCode::kInvalidArgument;
-    return google::cloud::Status{code, std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   };
 
   if (options.bucket.empty()) {
@@ -482,7 +486,8 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
       os << "  " << a << "\n";
     }
     os << usage << "\n";
-    return Status{StatusCode::kInvalidArgument, os.str()};
+    return google::cloud::internal::InvalidArgumentError(os.str(),
+                                                         GCP_ERROR_INFO());
   }
   return ValidateParsedOptions(usage, options);
 }

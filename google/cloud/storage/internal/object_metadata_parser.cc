@@ -190,7 +190,7 @@ Status ParseHardDeleteTime(ObjectMetadata& meta, nlohmann::json const& json) {
 
 StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
     nlohmann::json const& json) {
-  if (!json.is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+  if (!json.is_object()) return NotJsonObject(json, GCP_ERROR_INFO());
 
   using Parser = std::function<Status(ObjectMetadata&, nlohmann::json const&)>;
   Parser parsers[] = {

@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include <iostream>
 
 namespace google {
@@ -34,9 +36,7 @@ std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r) {
 StatusOr<ListObjectAclResponse> ListObjectAclResponse::FromHttpResponse(
     std::string const& payload) {
   auto json = nlohmann::json::parse(payload, nullptr, false);
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
+  if (!json.is_object()) return ExpectedJsonObject(payload, GCP_ERROR_INFO());
   ListObjectAclResponse result;
   for (auto const& kv : json["items"].items()) {
     auto parsed = ObjectAccessControlParser::FromJson(kv.value());

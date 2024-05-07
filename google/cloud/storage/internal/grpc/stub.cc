@@ -37,6 +37,7 @@
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/make_status.h"
 #include "absl/strings/match.h"
 #include "absl/time/time.h"
 #include <grpcpp/grpcpp.h>
@@ -78,9 +79,9 @@ StatusOr<storage::BucketAccessControl> FindBucketAccessControl(
     if (acl.entity() != entity && acl.entity_alt() != entity) continue;
     return FromProto(acl, response->bucket_id(), bucket_self_link);
   }
-  return Status(
-      StatusCode::kNotFound,
-      "cannot find entity <" + entity + "> in bucket " + response->bucket_id());
+  return google::cloud::internal::NotFoundError(
+      "cannot find entity <" + entity + "> in bucket " + response->bucket_id(),
+      GCP_ERROR_INFO());
 }
 
 // Used in the implementation of `*ObjectAcl()`.
@@ -94,9 +95,10 @@ StatusOr<storage::ObjectAccessControl> FindObjectAccessControl(
     return FromProto(acl, bucket_id, response->name(), response->generation(),
                      object_self_link);
   }
-  return Status(StatusCode::kNotFound, "cannot find entity <" + entity +
-                                           "> in bucket/object " + bucket_id +
-                                           "/" + response->name());
+  return google::cloud::internal::NotFoundError(
+      "cannot find entity <" + entity + "> in bucket/object " + bucket_id +
+          "/" + response->name(),
+      GCP_ERROR_INFO());
 }
 
 // Used in the implementation of `*DefaultObjectAcl()`.
@@ -107,15 +109,16 @@ StatusOr<storage::ObjectAccessControl> FindDefaultObjectAccessControl(
     if (acl.entity() != entity && acl.entity_alt() != entity) continue;
     return FromProtoDefaultObjectAccessControl(acl, response->bucket_id());
   }
-  return Status(
-      StatusCode::kNotFound,
-      "cannot find entity <" + entity + "> in bucket " + response->bucket_id());
+  return google::cloud::internal::NotFoundError(
+      "cannot find entity <" + entity + "> in bucket " + response->bucket_id(),
+      GCP_ERROR_INFO());
 }
 
 Status TimeoutError(std::chrono::milliseconds timeout, std::string const& op) {
-  return Status(StatusCode::kDeadlineExceeded,
-                "timeout [" + absl::FormatDuration(absl::FromChrono(timeout)) +
-                    "] while waiting for " + op);
+  return google::cloud::internal::DeadlineExceededError(
+      "timeout [" + absl::FormatDuration(absl::FromChrono(timeout)) +
+          "] while waiting for " + op,
+      GCP_ERROR_INFO());
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
@@ -222,8 +225,8 @@ StatusOr<storage::BucketMetadata> GrpcStub::CreateBucket(
   // as we do for the JSON transport.
   auto const code = response.status().code();
   if (code == StatusCode::kFailedPrecondition || code == StatusCode::kAborted) {
-    return Status(StatusCode::kAlreadyExists, response.status().message(),
-                  response.status().error_info());
+    return google::cloud::internal::AlreadyExistsError(
+        response.status().message(), response.status().error_info());
   }
   return std::move(response).status();
 }
@@ -399,9 +402,9 @@ StatusOr<storage::ObjectMetadata> GrpcStub::CopyObject(
   auto response = stub_->RewriteObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   if (!response->done()) {
-    return Status(
-        StatusCode::kOutOfRange,
-        "Object too large, use RewriteObject() instead of CopyObject()");
+    return google::cloud::internal::OutOfRangeError(
+        "Object too large, use RewriteObject() instead of CopyObject()",
+        GCP_ERROR_INFO());
   }
   return FromProto(response->resource(), options);
 }
@@ -698,10 +701,10 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteBucketAcl(
           return a.entity() == entity || a.entity_alt() == entity;
         });
     if (i == acl.end()) {
-      return Status(StatusCode::kNotFound,
-                    "the entity <" + request.entity() +
-                        "> is not present in the ACL for bucket " +
-                        request.bucket_name());
+      return google::cloud::internal::NotFoundError(
+          "the entity <" + request.entity() +
+              "> is not present in the ACL for bucket " + request.bucket_name(),
+          GCP_ERROR_INFO());
     }
     acl.erase(i, acl.end());
     return acl;
@@ -792,10 +795,10 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteObjectAcl(
           return a.entity() == entity || a.entity_alt() == entity;
         });
     if (i == acl.end()) {
-      return Status(StatusCode::kNotFound,
-                    "the entity <" + request.entity() +
-                        "> is not present in the ACL for object " +
-                        request.object_name());
+      return google::cloud::internal::NotFoundError(
+          "the entity <" + request.entity() +
+              "> is not present in the ACL for object " + request.object_name(),
+          GCP_ERROR_INFO());
     }
     acl.erase(i, acl.end());
     return acl;
@@ -898,10 +901,10 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteDefaultObjectAcl(
           return a.entity() == entity || a.entity_alt() == entity;
         });
     if (i == acl.end()) {
-      return Status(StatusCode::kNotFound,
-                    "the entity <" + request.entity() +
-                        "> is not present in the ACL for bucket " +
-                        request.bucket_name());
+      return google::cloud::internal::NotFoundError(
+          "the entity <" + request.entity() +
+              "> is not present in the ACL for bucket " + request.bucket_name(),
+          GCP_ERROR_INFO());
     }
     acl.erase(i, acl.end());
     return acl;
@@ -1158,10 +1161,10 @@ StatusOr<google::storage::v2::Bucket> GrpcStub::ModifyBucketAccessControl(
   auto patch = PatchBucketImpl(context, options, patch_request);
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
-    return Status(
-        StatusCode::kUnavailable,
+    return google::cloud::internal::UnavailableError(
         "retrying BucketAccessControl change due to conflict, bucket=" +
-            request.bucket_name());
+            request.bucket_name(),
+        patch.status().error_info());
   }
   return patch;
 }
@@ -1193,10 +1196,10 @@ StatusOr<google::storage::v2::Object> GrpcStub::ModifyObjectAccessControl(
   auto patch = PatchObjectImpl(context, options, patch_request);
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
-    return Status(
-        StatusCode::kUnavailable,
+    return google::cloud::internal::UnavailableError(
         "retrying ObjectAccessControl change due to conflict, bucket=" +
-            request.bucket_name() + ", object=" + request.object_name());
+            request.bucket_name() + ", object=" + request.object_name(),
+        patch.status().error_info());
   }
   return patch;
 }
@@ -1225,10 +1228,10 @@ StatusOr<google::storage::v2::Bucket> GrpcStub::ModifyDefaultAccessControl(
   auto patch = PatchBucketImpl(context, options, patch_request);
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
-    return Status(
-        StatusCode::kUnavailable,
+    return google::cloud::internal::UnavailableError(
         "retrying BucketAccessControl change due to conflict, bucket=" +
-            request.bucket_name());
+            request.bucket_name(),
+        patch.status().error_info());
   }
   return patch;
 }

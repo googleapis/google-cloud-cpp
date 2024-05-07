@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/retry_object_read_source.h"
+#include "google/cloud/internal/make_status.h"
 #include <algorithm>
 #include <sstream>
 #include <string>
@@ -53,7 +54,8 @@ RetryObjectReadSource::RetryObjectReadSource(
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                                                        std::size_t n) {
   if (!child_) {
-    return Status(StatusCode::kFailedPrecondition, "Stream is not open");
+    return google::cloud::internal::FailedPreconditionError(
+        "Stream is not open", GCP_ERROR_INFO());
   }
 
   // Read some data, if successful return immediately, saving some allocations.
@@ -164,9 +166,10 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryObjectReadSource::ReadDiscard(
     count -= result->bytes_received;
     if (result->response.status_code != HttpStatusCode::kContinue &&
         count != 0) {
-      return Status{StatusCode::kInternal,
-                    "could not read back to previous offset (" +
-                        std::to_string(current_offset_) + ")"};
+      return google::cloud::internal::InternalError(
+          "could not read back to previous offset (" +
+              std::to_string(current_offset_) + ")",
+          GCP_ERROR_INFO());
     }
   }
   return child;

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -22,8 +23,8 @@ namespace oauth2 {
 
 StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
     SigningAccount const&, std::string const&) const {
-  return Status(StatusCode::kUnimplemented,
-                "The current credentials cannot sign blobs locally");
+  return google::cloud::internal::UnimplementedError(
+      "The current credentials cannot sign blobs locally", GCP_ERROR_INFO());
 }
 
 }  // namespace oauth2

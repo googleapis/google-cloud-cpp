@@ -18,12 +18,14 @@
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/terminate_handler.h"
 #include <cstdio>
 #include <future>
 #include <iomanip>
 #include <sstream>
+#include <utility>
 
 namespace {
 namespace gcs = ::google::cloud::storage;
@@ -77,7 +79,6 @@ performance data. The bucket is deleted after the program terminates.
 )""";
 
 using ::google::cloud::Status;
-using ::google::cloud::StatusCode;
 using ::google::cloud::StatusOr;
 
 struct Options {
@@ -107,9 +108,9 @@ StatusOr<std::string> CreateTempFile(
 
   std::ofstream file(file_name, std::ios::binary | std::ios::trunc);
   if (!file.good()) {
-    return Status(
-        StatusCode::kInternal,
-        "Failed to create a temporary file (file_name=" + file_name + ")");
+    return google::cloud::internal::InternalError(
+        "Failed to create a temporary file (file_name=" + file_name + ")",
+        GCP_ERROR_INFO());
   }
   while (size_left > 0) {
     auto const to_write = [size_left, &random_data] {
@@ -120,8 +121,8 @@ StatusOr<std::string> CreateTempFile(
     file.write(random_data.c_str(), to_write);
     if (!file.good()) {
       std::remove(file_name.c_str());
-      return Status(StatusCode::kInternal,
-                    "Failed to write to file " + file_name);
+      return google::cloud::internal::InternalError(
+          "Failed to write to file " + file_name, GCP_ERROR_INFO());
     }
   }
   return file_name;
@@ -356,8 +357,8 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
   if (unparsed.size() > 2) {
     std::ostringstream os;
     os << "Unknown arguments or options\n" << usage << "\n";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
   if (unparsed.size() == 2) {
     options.region = unparsed[1];
@@ -365,30 +366,30 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
   if (options.region.empty()) {
     std::ostringstream os;
     os << "Missing value for --region option" << usage << "\n";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
 
   if (options.minimum_object_size > options.maximum_object_size) {
     std::ostringstream os;
     os << "Invalid range for object size [" << options.minimum_object_size
        << ',' << options.maximum_object_size << "]";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
   if (options.minimum_num_shards > options.maximum_num_shards) {
     std::ostringstream os;
     os << "Invalid range for number of shards [" << options.minimum_num_shards
        << ',' << options.maximum_num_shards << "]";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
   if (options.minimum_sample_count > options.maximum_sample_count) {
     std::ostringstream os;
     os << "Invalid range for sample range [" << options.minimum_sample_count
        << ',' << options.maximum_sample_count << "]";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
 
   return options;
@@ -398,8 +399,8 @@ google::cloud::StatusOr<Options> SelfTest() {
   using ::google::cloud::internal::GetEnv;
   using ::google::cloud::internal::Sample;
 
-  google::cloud::Status const self_test_error(
-      google::cloud::StatusCode::kUnknown, "self-test failure");
+  auto const self_test_error = google::cloud::internal::UnknownError(
+      "self-test failure", GCP_ERROR_INFO());
 
   {
     auto options = ParseArgsDefault(
@@ -453,8 +454,8 @@ google::cloud::StatusOr<Options> SelfTest() {
     if (!value.empty()) continue;
     std::ostringstream os;
     os << "The environment variable " << var << " is not set or empty";
-    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
-                                 std::move(os).str());
+    return google::cloud::internal::UnknownError(std::move(os).str(),
+                                                 GCP_ERROR_INFO());
   }
   return ParseArgsDefault({
       "self-test",

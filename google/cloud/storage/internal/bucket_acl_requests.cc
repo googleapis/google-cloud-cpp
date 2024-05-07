@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include <iostream>
 
@@ -44,9 +45,7 @@ StatusOr<ListBucketAclResponse> ListBucketAclResponse::FromHttpResponse(
     std::string const& payload) {
   ListBucketAclResponse result;
   auto json = nlohmann::json::parse(payload, nullptr, false);
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
+  if (!json.is_object()) return ExpectedJsonObject(payload, GCP_ERROR_INFO());
   for (auto const& kv : json["items"].items()) {
     auto parsed = BucketAccessControlParser::FromJson(kv.value());
     if (!parsed.ok()) {

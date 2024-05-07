@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_read_stream.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -23,7 +24,8 @@ namespace {
 std::unique_ptr<internal::ObjectReadStreambuf> MakeErrorStreambuf() {
   return std::make_unique<internal::ObjectReadStreambuf>(
       internal::ReadObjectRangeRequest("", ""),
-      Status(StatusCode::kUnimplemented, "null stream"));
+      google::cloud::internal::UnimplementedError("null stream",
+                                                  GCP_ERROR_INFO()));
 }
 }  // namespace
 

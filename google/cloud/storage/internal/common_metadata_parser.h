@@ -33,9 +33,7 @@ struct GOOGLE_CLOUD_CPP_DEPRECATED(
     CommonMetadataParser {
   static Status FromJson(CommonMetadata<Derived>& result,
                          nlohmann::json const& json) {
-    if (!json.is_object()) {
-      return Status(StatusCode::kInvalidArgument, __func__);
-    }
+    if (!json.is_object()) return NotJsonObject(json, GCP_ERROR_INFO());
     result.etag_ = json.value("etag", "");
     result.id_ = json.value("id", "");
     result.kind_ = json.value("kind", "");

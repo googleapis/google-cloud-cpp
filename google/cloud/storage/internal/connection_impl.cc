@@ -56,7 +56,8 @@ Status ValidateCommittedSize(UploadChunkRequest const& request,
     os << " session_id=" << request.upload_session_url();
     os << ", result=" << response;
     os << ", request=" << request;
-    return Status(StatusCode::kInternal, os.str());
+    return google::cloud::internal::InternalError(std::move(os).str(),
+                                                  GCP_ERROR_INFO());
   }
   if (*response.committed_size > expected_committed_size) {
     std::stringstream os;
@@ -83,7 +84,8 @@ Status ValidateCommittedSize(UploadChunkRequest const& request,
     os << " session_id=" << request.upload_session_url();
     os << ", result=" << response;
     os << ", request=" << request;
-    return Status(StatusCode::kInternal, os.str());
+    return google::cloud::internal::InternalError(std::move(os).str(),
+                                                  GCP_ERROR_INFO());
   }
   return {};
 }
@@ -94,8 +96,8 @@ bool UploadChunkOnFailure(RetryPolicy& retry_policy, Status const& status) {
   // TODO(#9273) - use ErrorInfo when it becomes available
   if (status.code() == StatusCode::kAborted &&
       absl::StartsWith(status.message(), "Concurrent requests received.")) {
-    return retry_policy.OnFailure(Status(
-        StatusCode::kUnavailable, "TODO(#9273) - workaround service problems"));
+    return retry_policy.OnFailure(google::cloud::internal::UnavailableError(
+        "TODO(#9273) - workaround service problems", status.error_info()));
   }
   return retry_policy.OnFailure(status);
 }
@@ -113,7 +115,8 @@ Status MissingCommittedSize(int error_count, int upload_count, int reset_count,
   os << "All requests (" << upload_count << ") have succeeded, but they lacked"
      << " a committed_size value. This requires querying the write status."
      << " The client library performed " << reset_count << " such queries.";
-  return Status{StatusCode::kDeadlineExceeded, std::move(os).str()};
+  return google::cloud::internal::DeadlineExceededError(std::move(os).str(),
+                                                        GCP_ERROR_INFO());
 }
 
 Status PartialWriteStatus(int error_count, int upload_count,
@@ -126,7 +129,8 @@ Status PartialWriteStatus(int error_count, int upload_count,
      << " not completed the full write. The expected committed size is "
      << expected_committed_size << " and the current committed size is "
      << committed_size;
-  return Status{StatusCode::kDeadlineExceeded, std::move(os).str()};
+  return google::cloud::internal::DeadlineExceededError(std::move(os).str(),
+                                                        GCP_ERROR_INFO());
 }
 
 auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
@@ -598,9 +602,9 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
       [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); };
   sleeper = google::cloud::internal::MakeTracedSleeper(
       current, std::move(sleeper), "Backoff");
-  auto last_status =
-      Status(StatusCode::kDeadlineExceeded,
-             "Retry policy exhausted before first attempt was made.");
+  auto last_status = google::cloud::internal::DeadlineExceededError(
+      "Retry policy exhausted before first attempt was made.",
+      GCP_ERROR_INFO());
 
   auto retry_policy = current_retry_policy();
   auto backoff_policy = current_backoff_policy();

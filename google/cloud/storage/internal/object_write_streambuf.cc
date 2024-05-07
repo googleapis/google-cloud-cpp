@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/make_status.h"
 #include <sstream>
 #include <utility>
 
@@ -230,11 +231,11 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   }
 
   if (committed_size_ != expected_committed_size) {
-    std::ostringstream error_message;
-    error_message << "Could not continue upload stream. GCS reports "
-                  << committed_size_ << " as committed, but we expected "
-                  << expected_committed_size;
-    last_status_ = Status(StatusCode::kAborted, error_message.str());
+    std::ostringstream os;
+    os << "Could not continue upload stream. GCS reports " << committed_size_
+       << " as committed, but we expected " << expected_committed_size;
+    last_status_ = google::cloud::internal::AbortedError(std::move(os).str(),
+                                                         GCP_ERROR_INFO());
   }
 }
 

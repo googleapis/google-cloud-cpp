@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/iam_policy.h"
+#include "google/cloud/internal/make_status.h"
 #include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
 #include <sstream>
@@ -35,7 +36,8 @@ Status IsOfTypeIfPresent(nlohmann::json const& json,
     std::ostringstream os;
     os << "Invalid IamPolicy payload, expected " << type_desc << " for "
        << location_desc << ". payload=" << json_rep;
-    return Status(StatusCode::kInvalidArgument, os.str());
+    return google::cloud::internal::InvalidArgumentError(os.str(),
+                                                         GCP_ERROR_INFO());
   }
   return Status();
 }
@@ -401,7 +403,8 @@ StatusOr<NativeIamPolicy> NativeIamPolicy::CreateFromJson(
     os << "Invalid IamPolicy payload, it failed to parse as valid JSON. "
           "payload="
        << json_rep;
-    return Status(StatusCode::kInvalidArgument, os.str());
+    return google::cloud::internal::InvalidArgumentError(os.str(),
+                                                         GCP_ERROR_INFO());
   }
   Status status;
   status = IsObjectIfPresent(json, json_rep, "", "top level node");
