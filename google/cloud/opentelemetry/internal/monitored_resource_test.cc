@@ -36,7 +36,7 @@ TEST(AsString, Simple) {
       {true, "true"},       {false, "false"},
       {int32_t{1}, "1"},    {uint32_t{2}, "2"},
       {int64_t{3}, "3"},    {uint64_t{4}, "4"},
-      {double{5.6}, "5.6"}, {std::string{"value"}, "value"},
+      {5.6, "5.6"}, {std::string{"value"}, "value"},
   };
 
   for (auto const& c : cases) {
