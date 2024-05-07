@@ -68,6 +68,9 @@
 #    code, but we should do that over time, maybe per-directory, instead of
 #    blocking the adoption of Clang 17 until it is all fixed.
 #
+#  -bugprone-unused-local-non-trivial-variable: This might be nice to have, but
+#     we want to cleanup the existing code first.
+#
 Checks: >
   -*,
   abseil-*,
@@ -102,7 +105,8 @@ Checks: >
   -bugprone-narrowing-conversions,
   -bugprone-easily-swappable-parameters,
   -bugprone-implicit-widening-of-multiplication-result,
-  -bugprone-unchecked-optional-access
+  -bugprone-unchecked-optional-access,
+  -bugprone-unused-local-non-trivial-variable
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"
