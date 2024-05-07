@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc/object_read_source.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/type_traits.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>
@@ -55,8 +56,8 @@ StatusOr<storage::internal::ReadSourceResult> GrpcObjectReadSource::Read(
     auto data = stream_->Read();
     watchdog.cancel();
     if (watchdog.get()) {
-      status_ = Status(StatusCode::kDeadlineExceeded,
-                       "Deadline exceeded waiting for data in ReadObject");
+      status_ = google::cloud::internal::DeadlineExceededError(
+          "Deadline exceeded waiting for data in ReadObject", GCP_ERROR_INFO());
       // The stream is already cancelled, but we need to wait for its status.
       while (!absl::holds_alternative<Status>(data)) data = stream_->Read();
       return status_;

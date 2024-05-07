@@ -15,6 +15,7 @@
 #include "google/cloud/storage/benchmarks/throughput_experiment.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/internal/make_status.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/grpc_error_delegate.h"
@@ -297,9 +298,9 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
 
     curl_easy_setopt(hnd, CURLOPT_STDERR, stderr);
     CURLcode ret = curl_easy_perform(hnd);
-    Status status = ret == CURLE_OK
-                        ? Status{}
-                        : Status{StatusCode::kUnknown, "curl failed"};
+    Status status = ret == CURLE_OK ? Status{}
+                                    : google::cloud::internal::UnknownError(
+                                          "curl failed", GCP_ERROR_INFO());
     auto peer = [&] {
       char* ip = nullptr;
       auto e = curl_easy_getinfo(hnd, CURLINFO_PRIMARY_IP, &ip);

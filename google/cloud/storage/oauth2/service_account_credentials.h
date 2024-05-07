@@ -25,6 +25,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/internal/sign_using_sha256.h"
@@ -291,9 +292,10 @@ class ServiceAccountCredentials : public Credentials {
       std::string const& blob) const override {
     if (signing_account.has_value() &&
         signing_account.value() != info_.client_email) {
-      return Status(StatusCode::kInvalidArgument,
-                    "The current_credentials cannot sign blobs for " +
-                        signing_account.value());
+      return google::cloud::internal::InvalidArgumentError(
+          "The current_credentials cannot sign blobs for " +
+              signing_account.value(),
+          GCP_ERROR_INFO());
     }
     return google::cloud::internal::SignUsingSha256(blob, info_.private_key);
   }

@@ -14,7 +14,9 @@
 
 #include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include <nlohmann/json.hpp>
 
 namespace google {
@@ -32,9 +34,7 @@ std::ostream& operator<<(std::ostream& os, SignBlobRequest const& r) {
 StatusOr<SignBlobResponse> SignBlobResponse::FromHttpResponse(
     std::string const& payload) {
   auto json = nlohmann::json::parse(payload, nullptr, false);
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
+  if (!json.is_object()) return ExpectedJsonObject(payload, GCP_ERROR_INFO());
   SignBlobResponse result;
   result.key_id = json.value("keyId", "");
   result.signed_blob = json.value("signedBlob", "");

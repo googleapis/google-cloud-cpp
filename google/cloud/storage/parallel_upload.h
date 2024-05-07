@@ -879,18 +879,20 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
   }
 
   if (persistent_state->destination_object_name != object_name) {
-    return Status(StatusCode::kInternal,
-                  "Specified resumable session ID is doesn't match the "
-                  "destination object name (" +
-                      object_name + " vs " +
-                      persistent_state->destination_object_name + ")");
+    return google::cloud::internal::InternalError(
+        "Specified resumable session ID is doesn't match the "
+        "destination object name (" +
+            object_name + " vs " + persistent_state->destination_object_name +
+            ")",
+        GCP_ERROR_INFO());
   }
   if (persistent_state->streams.size() != num_shards && num_shards != 0) {
-    return Status(StatusCode::kInternal,
-                  "Specified resumable session ID is doesn't match the "
-                  "previously specified number of shards (" +
-                      std::to_string(num_shards) + " vs " +
-                      std::to_string(persistent_state->streams.size()) + ")");
+    return google::cloud::internal::InternalError(
+        "Specified resumable session ID is doesn't match the "
+        "previously specified number of shards (" +
+            std::to_string(num_shards) + " vs " +
+            std::to_string(persistent_state->streams.size()) + ")",
+        GCP_ERROR_INFO());
   }
 
   auto deleter = CreateDeleter(client, bucket_name, options);
@@ -1069,7 +1071,8 @@ struct CreateParallelUploadShards {
     std::error_code size_err;
     auto file_size = google::cloud::internal::file_size(file_name, size_err);
     if (size_err) {
-      return Status(StatusCode::kNotFound, size_err.message());
+      return google::cloud::internal::NotFoundError(size_err.message(),
+                                                    GCP_ERROR_INFO());
     }
 
     auto const resumable_session_id_arg =

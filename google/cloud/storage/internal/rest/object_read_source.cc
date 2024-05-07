@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/internal/http_payload.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/status_or.h"
 #include <memory>
@@ -88,7 +89,8 @@ RestObjectReadSource::RestObjectReadSource(
 
 StatusOr<HttpResponse> RestObjectReadSource::Close() {
   if (!payload_) {
-    return Status(StatusCode::kFailedPrecondition, "Connection not open.");
+    return google::cloud::internal::FailedPreconditionError(
+        "Connection not open.", GCP_ERROR_INFO());
   }
   payload_.reset();
   return HttpResponse{status_code_, {}, {}};
@@ -97,7 +99,8 @@ StatusOr<HttpResponse> RestObjectReadSource::Close() {
 StatusOr<ReadSourceResult> RestObjectReadSource::Read(char* buf,
                                                       std::size_t n) {
   if (!payload_) {
-    return Status(StatusCode::kFailedPrecondition, "Connection not open.");
+    return google::cloud::internal::FailedPreconditionError(
+        "Connection not open.", GCP_ERROR_INFO());
   }
 
   if (status_code_ >= google::cloud::rest_internal::kMinNotSuccess) {

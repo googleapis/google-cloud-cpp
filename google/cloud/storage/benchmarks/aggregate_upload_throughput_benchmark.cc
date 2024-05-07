@@ -19,6 +19,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
@@ -370,8 +371,8 @@ google::cloud::StatusOr<AggregateUploadThroughputOptions> SelfTest(
     if (!value.empty()) continue;
     std::ostringstream os;
     os << "The environment variable " << var << " is not set or empty";
-    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
-                                 std::move(os).str());
+    return google::cloud::internal::UnknownError(std::move(os).str(),
+                                                 GCP_ERROR_INFO());
   }
   auto bucket_name =
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value();

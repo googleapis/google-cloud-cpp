@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/service_account_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 
 namespace google {
 namespace cloud {
@@ -21,9 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 StatusOr<ServiceAccount> ServiceAccountParser::FromJson(
     nlohmann::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
+  if (!json.is_object()) return NotJsonObject(json, GCP_ERROR_INFO());
   ServiceAccount result{};
   result.set_kind(json.value("kind", ""));
   result.set_email_address(json.value("email_address", ""));

@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/hash_mismatch_error.h"
 #include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/internal/make_status.h"
 #include <cstring>
 
 namespace google {
@@ -109,7 +110,7 @@ void ObjectReadStreambuf::ThrowHashMismatchDelegate(char const* function_name) {
     // If there is an existing error, we should report that instead because
     // it is more specific, for example, every permanent network error will
     // produce invalid checksums, but that is not the interesting information.
-    status_ = Status(StatusCode::kDataLoss, msg);
+    status_ = google::cloud::internal::DataLossError(msg, GCP_ERROR_INFO());
   }
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // The only way to report errors from a std::basic_streambuf<> (which this
