@@ -71,13 +71,13 @@ steps:
   # Builds the docker image that will be used by the main build step. Makes 3
   # attempts to workaround #6438.
 - name: 'gcr.io/kaniko-project/executor:v1.22.0'
-  id: 'kaniko-attempt-1'
+  id: 'kaniko-build'
   args: [
     '--log-format=text',
     '--context=dir:///workspace/ci',
     '--dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile',
     '--cache=true',
-    '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',
+    '--destination=${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}',
     '--image-fs-extract-retry=3',
     '--image-download-retry=3',
     '--push-retry=3'
@@ -86,34 +86,13 @@ steps:
 
   # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
   # automatically, and also fill the log with about 2-3 pages of noise.
-- name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
-  id: 'download-runner-image-attempt-1'
+- name: '${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}'
+  id: 'download-runner-image'
   entrypoint: '/bin/true'
   allowFailure: true
-
-- name: 'gcr.io/kaniko-project/executor:v1.22.0'
-  id: 'kaniko-attempt-2'
-  waitFor: [ 'kaniko-attempt-1' ]
-  args: [
-    '--log-format=text',
-    '--context=dir:///workspace/ci',
-    '--dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile',
-    '--cache=true',
-    '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',
-    '--image-fs-extract-retry=3',
-    '--image-download-retry=3',
-    '--push-retry=3'
-  ]
-  allowFailure: true
-
-  # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
-  # automatically, and also fill the log with about 2-3 pages of noise.
-- name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
-  id: 'download-runner-image-attempt-2'
-  entrypoint: '/bin/true'
 
   # Runs the specified build in the image that was created in the first step.
-- name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
+- name: '${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '--local', '--build', '${_BUILD_NAME}' ]
   secretEnv: ['CODECOV_TOKEN']
@@ -129,7 +108,7 @@ steps:
     'VCPKG_BINARY_SOURCES=x-gcs,gs://${_CACHE_BUCKET}/vcpkg-cache/${_DISTRO}-${_BUILD_NAME},readwrite'
   ]
 
-  # Remove the images created by this build.
+  # Remove the image created by this build.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   allowFailure: true
   entrypoint: 'bash'
@@ -137,26 +116,7 @@ steps:
     - '-c'
     - |
       set +e
-      gcloud container images delete -q gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}
-
-  # The previous step may not run if the build fails. Garbage collect any
-  # images created by this script, and/or similar scripts in this repository.
-  # The main idea is to remove images created over 4 weeks ago. Because the
-  # current builds create images with current timestamps, such images are not
-  # likely to be in use. This step should not break the build on error, and it
-  # can start running as soon as the build does.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  allowFailure: true
-  waitFor: [ '-' ]
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      set +e
-      gcloud container images list-tags gcr.io/${PROJECT_ID}/${_IMAGE} \
-        --format='get(digest)' --filter='timestamp.datetime < -P4W' | \
-        xargs -r printf "gcr.io/${PROJECT_ID}/${_IMAGE}@%s\n" | \
-        xargs -r -P 4 -L 32 gcloud container images delete -q --force-delete-tags
+      gcloud artifacts docker images delete -q ${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}
 
   # Cancels in-progress builds for previous commits in the current PR so we can
   # free up resources to start running the builds for the new commit.
