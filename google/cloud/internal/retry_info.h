@@ -37,11 +37,11 @@ class RetryInfo {
 
   std::chrono::nanoseconds retry_delay() const { return retry_delay_; }
 
-  friend inline bool operator==(RetryInfo const& a, RetryInfo const& b) {
+  friend bool operator==(RetryInfo const& a, RetryInfo const& b) {
     return a.retry_delay_ == b.retry_delay_;
   }
 
-  friend inline bool operator!=(RetryInfo const& a, RetryInfo const& b) {
+  friend bool operator!=(RetryInfo const& a, RetryInfo const& b) {
     return !(a == b);
   }
 

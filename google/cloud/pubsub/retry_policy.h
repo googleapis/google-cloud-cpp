@@ -27,7 +27,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Define the gRPC status code semantics for retrying requests.
 struct RetryTraits {
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+  static bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kOk &&
            status.code() != StatusCode::kAborted &&
            status.code() != StatusCode::kInternal &&
