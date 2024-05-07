@@ -36,7 +36,7 @@ struct SafeGrpcRetry {
            status.code() == StatusCode::kResourceExhausted ||
            internal::IsTransientInternalError(status);
   }
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+  static bool IsPermanentFailure(google::cloud::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };
@@ -49,7 +49,7 @@ struct SafeTransactionRerun {
   static inline bool IsTransientFailure(google::cloud::Status const& status) {
     return status.code() == StatusCode::kAborted || IsSessionNotFound(status);
   }
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+  static bool IsPermanentFailure(google::cloud::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };

@@ -34,7 +34,7 @@ struct SafeGrpcRetry {
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
            google::cloud::internal::IsTransientInternalError(status);
   }
-  static inline bool IsPermanentFailure(Status const& status) {
+  static bool IsPermanentFailure(Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 
@@ -43,7 +43,7 @@ struct SafeGrpcRetry {
   static inline bool IsTransientFailure(grpc::Status const& status) {
     return IsTransientFailure(MakeStatusFromRpcError(status));
   }
-  static inline bool IsPermanentFailure(grpc::Status const& status) {
+  static bool IsPermanentFailure(grpc::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };

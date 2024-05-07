@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Rest status code semantics for retrying requests.
 struct BigQueryJobRetryTraits {
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+  static bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kResourceExhausted &&
            status.code() != StatusCode::kUnavailable;

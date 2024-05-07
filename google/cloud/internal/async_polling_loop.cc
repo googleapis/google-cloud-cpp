@@ -123,8 +123,10 @@ class AsyncPollingLoopImpl
   void OnTimer(TimerResult f) {
     GCP_LOG(DEBUG) << location_ << "() polling loop awakened";
     auto t = f.get();
-    if (!t) { promise_.set_value(std::move(t).status());
-    return;}
+    if (!t) {
+      promise_.set_value(std::move(t).status());
+      return;
+    }
     google::longrunning::GetOperationRequest request;
     {
       std::unique_lock<std::mutex> lk(mu_);
@@ -143,7 +145,7 @@ class AsyncPollingLoopImpl
     GCP_LOG(DEBUG) << location_ << "() polling loop result";
     auto op = f.get();
     if (op && op->done()) {
-       promise_.set_value(*std::move(op));
+      promise_.set_value(*std::move(op));
       return;
     }
     // Update the polling policy even on successful requests, so we can stop
@@ -155,16 +157,16 @@ class AsyncPollingLoopImpl
         // an accurate status to the user, otherwise they will have no idea
         // how to react. But for now, we leave the operation running. It
         // may eventually complete.
-         promise_.set_value(Status(
+        promise_.set_value(Status(
             StatusCode::kDeadlineExceeded,
             location_ + "() - polling loop terminated by polling policy"));
-            return;
+        return;
       }
       // This could be a transient error if the policy is exhausted.
-       promise_.set_value(std::move(op).status());
-       return;
+      promise_.set_value(std::move(op).status());
+      return;
     }
-     Wait();
+    Wait();
   }
 
   // These member variables are initialized in the constructor or from
