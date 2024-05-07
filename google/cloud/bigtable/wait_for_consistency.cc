@@ -99,9 +99,13 @@ class AsyncWaitForConsistencyImpl
     }
     auto status = std::move(result).status();
     if (!polling_policy_->OnFailure(status)) {
-      if (!status.ok()) return SetDone(std::move(status));
-      return SetDone(Status(StatusCode::kDeadlineExceeded,
-                            "Polling loop terminated by polling policy"));
+      if (!status.ok()) {
+        SetDone(std::move(status));
+        return;
+      }
+      SetDone(Status(StatusCode::kDeadlineExceeded,
+                     "Polling loop terminated by polling policy"));
+      return;
     }
     StartBackoff();
   }
@@ -113,7 +117,8 @@ class AsyncWaitForConsistencyImpl
     if (state.cancelled) return;
     if (!tp) {
       // Some kind of error in the CompletionQueue, probably shutting down.
-      return SetDone(std::move(tp).status());
+      SetDone(std::move(tp).status());
+      return;
     }
     StartAttempt();
   }
@@ -121,7 +126,10 @@ class AsyncWaitForConsistencyImpl
   void SetPending(std::uint_fast32_t operation, future<void> op) {
     std::unique_lock<std::mutex> lk(mu_);
     if (operation_ == operation) pending_operation_ = std::move(op);
-    if (cancelled_) return Cancel(std::move(lk));
+    if (cancelled_) {
+      Cancel(std::move(lk));
+      return;
+    }
   }
 
   void SetDone(Status value) {
@@ -140,7 +148,7 @@ class AsyncWaitForConsistencyImpl
     return State{true, 0};
   }
 
-  void Cancel() { return Cancel(std::unique_lock<std::mutex>(mu_)); }
+  void Cancel() { Cancel(std::unique_lock<std::mutex>(mu_)); }
 
   void Cancel(std::unique_lock<std::mutex> lk) {
     cancelled_ = true;

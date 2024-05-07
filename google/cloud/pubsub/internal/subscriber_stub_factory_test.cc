@@ -53,7 +53,7 @@ class SubscriberStubFactory : public ::testing::Test {
  protected:
   void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
                         google::protobuf::Message const& request) {
-    return validate_metadata_fixture_.IsContextMDValid(
+    validate_metadata_fixture_.IsContextMDValid(
         context, method, request,
         google::cloud::internal::HandCraftedLibClientHeader());
   }

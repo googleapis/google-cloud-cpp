@@ -180,7 +180,8 @@ class DataTracingConnection : public bigtable::DataConnection {
          oc = opentelemetry::context::RuntimeContext::GetCurrent()](
             Status const& status) {
           internal::DetachOTelContext(oc);
-          return on_finish(internal::EndSpan(*span, status));
+          on_finish(internal::EndSpan(*span, status));
+          return;
         };
     child_->AsyncReadRows(table_name, std::move(on_row),
                           std::move(traced_on_finish), std::move(row_set),
