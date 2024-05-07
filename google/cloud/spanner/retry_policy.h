@@ -28,9 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Define the gRPC status code semantics for retrying requests.
 struct SafeGrpcRetry {
-  static bool IsOk(google::cloud::Status const& status) {
-    return status.ok();
-  }
+  static bool IsOk(google::cloud::Status const& status) { return status.ok(); }
   static bool IsTransientFailure(google::cloud::Status const& status) {
     return status.code() == StatusCode::kUnavailable ||
            status.code() == StatusCode::kResourceExhausted ||
@@ -43,9 +41,7 @@ struct SafeGrpcRetry {
 
 /// Define the gRPC status code semantics for rerunning transactions.
 struct SafeTransactionRerun {
-  static bool IsOk(google::cloud::Status const& status) {
-    return status.ok();
-  }
+  static bool IsOk(google::cloud::Status const& status) { return status.ok(); }
   static bool IsTransientFailure(google::cloud::Status const& status) {
     return status.code() == StatusCode::kAborted || IsSessionNotFound(status);
   }
