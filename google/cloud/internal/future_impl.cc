@@ -19,6 +19,7 @@
 
 // This function is only needed if exceptions are enabled.
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+// TODO(#14152): Remove libC++ hack
 // The `std::future_error::future_error(std::future_errc)` constructor is not
 // guaranteed to exist until C++17. Fortunately, stdlibc++, MSVC are forgiving,
 // and libc++ is forgiving until version 18.1.
