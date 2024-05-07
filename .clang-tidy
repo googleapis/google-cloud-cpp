@@ -71,6 +71,9 @@
 #  -bugprone-unused-local-non-trivial-variable: This might be nice to have, but
 #     we want to cleanup the existing code first.
 #
+#  -bugprone-inc-dec-in-conditions: This might be nice to have, but
+#     we want to cleanup the existing code first.
+#
 Checks: >
   -*,
   abseil-*,
@@ -104,6 +107,7 @@ Checks: >
   -readability-function-cognitive-complexity,
   -bugprone-narrowing-conversions,
   -bugprone-easily-swappable-parameters,
+  -bugprone-inc-dec-in-conditions,
   -bugprone-implicit-widening-of-multiplication-result,
   -bugprone-unchecked-optional-access,
   -bugprone-unused-local-non-trivial-variable
