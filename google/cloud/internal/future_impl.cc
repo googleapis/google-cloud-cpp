@@ -13,8 +13,49 @@
 // limitations under the License.
 
 #include "google/cloud/internal/future_impl.h"
+#include "google/cloud/internal/port_platform.h"
 #include "google/cloud/terminate_handler.h"
 #include <stdexcept>
+
+// This function is only needed if exceptions are enabled.
+#ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+// TODO(#14152): Remove libC++ hack
+// The `std::future_error::future_error(std::future_errc)` constructor is not
+// guaranteed to exist until C++17. Fortunately, stdlibc++, MSVC are forgiving,
+// and libc++ is forgiving until version 18.1.
+#if GOOGLE_CLOUD_CPP_CPP_VERSION >= 201703L || _LIBCPP_VERSION < 180100
+
+namespace {
+std::future_error MakeFutureErrorImpl(std::future_errc ec) {
+  return std::future_error(ec);
+}
+}  // namespace
+
+#else
+// We can probably tolerate this terrible hack (which depends on UB) until we
+// require C++17.
+namespace {
+struct OhTheHorrors {};
+}  // namespace
+
+namespace std {
+template <>
+class promise<OhTheHorrors> {
+ public:
+  static auto MakeFutureError(std::future_errc ec) {
+    return std::future_error(std::make_error_code(ec));
+  }
+};
+}  // namespace std
+
+namespace {
+std::future_error MakeFutureErrorImpl(std::future_errc ec) {
+  return std::promise<OhTheHorrors>::MakeFutureError(ec);
+}
+}  // namespace
+
+#endif
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 namespace google {
 namespace cloud {
@@ -24,7 +65,7 @@ namespace internal {
 [[noreturn]] void ThrowFutureError(std::future_errc ec, char const* msg) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   (void)msg;  // disable unused argument warning.
-  throw std::future_error(ec);
+  throw MakeFutureErrorImpl(ec);
 #else
   std::string full_msg = "future_error[";
   full_msg += std::make_error_code(ec).message();
@@ -46,7 +87,7 @@ namespace internal {
 
 std::exception_ptr MakeFutureError(std::future_errc ec) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  return std::make_exception_ptr(std::future_error(ec));
+  return std::make_exception_ptr(MakeFutureErrorImpl(ec));
 #else
   (void)ec;
   // We cannot create a valid `std::exception_ptr` in this case. It does not
