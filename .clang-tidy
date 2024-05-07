@@ -74,6 +74,9 @@
 #  -bugprone-inc-dec-in-conditions: This might be nice to have, but
 #     we want to cleanup the existing code first.
 #
+#  -bugprone-unused-return-value: This might be nice to have, but
+#     we want to cleanup the existing code first.
+
 Checks: >
   -*,
   abseil-*,
@@ -110,8 +113,8 @@ Checks: >
   -bugprone-inc-dec-in-conditions,
   -bugprone-implicit-widening-of-multiplication-result,
   -bugprone-unchecked-optional-access,
-  -bugprone-unused-local-non-trivial-variable
-
+  -bugprone-unused-local-non-trivial-variable,
+  -bugprone-unused-return-value
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"
 
