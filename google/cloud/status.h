@@ -356,9 +356,7 @@ class Status {
   friend bool operator==(Status const& a, Status const& b) {
     return (a.ok() && b.ok()) || Equals(a, b);
   }
-  friend bool operator!=(Status const& a, Status const& b) {
-    return !(a == b);
-  }
+  friend bool operator!=(Status const& a, Status const& b) { return !(a == b); }
 
  private:
   static bool Equals(Status const& a, Status const& b);

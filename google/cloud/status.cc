@@ -114,9 +114,7 @@ class Status::Impl {
            a.payload_ == b.payload_;
   }
 
-  friend bool operator!=(Impl const& a, Impl const& b) {
-    return !(a == b);
-  }
+  friend bool operator!=(Impl const& a, Impl const& b) { return !(a == b); }
 
  private:
   StatusCode code_;
