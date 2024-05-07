@@ -225,6 +225,16 @@ StatusOr<std::string> ComputeEngineCredentials::universe_domain(
   return RetrieveUniverseDomain(lock, options);
 }
 
+StatusOr<std::string> ComputeEngineCredentials::project_id() const {
+  return project_id(Options{});
+}
+
+StatusOr<std::string> ComputeEngineCredentials::project_id(
+    google::cloud::Options const& options) const {
+  std::lock_guard<std::mutex> lk(mu_);
+  return RetrieveProjectId(lk, options);
+}
+
 StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(
     std::lock_guard<std::mutex> const&, Options const& options) const {
   // Fetch the universe domain only once.
@@ -303,6 +313,30 @@ std::string ComputeEngineCredentials::RetrieveServiceAccountInfo(
   scopes_ = std::move(metadata->scopes);
   service_account_retrieved_ = true;
   return service_account_email_;
+}
+
+StatusOr<std::string> ComputeEngineCredentials::RetrieveProjectId(
+    std::lock_guard<std::mutex> const&, Options const& options) const {
+  if (project_id_.has_value()) return *project_id_;
+
+  auto client = client_factory_(internal::MergeOptions(options, options_));
+  auto request =
+      rest_internal::RestRequest{}
+          .SetPath(absl::StrCat(internal::GceMetadataScheme(), "://",
+                                internal::GceMetadataHostname(), "/",
+                                "computeMetadata/v1/project/project-id"))
+          .AddHeader("metadata-flavor", "Google");
+
+  auto context = rest_internal::RestContext{};
+  auto response = client->Get(context, request);
+  if (!response) return std::move(response).status();
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
+
+  auto payload =
+      rest_internal::ReadAll((std::move(**response)).ExtractPayload());
+  if (!payload) return std::move(payload).status();
+  project_id_ = *std::move(payload);
+  return *project_id_;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

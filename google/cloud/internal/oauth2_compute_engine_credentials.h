@@ -112,6 +112,12 @@ class ComputeEngineCredentials : public Credentials {
       google::cloud::Options const& options) const override;
 
   /**
+   * Returns the project id from the Metadata Server (MDS).
+   */
+  StatusOr<std::string> project_id() const;
+  StatusOr<std::string> project_id(google::cloud::Options const& options) const;
+
+  /**
    * Returns the email or alias of this credential's service account.
    *
    * @note This class must query the Compute Engine instance's metadata server
@@ -145,6 +151,9 @@ class ComputeEngineCredentials : public Credentials {
   StatusOr<std::string> RetrieveUniverseDomain(
       std::lock_guard<std::mutex> const&, Options const& options) const;
 
+  StatusOr<std::string> RetrieveProjectId(std::lock_guard<std::mutex> const&,
+                                          Options const& options) const;
+
   Options options_;
   HttpClientFactory client_factory_;
   mutable std::mutex mu_;
@@ -152,6 +161,7 @@ class ComputeEngineCredentials : public Credentials {
   mutable std::set<std::string> scopes_;
   mutable std::string service_account_email_;
   mutable absl::optional<std::string> universe_domain_;
+  mutable absl::optional<std::string> project_id_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
