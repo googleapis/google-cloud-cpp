@@ -99,7 +99,7 @@ future<Status> DefaultPullLeaseManager::ExtendLease(
       [stub = std::move(stub), deadline = now + extension, clock = clock_,
        impl = impl_](auto cq, auto context, auto options, auto const& request) {
         if (deadline < clock->Now()) {
-          return make_ready_future(internal::FailedPreconditionError(
+          return make_ready_future(internal::DeadlineExceededError(
               "lease already expired", GCP_ERROR_INFO()));
         }
         context->set_deadline((std::min)(deadline, context->deadline()));

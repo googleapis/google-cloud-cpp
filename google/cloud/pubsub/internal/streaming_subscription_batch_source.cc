@@ -271,8 +271,7 @@ void StreamingSubscriptionBatchSource::StartStream(
       "subscription=" + internal::UrlEncode(request.subscription()));
   auto stream = stub_->AsyncStreamingPull(cq_, std::move(context), options_);
   if (!stream) {
-    OnRetryFailure(
-        internal::FailedPreconditionError("null stream", GCP_ERROR_INFO()));
+    OnRetryFailure(internal::UnknownError("null stream", GCP_ERROR_INFO()));
     return;
   }
   shutdown_manager_->StartOperation(__func__, "InitialStart", [&] {
