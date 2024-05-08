@@ -208,21 +208,31 @@ StatusOr<AccessToken> ComputeEngineCredentials::GetToken(
 }
 
 std::string ComputeEngineCredentials::AccountEmail() const {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> lock(service_account_mu_);
   // Force a refresh on the account info.
   RetrieveServiceAccountInfo(lock);
   return service_account_email_;
 }
 
 StatusOr<std::string> ComputeEngineCredentials::universe_domain() const {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> lock(universe_domain_mu_);
   return RetrieveUniverseDomain(lock, Options{});
 }
 
 StatusOr<std::string> ComputeEngineCredentials::universe_domain(
     google::cloud::Options const& options) const {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> lock(universe_domain_mu_);
   return RetrieveUniverseDomain(lock, options);
+}
+
+StatusOr<std::string> ComputeEngineCredentials::project_id() const {
+  return project_id(Options{});
+}
+
+StatusOr<std::string> ComputeEngineCredentials::project_id(
+    google::cloud::Options const& options) const {
+  std::lock_guard<std::mutex> lk(project_id_mu_);
+  return RetrieveProjectId(lk, options);
 }
 
 StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(
@@ -272,17 +282,18 @@ StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(
 }
 
 std::string ComputeEngineCredentials::service_account_email() const {
-  std::unique_lock<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lock(service_account_mu_);
   return service_account_email_;
 }
 
 std::set<std::string> ComputeEngineCredentials::scopes() const {
-  std::unique_lock<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lock(service_account_mu_);
   return scopes_;
 }
 
 std::string ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
-  return RetrieveServiceAccountInfo(std::lock_guard<std::mutex>{mu_});
+  return RetrieveServiceAccountInfo(
+      std::lock_guard<std::mutex>{service_account_mu_});
 }
 
 std::string ComputeEngineCredentials::RetrieveServiceAccountInfo(
@@ -303,6 +314,30 @@ std::string ComputeEngineCredentials::RetrieveServiceAccountInfo(
   scopes_ = std::move(metadata->scopes);
   service_account_retrieved_ = true;
   return service_account_email_;
+}
+
+StatusOr<std::string> ComputeEngineCredentials::RetrieveProjectId(
+    std::lock_guard<std::mutex> const&, Options const& options) const {
+  if (project_id_.has_value()) return *project_id_;
+
+  auto client = client_factory_(internal::MergeOptions(options, options_));
+  auto request =
+      rest_internal::RestRequest{}
+          .SetPath(absl::StrCat(internal::GceMetadataScheme(), "://",
+                                internal::GceMetadataHostname(), "/",
+                                "computeMetadata/v1/project/project-id"))
+          .AddHeader("metadata-flavor", "Google");
+
+  auto context = rest_internal::RestContext{};
+  auto response = client->Get(context, request);
+  if (!response) return std::move(response).status();
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
+
+  auto payload =
+      rest_internal::ReadAll((std::move(**response)).ExtractPayload());
+  if (!payload) return std::move(payload).status();
+  project_id_ = *std::move(payload);
+  return *project_id_;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -567,6 +567,52 @@ TEST(ComputeEngineCredentialsTest, UniverseDomainCallOptionsCustomRetryPolicy) {
               StatusIs(StatusCode::kUnavailable));
 }
 
+TEST(ComputeEngineCredentialsTest, ProjectIdSuccess) {
+  auto expected_request = []() {
+    auto const expected_path = absl::StrCat(
+        internal::GceMetadataScheme(), "://", internal::GceMetadataHostname(),
+        "/computeMetadata/v1/project/project-id");
+    return AllOf(
+        Property(&RestRequest::path, expected_path),
+        Property(&RestRequest::headers,
+                 Contains(Pair("metadata-flavor", Contains("Google")))));
+  };
+
+  auto const expected = std::string{"test-only-project-id"};
+
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call)
+      .WillOnce([&] {
+        auto client = std::make_unique<MockRestClient>();
+        EXPECT_CALL(*client, Get(_, expected_request())).WillOnce([] {
+          return internal::UnavailableError("Transient Error");
+        });
+        return client;
+      })
+      .WillOnce([&] {
+        auto client = std::make_unique<MockRestClient>();
+        EXPECT_CALL(*client, Get(_, expected_request())).WillOnce([&] {
+          auto response = std::make_unique<MockRestResponse>();
+          EXPECT_CALL(*response, StatusCode)
+              .WillRepeatedly(Return(HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([&] {
+            return MakeMockHttpPayloadSuccess(expected);
+          });
+          return std::unique_ptr<RestResponse>(std::move(response));
+        });
+        return client;
+      });
+  ComputeEngineCredentials credentials(Options{},
+                                       client_factory.AsStdFunction());
+  // The first attempt fails, no retry policies for project id, so the error
+  // should be returned to the caller.
+  EXPECT_THAT(credentials.project_id(), StatusIs(StatusCode::kUnavailable));
+  // The error is not cached, a second request may succeed.
+  EXPECT_THAT(credentials.project_id(), IsOkAndHolds(expected));
+  // Verify the value is cached and further lookups do not create requests.
+  EXPECT_THAT(credentials.project_id(), IsOkAndHolds(expected));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
