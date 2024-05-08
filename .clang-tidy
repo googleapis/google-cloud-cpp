@@ -45,6 +45,9 @@
 #      class in order to document it as part of the public API, that will
 #      trigger a redundant declaration warning from this check.
 #
+#  -readability-avoid-return-with-void-value: We believe this is idiomatic
+#    and saves typing, and the intent is obvious.
+#
 #  -readability-function-cognitive-complexity: too many false positives with
 #      clang-tidy-12. We need to disable this check in macros, and that setting
 #      only appears in clang-tidy-13.
@@ -94,6 +97,7 @@ Checks: >
   -readability-magic-numbers,
   -readability-named-parameter,
   -readability-redundant-declaration,
+  -readability-avoid-return-with-void-value,
   -readability-function-cognitive-complexity,
   -bugprone-narrowing-conversions,
   -bugprone-easily-swappable-parameters,
