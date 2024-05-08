@@ -106,7 +106,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/type/quaternion.proto"
     "google/type/timeofday.proto")
 
-include(EnableWerror)
+include(GoogleCloudCppCommonOptions)
 
 # Set EXTERNAL_GOOGLEAPIS_SOURCE in the parent directory, as it is used by all
 # the generated libraries.  The Conan packages (https://conan.io), will need to
