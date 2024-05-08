@@ -88,6 +88,18 @@ class Credentials {
   /// `Options`, is used. Otherwise the default retry policy is used.
   virtual StatusOr<std::string> universe_domain(
       google::cloud::Options const& options) const;
+
+  /**
+   * Return the project (if any) associated with the credentials.
+   *
+   * Some credential types, notably service account credentials and compute
+   * engine credentials, have an associated project. This project is needed in
+   * the implementation of GCS+gRPC metrics.
+   */
+  virtual StatusOr<std::string> project_id() const;
+
+  /// @copydoc project_id()
+  virtual StatusOr<std::string> project_id(Options const&) const;
 };
 
 /**
