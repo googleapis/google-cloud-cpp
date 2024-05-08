@@ -105,7 +105,6 @@ nlohmann::json MockIndex() {
       {"majorversion", "v1"},
       {"hostName", "test.googleapis.com"},
       {"title", "Test Only API"},
-      {"description", "Provides a placeholder to write this test."},
       {"configFile", "test_v1.yaml"},
   };
   return nlohmann::json{{"apis", std::vector<nlohmann::json>{api}}};
@@ -186,8 +185,6 @@ TEST_F(ScaffoldGenerator, Vars) {
   EXPECT_THAT(
       ga,
       AllOf(Contains(Pair("title", "Test Only API")),
-            Contains(Pair("description",
-                          "Provides a placeholder to write this test.")),
             Contains(Pair("library", "test")),
             Contains(Pair("service_subdirectory", "v1/")),
             Contains(Pair("product_options_page", "google-cloud-test-options")),
@@ -201,8 +198,6 @@ TEST_F(ScaffoldGenerator, Vars) {
   EXPECT_THAT(
       experimental,
       AllOf(Contains(Pair("title", "Test Only API")),
-            Contains(Pair("description",
-                          "Provides a placeholder to write this test.")),
             Contains(Pair("library", "test")),
             Contains(Pair("service_subdirectory", "v1/")),
             Contains(Pair("product_options_page", "google-cloud-test-options")),
@@ -315,8 +310,7 @@ TEST_F(ScaffoldGenerator, DoxygenMainPage) {
   GenerateDoxygenMainPage(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr(R"""(
-An idiomatic C++ client library for the [Test Only API][cloud-service-docs], a service
-to Provides a placeholder to write this test.
+An idiomatic C++ client library for the [Test Only API][cloud-service-docs].
 )"""));
   EXPECT_THAT(actual, HasSubstr(R"""(
 [cloud-service-docs]: https://cloud.google.com/test/docs
