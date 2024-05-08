@@ -242,13 +242,7 @@ Status MetadataDecoratorRestGenerator::GenerateCc() {
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
-  if (HasApiVersion()) {
-    CcPrint(R"""(
-namespace {
-  auto constexpr kServiceApiVersion = "$api_version$";
-}  // namespace
-)""");
-  }
+
   // constructor
   CcPrint(R"""(
 $metadata_rest_class_name$::$metadata_rest_class_name$(
@@ -389,7 +383,7 @@ void $metadata_rest_class_name$::SetMetadata(
 )""");
   if (HasApiVersion()) {
     CcPrint(
-        R"""(  rest_context.AddHeader("x-goog-api-version", kServiceApiVersion);
+        R"""(  rest_context.AddHeader("x-goog-api-version", "$api_version$");
 )""");
   }
   CcPrint(R"""(  google::cloud::rest_internal::SetMetadata(
