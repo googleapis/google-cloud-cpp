@@ -347,7 +347,9 @@ void GenerateReadme(std::ostream& os,
   auto constexpr kText1 = R"""(# $title$ C++ Client Library
 $construction$
 This directory contains an idiomatic C++ client library for the
-[$title$][cloud-service-docs], a service to $description$
+[$title$][cloud-service-docs].
+
+$description$
 
 $status$ note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -514,8 +516,9 @@ void GenerateDoxygenMainPage(
 
 @mainpage $title$ C++ Client Library
 
-An idiomatic C++ client library for the [$title$][cloud-service-docs], a service
-to $description$
+An idiomatic C++ client library for the [$title$][cloud-service-docs].
+
+$description$
 
 $status$ note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
