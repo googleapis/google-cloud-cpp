@@ -208,20 +208,20 @@ StatusOr<AccessToken> ComputeEngineCredentials::GetToken(
 }
 
 std::string ComputeEngineCredentials::AccountEmail() const {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> lock(service_account_mu_);
   // Force a refresh on the account info.
   RetrieveServiceAccountInfo(lock);
   return service_account_email_;
 }
 
 StatusOr<std::string> ComputeEngineCredentials::universe_domain() const {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> lock(universe_domain_mu_);
   return RetrieveUniverseDomain(lock, Options{});
 }
 
 StatusOr<std::string> ComputeEngineCredentials::universe_domain(
     google::cloud::Options const& options) const {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> lock(universe_domain_mu_);
   return RetrieveUniverseDomain(lock, options);
 }
 
@@ -231,7 +231,7 @@ StatusOr<std::string> ComputeEngineCredentials::project_id() const {
 
 StatusOr<std::string> ComputeEngineCredentials::project_id(
     google::cloud::Options const& options) const {
-  std::lock_guard<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(project_id_mu_);
   return RetrieveProjectId(lk, options);
 }
 
@@ -282,17 +282,18 @@ StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(
 }
 
 std::string ComputeEngineCredentials::service_account_email() const {
-  std::unique_lock<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lock(service_account_mu_);
   return service_account_email_;
 }
 
 std::set<std::string> ComputeEngineCredentials::scopes() const {
-  std::unique_lock<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lock(service_account_mu_);
   return scopes_;
 }
 
 std::string ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
-  return RetrieveServiceAccountInfo(std::lock_guard<std::mutex>{mu_});
+  return RetrieveServiceAccountInfo(
+      std::lock_guard<std::mutex>{service_account_mu_});
 }
 
 std::string ComputeEngineCredentials::RetrieveServiceAccountInfo(

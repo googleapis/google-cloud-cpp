@@ -156,11 +156,13 @@ class ComputeEngineCredentials : public Credentials {
 
   Options options_;
   HttpClientFactory client_factory_;
-  mutable std::mutex mu_;
+  mutable std::mutex service_account_mu_;
   mutable bool service_account_retrieved_ = false;
   mutable std::set<std::string> scopes_;
   mutable std::string service_account_email_;
+  mutable std::mutex universe_domain_mu_;
   mutable absl::optional<std::string> universe_domain_;
+  mutable std::mutex project_id_mu_;
   mutable absl::optional<std::string> project_id_;
 };
 
