@@ -36,6 +36,10 @@
 #  -performance-avoid-endl: we would like to turn this on, but there are too
 #      many legitimate uses in our samples.
 #
+#  -performance-enum-size: Smaller enums may or not may be faster, it depends on
+#      the architechture. If data size was a consideration, we might decide to
+#      enable the warnings.
+#
 #  -readability-redundant-declaration: A friend declaration inside a class
 #      counts as a declaration, so if we also declare that friend outside the
 #      class in order to document it as part of the public API, that will
@@ -85,6 +89,7 @@ Checks: >
   -modernize-avoid-c-arrays,
   -performance-move-const-arg,
   -performance-avoid-endl,
+  -performance-enum-size,
   -readability-braces-around-statements,
   -readability-identifier-length,
   -readability-magic-numbers,
