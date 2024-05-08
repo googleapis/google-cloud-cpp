@@ -47,7 +47,7 @@ DoMetadataServerGetRequest(rest_internal::RestClient& client,
 }
 
 struct DefaultUniverseDomainRetryTraits {
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+  static bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kOk &&
            status.code() != StatusCode::kUnavailable;
   }

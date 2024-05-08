@@ -28,28 +28,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Define the gRPC status code semantics for retrying requests.
 struct SafeGrpcRetry {
-  static inline bool IsOk(google::cloud::Status const& status) {
-    return status.ok();
-  }
-  static inline bool IsTransientFailure(google::cloud::Status const& status) {
+  static bool IsOk(google::cloud::Status const& status) { return status.ok(); }
+  static bool IsTransientFailure(google::cloud::Status const& status) {
     return status.code() == StatusCode::kUnavailable ||
            status.code() == StatusCode::kResourceExhausted ||
            internal::IsTransientInternalError(status);
   }
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+  static bool IsPermanentFailure(google::cloud::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };
 
 /// Define the gRPC status code semantics for rerunning transactions.
 struct SafeTransactionRerun {
-  static inline bool IsOk(google::cloud::Status const& status) {
-    return status.ok();
-  }
-  static inline bool IsTransientFailure(google::cloud::Status const& status) {
+  static bool IsOk(google::cloud::Status const& status) { return status.ok(); }
+  static bool IsTransientFailure(google::cloud::Status const& status) {
     return status.code() == StatusCode::kAborted || IsSessionNotFound(status);
   }
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+  static bool IsPermanentFailure(google::cloud::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };
