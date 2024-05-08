@@ -58,8 +58,8 @@
 #     Despite what the documentation says, this warning appears after
 #     `ASSERT_TRUE(variable)` or `ASSERT_TRUE(variable.has_value())`.
 #
-#   TODO(#14162): Enable clang-tidy checks. We initially omitted these checks 
-#   because they require large cleanup efforts or were blocking the clang-tidy 
+#   TODO(#14162): Enable clang-tidy checks. We initially omitted these checks
+#   because they require large cleanup efforts or were blocking the clang-tidy
 #   X update.
 Checks: >
   -*,
