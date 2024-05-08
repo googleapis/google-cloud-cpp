@@ -283,7 +283,8 @@ TEST_F(ScaffoldGenerator, Build) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-  EXPECT_THAT(actual, HasSubstr(R"""(name = "google_cloud_cpp_test",)"""));
+  EXPECT_THAT(actual, HasSubstr(R"""(cc_gapic_library)"""));
+  EXPECT_THAT(actual, HasSubstr(R"""(name = "test",)"""));
   EXPECT_THAT(
       actual,
       HasSubstr(
