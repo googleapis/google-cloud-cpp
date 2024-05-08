@@ -20,6 +20,7 @@
 #include "google/cloud/pubsub/internal/tracing_batch_callback.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/subscription.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/opentelemetry_options.h"
 
@@ -42,13 +43,13 @@ class AckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
 
   future<Status> ack() override {
     if (auto s = source_.lock()) return s->AckMessage(ack_id_);
-    return make_ready_future(
-        Status(StatusCode::kFailedPrecondition, "session already shutdown"));
+    return make_ready_future(internal::FailedPreconditionError(
+        "session already shutdown", GCP_ERROR_INFO()));
   }
   future<Status> nack() override {
     if (auto s = source_.lock()) return s->NackMessage(ack_id_);
-    return make_ready_future(
-        Status(StatusCode::kFailedPrecondition, "session already shutdown"));
+    return make_ready_future(internal::FailedPreconditionError(
+        "session already shutdown", GCP_ERROR_INFO()));
   }
   std::int32_t delivery_attempt() const override { return delivery_attempt_; }
   std::string ack_id() override { return ack_id_; }

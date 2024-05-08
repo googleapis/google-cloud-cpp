@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/default_pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -98,8 +99,8 @@ future<Status> DefaultPullLeaseManager::ExtendLease(
       [stub = std::move(stub), deadline = now + extension, clock = clock_,
        impl = impl_](auto cq, auto context, auto options, auto const& request) {
         if (deadline < clock->Now()) {
-          return make_ready_future(
-              Status(StatusCode::kDeadlineExceeded, "lease already expired"));
+          return make_ready_future(internal::FailedPreconditionError(
+              "lease already expired", GCP_ERROR_INFO()));
         }
         context->set_deadline((std::min)(deadline, context->deadline()));
         return impl->AsyncModifyAckDeadline(stub, cq, std::move(context),

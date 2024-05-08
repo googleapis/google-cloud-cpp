@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/internal/pull_lease_manager_factory.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/make_status.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <memory>
 
@@ -72,8 +73,8 @@ future<Status> DefaultPullAckHandler::ack() {
         },
         google::cloud::internal::MakeImmutableOptions({}), request, __func__);
   }
-  return make_ready_future(
-      Status(StatusCode::kFailedPrecondition, "session already shutdown"));
+  return make_ready_future(internal::FailedPreconditionError(
+      "session already shutdown", GCP_ERROR_INFO()));
 }
 
 future<Status> DefaultPullAckHandler::nack() {
@@ -93,8 +94,8 @@ future<Status> DefaultPullAckHandler::nack() {
         },
         google::cloud::internal::MakeImmutableOptions({}), request, __func__);
   }
-  return make_ready_future(
-      Status(StatusCode::kFailedPrecondition, "session already shutdown"));
+  return make_ready_future(internal::FailedPreconditionError(
+      "session already shutdown", GCP_ERROR_INFO()));
 }
 
 std::int32_t DefaultPullAckHandler::delivery_attempt() const {

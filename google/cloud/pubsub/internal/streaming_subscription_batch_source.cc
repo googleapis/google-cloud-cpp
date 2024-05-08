@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "google/cloud/pubsub/internal/extend_leases_with_retry.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/log.h"
 #include "google/cloud/opentelemetry_options.h"
@@ -270,7 +271,8 @@ void StreamingSubscriptionBatchSource::StartStream(
       "subscription=" + internal::UrlEncode(request.subscription()));
   auto stream = stub_->AsyncStreamingPull(cq_, std::move(context), options_);
   if (!stream) {
-    OnRetryFailure(Status(StatusCode::kUnknown, "null stream"));
+    OnRetryFailure(
+        internal::FailedPreconditionError("null stream", GCP_ERROR_INFO()));
     return;
   }
   shutdown_manager_->StartOperation(__func__, "InitialStart", [&] {

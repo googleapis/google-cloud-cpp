@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -21,11 +22,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 future<StatusOr<std::string>> RejectsWithOrderingKey::Publish(PublishParams p) {
   if (!p.message.ordering_key().empty()) {
-    return google::cloud::make_ready_future(StatusOr<std::string>(
-        Status(StatusCode::kInvalidArgument,
-               "Attempted to publish a message with an ordering"
-               " key with a publisher that does not have message"
-               " ordering enabled.")));
+    return google::cloud::make_ready_future(
+        StatusOr<std::string>(internal::InvalidArgumentError(
+            "Attempted to publish a message with an ordering"
+            " key with a publisher that does not have message"
+            " ordering enabled.",
+            GCP_ERROR_INFO())));
   }
   return connection_->Publish(std::move(p));
 }

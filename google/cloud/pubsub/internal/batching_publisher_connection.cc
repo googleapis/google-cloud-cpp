@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -33,8 +34,8 @@ struct Batch {
     }
     if (static_cast<std::size_t>(response->message_ids_size()) !=
         waiters.size()) {
-      SatisfyAllWaiters(
-          Status(StatusCode::kUnknown, "mismatched message id count"));
+      SatisfyAllWaiters(internal::UnknownError("mismatched message id count",
+                                               GCP_ERROR_INFO()));
       return;
     }
     int idx = 0;
