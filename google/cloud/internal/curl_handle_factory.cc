@@ -96,7 +96,7 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
     lk.unlock();
     // Clear all the options in the handle, so we do not leak its previous
     // state.
-    (void)curl_easy_reset(handle.get());
+    curl_easy_reset(handle.get());
     SetCurlOptions(handle.get());
     return handle;
   }

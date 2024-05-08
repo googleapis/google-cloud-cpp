@@ -28,22 +28,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// An adapter to use `grpc::Status` with the `google::cloud::*Policies`.
 struct SafeGrpcRetry {
-  static inline bool IsOk(Status const& status) { return status.ok(); }
-  static inline bool IsTransientFailure(Status const& status) {
+  static bool IsOk(Status const& status) { return status.ok(); }
+  static bool IsTransientFailure(Status const& status) {
     auto const code = status.code();
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
            google::cloud::internal::IsTransientInternalError(status);
   }
-  static inline bool IsPermanentFailure(Status const& status) {
+  static bool IsPermanentFailure(Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 
   // TODO(#2344) - remove ::grpc::Status version.
-  static inline bool IsOk(grpc::Status const& status) { return status.ok(); }
-  static inline bool IsTransientFailure(grpc::Status const& status) {
+  static bool IsOk(grpc::Status const& status) { return status.ok(); }
+  static bool IsTransientFailure(grpc::Status const& status) {
     return IsTransientFailure(MakeStatusFromRpcError(status));
   }
-  static inline bool IsPermanentFailure(grpc::Status const& status) {
+  static bool IsPermanentFailure(grpc::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };

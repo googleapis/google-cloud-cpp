@@ -108,15 +108,13 @@ class Status::Impl {
   // `internal::SetPayload()` function.
   PayloadType& payload() { return payload_; }
 
-  friend inline bool operator==(Impl const& a, Impl const& b) {
+  friend bool operator==(Impl const& a, Impl const& b) {
     return a.code_ == b.code_ && a.message_ == b.message_ &&
            a.error_info_ == b.error_info_ && a.retry_info_ == b.retry_info_ &&
            a.payload_ == b.payload_;
   }
 
-  friend inline bool operator!=(Impl const& a, Impl const& b) {
-    return !(a == b);
-  }
+  friend bool operator!=(Impl const& a, Impl const& b) { return !(a == b); }
 
  private:
   StatusCode code_;

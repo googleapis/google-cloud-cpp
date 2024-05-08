@@ -402,7 +402,6 @@ function (google_cloud_cpp_proto_library libname)
         ${_opt_PROTO_PATH_DIRECTORIES} OUT_DIRECTORY ${_opt_OUT_DIRECTORY})
 
     add_library(${libname} ${proto_sources})
-    target_compile_features(${libname} PUBLIC cxx_std_14)
     set_property(TARGET ${libname} PROPERTY PROTO_SOURCES
                                             ${_opt_UNPARSED_ARGUMENTS})
     target_link_libraries(${libname} PUBLIC gRPC::grpc++ gRPC::grpc
@@ -412,8 +411,7 @@ function (google_cloud_cpp_proto_library libname)
     target_include_directories(
         ${libname} SYSTEM PUBLIC $<BUILD_INTERFACE:${OUT_DIR}>
                                  $<INSTALL_INTERFACE:include>)
-    google_cloud_cpp_silence_warnings_in_deps(${libname})
-    set_target_properties(${libname} PROPERTIES CXX_CLANG_TIDY "")
+    google_cloud_cpp_add_common_options(${libname} NO_WARNINGS)
     if (MSVC)
         # The protobuf-generated files have warnings under the default MSVC
         # settings. We are not interested in these warnings, because we cannot
