@@ -36,7 +36,7 @@ google_cloud_cpp_add_common_options(target [NO_WARNINGS])
 Set the compilation options for the ``google-cloud-cpp`` targets.
 
 There are a number of compiler options and features we want to set on all our
-targets. This function sets them  During development we want to enable options
+targets. This function sets them.
 
 - NO_WARNINGS: if present, skip the options to increase the warning level.
   We compile most of our targets with increased warning levels, and in
@@ -86,13 +86,6 @@ function (google_cloud_cpp_add_common_options target)
     endif ()
     if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WCONVERSION)
         target_compile_options(${target} PRIVATE "-Wconversion")
-    endif ()
-    # Disable a few warnings that are not very useful.
-    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"
-        AND "${CMAKE_CXX_COMPILER_VERSION}" VERSION_LESS 5.0)
-        # With GCC 4.x this warning is too noisy to be useful.
-        target_compile_options(${target}
-                               PRIVATE "-Wno-missing-field-initializers")
     endif ()
     if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WNO_SIGN_CONVERSION)
         target_compile_options(${target} PRIVATE "-Wno-sign-conversion")
