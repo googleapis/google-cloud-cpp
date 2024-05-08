@@ -349,6 +349,8 @@ $construction$
 This directory contains an idiomatic C++ client library for the
 [$title$][cloud-service-docs].
 
+$description$
+
 $status$ note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
@@ -515,6 +517,8 @@ void GenerateDoxygenMainPage(
 @mainpage $title$ C++ Client Library
 
 An idiomatic C++ client library for the [$title$][cloud-service-docs].
+
+$description$
 
 $status$ note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
