@@ -47,7 +47,7 @@ class MetadataDecoratorTest : public ::testing::Test {
 
   void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
                         google::protobuf::Message const& request) {
-    validate_metadata_fixture_.IsContextMDValid(
+    return validate_metadata_fixture_.IsContextMDValid(
         context, method, request,
         google::cloud::internal::GeneratedLibClientHeader());
   }
@@ -55,8 +55,8 @@ class MetadataDecoratorTest : public ::testing::Test {
   void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
                         google::protobuf::Message const& request,
                         std::string const& expected_api_client_header) {
-    validate_metadata_fixture_.IsContextMDValid(context, method, request,
-                                                expected_api_client_header);
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, request, expected_api_client_header);
   }
 
   std::shared_ptr<MockGoldenThingAdminStub> mock_;

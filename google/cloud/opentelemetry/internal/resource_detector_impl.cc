@@ -87,26 +87,11 @@ class Parser {
     SetAttribute(sc::kCloudProvider, "gcp");
     SetAttribute(sc::kCloudAccountId, Metadata({"project", "projectId"}));
 
-    if (internal::GetEnv("KUBERNETES_SERVICE_HOST")) {
-      Gke();
-      return;
-    }
-    if (internal::GetEnv("FUNCTION_TARGET")) {
-      CloudFunctions();
-      return;
-    }
-    if (internal::GetEnv("K_CONFIGURATION")) {
-      CloudRun();
-      return;
-    }
-    if (internal::GetEnv("GAE_SERVICE")) {
-      Gae();
-      return;
-    }
-    if (!Metadata({"instance", "machineType"}).empty()) {
-      Gce();
-      return;
-    }
+    if (internal::GetEnv("KUBERNETES_SERVICE_HOST")) return Gke();
+    if (internal::GetEnv("FUNCTION_TARGET")) return CloudFunctions();
+    if (internal::GetEnv("K_CONFIGURATION")) return CloudRun();
+    if (internal::GetEnv("GAE_SERVICE")) return Gae();
+    if (!Metadata({"instance", "machineType"}).empty()) return Gce();
   }
 
   void Gke() {

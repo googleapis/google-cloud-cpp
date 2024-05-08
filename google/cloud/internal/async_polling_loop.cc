@@ -90,15 +90,9 @@ class AsyncPollingLoopImpl
   }
 
   void OnStart(StatusOr<Operation> op) {
-    if (!op) {
-      promise_.set_value(std::move(op));
-      return;
-    }
+    if (!op) return promise_.set_value(std::move(op));
     AddSpanAttribute(*options_, "gl-cpp.LRO_name", op->name());
-    if (op->done()) {
-      promise_.set_value(std::move(op));
-      return;
-    }
+    if (op->done()) return promise_.set_value(std::move(op));
     GCP_LOG(DEBUG) << location_ << "() polling loop starting for "
                    << op->name();
     bool do_cancel = false;
@@ -108,7 +102,7 @@ class AsyncPollingLoopImpl
       op_name_ = std::move(*op->mutable_name());
     }
     if (do_cancel) DoCancel();
-    Wait();
+    return Wait();
   }
 
   void Wait() {
@@ -123,10 +117,7 @@ class AsyncPollingLoopImpl
   void OnTimer(TimerResult f) {
     GCP_LOG(DEBUG) << location_ << "() polling loop awakened";
     auto t = f.get();
-    if (!t) {
-      promise_.set_value(std::move(t).status());
-      return;
-    }
+    if (!t) return promise_.set_value(std::move(t).status());
     google::longrunning::GetOperationRequest request;
     {
       std::unique_lock<std::mutex> lk(mu_);
@@ -145,8 +136,7 @@ class AsyncPollingLoopImpl
     GCP_LOG(DEBUG) << location_ << "() polling loop result";
     auto op = f.get();
     if (op && op->done()) {
-      promise_.set_value(*std::move(op));
-      return;
+      return promise_.set_value(*std::move(op));
     }
     // Update the polling policy even on successful requests, so we can stop
     // after too many polling attempts.
@@ -157,16 +147,14 @@ class AsyncPollingLoopImpl
         // an accurate status to the user, otherwise they will have no idea
         // how to react. But for now, we leave the operation running. It
         // may eventually complete.
-        promise_.set_value(Status(
+        return promise_.set_value(Status(
             StatusCode::kDeadlineExceeded,
             location_ + "() - polling loop terminated by polling policy"));
-        return;
       }
       // This could be a transient error if the policy is exhausted.
-      promise_.set_value(std::move(op).status());
-      return;
+      return promise_.set_value(std::move(op).status());
     }
-    Wait();
+    return Wait();
   }
 
   // These member variables are initialized in the constructor or from
