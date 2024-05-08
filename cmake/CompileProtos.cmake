@@ -385,7 +385,7 @@ function (google_cloud_cpp_install_proto_library_protos target source_dir)
     endforeach ()
 endfunction ()
 
-include(EnableWerror)
+include(GoogleCloudCppCommonOptions)
 
 function (google_cloud_cpp_proto_library libname)
     cmake_parse_arguments(_opt "" "OUT_DIRECTORY" "PROTO_PATH_DIRECTORIES"

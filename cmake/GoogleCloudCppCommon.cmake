@@ -17,8 +17,8 @@
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
-# Enable Werror
-include(EnableWerror)
+# Helper functions to set common options, e.g., enabling -Werror
+include(GoogleCloudCppCommonOptions)
 
 # Helper functions to create pkg-config(1) module files.
 include(AddPkgConfig)
