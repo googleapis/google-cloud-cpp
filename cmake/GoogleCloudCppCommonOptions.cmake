@@ -32,7 +32,8 @@ check_cxx_compiler_flag(-Wconversion
 check_cxx_compiler_flag(-Wno-sign-conversion
                         GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WNO_SIGN_CONVERSION)
 check_cxx_compiler_flag(-Werror GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WERROR)
-check_cxx_compiler_flag(-fclang-abi-compat=17 GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CLANG_ABI_COMPAT_17)
+check_cxx_compiler_flag(-fclang-abi-compat=17
+                        GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CLANG_ABI_COMPAT_17)
 
 #[=======================================================================[.rst:
 google_cloud_cpp_add_common_options(target [NO_WARNINGS])
@@ -59,8 +60,8 @@ function (google_cloud_cpp_add_common_options target)
     target_compile_features(${target} PUBLIC cxx_std_14)
 
     # Add `-fclang-abi-compat=17` if supported *AND* requested.
-    if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CLANG_ABI_COMPAT_17 AND
-        GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CLANG_ABI_COMPAT_17)
+    if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CLANG_ABI_COMPAT_17
+        AND GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CLANG_ABI_COMPAT_17)
         target_compile_options(${target} PUBLIC "-fclang-abi-compat=17")
     endif ()
 
