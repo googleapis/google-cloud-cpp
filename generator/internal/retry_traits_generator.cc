@@ -53,7 +53,7 @@ Status RetryTraitsGenerator::GenerateHeader() {
     "\n"
     "/// Define the gRPC status code semantics for retrying requests.\n"
     "struct $retry_traits_name$ {\n"
-    "  static inline bool IsPermanentFailure(google::cloud::Status const& status) {\n"
+    "  static bool IsPermanentFailure(google::cloud::Status const& status) {\n"
     "    return $retry_status_code_expression$;\n"
     "  }\n"
     "};\n"

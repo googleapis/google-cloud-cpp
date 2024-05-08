@@ -65,10 +65,9 @@
 #     Despite what the documentation says, this warning appears after
 #     `ASSERT_TRUE(variable)` or `ASSERT_TRUE(variable.has_value())`.
 #
-#  -misc-include-cleaner: too many *true* positives. We need to clean up the
-#    code, but we should do that over time, maybe per-directory, instead of
-#    blocking the adoption of Clang 17 until it is all fixed.
-#
+#   TODO(#14162): Enable clang-tidy checks. We initially omitted these checks
+#   because they require large cleanup efforts or were blocking the clang-tidy
+#   X update.
 Checks: >
   -*,
   abseil-*,
@@ -102,8 +101,11 @@ Checks: >
   -readability-function-cognitive-complexity,
   -bugprone-narrowing-conversions,
   -bugprone-easily-swappable-parameters,
+  -bugprone-inc-dec-in-conditions,
   -bugprone-implicit-widening-of-multiplication-result,
-  -bugprone-unchecked-optional-access
+  -bugprone-unchecked-optional-access,
+  -bugprone-unused-local-non-trivial-variable,
+  -bugprone-unused-return-value
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"
