@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/endpoint.h"
+#include "google/cloud/internal/make_status.h"
 #include <cctype>
 
 namespace google {
@@ -22,8 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::string> EndpointFromZone(std::string const& zone_id) {
   auto make_error = [] {
-    return Status(StatusCode::kInvalidArgument,
-                  "expected a zone id in <region>-[a-z] format");
+    return internal::InvalidArgumentError("expected a zone id in <region>-[a-z] format", GCP_ERROR_INFO());
   };
   auto const n = zone_id.size();
   if (n < 3) return make_error();
