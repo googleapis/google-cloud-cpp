@@ -23,6 +23,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
@@ -248,7 +249,8 @@ StatusOr<CommitResult> Client::Commit(
       // Treat this like mutator() returned a bad Status.
       Status status = error.status();
       if (status.ok()) {
-        status = Status(StatusCode::kUnknown, "OK Status thrown from mutator");
+        status = internal::UnknownError("OK Status thrown from mutator",
+                                        GCP_ERROR_INFO());
       }
       mutations = status;
     } catch (...) {

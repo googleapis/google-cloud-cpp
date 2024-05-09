@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/debug_string_protobuf.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/strerror.h"
 #include "absl/time/civil_time.h"
 #include <google/protobuf/descriptor.h>
@@ -534,7 +535,7 @@ google::protobuf::Value Value::MakeValueProto(char const* s) {
 StatusOr<bool> Value::GetValue(bool, google::protobuf::Value const& pv,
                                google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kBoolValue) {
-    return Status(StatusCode::kUnknown, "missing BOOL");
+    return internal::UnknownError("missing BOOL", GCP_ERROR_INFO());
   }
   return pv.bool_value();
 }
@@ -543,7 +544,7 @@ StatusOr<std::int64_t> Value::GetValue(std::int64_t,
                                        google::protobuf::Value const& pv,
                                        google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing INT64");
+    return internal::UnknownError("missing INT64", GCP_ERROR_INFO());
   }
   auto const& s = pv.string_value();
   char* end = nullptr;
@@ -554,10 +555,12 @@ StatusOr<std::int64_t> Value::GetValue(std::int64_t,
                   google::cloud::internal::strerror(errno) + ": \"" + s + "\"");
   }
   if (end == s.c_str()) {
-    return Status(StatusCode::kUnknown, "No numeric conversion: \"" + s + "\"");
+    return internal::UnknownError("No numeric conversion: \"" + s + "\"",
+                                  GCP_ERROR_INFO());
   }
   if (*end != '\0') {
-    return Status(StatusCode::kUnknown, "Trailing data: \"" + s + "\"");
+    return internal::UnknownError("Trailing data: \"" + s + "\"",
+                                  GCP_ERROR_INFO());
   }
   return x;
 }
@@ -573,14 +576,15 @@ StatusOr<float> Value::GetValue(float, google::protobuf::Value const& pv,
     return static_cast<float>(pv.number_value());
   }
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing FLOAT32");
+    return internal::UnknownError("missing FLOAT32", GCP_ERROR_INFO());
   }
   std::string const& s = pv.string_value();
   auto const inf = std::numeric_limits<float>::infinity();
   if (s == "-Infinity") return -inf;
   if (s == "Infinity") return inf;
   if (s == "NaN") return std::nanf("");
-  return Status(StatusCode::kUnknown, "bad FLOAT32 data: \"" + s + "\"");
+  return internal::UnknownError("bad FLOAT32 data: \"" + s + "\"",
+                                GCP_ERROR_INFO());
 }
 
 StatusOr<double> Value::GetValue(double, google::protobuf::Value const& pv,
@@ -589,21 +593,22 @@ StatusOr<double> Value::GetValue(double, google::protobuf::Value const& pv,
     return pv.number_value();
   }
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing FLOAT64");
+    return internal::UnknownError("missing FLOAT64", GCP_ERROR_INFO());
   }
   std::string const& s = pv.string_value();
   auto const inf = std::numeric_limits<double>::infinity();
   if (s == "-Infinity") return -inf;
   if (s == "Infinity") return inf;
   if (s == "NaN") return std::nan("");
-  return Status(StatusCode::kUnknown, "bad FLOAT64 data: \"" + s + "\"");
+  return internal::UnknownError("bad FLOAT64 data: \"" + s + "\"",
+                                GCP_ERROR_INFO());
 }
 
 StatusOr<std::string> Value::GetValue(std::string const&,
                                       google::protobuf::Value const& pv,
                                       google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing STRING");
+    return internal::UnknownError("missing STRING", GCP_ERROR_INFO());
   }
   return pv.string_value();
 }
@@ -612,7 +617,7 @@ StatusOr<std::string> Value::GetValue(std::string const&,
                                       google::protobuf::Value&& pv,
                                       google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing STRING");
+    return internal::UnknownError("missing STRING", GCP_ERROR_INFO());
   }
   return std::move(*pv.mutable_string_value());
 }
@@ -620,7 +625,7 @@ StatusOr<std::string> Value::GetValue(std::string const&,
 StatusOr<Bytes> Value::GetValue(Bytes const&, google::protobuf::Value const& pv,
                                 google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing BYTES");
+    return internal::UnknownError("missing BYTES", GCP_ERROR_INFO());
   }
   auto decoded = spanner_internal::BytesFromBase64(pv.string_value());
   if (!decoded) return decoded.status();
@@ -630,7 +635,7 @@ StatusOr<Bytes> Value::GetValue(Bytes const&, google::protobuf::Value const& pv,
 StatusOr<Json> Value::GetValue(Json const&, google::protobuf::Value const& pv,
                                google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing JSON");
+    return internal::UnknownError("missing JSON", GCP_ERROR_INFO());
   }
   return Json(pv.string_value());
 }
@@ -638,7 +643,7 @@ StatusOr<Json> Value::GetValue(Json const&, google::protobuf::Value const& pv,
 StatusOr<JsonB> Value::GetValue(JsonB const&, google::protobuf::Value const& pv,
                                 google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing JSONB");
+    return internal::UnknownError("missing JSONB", GCP_ERROR_INFO());
   }
   return JsonB(pv.string_value());
 }
@@ -647,7 +652,7 @@ StatusOr<Numeric> Value::GetValue(Numeric const&,
                                   google::protobuf::Value const& pv,
                                   google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing NUMERIC");
+    return internal::UnknownError("missing NUMERIC", GCP_ERROR_INFO());
   }
   auto decoded = MakeNumeric(pv.string_value());
   if (!decoded) return decoded.status();
@@ -658,7 +663,7 @@ StatusOr<PgNumeric> Value::GetValue(PgNumeric const&,
                                     google::protobuf::Value const& pv,
                                     google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing NUMERIC");
+    return internal::UnknownError("missing NUMERIC", GCP_ERROR_INFO());
   }
   auto decoded = MakePgNumeric(pv.string_value());
   if (!decoded) return decoded.status();
@@ -668,7 +673,7 @@ StatusOr<PgNumeric> Value::GetValue(PgNumeric const&,
 StatusOr<PgOid> Value::GetValue(PgOid const&, google::protobuf::Value const& pv,
                                 google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing OID");
+    return internal::UnknownError("missing OID", GCP_ERROR_INFO());
   }
   return PgOid(std::stoull(pv.string_value()));
 }
@@ -677,7 +682,7 @@ StatusOr<Timestamp> Value::GetValue(Timestamp,
                                     google::protobuf::Value const& pv,
                                     google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing TIMESTAMP");
+    return internal::UnknownError("missing TIMESTAMP", GCP_ERROR_INFO());
   }
   return spanner_internal::TimestampFromRFC3339(pv.string_value());
 }
@@ -687,7 +692,7 @@ StatusOr<CommitTimestamp> Value::GetValue(CommitTimestamp,
                                           google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue ||
       pv.string_value() != "spanner.commit_timestamp()") {
-    return Status(StatusCode::kUnknown, "invalid commit_timestamp");
+    return internal::UnknownError("invalid commit_timestamp", GCP_ERROR_INFO());
   }
   return CommitTimestamp{};
 }
@@ -696,7 +701,7 @@ StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
                                          google::protobuf::Value const& pv,
                                          google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing DATE");
+    return internal::UnknownError("missing DATE", GCP_ERROR_INFO());
   }
   auto const& s = pv.string_value();
   absl::CivilDay day;

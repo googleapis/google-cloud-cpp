@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/read_partition.h"
+#include "google/cloud/internal/make_status.h"
 #include <google/spanner/v1/spanner.pb.h>
 
 namespace google {
@@ -129,16 +130,16 @@ StatusOr<std::string> SerializeReadPartition(
   if (read_partition.proto_.SerializeToString(&serialized_proto)) {
     return serialized_proto;
   }
-  return Status(StatusCode::kInvalidArgument,
-                "Failed to serialize SqlPartition");
+  return internal::InvalidArgumentError("Failed to serialize SqlPartition",
+                                        GCP_ERROR_INFO());
 }
 
 StatusOr<ReadPartition> DeserializeReadPartition(
     std::string const& serialized_read_partition) {
   google::spanner::v1::ReadRequest proto;
   if (!proto.ParseFromString(serialized_read_partition)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Failed to deserialize into SqlPartition");
+    return internal::InvalidArgumentError(
+        "Failed to deserialize into SqlPartition", GCP_ERROR_INFO());
   }
   return ReadPartition(std::move(proto));
 }

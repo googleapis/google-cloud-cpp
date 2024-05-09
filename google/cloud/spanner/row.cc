@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/row.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -59,14 +60,16 @@ Row::Row(std::vector<Value> values,
 // NOLINTNEXTLINE(readability-identifier-naming)
 StatusOr<Value> Row::get(std::size_t pos) const {
   if (pos < values_.size()) return values_[pos];
-  return Status(StatusCode::kInvalidArgument, "position out of range");
+  return internal::InvalidArgumentError("position out of range",
+                                        GCP_ERROR_INFO());
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 StatusOr<Value> Row::get(std::string const& name) const {
   auto it = std::find(columns_->begin(), columns_->end(), name);
   if (it != columns_->end()) return get(std::distance(columns_->begin(), it));
-  return Status(StatusCode::kInvalidArgument, "column name not found");
+  return internal::InvalidArgumentError("column name not found",
+                                        GCP_ERROR_INFO());
 }
 
 bool operator==(Row const& a, Row const& b) {
