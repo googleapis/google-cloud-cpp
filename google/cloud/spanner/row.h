@@ -468,11 +468,13 @@ template <typename RowRange>
 auto GetSingularRow(RowRange range) -> std::decay_t<decltype(*range.begin())> {
   auto const e = range.end();
   auto it = range.begin();
-  if (it == e)
+  if (it == e) {
     return internal::InvalidArgumentError("no rows", GCP_ERROR_INFO());
+  }
   auto row = std::move(*it);
-  if (++it != e)
+  if (++it != e) {
     return internal::InvalidArgumentError("too many rows", GCP_ERROR_INFO());
+  }
   return row;
 }
 
