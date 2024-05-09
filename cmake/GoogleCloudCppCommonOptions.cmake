@@ -61,7 +61,7 @@ function (google_cloud_cpp_add_common_options target)
 
     # Add `-fclang-abi-compat=17` if supported *AND* requested.
     if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CLANG_ABI_COMPAT_17
-        AND GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_CLANG_ABI_COMPAT_17)
+        AND GOOGLE_CLOUD_CPP_ENABLE_CLANG_ABI_COMPAT_17)
         target_compile_options(${target} PUBLIC "-fclang-abi-compat=17")
     endif ()
 
