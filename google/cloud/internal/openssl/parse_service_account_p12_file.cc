@@ -73,12 +73,14 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   std::unique_ptr<X509, decltype(&X509_free)> cert(cert_raw, &X509_free);
 
   if (pkey_raw == nullptr) {
-    return Status(StatusCode::kInvalidArgument,
-                  "No private key found in PKCS#12 file (" + source + ")");
+    return internal::InvalidArgumentError(
+        "No private key found in PKCS#12 file (" + source + ")",
+        GCP_ERROR_INFO());
   }
   if (cert_raw == nullptr) {
-    return Status(StatusCode::kInvalidArgument,
-                  "No certificate found in PKCS#12 file (" + source + ")");
+    return internal::InvalidArgumentError(
+        "No certificate found in PKCS#12 file (" + source + ")",
+        GCP_ERROR_INFO());
   }
 
   // This is automatically deleted by `cert`.
