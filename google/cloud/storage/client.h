@@ -3492,7 +3492,7 @@ class Client {
   StatusOr<PolicyDocumentV4Result> SignPolicyDocumentV4(
       internal::PolicyDocumentV4Request request);
 
-  std::string ExternalUrl();
+  std::string ExternalUrl() const;
 
   std::shared_ptr<internal::StorageConnection> connection_;
 };
