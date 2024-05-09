@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <functional>
@@ -136,7 +137,7 @@ class Row {
   StatusOr<Tuple> get() const& {
     if (size() != std::tuple_size<Tuple>::value) {
       auto constexpr kMsg = "Tuple has the wrong number of elements";
-      return Status(StatusCode::kInvalidArgument, kMsg);
+      return internal::InvalidArgumentError(kMsg, GCP_ERROR_INFO());
     }
     Tuple tup;
     auto it = values_.begin();

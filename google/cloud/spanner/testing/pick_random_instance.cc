@@ -51,8 +51,8 @@ StatusOr<std::string> PickRandomInstance(
     if (!absl::StartsWith(instance_id, "test-instance-")) {
       auto emulator = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
       if (emulator.has_value()) continue;  // server-side filter not supported
-      return Status(StatusCode::kInternal,
-                    "ListInstances erroneously returned " + instance_id);
+      return internal::InternalError("ListInstances erroneously returned " +
+                                     instance_id);
     }
     instance_ids.push_back(std::move(instance_id));
   }
@@ -82,7 +82,7 @@ StatusOr<std::string> PickRandomInstance(
 
   auto random_index =
       std::uniform_int_distribution<std::size_t>(0, instance_ids.size() - 1);
-  return instance_ids[random_index(generator)];
+  return instance_ids[random_index(generator, GCP_ERROR_INFO())];
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

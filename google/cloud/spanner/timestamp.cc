@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include <google/protobuf/util/time_util.h>
 #include <string>
@@ -25,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 Status OutOfRange(std::string message) {
-  return Status(StatusCode::kOutOfRange, std::move(message));
+  return internal::OutOfRangeError(std::move(message), GCP_ERROR_INFO());
 }
 
 Status PositiveOverflow(std::string const& type) {

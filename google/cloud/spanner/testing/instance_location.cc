@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/testing/instance_location.h"
 #include "google/cloud/spanner/admin/instance_admin_client.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -30,8 +31,9 @@ StatusOr<std::string> InstanceLocation(spanner::Instance const& in) {
   for (auto const& replica : instance_config->replicas()) {
     if (replica.default_leader_location()) return replica.location();
   }
-  return Status(StatusCode::kUnavailable,
-                in.FullName() + ": No default_leader_location for replicas");
+  return internal::UnavailableError(
+      in.FullName() + ": No default_leader_location for replicas",
+      GCP_ERROR_INFO());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

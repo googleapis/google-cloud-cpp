@@ -175,9 +175,10 @@ Status PartialResultSetSource::ReadFromStream() {
       // The reader claims to have resumed the stream even though we said it
       // should not. That leaves us in the untenable position of possibly
       // having returned data that will be replayed, so fail the stream now.
-      return Status(StatusCode::kInternal,
-                    "PartialResultSetSource reader resumed the stream"
-                    " despite our having asked it not to");
+      return internal::InternalError(
+          "PartialResultSetSource reader resumed the stream"
+          " despite our having asked it not to",
+          GCP_ERROR_INFO());
     }
     values_back_incomplete_ = false;
     values_.Clear();

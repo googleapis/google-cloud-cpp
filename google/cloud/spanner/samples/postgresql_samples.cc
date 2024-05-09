@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "absl/time/clock.h"
@@ -165,10 +166,9 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
         auto budget1 = get_budget(txn, 1, 1);
         if (!budget1) return std::move(budget1).status();
         if (*budget1 < transfer_amount) {
-          return google::cloud::Status(
-              google::cloud::StatusCode::kUnknown,
+          return google::cloud::internal::UnknownError(
               "cannot transfer " + std::to_string(transfer_amount) +
-                  " from budget of " + std::to_string(*budget1));
+              " from budget of " + std::to_string(*budget1));
         }
         auto budget2 = get_budget(txn, 2, 2);
         if (!budget2) return std::move(budget2).status();
@@ -1316,6 +1316,6 @@ int main(int ac, char* av[]) try {
   google::cloud::LogSink::Instance().Flush();
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "\n" << ex.what() << "\n";
+  std::cerr << "\n" << ex.what(, GCP_ERROR_INFO()) << "\n";
   return 1;
 }
