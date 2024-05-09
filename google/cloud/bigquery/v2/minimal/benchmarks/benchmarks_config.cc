@@ -17,6 +17,7 @@
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "absl/strings/match.h"
 #include <chrono>
@@ -36,7 +37,7 @@ using ::google::cloud::bigquery_v2_minimal_internal::TableMetadataView;
 namespace {
 
 auto invalid_argument = [](std::string msg) {
-  return google::cloud::Status(StatusCode::kInvalidArgument, std::move(msg));
+  return internal::InvalidArgumentError(std::move(msg), GCP_ERROR_INFO());
 };
 
 auto status_ok = google::cloud::Status(StatusCode::kOk, "");
