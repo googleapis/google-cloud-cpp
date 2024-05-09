@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_connection.h"
+#include "google/cloud/internal/make_status.h"
 #include <algorithm>
 
 namespace google {
@@ -21,7 +22,8 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 StatusOr<std::string> RejectMessage() {
-  return Status(StatusCode::kFailedPrecondition, "Publisher is full");
+  return internal::FailedPreconditionError("Publisher is full",
+                                           GCP_ERROR_INFO());
 }
 }  // namespace
 

@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/blocking_publisher_connection_impl.h"
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop.h"
 
 namespace google {
@@ -48,8 +49,8 @@ StatusOr<std::string> BlockingPublisherConnectionImpl::Publish(
       current, request, __func__);
   if (!response) return std::move(response).status();
   if (response->message_ids_size() != 1) {
-    return Status(StatusCode::kInternal,
-                  "invalid response, mismatched ID count");
+    return internal::InternalError("invalid response, mismatched ID count",
+                                   GCP_ERROR_INFO());
   }
   return std::move(*response->mutable_message_ids(0));
 }

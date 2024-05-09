@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include <algorithm>
@@ -180,7 +181,7 @@ class ExtendLeasesHandle
   CompletionQueue cq_;
   google::pubsub::v1::ModifyAckDeadlineRequest request_;
   std::unique_ptr<pubsub::BackoffPolicy> backoff_ = ExactlyOnceBackoffPolicy();
-  Status last_status_ = Status(StatusCode::kUnknown, "Exhausted before start");
+  Status last_status_ = internal::UnknownError("Exhausted before start");
   int attempts_ = 0;
 };
 
