@@ -80,7 +80,8 @@ function (google_cloud_cpp_doxygen_targets_impl library)
 
     # Options controlling how Doxygen behaves on errors and the level of output.
     set(DOXYGEN_QUIET YES)
-    set(DOXYGEN_WARN_AS_ERROR YES)
+    # Continue running after a warning, and then exit with an error at the end.
+    set(DOXYGEN_WARN_AS_ERROR FAIL_ON_WARNINGS)
 
     # Options controlling the format of the output.
     google_cloud_cpp_doxygen_deploy_version(VERSION)
