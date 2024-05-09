@@ -114,8 +114,9 @@ class ComputeEngineCredentials : public Credentials {
   /**
    * Returns the project id from the Metadata Server (MDS).
    */
-  StatusOr<std::string> project_id() const;
-  StatusOr<std::string> project_id(google::cloud::Options const& options) const;
+  StatusOr<std::string> project_id() const override;
+  StatusOr<std::string> project_id(
+      google::cloud::Options const& options) const override;
 
   /**
    * Returns the email or alias of this credential's service account.

@@ -24,7 +24,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::UnavailableError;
+using ::google::cloud::testing_util::IsOk;
 using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
 
@@ -79,6 +81,12 @@ TEST(Credentials, AuthorizationHeaderJoinedError) {
   EXPECT_CALL(mock, GetToken).WillOnce(Return(UnavailableError("try-again")));
   auto actual = AuthorizationHeaderJoined(mock);
   EXPECT_EQ(actual.status(), UnavailableError("try-again"));
+}
+
+TEST(Credentials, ProjectId) {
+  MockCredentials mock;
+  EXPECT_THAT(mock.project_id(), Not(IsOk()));
+  EXPECT_THAT(mock.project_id({}), Not(IsOk()));
 }
 
 }  // namespace

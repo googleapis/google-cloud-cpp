@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
 
 namespace google {
@@ -34,6 +35,15 @@ StatusOr<std::string> Credentials::universe_domain() const {
 StatusOr<std::string> Credentials::universe_domain(
     google::cloud::Options const&) const {
   return universe_domain();
+}
+
+StatusOr<std::string> Credentials::project_id() const {
+  return internal::UnimplementedError("unimplemented", GCP_ERROR_INFO());
+}
+
+StatusOr<std::string> Credentials::project_id(
+    google::cloud::Options const&) const {
+  return project_id();
 }
 
 StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
