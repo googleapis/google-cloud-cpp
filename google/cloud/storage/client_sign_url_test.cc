@@ -107,6 +107,17 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_safe));
 }
 
+/// @test Verify that CreateV2SignedUrl() respects the custom endpoint.
+TEST_F(CreateSignedUrlTest, V2SignCustomEndpoint) {
+  std::string custom_endpoint = "https://storage.mydomain.com";
+
+  Client client(Options{}.set<RestEndpointOption>(custom_endpoint));
+  StatusOr<std::string> actual =
+      client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, HasSubstr(custom_endpoint));
+}
+
 // This is a placeholder service account JSON file that is inactive. It's fine
 // for it to be public.
 constexpr char kJsonKeyfileContentsForV4[] = R"""({
