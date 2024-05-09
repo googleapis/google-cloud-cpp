@@ -39,8 +39,8 @@ class Printer {
   Printer(google::protobuf::compiler::GeneratorContext* generator_context,
           std::string const& file_name)
       : output_(generator_context->Open(file_name)),
-        printer_(std::make_unique<google::protobuf::io::Printer>(
-            output_.get(), '$', nullptr)) {}
+        printer_(
+            std::make_unique<google::protobuf::io::Printer>(output_.get())) {}
 
   Printer(Printer const&) = delete;
   Printer& operator=(Printer const&) = delete;
