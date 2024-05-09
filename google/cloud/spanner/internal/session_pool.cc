@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
@@ -225,7 +226,8 @@ StatusOr<std::vector<SessionPool::CreateCount>>
 SessionPool::ComputeCreateCounts(int sessions_to_create) {
   if (total_sessions_ == max_pool_size_) {
     // Can't grow the pool since we're already at max size.
-    return Status(StatusCode::kResourceExhausted, "session pool exhausted");
+    return internal::ResourceExhaustedError("session pool exhausted",
+                                            GCP_ERROR_INFO());
   }
 
   // Compute how many Sessions to create on each Channel, trying to keep the
@@ -320,7 +322,8 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     if (total_sessions_ >= max_pool_size_) {
       if (opts_.get<spanner::SessionPoolActionOnExhaustionOption>() ==
           spanner::ActionOnExhaustion::kFail) {
-        return Status(StatusCode::kResourceExhausted, "session pool exhausted");
+        return internal::ResourceExhaustedError("session pool exhausted",
+                                                GCP_ERROR_INFO());
       }
       Wait(lk, [this] {
         return !sessions_.empty() || total_sessions_ < max_pool_size_;

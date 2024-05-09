@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
@@ -1190,7 +1191,8 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
       break;
     }
     default:
-      return Status(StatusCode::kInternal, "TransactionSelector state error");
+      return internal::InternalError("TransactionSelector state error",
+                                     GCP_ERROR_INFO());
   }
 
   auto const& current = internal::CurrentOptions();
@@ -1226,8 +1228,8 @@ Status ConnectionImpl::RollbackImpl(
     return s.status();
   }
   if (s->has_single_use()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Cannot rollback a single-use transaction");
+    return internal::InvalidArgumentError(
+        "Cannot rollback a single-use transaction", GCP_ERROR_INFO());
   }
 
   auto prepare_status = PrepareSession(session);
