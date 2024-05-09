@@ -34,6 +34,7 @@ readonly ENABLED_FEATURES
 
 io::run cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_STANDARD=20 \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CLANG_ABI_COMPAT_17=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
