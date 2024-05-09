@@ -389,7 +389,7 @@ StatusOr<std::string> Client::SignUrlV2(
   std::string signature = curl.MakeEscapedString(encoded).get();
 
   std::ostringstream os;
-  os << "https://storage.googleapis.com/" << request.bucket_name();
+  os << ExternalUrl() << request.bucket_name();
   if (!request.object_name().empty()) {
     os << '/' << curl.MakeEscapedString(request.object_name()).get();
   }
@@ -479,6 +479,10 @@ std::string CreateRandomPrefixName(std::string const& prefix) {
   auto rng = google::cloud::internal::MakeDefaultPRNG();
   return prefix + google::cloud::internal::Sample(rng, kPrefixNameSize,
                                                   "abcdefghijklmnopqrstuvwxyz");
+}
+
+std::string Client::ExternalUrl() {
+  return connection_->client_options().endpoint() + "/";
 }
 
 namespace internal {
