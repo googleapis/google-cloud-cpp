@@ -28,7 +28,8 @@ std::shared_ptr<MockAuthenticationStrategy> MakeTypicalMockAuth() {
   auto auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*auth, ConfigureContext)
       .WillOnce([](grpc::ClientContext&) {
-        return internal::InvalidArgumentError("cannot-set-credentials", GCP_ERROR_INFO());
+        return internal::InvalidArgumentError("cannot-set-credentials",
+                                              GCP_ERROR_INFO());
       })
       .WillOnce([](grpc::ClientContext& context) {
         context.set_credentials(
@@ -43,8 +44,8 @@ std::shared_ptr<MockAuthenticationStrategy> MakeTypicalAsyncMockAuth() {
   auto auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*auth, AsyncConfigureContext)
       .WillOnce([](auto) {
-        return make_ready_future(ReturnType(
-            internal::InvalidArgumentError("cannot-set-credentials", GCP_ERROR_INFO())));
+        return make_ready_future(ReturnType(internal::InvalidArgumentError(
+            "cannot-set-credentials", GCP_ERROR_INFO())));
       })
       .WillOnce([](auto context) {
         context->set_credentials(
