@@ -161,7 +161,7 @@ class AsyncWriterConnectionBufferedState
       result = p.get_future();
       flush_handlers_.push_back(MakeLwmWaiter(std::move(p)));
     }
-    (void)StartWriting(std::move(lk));
+    StartWriting(std::move(lk));
     return result;
   }
 
