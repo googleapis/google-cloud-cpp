@@ -82,14 +82,12 @@ steps:
     '--image-download-retry=3',
     '--push-retry=3'
   ]
-  allowFailure: true
 
   # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
   # automatically, and also fill the log with about 2-3 pages of noise.
 - name: '${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}'
   id: 'download-runner-image'
   entrypoint: '/bin/true'
-  allowFailure: true
 
   # Runs the specified build in the image that was created in the first step.
 - name: '${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}'
