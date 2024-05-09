@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/project.h"
 #include "absl/strings/match.h"
 #include <vector>
@@ -75,7 +76,8 @@ StatusOr<std::string> PickRandomInstance(
   }
 
   if (instance_ids.empty()) {
-    return Status(StatusCode::kUnavailable, "No available instances");
+    return internal::UnavailableError("No available instances",
+                                      GCP_ERROR_INFO());
   }
 
   auto random_index =

@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include <chrono>
 #include <regex>
@@ -49,16 +50,17 @@ Status CleanupStaleInstances(
 
   // Make sure we're using a regex that matches a random instance name.
   if (name_regex.mark_count() != 1) {
-    return Status(StatusCode::kInternal,
-                  "Instance regex must have a single capture group");
+    return internal::InternalError(
+        "Instance regex must have a single capture group", GCP_ERROR_INFO());
   }
   auto generator = internal::MakeDefaultPRNG();
   auto random_id = spanner_testing::RandomInstanceName(generator);
   auto full_name = spanner::Instance(project, random_id).FullName();
   std::smatch m;
   if (!std::regex_match(full_name, m, name_regex)) {
-    return Status(StatusCode::kInternal,
-                  "Instance regex does not match a random instance name");
+    return internal::InternalError(
+        "Instance regex does not match a random instance name",
+        GCP_ERROR_INFO());
   }
 
   auto cutoff_date = CutoffDate();
@@ -94,16 +96,16 @@ Status CleanupStaleInstanceConfigs(
 
   // Make sure we're using a regex that matches a random config name.
   if (name_regex.mark_count() != 1) {
-    return Status(StatusCode::kInternal,
-                  "Config regex must have a single capture group");
+    return internal::InternalError(
+        "Config regex must have a single capture group", GCP_ERROR_INFO());
   }
   auto generator = internal::MakeDefaultPRNG();
   auto random_id = spanner_testing::RandomInstanceConfigName(generator);
   auto full_name = project.FullName() + "/instanceConfigs/" + random_id;
   std::smatch m;
   if (!std::regex_match(full_name, m, name_regex)) {
-    return Status(StatusCode::kInternal,
-                  "Config regex does not match a random config name");
+    return internal::InternalError(
+        "Config regex does not match a random config name", GCP_ERROR_INFO());
   }
 
   auto cutoff_date = CutoffDate();
