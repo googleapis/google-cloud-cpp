@@ -14,6 +14,7 @@
 
 #ifndef _WIN32
 #include "google/cloud/internal/parse_service_account_p12_file.h"
+#include "google/cloud/internal/make_status.h"
 #include <openssl/err.h>
 #include <openssl/pem.h>
 #include <openssl/pkcs12.h>
