@@ -182,7 +182,7 @@ class ExtendLeasesHandle
   google::pubsub::v1::ModifyAckDeadlineRequest request_;
   std::unique_ptr<pubsub::BackoffPolicy> backoff_ = ExactlyOnceBackoffPolicy();
   Status last_status_ =
-      internal::UnknownError("Exhausted before start", GCP_ERROR_INFO());
+	      internal::UnknownError("Exhausted before start");
   int attempts_ = 0;
 };
 
