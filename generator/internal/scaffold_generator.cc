@@ -400,67 +400,23 @@ void GenerateBuild(std::ostream& os,
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@google_cloud_cpp//bazel:gapic.bzl", "cc_gapic_library")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = ["$service_subdirectory$"]
 
-src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
+googleapis_deps = [
+    "@com_google_googleapis//$directory$:$library$_cc_grpc",
+]
 
-filegroup(
-    name = "srcs",
-    srcs = glob([d + "*.cc" for d in src_dirs]),
+cc_gapic_library(
+    name = "$library$",
+    googleapis_deps = googleapis_deps,
+    service_dirs = service_dirs,
 )
-
-filegroup(
-    name = "hdrs",
-    srcs = glob([d + "*.h" for d in src_dirs]),
-)
-
-filegroup(
-    name = "public_hdrs",
-    srcs = glob([d + "*.h" for d in service_dirs]),
-    visibility = ["//:__pkg__"],
-)
-
-filegroup(
-    name = "mocks",
-    srcs = glob([d + "mocks/*.h" for d in service_dirs]),
-    visibility = ["//:__pkg__"],
-)
-
-cc_library(
-    name = "google_cloud_cpp_$library$",
-    srcs = [":srcs"],
-    hdrs = [":hdrs"],
-    visibility = ["//:__pkg__"],
-    deps = [
-        "//:common",
-        "//:grpc_utils",
-        "@com_google_googleapis//$directory$:$library$_cc_grpc",
-    ],
-)
-
-cc_library(
-    name = "google_cloud_cpp_$library$_mocks",
-    hdrs = [":mocks"],
-    visibility = ["//:__pkg__"],
-    deps = [
-        ":google_cloud_cpp_$library$",
-        "@com_google_googletest//:gtest",
-    ],
-)
-
-[cc_test(
-    name = sample.replace("/", "_").replace(".cc", ""),
-    srcs = [sample],
-    tags = ["integration-test"],
-    deps = [
-        "//:$library$",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-    ],
-) for sample in glob([d + "samples/*.cc" for d in service_dirs])]
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
