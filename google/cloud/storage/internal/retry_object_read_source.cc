@@ -113,7 +113,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
 
 bool RetryObjectReadSource::HandleResult(StatusOr<ReadSourceResult> const& r) {
   if (!r) return false;
-  if (r->generation) generation_ = *r->generation;
+  if (r->generation) generation_ = r->generation;
   if (r->transformation.value_or("") == "gunzipped") is_gunzipped_ = true;
   // Since decompressive transcoding does not respect `ReadLast()` we need
   // to ensure the offset is incremented, so the discard loop works.

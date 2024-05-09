@@ -27,7 +27,7 @@ absl::optional<std::vector<std::string>> MergeStringListConditions(
     absl::optional<std::vector<std::string>> result,
     absl::optional<std::vector<std::string>> const& rhs) {
   if (!rhs.has_value()) return result;
-  if (!result.has_value()) return *rhs;
+  if (!result.has_value()) return rhs;
 
   std::sort(result->begin(), result->end());
   std::vector<std::string> b = *rhs;
@@ -96,7 +96,7 @@ void MergeDaysSinceNoncurrent(LifecycleRuleCondition& result,
     result.days_since_noncurrent_time = std::max(
         *result.days_since_noncurrent_time, *rhs.days_since_noncurrent_time);
   } else {
-    result.days_since_noncurrent_time = *rhs.days_since_noncurrent_time;
+    result.days_since_noncurrent_time = rhs.days_since_noncurrent_time;
   }
 }
 
@@ -118,7 +118,7 @@ void MergeDaysSinceCustomTime(LifecycleRuleCondition& result,
     result.days_since_custom_time =
         std::max(*result.days_since_custom_time, *rhs.days_since_custom_time);
   } else {
-    result.days_since_custom_time = *rhs.days_since_custom_time;
+    result.days_since_custom_time = rhs.days_since_custom_time;
   }
 }
 void MergeCustomTimeBefore(LifecycleRuleCondition& result,
