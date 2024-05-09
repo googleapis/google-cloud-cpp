@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/wait_for_consistency.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
+#include "google/cloud/internal/make_status.h"
 #include <chrono>
 
 namespace google {
@@ -100,8 +101,8 @@ class AsyncWaitForConsistencyImpl
     auto status = std::move(result).status();
     if (!polling_policy_->OnFailure(status)) {
       if (!status.ok()) return SetDone(std::move(status));
-      return SetDone(Status(StatusCode::kDeadlineExceeded,
-                            "Polling loop terminated by polling policy"));
+      return SetDone(internal::DeadlineExceededError(
+          "Polling loop terminated by polling policy", GCP_ERROR_INFO()));
     }
     StartBackoff();
   }
@@ -136,7 +137,8 @@ class AsyncWaitForConsistencyImpl
     if (done_) return State{true, 0};
     done_ = true;
     lk.unlock();
-    result_.set_value(Status(StatusCode::kCancelled, "Operation cancelled"));
+    result_.set_value(
+        internal::CancelledError("Operation cancelled", GCP_ERROR_INFO()));
     return State{true, 0};
   }
 
