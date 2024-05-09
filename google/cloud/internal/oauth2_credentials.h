@@ -90,11 +90,18 @@ class Credentials {
       google::cloud::Options const& options) const;
 
   /**
-   * Return the project (if any) associated with the credentials.
+   * Return the project associated with the credentials.
    *
-   * Some credential types, notably service account credentials and compute
-   * engine credentials, have an associated project. This project is needed in
-   * the implementation of GCS+gRPC metrics.
+   * This function may return an error, for example:
+   *
+   * - The credential type does not have an associated project id, e.g. user
+   *   credentials
+   * - The credential type should have an associated project id, but it is not
+   *   present, e.g., a service account key file with a missing `project_id`
+   *   field.
+   * - The credential type should have an associated project id, but it was
+   *   not possible to retrieve it, e.g., compute engine credentials with a
+   *   transient failure fetching the project id from the metadata service.
    */
   virtual StatusOr<std::string> project_id() const;
 
