@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_READ_WRITE_STREAM_AUTH_H
 
 #include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <functional>
@@ -84,7 +85,8 @@ class AsyncStreamingReadWriteRpcAuth
           initial_context(std::move(initial_context)),
           stream(std::make_unique<
                  AsyncStreamingReadWriteRpcError<Request, Response>>(
-              Status(StatusCode::kInternal, "Stream is not yet started."))) {}
+              internal::InternalError("Stream is not yet started.",
+                                      GCP_ERROR_INFO()))) {}
 
     std::shared_ptr<grpc::ClientContext> ReleaseInitialContext() {
       std::lock_guard<std::mutex> g{mu};

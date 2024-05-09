@@ -24,8 +24,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
     absl::optional<std::string> const&, std::string const&) const {
-  return Status(StatusCode::kUnimplemented,
-                "The current credentials cannot sign blobs locally");
+  return internal::UnimplementedError(
+      "The current credentials cannot sign blobs locally", GCP_ERROR_INFO());
 }
 
 StatusOr<std::string> Credentials::universe_domain() const {
