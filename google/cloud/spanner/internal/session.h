@@ -29,10 +29,10 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Sessions are a central concept in the Spanner Cloud API: all Spanner
+ * Sessions are a central concept in the Cloud Spanner API. All Spanner
  * reads/writes are performed through a session. A session must be created
  * before any non-admin operation can be performed. Once created, a session
- * persists until it is destroyed by the client, or is reclaimed due to
+ * persists until it is destroyed by the client, or reclaimed due to
  * inactivity.
  *
  * This class is thread-safe.
