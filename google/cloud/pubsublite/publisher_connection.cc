@@ -29,6 +29,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <google/protobuf/struct.pb.h>
 #include <functional>
@@ -120,7 +121,8 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
     // region to form the endpoint
     auto endpoint = GetEndpoint(topic.location_id());
     if (!endpoint) {
-      return Status{StatusCode::kInvalidArgument, "`topic` not valid"};
+      return internal::InvalidArgumentError("`topic` not valid",
+                                            GCP_ERROR_INFO());
     }
     opts.set<EndpointOption>(*std::move(endpoint));
   }

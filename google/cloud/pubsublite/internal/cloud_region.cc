@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/cloud_region.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -22,7 +23,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StatusOr<CloudRegion> MakeCloudRegion(std::string const& region) {
   std::vector<std::string> splits = absl::StrSplit(region, '-');
   if (splits.size() != 2) {
-    return Status{StatusCode::kInvalidArgument, "Invalid region name"};
+    return internal::InvalidArgumentError("Invalid region name",
+                                          GCP_ERROR_INFO());
   }
   return CloudRegion{region};
 }

@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include <functional>
 #include <iterator>
 
@@ -154,10 +155,10 @@ void PartitionPublisher::OnRead(absl::optional<PublishResponse> response) {
   }
   if (batch.empty()) {
     OnReadEnd();
-    return service_composite_.Abort(
-        Status(StatusCode::kFailedPrecondition,
-               "Server sent message response when no batches were "
-               "outstanding."));
+    return service_composite_.Abort(internal::FailedPreconditionError(
+        "Server sent message response when no batches were "
+        "outstanding.",
+        GCP_ERROR_INFO()));
   }
   std::int64_t offset = response->message_response().start_cursor().offset();
   for (auto& message : batch) {

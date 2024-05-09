@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/multipartition_publisher.h"
+#include "google/cloud/internal/make_status.h"
 #include <functional>
 #include <limits>
 
@@ -69,9 +70,10 @@ future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
         if (!partitions) return std::move(partitions).status();
         if (partitions->partition_count() >=
             std::numeric_limits<std::uint32_t>::max()) {
-          return Status{StatusCode::kInternal,
-                        absl::StrCat("Returned partition count is too big: ",
-                                     partitions->partition_count())};
+          return internal::InternalError(
+              absl::StrCat("Returned partition count is too big: ",
+                           partitions->partition_count()),
+              GCP_ERROR_INFO());
         }
         return static_cast<std::uint32_t>(partitions->partition_count());
       });

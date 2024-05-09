@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsublite/internal/futures.h"
 #include "google/cloud/pubsublite/internal/service.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include <mutex>
 #include <vector>
@@ -127,8 +128,9 @@ class ServiceComposite : public Service {
       if (shutdown_) return make_ready_future();
       shutdown_ = true;
       status_promise_.swap(status_promise);
-      if (status_.ok())
-        status_ = Status{StatusCode::kAborted, "`Shutdown` called"};
+      if (status_.ok()) {
+        status_ = internal::AbortedError("`Shutdown` called", GCP_ERROR_INFO());
+      }
     }
     if (status_promise) status_promise->set_value(Status());
 
@@ -149,8 +151,8 @@ class ServiceComposite : public Service {
   bool shutdown_ = true;                // ABSL_GUARDED_BY(mu_)
   absl::optional<promise<Status>> status_promise_{
       promise<Status>{}};  // ABSL_GUARDED_BY(mu_)
-  Status status_ = Status{StatusCode::kFailedPrecondition,
-                          "`Start` not called"};  // ABSL_GUARDED_BY(mu_)
+  Status status_ = internal::FailedPreconditionError(
+                          "`Start` not called"));  // ABSL_GUARDED_BY(mu_)
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

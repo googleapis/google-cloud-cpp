@@ -35,9 +35,9 @@ StatusOr<std::string> EndpointFromZone(std::string const& zone_id) {
 
 StatusOr<std::string> EndpointFromRegion(std::string const& region_id) {
   auto make_error = [] {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "region ids start with a alphabetic character and end with a digit");
+    return internal::InvalidArgumentError(
+        "region ids start with a alphabetic character and end with a digit",
+        GCP_ERROR_INFO());
   };
   if (region_id.size() < 2) return make_error();
   auto front = static_cast<unsigned char>(region_id.front());
