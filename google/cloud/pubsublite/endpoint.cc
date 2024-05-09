@@ -23,7 +23,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::string> EndpointFromZone(std::string const& zone_id) {
   auto make_error = [] {
-    return internal::InvalidArgumentError("expected a zone id in <region>-[a-z] format", GCP_ERROR_INFO());
+    return internal::InvalidArgumentError(
+        "expected a zone id in <region>-[a-z] format", GCP_ERROR_INFO());
   };
   auto const n = zone_id.size();
   if (n < 3) return make_error();
