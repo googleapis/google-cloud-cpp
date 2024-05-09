@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
+#include "google/cloud/internal/make_status.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -27,7 +28,7 @@ std::shared_ptr<MockAuthenticationStrategy> MakeTypicalMockAuth() {
   auto auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*auth, ConfigureContext)
       .WillOnce([](grpc::ClientContext&) {
-        return Status(StatusCode::kInvalidArgument, "cannot-set-credentials");
+        return internal::InvalidArgumentError("cannot-set-credentials", GCP_ERROR_INFO());
       })
       .WillOnce([](grpc::ClientContext& context) {
         context.set_credentials(
@@ -43,7 +44,7 @@ std::shared_ptr<MockAuthenticationStrategy> MakeTypicalAsyncMockAuth() {
   EXPECT_CALL(*auth, AsyncConfigureContext)
       .WillOnce([](auto) {
         return make_ready_future(ReturnType(
-            Status(StatusCode::kInvalidArgument, "cannot-set-credentials")));
+            internal::InvalidArgumentError("cannot-set-credentials", GCP_ERROR_INFO())));
       })
       .WillOnce([](auto context) {
         context->set_credentials(
