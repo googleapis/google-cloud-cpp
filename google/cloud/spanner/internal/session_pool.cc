@@ -297,11 +297,25 @@ Status SessionPool::CreateSessions(
 }
 
 StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
+  return Allocate(std::unique_lock<std::mutex>(mu_), dissociate_from_pool);
+}
+
+std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
+  auto const& channel = session.channel();
+  if (channel) return channel->stub;
+
+  // Sessions that were created for partitioned Reads/Queries do
+  // not have their own channel/stub, so return a stub to use by
+  // round-robining between the channels.
+  return GetStub(std::unique_lock<std::mutex>(mu_));
+}
+
+StatusOr<SessionHolder> SessionPool::Allocate(std::unique_lock<std::mutex> lk,
+                                              bool dissociate_from_pool) {
   // We choose to ignore the internal::CurrentOptions() here as it is
   // non-deterministic when RPCs to create sessions are actually made.
   // It is clearer if we just stick with the construction-time Options.
   internal::OptionsSpan span(opts_);
-  std::unique_lock<std::mutex> lk(mu_);
   for (;;) {
     if (!sessions_.empty()) {
       // return the most recently used session.
@@ -355,16 +369,8 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
   }
 }
 
-std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
-  auto const& channel = session.channel();
-  if (channel) {
-    return channel->stub;
-  }
-
-  // Sessions that were created for partitioned Reads/Queries do not have
-  // their own channel/stub; return a stub to use by round-robining between
-  // the channels.
-  std::unique_lock<std::mutex> lk(mu_);
+std::shared_ptr<SpannerStub> SessionPool::GetStub(
+    std::unique_lock<std::mutex>) {
   auto stub = (*next_dissociated_stub_channel_)->stub;
   if (++next_dissociated_stub_channel_ == channels_.end()) {
     next_dissociated_stub_channel_ = channels_.begin();

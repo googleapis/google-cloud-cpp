@@ -84,10 +84,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   /**
    * Allocate a `Session` from the pool, creating a new one if necessary.
    *
-   * The returned `SessionHolder` will return the `Session` to this pool, unless
-   * `dissociate_from_pool` is true, in which case it is not returned to the
-   * pool.  This is used in partitioned operations, since we don't know when all
-   * parties are done using the session.
+   * The returned `SessionHolder` will return the `Session` to this pool,
+   * unless `dissociate_from_pool` is true, in which case it is not returned
+   * to the pool.  This is used in partitioned operations, since we don't
+   * know when all parties are done using the session.
    *
    * @return a `SessionHolder` on success (which is guaranteed not to be
    * `nullptr`), or an error.
@@ -122,6 +122,13 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
     int session_count;
   };
   enum class WaitForSessionAllocation { kWait, kNoWait };
+
+  // Allocate a session from the pool.
+  StatusOr<SessionHolder> Allocate(std::unique_lock<std::mutex>,
+                                   bool dissociate_from_pool);
+
+  // Returns a stub to use by round-robining between the channels.
+  std::shared_ptr<SpannerStub> GetStub(std::unique_lock<std::mutex>);
 
   // Release session back to the pool.
   void Release(std::unique_ptr<Session> session);

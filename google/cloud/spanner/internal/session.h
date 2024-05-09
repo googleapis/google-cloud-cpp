@@ -29,7 +29,11 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A class that represents a Session.
+ * Sessions are a central concept in the Cloud Spanner API. All Spanner
+ * reads/writes are performed through a session. A session must be created
+ * before any non-admin operation can be performed. Once created, a session
+ * persists until it is destroyed by the client, or reclaimed due to
+ * inactivity.
  *
  * This class is thread-safe.
  */
@@ -59,6 +63,7 @@ class Session {
  private:
   // Give `SessionPool` access to the private methods below.
   friend class SessionPool;
+
   std::shared_ptr<Channel> const& channel() const { return channel_; }
 
   // The caller is responsible for ensuring these methods are used in a
