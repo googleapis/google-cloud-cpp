@@ -137,7 +137,8 @@ class AsyncWaitForConsistencyImpl
     if (done_) return State{true, 0};
     done_ = true;
     lk.unlock();
-    result_.set_value(internal::CancelledError("Operation cancelled", GCP_ERROR_INFO()));
+    result_.set_value(
+        internal::CancelledError("Operation cancelled", GCP_ERROR_INFO()));
     return State{true, 0};
   }
 
