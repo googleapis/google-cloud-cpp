@@ -292,7 +292,7 @@ StatusOr<std::string> ServiceAccountCredentials::project_id() const {
 
 StatusOr<std::string> ServiceAccountCredentials::project_id(
     Options const&) const {
-  // universe_domain is stored locally, so any retry options are unnecessary.
+  // project_id() is stored locally, so any retry options are unnecessary.
   return project_id();
 }
 
