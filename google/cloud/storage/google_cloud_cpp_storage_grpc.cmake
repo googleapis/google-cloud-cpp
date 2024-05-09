@@ -55,8 +55,6 @@ else ()
     if (Protobuf_VERSION VERSION_GREATER_EQUAL "23")
         set(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT OFF)
     endif ()
-    message(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT=
-            ${GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT})
     option(
         GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND
         [==[Enable the workarounds for [ctype = CORD] when using Protobuf < v23.
