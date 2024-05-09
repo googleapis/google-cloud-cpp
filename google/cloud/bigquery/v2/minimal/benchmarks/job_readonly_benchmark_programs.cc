@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmark.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmarks_config.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/time/clock.h"
@@ -84,7 +85,7 @@ OperationResult RunListJobs(JobBenchmark& benchmark) {
       }
     }
 
-    return ::google::cloud::Status(StatusCode::kOk, "");
+    return ::google::cloud::internal::OkError("", GCP_ERROR_INFO());
   };
   return Benchmark::TimeOperation(std::move(op));
 }

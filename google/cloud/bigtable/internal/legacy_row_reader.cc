@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/legacy_row_reader.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -102,7 +103,7 @@ bool LegacyRowReader::NextChunk() {
 
 absl::variant<Status, bigtable::Row> LegacyRowReader::Advance() {
   if (operation_cancelled_) {
-    return Status(StatusCode::kCancelled, "Operation cancelled.");
+    return internal::CancelledError("Operation cancelled.", GCP_ERROR_INFO());
   }
   while (true) {
     auto variant = AdvanceOrFail();

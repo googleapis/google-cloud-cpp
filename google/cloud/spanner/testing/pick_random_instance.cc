@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/spanner/admin/instance_admin_client.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance.h"
@@ -75,7 +76,7 @@ StatusOr<std::string> PickRandomInstance(
   }
 
   if (instance_ids.empty()) {
-    return Status(StatusCode::kUnavailable, "No available instances");
+    return internal::UnavailableError("No available instances", GCP_ERROR_INFO());
   }
 
   auto random_index =

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmarks_config.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/compiler_info.h"
@@ -39,7 +40,7 @@ auto invalid_argument = [](std::string msg) {
   return google::cloud::Status(StatusCode::kInvalidArgument, std::move(msg));
 };
 
-auto status_ok = google::cloud::Status(StatusCode::kOk, "");
+auto status_ok = google::cloud::internal::OkError("", GCP_ERROR_INFO());
 
 std::string insert_job_dr_request_body =
     R"({"jobReference":{"projectId":"bigquery-devtools-drivers")"

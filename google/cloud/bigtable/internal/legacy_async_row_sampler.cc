@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/legacy_async_row_sampler.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include <grpcpp/client_context.h>
 #include <grpcpp/completion_queue.h>
@@ -109,7 +110,7 @@ void LegacyAsyncRowSampler::OnFinish(Status const& status) {
       self->StartIteration();
     } else {
       self->promise_.set_value(
-          Status(StatusCode::kCancelled, "call cancelled"));
+          internal::CancelledError("call cancelled", GCP_ERROR_INFO()));
     }
   });
 }
