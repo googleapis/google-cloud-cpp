@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_connection_ready.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 
 namespace google {
@@ -34,8 +35,7 @@ future<Status> AsyncConnectionReadyFuture::Start() {
 void AsyncConnectionReadyFuture::Notify(bool ok) {
   if (!ok) {
     promise_.set_value(
-        Status(StatusCode::kDeadlineExceeded,
-               "Connection couldn't connect before requested deadline"));
+        internal::DeadlineExceededError("Connection couldn't connect before requested deadline", GCP_ERROR_INFO()));
     return;
   }
   auto state = channel_->GetState(true);
@@ -45,8 +45,7 @@ void AsyncConnectionReadyFuture::Notify(bool ok) {
   }
   if (state == GRPC_CHANNEL_SHUTDOWN) {
     promise_.set_value(
-        Status(StatusCode::kCancelled,
-               "Connection will never succeed because it's shut down."));
+        internal::CancelledError("Connection will never succeed because it's shut down.", GCP_ERROR_INFO()));
     return;
   }
   // If connection was idle, GetState(true) triggered an attempt to connect.
