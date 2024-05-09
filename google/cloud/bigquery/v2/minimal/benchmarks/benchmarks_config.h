@@ -60,7 +60,7 @@ struct Config {
   };
 
   google::cloud::Status ParseCommonArgs(std::vector<std::string> const& args);
-  inline bool CommonFlagsParsed() { return !flags_.empty(); }
+  bool CommonFlagsParsed() { return !flags_.empty(); }
   google::cloud::Status ValidateArgs(std::vector<std::string> const& args);
 
   std::vector<Config::Flag> flags_;
