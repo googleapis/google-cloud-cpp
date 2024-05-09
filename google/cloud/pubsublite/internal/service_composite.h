@@ -152,7 +152,7 @@ class ServiceComposite : public Service {
   absl::optional<promise<Status>> status_promise_{
       promise<Status>{}};  // ABSL_GUARDED_BY(mu_)
   Status status_ = internal::FailedPreconditionError(
-                          "`Start` not called"));  // ABSL_GUARDED_BY(mu_)
+      "`Start` not called");  // ABSL_GUARDED_BY(mu_)
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
