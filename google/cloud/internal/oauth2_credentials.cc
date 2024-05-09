@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
 
 namespace google {
@@ -24,7 +24,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
     absl::optional<std::string> const&, std::string const&) const {
-  return internal::UnimplementedError("The current credentials cannot sign blobs locally", GCP_ERROR_INFO());
+  return internal::UnimplementedError(
+      "The current credentials cannot sign blobs locally", GCP_ERROR_INFO());
 }
 
 StatusOr<std::string> Credentials::universe_domain() const {

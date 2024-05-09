@@ -85,7 +85,8 @@ class AsyncStreamingReadWriteRpcAuth
           initial_context(std::move(initial_context)),
           stream(std::make_unique<
                  AsyncStreamingReadWriteRpcError<Request, Response>>(
-              internal::InternalError("Stream is not yet started.", GCP_ERROR_INFO()))) {}
+              internal::InternalError("Stream is not yet started.",
+                                      GCP_ERROR_INFO()))) {}
 
     std::shared_ptr<grpc::ClientContext> ReleaseInitialContext() {
       std::lock_guard<std::mutex> g{mu};
