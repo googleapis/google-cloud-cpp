@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 
 namespace google {
@@ -35,7 +36,8 @@ class FakeAsyncTimer : public internal::AsyncGrpcOperation {
   bool Notify(bool ok) override {
     internal::OptionsSpan span(options_);
     if (!ok) {
-      promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
+      promise_.set_value(
+          internal::CancelledError("timer canceled", GCP_ERROR_INFO()));
     } else {
       promise_.set_value(deadline_);
     }
