@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/merge_chunk.h"
 #include "google/cloud/spanner/options.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/container/fixed_array.h"
 
@@ -70,8 +71,9 @@ PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
   // Otherwise we require that the first response contains the metadata.
   // Without it, creating the `PartialResultSetSource` should fail.
   if (!source->metadata_) {
-    return Status(StatusCode::kInternal,
-                  "PartialResultSetSource response contained no metadata");
+    return internal::InternalError(
+        "PartialResultSetSource response contained no metadata",
+        GCP_ERROR_INFO());
   }
 
   return {std::move(source)};
@@ -122,7 +124,8 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
 Status PartialResultSetSource::ReadFromStream() {
   absl::optional<PartialResultSet> result_set;
   if (state_ == kFinished || !rows_.empty()) {
-    return Status(StatusCode::kInternal, "PartialResultSetSource state error");
+    return internal::InternalError("PartialResultSetSource state error",
+                                   GCP_ERROR_INFO());
   }
   if (state_ == kReading) {
     result_set = reader_->Read(resume_token_);
@@ -200,8 +203,9 @@ Status PartialResultSetSource::ReadFromStream() {
   auto const n_columns = columns_ ? static_cast<int>(columns_->size()) : 0;
   auto n_rows = n_columns ? n_values / n_columns : 0;
   if (n_columns == 0 && !values_.empty()) {
-    return Status(StatusCode::kInternal,
-                  "PartialResultSetSource metadata is missing row type");
+    return internal::InternalError(
+        "PartialResultSetSource metadata is missing row type",
+        GCP_ERROR_INFO());
   }
 
   // If we didn't receive a resume token, and have not exceeded our buffer

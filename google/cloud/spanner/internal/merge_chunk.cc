@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/merge_chunk.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -22,14 +23,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 Status MergeChunk(google::protobuf::Value& value,  // NOLINT(misc-no-recursion)
                   google::protobuf::Value&& chunk) {
   if (value.kind_case() != chunk.kind_case()) {
-    return Status(StatusCode::kInvalidArgument, "mismatched types");
+    return internal::InvalidArgumentError("mismatched types", GCP_ERROR_INFO());
   }
   switch (value.kind_case()) {
     case google::protobuf::Value::kBoolValue:
     case google::protobuf::Value::kNumberValue:
     case google::protobuf::Value::kNullValue:
     case google::protobuf::Value::kStructValue:
-      return Status(StatusCode::kInvalidArgument, "invalid type");
+      return internal::InvalidArgumentError("invalid type", GCP_ERROR_INFO());
 
     case google::protobuf::Value::kStringValue: {
       *value.mutable_string_value() += chunk.string_value();
@@ -70,7 +71,7 @@ Status MergeChunk(google::protobuf::Value& value,  // NOLINT(misc-no-recursion)
     default:
       break;
   }
-  return Status(StatusCode::kUnknown, "unknown Value type");
+  return internal::UnknownError("unknown Value type", GCP_ERROR_INFO());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
