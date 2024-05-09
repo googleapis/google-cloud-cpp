@@ -26,6 +26,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
@@ -321,10 +322,10 @@ class Value {
   template <typename T>
   StatusOr<T> get() const& {
     if (!TypeProtoIs(T{}, type_))
-      return Status(StatusCode::kUnknown, "wrong type");
+      return internal::UnknownError("wrong type", GCP_ERROR_INFO());
     if (value_.kind_case() == google::protobuf::Value::kNullValue) {
       if (IsOptional<T>::value) return T{};
-      return Status(StatusCode::kUnknown, "null value");
+      return internal::UnknownError("null value", GCP_ERROR_INFO());
     }
     return GetValue(T{}, value_, type_);
   }
@@ -333,10 +334,10 @@ class Value {
   template <typename T>
   StatusOr<T> get() && {
     if (!TypeProtoIs(T{}, type_))
-      return Status(StatusCode::kUnknown, "wrong type");
+      return internal::UnknownError("wrong type", GCP_ERROR_INFO());
     if (value_.kind_case() == google::protobuf::Value::kNullValue) {
       if (IsOptional<T>::value) return T{};
-      return Status(StatusCode::kUnknown, "null value");
+      return internal::UnknownError("null value", GCP_ERROR_INFO());
     }
     auto tag = T{};  // Works around an odd msvc issue
     return GetValue(std::move(tag), std::move(value_), type_);
@@ -633,7 +634,7 @@ class Value {
                                          google::protobuf::Value const& pv,
                                          google::spanner::v1::Type const& pt) {
     if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-      return Status(StatusCode::kUnknown, "missing ENUM");
+      return internal::UnknownError("missing ENUM", GCP_ERROR_INFO());
     }
     auto value = GetValue(std::int64_t{}, pv, pt);
     if (!value) return std::move(value).status();
@@ -648,7 +649,7 @@ class Value {
                                             google::protobuf::Value const& pv,
                                             google::spanner::v1::Type const&) {
     if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-      return Status(StatusCode::kUnknown, "missing PROTO");
+      return internal::UnknownError("missing PROTO", GCP_ERROR_INFO());
     }
     auto bytes = internal::Base64DecodeToBytes(pv.string_value());
     if (!bytes) return std::move(bytes).status();
@@ -668,7 +669,7 @@ class Value {
   static StatusOr<std::vector<T>> GetValue(
       std::vector<T> const&, V&& pv, google::spanner::v1::Type const& pt) {
     if (pv.kind_case() != google::protobuf::Value::kListValue) {
-      return Status(StatusCode::kUnknown, "missing ARRAY");
+      return internal::UnknownError("missing ARRAY", GCP_ERROR_INFO());
     }
     std::vector<T> v;
     for (int i = 0; i < pv.list_value().values().size(); ++i) {
@@ -684,7 +685,7 @@ class Value {
   static StatusOr<std::tuple<Ts...>> GetValue(
       std::tuple<Ts...> const&, V&& pv, google::spanner::v1::Type const& pt) {
     if (pv.kind_case() != google::protobuf::Value::kListValue) {
-      return Status(StatusCode::kUnknown, "missing STRUCT");
+      return internal::UnknownError("missing STRUCT", GCP_ERROR_INFO());
     }
     std::tuple<Ts...> tup;
     Status status;  // OK

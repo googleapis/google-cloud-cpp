@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/query_partition.h"
+#include "google/cloud/internal/make_status.h"
 #include <google/spanner/v1/spanner.pb.h>
 
 namespace google {
@@ -82,16 +83,16 @@ StatusOr<std::string> SerializeQueryPartition(
   if (proto.SerializeToString(&serialized_proto)) {
     return serialized_proto;
   }
-  return Status(StatusCode::kInvalidArgument,
-                "Failed to serialize QueryPartition");
+  return internal::InvalidArgumentError("Failed to serialize QueryPartition",
+                                        GCP_ERROR_INFO());
 }
 
 StatusOr<QueryPartition> DeserializeQueryPartition(
     std::string const& serialized_query_partition) {
   google::spanner::v1::ExecuteSqlRequest proto;
   if (!proto.ParseFromString(serialized_query_partition)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Failed to deserialize into QueryPartition");
+    return internal::InvalidArgumentError(
+        "Failed to deserialize into QueryPartition", GCP_ERROR_INFO());
   }
 
   SqlStatement::ParamType sql_parameters;
