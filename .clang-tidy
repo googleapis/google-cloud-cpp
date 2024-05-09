@@ -61,6 +61,9 @@
 #     Almost any expression of the form `2 * variable` or `long x = a_int * b_int;`
 #     generates an error.
 #
+#  -bugprone-suspicious-include: We `#include "*.cc"` files as a way to squash
+#     them into one translation unit.
+#
 #  -bugprone-unchecked-optional-access: too many false positives in tests.
 #     Despite what the documentation says, this warning appears after
 #     `ASSERT_TRUE(variable)` or `ASSERT_TRUE(variable.has_value())`.
@@ -103,6 +106,7 @@ Checks: >
   -bugprone-easily-swappable-parameters,
   -bugprone-inc-dec-in-conditions,
   -bugprone-implicit-widening-of-multiplication-result,
+  -bugprone-suspicious-include,
   -bugprone-unchecked-optional-access,
   -bugprone-unused-local-non-trivial-variable,
   -bugprone-unused-return-value

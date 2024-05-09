@@ -126,6 +126,8 @@ add_library(
     internal/scaffold_generator.h
     internal/service_code_generator.cc
     internal/service_code_generator.h
+    internal/sources_generator.cc
+    internal/sources_generator.h
     internal/stub_factory_generator.cc
     internal/stub_factory_generator.h
     internal/stub_factory_rest_generator.cc
