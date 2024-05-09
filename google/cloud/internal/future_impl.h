@@ -43,6 +43,7 @@ std::exception_ptr MakeFutureError(std::future_errc ec);
 
 // Forward declare the implementation type as we will need it for some helpers.
 template <typename T>
+// NOLINTNEXTLINE(readability-identifier-naming)
 class future_shared_state;
 
 /**

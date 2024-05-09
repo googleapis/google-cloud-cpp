@@ -22,22 +22,28 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // Forward declare the promise type so we can write some helpers.
 template <typename R>
+// NOLINTNEXTLINE(readability-identifier-naming)
 class promise;
 
 // Forward declare the future type so we can write some helpers.
 template <typename R>
+// NOLINTNEXTLINE(readability-identifier-naming)
 class future;
 
 // Forward declare the specializations for references.
 template <typename R>
+// NOLINTNEXTLINE(readability-identifier-naming)
 class promise<R&>;
 template <typename R>
+// NOLINTNEXTLINE(readability-identifier-naming)
 class future<R&>;
 
 // Forward declare the specialization for `void`.
 template <>
+// NOLINTNEXTLINE(readability-identifier-naming)
 class promise<void>;
 template <>
+// NOLINTNEXTLINE(readability-identifier-naming)
 class future<void>;
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
