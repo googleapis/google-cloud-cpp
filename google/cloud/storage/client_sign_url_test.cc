@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,9 +29,11 @@ namespace {
 
 using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
+using ::testing::StartsWith;
 
 constexpr char kJsonKeyfileContents[] = R"""({
       "type": "service_account",
@@ -109,13 +112,27 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
 
 /// @test Verify that CreateV2SignedUrl() respects the custom endpoint.
 TEST_F(CreateSignedUrlTest, V2SignCustomEndpoint) {
-  std::string custom_endpoint = "https://storage.mydomain.com";
-
-  Client client(Options{}.set<RestEndpointOption>(custom_endpoint));
+  auto const custom_endpoint = std::string{"https://storage.mydomain.com"};
+  
+  Options options = Options{}.set<UnifiedCredentialsOption>(MakeServiceAccountCredentials(kJsonKeyfileContents))
+                             .set<RestEndpointOption>(custom_endpoint);
+  Client client(options);
   StatusOr<std::string> actual =
       client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
-  ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(*actual, HasSubstr(custom_endpoint));
+  EXPECT_THAT(actual, IsOkAndHolds(StartsWith(custom_endpoint)));
+}
+
+/// @test Verify that CreateV2SignedUrl() respects the custom universe domain.
+TEST_F(CreateSignedUrlTest, V2SignCustomUniverseDomain) {
+  auto const custom_ud = std::string{"mydomain.com"};
+
+  Options options = Options{}.set<UnifiedCredentialsOption>(MakeServiceAccountCredentials(kJsonKeyfileContents))
+                             .set<google::cloud::internal::UniverseDomainOption>(custom_ud);
+  Client client(options);
+
+  StatusOr<std::string> actual =
+      client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
+  EXPECT_THAT(actual, IsOkAndHolds(HasSubstr(custom_ud)));
 }
 
 // This is a placeholder service account JSON file that is inactive. It's fine
