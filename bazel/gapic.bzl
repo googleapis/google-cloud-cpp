@@ -26,7 +26,13 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = []):
             this library depends on.
     """
 
-    code_glob = [d + i + f for d in service_dirs for i in ["", "internal/"] for f in ["*.h", "*.cc"]]
+    code_glob = [d + i + f for d in service_dirs for i in [
+        "",
+        "internal/",
+    ] for f in [
+        "*.h",
+        "*.cc",
+    ]]
 
     sources_glob = [d + "internal/*_sources.cc" for d in service_dirs] + [d + "internal/streaming.cc" for d in service_dirs]
 

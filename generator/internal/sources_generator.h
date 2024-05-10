@@ -21,6 +21,7 @@
 #include <google/protobuf/descriptor.h>
 #include <map>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
