@@ -121,6 +121,7 @@ build:msan --config=libcxx
 build:msan --copt=-fsanitize=memory
 build:msan --copt=-fsanitize-memory-track-origins
 build:msan --copt=-fsanitize-memory-use-after-dtor
+build:msan --copt=-fno-exceptions
 build:msan --cxxopt=-I/usr/include/x86_64-unknown-linux-gnu/c++/v1
 build:msan --linkopt=-fsanitize=memory
 build:msan --action_env=LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:/usr/lib64:/usr/lib:/lib64:/lib
