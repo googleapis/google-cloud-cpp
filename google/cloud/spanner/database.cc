@@ -49,7 +49,7 @@ StatusOr<Database> MakeDatabase(std::string const& full_name) {
   std::smatch matches;
   if (!std::regex_match(full_name, matches, re)) {
     return internal::InvalidArgumentError(
-        "Improperly formatted Database: " + full_name, , GCP_ERROR_INFO());
+        "Improperly formatted Database: " + full_name, GCP_ERROR_INFO());
   }
   return Database(Instance(std::move(matches[1]), std::move(matches[2])),
                   std::move(matches[3]));

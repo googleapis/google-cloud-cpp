@@ -51,11 +51,7 @@ Status CleanupStaleInstances(
   // Make sure we're using a regex that matches a random instance name.
   if (name_regex.mark_count() != 1) {
     return internal::InternalError(
-<<<<<<< Updated upstream
         "Instance regex must have a single capture group", GCP_ERROR_INFO());
-=======
-        "Instance regex must have a single capture group");
->>>>>>> Stashed changes
   }
   auto generator = internal::MakeDefaultPRNG();
   auto random_id = spanner_testing::RandomInstanceName(generator);
@@ -131,7 +127,7 @@ Status CleanupStaleInstanceConfigs(
   for (auto const& config : configs) {
     instance_admin_client.DeleteInstanceConfig(config);
   }
-  return Status(, GCP_ERROR_INFO());
+  return Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
