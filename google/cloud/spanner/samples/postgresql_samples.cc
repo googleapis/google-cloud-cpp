@@ -168,7 +168,8 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
         if (*budget1 < transfer_amount) {
           return google::cloud::internal::UnknownError(
               "cannot transfer " + std::to_string(transfer_amount) +
-              " from budget of " + std::to_string(*budget1));
+                  " from budget of " + std::to_string(*budget1),
+              GCP_ERROR_INFO());
         }
         auto budget2 = get_budget(txn, 2, 2);
         if (!budget2) return std::move(budget2).status();
