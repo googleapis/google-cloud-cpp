@@ -22,7 +22,13 @@ service_dirs = [
     "v2/",
 ]
 
-code_glob = [d + i + f for d in service_dirs for i in ["", "internal/"] for f in ["*.h", "*.cc"]]
+code_glob = [d + i + f for d in service_dirs for i in [
+    "",
+    "internal/",
+] for f in [
+    "*.h",
+    "*.cc",
+]]
 
 sources_glob = [d + "internal/*_sources.cc" for d in service_dirs]
 
@@ -33,7 +39,10 @@ filegroup(
 
 filegroup(
     name = "hdrs",
-    srcs = glob(include = code_glob, exclude = sources_glob),
+    srcs = glob(
+        include = code_glob,
+        exclude = sources_glob,
+    ),
 )
 
 filegroup(
