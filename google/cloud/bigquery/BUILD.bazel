@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@google_cloud_cpp//bazel:gapic.bzl", "cc_gapic_library")
 load(":bigquery_rest_testing.bzl", "bigquery_rest_testing_hdrs", "bigquery_rest_testing_srcs")
 load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
 load(":google_cloud_cpp_bigquery_rest.bzl", "google_cloud_cpp_bigquery_rest_hdrs", "google_cloud_cpp_bigquery_rest_srcs")
@@ -35,72 +36,23 @@ service_dirs = [
 
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 
-filegroup(
-    name = "srcs",
-    srcs = glob([d + "*.cc" for d in src_dirs]),
+googleapis_deps = [
+    "@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc",
+    "@com_google_googleapis//google/cloud/bigquery/biglake/v1:biglake_cc_grpc",
+    "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc",
+    "@com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicies_cc_grpc",
+    "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc",
+    "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc",
+    "@com_google_googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc",
+    "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc",
+    "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc",
+]
+
+cc_gapic_library(
+    name = "bigquery",
+    googleapis_deps = googleapis_deps,
+    service_dirs = service_dirs,
 )
-
-filegroup(
-    name = "hdrs",
-    srcs = glob([d + "*.h" for d in src_dirs]),
-)
-
-filegroup(
-    name = "public_hdrs",
-    srcs = glob([d + "*.h" for d in service_dirs]),
-    visibility = ["//:__pkg__"],
-)
-
-filegroup(
-    name = "mocks",
-    srcs = glob([d + "mocks/*.h" for d in service_dirs]),
-    visibility = ["//:__pkg__"],
-)
-
-cc_library(
-    name = "google_cloud_cpp_bigquery",
-    srcs = [":srcs"],
-    hdrs = [":hdrs"],
-    visibility = ["//:__pkg__"],
-    deps = [
-        "//:common",
-        "//:grpc_utils",
-        "@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc",
-        "@com_google_googleapis//google/cloud/bigquery/biglake/v1:biglake_cc_grpc",
-        "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc",
-        "@com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicies_cc_grpc",
-        "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc",
-        "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc",
-        "@com_google_googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc",
-        "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc",
-        "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc",
-    ],
-)
-
-cc_library(
-    name = "google_cloud_cpp_bigquery_mocks",
-    hdrs = [":mocks"],
-    visibility = ["//:__pkg__"],
-    deps = [
-        ":google_cloud_cpp_bigquery",
-        "@com_google_googletest//:gtest",
-    ],
-)
-
-mock_samples_glob = ["samples/mock_*.cc"]
-
-[cc_test(
-    name = sample.replace("/", "_").replace(".cc", ""),
-    srcs = [sample],
-    tags = ["integration-test"],
-    deps = [
-        "//:bigquery",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-    ],
-) for sample in glob(
-    include = [d + "samples/*.cc" for d in service_dirs],
-    exclude = mock_samples_glob,
-)]
 
 [cc_test(
     name = sample.replace("/", "_").replace(".cc", ""),
@@ -110,7 +62,7 @@ mock_samples_glob = ["samples/mock_*.cc"]
         "//:bigquery_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
-) for sample in glob(mock_samples_glob)]
+) for sample in glob(["samples/mock_*.cc"])]
 
 cc_library(
     name = "google_cloud_cpp_bigquery_rest",
