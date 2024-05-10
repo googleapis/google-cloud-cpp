@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "absl/time/time.h"
@@ -93,7 +94,7 @@ StatusOr<MutationBatcherThroughputOptions> ParseArgs(int argc, char* argv[]) {
       if (!value.empty()) continue;
       std::ostringstream os;
       os << "The environment variable " << var << "is not set or empty";
-      return Status(StatusCode::kUnknown, std::move(os).str());
+      return internal::UnknownError(std::move(os).str(), GCP_ERROR_INFO());
     }
     auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value();
     auto const instance_id =
