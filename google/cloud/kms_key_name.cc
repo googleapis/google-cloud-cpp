@@ -39,8 +39,8 @@ StatusOr<KmsKeyName> MakeKmsKeyName(std::string const& full_name) {
       "projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)");
   std::smatch matches;
   if (!std::regex_match(full_name, matches, re)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Improperly formatted KmsKeyName: " + full_name);
+    return internal::InvalidArgumentError("Improperly formatted KmsKeyName: " +
+                                          full_name);
   }
   return KmsKeyName(std::move(matches[1]), std::move(matches[2]),
                     std::move(matches[3]), std::move(matches[4]));

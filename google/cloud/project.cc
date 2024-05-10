@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/project.h"
+#include "google/cloud/internal/make_status.h"
 #include <ostream>
 #include <regex>
 
@@ -38,8 +39,8 @@ StatusOr<Project> MakeProject(std::string const& full_name) {
   std::regex re("projects/([^/]+)");
   std::smatch matches;
   if (!std::regex_match(full_name, matches, re)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Improperly formatted Project: " + full_name);
+    return internal::InvalidArgumentError("Improperly formatted Project: " +
+                                          full_name);
   }
   return Project(std::move(matches[1]));
 }

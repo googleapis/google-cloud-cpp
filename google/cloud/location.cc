@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/location.h"
+#include "google/cloud/internal/make_status.h"
 #include <ostream>
 #include <regex>
 
@@ -44,8 +45,8 @@ StatusOr<Location> MakeLocation(std::string const& full_name) {
   std::regex re("projects/([^/]+)/locations/([^/]+)");
   std::smatch matches;
   if (!std::regex_match(full_name, matches, re)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Improperly formatted Location: " + full_name);
+    return internal::InvalidArgumentError("Improperly formatted Location: " +
+                                          full_name);
   }
   return Location(Project(std::move(matches[1])), std::move(matches[2]));
 }
