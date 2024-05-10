@@ -25,16 +25,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-Status OutOfRange(std::string message) {
-  return internal::OutOfRangeError(std::move(message), GCP_ERROR_INFO());
+Status OutOfRange(std::string message, ErrorInfo info) {
+  return internal::OutOfRangeError(std::move(message), info);
 }
 
 Status PositiveOverflow(std::string const& type) {
-  return OutOfRange(type + " positive overflow");
+  return OutOfRange(type + " positive overflow", GCP_ERROR_INFO());
 }
 
 Status NegativeOverflow(std::string const& type) {
-  return OutOfRange(type + " negative overflow");
+  return OutOfRange(type + " negative overflow", GCP_ERROR_INFO());
 }
 
 }  // namespace
