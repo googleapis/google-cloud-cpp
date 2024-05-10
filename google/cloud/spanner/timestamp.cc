@@ -25,7 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-Status OutOfRange(std::string message, ErrorInfo info) {
+Status OutOfRange(std::string message, internal::ErrorInfoBuilder info) {
   return internal::OutOfRangeError(std::move(message), info);
 }
 
