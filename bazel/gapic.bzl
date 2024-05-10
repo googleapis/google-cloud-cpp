@@ -26,16 +26,18 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = []):
             this library depends on.
     """
 
-    src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
+    code_glob = [d + i + f for d in service_dirs for i in ["", "internal/"] for f in ["*.h", "*.cc"]]
+
+    sources_glob = [d + "internal/*_sources.cc" for d in service_dirs] + [d + "internal/streaming.cc" for d in service_dirs]
 
     native.filegroup(
         name = "srcs",
-        srcs = native.glob([d + "*.cc" for d in src_dirs]),
+        srcs = native.glob(sources_glob),
     )
 
     native.filegroup(
         name = "hdrs",
-        srcs = native.glob([d + "*.h" for d in src_dirs]),
+        srcs = native.glob(include = code_glob, exclude = sources_glob),
     )
 
     native.filegroup(
