@@ -15,6 +15,7 @@
 #include "google/cloud/pubsublite/internal/default_publish_message_transformer.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
 
@@ -22,12 +23,13 @@ namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 
-using ::google::cloud::testing_util::IsProtoEqual;
-
 using google::cloud::internal::Base64Encoder;
 using google::cloud::pubsub::MessageBuilder;
 using google::cloud::pubsublite::v1::PubSubMessage;
+using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using google::protobuf::Timestamp;
+using ::testing::HasSubstr;
 
 MessageBuilder ExamplePubSubMessageBuilder() {
   return MessageBuilder{}
@@ -71,13 +73,13 @@ TEST(DefaultPublishMessageTransformerTest, Timestamp) {
 TEST(DefaultPublishMessageTransformerTest, InvalidTimestamp) {
   PubSubMessage psl_message = ExamplePslMessage();
   *psl_message.mutable_event_time() = Timestamp{};
-  EXPECT_EQ(
-      DefaultPublishMessageTransformer(
-          ExamplePubSubMessageBuilder()
-              .InsertAttribute(EventTimestampAttribute(), "oops")
-              .Build())
-          .status(),
-      (Status{StatusCode::kInvalidArgument, "Not able to parse event time."}));
+  EXPECT_THAT(DefaultPublishMessageTransformer(
+                  ExamplePubSubMessageBuilder()
+                      .InsertAttribute(EventTimestampAttribute(), "oops")
+                      .Build())
+                  .status(),
+              (StatusIs(StatusCode::kInvalidArgument,
+                        HasSubstr("Not able to parse event time."))));
 }
 
 }  // namespace pubsublite_internal

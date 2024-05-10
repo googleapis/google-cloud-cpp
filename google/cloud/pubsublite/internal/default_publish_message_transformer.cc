@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsublite/internal/default_publish_message_transformer.h"
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -41,8 +42,8 @@ StatusOr<PubSubMessage> DefaultPublishMessageTransformer(
       bool valid = m.mutable_event_time()->ParseFromString(
           std::string{decoder.begin(), decoder.end()});
       if (!valid) {
-        return Status{StatusCode::kInvalidArgument,
-                      "Not able to parse event time."};
+        return internal::InvalidArgumentError("Not able to parse event time.",
+                                              GCP_ERROR_INFO());
       }
       continue;
     }

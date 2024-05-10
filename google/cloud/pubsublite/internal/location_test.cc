@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/location.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <deque>
 #include <memory>
@@ -26,6 +27,8 @@ namespace {
 using google::cloud::pubsublite_internal::MakeCloudRegion;
 using google::cloud::pubsublite_internal::MakeCloudZone;
 using google::cloud::pubsublite_internal::MakeLocation;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
 
 TEST(CloudRegion, ValidRegion) {
   std::string str = "first-second";
@@ -39,16 +42,16 @@ TEST(CloudRegion, InvalidRegionNoDash) {
   std::string str = "firstsecond";
   auto region = MakeCloudRegion(str);
   EXPECT_FALSE(region.ok());
-  EXPECT_EQ(region.status(),
-            Status(StatusCode::kInvalidArgument, "Invalid region name"));
+  EXPECT_THAT(region.status(), StatusIs(StatusCode::kInvalidArgument,
+                                        HasSubstr("Invalid region name")));
 }
 
 TEST(CloudRegion, InvalidRegionTooManyDashes) {
   std::string str = "first-second-third";
   auto region = MakeCloudRegion(str);
   EXPECT_FALSE(region.ok());
-  EXPECT_EQ(region.status(),
-            Status(StatusCode::kInvalidArgument, "Invalid region name"));
+  EXPECT_THAT(region.status(), StatusIs(StatusCode::kInvalidArgument,
+                                        HasSubstr("Invalid region name")));
 }
 
 TEST(CloudZone, ValidZone) {
@@ -65,24 +68,24 @@ TEST(CloudZone, InvalidZoneNoDash) {
   std::string str = "firstsecond";
   auto zone = MakeCloudZone(str);
   EXPECT_FALSE(zone.ok());
-  EXPECT_EQ(zone.status(),
-            Status(StatusCode::kInvalidArgument, "Invalid zone name"));
+  EXPECT_THAT(zone.status(), StatusIs(StatusCode::kInvalidArgument,
+                                      HasSubstr("Invalid zone name")));
 }
 
 TEST(CloudZone, InvalidZoneNoTerminalLetter) {
   std::string str = "first-second-notaletter";
   auto zone = MakeCloudZone(str);
   EXPECT_FALSE(zone.ok());
-  EXPECT_EQ(zone.status(),
-            Status(StatusCode::kInvalidArgument, "Invalid zone name"));
+  EXPECT_THAT(zone.status(), StatusIs(StatusCode::kInvalidArgument,
+                                      HasSubstr("Invalid zone name")));
 }
 
 TEST(CloudZone, InvalidZoneTooManyDashes) {
   std::string str = "first-second-t-t";
   auto zone = MakeCloudZone(str);
   EXPECT_FALSE(zone.ok());
-  EXPECT_EQ(zone.status(),
-            Status(StatusCode::kInvalidArgument, "Invalid zone name"));
+  EXPECT_THAT(zone.status(),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("Invalid")));
 }
 
 TEST(Location, ValidCloudRegion) {
@@ -98,8 +101,8 @@ TEST(Location, InvalidCloudRegion) {
   std::string str = "firstsecond";
   auto location = MakeLocation(str);
   EXPECT_FALSE(location.ok());
-  EXPECT_EQ(location.status(),
-            Status(StatusCode::kInvalidArgument, "Invalid location"));
+  EXPECT_THAT(location.status(), StatusIs(StatusCode::kInvalidArgument,
+                                          HasSubstr("Invalid location")));
 }
 
 TEST(Location, ValidCloudZone) {
@@ -116,8 +119,8 @@ TEST(Location, InvalidCloudZone) {
   std::string str = "first-second-notaletter";
   auto location = MakeLocation(str);
   EXPECT_FALSE(location.ok());
-  EXPECT_EQ(location.status(),
-            Status(StatusCode::kInvalidArgument, "Invalid location"));
+  EXPECT_THAT(location.status(), StatusIs(StatusCode::kInvalidArgument,
+                                          HasSubstr("Invalid location")));
 }
 
 }  // namespace

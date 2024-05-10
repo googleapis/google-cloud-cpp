@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/location.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -24,7 +25,7 @@ StatusOr<Location> MakeLocation(std::string const& location) {
   if (possible_zone.ok()) return Location{*possible_zone};
   auto possible_region = MakeCloudRegion(location);
   if (possible_region.ok()) return Location{*possible_region};
-  return Status{StatusCode::kInvalidArgument, "Invalid location"};
+  return internal::InvalidArgumentError("Invalid location", GCP_ERROR_INFO());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,6 +20,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -32,18 +33,19 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using google::cloud::pubsublite::v1::Cursor;
+using google::cloud::pubsublite::v1::InitialPublishRequest;
+using google::cloud::pubsublite::v1::InitialPublishResponse;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::StrictMock;
 using ::testing::WithArg;
-
-using google::cloud::pubsublite::v1::Cursor;
-using google::cloud::pubsublite::v1::InitialPublishRequest;
-using google::cloud::pubsublite::v1::InitialPublishResponse;
 
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::PublishRequest;
@@ -133,8 +135,8 @@ TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
     message_promise.get_future().then([i](future<StatusOr<Cursor>> f) {
       auto status = f.get();
       EXPECT_FALSE(status.ok());
-      EXPECT_EQ(status.status(),
-                Status(StatusCode::kUnavailable, std::to_string(i)));
+      EXPECT_THAT(status.status(), StatusIs(StatusCode::kUnavailable,
+                                            HasSubstr(std::to_string(i))));
     });
     message_with_promises.emplace_back(message, std::move(message_promise));
     messages.push_back(std::move(message));
@@ -168,8 +170,8 @@ TEST_F(PartitionPublisherBatchingTest,
     message_promise.get_future().then([i](future<StatusOr<Cursor>> f) {
       auto status = f.get();
       EXPECT_FALSE(status.ok());
-      EXPECT_EQ(status.status(),
-                Status(StatusCode::kUnavailable, std::to_string(i)));
+      EXPECT_THAT(status.status(), StatusIs(StatusCode::kUnavailable,
+                                            HasSubstr(std::to_string(i))));
     });
     message_with_promises.emplace_back(message, std::move(message_promise));
     messages.push_back(std::move(message));
@@ -421,8 +423,8 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   for (auto& publish_message_resp : publish_message_futures) {
     auto message_response = publish_message_resp.get();
     EXPECT_FALSE(message_response);
-    EXPECT_EQ(message_response.status(),
-              Status(StatusCode::kAborted, "`Shutdown` called"));
+    EXPECT_THAT(message_response.status(),
+                StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
   }
 
   // shouldn't do anything b/c shutdown
@@ -524,11 +526,11 @@ TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
   pr.mutable_message_response()->mutable_start_cursor()->set_offset(0);
   promise<absl::optional<PublishResponse>> read_promise1;
   read_promise.set_value(std::move(pr));
-
-  EXPECT_EQ(publisher_start_future.get(),
-            Status(StatusCode::kFailedPrecondition,
-                   "Server sent message response when no batches were "
-                   "outstanding."));
+  EXPECT_THAT(
+      publisher_start_future.get(),
+      StatusIs(StatusCode::kFailedPrecondition,
+               HasSubstr("Server sent message response when no batches were "
+                         "outstanding.")));
 
   // shouldn't do anything b/c lifecycle ended
   publisher_->Flush();
@@ -541,10 +543,11 @@ TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
 
   auto message_response = publish_future.get();
   EXPECT_FALSE(message_response);
-  EXPECT_EQ(message_response.status(),
-            Status(StatusCode::kFailedPrecondition,
-                   "Server sent message response when no batches were "
-                   "outstanding."));
+  EXPECT_THAT(
+      message_response.status(),
+      StatusIs(StatusCode::kFailedPrecondition,
+               HasSubstr("Server sent message response when no batches were "
+                         "outstanding.")));
 }
 
 TEST_F(PartitionPublisherTest, PublishAfterShutdown) {
@@ -584,8 +587,8 @@ TEST_F(PartitionPublisherTest, PublishAfterShutdown) {
   auto publish_future = publisher_->Publish(PubSubMessage::default_instance());
   auto invalid_publish_response = publish_future.get();
   EXPECT_FALSE(invalid_publish_response.ok());
-  EXPECT_EQ(invalid_publish_response.status(),
-            (Status{StatusCode::kAborted, "`Shutdown` called"}));
+  EXPECT_THAT(invalid_publish_response.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
 }
 
 TEST_F(PartitionPublisherTest, ShutdownWaitsForReadResponse) {

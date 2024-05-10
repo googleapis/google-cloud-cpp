@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/message_metadata.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -29,8 +30,8 @@ StatusOr<MessageMetadata> MakeMessageMetadata(std::string const& input) {
     cursor.set_offset(offset);
     return MessageMetadata{partition, std::move(cursor)};
   }
-  return Status{StatusCode::kInvalidArgument,
-                "Not able to parse `MessageMetadata`"};
+  return internal::InvalidArgumentError("Not able to parse `MessageMetadata`",
+                                        GCP_ERROR_INFO());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

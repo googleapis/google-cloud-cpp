@@ -28,6 +28,8 @@ using ::google::cloud::pubsublite::MakeMessageMetadata;
 using ::google::cloud::pubsublite::MessageMetadata;
 using ::google::cloud::pubsublite::v1::Cursor;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
 
 TEST(MessageMetadata, ValidParse) {
   std::int64_t partition = 2389457;
@@ -45,16 +47,18 @@ TEST(MessageMetadata, InvalidParseBadPartition) {
   std::string input = "q2432asdf:324572368";
   auto mm = MakeMessageMetadata(input);
   EXPECT_FALSE(mm.ok());
-  EXPECT_EQ(mm.status(), Status(StatusCode::kInvalidArgument,
-                                "Not able to parse `MessageMetadata`"));
+  EXPECT_THAT(mm.status(),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Not able to parse `MessageMetadata`")));
 }
 
 TEST(MessageMetadata, InvalidParseBadOffset) {
   std::string input = "324572368:q243223423f";
   auto mm = MakeMessageMetadata(input);
   EXPECT_FALSE(mm.ok());
-  EXPECT_EQ(mm.status(), Status(StatusCode::kInvalidArgument,
-                                "Not able to parse `MessageMetadata`"));
+  EXPECT_THAT(mm.status(),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Not able to parse `MessageMetadata`")));
 }
 
 TEST(MessageMetadata, Serialize) {
