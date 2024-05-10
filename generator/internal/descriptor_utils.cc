@@ -20,7 +20,6 @@
 #include "generator/internal/format_method_comments.h"
 #include "generator/internal/http_option_utils.h"
 #include "generator/internal/longrunning.h"
-#include "google/cloud/internal/make_status.h"
 #include "generator/internal/pagination.h"
 #include "generator/internal/request_id.h"
 #include "generator/internal/resolve_method_return.h"
@@ -30,6 +29,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
@@ -972,12 +972,14 @@ Status PrintMethod(google::protobuf::MethodDescriptor const& method,
 
   if (matching_patterns.empty())
     return internal::NotFoundError(
-                  absl::StrCat(file, ":", line, ": no matching patterns for: ",
-                               method.full_name()), GCP_ERROR_INFO());
+        absl::StrCat(file, ":", line,
+                     ": no matching patterns for: ", method.full_name()),
+        GCP_ERROR_INFO());
   if (matching_patterns.size() > 1)
     return internal::InternalError(
-        absl::StrCat(file, ":", line, ": more than one pattern found for: ",
-                     method.full_name()), GCP_ERROR_INFO());
+        absl::StrCat(file, ":", line,
+                     ": more than one pattern found for: ", method.full_name()),
+        GCP_ERROR_INFO());
   for (auto const& f : matching_patterns[0].fragments()) {
     printer.Print(line, file, vars, f(method));
   }
