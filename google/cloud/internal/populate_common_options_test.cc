@@ -94,7 +94,6 @@ TEST(PopulateCommonOptions, InsecureCredentialsWithEmulator) {
   EXPECT_EQ(v.name, "InsecureCredentialsConfig");
 }
 
-// TODO(#13191): Simplify into multiple tests.
 TEST(PopulateCommonOptions, EndpointAuthority) {
   Options optionses[] = {
       Options{},
