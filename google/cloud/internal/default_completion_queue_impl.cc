@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/default_completion_queue_impl.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <grpcpp/alarm.h>
 #include <sstream>
@@ -96,7 +97,7 @@ class AsyncTimerFuture : public AsyncGrpcOperation {
   }
 
   static ValueType Cancelled() {
-    return Status{StatusCode::kCancelled, "timer canceled"};
+    return internal::CancelledError("timer canceled", GCP_ERROR_INFO());
   }
 
   enum State { kIdle, kSet, kCancelled };

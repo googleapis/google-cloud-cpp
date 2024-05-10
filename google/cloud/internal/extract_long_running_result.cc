@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/extract_long_running_result.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -28,19 +29,20 @@ Status ExtractOperationResultMetadataImpl(
   if (!op) return std::move(op).status();
   if (op->has_error()) return MakeStatusFromRpcError(op->error());
   if (!op->has_metadata()) {
-    return Status(StatusCode::kInternal,
-                  location +
-                      "() cannot extract value from operation without error or "
-                      "metadata, name=" +
-                      op->name());
+    return internal::InternalError(location +
+                                       "() cannot extract value "
+                                       "from operation without error or "
+                                       "metadata, name=" +
+                                       op->name(),
+                                   GCP_ERROR_INFO());
   }
   google::protobuf::Any const& any = op->metadata();
   if (!validate_any(any)) {
-    return Status(
-        StatusCode::kInternal,
-        location +
-            "() operation completed with an invalid metadata type, name=" +
-            op->name());
+    return internal::InternalError(location +
+                                       "() operation completed "
+                                       "with an invalid metadata type, name=" +
+                                       op->name(),
+                                   GCP_ERROR_INFO());
   }
   any.UnpackTo(&result);
   return Status{};
@@ -54,19 +56,20 @@ Status ExtractOperationResultResponseImpl(
   if (!op) return std::move(op).status();
   if (op->has_error()) return MakeStatusFromRpcError(op->error());
   if (!op->has_response()) {
-    return Status(StatusCode::kInternal,
-                  location +
-                      "() cannot extract value from operation without error or "
-                      "response, name=" +
-                      op->name());
+    return internal::InternalError(location +
+                                       "() cannot extract value "
+                                       "from operation without error or "
+                                       "response, name=" +
+                                       op->name(),
+                                   GCP_ERROR_INFO());
   }
   google::protobuf::Any const& any = op->response();
   if (!validate_any(any)) {
-    return Status(
-        StatusCode::kInternal,
-        location +
-            "() operation completed with an invalid response type, name=" +
-            op->name());
+    return internal::InternalError(location +
+                                       "() operation completed "
+                                       "with an invalid response type, name=" +
+                                       op->name(),
+                                   GCP_ERROR_INFO());
   }
   any.UnpackTo(&result);
   return Status{};
