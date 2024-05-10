@@ -60,22 +60,21 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   VarsDictionary service_vars = CreateServiceVars(*service, vars);
   auto method_vars = CreateMethodVars(*service, service_config, service_vars);
-  bool const generate_grpc_transport = [&] {
-    auto iter = service_vars.find("generate_grpc_transport");
-    if (iter == service_vars.end()) return true;
+  auto get_flag = [&](std::string const& key, bool default_value = false) {
+    auto iter = service_vars.find(key);
+    if (iter == service_vars.end()) return default_value;
     return iter->second == "true";
-  }();
+  };
+  bool const generate_grpc_transport =
+      get_flag("generate_grpc_transport", true);
 
-  auto const omit_client = service_vars.find("omit_client");
-  if (omit_client == service_vars.end() || omit_client->second != "true") {
+  if (!get_flag("omit_client")) {
     code_generators.push_back(std::make_unique<ClientGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(std::make_unique<SampleGenerator>(
         service, service_vars, method_vars, context));
   }
-  auto const omit_connection = service_vars.find("omit_connection");
-  if (omit_connection == service_vars.end() ||
-      omit_connection->second != "true") {
+  if (!get_flag("omit_connection")) {
     if (generate_grpc_transport) {
       code_generators.push_back(std::make_unique<ConnectionImplGenerator>(
           service, service_vars, method_vars, context));
@@ -98,13 +97,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     code_generators.push_back(std::make_unique<TracingConnectionGenerator>(
         service, service_vars, method_vars, context));
   }
-  auto const omit_stub_factory = service_vars.find("omit_stub_factory");
-  if (omit_stub_factory == service_vars.end() ||
-      omit_stub_factory->second != "true") {
-    if (generate_grpc_transport) {
-      code_generators.push_back(std::make_unique<StubFactoryGenerator>(
-          service, service_vars, method_vars, context));
-    }
+  if (!get_flag("omit_stub_factory") && generate_grpc_transport) {
+    code_generators.push_back(std::make_unique<StubFactoryGenerator>(
+        service, service_vars, method_vars, context));
   }
   auto const forwarding_headers = service_vars.find("forwarding_product_path");
   if (forwarding_headers != service_vars.end() &&
@@ -136,18 +131,12 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
         service, service_vars, method_vars, context));
   }
 
-  auto const generate_round_robin_generator =
-      service_vars.find("generate_round_robin_decorator");
-  if (generate_round_robin_generator != service_vars.end() &&
-      generate_round_robin_generator->second == "true") {
+  if (get_flag("generate_round_robin_decorator")) {
     code_generators.push_back(std::make_unique<RoundRobinDecoratorGenerator>(
         service, service_vars, method_vars, context));
   }
 
-  auto const generate_rest_transport =
-      service_vars.find("generate_rest_transport");
-  if (generate_rest_transport != service_vars.end() &&
-      generate_rest_transport->second == "true") {
+  if (get_flag("generate_rest_transport")) {
     // All REST interfaces postdate the change to the format of our inline
     // namespace name, so we never need to add a backwards-compatibility alias.
     auto rest_service_vars = service_vars;
