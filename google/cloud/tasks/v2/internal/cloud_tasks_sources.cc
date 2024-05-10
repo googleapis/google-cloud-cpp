@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/tasks/v2/cloudtasks.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/tasks/v2/cloud_tasks_client.cc"
 #include "google/cloud/tasks/v2/cloud_tasks_connection.cc"
 #include "google/cloud/tasks/v2/cloud_tasks_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/tasks/v2/internal/cloud_tasks_stub_factory.cc"
 #include "google/cloud/tasks/v2/internal/cloud_tasks_tracing_connection.cc"
 #include "google/cloud/tasks/v2/internal/cloud_tasks_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

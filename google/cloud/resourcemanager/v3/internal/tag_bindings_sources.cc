@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/resourcemanager/v3/tag_bindings.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/resourcemanager/v3/internal/tag_bindings_auth_decorator.cc"
 #include "google/cloud/resourcemanager/v3/internal/tag_bindings_connection_impl.cc"
 #include "google/cloud/resourcemanager/v3/internal/tag_bindings_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/resourcemanager/v3/tag_bindings_client.cc"
 #include "google/cloud/resourcemanager/v3/tag_bindings_connection.cc"
 #include "google/cloud/resourcemanager/v3/tag_bindings_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

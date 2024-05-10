@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/cloudcontrolspartner/v1/core.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_client.cc"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_connection.cc"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_stub_factory.cc"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_tracing_connection.cc"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/networkservices/v1/network_services.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/networkservices/v1/internal/network_services_auth_decorator.cc"
 #include "google/cloud/networkservices/v1/internal/network_services_connection_impl.cc"
 #include "google/cloud/networkservices/v1/internal/network_services_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/networkservices/v1/network_services_client.cc"
 #include "google/cloud/networkservices/v1/network_services_connection.cc"
 #include "google/cloud/networkservices/v1/network_services_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

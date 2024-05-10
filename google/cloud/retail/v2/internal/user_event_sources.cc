@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/retail/v2/user_event_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/retail/v2/internal/user_event_auth_decorator.cc"
 #include "google/cloud/retail/v2/internal/user_event_connection_impl.cc"
 #include "google/cloud/retail/v2/internal/user_event_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/retail/v2/user_event_client.cc"
 #include "google/cloud/retail/v2/user_event_connection.cc"
 #include "google/cloud/retail/v2/user_event_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

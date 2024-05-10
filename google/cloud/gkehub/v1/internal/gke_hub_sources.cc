@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/gkehub/v1/gke_hub_client.cc"
 #include "google/cloud/gkehub/v1/gke_hub_connection.cc"
 #include "google/cloud/gkehub/v1/gke_hub_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/gkehub/v1/internal/gke_hub_stub_factory.cc"
 #include "google/cloud/gkehub/v1/internal/gke_hub_tracing_connection.cc"
 #include "google/cloud/gkehub/v1/internal/gke_hub_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

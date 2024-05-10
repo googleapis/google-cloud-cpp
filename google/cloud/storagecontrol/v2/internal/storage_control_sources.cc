@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/storage/control/v2/storage_control.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/storagecontrol/v2/internal/storage_control_auth_decorator.cc"
 #include "google/cloud/storagecontrol/v2/internal/storage_control_connection_impl.cc"
 #include "google/cloud/storagecontrol/v2/internal/storage_control_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/storagecontrol/v2/storage_control_client.cc"
 #include "google/cloud/storagecontrol/v2/storage_control_connection.cc"
 #include "google/cloud/storagecontrol/v2/storage_control_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

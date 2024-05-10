@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/aiplatform/v1/persistent_resource_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/aiplatform/v1/internal/persistent_resource_auth_decorator.cc"
 #include "google/cloud/aiplatform/v1/internal/persistent_resource_connection_impl.cc"
 #include "google/cloud/aiplatform/v1/internal/persistent_resource_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/aiplatform/v1/persistent_resource_client.cc"
 #include "google/cloud/aiplatform/v1/persistent_resource_connection.cc"
 #include "google/cloud/aiplatform/v1/persistent_resource_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contentwarehouse/v1/document_schema_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/contentwarehouse/v1/document_schema_client.cc"
 #include "google/cloud/contentwarehouse/v1/document_schema_connection.cc"
 #include "google/cloud/contentwarehouse/v1/document_schema_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_stub_factory.cc"
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_tracing_connection.cc"
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

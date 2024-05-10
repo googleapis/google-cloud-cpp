@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/v2/participant.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_es/internal/participants_auth_decorator.cc"
 #include "google/cloud/dialogflow_es/internal/participants_connection_impl.cc"
 #include "google/cloud/dialogflow_es/internal/participants_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_es/participants_client.cc"
 #include "google/cloud/dialogflow_es/participants_connection.cc"
 #include "google/cloud/dialogflow_es/participants_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

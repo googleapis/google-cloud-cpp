@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/biglake/v1/metastore.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_auth_decorator.cc"
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_connection_impl.cc"
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/bigquery/biglake/v1/metastore_client.cc"
 #include "google/cloud/bigquery/biglake/v1/metastore_connection.cc"
 #include "google/cloud/bigquery/biglake/v1/metastore_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

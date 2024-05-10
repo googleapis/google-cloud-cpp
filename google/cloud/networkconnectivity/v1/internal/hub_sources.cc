@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/networkconnectivity/v1/hub.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/networkconnectivity/v1/hub_client.cc"
 #include "google/cloud/networkconnectivity/v1/hub_connection.cc"
 #include "google/cloud/networkconnectivity/v1/hub_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/networkconnectivity/v1/internal/hub_stub_factory.cc"
 #include "google/cloud/networkconnectivity/v1/internal/hub_tracing_connection.cc"
 #include "google/cloud/networkconnectivity/v1/internal/hub_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

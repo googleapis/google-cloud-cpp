@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vmmigration/v1/vmmigration.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/vmmigration/v1/internal/vm_migration_auth_decorator.cc"
 #include "google/cloud/vmmigration/v1/internal/vm_migration_connection_impl.cc"
 #include "google/cloud/vmmigration/v1/internal/vm_migration_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/vmmigration/v1/vm_migration_client.cc"
 #include "google/cloud/vmmigration/v1/vm_migration_connection.cc"
 #include "google/cloud/vmmigration/v1/vm_migration_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

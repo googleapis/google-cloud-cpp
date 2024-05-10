@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataproc/v1/autoscaling_policies.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dataproc/v1/autoscaling_policy_client.cc"
 #include "google/cloud/dataproc/v1/autoscaling_policy_connection.cc"
 #include "google/cloud/dataproc/v1/autoscaling_policy_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_stub_factory.cc"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_tracing_connection.cc"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

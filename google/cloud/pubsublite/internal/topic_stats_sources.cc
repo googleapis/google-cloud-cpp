@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/pubsublite/v1/topic_stats.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/pubsublite/internal/topic_stats_auth_decorator.cc"
 #include "google/cloud/pubsublite/internal/topic_stats_connection_impl.cc"
 #include "google/cloud/pubsublite/internal/topic_stats_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/pubsublite/topic_stats_client.cc"
 #include "google/cloud/pubsublite/topic_stats_connection.cc"
 #include "google/cloud/pubsublite/topic_stats_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

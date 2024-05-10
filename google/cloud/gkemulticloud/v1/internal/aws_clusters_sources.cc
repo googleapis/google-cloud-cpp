@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkemulticloud/v1/aws_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/gkemulticloud/v1/aws_clusters_client.cc"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection.cc"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_stub_factory.cc"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_tracing_connection.cc"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

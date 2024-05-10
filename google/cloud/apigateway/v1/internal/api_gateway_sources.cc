@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/apigateway/v1/api_gateway_client.cc"
 #include "google/cloud/apigateway/v1/api_gateway_connection.cc"
 #include "google/cloud/apigateway/v1/api_gateway_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/apigateway/v1/internal/api_gateway_stub_factory.cc"
 #include "google/cloud/apigateway/v1/internal/api_gateway_tracing_connection.cc"
 #include "google/cloud/apigateway/v1/internal/api_gateway_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

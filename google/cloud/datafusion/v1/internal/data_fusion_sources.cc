@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datafusion/v1/datafusion.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/datafusion/v1/data_fusion_client.cc"
 #include "google/cloud/datafusion/v1/data_fusion_connection.cc"
 #include "google/cloud/datafusion/v1/data_fusion_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/datafusion/v1/internal/data_fusion_stub_factory.cc"
 #include "google/cloud/datafusion/v1/internal/data_fusion_tracing_connection.cc"
 #include "google/cloud/datafusion/v1/internal/data_fusion_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

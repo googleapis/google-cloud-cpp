@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v2/language_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/language/v2/internal/language_auth_decorator.cc"
 #include "google/cloud/language/v2/internal/language_connection_impl.cc"
 #include "google/cloud/language/v2/internal/language_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/language/v2/language_client.cc"
 #include "google/cloud/language/v2/language_connection.cc"
 #include "google/cloud/language/v2/language_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

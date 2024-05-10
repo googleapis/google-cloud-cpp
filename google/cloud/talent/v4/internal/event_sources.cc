@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/talent/v4/event_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/talent/v4/event_client.cc"
 #include "google/cloud/talent/v4/event_connection.cc"
 #include "google/cloud/talent/v4/event_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/talent/v4/internal/event_stub_factory.cc"
 #include "google/cloud/talent/v4/internal/event_tracing_connection.cc"
 #include "google/cloud/talent/v4/internal/event_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

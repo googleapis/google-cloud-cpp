@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/tpu/v2/cloud_tpu.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/tpu/v2/internal/tpu_auth_decorator.cc"
 #include "google/cloud/tpu/v2/internal/tpu_connection_impl.cc"
 #include "google/cloud/tpu/v2/internal/tpu_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/tpu/v2/tpu_client.cc"
 #include "google/cloud/tpu/v2/tpu_connection.cc"
 #include "google/cloud/tpu/v2/tpu_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

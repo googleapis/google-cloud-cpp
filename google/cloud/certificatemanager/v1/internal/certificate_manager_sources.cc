@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/certificatemanager/v1/certificate_manager_client.cc"
 #include "google/cloud/certificatemanager/v1/certificate_manager_connection.cc"
 #include "google/cloud/certificatemanager/v1/certificate_manager_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/certificatemanager/v1/internal/certificate_manager_stub_factory.cc"
 #include "google/cloud/certificatemanager/v1/internal/certificate_manager_tracing_connection.cc"
 #include "google/cloud/certificatemanager/v1/internal/certificate_manager_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

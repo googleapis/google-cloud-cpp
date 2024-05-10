@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/cx/v3/transition_route_group.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_auth_decorator.cc"
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_connection_impl.cc"
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_cx/transition_route_groups_client.cc"
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection.cc"
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

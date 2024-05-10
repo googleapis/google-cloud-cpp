@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/kms/v1/ekm_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/kms/v1/ekm_client.cc"
 #include "google/cloud/kms/v1/ekm_connection.cc"
 #include "google/cloud/kms/v1/ekm_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/kms/v1/internal/ekm_stub_factory.cc"
 #include "google/cloud/kms/v1/internal/ekm_tracing_connection.cc"
 #include "google/cloud/kms/v1/internal/ekm_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

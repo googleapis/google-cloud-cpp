@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/resourcemanager/v3/folders.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/resourcemanager/v3/folders_client.cc"
 #include "google/cloud/resourcemanager/v3/folders_connection.cc"
 #include "google/cloud/resourcemanager/v3/folders_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/resourcemanager/v3/internal/folders_stub_factory.cc"
 #include "google/cloud/resourcemanager/v3/internal/folders_tracing_connection.cc"
 #include "google/cloud/resourcemanager/v3/internal/folders_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

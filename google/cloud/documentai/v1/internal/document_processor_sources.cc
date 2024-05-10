@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/documentai/v1/document_processor_client.cc"
 #include "google/cloud/documentai/v1/document_processor_connection.cc"
 #include "google/cloud/documentai/v1/document_processor_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/documentai/v1/internal/document_processor_stub_factory.cc"
 #include "google/cloud/documentai/v1/internal/document_processor_tracing_connection.cc"
 #include "google/cloud/documentai/v1/internal/document_processor_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

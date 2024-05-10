@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/policysimulator/v1/simulator.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/policysimulator/v1/internal/simulator_auth_decorator.cc"
 #include "google/cloud/policysimulator/v1/internal/simulator_connection_impl.cc"
 #include "google/cloud/policysimulator/v1/internal/simulator_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/policysimulator/v1/simulator_client.cc"
 #include "google/cloud/policysimulator/v1/simulator_connection.cc"
 #include "google/cloud/policysimulator/v1/simulator_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

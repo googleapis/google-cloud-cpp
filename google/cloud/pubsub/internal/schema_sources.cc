@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/pubsub/v1/schema.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/pubsub/internal/schema_auth_decorator.cc"
 #include "google/cloud/pubsub/internal/schema_connection_impl.cc"
 #include "google/cloud/pubsub/internal/schema_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/pubsub/schema_client.cc"
 #include "google/cloud/pubsub/schema_connection.cc"
 #include "google/cloud/pubsub/schema_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

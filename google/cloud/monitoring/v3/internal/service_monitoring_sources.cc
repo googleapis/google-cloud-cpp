@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/v3/service_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/monitoring/v3/internal/service_monitoring_auth_decorator.cc"
 #include "google/cloud/monitoring/v3/internal/service_monitoring_connection_impl.cc"
 #include "google/cloud/monitoring/v3/internal/service_monitoring_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/monitoring/v3/service_monitoring_client.cc"
 #include "google/cloud/monitoring/v3/service_monitoring_connection.cc"
 #include "google/cloud/monitoring/v3/service_monitoring_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

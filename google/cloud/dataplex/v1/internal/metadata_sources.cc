@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataplex/v1/metadata.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dataplex/v1/internal/metadata_auth_decorator.cc"
 #include "google/cloud/dataplex/v1/internal/metadata_connection_impl.cc"
 #include "google/cloud/dataplex/v1/internal/metadata_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dataplex/v1/metadata_client.cc"
 #include "google/cloud/dataplex/v1/metadata_connection.cc"
 #include "google/cloud/dataplex/v1/metadata_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

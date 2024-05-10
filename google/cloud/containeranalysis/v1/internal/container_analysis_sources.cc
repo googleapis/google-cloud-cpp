@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/containeranalysis/v1/container_analysis_client.cc"
 #include "google/cloud/containeranalysis/v1/container_analysis_connection.cc"
 #include "google/cloud/containeranalysis/v1/container_analysis_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_stub_factory.cc"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_tracing_connection.cc"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

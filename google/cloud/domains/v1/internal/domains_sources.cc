@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/domains/v1/domains.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/domains/v1/domains_client.cc"
 #include "google/cloud/domains/v1/domains_connection.cc"
 #include "google/cloud/domains/v1/domains_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/domains/v1/internal/domains_stub_factory.cc"
 #include "google/cloud/domains/v1/internal/domains_tracing_connection.cc"
 #include "google/cloud/domains/v1/internal/domains_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

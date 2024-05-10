@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/v2/answer_record.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_es/answer_records_client.cc"
 #include "google/cloud/dialogflow_es/answer_records_connection.cc"
 #include "google/cloud/dialogflow_es/answer_records_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_es/internal/answer_records_stub_factory.cc"
 #include "google/cloud/dialogflow_es/internal/answer_records_tracing_connection.cc"
 #include "google/cloud/dialogflow_es/internal/answer_records_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

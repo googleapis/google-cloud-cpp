@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/confidentialcomputing/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_client.cc"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection.cc"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub_factory.cc"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_tracing_connection.cc"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

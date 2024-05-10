@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/support/v2/comment_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/support/v2/comment_client.cc"
 #include "google/cloud/support/v2/comment_connection.cc"
 #include "google/cloud/support/v2/comment_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/support/v2/internal/comment_stub_factory.cc"
 #include "google/cloud/support/v2/internal/comment_tracing_connection.cc"
 #include "google/cloud/support/v2/internal/comment_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

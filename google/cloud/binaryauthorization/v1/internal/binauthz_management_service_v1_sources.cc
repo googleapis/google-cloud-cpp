@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/binaryauthorization/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_client.cc"
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_connection.cc"
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_stub_factory.cc"
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_tracing_connection.cc"
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/appengine/v1/appengine.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/appengine/v1/firewall_client.cc"
 #include "google/cloud/appengine/v1/firewall_connection.cc"
 #include "google/cloud/appengine/v1/firewall_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/appengine/v1/internal/firewall_stub_factory.cc"
 #include "google/cloud/appengine/v1/internal/firewall_tracing_connection.cc"
 #include "google/cloud/appengine/v1/internal/firewall_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

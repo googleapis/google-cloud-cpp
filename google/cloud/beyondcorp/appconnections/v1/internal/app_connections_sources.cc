@@ -17,6 +17,7 @@
 // source:
 // google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/beyondcorp/appconnections/v1/app_connections_client.cc"
 #include "google/cloud/beyondcorp/appconnections/v1/app_connections_connection.cc"
 #include "google/cloud/beyondcorp/appconnections/v1/app_connections_connection_idempotency_policy.cc"
@@ -29,3 +30,4 @@
 #include "google/cloud/beyondcorp/appconnections/v1/internal/app_connections_stub_factory.cc"
 #include "google/cloud/beyondcorp/appconnections/v1/internal/app_connections_tracing_connection.cc"
 #include "google/cloud/beyondcorp/appconnections/v1/internal/app_connections_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

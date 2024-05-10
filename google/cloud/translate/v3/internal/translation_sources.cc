@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/translate/v3/translation_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/translate/v3/internal/translation_auth_decorator.cc"
 #include "google/cloud/translate/v3/internal/translation_connection_impl.cc"
 #include "google/cloud/translate/v3/internal/translation_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/translate/v3/translation_client.cc"
 #include "google/cloud/translate/v3/translation_connection.cc"
 #include "google/cloud/translate/v3/translation_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

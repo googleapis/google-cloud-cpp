@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/api/serviceusage/v1/serviceusage.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/serviceusage/v1/internal/service_usage_auth_decorator.cc"
 #include "google/cloud/serviceusage/v1/internal/service_usage_connection_impl.cc"
 #include "google/cloud/serviceusage/v1/internal/service_usage_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/serviceusage/v1/service_usage_client.cc"
 #include "google/cloud/serviceusage/v1/service_usage_connection.cc"
 #include "google/cloud/serviceusage/v1/service_usage_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

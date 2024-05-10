@@ -17,6 +17,7 @@
 // source:
 // google/cloud/securitycentermanagement/v1/security_center_management.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_auth_decorator.cc"
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_connection_impl.cc"
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_logging_decorator.cc"
@@ -29,3 +30,4 @@
 #include "google/cloud/securitycentermanagement/v1/security_center_management_client.cc"
 #include "google/cloud/securitycentermanagement/v1/security_center_management_connection.cc"
 #include "google/cloud/securitycentermanagement/v1/security_center_management_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

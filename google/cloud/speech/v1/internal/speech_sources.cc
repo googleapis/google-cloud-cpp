@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/speech/v1/internal/speech_auth_decorator.cc"
 #include "google/cloud/speech/v1/internal/speech_connection_impl.cc"
 #include "google/cloud/speech/v1/internal/speech_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/speech/v1/speech_client.cc"
 #include "google/cloud/speech/v1/speech_connection.cc"
 #include "google/cloud/speech/v1/speech_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

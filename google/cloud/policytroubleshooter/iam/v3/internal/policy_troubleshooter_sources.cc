@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/policytroubleshooter/iam/v3/troubleshooter.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_auth_decorator.cc"
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_connection_impl.cc"
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_client.cc"
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection.cc"
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

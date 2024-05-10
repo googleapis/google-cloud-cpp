@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/workstations/v1/workstations.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/workstations/v1/internal/workstations_auth_decorator.cc"
 #include "google/cloud/workstations/v1/internal/workstations_connection_impl.cc"
 #include "google/cloud/workstations/v1/internal/workstations_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/workstations/v1/workstations_client.cc"
 #include "google/cloud/workstations/v1/workstations_connection.cc"
 #include "google/cloud/workstations/v1/workstations_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

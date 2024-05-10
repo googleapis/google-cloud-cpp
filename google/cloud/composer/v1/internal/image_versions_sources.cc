@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/composer/v1/image_versions_client.cc"
 #include "google/cloud/composer/v1/image_versions_connection.cc"
 #include "google/cloud/composer/v1/image_versions_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/composer/v1/internal/image_versions_stub_factory.cc"
 #include "google/cloud/composer/v1/internal/image_versions_tracing_connection.cc"
 #include "google/cloud/composer/v1/internal/image_versions_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

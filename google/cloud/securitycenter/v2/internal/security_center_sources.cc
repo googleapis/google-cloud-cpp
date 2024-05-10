@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/securitycenter/v2/securitycenter_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/securitycenter/v2/internal/security_center_auth_decorator.cc"
 #include "google/cloud/securitycenter/v2/internal/security_center_connection_impl.cc"
 #include "google/cloud/securitycenter/v2/internal/security_center_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/securitycenter/v2/security_center_client.cc"
 #include "google/cloud/securitycenter/v2/security_center_connection.cc"
 #include "google/cloud/securitycenter/v2/security_center_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

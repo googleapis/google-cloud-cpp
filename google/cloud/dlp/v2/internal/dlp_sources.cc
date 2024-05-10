@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dlp/v2/dlp_client.cc"
 #include "google/cloud/dlp/v2/dlp_connection.cc"
 #include "google/cloud/dlp/v2/dlp_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dlp/v2/internal/dlp_stub_factory.cc"
 #include "google/cloud/dlp/v2/internal/dlp_tracing_connection.cc"
 #include "google/cloud/dlp/v2/internal/dlp_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

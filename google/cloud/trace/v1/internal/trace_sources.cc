@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudtrace/v1/trace.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/trace/v1/internal/trace_auth_decorator.cc"
 #include "google/cloud/trace/v1/internal/trace_connection_impl.cc"
 #include "google/cloud/trace/v1/internal/trace_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/trace/v1/trace_client.cc"
 #include "google/cloud/trace/v1/trace_connection.cc"
 #include "google/cloud/trace/v1/trace_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

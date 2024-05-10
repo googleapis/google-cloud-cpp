@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: grafeas/v1/grafeas.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/containeranalysis/v1/grafeas_client.cc"
 #include "google/cloud/containeranalysis/v1/grafeas_connection.cc"
 #include "google/cloud/containeranalysis/v1/grafeas_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/containeranalysis/v1/internal/grafeas_stub_factory.cc"
 #include "google/cloud/containeranalysis/v1/internal/grafeas_tracing_connection.cc"
 #include "google/cloud/containeranalysis/v1/internal/grafeas_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

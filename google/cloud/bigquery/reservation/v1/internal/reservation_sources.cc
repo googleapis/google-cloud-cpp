@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_auth_decorator.cc"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_connection_impl.cc"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/bigquery/reservation/v1/reservation_client.cc"
 #include "google/cloud/bigquery/reservation/v1/reservation_connection.cc"
 #include "google/cloud/bigquery/reservation/v1/reservation_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

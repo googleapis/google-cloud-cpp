@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/workflows/v1/workflows.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/workflows/v1/internal/workflows_auth_decorator.cc"
 #include "google/cloud/workflows/v1/internal/workflows_connection_impl.cc"
 #include "google/cloud/workflows/v1/internal/workflows_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/workflows/v1/workflows_client.cc"
 #include "google/cloud/workflows/v1/workflows_connection.cc"
 #include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

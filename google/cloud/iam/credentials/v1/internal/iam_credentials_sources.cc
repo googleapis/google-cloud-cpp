@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/iam/credentials/v1/iamcredentials.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/iam/credentials/v1/iam_credentials_client.cc"
 #include "google/cloud/iam/credentials/v1/iam_credentials_connection.cc"
 #include "google/cloud/iam/credentials/v1/iam_credentials_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_stub_factory.cc"
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_tracing_connection.cc"
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

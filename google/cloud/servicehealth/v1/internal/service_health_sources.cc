@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/servicehealth/v1/event_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/servicehealth/v1/internal/service_health_auth_decorator.cc"
 #include "google/cloud/servicehealth/v1/internal/service_health_connection_impl.cc"
 #include "google/cloud/servicehealth/v1/internal/service_health_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/servicehealth/v1/service_health_client.cc"
 #include "google/cloud/servicehealth/v1/service_health_connection.cc"
 #include "google/cloud/servicehealth/v1/service_health_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

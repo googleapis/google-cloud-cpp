@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/netapp/v1/cloud_netapp_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/netapp/v1/internal/net_app_auth_decorator.cc"
 #include "google/cloud/netapp/v1/internal/net_app_connection_impl.cc"
 #include "google/cloud/netapp/v1/internal/net_app_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/netapp/v1/net_app_client.cc"
 #include "google/cloud/netapp/v1/net_app_connection.cc"
 #include "google/cloud/netapp/v1/net_app_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

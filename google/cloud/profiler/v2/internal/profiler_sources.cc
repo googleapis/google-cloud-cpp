@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/profiler/v2/internal/profiler_auth_decorator.cc"
 #include "google/cloud/profiler/v2/internal/profiler_connection_impl.cc"
 #include "google/cloud/profiler/v2/internal/profiler_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/profiler/v2/profiler_client.cc"
 #include "google/cloud/profiler/v2/profiler_connection.cc"
 #include "google/cloud/profiler/v2/profiler_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

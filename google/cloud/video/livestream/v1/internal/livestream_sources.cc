@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/video/livestream/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/video/livestream/v1/internal/livestream_auth_decorator.cc"
 #include "google/cloud/video/livestream/v1/internal/livestream_connection_impl.cc"
 #include "google/cloud/video/livestream/v1/internal/livestream_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/video/livestream/v1/livestream_client.cc"
 #include "google/cloud/video/livestream/v1/livestream_connection.cc"
 #include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_client.cc"
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection.cc"
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_stub_factory.cc"
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_tracing_connection.cc"
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

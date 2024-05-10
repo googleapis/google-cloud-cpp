@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataplex/v1/content.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dataplex/v1/content_client.cc"
 #include "google/cloud/dataplex/v1/content_connection.cc"
 #include "google/cloud/dataplex/v1/content_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dataplex/v1/internal/content_stub_factory.cc"
 #include "google/cloud/dataplex/v1/internal/content_tracing_connection.cc"
 #include "google/cloud/dataplex/v1/internal/content_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

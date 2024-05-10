@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/orgpolicy/v2/internal/org_policy_auth_decorator.cc"
 #include "google/cloud/orgpolicy/v2/internal/org_policy_connection_impl.cc"
 #include "google/cloud/orgpolicy/v2/internal/org_policy_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/orgpolicy/v2/org_policy_client.cc"
 #include "google/cloud/orgpolicy/v2/org_policy_connection.cc"
 #include "google/cloud/orgpolicy/v2/org_policy_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataplex/v1/catalog.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dataplex/v1/catalog_client.cc"
 #include "google/cloud/dataplex/v1/catalog_connection.cc"
 #include "google/cloud/dataplex/v1/catalog_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dataplex/v1/internal/catalog_stub_factory.cc"
 #include "google/cloud/dataplex/v1/internal/catalog_tracing_connection.cc"
 #include "google/cloud/dataplex/v1/internal/catalog_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

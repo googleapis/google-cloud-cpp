@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v2/functions.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/functions/v2/function_client.cc"
 #include "google/cloud/functions/v2/function_connection.cc"
 #include "google/cloud/functions/v2/function_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/functions/v2/internal/function_stub_factory.cc"
 #include "google/cloud/functions/v2/internal/function_tracing_connection.cc"
 #include "google/cloud/functions/v2/internal/function_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

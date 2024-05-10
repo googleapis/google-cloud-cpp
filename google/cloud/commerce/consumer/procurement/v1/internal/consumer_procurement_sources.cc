@@ -17,6 +17,7 @@
 // source:
 // google/cloud/commerce/consumer/procurement/v1/procurement_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_client.cc"
 #include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_connection.cc"
 #include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_connection_idempotency_policy.cc"
@@ -29,3 +30,4 @@
 #include "google/cloud/commerce/consumer/procurement/v1/internal/consumer_procurement_stub_factory.cc"
 #include "google/cloud/commerce/consumer/procurement/v1/internal/consumer_procurement_tracing_connection.cc"
 #include "google/cloud/commerce/consumer/procurement/v1/internal/consumer_procurement_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

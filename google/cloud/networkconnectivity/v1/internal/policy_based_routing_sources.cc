@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/networkconnectivity/v1/policy_based_routing.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_auth_decorator.cc"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_connection_impl.cc"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_client.cc"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection.cc"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

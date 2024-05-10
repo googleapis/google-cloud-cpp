@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/v3/metric_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/monitoring/v3/internal/metric_auth_decorator.cc"
 #include "google/cloud/monitoring/v3/internal/metric_connection_impl.cc"
 #include "google/cloud/monitoring/v3/internal/metric_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/monitoring/v3/metric_client.cc"
 #include "google/cloud/monitoring/v3/metric_connection.cc"
 #include "google/cloud/monitoring/v3/metric_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging_metrics.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/logging/v2/internal/metrics_service_v2_auth_decorator.cc"
 #include "google/cloud/logging/v2/internal/metrics_service_v2_connection_impl.cc"
 #include "google/cloud/logging/v2/internal/metrics_service_v2_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/logging/v2/metrics_service_v2_client.cc"
 #include "google/cloud/logging/v2/metrics_service_v2_connection.cc"
 #include "google/cloud/logging/v2/metrics_service_v2_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

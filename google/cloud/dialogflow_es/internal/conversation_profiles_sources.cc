@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/v2/conversation_profile.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_es/conversation_profiles_client.cc"
 #include "google/cloud/dialogflow_es/conversation_profiles_connection.cc"
 #include "google/cloud/dialogflow_es/conversation_profiles_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_stub_factory.cc"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_tracing_connection.cc"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

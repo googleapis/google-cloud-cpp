@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/asset/v1/asset_client.cc"
 #include "google/cloud/asset/v1/asset_connection.cc"
 #include "google/cloud/asset/v1/asset_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/asset/v1/internal/asset_stub_factory.cc"
 #include "google/cloud/asset/v1/internal/asset_tracing_connection.cc"
 #include "google/cloud/asset/v1/internal/asset_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

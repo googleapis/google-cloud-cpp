@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/migration/v2/migration_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/bigquery/migration/v2/internal/migration_auth_decorator.cc"
 #include "google/cloud/bigquery/migration/v2/internal/migration_connection_impl.cc"
 #include "google/cloud/bigquery/migration/v2/internal/migration_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/bigquery/migration/v2/migration_client.cc"
 #include "google/cloud/bigquery/migration/v2/migration_connection.cc"
 #include "google/cloud/bigquery/migration/v2/migration_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

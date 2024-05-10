@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/automl/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/automl/v1/auto_ml_client.cc"
 #include "google/cloud/automl/v1/auto_ml_connection.cc"
 #include "google/cloud/automl/v1/auto_ml_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/automl/v1/internal/auto_ml_stub_factory.cc"
 #include "google/cloud/automl/v1/internal/auto_ml_tracing_connection.cc"
 #include "google/cloud/automl/v1/internal/auto_ml_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/retail/v2/search_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/retail/v2/internal/search_auth_decorator.cc"
 #include "google/cloud/retail/v2/internal/search_connection_impl.cc"
 #include "google/cloud/retail/v2/internal/search_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/retail/v2/search_client.cc"
 #include "google/cloud/retail/v2/search_connection.cc"
 #include "google/cloud/retail/v2/search_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/api/apikeys/v2/apikeys.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/apikeys/v2/api_keys_client.cc"
 #include "google/cloud/apikeys/v2/api_keys_connection.cc"
 #include "google/cloud/apikeys/v2/api_keys_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/apikeys/v2/internal/api_keys_stub_factory.cc"
 #include "google/cloud/apikeys/v2/internal/api_keys_tracing_connection.cc"
 #include "google/cloud/apikeys/v2/internal/api_keys_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

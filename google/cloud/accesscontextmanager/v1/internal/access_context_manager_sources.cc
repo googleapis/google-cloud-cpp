@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/accesscontextmanager/v1/access_context_manager_client.cc"
 #include "google/cloud/accesscontextmanager/v1/access_context_manager_connection.cc"
 #include "google/cloud/accesscontextmanager/v1/access_context_manager_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_stub_factory.cc"
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_tracing_connection.cc"
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/aiplatform/v1/notebook_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/aiplatform/v1/internal/notebook_auth_decorator.cc"
 #include "google/cloud/aiplatform/v1/internal/notebook_connection_impl.cc"
 #include "google/cloud/aiplatform/v1/internal/notebook_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/aiplatform/v1/notebook_client.cc"
 #include "google/cloud/aiplatform/v1/notebook_connection.cc"
 #include "google/cloud/aiplatform/v1/notebook_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v2/repositories.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_auth_decorator.cc"
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_connection_impl.cc"
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/cloudbuild/v2/repository_manager_client.cc"
 #include "google/cloud/cloudbuild/v2/repository_manager_connection.cc"
 #include "google/cloud/cloudbuild/v2/repository_manager_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

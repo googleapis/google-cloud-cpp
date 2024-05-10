@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/video/stitcher/v1/video_stitcher_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_auth_decorator.cc"
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_connection_impl.cc"
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/video/stitcher/v1/video_stitcher_client.cc"
 #include "google/cloud/video/stitcher/v1/video_stitcher_connection.cc"
 #include "google/cloud/video/stitcher/v1/video_stitcher_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

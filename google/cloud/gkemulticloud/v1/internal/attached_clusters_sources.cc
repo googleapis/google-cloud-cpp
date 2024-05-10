@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkemulticloud/v1/attached_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/gkemulticloud/v1/attached_clusters_client.cc"
 #include "google/cloud/gkemulticloud/v1/attached_clusters_connection.cc"
 #include "google/cloud/gkemulticloud/v1/attached_clusters_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_stub_factory.cc"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_tracing_connection.cc"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

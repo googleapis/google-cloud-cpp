@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/retail/v2/control_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/retail/v2/control_client.cc"
 #include "google/cloud/retail/v2/control_connection.cc"
 #include "google/cloud/retail/v2/control_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/retail/v2/internal/control_stub_factory.cc"
 #include "google/cloud/retail/v2/internal/control_tracing_connection.cc"
 #include "google/cloud/retail/v2/internal/control_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

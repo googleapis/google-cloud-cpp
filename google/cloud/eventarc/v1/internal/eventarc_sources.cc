@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/eventarc/v1/eventarc.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/eventarc/v1/eventarc_client.cc"
 #include "google/cloud/eventarc/v1/eventarc_connection.cc"
 #include "google/cloud/eventarc/v1/eventarc_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/eventarc/v1/internal/eventarc_stub_factory.cc"
 #include "google/cloud/eventarc/v1/internal/eventarc_tracing_connection.cc"
 #include "google/cloud/eventarc/v1/internal/eventarc_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

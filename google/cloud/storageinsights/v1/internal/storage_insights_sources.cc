@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/storageinsights/v1/storageinsights.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/storageinsights/v1/internal/storage_insights_auth_decorator.cc"
 #include "google/cloud/storageinsights/v1/internal/storage_insights_connection_impl.cc"
 #include "google/cloud/storageinsights/v1/internal/storage_insights_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/storageinsights/v1/storage_insights_client.cc"
 #include "google/cloud/storageinsights/v1/storage_insights_connection.cc"
 #include "google/cloud/storageinsights/v1/storage_insights_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

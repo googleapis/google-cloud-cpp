@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/managedidentities/v1/internal/managed_identities_auth_decorator.cc"
 #include "google/cloud/managedidentities/v1/internal/managed_identities_connection_impl.cc"
 #include "google/cloud/managedidentities/v1/internal/managed_identities_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/managedidentities/v1/managed_identities_client.cc"
 #include "google/cloud/managedidentities/v1/managed_identities_connection.cc"
 #include "google/cloud/managedidentities/v1/managed_identities_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/v2/context.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_es/contexts_client.cc"
 #include "google/cloud/dialogflow_es/contexts_connection.cc"
 #include "google/cloud/dialogflow_es/contexts_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_es/internal/contexts_stub_factory.cc"
 #include "google/cloud/dialogflow_es/internal/contexts_tracing_connection.cc"
 #include "google/cloud/dialogflow_es/internal/contexts_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

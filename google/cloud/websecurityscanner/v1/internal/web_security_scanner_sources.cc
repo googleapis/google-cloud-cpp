@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/websecurityscanner/v1/web_security_scanner.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_auth_decorator.cc"
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_connection_impl.cc"
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/websecurityscanner/v1/web_security_scanner_client.cc"
 #include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.cc"
 #include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

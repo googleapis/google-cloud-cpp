@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/cloudbuild/v1/cloud_build_client.cc"
 #include "google/cloud/cloudbuild/v1/cloud_build_connection.cc"
 #include "google/cloud/cloudbuild/v1/cloud_build_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_stub_factory.cc"
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_tracing_connection.cc"
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

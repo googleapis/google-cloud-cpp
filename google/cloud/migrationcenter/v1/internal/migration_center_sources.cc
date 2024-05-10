@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/migrationcenter/v1/migrationcenter.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/migrationcenter/v1/internal/migration_center_auth_decorator.cc"
 #include "google/cloud/migrationcenter/v1/internal/migration_center_connection_impl.cc"
 #include "google/cloud/migrationcenter/v1/internal/migration_center_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/migrationcenter/v1/migration_center_client.cc"
 #include "google/cloud/migrationcenter/v1/migration_center_connection.cc"
 #include "google/cloud/migrationcenter/v1/migration_center_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

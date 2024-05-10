@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataproc/v1/jobs.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dataproc/v1/internal/job_controller_auth_decorator.cc"
 #include "google/cloud/dataproc/v1/internal/job_controller_connection_impl.cc"
 #include "google/cloud/dataproc/v1/internal/job_controller_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dataproc/v1/job_controller_client.cc"
 #include "google/cloud/dataproc/v1/job_controller_connection.cc"
 #include "google/cloud/dataproc/v1/job_controller_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

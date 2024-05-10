@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/run/v2/revision.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/run/v2/internal/revisions_auth_decorator.cc"
 #include "google/cloud/run/v2/internal/revisions_connection_impl.cc"
 #include "google/cloud/run/v2/internal/revisions_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/run/v2/revisions_client.cc"
 #include "google/cloud/run/v2/revisions_connection.cc"
 #include "google/cloud/run/v2/revisions_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

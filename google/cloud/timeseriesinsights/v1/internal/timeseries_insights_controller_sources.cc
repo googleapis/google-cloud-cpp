@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/timeseriesinsights/v1/timeseries_insights.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_auth_decorator.cc"
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_connection_impl.cc"
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_client.cc"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection.cc"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

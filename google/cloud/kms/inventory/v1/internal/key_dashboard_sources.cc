@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/kms/inventory/v1/key_dashboard_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_auth_decorator.cc"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_connection_impl.cc"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/kms/inventory/v1/key_dashboard_client.cc"
 #include "google/cloud/kms/inventory/v1/key_dashboard_connection.cc"
 #include "google/cloud/kms/inventory/v1/key_dashboard_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

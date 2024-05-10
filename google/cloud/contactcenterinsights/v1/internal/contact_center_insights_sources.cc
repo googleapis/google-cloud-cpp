@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_client.cc"
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection.cc"
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub_factory.cc"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_tracing_connection.cc"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

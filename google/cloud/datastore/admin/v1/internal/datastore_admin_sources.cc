@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/datastore/admin/v1/datastore_admin.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/datastore/admin/v1/datastore_admin_client.cc"
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection.cc"
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_stub_factory.cc"
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_tracing_connection.cc"
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

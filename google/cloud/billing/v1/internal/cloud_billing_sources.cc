@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/billing/v1/cloud_billing.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/billing/v1/cloud_billing_client.cc"
 #include "google/cloud/billing/v1/cloud_billing_connection.cc"
 #include "google/cloud/billing/v1/cloud_billing_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/billing/v1/internal/cloud_billing_stub_factory.cc"
 #include "google/cloud/billing/v1/internal/cloud_billing_tracing_connection.cc"
 #include "google/cloud/billing/v1/internal/cloud_billing_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_auth_decorator.cc"
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_connection_impl.cc"
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_client.cc"
 #include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_connection.cc"
 #include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

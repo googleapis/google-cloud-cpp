@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/storagetransfer/v1/transfer.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_auth_decorator.cc"
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_connection_impl.cc"
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/storagetransfer/v1/storage_transfer_client.cc"
 #include "google/cloud/storagetransfer/v1/storage_transfer_connection.cc"
 #include "google/cloud/storagetransfer/v1/storage_transfer_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

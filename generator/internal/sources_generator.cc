@@ -37,7 +37,11 @@ Status SourcesGenerator::GenerateHeader() {
 // source: $proto_file_name$
 
 )""");
+  HeaderPrint(R"""(// NOLINTBEGIN(bugprone-suspicious-include)
+  )""");
   HeaderLocalIncludes(sources_);
+  HeaderPrint(R"""(// NOLINTEND(bugprone-suspicious-include)
+  )""");
   return Status();
 }
 

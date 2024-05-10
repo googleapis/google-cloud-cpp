@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/deploy/v1/cloud_deploy_client.cc"
 #include "google/cloud/deploy/v1/cloud_deploy_connection.cc"
 #include "google/cloud/deploy/v1/cloud_deploy_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/deploy/v1/internal/cloud_deploy_stub_factory.cc"
 #include "google/cloud/deploy/v1/internal/cloud_deploy_tracing_connection.cc"
 #include "google/cloud/deploy/v1/internal/cloud_deploy_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

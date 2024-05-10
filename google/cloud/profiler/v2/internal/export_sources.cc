@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/profiler/v2/export_client.cc"
 #include "google/cloud/profiler/v2/export_connection.cc"
 #include "google/cloud/profiler/v2/export_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/profiler/v2/internal/export_stub_factory.cc"
 #include "google/cloud/profiler/v2/internal/export_tracing_connection.cc"
 #include "google/cloud/profiler/v2/internal/export_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/talent/v4/job_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/talent/v4/internal/job_auth_decorator.cc"
 #include "google/cloud/talent/v4/internal/job_connection_impl.cc"
 #include "google/cloud/talent/v4/internal/job_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/talent/v4/job_client.cc"
 #include "google/cloud/talent/v4/job_connection.cc"
 #include "google/cloud/talent/v4/job_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

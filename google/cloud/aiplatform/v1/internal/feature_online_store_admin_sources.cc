@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/aiplatform/v1/feature_online_store_admin_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/aiplatform/v1/feature_online_store_admin_client.cc"
 #include "google/cloud/aiplatform/v1/feature_online_store_admin_connection.cc"
 #include "google/cloud/aiplatform/v1/feature_online_store_admin_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_admin_stub_factory.cc"
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_admin_tracing_connection.cc"
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_admin_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

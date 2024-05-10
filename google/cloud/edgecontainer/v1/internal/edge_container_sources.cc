@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/edgecontainer/v1/edge_container_client.cc"
 #include "google/cloud/edgecontainer/v1/edge_container_connection.cc"
 #include "google/cloud/edgecontainer/v1/edge_container_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/edgecontainer/v1/internal/edge_container_stub_factory.cc"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_tracing_connection.cc"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

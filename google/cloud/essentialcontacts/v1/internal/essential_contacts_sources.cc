@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/essentialcontacts/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/essentialcontacts/v1/essential_contacts_client.cc"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection.cc"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_stub_factory.cc"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_tracing_connection.cc"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

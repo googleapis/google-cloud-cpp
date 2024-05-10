@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkebackup/v1/gkebackup.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/gkebackup/v1/backup_for_gke_client.cc"
 #include "google/cloud/gkebackup/v1/backup_for_gke_connection.cc"
 #include "google/cloud/gkebackup/v1/backup_for_gke_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_stub_factory.cc"
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_tracing_connection.cc"
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

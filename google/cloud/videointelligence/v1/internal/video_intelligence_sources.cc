@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_auth_decorator.cc"
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_connection_impl.cc"
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/videointelligence/v1/video_intelligence_client.cc"
 #include "google/cloud/videointelligence/v1/video_intelligence_connection.cc"
 #include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

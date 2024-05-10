@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/webrisk/v1/webrisk.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/webrisk/v1/internal/web_risk_auth_decorator.cc"
 #include "google/cloud/webrisk/v1/internal/web_risk_connection_impl.cc"
 #include "google/cloud/webrisk/v1/internal/web_risk_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/webrisk/v1/web_risk_client.cc"
 #include "google/cloud/webrisk/v1/web_risk_connection.cc"
 #include "google/cloud/webrisk/v1/web_risk_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

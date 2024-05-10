@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/resourcemanager/v3/tag_values.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/resourcemanager/v3/internal/tag_values_auth_decorator.cc"
 #include "google/cloud/resourcemanager/v3/internal/tag_values_connection_impl.cc"
 #include "google/cloud/resourcemanager/v3/internal/tag_values_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/resourcemanager/v3/tag_values_client.cc"
 #include "google/cloud/resourcemanager/v3/tag_values_connection.cc"
 #include "google/cloud/resourcemanager/v3/tag_values_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

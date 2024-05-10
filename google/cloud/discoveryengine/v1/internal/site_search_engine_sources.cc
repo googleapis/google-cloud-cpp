@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/discoveryengine/v1/site_search_engine_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_auth_decorator.cc"
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_connection_impl.cc"
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/discoveryengine/v1/site_search_engine_client.cc"
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection.cc"
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

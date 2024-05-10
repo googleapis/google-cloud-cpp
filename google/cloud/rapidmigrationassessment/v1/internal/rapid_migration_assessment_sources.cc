@@ -17,6 +17,7 @@
 // source:
 // google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_auth_decorator.cc"
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_connection_impl.cc"
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_logging_decorator.cc"
@@ -29,3 +30,4 @@
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_client.cc"
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_connection.cc"
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

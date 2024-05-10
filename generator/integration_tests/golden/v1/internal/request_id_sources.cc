@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test_request_id.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "generator/integration_tests/golden/v1/internal/request_id_auth_decorator.cc"
 #include "generator/integration_tests/golden/v1/internal/request_id_connection_impl.cc"
 #include "generator/integration_tests/golden/v1/internal/request_id_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "generator/integration_tests/golden/v1/request_id_client.cc"
 #include "generator/integration_tests/golden/v1/request_id_connection.cc"
 #include "generator/integration_tests/golden/v1/request_id_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

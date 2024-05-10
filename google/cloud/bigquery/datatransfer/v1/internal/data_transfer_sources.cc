@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/datatransfer/v1/datatransfer.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_client.cc"
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_connection.cc"
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_stub_factory.cc"
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_tracing_connection.cc"
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

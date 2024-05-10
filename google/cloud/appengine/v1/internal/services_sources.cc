@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/appengine/v1/appengine.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/appengine/v1/internal/services_auth_decorator.cc"
 #include "google/cloud/appengine/v1/internal/services_connection_impl.cc"
 #include "google/cloud/appengine/v1/internal/services_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/appengine/v1/services_client.cc"
 #include "google/cloud/appengine/v1/services_connection.cc"
 #include "google/cloud/appengine/v1/services_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/talent/v4/tenant_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/talent/v4/internal/tenant_auth_decorator.cc"
 #include "google/cloud/talent/v4/internal/tenant_connection_impl.cc"
 #include "google/cloud/talent/v4/internal/tenant_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/talent/v4/tenant_client.cc"
 #include "google/cloud/talent/v4/tenant_connection.cc"
 #include "google/cloud/talent/v4/tenant_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

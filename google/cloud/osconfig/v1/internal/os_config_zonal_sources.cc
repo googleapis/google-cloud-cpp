@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/osconfig/v1/osconfig_zonal_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_auth_decorator.cc"
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_connection_impl.cc"
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/osconfig/v1/os_config_zonal_client.cc"
 #include "google/cloud/osconfig/v1/os_config_zonal_connection.cc"
 #include "google/cloud/osconfig/v1/os_config_zonal_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/reports_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/channel/v1/cloud_channel_reports_client.cc"
 #include "google/cloud/channel/v1/cloud_channel_reports_connection.cc"
 #include "google/cloud/channel/v1/cloud_channel_reports_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_stub_factory.cc"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_tracing_connection.cc"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

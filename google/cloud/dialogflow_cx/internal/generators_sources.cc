@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/cx/v3/generator.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_cx/generators_client.cc"
 #include "google/cloud/dialogflow_cx/generators_connection.cc"
 #include "google/cloud/dialogflow_cx/generators_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_cx/internal/generators_stub_factory.cc"
 #include "google/cloud/dialogflow_cx/internal/generators_tracing_connection.cc"
 #include "google/cloud/dialogflow_cx/internal/generators_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

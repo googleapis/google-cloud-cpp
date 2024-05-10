@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/talent/v4/completion_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/talent/v4/completion_client.cc"
 #include "google/cloud/talent/v4/completion_connection.cc"
 #include "google/cloud/talent/v4/completion_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/talent/v4/internal/completion_stub_factory.cc"
 #include "google/cloud/talent/v4/internal/completion_tracing_connection.cc"
 #include "google/cloud/talent/v4/internal/completion_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

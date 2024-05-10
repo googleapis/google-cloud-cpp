@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/discoveryengine/v1/data_store_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/discoveryengine/v1/data_store_client.cc"
 #include "google/cloud/discoveryengine/v1/data_store_connection.cc"
 #include "google/cloud/discoveryengine/v1/data_store_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/discoveryengine/v1/internal/data_store_stub_factory.cc"
 #include "google/cloud/discoveryengine/v1/internal/data_store_tracing_connection.cc"
 #include "google/cloud/discoveryengine/v1/internal/data_store_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

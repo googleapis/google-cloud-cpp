@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/v2/session_entity_type.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_es/internal/session_entity_types_auth_decorator.cc"
 #include "google/cloud/dialogflow_es/internal/session_entity_types_connection_impl.cc"
 #include "google/cloud/dialogflow_es/internal/session_entity_types_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_es/session_entity_types_client.cc"
 #include "google/cloud/dialogflow_es/session_entity_types_connection.cc"
 #include "google/cloud/dialogflow_es/session_entity_types_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

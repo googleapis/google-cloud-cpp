@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datacatalog/v1/policytagmanagerserialization.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_auth_decorator.cc"
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_connection_impl.cc"
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/datacatalog/v1/policy_tag_manager_serialization_client.cc"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_serialization_connection.cc"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_serialization_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/retail/v2/model_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/retail/v2/internal/model_auth_decorator.cc"
 #include "google/cloud/retail/v2/internal/model_connection_impl.cc"
 #include "google/cloud/retail/v2/internal/model_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/retail/v2/model_client.cc"
 #include "google/cloud/retail/v2/model_connection.cc"
 #include "google/cloud/retail/v2/model_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

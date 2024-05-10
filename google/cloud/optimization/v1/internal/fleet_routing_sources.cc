@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/optimization/v1/fleet_routing.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/optimization/v1/fleet_routing_client.cc"
 #include "google/cloud/optimization/v1/fleet_routing_connection.cc"
 #include "google/cloud/optimization/v1/fleet_routing_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/optimization/v1/internal/fleet_routing_stub_factory.cc"
 #include "google/cloud/optimization/v1/internal/fleet_routing_tracing_connection.cc"
 #include "google/cloud/optimization/v1/internal/fleet_routing_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

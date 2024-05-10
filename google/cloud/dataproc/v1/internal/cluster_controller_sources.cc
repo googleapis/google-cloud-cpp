@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataproc/v1/clusters.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dataproc/v1/cluster_controller_client.cc"
 #include "google/cloud/dataproc/v1/cluster_controller_connection.cc"
 #include "google/cloud/dataproc/v1/cluster_controller_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dataproc/v1/internal/cluster_controller_stub_factory.cc"
 #include "google/cloud/dataproc/v1/internal/cluster_controller_tracing_connection.cc"
 #include "google/cloud/dataproc/v1/internal/cluster_controller_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

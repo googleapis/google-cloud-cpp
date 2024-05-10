@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/clouddms/v1/clouddms.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/datamigration/v1/data_migration_client.cc"
 #include "google/cloud/datamigration/v1/data_migration_connection.cc"
 #include "google/cloud/datamigration/v1/data_migration_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/datamigration/v1/internal/data_migration_stub_factory.cc"
 #include "google/cloud/datamigration/v1/internal/data_migration_tracing_connection.cc"
 #include "google/cloud/datamigration/v1/internal/data_migration_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

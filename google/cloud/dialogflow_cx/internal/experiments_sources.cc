@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/cx/v3/experiment.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_cx/experiments_client.cc"
 #include "google/cloud/dialogflow_cx/experiments_connection.cc"
 #include "google/cloud/dialogflow_cx/experiments_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_cx/internal/experiments_stub_factory.cc"
 #include "google/cloud/dialogflow_cx/internal/experiments_tracing_connection.cc"
 #include "google/cloud/dialogflow_cx/internal/experiments_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

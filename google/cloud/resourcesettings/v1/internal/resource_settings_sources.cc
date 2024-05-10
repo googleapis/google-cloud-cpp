@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_auth_decorator.cc"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_connection_impl.cc"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/resourcesettings/v1/resource_settings_client.cc"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection.cc"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_client.cc"
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection.cc"
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub_factory.cc"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_tracing_connection.cc"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

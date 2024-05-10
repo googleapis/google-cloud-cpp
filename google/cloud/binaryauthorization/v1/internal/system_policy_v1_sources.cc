@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/binaryauthorization/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_auth_decorator.cc"
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_connection_impl.cc"
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_client.cc"
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_connection.cc"
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

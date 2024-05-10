@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/v2/entity_type.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_es/entity_types_client.cc"
 #include "google/cloud/dialogflow_es/entity_types_connection.cc"
 #include "google/cloud/dialogflow_es/entity_types_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_es/internal/entity_types_stub_factory.cc"
 #include "google/cloud/dialogflow_es/internal/entity_types_tracing_connection.cc"
 #include "google/cloud/dialogflow_es/internal/entity_types_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

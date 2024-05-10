@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/run/v2/execution.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/run/v2/executions_client.cc"
 #include "google/cloud/run/v2/executions_connection.cc"
 #include "google/cloud/run/v2/executions_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/run/v2/internal/executions_stub_factory.cc"
 #include "google/cloud/run/v2/internal/executions_tracing_connection.cc"
 #include "google/cloud/run/v2/internal/executions_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

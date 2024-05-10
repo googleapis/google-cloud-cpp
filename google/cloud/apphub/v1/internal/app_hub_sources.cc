@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/apphub/v1/apphub_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/apphub/v1/app_hub_client.cc"
 #include "google/cloud/apphub/v1/app_hub_connection.cc"
 #include "google/cloud/apphub/v1/app_hub_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/apphub/v1/internal/app_hub_stub_factory.cc"
 #include "google/cloud/apphub/v1/internal/app_hub_tracing_connection.cc"
 #include "google/cloud/apphub/v1/internal/app_hub_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

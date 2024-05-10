@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/oslogin/v1/oslogin.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/oslogin/v1/internal/os_login_auth_decorator.cc"
 #include "google/cloud/oslogin/v1/internal/os_login_connection_impl.cc"
 #include "google/cloud/oslogin/v1/internal/os_login_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/oslogin/v1/os_login_client.cc"
 #include "google/cloud/oslogin/v1/os_login_connection.cc"
 #include "google/cloud/oslogin/v1/os_login_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

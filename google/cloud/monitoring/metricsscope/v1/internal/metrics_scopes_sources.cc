@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/metricsscope/v1/metrics_scopes.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_auth_decorator.cc"
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_connection_impl.cc"
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_client.cc"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection.cc"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

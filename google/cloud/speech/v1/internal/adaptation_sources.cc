@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech_adaptation.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/speech/v1/adaptation_client.cc"
 #include "google/cloud/speech/v1/adaptation_connection.cc"
 #include "google/cloud/speech/v1/adaptation_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/speech/v1/internal/adaptation_stub_factory.cc"
 #include "google/cloud/speech/v1/internal/adaptation_tracing_connection.cc"
 #include "google/cloud/speech/v1/internal/adaptation_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/cx/v3/session.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/dialogflow_cx/internal/sessions_auth_decorator.cc"
 #include "google/cloud/dialogflow_cx/internal/sessions_connection_impl.cc"
 #include "google/cloud/dialogflow_cx/internal/sessions_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/dialogflow_cx/sessions_client.cc"
 #include "google/cloud/dialogflow_cx/sessions_connection.cc"
 #include "google/cloud/dialogflow_cx/sessions_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

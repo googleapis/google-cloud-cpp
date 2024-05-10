@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contentwarehouse/v1/synonymset_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_auth_decorator.cc"
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_connection_impl.cc"
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/contentwarehouse/v1/synonym_set_client.cc"
 #include "google/cloud/contentwarehouse/v1/synonym_set_connection.cc"
 #include "google/cloud/contentwarehouse/v1/synonym_set_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

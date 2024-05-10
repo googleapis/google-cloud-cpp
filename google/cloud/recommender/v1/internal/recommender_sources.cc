@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/recommender/v1/recommender_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/recommender/v1/internal/recommender_auth_decorator.cc"
 #include "google/cloud/recommender/v1/internal/recommender_connection_impl.cc"
 #include "google/cloud/recommender/v1/internal/recommender_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/recommender/v1/recommender_client.cc"
 #include "google/cloud/recommender/v1/recommender_connection.cc"
 #include "google/cloud/recommender/v1/recommender_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

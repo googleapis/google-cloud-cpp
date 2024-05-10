@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iap/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_client.cc"
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_connection.cc"
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_stub_factory.cc"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_tracing_connection.cc"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

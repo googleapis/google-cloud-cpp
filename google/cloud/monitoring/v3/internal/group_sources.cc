@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/v3/group_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/monitoring/v3/group_client.cc"
 #include "google/cloud/monitoring/v3/group_connection.cc"
 #include "google/cloud/monitoring/v3/group_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/monitoring/v3/internal/group_stub_factory.cc"
 #include "google/cloud/monitoring/v3/internal/group_tracing_connection.cc"
 #include "google/cloud/monitoring/v3/internal/group_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/discoveryengine/v1/document_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/discoveryengine/v1/document_client.cc"
 #include "google/cloud/discoveryengine/v1/document_connection.cc"
 #include "google/cloud/discoveryengine/v1/document_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/discoveryengine/v1/internal/document_stub_factory.cc"
 #include "google/cloud/discoveryengine/v1/internal/document_tracing_connection.cc"
 #include "google/cloud/discoveryengine/v1/internal/document_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

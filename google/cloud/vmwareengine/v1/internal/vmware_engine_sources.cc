@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vmwareengine/v1/vmwareengine.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_auth_decorator.cc"
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_connection_impl.cc"
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/vmwareengine/v1/vmware_engine_client.cc"
 #include "google/cloud/vmwareengine/v1/vmware_engine_connection.cc"
 #include "google/cloud/vmwareengine/v1/vmware_engine_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

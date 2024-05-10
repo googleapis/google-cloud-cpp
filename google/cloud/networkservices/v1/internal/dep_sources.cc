@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/networkservices/v1/dep.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/networkservices/v1/dep_client.cc"
 #include "google/cloud/networkservices/v1/dep_connection.cc"
 #include "google/cloud/networkservices/v1/dep_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/networkservices/v1/internal/dep_stub_factory.cc"
 #include "google/cloud/networkservices/v1/internal/dep_tracing_connection.cc"
 #include "google/cloud/networkservices/v1/internal/dep_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

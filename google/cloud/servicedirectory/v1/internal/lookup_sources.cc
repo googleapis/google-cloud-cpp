@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/servicedirectory/v1/internal/lookup_auth_decorator.cc"
 #include "google/cloud/servicedirectory/v1/internal/lookup_connection_impl.cc"
 #include "google/cloud/servicedirectory/v1/internal/lookup_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/servicedirectory/v1/lookup_client.cc"
 #include "google/cloud/servicedirectory/v1/lookup_connection.cc"
 #include "google/cloud/servicedirectory/v1/lookup_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

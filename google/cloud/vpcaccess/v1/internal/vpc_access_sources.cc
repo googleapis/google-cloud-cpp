@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_auth_decorator.cc"
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_connection_impl.cc"
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/vpcaccess/v1/vpc_access_client.cc"
 #include "google/cloud/vpcaccess/v1/vpc_access_connection.cc"
 #include "google/cloud/vpcaccess/v1/vpc_access_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

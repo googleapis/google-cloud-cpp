@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/datapolicies/v1/datapolicy.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_client.cc"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection.cc"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_stub_factory.cc"
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_tracing_connection.cc"
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

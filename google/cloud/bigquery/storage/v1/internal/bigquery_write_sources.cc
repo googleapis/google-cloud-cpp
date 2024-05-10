@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/bigquery/storage/v1/bigquery_write_client.cc"
 #include "google/cloud/bigquery/storage/v1/bigquery_write_connection.cc"
 #include "google/cloud/bigquery/storage/v1/bigquery_write_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_stub_factory.cc"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_tracing_connection.cc"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

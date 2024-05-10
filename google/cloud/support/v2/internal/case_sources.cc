@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/support/v2/case_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/support/v2/case_client.cc"
 #include "google/cloud/support/v2/case_connection.cc"
 #include "google/cloud/support/v2/case_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/support/v2/internal/case_stub_factory.cc"
 #include "google/cloud/support/v2/internal/case_tracing_connection.cc"
 #include "google/cloud/support/v2/internal/case_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

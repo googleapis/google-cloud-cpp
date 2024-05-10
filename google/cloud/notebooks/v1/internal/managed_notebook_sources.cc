@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/notebooks/v1/managed_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/notebooks/v1/internal/managed_notebook_auth_decorator.cc"
 #include "google/cloud/notebooks/v1/internal/managed_notebook_connection_impl.cc"
 #include "google/cloud/notebooks/v1/internal/managed_notebook_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/notebooks/v1/managed_notebook_client.cc"
 #include "google/cloud/notebooks/v1/managed_notebook_connection.cc"
 #include "google/cloud/notebooks/v1/managed_notebook_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

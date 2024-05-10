@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/pubsublite/v1/admin.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/pubsublite/admin_client.cc"
 #include "google/cloud/pubsublite/admin_connection.cc"
 #include "google/cloud/pubsublite/admin_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/pubsublite/internal/admin_stub_factory.cc"
 #include "google/cloud/pubsublite/internal/admin_tracing_connection.cc"
 #include "google/cloud/pubsublite/internal/admin_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

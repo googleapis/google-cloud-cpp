@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orchestration/airflow/service/v1/environments.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/composer/v1/environments_client.cc"
 #include "google/cloud/composer/v1/environments_connection.cc"
 #include "google/cloud/composer/v1/environments_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/composer/v1/internal/environments_stub_factory.cc"
 #include "google/cloud/composer/v1/internal/environments_tracing_connection.cc"
 #include "google/cloud/composer/v1/internal/environments_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

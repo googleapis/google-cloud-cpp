@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/billing/budgets/v1/budget_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/billing/budgets/v1/budget_client.cc"
 #include "google/cloud/billing/budgets/v1/budget_connection.cc"
 #include "google/cloud/billing/budgets/v1/budget_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/billing/budgets/v1/internal/budget_stub_factory.cc"
 #include "google/cloud/billing/budgets/v1/internal/budget_tracing_connection.cc"
 #include "google/cloud/billing/budgets/v1/internal/budget_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

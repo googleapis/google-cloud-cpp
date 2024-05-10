@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_client.cc"
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.cc"
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub_factory.cc"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_tracing_connection.cc"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

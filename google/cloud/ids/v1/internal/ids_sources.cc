@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/ids/v1/ids_client.cc"
 #include "google/cloud/ids/v1/ids_connection.cc"
 #include "google/cloud/ids/v1/ids_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/ids/v1/internal/ids_stub_factory.cc"
 #include "google/cloud/ids/v1/internal/ids_tracing_connection.cc"
 #include "google/cloud/ids/v1/internal/ids_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

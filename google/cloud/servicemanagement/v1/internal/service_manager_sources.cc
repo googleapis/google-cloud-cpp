@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/servicemanagement/v1/internal/service_manager_auth_decorator.cc"
 #include "google/cloud/servicemanagement/v1/internal/service_manager_connection_impl.cc"
 #include "google/cloud/servicemanagement/v1/internal/service_manager_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/servicemanagement/v1/service_manager_client.cc"
 #include "google/cloud/servicemanagement/v1/service_manager_connection.cc"
 #include "google/cloud/servicemanagement/v1/service_manager_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

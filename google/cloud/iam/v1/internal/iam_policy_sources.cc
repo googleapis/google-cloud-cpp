@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/iam/v1/iam_policy.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/iam/v1/iam_policy_client.cc"
 #include "google/cloud/iam/v1/iam_policy_connection.cc"
 #include "google/cloud/iam/v1/iam_policy_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/iam/v1/internal/iam_policy_stub_factory.cc"
 #include "google/cloud/iam/v1/internal/iam_policy_tracing_connection.cc"
 #include "google/cloud/iam/v1/internal/iam_policy_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

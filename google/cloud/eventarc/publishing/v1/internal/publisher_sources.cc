@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_auth_decorator.cc"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_connection_impl.cc"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/eventarc/publishing/v1/publisher_client.cc"
 #include "google/cloud/eventarc/publishing/v1/publisher_connection.cc"
 #include "google/cloud/eventarc/publishing/v1/publisher_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

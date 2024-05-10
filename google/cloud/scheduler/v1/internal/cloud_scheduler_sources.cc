@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/scheduler/v1/cloudscheduler.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/scheduler/v1/cloud_scheduler_client.cc"
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection.cc"
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_stub_factory.cc"
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_tracing_connection.cc"
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

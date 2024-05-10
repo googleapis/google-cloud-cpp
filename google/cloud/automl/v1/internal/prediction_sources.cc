@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/automl/v1/prediction_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/automl/v1/internal/prediction_auth_decorator.cc"
 #include "google/cloud/automl/v1/internal/prediction_connection_impl.cc"
 #include "google/cloud/automl/v1/internal/prediction_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/automl/v1/prediction_client.cc"
 #include "google/cloud/automl/v1/prediction_connection.cc"
 #include "google/cloud/automl/v1/prediction_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

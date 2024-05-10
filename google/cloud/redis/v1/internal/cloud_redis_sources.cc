@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/redis/v1/cloud_redis.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/redis/v1/cloud_redis_client.cc"
 #include "google/cloud/redis/v1/cloud_redis_connection.cc"
 #include "google/cloud/redis/v1/cloud_redis_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/redis/v1/internal/cloud_redis_stub_factory.cc"
 #include "google/cloud/redis/v1/internal/cloud_redis_tracing_connection.cc"
 #include "google/cloud/redis/v1/internal/cloud_redis_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

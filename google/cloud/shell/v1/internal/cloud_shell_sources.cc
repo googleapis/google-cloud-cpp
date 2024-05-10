@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/shell/v1/cloudshell.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/shell/v1/cloud_shell_client.cc"
 #include "google/cloud/shell/v1/cloud_shell_connection.cc"
 #include "google/cloud/shell/v1/cloud_shell_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/shell/v1/internal/cloud_shell_stub_factory.cc"
 #include "google/cloud/shell/v1/internal/cloud_shell_tracing_connection.cc"
 #include "google/cloud/shell/v1/internal/cloud_shell_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vision/v1/image_annotator.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/vision/v1/image_annotator_client.cc"
 #include "google/cloud/vision/v1/image_annotator_connection.cc"
 #include "google/cloud/vision/v1/image_annotator_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/vision/v1/internal/image_annotator_stub_factory.cc"
 #include "google/cloud/vision/v1/internal/image_annotator_tracing_connection.cc"
 #include "google/cloud/vision/v1/internal/image_annotator_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

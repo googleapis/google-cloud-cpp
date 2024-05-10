@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/accessapproval/v1/access_approval_client.cc"
 #include "google/cloud/accessapproval/v1/access_approval_connection.cc"
 #include "google/cloud/accessapproval/v1/access_approval_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/accessapproval/v1/internal/access_approval_stub_factory.cc"
 #include "google/cloud/accessapproval/v1/internal/access_approval_tracing_connection.cc"
 #include "google/cloud/accessapproval/v1/internal/access_approval_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

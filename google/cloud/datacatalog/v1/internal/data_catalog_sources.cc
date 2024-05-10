@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datacatalog/v1/datacatalog.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/datacatalog/v1/data_catalog_client.cc"
 #include "google/cloud/datacatalog/v1/data_catalog_connection.cc"
 #include "google/cloud/datacatalog/v1/data_catalog_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/datacatalog/v1/internal/data_catalog_stub_factory.cc"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_tracing_connection.cc"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

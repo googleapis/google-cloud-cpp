@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datacatalog/lineage/v1/lineage.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_auth_decorator.cc"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_connection_impl.cc"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/datacatalog/lineage/v1/lineage_client.cc"
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection.cc"
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

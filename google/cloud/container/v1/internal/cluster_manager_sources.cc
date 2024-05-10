@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/container/v1/cluster_manager_client.cc"
 #include "google/cloud/container/v1/cluster_manager_connection.cc"
 #include "google/cloud/container/v1/cluster_manager_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/container/v1/internal/cluster_manager_stub_factory.cc"
 #include "google/cloud/container/v1/internal/cluster_manager_tracing_connection.cc"
 #include "google/cloud/container/v1/internal/cluster_manager_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

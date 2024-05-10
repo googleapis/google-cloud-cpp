@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging_config.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/logging/v2/config_service_v2_client.cc"
 #include "google/cloud/logging/v2/config_service_v2_connection.cc"
 #include "google/cloud/logging/v2/config_service_v2_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/logging/v2/internal/config_service_v2_stub_factory.cc"
 #include "google/cloud/logging/v2/internal/config_service_v2_tracing_connection.cc"
 #include "google/cloud/logging/v2/internal/config_service_v2_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

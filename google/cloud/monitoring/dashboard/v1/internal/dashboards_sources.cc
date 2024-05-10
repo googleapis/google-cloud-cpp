@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/dashboard/v1/dashboards_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/monitoring/dashboard/v1/dashboards_client.cc"
 #include "google/cloud/monitoring/dashboard/v1/dashboards_connection.cc"
 #include "google/cloud/monitoring/dashboard/v1/dashboards_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_stub_factory.cc"
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_tracing_connection.cc"
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

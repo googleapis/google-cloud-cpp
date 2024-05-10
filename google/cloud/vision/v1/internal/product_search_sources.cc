@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vision/v1/product_search_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/vision/v1/internal/product_search_auth_decorator.cc"
 #include "google/cloud/vision/v1/internal/product_search_connection_impl.cc"
 #include "google/cloud/vision/v1/internal/product_search_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/vision/v1/product_search_client.cc"
 #include "google/cloud/vision/v1/product_search_connection.cc"
 #include "google/cloud/vision/v1/product_search_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

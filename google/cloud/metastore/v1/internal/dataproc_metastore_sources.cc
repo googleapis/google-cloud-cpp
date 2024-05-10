@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/metastore/v1/metastore.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/metastore/v1/dataproc_metastore_client.cc"
 #include "google/cloud/metastore/v1/dataproc_metastore_connection.cc"
 #include "google/cloud/metastore/v1/dataproc_metastore_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_stub_factory.cc"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_tracing_connection.cc"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/security/privateca/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/privateca/v1/certificate_authority_client.cc"
 #include "google/cloud/privateca/v1/certificate_authority_connection.cc"
 #include "google/cloud/privateca/v1/certificate_authority_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/privateca/v1/internal/certificate_authority_stub_factory.cc"
 #include "google/cloud/privateca/v1/internal/certificate_authority_tracing_connection.cc"
 #include "google/cloud/privateca/v1/internal/certificate_authority_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

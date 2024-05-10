@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/networksecurity/v1/network_security.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/networksecurity/v1/internal/network_security_auth_decorator.cc"
 #include "google/cloud/networksecurity/v1/internal/network_security_connection_impl.cc"
 #include "google/cloud/networksecurity/v1/internal/network_security_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/networksecurity/v1/network_security_client.cc"
 #include "google/cloud/networksecurity/v1/network_security_connection.cc"
 #include "google/cloud/networksecurity/v1/network_security_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/assuredworkloads/v1/assured_workloads_client.cc"
 #include "google/cloud/assuredworkloads/v1/assured_workloads_connection.cc"
 #include "google/cloud/assuredworkloads/v1/assured_workloads_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub_factory.cc"
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_tracing_connection.cc"
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

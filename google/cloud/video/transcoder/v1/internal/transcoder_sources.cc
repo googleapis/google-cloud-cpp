@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/video/transcoder/v1/services.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/video/transcoder/v1/internal/transcoder_auth_decorator.cc"
 #include "google/cloud/video/transcoder/v1/internal/transcoder_connection_impl.cc"
 #include "google/cloud/video/transcoder/v1/internal/transcoder_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/video/transcoder/v1/transcoder_client.cc"
 #include "google/cloud/video/transcoder/v1/transcoder_connection.cc"
 #include "google/cloud/video/transcoder/v1/transcoder_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

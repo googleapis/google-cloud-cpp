@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/v3/uptime_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/monitoring/v3/internal/uptime_check_auth_decorator.cc"
 #include "google/cloud/monitoring/v3/internal/uptime_check_connection_impl.cc"
 #include "google/cloud/monitoring/v3/internal/uptime_check_logging_decorator.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/monitoring/v3/uptime_check_client.cc"
 #include "google/cloud/monitoring/v3/uptime_check_connection.cc"
 #include "google/cloud/monitoring/v3/uptime_check_connection_idempotency_policy.cc"
+// NOLINTEND(bugprone-suspicious-include)

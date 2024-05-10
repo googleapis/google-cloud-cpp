@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/aiplatform/v1/index_service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/aiplatform/v1/index_client.cc"
 #include "google/cloud/aiplatform/v1/index_connection.cc"
 #include "google/cloud/aiplatform/v1/index_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/aiplatform/v1/internal/index_stub_factory.cc"
 #include "google/cloud/aiplatform/v1/internal/index_tracing_connection.cc"
 #include "google/cloud/aiplatform/v1/internal/index_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

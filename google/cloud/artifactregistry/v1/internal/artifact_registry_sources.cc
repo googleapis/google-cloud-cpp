@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/artifactregistry/v1/artifact_registry_client.cc"
 #include "google/cloud/artifactregistry/v1/artifact_registry_connection.cc"
 #include "google/cloud/artifactregistry/v1/artifact_registry_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_stub_factory.cc"
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_tracing_connection.cc"
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

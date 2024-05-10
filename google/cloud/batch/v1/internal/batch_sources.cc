@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/batch/v1/batch.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/batch/v1/batch_client.cc"
 #include "google/cloud/batch/v1/batch_connection.cc"
 #include "google/cloud/batch/v1/batch_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/batch/v1/internal/batch_stub_factory.cc"
 #include "google/cloud/batch/v1/internal/batch_tracing_connection.cc"
 #include "google/cloud/batch/v1/internal/batch_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/api/cloudquotas/v1/cloudquotas.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/cloudquotas/v1/cloud_quotas_client.cc"
 #include "google/cloud/cloudquotas/v1/cloud_quotas_connection.cc"
 #include "google/cloud/cloudquotas/v1/cloud_quotas_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_stub_factory.cc"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_tracing_connection.cc"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/policytroubleshooter/v1/iam_checker_client.cc"
 #include "google/cloud/policytroubleshooter/v1/iam_checker_connection.cc"
 #include "google/cloud/policytroubleshooter/v1/iam_checker_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub_factory.cc"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_tracing_connection.cc"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

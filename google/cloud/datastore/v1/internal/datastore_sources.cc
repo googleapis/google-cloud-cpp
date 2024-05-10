@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/datastore/v1/datastore.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/datastore/v1/datastore_client.cc"
 #include "google/cloud/datastore/v1/datastore_connection.cc"
 #include "google/cloud/datastore/v1/datastore_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/datastore/v1/internal/datastore_stub_factory.cc"
 #include "google/cloud/datastore/v1/internal/datastore_tracing_connection.cc"
 #include "google/cloud/datastore/v1/internal/datastore_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)

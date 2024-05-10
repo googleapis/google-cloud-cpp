@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/cloudcontrolspartner/v1/monitoring.proto
 
+// NOLINTBEGIN(bugprone-suspicious-include)
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_client.cc"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_connection.cc"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_connection_idempotency_policy.cc"
@@ -28,3 +29,4 @@
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_stub_factory.cc"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_tracing_connection.cc"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_tracing_stub.cc"
+// NOLINTEND(bugprone-suspicious-include)
