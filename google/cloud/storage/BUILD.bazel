@@ -69,12 +69,8 @@ cc_library(
         "@com_google_absl//absl/time",
         "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
         "@com_google_googleapis//google/storage/v2:storage_cc_proto",
-    ] + select({
-        # This library uses the opentelemetry SDK directly, so it must depend
-        # on the library directly.
-        "//google/cloud:enable_opentelemetry_valid": ["@io_opentelemetry_cpp//sdk/src/metrics"],
-        "//conditions:default": [],
-    }),
+        "@io_opentelemetry_cpp//sdk/src/metrics",
+    ],
 )
 
 filegroup(
