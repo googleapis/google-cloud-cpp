@@ -70,18 +70,26 @@ logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COM
 steps:
   # Builds the docker image that will be used by the main build step. Makes 3
   # attempts to workaround #6438.
-- name: 'gcr.io/kaniko-project/executor:v1.22.0'
+- name: 'gcr.io/kaniko-project/executor:v1.22.0-debug'
   id: 'kaniko-build'
-  args: [
-    '--log-format=text',
-    '--context=dir:///workspace/ci',
-    '--dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile',
-    '--cache=true',
-    '--destination=${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}',
-    '--image-fs-extract-retry=3',
-    '--image-download-retry=3',
-    '--push-retry=3'
-  ]
+  entrypoint: '/busybox/sh'
+  args:
+    - -c
+    - |
+      status=1
+      for delay in 0 30 30 30 30; do
+        sleep $$delay
+        /kaniko/executor --log-format=text \
+          --context=dir:///workspace/ci \
+          --dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile \
+          --cache=true \
+          --destination=${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}
+        if [[ $? -eq 0 ]]; then
+          status=0
+          break
+        fi
+      done
+      exit $$status
 
   # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
   # automatically, and also fill the log with about 2-3 pages of noise.
