@@ -159,7 +159,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   }
 
   Status CreateMultiplexedSession();  // LOCKS_EXCLUDED(mu_)
-  StatusOr<std::string> CreateMultiplexedSession(std::shared_ptr<SpannerStub>);
+  StatusOr<std::string> CreateMultiplexedSession(
+      std::shared_ptr<SpannerStub>) const;
+  bool HasValidMultiplexedSession(std::unique_lock<std::mutex> const&) const;
 
   Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
               WaitForSessionAllocation wait);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)

@@ -101,7 +101,7 @@ SessionPool::~SessionPool() {
   current_timer_.cancel();
 
   // Send fire-and-forget `AsyncDeleteSession()` calls for all sessions.
-  if (multiplexed_session_ && !multiplexed_session_->is_bad()) {
+  if (HasValidMultiplexedSession(std::unique_lock<std::mutex>(mu_))) {
     AsyncDeleteSession(cq_, GetStub(*multiplexed_session_),
                        multiplexed_session_->session_name())
         .then([](auto result) { auto status = result.get(); });
@@ -206,7 +206,7 @@ void SessionPool::Erase(std::string const& session_name) {
 
 Status SessionPool::CreateMultiplexedSession() {
   std::unique_lock<std::mutex> lk(mu_);
-  if (!multiplexed_session_ || multiplexed_session_->is_bad()) {
+  if (!HasValidMultiplexedSession(lk)) {
     auto stub = GetStub(std::move(lk));
     auto name = CreateMultiplexedSession(std::move(stub));
     if (!name) return name.status();
@@ -219,7 +219,7 @@ Status SessionPool::CreateMultiplexedSession() {
 }
 
 StatusOr<std::string> SessionPool::CreateMultiplexedSession(
-    std::shared_ptr<SpannerStub> stub) {
+    std::shared_ptr<SpannerStub> stub) const {
   google::spanner::v1::CreateSessionRequest request;
   request.set_database(db_.FullName());
   auto* session = request.mutable_session();
@@ -228,9 +228,7 @@ StatusOr<std::string> SessionPool::CreateMultiplexedSession(
     session->mutable_labels()->insert(labels.begin(), labels.end());
   }
   auto const& role = opts_.get<spanner::SessionCreatorRoleOption>();
-  if (!role.empty()) {
-    session->set_creator_role(role);
-  }
+  if (!role.empty()) session->set_creator_role(role);
   session->set_multiplexed(true);
 
   auto response = RetryLoop(
@@ -242,8 +240,13 @@ StatusOr<std::string> SessionPool::CreateMultiplexedSession(
         return stub->CreateSession(context, options, request);
       },
       opts_, request, __func__);
-  if (!response) return response.status();
+  if (!response) return std::move(response).status();
   return response->name();
+}
+
+bool SessionPool::HasValidMultiplexedSession(
+    std::unique_lock<std::mutex> const&) const {
+  return multiplexed_session_ && !multiplexed_session_->is_bad();
 }
 
 /*
@@ -351,11 +354,9 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
 
 StatusOr<SessionHolder> SessionPool::Multiplexed() {
   std::unique_lock<std::mutex> lk(mu_);
-  if (multiplexed_session_ && !multiplexed_session_->is_bad()) {
-    return multiplexed_session_;
-  }
   // If we don't have a multiplexed session (yet), use a regular one.
-  return Allocate(std::move(lk), false);
+  if (!HasValidMultiplexedSession(lk)) return Allocate(std::move(lk), false);
+  return multiplexed_session_;
 }
 
 std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
