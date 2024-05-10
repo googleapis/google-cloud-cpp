@@ -15,15 +15,28 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_MONITORING_PROJECT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_MONITORING_PROJECT_H
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 #include "google/cloud/options.h"
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
+#include <opentelemetry/sdk/resource/resource.h>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * Returns the project associated with @p resource.
+ *
+ * This function should be called with the outcome from a `Detect()` call on a
+ * GCP resource detector. If the detector finds a GCP project, we can use it as
+ * the project to send monitoring metrics.
+ */
+absl::optional<Project> MonitoringProject(
+    opentelemetry::sdk::resource::Resource const& resource);
 
 /**
  * Returns the monitoring project given the (fully populated) options.
@@ -34,5 +47,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_MONITORING_PROJECT_H

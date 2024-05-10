@@ -12,13 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 #include "google/cloud/storage/internal/grpc/monitoring_project.h"
 #include "google/cloud/storage/options.h"
+#include <opentelemetry/sdk/resource/semantic_conventions.h>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+absl::optional<Project> MonitoringProject(
+    opentelemetry::sdk::resource::Resource const& resource) {
+  namespace sc = ::opentelemetry::sdk::resource::SemanticConventions;
+  auto const& attributes = resource.GetAttributes();
+  auto l = attributes.find(sc::kCloudProvider);
+  if (l == attributes.end() ||
+      opentelemetry::nostd::get<std::string>(l->second) != "gcp") {
+    return absl::nullopt;
+  }
+  l = attributes.find(sc::kCloudAccountId);
+  if (l == attributes.end()) return absl::nullopt;
+  return Project(opentelemetry::nostd::get<std::string>(l->second));
+}
 
 absl::optional<Project> MonitoringProject(Options const& options) {
   if (!options.has<storage::ProjectIdOption>()) return absl::nullopt;
@@ -31,3 +48,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -42,6 +42,9 @@ else ()
     include(GoogleCloudCppLibrary)
     google_cloud_cpp_add_library_protos(storage)
 
+    # This library has a hard dependency on OpenTelemetry.
+    find_package(opentelemetry-cpp CONFIG REQUIRED)
+
     set(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT ON)
     # Protobuf versions are ... complicated.  Protobuf used to call itself
     # 3.21.*, 3.20.*, 3.19.*, etc. Then it starts calling itself 22.*, 23.*,
@@ -208,6 +211,7 @@ else ()
                google-cloud-cpp::grpc_utils
                google-cloud-cpp::common
                nlohmann_json::nlohmann_json
+               opentelemetry-cpp::metrics
                gRPC::grpc++
                absl::optional
                absl::strings
