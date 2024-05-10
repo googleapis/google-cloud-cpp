@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
+#include "google/cloud/internal/make_status.h"
 #include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -60,8 +61,7 @@ Status ProcessArgProductPath(
                      return p.first == "product_path";
                    });
   if (product_path == command_line_args.end() || product_path->second.empty()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "--cpp_codegen_opt=product_path=<path> must be specified.");
+    return internal::InvalidArgumentError("--cpp_codegen_opt=product_path=<path> must be specified.", GCP_ERROR_INFO());
   }
   FormatProductPath(product_path->second);
   return {};

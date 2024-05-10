@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/service_code_generator.h"
+#include "google/cloud/internal/make_status.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
@@ -403,8 +404,7 @@ Status ServiceCodeGenerator::OpenNamespaces(
     std::string const& ns_documentation) {
   auto result = service_vars_.find(product_path_var);
   if (result == service_vars_.end()) {
-    return Status(StatusCode::kInternal,
-                  product_path_var + " not found in vars");
+    return internal::InternalError(product_path_var + " not found in vars", GCP_ERROR_INFO());
   }
   namespace_ = Namespace(service_vars_[product_path_var], ns_type);
   p.Print(R"""(

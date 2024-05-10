@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/generator.h"
+#include "google/cloud/internal/make_status.h"
 #include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
@@ -104,8 +105,7 @@ GetConfig(std::string const& filepath) {
       buffer.str(), &generator_config);
 
   if (parse_result) return generator_config;
-  return google::cloud::Status(google::cloud::StatusCode::kInvalidArgument,
-                               "Unable to parse textproto file.");
+  return google::cloud::internal::InvalidArgumentError("Unable to parse textproto file.", GCP_ERROR_INFO());
 }
 
 /**
