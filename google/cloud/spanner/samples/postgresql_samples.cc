@@ -1316,6 +1316,6 @@ int main(int ac, char* av[]) try {
   google::cloud::LogSink::Instance().Flush();
   return 1;
 } catch (std::exception const& ex) {
-  std::cerr << "\n" << ex.what(, GCP_ERROR_INFO()) << "\n";
+  std::cerr << "\n" << ex.what() << "\n";
   return 1;
 }
