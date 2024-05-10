@@ -81,7 +81,8 @@ class Session {
 /**
  * A `SessionHolder` is a shared_ptr with a custom deleter that normally
  * returns the `Session` to the pool it came from (although in some cases it
- * just deletes the `Session` - see `MakeDissociatedSessionHolder`)
+ * just deletes the `Session` - see `MakeDissociatedSessionHolder()` or
+ * `SessionPool::Multiplexed()`).
  */
 using SessionHolder = std::shared_ptr<Session>;
 

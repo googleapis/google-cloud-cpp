@@ -82,7 +82,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   ~SessionPool();
 
   /**
-   * Allocate a `Session` from the pool, creating a new one if necessary.
+   * Allocates a "regular" session from the pool, which only supports a
+   * single transaction at a time, whether read-write or read-only, creating
+   * a new one if necessary.
    *
    * The returned `SessionHolder` will return the `Session` to this pool,
    * unless `dissociate_from_pool` is true, in which case it is not returned
@@ -93,6 +95,20 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * `nullptr`), or an error.
    */
   StatusOr<SessionHolder> Allocate(bool dissociate_from_pool = false);
+
+  /**
+   * Returns the multiplexed session, which allows an unbounded number of
+   * concurrent operations, and has no affinity to a single gRPC channel.
+   * A multiplexed session is long-lived, but does not require keep-alive
+   * requests when idle.
+   *
+   * May fallback to a "regular" session if no multiplexed session has
+   * been allocated.
+   *
+   * @return a `SessionHolder` on success (which is guaranteed not to be
+   * `nullptr`), or an error.
+   */
+  StatusOr<SessionHolder> Multiplexed();
 
   /**
    * Return a `SpannerStub` to be used when making calls using `session`.
@@ -141,6 +157,11 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
     cond_.wait(lk, std::forward<Predicate>(p));
     --num_waiting_for_session_;
   }
+
+  Status CreateMultiplexedSession();  // LOCKS_EXCLUDED(mu_)
+  StatusOr<std::string> CreateMultiplexedSession(
+      std::shared_ptr<SpannerStub>) const;
+  bool HasValidMultiplexedSession(std::unique_lock<std::mutex> const&) const;
 
   Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
               WaitForSessionAllocation wait);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
@@ -197,6 +218,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   std::mutex mu_;
   std::condition_variable cond_;
+  SessionHolder multiplexed_session_;               // GUARDED_BY(mu_)
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
   int total_sessions_ = 0;                          // GUARDED_BY(mu_)
   int create_calls_in_progress_ = 0;                // GUARDED_BY(mu_)

@@ -73,10 +73,15 @@ class SessionPoolTest : public testing::Test {
   testing_util::ValidateMetadataFixture validate_metadata_fixture_;
 };
 
-// Matches a BatchCreateSessionsRequest with the specified `database_name`.
-MATCHER_P(DatabaseIs, database_name,
-          "BatchCreateSessionsRequest has expected database name") {
+// Matches a CreateSessionRequest or BatchCreateSessionsRequest with the
+// specified `database_name`.
+MATCHER_P(DatabaseIs, database_name, "request has expected database name") {
   return arg.database() == database_name;
+}
+
+// Matches a multiplexed CreateSessionRequest.
+MATCHER(IsMultiplexed, "is a multiplexed CreateSessionRequest") {
+  return arg.session().multiplexed();
 }
 
 // Matches a BatchCreateSessionsRequest with the specified `labels`.
@@ -108,7 +113,19 @@ google::protobuf::Timestamp Now() {
   return now.get<google::protobuf::Timestamp>().value();
 }
 
-// Create a response with the given `sessions`
+// Create a session with the given `name`.
+google::spanner::v1::Session MakeMultiplexedSession(std::string name,
+                                                    std::string role = "") {
+  google::spanner::v1::Session session;
+  session.set_name(std::move(name));
+  *session.mutable_create_time() = Now();
+  *session.mutable_approximate_last_use_time() = Now();
+  if (!role.empty()) session.set_creator_role(std::move(role));
+  session.set_multiplexed(true);
+  return session;
+}
+
+// Create a response with the given `sessions`.
 google::spanner::v1::BatchCreateSessionsResponse MakeSessionsResponse(
     std::vector<std::string> sessions, std::string role = "") {
   google::spanner::v1::BatchCreateSessionsResponse response;
@@ -136,9 +153,57 @@ std::shared_ptr<SessionPool> MakeTestSessionPool(
                          std::move(opts));
 }
 
+TEST_F(SessionPoolTest, Multiplexed) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
+  EXPECT_CALL(*mock, BatchCreateSessions)
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
+  auto session = pool->Multiplexed();
+  ASSERT_STATUS_OK(session);
+  EXPECT_EQ((*session)->session_name(), "multiplexed");
+}
+
+TEST_F(SessionPoolTest, MultiplexedFallback) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillRepeatedly(
+          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
+  EXPECT_CALL(*mock, BatchCreateSessions)
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
+      .WillOnce(Return(make_ready_future(Status{})));
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
+  auto session = pool->Multiplexed();
+  ASSERT_STATUS_OK(session);
+  EXPECT_EQ((*session)->session_name(), "session1");
+}
+
 TEST_F(SessionPoolTest, AllocateRouteToLeader) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       google::spanner::v1::CreateSessionRequest const&) {
+        EXPECT_THAT(GetMetadata(context),
+                    Contains(Pair(kRouteToLeader, "true")));
+        return MakeMultiplexedSession("multiplexed");
+      });
   EXPECT_CALL(*mock,
               BatchCreateSessions(
                   _, _, AllOf(DatabaseIs(db.FullName()), SessionCountIs(42))))
@@ -148,6 +213,8 @@ TEST_F(SessionPoolTest, AllocateRouteToLeader) {
                     Contains(Pair(kRouteToLeader, "true")));
         return MakeSessionsResponse({"session1"});
       });
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
       .WillOnce(Return(make_ready_future(Status{})));
 
@@ -166,6 +233,16 @@ TEST_F(SessionPoolTest, AllocateRouteToLeader) {
 TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       google::spanner::v1::CreateSessionRequest const&) {
+        EXPECT_THAT(GetMetadata(context),
+                    AnyOf(Contains(Pair(kRouteToLeader, "false")),
+                          Not(Contains(Pair(kRouteToLeader, _)))));
+        return MakeMultiplexedSession("multiplexed");
+      });
   EXPECT_CALL(*mock,
               BatchCreateSessions(
                   _, _, AllOf(DatabaseIs(db.FullName()), SessionCountIs(42))))
@@ -176,6 +253,8 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
                           Not(Contains(Pair(kRouteToLeader, _)))));
         return MakeSessionsResponse({"session1"});
       });
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
       .WillOnce(Return(make_ready_future(Status{})));
 
@@ -194,6 +273,10 @@ TEST_F(SessionPoolTest, AllocateNoRouteToLeader) {
 TEST_F(SessionPoolTest, ReleaseBadSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock,
               BatchCreateSessions(
                   _, _, AllOf(DatabaseIs(db.FullName()), SessionCountIs(1))))
@@ -202,6 +285,8 @@ TEST_F(SessionPoolTest, ReleaseBadSession) {
               BatchCreateSessions(
                   _, _, AllOf(DatabaseIs(db.FullName()), SessionCountIs(2))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session2"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
       .Times(0);
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session2")))
@@ -232,6 +317,9 @@ TEST_F(SessionPoolTest, ReleaseBadSession) {
 TEST_F(SessionPoolTest, CreateError) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillRepeatedly(
+          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "init failure"))))
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "some failure"))));
@@ -247,8 +335,12 @@ TEST_F(SessionPoolTest, CreateError) {
 TEST_F(SessionPoolTest, ReuseSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
       .WillOnce(Return(make_ready_future(Status{})));
 
@@ -267,9 +359,13 @@ TEST_F(SessionPoolTest, ReuseSession) {
 TEST_F(SessionPoolTest, Lifo) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session2"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
       .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session2")))
@@ -303,8 +399,12 @@ TEST_F(SessionPoolTest, MinSessionsEagerAllocation) {
   int const min_sessions = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, BatchCreateSessions(_, _, SessionCountIs(min_sessions)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
       .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2")))
@@ -323,6 +423,8 @@ TEST_F(SessionPoolTest, MinSessionsMultipleAllocations) {
   int const min_sessions = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   // The constructor will make this call.
   EXPECT_CALL(*mock, BatchCreateSessions(_, _, SessionCountIs(min_sessions)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
@@ -330,6 +432,8 @@ TEST_F(SessionPoolTest, MinSessionsMultipleAllocations) {
   EXPECT_CALL(*mock,
               BatchCreateSessions(_, _, SessionCountIs(min_sessions + 1)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s7", "s6", "s5", "s4"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
       .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2")))
@@ -365,10 +469,14 @@ TEST_F(SessionPoolTest, MaxSessionsFailOnExhaustion) {
   int const max_sessions_per_channel = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
       .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2")))
@@ -402,8 +510,12 @@ TEST_F(SessionPoolTest, MaxSessionsBlockUntilRelease) {
   int const max_sessions_per_channel = 1;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
       .WillOnce(Return(make_ready_future(Status{})));
 
@@ -435,8 +547,22 @@ TEST_F(SessionPoolTest, Labels) {
   auto db = spanner::Database("project", "instance", "database");
   std::map<std::string, std::string> labels = {
       {"k1", "v1"}, {"k2", "v2"}, {"k3", "v3"}};
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      .WillOnce(
+          [labels](grpc::ClientContext&, Options const&,
+                   google::spanner::v1::CreateSessionRequest const& request) {
+            auto const& request_labels = request.session().labels();
+            EXPECT_EQ((std::map<std::string, std::string>(
+                          request_labels.begin(), request_labels.end())),
+                      labels);
+            return MakeMultiplexedSession("multiplexed");
+          });
   EXPECT_CALL(*mock, BatchCreateSessions(_, _, LabelsAre(labels)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
       .WillOnce(Return(make_ready_future(Status{})));
 
@@ -453,10 +579,21 @@ TEST_F(SessionPoolTest, CreatorRole) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
   std::string const role = "public";
+  EXPECT_CALL(
+      *mock,
+      CreateSession(_, _, AllOf(DatabaseIs(db.FullName()), IsMultiplexed())))
+      .WillOnce(
+          [role](grpc::ClientContext&, Options const&,
+                 google::spanner::v1::CreateSessionRequest const& request) {
+            EXPECT_EQ(request.session().creator_role(), role);
+            return MakeMultiplexedSession("multiplexed");
+          });
   EXPECT_CALL(*mock,
               BatchCreateSessions(
                   _, _, AllOf(DatabaseIs(db.FullName()), CreatorRoleIs(role))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}, role))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("session1")))
       .WillOnce(Return(make_ready_future(Status{})));
 
@@ -473,6 +610,9 @@ TEST_F(SessionPoolTest, MultipleChannels) {
   auto mock1 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock1, CreateSession)
+      .WillRepeatedly(
+          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
   EXPECT_CALL(*mock1, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s2"}))))
@@ -483,6 +623,9 @@ TEST_F(SessionPoolTest, MultipleChannels) {
       .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock1, AsyncDeleteSession(_, _, _, SessionNameIs("c1s3")))
       .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock2, CreateSession)
+      .WillRepeatedly(
+          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
   EXPECT_CALL(*mock2, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s2"}))))
@@ -513,6 +656,9 @@ TEST_F(SessionPoolTest, MultipleChannelsPreAllocation) {
   auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto mock3 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock1, CreateSession)
+      .WillRepeatedly(
+          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
   EXPECT_CALL(*mock1, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s1", "c1s2", "c1s3"}))));
   EXPECT_CALL(*mock1, AsyncDeleteSession(_, _, _, SessionNameIs("c1s1")))
@@ -521,6 +667,9 @@ TEST_F(SessionPoolTest, MultipleChannelsPreAllocation) {
       .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock1, AsyncDeleteSession(_, _, _, SessionNameIs("c1s3")))
       .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock2, CreateSession)
+      .WillRepeatedly(
+          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
   EXPECT_CALL(*mock2, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s1", "c2s2", "c2s3"}))));
   EXPECT_CALL(*mock2, AsyncDeleteSession(_, _, _, SessionNameIs("c2s1")))
@@ -529,6 +678,9 @@ TEST_F(SessionPoolTest, MultipleChannelsPreAllocation) {
       .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock2, AsyncDeleteSession(_, _, _, SessionNameIs("c2s3")))
       .WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*mock3, CreateSession)
+      .WillRepeatedly(
+          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
   EXPECT_CALL(*mock3, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c3s1", "c3s2", "c3s3"}))));
   EXPECT_CALL(*mock3, AsyncDeleteSession(_, _, _, SessionNameIs("c3s1")))
@@ -566,6 +718,9 @@ TEST_F(SessionPoolTest, MultipleChannelsPreAllocation) {
 TEST_F(SessionPoolTest, GetStubForStublessSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillRepeatedly(
+          Return(ByMove(Status(StatusCode::kInternal, "init failure"))));
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(
       db, {mock}, threads.cq(),
@@ -577,9 +732,13 @@ TEST_F(SessionPoolTest, GetStubForStublessSession) {
 
 TEST_F(SessionPoolTest, SessionRefresh) {
   auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
       .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2")))
@@ -650,10 +809,14 @@ TEST_F(SessionPoolTest, SessionRefresh) {
 
 TEST_F(SessionPoolTest, SessionRefreshNotFound) {
   auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(ByMove(MakeMultiplexedSession({"multiplexed"}))));
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
+  EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("multiplexed")))
+      .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s1")))
       .WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*mock, AsyncDeleteSession(_, _, _, SessionNameIs("s2"))).Times(0);

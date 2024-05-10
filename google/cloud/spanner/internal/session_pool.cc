@@ -78,6 +78,7 @@ SessionPool::SessionPool(spanner::Database db,
 
 void SessionPool::Initialize() {
   internal::OptionsSpan span(opts_);
+  CreateMultiplexedSession();
   auto const min_sessions = opts_.get<spanner::SessionPoolMinSessionsOption>();
   if (min_sessions > 0) {
     std::unique_lock<std::mutex> lk(mu_);
@@ -100,9 +101,14 @@ SessionPool::~SessionPool() {
   current_timer_.cancel();
 
   // Send fire-and-forget `AsyncDeleteSession()` calls for all sessions.
+  if (HasValidMultiplexedSession(std::unique_lock<std::mutex>(mu_))) {
+    AsyncDeleteSession(cq_, GetStub(*multiplexed_session_),
+                       multiplexed_session_->session_name())
+        .then([](auto result) { auto status = result.get(); });
+  }
   for (auto const& session : sessions_) {
     if (session->is_bad()) continue;
-    AsyncDeleteSession(cq_, session->channel()->stub, session->session_name())
+    AsyncDeleteSession(cq_, GetStub(*session), session->session_name())
         .then([](auto result) { auto status = result.get(); });
   }
 }
@@ -130,8 +136,9 @@ void SessionPool::DoBackgroundWork() {
 // Ensure the pool size conforms to what was specified in the `SessionOptions`,
 // creating or deleting sessions as necessary.
 void SessionPool::MaintainPoolSize() {
-  std::unique_lock<std::mutex> lk(mu_);
+  CreateMultiplexedSession();
   auto const min_sessions = opts_.get<spanner::SessionPoolMinSessionsOption>();
+  std::unique_lock<std::mutex> lk(mu_);
   if (create_calls_in_progress_ == 0 && total_sessions_ < min_sessions) {
     Grow(lk, total_sessions_ - min_sessions, WaitForSessionAllocation::kNoWait);
   }
@@ -195,6 +202,51 @@ void SessionPool::Erase(std::string const& session_name) {
       break;
     }
   }
+}
+
+Status SessionPool::CreateMultiplexedSession() {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (!HasValidMultiplexedSession(lk)) {
+    auto stub = GetStub(std::move(lk));
+    auto name = CreateMultiplexedSession(std::move(stub));
+    if (!name) return name.status();
+    auto session = std::make_shared<Session>(*std::move(name),
+                                             /*channel=*/nullptr, clock_);
+    std::unique_lock<std::mutex> lk(mu_);
+    multiplexed_session_ = std::move(session);
+  }
+  return Status{};
+}
+
+StatusOr<std::string> SessionPool::CreateMultiplexedSession(
+    std::shared_ptr<SpannerStub> stub) const {
+  google::spanner::v1::CreateSessionRequest request;
+  request.set_database(db_.FullName());
+  auto* session = request.mutable_session();
+  auto const& labels = opts_.get<spanner::SessionPoolLabelsOption>();
+  if (!labels.empty()) {
+    session->mutable_labels()->insert(labels.begin(), labels.end());
+  }
+  auto const& role = opts_.get<spanner::SessionCreatorRoleOption>();
+  if (!role.empty()) session->set_creator_role(role);
+  session->set_multiplexed(true);
+
+  auto response = RetryLoop(
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      google::cloud::Idempotency::kIdempotent,
+      [&stub](grpc::ClientContext& context, Options const& options,
+              google::spanner::v1::CreateSessionRequest const& request) {
+        RouteToLeader(context);  // always for CreateSession()
+        return stub->CreateSession(context, options, request);
+      },
+      opts_, request, __func__);
+  if (!response) return std::move(response).status();
+  return response->name();
+}
+
+bool SessionPool::HasValidMultiplexedSession(
+    std::unique_lock<std::mutex> const&) const {
+  return multiplexed_session_ && !multiplexed_session_->is_bad();
 }
 
 /*
@@ -300,13 +352,20 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
   return Allocate(std::unique_lock<std::mutex>(mu_), dissociate_from_pool);
 }
 
+StatusOr<SessionHolder> SessionPool::Multiplexed() {
+  std::unique_lock<std::mutex> lk(mu_);
+  // If we don't have a multiplexed session (yet), use a regular one.
+  if (!HasValidMultiplexedSession(lk)) return Allocate(std::move(lk), false);
+  return multiplexed_session_;
+}
+
 std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
   auto const& channel = session.channel();
   if (channel) return channel->stub;
 
-  // Sessions that were created for partitioned Reads/Queries do
-  // not have their own channel/stub, so return a stub to use by
-  // round-robining between the channels.
+  // Multiplexed sessions, or sessions that were created for partitioned
+  // Reads/Queries, do not have their own channel/stub, so return a stub
+  // to use by round-robining between the channels.
   return GetStub(std::unique_lock<std::mutex>(mu_));
 }
 
