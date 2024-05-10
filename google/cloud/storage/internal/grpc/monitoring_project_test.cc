@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 #include "google/cloud/storage/internal/grpc/monitoring_project.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/options.h"
@@ -20,6 +22,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
+#include <opentelemetry/sdk/resource/resource.h>
 
 namespace google {
 namespace cloud {
@@ -29,6 +32,26 @@ namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Optional;
+
+TEST(MonitoringProject, Resource) {
+  EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
+                {{"cloud.region", "unknown"}})),
+            absl::optional<Project>());
+  EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
+                {{"cloud.account.id", "missing cloud provider"}})),
+            absl::optional<Project>());
+  EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
+                {{"cloud.provider", "missing project"}})),
+            absl::optional<Project>());
+  EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
+                {{"cloud.provider", "not-the-right-cloud"},
+                 {"cloud.account.id", "test-only"}})),
+            absl::optional<Project>());
+  EXPECT_THAT(
+      MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
+          {{"cloud.provider", "gcp"}, {"cloud.account.id", "test-only"}})),
+      Optional<Project>(Project("test-only")));
+}
 
 TEST(MonitoringProject, Default) {
   ScopedEnvironment pr("GOOGLE_CLOUD_PROJECT", absl::nullopt);
@@ -53,3 +76,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
