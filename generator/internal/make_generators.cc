@@ -37,6 +37,7 @@
 #include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/round_robin_decorator_generator.h"
 #include "generator/internal/sample_generator.h"
+#include "generator/internal/sources_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_factory_rest_generator.h"
 #include "generator/internal/stub_generator.h"
@@ -44,6 +45,7 @@
 #include "generator/internal/tracing_connection_generator.h"
 #include "generator/internal/tracing_stub_generator.h"
 #include <google/protobuf/compiler/code_generator.h>
+#include <algorithm>
 #include <string>
 #include <utility>
 #include <vector>
@@ -57,6 +59,7 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::compiler::GeneratorContext* context,
     YAML::Node const& service_config,
     std::vector<std::pair<std::string, std::string>> const& vars) {
+  std::vector<std::string> sources;
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   VarsDictionary service_vars = CreateServiceVars(*service, vars);
   auto method_vars = CreateMethodVars(*service, service_config, service_vars);
@@ -67,8 +70,10 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   };
   bool const generate_grpc_transport =
       get_flag("generate_grpc_transport", true);
+  auto const generate_rest_transport = get_flag("generate_rest_transport");
+  auto const omit_client = get_flag("omit_client");
 
-  if (!get_flag("omit_client")) {
+  if (!omit_client) {
     code_generators.push_back(std::make_unique<ClientGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(std::make_unique<SampleGenerator>(
@@ -134,9 +139,10 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   if (get_flag("generate_round_robin_decorator")) {
     code_generators.push_back(std::make_unique<RoundRobinDecoratorGenerator>(
         service, service_vars, method_vars, context));
+    sources.push_back(service_vars["round_robin_cc_path"]);
   }
 
-  if (get_flag("generate_rest_transport")) {
+  if (generate_rest_transport) {
     // All REST interfaces postdate the change to the format of our inline
     // namespace name, so we never need to add a backwards-compatibility alias.
     auto rest_service_vars = service_vars;
@@ -153,6 +159,32 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
         service, rest_service_vars, method_vars, context));
     code_generators.push_back(std::make_unique<StubRestGenerator>(
         service, rest_service_vars, method_vars, context));
+  }
+
+  // TODO(#14108): Use `SourcesGenerator` for REGAPICs.
+  if (!omit_client && !generate_rest_transport) {
+    // Only use `SourcesGenerator` for fully generated libraries. If we have a
+    // handwritten client for a service, we should handwrite the conglomerate
+    // sources file.
+    sources.push_back(service_vars["client_cc_path"]);
+    sources.push_back(service_vars["connection_impl_cc_path"]);
+    sources.push_back(service_vars["connection_cc_path"]);
+    sources.push_back(service_vars["idempotency_policy_cc_path"]);
+    sources.push_back(service_vars["option_defaults_cc_path"]);
+    sources.push_back(service_vars["tracing_connection_cc_path"]);
+
+    if (generate_grpc_transport) {
+      sources.push_back(service_vars["stub_factory_cc_path"]);
+      sources.push_back(service_vars["auth_cc_path"]);
+      sources.push_back(service_vars["logging_cc_path"]);
+      sources.push_back(service_vars["metadata_cc_path"]);
+      sources.push_back(service_vars["stub_cc_path"]);
+      sources.push_back(service_vars["tracing_stub_cc_path"]);
+    }
+
+    std::sort(sources.begin(), sources.end());
+    code_generators.push_back(std::make_unique<SourcesGenerator>(
+        service, service_vars, method_vars, context, std::move(sources)));
   }
 
   return code_generators;

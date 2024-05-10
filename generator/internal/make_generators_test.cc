@@ -72,7 +72,7 @@ class MakeGeneratorsTest : public ::testing::Test {
 };
 
 TEST_F(MakeGeneratorsTest, GenerateServicesSuccess) {
-  int constexpr kNumMockOutputStreams = 27;
+  int constexpr kNumMockOutputStreams = 28;
   std::vector<std::unique_ptr<generator_testing::MockZeroCopyOutputStream>>
       mock_outputs(kNumMockOutputStreams);
   for (auto& output : mock_outputs) {

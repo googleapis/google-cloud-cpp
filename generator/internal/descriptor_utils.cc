@@ -837,6 +837,9 @@ VarsDictionary CreateServiceVars(
   vars["service_authority_env_var"] =
       absl::StrCat(service_endpoint_env_var_prefix, "_AUTHORITY");
   vars["service_name"] = service_name;
+  vars["sources_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(service_name), "_sources.cc");
   vars["stub_class_name"] = absl::StrCat(service_name, "Stub");
   vars["stub_cc_path"] =
       absl::StrCat(vars["product_path"], "internal/",

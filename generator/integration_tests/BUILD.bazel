@@ -64,12 +64,19 @@ cc_grpc_library(
     deps = [":google_cloud_cpp_generator_testing_cc_proto"],
 )
 
+# TODO(#14108): We wait to build the golden files using the `*_sources.cc`
+# until all golden services support the conglomerate sources file.
 filegroup(
     name = "golden_srcs",
-    srcs = glob([
-        "golden/v1/*.cc",
-        "golden/v1/internal/*.cc",
-    ]),
+    srcs = glob(
+        include = [
+            "golden/v1/*.cc",
+            "golden/v1/internal/*.cc",
+        ],
+        exclude = [
+            "golden/v1/internal/*_sources.cc",
+        ],
+    ),
 )
 
 filegroup(
