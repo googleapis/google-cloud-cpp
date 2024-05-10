@@ -36,17 +36,17 @@ using ::testing::Optional;
 TEST(MonitoringProject, Resource) {
   EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
                 {{"cloud.region", "unknown"}})),
-            absl::optional<Project>());
+            absl::nullopt);
   EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
                 {{"cloud.account.id", "missing cloud provider"}})),
-            absl::optional<Project>());
+            absl::nullopt);
   EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
                 {{"cloud.provider", "missing project"}})),
-            absl::optional<Project>());
+            absl::nullopt);
   EXPECT_EQ(MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
                 {{"cloud.provider", "not-the-right-cloud"},
                  {"cloud.account.id", "test-only"}})),
-            absl::optional<Project>());
+            absl::nullopt);
   EXPECT_THAT(
       MonitoringProject(opentelemetry::sdk::resource::Resource::Create(
           {{"cloud.provider", "gcp"}, {"cloud.account.id", "test-only"}})),
