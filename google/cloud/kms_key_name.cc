@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/kms_key_name.h"
+#include "google/cloud/internal/make_status.h"
 #include <ostream>
 #include <regex>
 
