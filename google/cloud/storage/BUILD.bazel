@@ -62,15 +62,19 @@ cc_library(
         "//:grpc_utils",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
+        "@com_github_grpc_grpc//:grpc++",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/algorithm:container",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/time",
         "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
         "@com_google_googleapis//google/storage/v2:storage_cc_proto",
-        # Do not sort: grpc++ must come last
-        "@com_github_grpc_grpc//:grpc++",
-    ],
+    ] + select({
+        # This library uses the opentelemetry SDK directly, so it must depend
+        # on the library directly.
+        "//google/cloud:enable_opentelemetry_valid": ["@io_opentelemetry_cpp//sdk/src/metrics"],
+        "//conditions:default": [],
+    }),
 )
 
 filegroup(
