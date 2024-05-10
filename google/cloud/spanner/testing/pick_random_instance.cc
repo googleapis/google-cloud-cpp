@@ -82,7 +82,7 @@ StatusOr<std::string> PickRandomInstance(
 
   auto random_index =
       std::uniform_int_distribution<std::size_t>(0, instance_ids.size() - 1);
-  return instance_ids[random_index(generator, GCP_ERROR_INFO())];
+  return instance_ids[random_index(generator)];
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
