@@ -24,18 +24,20 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::pubsublite_testing::MockService;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::ByMove;
+using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::StrictMock;
 
-using ::google::cloud::pubsublite_testing::MockService;
-
 TEST(ServiceTest, SingleDependencyNoStartDestructorGood) {
   StrictMock<MockService> service;
   ServiceComposite service_composite{&service};
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kFailedPrecondition, "`Start` not called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kFailedPrecondition,
+                       HasSubstr("`Start` not called")));
 }
 
 TEST(ServiceTest, SingleDependencyGood) {
@@ -49,13 +51,14 @@ TEST(ServiceTest, SingleDependencyGood) {
   future<Status> service_composite_start = service_composite.Start();
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   // Abort call can safely be called more than once and not change final status
   // if already set
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  service_composite.Shutdown();
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
   EXPECT_EQ(service_composite_start.get(), Status());
 }
 
@@ -69,7 +72,8 @@ TEST(ServiceTest, SingleDependencyStartFailed) {
       .WillOnce(Return(ByMove(status_promise.get_future())));
   future<Status> service_composite_start = service_composite.Start();
   status_promise.set_value(Status(StatusCode::kAborted, "uh oh"));
-  EXPECT_EQ(service_composite.status(), Status(StatusCode::kAborted, "uh oh"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("uh oh")));
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
   // Abort call can safely be called more than once and not change final status
@@ -93,8 +97,8 @@ TEST(ServiceTest, SingleDependencyStartFinishedOk) {
   EXPECT_EQ(service_composite.status(), Status());
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
   EXPECT_EQ(service_composite_start.get(), Status());
 }
 
@@ -109,13 +113,13 @@ TEST(ServiceTest, SingleDependencyShutdownTwice) {
   future<Status> service_composite_start = service_composite.Start();
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   // Abort call can safely be called more than once and not change final status
   // if already set
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
   EXPECT_EQ(service_composite_start.get(), Status());
   // shouldn't do anything
   service_composite.Shutdown();
@@ -148,8 +152,8 @@ TEST(ServiceTest, MultipleDependencyGood) {
   EXPECT_CALL(service2, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
 
   service_composite.Shutdown();
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
 
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   status_promise1.set_value(Status(StatusCode::kOk, "test ok"));
@@ -213,13 +217,13 @@ TEST(ServiceTest, AddSingleDependencyToEmptyObjectGood) {
 
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   // Abort call can safely be called more than once and not change final status
   // if already set
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
 
   EXPECT_EQ(service_composite_start.get(), Status());
 }
@@ -266,8 +270,8 @@ TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectGood) {
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   EXPECT_CALL(service1, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   status_promise1.set_value(Status(StatusCode::kOk, "test ok"));
 
@@ -314,8 +318,8 @@ TEST(ServiceTest, AddDependencyAfterShutdown) {
   future<Status> service_composite_start = service_composite.Start();
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_THAT(service_composite.status(),
+              StatusIs(StatusCode::kAborted, HasSubstr("`Shutdown` called")));
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   StrictMock<MockService> service1;
   service_composite.AddServiceObject(&service1);
