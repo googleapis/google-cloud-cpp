@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 Status OutOfRange(std::string message, internal::ErrorInfoBuilder info) {
-  return internal::OutOfRangeError(std::move(message), info);
+  return internal::OutOfRangeError(std::move(message), std::move(info));
 }
 
 Status PositiveOverflow(std::string const& type) {
