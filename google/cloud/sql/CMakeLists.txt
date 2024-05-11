@@ -26,7 +26,8 @@ unset(source_globs)
 set(service_dirs "v1/")
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/" "_" ns "${dir}")
-    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+    list(APPEND source_globs "${dir}*.h" "${dir}internal/*.h"
+         "${dir}internal/*_sources.cc")
     list(APPEND mocks_globs "${dir}mocks/*.h")
     list(APPEND DOXYGEN_EXAMPLE_PATH
          "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")

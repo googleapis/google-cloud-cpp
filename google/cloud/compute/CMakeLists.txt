@@ -20,8 +20,8 @@ function (compute_service_library dir library)
     file(
         GLOB service_source_files
         LIST_DIRECTORIES false
-        RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.h" "${dir}*.cc"
-        "${dir}internal/*")
+        RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.h"
+        "${dir}internal/*.h" "${dir}internal/*_sources.cc")
     list(SORT service_source_files)
 
     add_library(${library} ${service_source_files})

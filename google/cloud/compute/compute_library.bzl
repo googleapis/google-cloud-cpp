@@ -25,14 +25,24 @@ def compute_library(service_dir, inner_deps = []):
     d = service_dir
     service = d.replace("/v1/", "")
 
+    code_glob = [d + i + f for i in [
+        "",
+        "internal/",
+    ] for f in [
+        "*.h",
+        "*.cc",
+    ]]
+
+    sources_glob = [d + "internal/*_sources.cc"]
+
     native.filegroup(
         name = service + "_srcs",
-        srcs = native.glob([d + "*.cc", d + "internal/*.cc"]),
+        srcs = native.glob(sources_glob),
     )
 
     native.filegroup(
         name = service + "_hdrs",
-        srcs = native.glob([d + "*.h", d + "internal/*.h"]),
+        srcs = native.glob(include = code_glob, exclude = sources_glob),
     )
 
     native.filegroup(

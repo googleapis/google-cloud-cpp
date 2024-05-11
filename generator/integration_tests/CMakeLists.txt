@@ -56,14 +56,10 @@ file(
     "golden/*.h"
     "golden/mocks/*.h"
     "golden/v1/*.h"
-    "golden/v1/*.cc"
     "golden/v1/internal/*.h"
-    "golden/v1/internal/*.cc"
+    "golden/v1/internal/*_sources.cc"
+    "golden/v1/internal/streaming.cc"
     "golden/v1/mocks/*.h")
-# TODO(#14108): We wait to build the golden files using the `.*_sources.cc`
-# until all golden services support the conglomerate sources file.
-list(FILTER google_cloud_cpp_generator_golden_files EXCLUDE REGEX
-     ".*_sources.cc")
 list(SORT google_cloud_cpp_generator_golden_files)
 
 # Create a library from the where the golden code was copied to.

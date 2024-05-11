@@ -18,16 +18,27 @@ licenses(["notice"])  # Apache 2.0
 
 service_dirs = ["v1/"]
 
-src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
+code_glob = [d + i + f for d in service_dirs for i in [
+    "",
+    "internal/",
+] for f in [
+    "*.h",
+    "*.cc",
+]]
+
+sources_glob = [d + "internal/*_sources.cc" for d in service_dirs]
 
 filegroup(
     name = "srcs",
-    srcs = glob([d + "*.cc" for d in src_dirs]),
+    srcs = glob(sources_glob),
 )
 
 filegroup(
     name = "hdrs",
-    srcs = glob([d + "*.h" for d in src_dirs]),
+    srcs = glob(
+        include = code_glob,
+        exclude = sources_glob,
+    ),
 )
 
 filegroup(
