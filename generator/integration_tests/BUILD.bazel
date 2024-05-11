@@ -64,14 +64,25 @@ cc_grpc_library(
     deps = [":google_cloud_cpp_generator_testing_cc_proto"],
 )
 
-# TODO(#14108): We wait to build the golden files using the `*_sources.cc`
-# until all golden services support the conglomerate sources file.
 filegroup(
     name = "golden_srcs",
+    srcs = glob([
+        "golden/v1/internal/*_sources.cc",
+        "golden/v1/internal/streaming.cc",
+    ]),
+)
+
+filegroup(
+    name = "golden_hdrs",
     srcs = glob(
         include = [
+            "golden/*.h",
+            "golden/mocks/*.h",
             "golden/v1/*.cc",
+            "golden/v1/*.h",
             "golden/v1/internal/*.cc",
+            "golden/v1/internal/*.h",
+            "golden/v1/mocks/*.h",
         ],
         exclude = [
             "golden/v1/internal/*_sources.cc",
@@ -79,25 +90,10 @@ filegroup(
     ),
 )
 
-filegroup(
-    name = "golden_hdrs",
-    srcs = glob([
-        "golden/*.h",
-        "golden/mocks/*.h",
-        "golden/v1/*.h",
-        "golden/v1/internal/*.h",
-        "golden/v1/mocks/*.h",
-    ]),
-)
-
 cc_library(
     name = "google_cloud_cpp_generator_golden",
-    srcs = [
-        ":golden_srcs",
-    ],
-    hdrs = [
-        ":golden_hdrs",
-    ],
+    srcs = [":golden_srcs"],
+    hdrs = [":golden_hdrs"],
     copts = [
         "-I$(BINDIR)",
     ],
