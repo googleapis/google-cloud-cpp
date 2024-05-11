@@ -13,10 +13,23 @@
 // limitations under the License.
 
 #include "generator/internal/sources_generator.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+// This generator was added in 2024. We do not want to create new files with a
+// copyright date in the past.
+VarsDictionary ModifyCopyrightYear(VarsDictionary service_vars) {
+  // This string comparison will be incorrect in 8000 years. I don't care.
+  service_vars["copyright_year"] =
+      std::max<std::string>("2024", service_vars["copyright_year"]);
+  return service_vars;
+}
+
+}  // namespace
 
 SourcesGenerator::SourcesGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
@@ -25,7 +38,7 @@ SourcesGenerator::SourcesGenerator(
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::string> sources)
     : ServiceCodeGenerator("sources_cc_path", service_descriptor,
-                           std::move(service_vars),
+                           ModifyCopyrightYear(std::move(service_vars)),
                            std::move(service_method_vars), context),
       sources_(std::move(sources)) {}
 
