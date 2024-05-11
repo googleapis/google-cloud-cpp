@@ -12,78 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":compute_library.bzl", "compute_library")
 load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
 
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-# Service C++ files and mocks targets
-[[
-    filegroup(
-        name = service.replace("/v1/", "_srcs"),
-        srcs = glob([service + "*.cc"]) + glob([service + "internal/*.cc"]),
-    ),
-    filegroup(
-        name = service.replace("/v1/", "_hdrs"),
-        srcs = glob([service + "*.h"]) + glob([service + "internal/*.h"]),
-    ),
-    filegroup(
-        name = service.replace("/v1/", "_public_hdrs"),
-        srcs = glob([service + "*.h"]),
-        visibility = ["//:__pkg__"],
-    ),
-    filegroup(
-        name = service.replace("/v1/", "_mock_hdrs"),
-        srcs = glob([service + "mocks/*.h"]),
-        visibility = ["//:__pkg__"],
-    ),
-    cc_library(
-        name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_mocks"),
-        hdrs = [":" + service.replace("/v1/", "_mock_hdrs")],
-        visibility = ["//:__pkg__"],
-        deps = [
-            ":google_cloud_cpp_compute_" + service.replace("/v1/", ""),
-            "@com_google_googletest//:gtest",
-        ],
-    ),
-] for service in service_dirs + operation_service_dirs]
+[compute_library(d, []) for d in operation_service_dirs]
 
-# Operation services
-[cc_library(
-    name = "google_cloud_cpp_compute_" + service.replace("/v1/", ""),
-    srcs = [":" + service.replace("/v1/", "_srcs")],
-    hdrs = [":" + service.replace("/v1/", "_hdrs")],
-    visibility = ["//:__pkg__"],
-    deps = [
-        "//:common",
-        "//:grpc_utils",
-        "//google/cloud:google_cloud_cpp_rest_internal",
-        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
-        "//protos:system_includes",
-        "//protos/google/cloud/compute:cc_proto",
-    ],
-) for service in operation_service_dirs]
+operations = [":google_cloud_cpp_compute_" + d.replace("/v1/", "") for d in operation_service_dirs]
 
-# Services
-[cc_library(
-    name = "google_cloud_cpp_compute_" + service.replace("/v1/", ""),
-    srcs = [":" + service.replace("/v1/", "_srcs")],
-    hdrs = [":" + service.replace("/v1/", "_hdrs")],
-    visibility = ["//:__pkg__"],
-    deps = [
-        ":google_cloud_cpp_compute_global_operations",
-        ":google_cloud_cpp_compute_global_organization_operations",
-        ":google_cloud_cpp_compute_region_operations",
-        ":google_cloud_cpp_compute_zone_operations",
-        "//:common",
-        "//:grpc_utils",
-        "//google/cloud:google_cloud_cpp_rest_internal",
-        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
-        "//protos:system_includes",
-        "//protos/google/cloud/compute:cc_proto",
-    ],
-) for service in service_dirs]
+[compute_library(d, operations) for d in service_dirs]
 
 [cc_test(
     # Sample names include the name of the client, which is unique. Removing
@@ -95,4 +35,4 @@ licenses(["notice"])  # Apache 2.0
         ":google_cloud_cpp_compute_" + sample[0:sample.find("/v")],
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
-) for sample in glob([d + "samples/*.cc" for d in service_dirs])]
+) for sample in glob([d + "samples/*.cc" for d in service_dirs + operation_service_dirs])]
