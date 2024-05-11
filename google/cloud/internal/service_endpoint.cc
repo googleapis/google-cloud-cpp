@@ -14,7 +14,6 @@
 
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/make_status.h"
 #include "google/cloud/universe_domain_options.h"
 #include "absl/strings/strip.h"
 
@@ -22,36 +21,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-// TODO(#13122): This function may need to be enhanced to support an env var
-// for UniverseDomain.
-StatusOr<std::string> DetermineServiceEndpoint(
-    absl::optional<std::string> endpoint_env_var,
-    absl::optional<std::string> endpoint_option, std::string default_endpoint,
-    Options const& options) {
-  if (endpoint_env_var.has_value() && !endpoint_env_var->empty()) {
-    return *endpoint_env_var;
-  }
-  if (endpoint_option.has_value()) {
-    return *endpoint_option;
-  }
-  if (!absl::EndsWith(default_endpoint, ".")) {
-    absl::StrAppend(&default_endpoint, ".");
-  }
-  if (options.has<UniverseDomainOption>()) {
-    std::string universe_domain_option = options.get<UniverseDomainOption>();
-    if (universe_domain_option.empty()) {
-      return internal::InvalidArgumentError(
-          "UniverseDomainOption cannot be empty");
-    }
-    if (!absl::StartsWith(universe_domain_option, ".")) {
-      universe_domain_option = absl::StrCat(".", universe_domain_option);
-    }
-    return absl::StrCat(absl::StripSuffix(default_endpoint, ".googleapis.com."),
-                        universe_domain_option);
-  }
-  return default_endpoint;
-}
 
 std::string UniverseDomainEndpoint(std::string gdu_endpoint,
                                    Options const& options) {
