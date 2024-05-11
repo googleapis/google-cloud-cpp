@@ -19,11 +19,16 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-[compute_library(d, []) for d in operation_service_dirs]
+[compute_library(
+    service_dir = d,
+) for d in operation_service_dirs]
 
 operations = [":google_cloud_cpp_compute_" + d.replace("/v1/", "") for d in operation_service_dirs]
 
-[compute_library(d, operations) for d in service_dirs]
+[compute_library(
+    inner_deps = operations,
+    service_dir = d,
+) for d in service_dirs]
 
 [cc_test(
     # Sample names include the name of the client, which is unique. Removing
