@@ -161,25 +161,33 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
         service, rest_service_vars, method_vars, context));
   }
 
-  // TODO(#14108): Use `SourcesGenerator` for REGAPICs.
-  if (!omit_client && !generate_rest_transport) {
+  if (!omit_client) {
     // Only use `SourcesGenerator` for fully generated libraries. If we have a
     // handwritten client for a service, we should handwrite the conglomerate
     // sources file.
     sources.push_back(service_vars["client_cc_path"]);
-    sources.push_back(service_vars["connection_impl_cc_path"]);
     sources.push_back(service_vars["connection_cc_path"]);
     sources.push_back(service_vars["idempotency_policy_cc_path"]);
     sources.push_back(service_vars["option_defaults_cc_path"]);
     sources.push_back(service_vars["tracing_connection_cc_path"]);
 
     if (generate_grpc_transport) {
+      sources.push_back(service_vars["connection_impl_cc_path"]);
       sources.push_back(service_vars["stub_factory_cc_path"]);
       sources.push_back(service_vars["auth_cc_path"]);
       sources.push_back(service_vars["logging_cc_path"]);
       sources.push_back(service_vars["metadata_cc_path"]);
       sources.push_back(service_vars["stub_cc_path"]);
       sources.push_back(service_vars["tracing_stub_cc_path"]);
+    }
+
+    if (generate_rest_transport) {
+      sources.push_back(service_vars["connection_rest_cc_path"]);
+      sources.push_back(service_vars["connection_impl_rest_cc_path"]);
+      sources.push_back(service_vars["logging_rest_cc_path"]);
+      sources.push_back(service_vars["metadata_rest_cc_path"]);
+      sources.push_back(service_vars["stub_factory_rest_cc_path"]);
+      sources.push_back(service_vars["stub_rest_cc_path"]);
     }
 
     std::sort(sources.begin(), sources.end());
