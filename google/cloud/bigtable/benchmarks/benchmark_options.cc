@@ -107,7 +107,8 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
     return options;
   }
 
-  auto make_status = [](std::ostringstream& os, ErrorBuilderinfo info) {
+  auto make_status = [](std::ostringstream& os,
+                        google::cloud::internal::ErrorInfoBuilder info) {
     return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
                                                          std::move(info));
   };
