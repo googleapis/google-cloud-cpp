@@ -172,6 +172,7 @@ create_bazel_config(google_cloud_cpp_generator YEAR "2020")
 
 # Build protoc plugin executable
 add_executable(protoc-gen-cpp_codegen plugin_main.cc)
+google_cloud_cpp_add_common_options(protoc-gen-cpp_codegen)
 target_link_libraries(
     protoc-gen-cpp_codegen LINK_PUBLIC google_cloud_cpp_generator
     protobuf::libprotoc ${Protobuf_LIBRARIES})
@@ -190,11 +191,14 @@ else ()
 endif ()
 target_link_libraries(google_cloud_cpp_generator_config
                       PUBLIC protobuf::libprotobuf)
+google_cloud_cpp_add_common_options(google_cloud_cpp_generator_config
+                                    NO_WARNINGS)
 set_target_properties(google_cloud_cpp_generator_config
                       PROPERTIES CXX_CLANG_TIDY "")
 
 # Build standalone executable
 add_executable(google-cloud-cpp-codegen standalone_main.cc)
+google_cloud_cpp_add_common_options(google-cloud-cpp-codegen)
 target_link_libraries(
     google-cloud-cpp-codegen
     PUBLIC google_cloud_cpp_generator_config google_cloud_cpp_generator
