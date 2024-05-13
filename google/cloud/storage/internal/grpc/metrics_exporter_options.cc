@@ -13,16 +13,66 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/metrics_exporter_options.h"
+#include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/universe_domain_options.h"
+#include <google/api/monitored_resource.pb.h>
+#include <opentelemetry/sdk/resource/semantic_conventions.h>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
 
-Options MetricsExporterOptions(Options const& options) {
-  auto result = Options{};
+auto ByName(opentelemetry::sdk::resource::ResourceAttributes const& attributes,
+            std::string const& name, std::string default_value) {
+  auto const l = attributes.find(name);
+  if (l == attributes.end()) return default_value;
+  using opentelemetry::nostd::get;
+  return get<std::string>(l->second);
+}
+
+}  // namespace
+
+Options MetricsExporterOptions(
+    Project const& project,
+    opentelemetry::sdk::resource::Resource const& resource,
+    Options const& options) {
+  namespace sc = ::opentelemetry::sdk::resource::SemanticConventions;
+  auto result =
+      Options{}
+          .set<otel_internal::ServiceTimeSeriesOption>(true)
+          .set<otel_internal::MetricPrefixOption>("storage.googleapis.com/");
+
+  // This is fairly expensive, it requires initializing a new PRNG, and fetching
+  // entropy from the OS. Outside tests, this function will be called a handful
+  // of times, so the performance is not that important.
+  auto uuid =
+      google::cloud::internal::InvocationIdGenerator().MakeInvocationId();
+
+  auto const& attributes = resource.GetAttributes();
+  auto monitored_resource = google::api::MonitoredResource{};
+  monitored_resource.set_type("gcs_client_instance");
+  monitored_resource.mutable_labels()->emplace("project_id",
+                                               project.project_id());
+  monitored_resource.mutable_labels()->emplace(
+      "location", ByName(attributes, sc::kCloudAvailabilityZone,
+                         ByName(attributes, sc::kCloudRegion, "global")));
+  monitored_resource.mutable_labels()->emplace(
+      "cloud_platform", ByName(attributes, sc::kCloudPlatform, "unknown"));
+  monitored_resource.mutable_labels()->emplace(
+      "host_id", ByName(attributes, "faas.id",
+                        ByName(attributes, sc::kHostId, "unknown")));
+  monitored_resource.mutable_labels()->emplace(
+      "instance_id",
+      ByName(attributes, sc::kServiceInstanceId, std::move(uuid)));
+  monitored_resource.mutable_labels()->emplace("api", "GRPC");
+
+  result.set<otel_internal::MonitoredResourceOption>(
+      std::move(monitored_resource));
+
   auto ep_canonical = std::string{"storage.googleapis.com"};
   auto ep_private = std::string{"private.googleapis.com"};
   auto ep_restricted = std::string{"restricted.googleapis.com"};

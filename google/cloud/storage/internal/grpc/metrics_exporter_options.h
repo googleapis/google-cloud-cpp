@@ -15,8 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_OPTIONS_H
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 #include "google/cloud/options.h"
+#include "google/cloud/project.h"
 #include "google/cloud/version.h"
+#include <opentelemetry/sdk/resource/resource.h>
 
 namespace google {
 namespace cloud {
@@ -27,7 +31,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Returns the monitoring options given the (fully populated) options for
  * Storage.
  */
-Options MetricsExporterOptions(Options const& options);
+Options MetricsExporterOptions(
+    Project const& project,
+    opentelemetry::sdk::resource::Resource const& resource,
+    Options const& options);
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
