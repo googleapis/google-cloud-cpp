@@ -16,6 +16,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
@@ -172,7 +173,7 @@ StatusOr<AccessToken> ParseComputeEngineRefreshResponse(
         "Could not find all required fields in response (access_token,"
         " expires_in, token_type) while trying to obtain an access token for"
         " compute engine credentials.";
-    return Status{StatusCode::kInvalidArgument, error_payload, {}};
+    return InvalidArgumentError(error_payload, GCP_ERROR_INFO());
   }
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   auto new_expiration = now + expires_in;
