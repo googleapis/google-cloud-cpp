@@ -140,9 +140,9 @@ void PartitionPublisher::OnRead(absl::optional<PublishResponse> response) {
     // `InitialPublishResponse`, we abort because this should not be the
     // case once we start `Read`ing
     OnReadEnd();
-    return service_composite_.Abort(Status(
-        StatusCode::kAborted,
-        absl::StrCat("Invalid `Read` response: ", response->DebugString())));
+    return service_composite_.Abort(internal::AbortedError(
+        absl::StrCat("Invalid `Read` response: ", response->DebugString()),
+        GCP_ERROR_INFO()));
   }
 
   std::deque<MessageWithPromise> batch;

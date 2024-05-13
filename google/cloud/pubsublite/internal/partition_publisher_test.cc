@@ -470,11 +470,11 @@ TEST_F(PartitionPublisherTest, InvalidReadResponse) {
 
   read_promise.set_value(absl::make_optional(GetInitializerPublishResponse()));
 
-  EXPECT_EQ(
+  EXPECT_THAT(
       publisher_start_future.get(),
-      Status(StatusCode::kAborted,
-             absl::StrCat("Invalid `Read` response: ",
-                          GetInitializerPublishResponse().DebugString())));
+      StatusIs(StatusCode::kAborted,
+               absl::StrCat("Invalid `Read` response: ",
+                            GetInitializerPublishResponse().DebugString())));
 
   // shouldn't do anything b/c lifecycle ended
   publisher_->Flush();
@@ -487,11 +487,11 @@ TEST_F(PartitionPublisherTest, InvalidReadResponse) {
 
   auto message_response = publish_future.get();
   EXPECT_FALSE(message_response);
-  EXPECT_EQ(
+  EXPECT_THAT(
       message_response.status(),
-      Status(StatusCode::kAborted,
-             absl::StrCat("Invalid `Read` response: ",
-                          GetInitializerPublishResponse().DebugString())));
+      StatusIs(StatusCode::kAborted,
+               absl::StrCat("Invalid `Read` response: ",
+                            GetInitializerPublishResponse().DebugString())));
 }
 
 TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
