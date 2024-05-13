@@ -37,6 +37,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/group_options.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -783,10 +784,10 @@ class Table {
       return;
     }
     if (!google::cloud::internal::IsEmpty(opts)) {
-      on_finish_fn(
-          Status(StatusCode::kInvalidArgument,
-                 "Per-operation options only apply to `Table`s constructed "
-                 "with a `DataConnection`."));
+      on_finish_fn(google::cloud::internal::InvalidArgumentError(
+          "Per-operation options only apply to `Table`s constructed "
+          "with a `DataConnection`.",
+          GCP_ERROR_INFO()));
       return;
     }
 

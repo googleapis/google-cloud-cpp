@@ -25,6 +25,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 #include <string>
@@ -227,9 +228,10 @@ StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
   if (!*it) return it->status();
   auto result = std::make_pair(true, std::move(**it));
   if (++it != reader.end()) {
-    return Status(
-        StatusCode::kInternal,
-        "internal error - RowReader returned more than one row in ReadRow()");
+    return internal::InternalError(
+        "internal error - RowReader returned more than one row in ReadRow(, "
+        ")",
+        GCP_ERROR_INFO());
   }
   return result;
 }

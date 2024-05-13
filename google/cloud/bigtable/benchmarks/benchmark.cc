@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include <future>
 #include <iomanip>
 #include <sstream>
@@ -44,8 +45,8 @@ google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
       if (!value.empty()) continue;
       std::ostringstream os;
       os << "The environment variable " << var << " is not set or empty";
-      return google::cloud::Status(google::cloud::StatusCode::kUnknown,
-                                   std::move(os).str());
+      return google::cloud::internal::UnknownError(std::move(os).str(),
+                                                   GCP_ERROR_INFO());
     }
     auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value();
     auto const instance_id =

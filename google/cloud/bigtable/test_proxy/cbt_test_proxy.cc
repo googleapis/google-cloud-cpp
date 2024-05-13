@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "absl/time/time.h"
@@ -364,8 +365,8 @@ StatusOr<std::shared_ptr<DataConnection>> CbtTestProxy::GetConnection(
   std::lock_guard<std::mutex> lk(mu_);
   auto client_it = connections_.find(client_id);
   if (client_it == connections_.end()) {
-    return Status(StatusCode::kNotFound,
-                  absl::StrCat("Client ", client_id, " not found."));
+    return google::cloud::internal::NotFoundError(
+        absl::StrCat("Client ", client_id, " not found."), GCP_ERROR_INFO());
   }
 
   return client_it->second;

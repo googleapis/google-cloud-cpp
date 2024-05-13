@@ -22,6 +22,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/tracing_options.h"
@@ -365,9 +366,10 @@ class ClientOptions {
         std::chrono::duration_cast<std::chrono::milliseconds>(fallback_timeout);
 
     if (ft_ms.count() > std::numeric_limits<int>::max()) {
-      return google::cloud::Status(google::cloud::StatusCode::kOutOfRange,
-                                   "The supplied duration is larger than the "
-                                   "maximum value allowed by gRPC (INT_MAX)");
+      return google::cloud::internal::OutOfRangeError(
+          "The supplied duration is larger than the "
+          "maximum value allowed by gRPC (INT_MAX)",
+          GCP_ERROR_INFO());
     }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetGrpclbFallbackTimeout(

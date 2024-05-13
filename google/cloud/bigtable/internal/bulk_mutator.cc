@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include <numeric>
 
@@ -146,12 +147,12 @@ void BulkMutatorState::OnFinish(Status finish_status,
       pending_annotations_.push_back(std::move(annotation));
     } else {
       if (last_status_.ok()) {
-        Status status(
-            StatusCode::kInternal,
+        auto status = internal::InternalError(
             "The server never sent a confirmation for this mutation but the "
             "stream didn't fail either. This is most likely a bug, please "
             "report it at "
-            "https://github.com/googleapis/google-cloud-cpp/issues/new");
+            "https://github.com/googleapis/google-cloud-cpp/issues/new",
+            GCP_ERROR_INFO());
         failures_.emplace_back(std::move(status), annotation.original_index);
       } else {
         failures_.emplace_back(last_status_, annotation.original_index);
@@ -173,12 +174,12 @@ std::vector<bigtable::FailedMutation> BulkMutatorState::OnRetryDone() && {
     } else if (!last_status_.ok()) {
       result.emplace_back(last_status_, annotation.original_index);
     } else {
-      Status status(
-          StatusCode::kInternal,
+      auto status = internal::InternalError(
           "The server never sent a confirmation for this mutation but the "
           "stream didn't fail either. This is most likely a bug, please "
           "report it at "
-          "https://github.com/googleapis/google-cloud-cpp/issues/new");
+          "https://github.com/googleapis/google-cloud-cpp/issues/new",
+          GCP_ERROR_INFO());
       result.emplace_back(std::move(status), annotation.original_index);
     }
   }
