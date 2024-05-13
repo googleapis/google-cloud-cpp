@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
@@ -106,9 +107,9 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
     return options;
   }
 
-  auto make_status = [](std::ostringstream& os) {
-    auto const code = google::cloud::StatusCode::kInvalidArgument;
-    return google::cloud::Status{code, std::move(os).str()};
+  auto make_status = [](std::ostringstream& os, ErrorBuilderinfo info) {
+    return google::cloud::internal::InvalidArgumentError(std::move(os).str(),
+                                                         std::move(info));
   };
 
   if (unparsed.size() != 1) {
@@ -117,41 +118,41 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
        << absl::StrJoin(std::next(unparsed.begin()), unparsed.end(), ", ")
        << "\n"
        << usage << "\n";
-    return make_status(os);
+    return make_status(os, GCP_ERROR_INFO());
   }
   if (options.project_id.empty()) {
     std::ostringstream os;
     os << "Missing --project-id option\n" << usage << "\n";
-    return make_status(os);
+    return make_status(os, GCP_ERROR_INFO());
   }
   if (options.instance_id.empty()) {
     std::ostringstream os;
     os << "Missing --instance-id option\n" << usage << "\n";
-    return make_status(os);
+    return make_status(os, GCP_ERROR_INFO());
   }
   if (options.app_profile_id.empty()) {
     std::ostringstream os;
     os << "Missing --app-profile-id option\n" << usage << "\n";
-    return make_status(os);
+    return make_status(os, GCP_ERROR_INFO());
   }
   if (options.thread_count <= 0) {
     std::ostringstream os;
     os << "Invalid number of threads (" << options.thread_count
        << "). Check your --thread-count option\n";
-    return make_status(os);
+    return make_status(os, GCP_ERROR_INFO());
   }
   if (options.table_size <= kPopulateShardCount) {
     std::ostringstream os;
     os << "Invalid table size (" << options.table_size
        << "). This value must be greater than " << kPopulateShardCount
        << ". Check your --table-size option\n";
-    return make_status(os);
+    return make_status(os, GCP_ERROR_INFO());
   }
   if (options.test_duration.count() <= 0) {
     std::ostringstream os;
     os << "Invalid test duration seconds (" << options.test_duration.count()
        << "). Check your --test-duration option.\n";
-    return make_status(os);
+    return make_status(os, GCP_ERROR_INFO());
   }
   return options;
 }
