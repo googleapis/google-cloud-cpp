@@ -106,11 +106,11 @@ void Round(std::deque<char>& int_rep, std::deque<char>& frac_rep,
   *it = *(std::strchr(kDigits, *it) + 1);
 }
 
-Status InvalidArgument(std::string message, ErrorBuilderinfo info) {
+Status InvalidArgument(std::string message, internal::ErrorInfoBuilder info) {
   return internal::InvalidArgumentError(std::move(message), std::move(info));
 }
 
-Status OutOfRange(std::string message, ErrorBuilderinfo info) {
+Status OutOfRange(std::string message, internal::ErrorInfoBuilder info) {
   return internal::OutOfRangeError(std::move(message), std::move(info));
 }
 
