@@ -99,10 +99,6 @@ namespace {
 auto constexpr kFormatSpec = "%E4Y-%m-%d%ET%H:%M:%E*SZ";
 auto constexpr kParseSpec = "%Y-%m-%d%ET%H:%M:%E*S%Ez";
 
-Status InvalidArgument(std::string message) {
-  return Status(StatusCode::kInvalidArgument, std::move(message));
-}
-
 }  // namespace
 
 StatusOr<spanner::Timestamp> TimestampFromRFC3339(std::string const& s) {
@@ -111,7 +107,7 @@ StatusOr<spanner::Timestamp> TimestampFromRFC3339(std::string const& s) {
   if (absl::ParseTime(kParseSpec, s, &t, &err)) {
     return spanner::MakeTimestamp(t);
   }
-  return InvalidArgument(s + ": " + err);
+  return internal::InvalidArgument(s + ": " + err, GCP_ERROR_INFO());
 }
 
 std::string TimestampToRFC3339(spanner::Timestamp ts) {

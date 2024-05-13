@@ -106,12 +106,12 @@ void Round(std::deque<char>& int_rep, std::deque<char>& frac_rep,
   *it = *(std::strchr(kDigits, *it) + 1);
 }
 
-Status InvalidArgument(std::string message) {
-  return internal::InvalidArgumentError(std::move(message), GCP_ERROR_INFO());
+Status InvalidArgument(std::string message, ErrorBuilderinfo info) {
+  return internal::InvalidArgumentError(std::move(message), std::move(info));
 }
 
-Status OutOfRange(std::string message) {
-  return Status(StatusCode::kOutOfRange, std::move(message));
+Status OutOfRange(std::string message, ErrorBuilderinfo info) {
+  return internal::OutOfRangeError(std::move(message), std::move(info));
 }
 
 }  // namespace
@@ -137,7 +137,7 @@ StatusOr<std::string> MakeDecimalRep(std::string s, bool const has_nan,
                                      std::size_t const frac_prec) {
   if (IsNaN(s)) {
     if (has_nan) return std::string{"NaN"};
-    return InvalidArgument(std::move(s));
+    return InvalidArgument(std::move(s), GCP_ERROR_INFO());
   }
 
   char const* p = s.c_str();
@@ -177,18 +177,18 @@ StatusOr<std::string> MakeDecimalRep(std::string s, bool const has_nan,
       char* ep = nullptr;
       exponent = std::strtol(p + 1, &ep, 10);
       if (ep != p + 1) {
-        if (errno != 0) return OutOfRange(std::move(s));
+        if (errno != 0) return OutOfRange(std::move(s), GCP_ERROR_INFO());
         p = ep;
       }
     }
   }
 
   // That must have consumed everything.
-  if (p != e) return InvalidArgument(std::move(s));
+  if (p != e) return InvalidArgument(std::move(s), GCP_ERROR_INFO());
 
   // There must be at least one digit.
   if (int_part.empty() && frac_part.size() <= 1) {
-    return InvalidArgument(std::move(s));
+    return InvalidArgument(std::move(s), GCP_ERROR_INFO());
   }
 
   auto int_rep = std::deque<char>(int_part.begin(), int_part.end());
@@ -214,7 +214,7 @@ StatusOr<std::string> MakeDecimalRep(std::string s, bool const has_nan,
   // Canonicalize and range check the integer part.
   while (!int_rep.empty() && int_rep.front() == '0') int_rep.pop_front();
   if (int_rep.size() > int_prec) {
-    return OutOfRange(std::move(s));
+    return OutOfRange(std::move(s), GCP_ERROR_INFO());
   }
 
   // Add any sign and decimal point.
@@ -237,7 +237,7 @@ StatusOr<std::string> MakeDecimalRep(double d) {
   ss.imbue(std::locale::classic());
   ss << std::setprecision(std::numeric_limits<double>::digits10 + 1) << d;
   std::string rep = std::move(ss).str();
-  if (std::isinf(d)) return OutOfRange(std::move(rep));
+  if (std::isinf(d)) return OutOfRange(std::move(rep), GCP_ERROR_INFO());
   return rep;
 }
 
