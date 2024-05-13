@@ -690,29 +690,33 @@ google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
 }
 
 google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
-  auto error = [](std::string m) {
-    return google::cloud::Status(google::cloud::StatusCode::kUnknown,
-                                 std::move(m));
+  auto error = [](std::string m,
+                  google::cloud::internal::ErrorInfoBuilder info) {
+    return google::cloud::internal::UnknownError(std::move(m), std::move(info));
   };
   for (auto const& var : {"GOOGLE_CLOUD_PROJECT"}) {
     auto const value = GetEnv(var).value_or("");
     if (!value.empty()) continue;
     std::ostringstream os;
     os << "The environment variable " << var << " is not set or empty";
-    return error(std::move(os).str());
+    return error(std::move(os).str(), GCP_ERROR_INFO());
   }
   auto config = ParseArgsImpl({cmd, "--help"}, kDescription);
-  if (!config || !config->show_help) return error("--help parsing");
+  if (!config || !config->show_help) {
+    return error("--help parsing", GCP_ERROR_INFO());
+  }
   config = ParseArgsImpl({cmd, "--description", "--help"}, kDescription);
-  if (!config || !config->show_help) return error("--description parsing");
+  if (!config || !config->show_help) {
+    return error("--description parsing", GCP_ERROR_INFO());
+  }
   config = ParseArgsImpl({cmd, "--project-id="}, kDescription);
-  if (config) return error("--project-id validation");
+  if (config) return error("--project-id validation", GCP_ERROR_INFO());
   config = ParseArgsImpl({cmd, "--topic-id=test"}, kDescription);
-  if (!config) return error("--topic-id");
+  if (!config) return error("--topic-id", GCP_ERROR_INFO());
   config = ParseArgsImpl({cmd, "--subscription-id=test"}, kDescription);
-  if (!config) return error("--subscription-id");
+  if (!config) return error("--subscription-id", GCP_ERROR_INFO());
   config = ParseArgsImpl({cmd, "--endpoint=test"}, kDescription);
-  if (!config) return error("--endpoint");
+  if (!config) return error("--endpoint", GCP_ERROR_INFO());
 
   return ParseArgsImpl(
       {
