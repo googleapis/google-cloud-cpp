@@ -51,8 +51,10 @@ using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
+using ::testing::Pair;
 
 TEST(OpenTelemetry, MakeSpanGrpc) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
@@ -188,6 +190,70 @@ TEST(OpenTelemetry, EndSpanFutureDetachesContext) {
   EXPECT_STATUS_OK(f.get());
   EXPECT_THAT(span_catcher->GetSpans(),
               ElementsAre(SpanNamed("google.cloud.foo.v1.Foo/GetBar")));
+}
+
+class EndSpanGrpcServerMetadataTest : public ::testing::Test {
+ protected:
+  testing_util::ValidateMetadataFixture metadata_fixture_;
+};
+
+TEST_F(EndSpanGrpcServerMetadataTest, UnknownOriginError) {
+  auto span_catcher = InstallSpanCatcher();
+
+  promise<Status> p;
+  auto context = std::make_shared<grpc::ClientContext>();
+  metadata_fixture_.SetServerMetadata(
+      *context, {{{"header", "header-value"}}, {{"trailer", "trailer-value"}}});
+  auto f = EndSpan(context, MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"),
+                   p.get_future());
+  EXPECT_FALSE(f.is_ready());
+  p.set_value(internal::CancelledError("call cancelled"));
+  EXPECT_TRUE(f.is_ready());
+  auto status = f.get();
+  EXPECT_THAT(status, StatusIs(StatusCode::kCancelled));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("grpc.peer", "inproc"),
+              OTelAttribute<std::string>("rpc.grpc.response.metadata.header",
+                                         "header-value"),
+              OTelAttribute<std::string>("rpc.grpc.response.metadata.trailer",
+                                         "trailer-value")))));
+}
+
+TEST_F(EndSpanGrpcServerMetadataTest, ClientOrigin) {
+  auto span_catcher = InstallSpanCatcher();
+
+  promise<Status> p;
+  auto context = std::make_shared<grpc::ClientContext>();
+  metadata_fixture_.SetServerMetadata(
+      *context, {{{"header", "header-value"}}, {{"trailer", "trailer-value"}}});
+  auto f = EndSpan(context, MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"),
+                   p.get_future());
+  EXPECT_FALSE(f.is_ready());
+  p.set_value(internal::CancelledError(
+      "call cancelled",
+      GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client")));
+  EXPECT_TRUE(f.is_ready());
+  auto status = f.get();
+  EXPECT_THAT(status, StatusIs(StatusCode::kCancelled));
+  auto const& metadata = status.error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gl-cpp.error.origin", "client")));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", "inproc")),
+          Not(SpanHasAttributes(
+              OTelAttribute<std::string>("grpc.peer", "inproc"),
+              OTelAttribute<std::string>("rpc.grpc.response.metadata.header",
+                                         "header-value"),
+              OTelAttribute<std::string>("rpc.grpc.response.metadata.trailer",
+                                         "trailer-value"))))));
 }
 
 TEST(OpenTelemetry, TracedAsyncBackoffEnabled) {
