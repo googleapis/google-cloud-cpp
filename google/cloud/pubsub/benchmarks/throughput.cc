@@ -690,7 +690,7 @@ google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
 }
 
 google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
-  auto error = [](std::string m, ErrorBuilderinfo info) {
+  auto error = [](std::string m, google::cloud::ErrorInfoBuilder info) {
     return google::cloud::internal::UnknownError(std::move(m), std::move(info));
   };
   for (auto const& var : {"GOOGLE_CLOUD_PROJECT"}) {
