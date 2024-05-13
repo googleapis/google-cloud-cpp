@@ -551,8 +551,9 @@ StatusOr<std::int64_t> Value::GetValue(std::int64_t,
   errno = 0;
   std::int64_t x = {std::strtoll(s.c_str(), &end, 10)};
   if (errno != 0) {
-    return Status(StatusCode::kUnknown,
-                  google::cloud::internal::strerror(errno) + ": \"" + s + "\"");
+    return internal::UnknownError(
+        google::cloud::internal::strerror(errno) + ": \"" + s + "\"",
+        GCP_ERROR_INFO());
   }
   if (end == s.c_str()) {
     return internal::UnknownError("No numeric conversion: \"" + s + "\"",

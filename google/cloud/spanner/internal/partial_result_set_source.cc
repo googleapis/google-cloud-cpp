@@ -224,14 +224,16 @@ Status PartialResultSetSource::ReadFromStream() {
     resume_token_ = result_set->result.resume_token();
     if (n_rows * n_columns != values_.size()) {
       if (state_ != kEndOfStream) {
-        return Status(StatusCode::kInternal,
-                      "PartialResultSetSource reader produced a resume token"
-                      " that is not on a row boundary");
+        return internal::InternalError(
+            "PartialResultSetSource reader produced a resume token"
+            " that is not on a row boundary",
+            GCP_ERROR_INFO());
       }
       if (n_rows == 0) {
-        return Status(StatusCode::kInternal,
-                      "PartialResultSetSource stream ended at a point"
-                      " that is not on a row boundary");
+        return internal::InternalError(
+            "PartialResultSetSource stream ended at a point"
+            " that is not on a row boundary",
+            GCP_ERROR_INFO());
       }
     }
   } else if (n_rows != 0) {
