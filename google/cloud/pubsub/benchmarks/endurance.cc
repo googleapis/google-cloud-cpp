@@ -564,7 +564,7 @@ google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
 }
 
 google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
-  auto error = [](std::string m, google::cloud::internal::ErrorInfoBuilder info) {
+  auto error = [](std::string m, google::cloud::ErrorInfoBuilder info) {
     return google::cloud::internal::UnknownError(std::move(m), std::move(info));
   };
   for (auto const& var : {"GOOGLE_CLOUD_PROJECT"}) {
@@ -575,11 +575,13 @@ google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
     return error(std::move(os).str(), GCP_ERROR_INFO());
   }
   auto config = ParseArgsImpl({cmd, "--help"}, kDescription);
-  if (!config || !config->show_help)
+  if (!config || !config->show_help) {
     return error("--help parsing", GCP_ERROR_INFO());
+  }
   config = ParseArgsImpl({cmd, "--description", "--help"}, kDescription);
-  if (!config || !config->show_help)
-    return error("--description parsing", , GCP_ERROR_INFO());
+  if (!config || !config->show_help) {
+    return error("--description parsing", GCP_ERROR_INFO());
+  }
   config = ParseArgsImpl({cmd, "--project-id="}, kDescription);
   if (config) return error("--project-id validation", GCP_ERROR_INFO());
   config = ParseArgsImpl({cmd, "--topic-id=test-topic"}, kDescription);
