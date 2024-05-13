@@ -94,7 +94,8 @@ StatusOr<MutationBatcherThroughputOptions> ParseArgs(int argc, char* argv[]) {
       if (!value.empty()) continue;
       std::ostringstream os;
       os << "The environment variable " << var << "is not set or empty";
-      return internal::UnknownError(std::move(os).str(), GCP_ERROR_INFO());
+      return google::cloud::internal::UnknownError(std::move(os).str(),
+                                                   GCP_ERROR_INFO());
     }
     auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value();
     auto const instance_id =

@@ -147,7 +147,7 @@ void BulkMutatorState::OnFinish(Status finish_status,
       pending_annotations_.push_back(std::move(annotation));
     } else {
       if (last_status_.ok()) {
-        auto status= internal::InternalError(
+        auto status = internal::InternalError(
             "The server never sent a confirmation for this mutation but the "
             "stream didn't fail either. This is most likely a bug, please "
             "report it at "

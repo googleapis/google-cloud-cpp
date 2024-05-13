@@ -271,7 +271,7 @@ StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
   }
   auto result = std::make_pair(true, std::move(**it));
   if (++it != reader.end()) {
-    return  google::cloud::internal::InternalError(
+    return google::cloud::internal::InternalError(
         "internal error - RowReader returned more than one row in ReadRow(, "
         "GCP_ERROR_INFO())");
   }
@@ -494,10 +494,11 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
     return connection_->AsyncReadModifyWriteRow(std::move(request));
   }
   if (!google::cloud::internal::IsEmpty(opts)) {
-    return make_ready_future<StatusOr<Row>>(google::cloud::internal::InvalidArgumentError(
-        "Per-operation options only apply to `Table`s constructed "
-        "with a `DataConnection`.",
-        GCP_ERROR_INFO()));
+    return make_ready_future<StatusOr<Row>>(
+        google::cloud::internal::InvalidArgumentError(
+            "Per-operation options only apply to `Table`s constructed "
+            "with a `DataConnection`.",
+            GCP_ERROR_INFO()));
   }
 
   auto cq = background_threads_->cq();
