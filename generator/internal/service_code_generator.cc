@@ -21,6 +21,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
@@ -403,8 +404,8 @@ Status ServiceCodeGenerator::OpenNamespaces(
     std::string const& ns_documentation) {
   auto result = service_vars_.find(product_path_var);
   if (result == service_vars_.end()) {
-    return Status(StatusCode::kInternal,
-                  product_path_var + " not found in vars");
+    return internal::InternalError(product_path_var + " not found in vars",
+                                   GCP_ERROR_INFO());
   }
   namespace_ = Namespace(service_vars_[product_path_var], ns_type);
   p.Print(R"""(
