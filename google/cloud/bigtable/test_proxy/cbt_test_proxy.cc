@@ -365,8 +365,8 @@ StatusOr<std::shared_ptr<DataConnection>> CbtTestProxy::GetConnection(
   std::lock_guard<std::mutex> lk(mu_);
   auto client_it = connections_.find(client_id);
   if (client_it == connections_.end()) {
-    return internal::NotFoundError(
-        absl::StrCat("Client ", client_id, " not found.", GCP_ERROR_INFO()));
+    return google::cloud::internal::NotFoundError(
+        absl::StrCat("Client ", client_id, " not found."), GCP_ERROR_INFO());
   }
 
   return client_it->second;
