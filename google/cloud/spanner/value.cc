@@ -706,8 +706,8 @@ StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
   auto const& s = pv.string_value();
   absl::CivilDay day;
   if (absl::ParseCivilTime(s, &day)) return day;
-  return Status(StatusCode::kInvalidArgument,
-                s + ": Failed to match RFC3339 full-date");
+  return internal::InvalidArgumentError(
+      s + ": Failed to match RFC3339 full-date", GCP_ERROR_INFO());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

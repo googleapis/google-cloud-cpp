@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/internal/make_status.h"
 #include <ostream>
 #include <regex>
 
@@ -47,8 +48,8 @@ StatusOr<Database> MakeDatabase(std::string const& full_name) {
   std::regex re("projects/([^/]+)/instances/([^/]+)/databases/([^/]+)");
   std::smatch matches;
   if (!std::regex_match(full_name, matches, re)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Improperly formatted Database: " + full_name);
+    return internal::InvalidArgumentError(
+        "Improperly formatted Database: " + full_name, GCP_ERROR_INFO());
   }
   return Database(Instance(std::move(matches[1]), std::move(matches[2])),
                   std::move(matches[3]));

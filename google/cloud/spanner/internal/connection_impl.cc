@@ -209,9 +209,10 @@ spanner::Timestamp MakeTimestamp(google::protobuf::Timestamp const& proto) {
 // a malformed response that does not contain a `Transaction` should invalidate
 // the transaction with and also return this status.
 Status MissingTransactionStatus(std::string const& operation) {
-  return Status(StatusCode::kInternal,
-                "Begin transaction requested but no transaction returned (in " +
-                    operation + ")");
+  return internal::InternalError(
+      "Begin transaction requested but no transaction returned (in " +
+          operation + ")",
+      GCP_ERROR_INFO());
 }
 
 class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {

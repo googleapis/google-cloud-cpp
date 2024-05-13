@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/sql_statement.h"
+#include "google/cloud/internal/make_status.h"
 #include <algorithm>
 
 namespace google {
@@ -54,7 +55,8 @@ google::cloud::StatusOr<Value> SqlStatement::GetParameter(
   if (iter != params_.end()) {
     return iter->second;
   }
-  return Status(StatusCode::kNotFound, "No such parameter: " + parameter_name);
+  return internal::NotFoundError("No such parameter: " + parameter_name,
+                                 GCP_ERROR_INFO());
 }
 
 std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt) {

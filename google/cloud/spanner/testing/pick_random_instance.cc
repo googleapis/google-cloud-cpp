@@ -51,8 +51,8 @@ StatusOr<std::string> PickRandomInstance(
     if (!absl::StartsWith(instance_id, "test-instance-")) {
       auto emulator = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
       if (emulator.has_value()) continue;  // server-side filter not supported
-      return Status(StatusCode::kInternal,
-                    "ListInstances erroneously returned " + instance_id);
+      return internal::InternalError("ListInstances erroneously returned " +
+                                     instance_id);
     }
     instance_ids.push_back(std::move(instance_id));
   }

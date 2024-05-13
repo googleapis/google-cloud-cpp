@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/numeric.h"
+#include "google/cloud/internal/make_status.h"
 #include <algorithm>
 #include <cctype>
 #include <cerrno>
@@ -106,7 +107,7 @@ void Round(std::deque<char>& int_rep, std::deque<char>& frac_rep,
 }
 
 Status InvalidArgument(std::string message) {
-  return Status(StatusCode::kInvalidArgument, std::move(message));
+  return internal::InvalidArgumentError(std::move(message), GCP_ERROR_INFO());
 }
 
 Status OutOfRange(std::string message) {

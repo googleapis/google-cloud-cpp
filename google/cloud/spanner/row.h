@@ -136,7 +136,7 @@ class Row {
   StatusOr<Tuple> get() const& {
     if (size() != std::tuple_size<Tuple>::value) {
       auto constexpr kMsg = "Tuple has the wrong number of elements";
-      return Status(StatusCode::kInvalidArgument, kMsg);
+      return internal::InvalidArgumentError(kMsg, GCP_ERROR_INFO());
     }
     Tuple tup;
     auto it = values_.begin();

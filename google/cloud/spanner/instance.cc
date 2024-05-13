@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/instance.h"
+#include "google/cloud/internal/make_status.h"
 #include <ostream>
 #include <regex>
 
@@ -45,8 +46,8 @@ StatusOr<Instance> MakeInstance(std::string const& full_name) {
   std::regex re("projects/([^/]+)/instances/([^/]+)");
   std::smatch matches;
   if (!std::regex_match(full_name, matches, re)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Improperly formatted Instance: " + full_name);
+    return internal::InvalidArgumentError(
+        "Improperly formatted Instance: " + full_name, GCP_ERROR_INFO());
   }
   return Instance(Project(std::move(matches[1])), std::move(matches[2]));
 }
