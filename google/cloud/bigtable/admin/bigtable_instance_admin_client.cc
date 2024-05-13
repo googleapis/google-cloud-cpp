@@ -18,7 +18,6 @@
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_options.h"
-#include "google/cloud/internal/make_status.h"
 #include <memory>
 #include <thread>
 #include <utility>

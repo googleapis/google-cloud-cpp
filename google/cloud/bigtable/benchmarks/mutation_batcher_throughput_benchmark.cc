@@ -37,7 +37,6 @@ namespace cbt = ::google::cloud::bigtable;
 using cbt::benchmarks::MutationBatcherThroughputOptions;
 using cbt::benchmarks::ParseMutationBatcherThroughputOptions;
 using ::google::cloud::Status;
-using ::google::cloud::StatusCode;
 using ::google::cloud::StatusOr;
 using ::google::cloud::internal::GetEnv;
 
