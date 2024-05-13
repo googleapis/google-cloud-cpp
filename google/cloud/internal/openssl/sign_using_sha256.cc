@@ -82,10 +82,11 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
   auto pem_buffer = std::unique_ptr<BIO, OpenSslDeleter>(BIO_new_mem_buf(
       pem_contents.data(), static_cast<int>(pem_contents.length())));
   if (!pem_buffer) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - "
-                  "could not create PEM buffer: " +
-                      CaptureSslErrors());
+    return internal::InvalidArgumentError(
+        "Invalid ServiceAccountCredentials - "
+        "could not create PEM buffer: " +
+            CaptureSslErrors(),
+        GCP_ERROR_INFO());
   }
 
   auto private_key =
@@ -98,34 +99,38 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
           // a password, which we don't currently support.
           nullptr));
   if (!private_key) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - "
-                  "could not parse PEM to get private key: " +
-                      CaptureSslErrors());
+    return internal::InvalidArgumentError(
+        "Invalid ServiceAccountCredentials - "
+        "could not parse PEM to get private key: " +
+            CaptureSslErrors(),
+        GCP_ERROR_INFO());
   }
 
   auto digest_ctx = GetDigestCtx();
   if (!digest_ctx) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - "
-                  "could not create context for OpenSSL digest: " +
-                      CaptureSslErrors());
+    return internal::InvalidArgumentError(
+        "Invalid ServiceAccountCredentials - "
+        "could not create context for OpenSSL digest: " +
+            CaptureSslErrors(),
+        GCP_ERROR_INFO());
   }
 
   auto constexpr kOpenSslSuccess = 1;
   if (EVP_DigestSignInit(digest_ctx.get(), nullptr, EVP_sha256(), nullptr,
                          private_key.get()) != kOpenSslSuccess) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - "
-                  "could not initialize signing digest: " +
-                      CaptureSslErrors());
+    return internal::InvalidArgumentError(
+        "Invalid ServiceAccountCredentials - "
+        "could not initialize signing digest: " +
+            CaptureSslErrors(),
+        GCP_ERROR_INFO());
   }
 
   if (EVP_DigestSignUpdate(digest_ctx.get(), str.data(), str.size()) !=
       kOpenSslSuccess) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - could not sign blob: " +
-                      CaptureSslErrors());
+    return internal::InvalidArgumentError(
+        "Invalid ServiceAccountCredentials - could not sign blob: " +
+            CaptureSslErrors(),
+        GCP_ERROR_INFO());
   }
 
   // The signed SHA256 size depends on the size (the experts say "modulus") of
@@ -133,9 +138,10 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
   std::size_t actual_len = 0;
   if (EVP_DigestSignFinal(digest_ctx.get(), nullptr, &actual_len) !=
       kOpenSslSuccess) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - could not sign blob: " +
-                      CaptureSslErrors());
+    return internal::InvalidArgumentError(
+        "Invalid ServiceAccountCredentials - could not sign blob: " +
+            CaptureSslErrors(),
+        GCP_ERROR_INFO());
   }
 
   // Then compute the actual signed digest. Note that OpenSSL requires a
@@ -143,9 +149,10 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
   std::vector<unsigned char> buffer(actual_len);
   if (EVP_DigestSignFinal(digest_ctx.get(), buffer.data(), &actual_len) !=
       kOpenSslSuccess) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - could not sign blob: " +
-                      CaptureSslErrors());
+    return internal::InvalidArgumentError(
+        "Invalid ServiceAccountCredentials - could not sign blob: " +
+            CaptureSslErrors(),
+        GCP_ERROR_INFO());
   }
 
   return StatusOr<std::vector<std::uint8_t>>(

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_BIG_ENDIAN_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_BIG_ENDIAN_H
 
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -64,7 +65,7 @@ StatusOr<T> DecodeBigEndian(std::string const& value) {
   if (value.size() != sizeof(T)) {
     auto const msg = "Given value with " + std::to_string(value.size()) +
                      " bytes; expected " + std::to_string(sizeof(T));
-    return Status(StatusCode::kInvalidArgument, msg);
+    return internal::InvalidArgumentError(msg, GCP_ERROR_INFO());
   }
   using unsigned_type = std::make_unsigned_t<T>;
   auto shift = sizeof(T) * 8;

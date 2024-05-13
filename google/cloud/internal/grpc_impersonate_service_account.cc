@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/minimal_iam_credentials_stub.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -111,7 +112,8 @@ GrpcImpersonateServiceAccount::AsyncConfigureContext(
     StatusOr<std::shared_ptr<grpc::ClientContext>> operator()(
         future<StatusOr<AccessToken>> f) {
       auto self = w.lock();
-      if (!self) return Status{StatusCode::kUnknown, "lost reference"};
+      if (!self)
+        return internal::UnknownError("lost reference", GCP_ERROR_INFO());
       return self->OnGetCallCredentials(std::move(context), f.get());
     }
   };

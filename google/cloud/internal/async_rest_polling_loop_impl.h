@@ -19,6 +19,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_rest_polling_loop.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
@@ -184,9 +185,10 @@ class AsyncRestPollingLoopImpl
         // an accurate status to the user, otherwise they will have no idea
         // how to react. But for now, we leave the operation running. It
         // may eventually complete.
-        return promise_.set_value(Status(
-            StatusCode::kDeadlineExceeded,
-            location_ + "() - polling loop terminated by polling policy"));
+        return promise_.set_value(internal::DeadlineExceededError(
+            location_ + "() - polling loop terminated by "
+                        "polling policy",
+            GCP_ERROR_INFO()));
       }
       // This could be a transient error if the policy is exhausted.
       return promise_.set_value(std::move(op).status());

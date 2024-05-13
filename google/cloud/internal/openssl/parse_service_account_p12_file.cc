@@ -57,7 +57,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   if (p12 == nullptr) {
     std::string msg = "Cannot open PKCS#12 file (" + source + "): ";
     msg += capture_openssl_errors();
-    return Status(StatusCode::kInvalidArgument, msg);
+    return internal::InvalidArgumentError(msg, GCP_ERROR_INFO());
   }
 
   EVP_PKEY* pkey_raw;
@@ -66,7 +66,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
       1) {
     std::string msg = "Cannot parse PKCS#12 file (" + source + "): ";
     msg += capture_openssl_errors();
-    return Status(StatusCode::kInvalidArgument, msg);
+    return internal::InvalidArgumentError(msg, GCP_ERROR_INFO());
   }
 
   std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)> pkey(pkey_raw,
@@ -101,10 +101,11 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
 
   if (service_account_id.find_first_not_of("0123456789") != std::string::npos ||
       service_account_id.empty()) {
-    return Status(
-        StatusCode::kInvalidArgument,
+    return internal::InvalidArgumentError(
         "Invalid PKCS#12 file (" + source +
-            "): service account id missing or not not formatted correctly");
+            "): service account id missing or not not formatted "
+            "correctly",
+        GCP_ERROR_INFO());
   }
 
   std::unique_ptr<BIO, decltype(&BIO_free)> mem_io(BIO_new(BIO_s_mem()),
@@ -115,7 +116,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string msg =
         "Cannot print private key in PKCS#12 file (" + source + "): ";
     msg += capture_openssl_errors();
-    return Status(StatusCode::kUnknown, msg);
+    return internal::UnknownError(msg, GCP_ERROR_INFO());
   }
 
   // This buffer belongs to the BIO chain and is freed upon its destruction.

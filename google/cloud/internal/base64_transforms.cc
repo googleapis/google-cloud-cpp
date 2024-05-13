@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include <limits>
 
 namespace google {
@@ -98,9 +99,10 @@ Status Base64DecodingError(std::string const& input,
                            std::string::const_iterator p) {
   auto const offset = std::distance(input.begin(), p);
   auto const bad_chunk = input.substr(offset, 4);
-  return Status(StatusCode::kInvalidArgument,
-                absl::StrCat("Invalid base64 chunk \"", bad_chunk,
-                             "\" at offset ", offset));
+  return internal::InvalidArgumentError(
+      absl::StrCat("Invalid base64 chunk \"", bad_chunk, "\" at offset ",
+                   offset),
+      GCP_ERROR_INFO());
 }
 
 template <typename Sink>

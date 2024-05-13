@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
 #include <nlohmann/json.hpp>
 
@@ -26,10 +27,10 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& default_token_uri) {
   auto credentials = nlohmann::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
-    return Status(
-        StatusCode::kInvalidArgument,
+    return internal::InvalidArgumentError(
         "Invalid AuthorizedUserCredentials, parsing failed on data from " +
-            source);
+            source,
+        GCP_ERROR_INFO());
   }
 
   std::string const client_id_key = "client_id";
@@ -38,16 +39,16 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
   for (auto const& key :
        {client_id_key, client_secret_key, refresh_token_key}) {
     if (credentials.count(key) == 0) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid AuthorizedUserCredentials, the " +
-                        std::string(key) +
-                        " field is missing on data loaded from " + source);
+      return internal::InvalidArgumentError(
+          "Invalid AuthorizedUserCredentials, the " + std::string(key) +
+              " field is missing on data loaded from " + source,
+          GCP_ERROR_INFO());
     }
     if (credentials.value(key, "").empty()) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid AuthorizedUserCredentials, the " +
-                        std::string(key) +
-                        " field is empty on data loaded from " + source);
+      return internal::InvalidArgumentError(
+          "Invalid AuthorizedUserCredentials, the " + std::string(key) +
+              " field is empty on data loaded from " + source,
+          GCP_ERROR_INFO());
     }
   }
 

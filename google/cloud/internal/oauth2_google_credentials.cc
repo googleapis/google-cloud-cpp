@@ -15,6 +15,7 @@
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_credentials.h"
@@ -49,7 +50,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   if (!ifs.is_open()) {
     // We use kUnknown here because we don't know if the file does not exist, or
     // if we were unable to open it for some other reason.
-    return Status(StatusCode::kUnknown, "Cannot open credentials file " + path);
+    return internal::UnknownError("Cannot open credentials file " + path,
+                                  GCP_ERROR_INFO());
   }
   auto const contents = std::string(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nlohmann::json::parse(contents, nullptr, false);
@@ -57,12 +59,12 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     // This is not a JSON file, try to load it as a P12 service account.
     auto info = ParseServiceAccountP12File(path);
     if (!info) {
-      return Status(
-          StatusCode::kInvalidArgument,
+      return internal::InvalidArgumentError(
           "Cannot open credentials file " + path +
               ", it does not contain a JSON object, nor can be parsed "
               "as a PKCS#12 file. " +
-              info.status().message());
+              info.status().message(),
+          GCP_ERROR_INFO());
     }
     info->scopes = {};
     info->subject = {};
@@ -95,11 +97,12 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
         std::make_unique<ServiceAccountCredentials>(*info, options,
                                                     std::move(client_factory)));
   }
-  return Status(
-      StatusCode::kInvalidArgument,
+  return internal::InvalidArgumentError(
       "Unsupported credential type (" + cred_type +
-          ") when reading Application Default Credentials file from " + path +
-          ".");
+          ") when reading Application Default Credentials file "
+          "from " +
+          path + ".",
+      GCP_ERROR_INFO());
 }
 
 // Tries to load the file at the path specified by the value of the Application
