@@ -95,14 +95,6 @@ resource "google_storage_bucket" "publiclogs" {
   }
 }
 
-resource "google_storage_bucket_iam_binding" "publiclogs-are-public" {
-  bucket = google_storage_bucket.publiclogs.name
-  role   = "roles/storage.objectViewer"
-  members = [
-    "allUsers"
-  ]
-}
-
 resource "google_storage_bucket_iam_member" "gcb-writes-to-publiclogs" {
   bucket = google_storage_bucket.publiclogs.name
   role   = "roles/storage.admin"
