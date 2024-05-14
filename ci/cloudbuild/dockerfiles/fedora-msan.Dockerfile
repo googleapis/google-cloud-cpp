@@ -43,7 +43,13 @@ WORKDIR /var/tmp/build
 #     https://github.com/google/sanitizers/wiki/MemorySanitizerLibcxxHowTo
 # with updates from:
 #     https://github.com/google/sanitizers/issues/1685
-RUN git clone --depth=1 --branch llvmorg-18.1.5 https://github.com/llvm/llvm-project
+#
+# Starting with 18.0 libcxx defaults to using LLVM's unwind library:
+#     https://libcxx.llvm.org/ReleaseNotes/18.html#build-system-changes
+# This does not work for us (not sure why exactly), we need to use the system
+# library, and therefore turn off the LLVM_UNWINDER.
+#
+RUN git clone --depth=1 --branch llvmorg-18.1.1 https://github.com/llvm/llvm-project
 WORKDIR /var/tmp/build/llvm-project
 # configure cmake
 RUN cmake -GNinja -S runtimes -B build \
@@ -53,6 +59,8 @@ RUN cmake -GNinja -S runtimes -B build \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DLLVM_USE_SANITIZER=MemoryWithOrigins \
+    -DLIBCXXABI_USE_LLVM_UNWINDER=OFF \
+    -DCOMPILER_RT_USE_LLVM_UNWINDER=OFF \
     -DCMAKE_INSTALL_PREFIX=/usr
 # build the libraries
 RUN cmake --build build
