@@ -70,7 +70,7 @@ logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COM
 steps:
   # Builds the docker image that will be used by the main build step. Makes 3
   # attempts to workaround #6438.
-- name: 'gcr.io/kaniko-project/executor:v1.22.0-debug'
+- name: 'gcr.io/kaniko-project/executor:v1.23.0-debug'
   id: 'kaniko-build'
   entrypoint: '/busybox/sh'
   args:
