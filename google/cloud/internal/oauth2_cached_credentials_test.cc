@@ -45,6 +45,9 @@ class MockCredentials : public Credentials {
   MOCK_METHOD(StatusOr<std::string>, universe_domain, (), (const, override));
   MOCK_METHOD(StatusOr<std::string>, universe_domain, (Options const&),
               (const, override));
+  MOCK_METHOD(StatusOr<std::string>, project_id, (), (const, override));
+  MOCK_METHOD(StatusOr<std::string>, project_id, (Options const&),
+              (const, override));
 };
 
 TEST(CachedCredentials, GetTokenUncached) {
@@ -173,6 +176,22 @@ TEST(CachedCredentials, UniverseDomainWithOptions) {
       .WillOnce(Return(StatusOr<std::string>("test-ud.net")));
   CachedCredentials tested(mock);
   EXPECT_THAT(tested.universe_domain(Options{}), IsOkAndHolds("test-ud.net"));
+}
+
+TEST(CachedCredentials, ProjectId) {
+  auto mock = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock, project_id())
+      .WillOnce(Return(StatusOr<std::string>("test-project-id")));
+  CachedCredentials tested(mock);
+  EXPECT_THAT(tested.project_id(), IsOkAndHolds("test-project-id"));
+}
+
+TEST(CachedCredentials, ProjectIdWithOptions) {
+  auto mock = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock, project_id(_))
+      .WillOnce(Return(StatusOr<std::string>("test-project-id")));
+  CachedCredentials tested(mock);
+  EXPECT_THAT(tested.project_id(Options{}), IsOkAndHolds("test-project-id"));
 }
 
 }  // namespace

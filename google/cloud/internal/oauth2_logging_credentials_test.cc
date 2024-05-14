@@ -47,6 +47,9 @@ class MockCredentials : public Credentials {
   MOCK_METHOD(StatusOr<std::string>, universe_domain, (), (const, override));
   MOCK_METHOD(StatusOr<std::string>, universe_domain, (Options const&),
               (const, override));
+  MOCK_METHOD(StatusOr<std::string>, project_id, (), (const, override));
+  MOCK_METHOD(StatusOr<std::string>, project_id, (Options const&),
+              (const, override));
 };
 
 TEST(LoggingCredentials, GetTokenSuccess) {
@@ -174,6 +177,28 @@ TEST(LoggingCredentials, UniverseDomainWithOptions) {
   EXPECT_THAT(tested.universe_domain(Options{}), IsOkAndHolds("test-ud.net"));
   EXPECT_THAT(log.ExtractLines(),
               Contains(HasSubstr("universe_domain(testing)")).Times(1));
+}
+
+TEST(LoggingCredentials, ProjectId) {
+  auto mock = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock, project_id())
+      .WillOnce(Return(StatusOr<std::string>("test-project-id")));
+  ScopedLog log;
+  LoggingCredentials tested("testing", TracingOptions(), mock);
+  EXPECT_THAT(tested.project_id(), IsOkAndHolds("test-project-id"));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(HasSubstr("project_id(testing)")).Times(1));
+}
+
+TEST(LoggingCredentials, ProjectIdWithOptions) {
+  auto mock = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock, project_id(_))
+      .WillOnce(Return(StatusOr<std::string>("test-project-id")));
+  ScopedLog log;
+  LoggingCredentials tested("testing", TracingOptions(), mock);
+  EXPECT_THAT(tested.project_id(Options{}), IsOkAndHolds("test-project-id"));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(HasSubstr("project_id(testing)")).Times(1));
 }
 
 }  // namespace
