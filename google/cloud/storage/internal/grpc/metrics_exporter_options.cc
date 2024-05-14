@@ -21,6 +21,7 @@
 #include "google/cloud/universe_domain_options.h"
 #include <google/api/monitored_resource.pb.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -57,20 +58,22 @@ Options MetricsExporterOptions(
   auto const& attributes = resource.GetAttributes();
   auto monitored_resource = google::api::MonitoredResource{};
   monitored_resource.set_type("gcs_client_instance");
-  monitored_resource.mutable_labels()->emplace("project_id",
-                                               project.project_id());
-  monitored_resource.mutable_labels()->emplace(
-      "location", ByName(attributes, sc::kCloudAvailabilityZone,
-                         ByName(attributes, sc::kCloudRegion, "global")));
-  monitored_resource.mutable_labels()->emplace(
-      "cloud_platform", ByName(attributes, sc::kCloudPlatform, "unknown"));
-  monitored_resource.mutable_labels()->emplace(
-      "host_id", ByName(attributes, "faas.id",
-                        ByName(attributes, sc::kHostId, "unknown")));
-  monitored_resource.mutable_labels()->emplace(
-      "instance_id",
-      ByName(attributes, sc::kServiceInstanceId, std::move(uuid)));
-  monitored_resource.mutable_labels()->emplace("api", "GRPC");
+  using MapType = std::decay_t<decltype(monitored_resource.labels())>;
+  using Pair = typename MapType::value_type;
+  monitored_resource.mutable_labels()->insert(
+      Pair("project_id", project.project_id()));
+  monitored_resource.mutable_labels()->insert(
+      Pair("location", ByName(attributes, sc::kCloudAvailabilityZone,
+                              ByName(attributes, sc::kCloudRegion, "global"))));
+  monitored_resource.mutable_labels()->insert(Pair(
+      "cloud_platform", ByName(attributes, sc::kCloudPlatform, "unknown")));
+  monitored_resource.mutable_labels()->insert(
+      Pair("host_id", ByName(attributes, "faas.id",
+                             ByName(attributes, sc::kHostId, "unknown"))));
+  monitored_resource.mutable_labels()->insert(
+      Pair("instance_id",
+           ByName(attributes, sc::kServiceInstanceId, std::move(uuid))));
+  monitored_resource.mutable_labels()->insert(Pair("api", "GRPC"));
 
   result.set<otel_internal::MonitoredResourceOption>(
       std::move(monitored_resource));
