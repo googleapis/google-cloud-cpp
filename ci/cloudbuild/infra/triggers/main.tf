@@ -18,6 +18,10 @@ variable "repository" {}
 
 locals {
   builds = {
+    asan = {
+      config = "ci/cloudbuild/cloudbuild.yaml"
+      distro = "fedora-latest-bazel"
+    }
     checkers = {
       config = "ci/cloudbuild/cloudbuild.yaml"
       distro = "checkers"
