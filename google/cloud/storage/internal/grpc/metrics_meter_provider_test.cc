@@ -154,11 +154,14 @@ auto MetricDataNotEmpty() {
       Not(IsEmpty()));
 }
 
+auto constexpr kExportInterval = std::chrono::milliseconds(5);
+
 auto TestReaderOptions() {
   opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions
       reader_options;
-  reader_options.export_interval_millis = std::chrono::milliseconds(2);
-  reader_options.export_timeout_millis = std::chrono::milliseconds(1);
+  reader_options.export_interval_millis = kExportInterval;
+  reader_options.export_timeout_millis =
+      kExportInterval - std::chrono::milliseconds(1);
   return reader_options;
 }
 
@@ -194,9 +197,9 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptDuration) {
                                                   "test-only-description", "s");
     // It may take several attempts before the periodic reader exports any data.
     // A short loop does the trick.
-    for (int i = 0; i != 100; ++i) {
+    for (int i = 0; i != 50; ++i) {
       histogram->Record(1.0, opentelemetry::context::Context{});
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      std::this_thread::sleep_for(kExportInterval);
     }
   }
 }
@@ -233,9 +236,9 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptSize) {
         size_metric, "test-only-description", "By");
     // It may take several attempts before the periodic reader exports any data.
     // A short loop does the trick.
-    for (int i = 0; i != 100; ++i) {
+    for (int i = 0; i != 50; ++i) {
       histogram->Record(1024.0, opentelemetry::context::Context{});
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      std::this_thread::sleep_for(kExportInterval);
     }
   }
 }
