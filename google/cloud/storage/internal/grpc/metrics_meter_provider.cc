@@ -62,6 +62,9 @@ void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
                                   " with histogram boundaries more appropriate "
                                   "for Google Cloud Storage RPCs");
 
+// OpenTelemetry introduced factory functions for a number of types in v1.10.
+// These are useful on Windows with DLLs and mixed CRTs, and we should try to
+// them if they are available.
 #if OPENTELEMETRY_VERSION_MAJOR > 1 || \
     (OPENTELEMETRY_VERSION_MAJOR == 1 && OPENTELEMETRY_VERSION_MINOR >= 10)
   provider.AddView(

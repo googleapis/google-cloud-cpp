@@ -188,7 +188,7 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptDuration) {
             return opentelemetry::sdk::common::ExportResult::kSuccess;
           });
 
-  // use a new scope to force a flush from the meter and provider before the
+  // Use a new scope to force a flush from the meter and provider before the
   // function exit.  Otherwise the mocks may not be called in time.
   {
     auto provider = MakeGrpcMeterProvider(std::move(mock), TestReaderOptions());
@@ -196,7 +196,9 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptDuration) {
     auto histogram = meter->CreateDoubleHistogram(kDurationMetric,
                                                   "test-only-description", "s");
     // It may take several attempts before the periodic reader exports any data.
-    // A short loop does the trick.
+    // We do 50 iterations to minimize flakes: each iteration should be enough
+    // to succeed, so we are giving this 50 chances to succeed. And the total
+    // running time (about 250ms) is not too terrible.
     for (int i = 0; i != 50; ++i) {
       histogram->Record(1.0, opentelemetry::context::Context{});
       std::this_thread::sleep_for(kExportInterval);
@@ -235,7 +237,9 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptSize) {
     auto histogram = meter->CreateDoubleHistogram(
         size_metric, "test-only-description", "By");
     // It may take several attempts before the periodic reader exports any data.
-    // A short loop does the trick.
+    // We do 50 iterations to minimize flakes: each iteration should be enough
+    // to succeed, so we are giving this 50 chances to succeed. And the total
+    // running time (about 250ms) is not too terrible.
     for (int i = 0; i != 50; ++i) {
       histogram->Record(1024.0, opentelemetry::context::Context{});
       std::this_thread::sleep_for(kExportInterval);
