@@ -235,19 +235,20 @@ Status V4SignUrlRequest::Validate() {
 }
 
 std::string V4SignUrlRequest::Hostname() {
+  auto const host = common_request_.host();
   if (virtual_host_name_) {
-    return common_request_.bucket_name() + ".storage.googleapis.com";
+    return common_request_.bucket_name() + "." + host;
   }
   if (domain_named_bucket_) {
     return *domain_named_bucket_;
   }
-  return "storage.googleapis.com";
+  return host;
 }
 
 std::string V4SignUrlRequest::HostnameWithBucket() {
-  return scheme_ + "://" + Hostname() +
-         (SkipBucketInPath() ? std::string()
-                             : ("/" + common_request_.bucket_name()));
+  return Hostname() + (SkipBucketInPath()
+                           ? std::string()
+                           : ("/" + common_request_.bucket_name()));
 }
 
 std::chrono::system_clock::time_point V4SignUrlRequest::DefaultTimestamp() {
