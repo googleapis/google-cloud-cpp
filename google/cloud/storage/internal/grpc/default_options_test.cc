@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {
@@ -120,12 +121,22 @@ TEST(DefaultOptionsGrpc, DefaultOptionsUploadBuffer) {
   EXPECT_EQ(with_override, 256 * 1024L);
 }
 
+#ifdef GRPC_CPP_VERSION_MAJOR
 TEST(DefaultOptionsGrpc, MetricsEnabled) {
   ScopedEnvironment env("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",
                         absl::nullopt);
   auto const options = DefaultOptionsGrpc(Options{});
-  EXPECT_TRUE(options.get<storage_experimental::EnableGrpcMetricsOption>());
+  auto const expected =
+      (GRPC_CPP_VERSION_MAJOR >= 1 &&
+       (                                                                    //
+           (GRPC_CPP_VERSION_MINOR == 63 && GRPC_CPP_VERSION_PATCH > 1) ||  //
+           (GRPC_CPP_VERSION_MINOR == 64 && GRPC_CPP_VERSION_PATCH > 1) ||  //
+           (GRPC_CPP_VERSION_MINOR >= 65)                                   //
+           ));
+  EXPECT_EQ(options.get<storage_experimental::EnableGrpcMetricsOption>(),
+            expected);
 }
+#endif  // GRPC_VERSION_MAJOR
 
 TEST(DefaultOptionsGrpc, MetricsDisabled) {
   ScopedEnvironment env("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",

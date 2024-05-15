@@ -22,6 +22,7 @@
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/service_endpoint.h"
 #include "absl/strings/match.h"
+#include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <thread>
 
@@ -53,6 +54,20 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
   return (std::max)(kMinimumChannels, static_cast<int>(count));
 }
 
+bool GrpcEnableMetricsIsSafe() {
+#ifndef GRPC_CPP_VERSION_MAJOR
+  return false;
+#else
+  return (
+      GRPC_CPP_VERSION_MAJOR >= 1 &&
+      (                                                                    //
+          (GRPC_CPP_VERSION_MINOR == 63 && GRPC_CPP_VERSION_PATCH > 1) ||  //
+          (GRPC_CPP_VERSION_MINOR == 64 && GRPC_CPP_VERSION_PATCH > 1) ||  //
+          (GRPC_CPP_VERSION_MINOR >= 65)                                   //
+          ));
+#endif  // GRPC_CPP_VERSION_MAJOR
+}
+
 }  // namespace
 
 Options DefaultOptionsGrpc(Options options) {
@@ -80,6 +95,12 @@ Options DefaultOptionsGrpc(Options options) {
     options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
 
+  // gRPC <= 1.64 may crash when metrics are enabled, so we don't enable them by
+  // default.
+  //     https://github.com/grpc/grpc/pull/36664
+  auto const enable_grpc_metrics =
+      !testbench.has_value() && GrpcEnableMetricsIsSafe();
+
   auto const ep = google::cloud::internal::UniverseDomainEndpoint(
       "storage.googleapis.com", options);
   options = google::cloud::internal::MergeOptions(
@@ -88,7 +109,7 @@ Options DefaultOptionsGrpc(Options options) {
           .set<EndpointOption>(ep)
           .set<AuthorityOption>(ep)
           .set<storage_experimental::EnableGrpcMetricsOption>(
-              !testbench.has_value())
+              enable_grpc_metrics)
           .set<storage_experimental::GrpcMetricsPeriodOption>(
               kDefaultMetricsPeriod));
   if (options.get<storage_experimental::GrpcMetricsPeriodOption>() <

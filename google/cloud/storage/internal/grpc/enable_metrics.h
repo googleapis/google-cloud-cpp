@@ -12,35 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_OPTIONS_H
-
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_ENABLE_METRICS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_ENABLE_METRICS_H
 
 #include "google/cloud/options.h"
-#include "google/cloud/project.h"
 #include "google/cloud/version.h"
-#include <opentelemetry/sdk/resource/resource.h>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Returns the monitoring exporter options given the project and resource.
-Options MetricsExporterOptions(
-    Project const& project,
-    opentelemetry::sdk::resource::Resource const& resource);
-
-/// Returns the monitoring exporter connection options given the fully populated
-/// storage options.
-Options MetricsExporterConnectionOptions(Options const& options);
-
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+void EnableGrpcMetrics(Options const& storage_options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_ENABLE_METRICS_H

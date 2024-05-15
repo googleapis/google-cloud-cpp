@@ -40,8 +40,8 @@ endif ()
 include(GoogleCloudCppLibrary)
 google_cloud_cpp_add_library_protos(storage)
 
-# This library has a hard dependency on OpenTelemetry.
-find_package(opentelemetry-cpp CONFIG REQUIRED)
+# Find out if `opentelemetry-cpp` is available.
+find_package(opentelemetry-cpp CONFIG)
 
 set(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND_DEFAULT ON)
 # Protobuf versions are ... complicated.  Protobuf used to call itself 3.21.*,
@@ -149,6 +149,8 @@ add_library(
     internal/grpc/ctype_cord_workaround.h
     internal/grpc/default_options.cc
     internal/grpc/default_options.h
+    internal/grpc/enable_metrics.cc
+    internal/grpc/enable_metrics.h
     internal/grpc/hmac_key_metadata_parser.cc
     internal/grpc/hmac_key_metadata_parser.h
     internal/grpc/hmac_key_request_parser.cc
@@ -209,11 +211,9 @@ target_link_libraries(
     google_cloud_cpp_storage_grpc
     PUBLIC google-cloud-cpp::storage
            google-cloud-cpp::storage_protos
-           google-cloud-cpp::opentelemetry
            google-cloud-cpp::grpc_utils
            google-cloud-cpp::common
            nlohmann_json::nlohmann_json
-           opentelemetry-cpp::metrics
            gRPC::grpc++
            absl::optional
            absl::strings
@@ -233,11 +233,20 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
         google_cloud_cpp_storage_grpc
         PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
 endif ()
-if (TARGET gRPC::grpcpp_otel_plugin)
-    target_link_libraries(google_cloud_cpp_storage_grpc
-                          PUBLIC gRPC::grpcpp_otel_plugin)
-    target_compile_definitions(google_cloud_cpp_storage_grpc
-                               PRIVATE GOOGLE_CLOUD_CPP_GRPC_HAS_OTEL_PLUGIN)
+if ((TARGET gRPC::grpcpp_otel_plugin)
+    AND (TARGET google-cloud-cpp::opentelemetry)
+    AND (TARGET opentelemetry-cpp::metrics))
+    target_compile_definitions(
+        google_cloud_cpp_storage_grpc
+        PRIVATE GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS)
+    target_link_libraries(
+        google_cloud_cpp_storage_grpc
+        PUBLIC google-cloud-cpp::opentelemetry gRPC::grpcpp_otel_plugin
+               opentelemetry-cpp::metrics)
+    # TODO(#14260) - remove this workaround. gRPC does not publish a pkgconfig
+    # module for grpcpp_otel_plugin.
+    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
+    set(EXTRA_LIBS "grpcpp_otel_plugin")
 endif ()
 set_target_properties(
     google_cloud_cpp_storage_grpc
@@ -256,13 +265,15 @@ google_cloud_cpp_add_pkgconfig(
     "An extension to the GCS C++ client library using gRPC for transport."
     "google_cloud_cpp_storage"
     "google_cloud_cpp_storage_protos"
-    "google_cloud_cpp_opentelemetry"
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
     "grpc++"
     "absl_optional"
     "absl_strings"
-    "absl_time")
+    "absl_time"
+    ${EXTRA_MODULES}
+    LIBS
+    ${EXTRA_LIBS})
 
 install(
     EXPORT storage_grpc-targets

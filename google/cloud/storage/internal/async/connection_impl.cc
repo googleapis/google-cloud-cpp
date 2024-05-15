@@ -31,6 +31,7 @@
 #include "google/cloud/storage/internal/grpc/channel_refresh.h"
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/grpc/enable_metrics.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/internal/grpc/scale_stall_timeout.h"
@@ -606,6 +607,7 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
 std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, Options options) {
   options = DefaultOptionsAsync(std::move(options));
+  EnableGrpcMetrics(options);
   auto p = CreateStorageStub(cq, options);
   return std::make_shared<AsyncConnectionImpl>(
       std::move(cq), std::move(p.first), std::move(p.second),
