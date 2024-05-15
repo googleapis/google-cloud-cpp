@@ -389,7 +389,7 @@ StatusOr<std::string> Client::SignUrlV2(
   std::string signature = curl.MakeEscapedString(encoded).get();
 
   std::ostringstream os;
-  os << ExternalUrl() << '/' << request.bucket_name();
+  os << Endpoint() << '/' << request.bucket_name();
   if (!request.object_name().empty()) {
     os << '/' << curl.MakeEscapedString(request.object_name()).get();
   }
@@ -481,7 +481,7 @@ std::string CreateRandomPrefixName(std::string const& prefix) {
                                                   "abcdefghijklmnopqrstuvwxyz");
 }
 
-std::string Client::ExternalUrl() const{
+std::string Client::Endpoint() const {
   return connection_->options().get<RestEndpointOption>();
 }
 
