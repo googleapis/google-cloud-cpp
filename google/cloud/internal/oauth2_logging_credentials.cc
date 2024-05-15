@@ -85,6 +85,17 @@ StatusOr<std::string> LoggingCredentials::universe_domain(
   return impl_->universe_domain(options);
 }
 
+StatusOr<std::string> LoggingCredentials::project_id() const {
+  GCP_LOG(DEBUG) << __func__ << "(" << phase_ << ")";
+  return impl_->project_id();
+}
+
+StatusOr<std::string> LoggingCredentials::project_id(
+    Options const& options) const {
+  GCP_LOG(DEBUG) << __func__ << "(" << phase_ << ")";
+  return impl_->project_id(options);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud
