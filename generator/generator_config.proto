@@ -178,6 +178,11 @@ message ServiceConfiguration {
   // from the service index JSON file in the googleapis repository. When
   // processing golden files we need to provide our own YAML files.
   string override_service_config_yaml_name = 28;
+
+  // Set to true in order to provide a custom resume loop for client-streaming
+  // RPCs. If set to false (the default), a no-op resumption function will be
+  // generated.
+  bool omit_streaming_updater = 29;
 }
 
 message DiscoveryDocumentDefinedProduct {

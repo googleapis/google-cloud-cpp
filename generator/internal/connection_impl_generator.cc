@@ -24,6 +24,15 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+bool OmitStreamingUpdater(VarsDictionary const& vars) {
+  auto it = vars.find("omit_streaming_updater");
+  if (it == vars.end()) return false;
+  return it->second == "true";
+}
+
+}  // namespace
 
 ConnectionImplGenerator::ConnectionImplGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
@@ -74,17 +83,13 @@ Status ConnectionImplGenerator::GenerateHeader() {
 
   // streaming updater functions
   for (auto const& method : methods()) {
-    HeaderPrintMethod(
-        method,
-        {MethodPattern(
-            {// clang-format off
-   {"\n"
-    "void $service_name$$method_name$StreamingUpdater(\n"
-    "    $response_type$ const& response,\n"
-    "    $request_type$& request);\n"}
-     }, IsStreamingRead)},
-             // clang-format on
-        __FILE__, __LINE__);
+    if (!IsStreamingRead(method)) continue;
+    HeaderPrintMethod(method, __FILE__, __LINE__,
+                      R"""(
+void $service_name$$method_name$StreamingUpdater(
+    $response_type$ const& response,
+    $request_type$& request);
+)""");
   }
 
   HeaderPrint(R"""(
@@ -202,6 +207,19 @@ std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
 } // namespace
 )""");
 
+  // streaming updater functions
+  if (!OmitStreamingUpdater(vars())) {
+    for (auto const& method : methods()) {
+      if (!IsStreamingRead(method)) continue;
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
+void $service_name$$method_name$StreamingUpdater(
+    $response_type$ const&,
+    $request_type$&) {}
+)""");
+    }
+  }
+
   CcPrint(R"""(
 $connection_class_name$Impl::$connection_class_name$Impl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -301,10 +319,21 @@ std::string ConnectionImplGenerator::AsyncMethodDeclaration(
 std::string ConnectionImplGenerator::MethodDefinition(
     google::protobuf::MethodDescriptor const& method) {
   if (IsBidirStreaming(method)) {
-    // We do not generate definitions for bidir streaming RPCs. Their retry or
-    // resume loops are so custom (if possible at all), and their usage so rare,
-    // that it is easier to hand-craft these functions in a streaming.cc file.
-    return R"""()""";
+    // We do not generate definitions for bidir streaming RPCs with custom
+    // retry/resume loops. We hand-craft these functions in a `*_streaming.cc`
+    // file.
+    if (OmitStreamingUpdater(vars())) return "";
+    return
+        R"""(
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    $request_type$,
+    $response_type$>>
+$connection_class_name$Impl::Async$method_name$() {
+  return stub_->Async$method_name$(background_->cq(),
+                                std::make_shared<grpc::ClientContext>(),
+                                internal::SaveCurrentOptions());
+}
+)""";
   }
 
   if (IsStreamingRead(method)) {
@@ -322,7 +351,8 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
           $service_name$$method_name$StreamingUpdater, request);
   return internal::MakeStreamRange(internal::StreamReader<$response_type$>(
       [resumable] { return resumable->Read(); }));
-})""";
+}
+)""";
   }
 
   if (IsStreamingWrite(method)) {

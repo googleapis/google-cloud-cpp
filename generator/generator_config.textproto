@@ -469,6 +469,7 @@ service {
   omitted_services: ["BigQueryWrite"]
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
+  omit_streaming_updater: true
 }
 
 service {
@@ -2526,6 +2527,8 @@ service {
   initial_copyright_year: "2021"
   gen_async_rpcs: ["WriteLogEntries"]
   retryable_status_codes: ["kInternal", "kUnavailable"]
+  # TODO(#7796) - add resume loop
+  omit_streaming_updater: false
 }
 
 service {
@@ -2779,6 +2782,10 @@ service {
   forwarding_product_path: "google/cloud/osconfig"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  # For this service, updating the streaming RPC is a no-op.  The response has
+  # no information (other than its presence) and resuming just requires sending
+  # the same request.
+  omit_streaming_updater: false
 }
 
 # OS Login
