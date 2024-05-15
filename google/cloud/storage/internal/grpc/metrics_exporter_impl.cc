@@ -24,9 +24,21 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/log.h"
+#include "absl/strings/match.h"
+#include "absl/strings/string_view.h"
+#include "absl/strings/strip.h"
+#include <grpcpp/grpcpp.h>
+#if GOOGLE_CLOUD_CPP_GRPC_HAS_OTEL_PLUGIN
+#include <grpcpp/ext/otel_plugin.h>
+#endif  // GOOGLE_CLOUD_CPP_GRPC_HAS_OTEL_PLUGIN
 #include <opentelemetry/sdk/resource/resource.h>
 #include <chrono>
+#include <mutex>
+#include <set>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -43,6 +55,29 @@ auto MakeReaderOptions(Options const& options) {
       std::chrono::milliseconds(std::chrono::seconds(30));
   return reader_options;
 }
+
+class ExporterRegistry {
+ public:
+  ExporterRegistry() = default;
+
+  static ExporterRegistry& Singleton() {
+    static auto* exporters = new ExporterRegistry;
+    return *exporters;
+  }
+
+  bool Register(std::string authority) {
+    std::unique_lock<std::mutex> lk(mu_);
+    return known_authority_.insert(std::move(authority)).second;
+  }
+
+  void Clear() {
+    std::unique_lock<std::mutex> lk(mu_);
+    known_authority_.clear();
+  }
+
+  std::set<std::string> known_authority_;
+  std::mutex mu_;
+};
 
 }  // namespace
 
@@ -61,6 +96,83 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
                         std::move(exporter_connection_options),
                         MakeReaderOptions(options),
                         options.get<AuthorityOption>()};
+}
+
+void EnableGrpcMetricsImpl(ExporterConfig config) {  // NOLINT
+#if !GOOGLE_CLOUD_CPP_GRPC_HAS_OTEL_PLUGIN
+  (void)config;
+#else
+  if (!ExporterRegistry::Singleton().Register(config.authority)) return;
+
+  // TODO(#13998) - the service is not ready to receive the monitored resource
+  //   and metrics defined for Google Cloud Storage clients. Erase this code
+  //   when it is.
+  auto monitored_resource =
+      config.exporter_options.get<otel_internal::MonitoredResourceOption>();
+  monitored_resource.set_type("generic_task");
+  auto& labels = *monitored_resource.mutable_labels();
+  // project_id untouched
+  // location untouched
+  labels["namespace"] = "storage_client";
+  labels["job"] = labels["host_id"];
+  labels["task_id"] = labels["instance_id"];
+  labels.erase("cloud_platform");
+  labels.erase("host_id");
+  labels.erase("instance_id");
+  labels.erase("api");
+  config.exporter_options.set<otel_internal::ServiceTimeSeriesOption>(false)
+      .set<otel_internal::MetricPrefixOption>("workload.googleapis.com/")
+      .set<otel_internal::MonitoredResourceOption>(
+          std::move(monitored_resource));
+  // END TODO(#13998) - end of code to erase.
+
+  auto exporter = otel_internal::MakeMonitoringExporter(
+      std::move(config.project),
+      monitoring_v3::MakeMetricServiceConnection(
+          std::move(config.exporter_connection_options)),
+      config.exporter_options);
+
+  auto provider = MakeGrpcMeterProvider(std::move(exporter),
+                                        std::move(config.reader_options));
+
+  auto const metrics = std::vector<absl::string_view>{
+      absl::string_view{"grpc.lb.wrr.rr_fallback"},
+      absl::string_view{"grpc.lb.wrr.endpoint_weight_not_yet_usable"},
+      absl::string_view{"grpc.lb.wrr.endpoint_weight_stale"},
+      absl::string_view{"grpc.lb.wrr.endpoint_weights"},
+      absl::string_view{"grpc.lb.pick_first.disconnections"},
+      absl::string_view{"grpc.lb.pick_first.connection_attempts_succeeded"},
+      absl::string_view{"grpc.lb.pick_first.connection_attempts_failed"},
+      absl::string_view{"grpc.xds_client.connected"},
+      absl::string_view{"grpc.xds_client.server_failure"},
+      absl::string_view{"grpc.xds_client.resource_updates_valid"},
+      absl::string_view{"grpc.xds_client.resource_updates_invalid"},
+      absl::string_view{"grpc.xds_client.resources"},
+      absl::string_view{"grpc.lb.rls.cache_size"},
+      absl::string_view{"grpc.lb.rls.cache_entries"},
+      absl::string_view{"grpc.lb.rls.default_target_picks"},
+      absl::string_view{"grpc.lb.rls.target_picks"},
+      absl::string_view{"grpc.lb.rls.failed_picks"},
+  };
+  auto scope_filter =
+      [authority = std::move(config.authority)](
+          grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
+        return (scope.default_authority() != authority);
+      };
+  auto status =
+      grpc::OpenTelemetryPluginBuilder()
+          .SetMeterProvider(provider)
+          .EnableMetrics(metrics)
+          .SetGenericMethodAttributeFilter([](absl::string_view target) {
+            return absl::StartsWith(target, "google.storage.v2");
+          })
+          .SetChannelScopeFilter(std::move(scope_filter))
+          .BuildAndRegisterGlobal();
+  if (!status.ok()) {
+    GCP_LOG(ERROR) << "Cannot register provider status=" << status.ToString();
+    return;
+  }
+#endif  // GOOGLE_CLOUD_CPP_ENABLE_GRPC_METRICS
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

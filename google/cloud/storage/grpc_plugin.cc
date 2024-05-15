@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/connection_factory.h"
 #include "google/cloud/storage/internal/generic_stub_factory.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
+#include "google/cloud/storage/internal/grpc/enable_metrics.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/internal/getenv.h"
 #include <memory>
@@ -43,6 +44,7 @@ bool UseRest(Options const& options) {
 google::cloud::storage::Client DefaultGrpcClient(Options opts) {
   if (UseRest(opts)) return google::cloud::storage::Client(std::move(opts));
   opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
+  storage_internal::EnableGrpcMetrics(opts);
   auto stub = std::make_unique<storage_internal::GrpcStub>(opts);
   return storage::internal::ClientImplDetails::CreateWithoutDecorations(
       MakeStorageConnection(std::move(opts), std::move(stub)));

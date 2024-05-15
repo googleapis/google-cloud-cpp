@@ -43,6 +43,8 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options);
 
+void EnableGrpcMetricsImpl(ExporterConfig config);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
