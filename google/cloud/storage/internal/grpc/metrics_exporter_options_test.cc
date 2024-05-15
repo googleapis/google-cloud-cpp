@@ -26,6 +26,7 @@
 #include <google/api/monitored_resource.pb.h>
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <regex>
 #include <utility>
 
 namespace google {
@@ -37,10 +38,9 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::Contains;
-using ::testing::ContainsRegex;
 using ::testing::Pair;
 
-auto EmptyResource() {
+auto TestResource() {
   return opentelemetry::sdk::resource::Resource::Create({});
 }
 
@@ -84,7 +84,7 @@ TEST(MetricsExporterOptions, DefaultEndpoint) {
     }
     options = DefaultOptionsGrpc(std::move(options));
     auto const actual =
-        MetricsExporterOptions(Project("test-only"), EmptyResource(), options);
+        MetricsExporterOptions(Project("test-only"), TestResource(), options);
     EXPECT_FALSE(actual.has<EndpointOption>());
     EXPECT_EQ(actual.get<internal::UniverseDomainOption>(), expected_ud);
     EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
@@ -98,7 +98,7 @@ TEST(MetricsExporterOptions, PrivateDefaultUD) {
   for (std::string prefix : {"", "google-c2p:///"}) {
     SCOPED_TRACE("Testing with prefix = " + prefix);
     auto actual = MetricsExporterOptions(
-        Project("test-only"), EmptyResource(),
+        Project("test-only"), TestResource(),
         Options{}.set<EndpointOption>(prefix + "private.googleapis.com"));
     EXPECT_THAT(actual.get<EndpointOption>(), "private.googleapis.com");
     EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
@@ -112,7 +112,7 @@ TEST(MetricsExporterOptions, PrivateUD) {
   for (std::string prefix : {"", "google-c2p:///"}) {
     SCOPED_TRACE("Testing with prefix = " + prefix);
     auto actual = MetricsExporterOptions(
-        Project("test-only"), EmptyResource(),
+        Project("test-only"), TestResource(),
         Options{}
             .set<EndpointOption>(prefix + "private.ud.net")
             .set<internal::UniverseDomainOption>("ud.net"));
@@ -128,7 +128,7 @@ TEST(MetricsExporterOptions, RestrictedDefaultUD) {
   for (std::string prefix : {"", "google-c2p:///"}) {
     SCOPED_TRACE("Testing with prefix = " + prefix);
     auto actual = MetricsExporterOptions(
-        Project("test-only"), EmptyResource(),
+        Project("test-only"), TestResource(),
         Options{}.set<EndpointOption>(prefix + "restricted.googleapis.com"));
     EXPECT_THAT(actual.get<EndpointOption>(), "restricted.googleapis.com");
     EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
@@ -142,7 +142,7 @@ TEST(MetricsExporterOptions, RestrictedUD) {
   for (std::string prefix : {"", "google-c2p:///"}) {
     SCOPED_TRACE("Testing with prefix = " + prefix);
     auto actual = MetricsExporterOptions(
-        Project("test-only"), EmptyResource(),
+        Project("test-only"), TestResource(),
         Options{}
             .set<EndpointOption>(prefix + "restricted.ud.net")
             .set<internal::UniverseDomainOption>("ud.net"));
@@ -154,20 +154,9 @@ TEST(MetricsExporterOptions, RestrictedUD) {
   }
 }
 
-auto IsInstanceId() {
-  return ContainsRegex(
-      "[0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
-      "[0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
-      "-"
-      "[0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
-      "-"
-      "[0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
-      "-"
-      "[0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
-      "-"
-      "[0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
-      "[0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
-      "[0-9a-f][0-9a-f][0-9a-f][0-9a-f]");
+MATCHER(MatchesInstanceId, "looks like an instance id") {
+  std::regex re("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+  return std::regex_match(arg, re);
 }
 
 TEST(MetricsExporterOptions, MonitoredResource) {
@@ -185,11 +174,11 @@ TEST(MetricsExporterOptions, MonitoredResource) {
   auto mr = actual.get<otel_internal::MonitoredResourceOption>();
   auto labels = mr.labels();
   // The `instance_id` label has unpredictable values,
-  EXPECT_THAT(labels, Contains(Pair("instance_id", IsInstanceId())));
+  EXPECT_THAT(labels, Contains(Pair("instance_id", MatchesInstanceId())));
   mr.mutable_labels()->erase("instance_id");
 
   auto constexpr kExpected = R"pb(
-    type: "gcs_client_instance"
+    type: "storage_client"
     labels { key: "project_id" value: "test-project" }
     labels { key: "location" value: "us-central1-c" }
     labels { key: "cloud_platform" value: "gcp" }

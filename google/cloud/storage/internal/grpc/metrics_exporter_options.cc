@@ -19,6 +19,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/types/variant.h"
 #include <google/api/monitored_resource.pb.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 #include <type_traits>
@@ -33,8 +34,7 @@ auto ByName(opentelemetry::sdk::resource::ResourceAttributes const& attributes,
             std::string const& name, std::string default_value) {
   auto const l = attributes.find(name);
   if (l == attributes.end()) return default_value;
-  using opentelemetry::nostd::get;
-  return get<std::string>(l->second);
+  return absl::get<std::string>(l->second);
 }
 
 }  // namespace
@@ -49,6 +49,12 @@ Options MetricsExporterOptions(
           .set<otel_internal::ServiceTimeSeriesOption>(true)
           .set<otel_internal::MetricPrefixOption>("storage.googleapis.com/");
 
+  // We need a UUID because there may be multiple monitored resources within the
+  // same process, and we need these monitored resources to be globally unique
+  // or GCM may complain about the publication rate. There is no information
+  // available that can make this unique enough, all the clients in a service
+  // may be using the same project and bucket (not that buckets are available).
+  //
   // This is fairly expensive, it requires initializing a new PRNG, and fetching
   // entropy from the OS. Outside tests, this function will be called a handful
   // of times, so the performance is not that important.
@@ -57,22 +63,16 @@ Options MetricsExporterOptions(
 
   auto const& attributes = resource.GetAttributes();
   auto monitored_resource = google::api::MonitoredResource{};
-  monitored_resource.set_type("gcs_client_instance");
-  using MapType = std::decay_t<decltype(monitored_resource.labels())>;
-  using Pair = typename MapType::value_type;
-  monitored_resource.mutable_labels()->insert(
-      Pair("project_id", project.project_id()));
-  monitored_resource.mutable_labels()->insert(
-      Pair("location", ByName(attributes, sc::kCloudAvailabilityZone,
-                              ByName(attributes, sc::kCloudRegion, "global"))));
-  monitored_resource.mutable_labels()->insert(Pair(
-      "cloud_platform", ByName(attributes, sc::kCloudPlatform, "unknown")));
-  monitored_resource.mutable_labels()->insert(
-      Pair("host_id", ByName(attributes, "faas.id",
-                             ByName(attributes, sc::kHostId, "unknown"))));
-  monitored_resource.mutable_labels()->insert(
-      Pair("instance_id", std::move(uuid)));
-  monitored_resource.mutable_labels()->insert(Pair("api", "GRPC"));
+  monitored_resource.set_type("storage_client");
+  auto& labels = *monitored_resource.mutable_labels();
+  labels["project_id"] = project.project_id();
+  labels["location"] = ByName(attributes, sc::kCloudAvailabilityZone,
+                              ByName(attributes, sc::kCloudRegion, "global"));
+  labels["cloud_platform"] = ByName(attributes, sc::kCloudPlatform, "unknown");
+  labels["host_id"] = ByName(attributes, "faas.id",
+                             ByName(attributes, sc::kHostId, "unknown"));
+  labels["instance_id"] =  std::move(uuid);
+  labels["api"] = "GRPC";
 
   result.set<otel_internal::MonitoredResourceOption>(
       std::move(monitored_resource));
