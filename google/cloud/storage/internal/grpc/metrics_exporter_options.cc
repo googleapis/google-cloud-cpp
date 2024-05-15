@@ -69,9 +69,9 @@ Options MetricsExporterOptions(
   labels["location"] = ByName(attributes, sc::kCloudAvailabilityZone,
                               ByName(attributes, sc::kCloudRegion, "global"));
   labels["cloud_platform"] = ByName(attributes, sc::kCloudPlatform, "unknown");
-  labels["host_id"] = ByName(attributes, "faas.id",
-                             ByName(attributes, sc::kHostId, "unknown"));
-  labels["instance_id"] =  std::move(uuid);
+  labels["host_id"] =
+      ByName(attributes, "faas.id", ByName(attributes, sc::kHostId, "unknown"));
+  labels["instance_id"] = std::move(uuid);
   labels["api"] = "GRPC";
 
   result.set<otel_internal::MonitoredResourceOption>(
