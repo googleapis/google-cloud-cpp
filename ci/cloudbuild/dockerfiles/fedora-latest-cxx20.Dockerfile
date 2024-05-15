@@ -150,27 +150,6 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v26.1.tar.gz 
     ldconfig && \
     cd /var/tmp && rm -fr build
 
-WORKDIR /var/tmp/build/grpc
-RUN dnf makecache && dnf install -y c-ares-devel re2-devel
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.63.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_CXX_STANDARD=20 \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
-        -DgRPC_INSTALL=ON \
-        -DgRPC_BUILD_TESTS=OFF \
-        -DgRPC_ABSL_PROVIDER=package \
-        -DgRPC_CARES_PROVIDER=package \
-        -DgRPC_PROTOBUF_PROVIDER=package \
-        -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
-        -DgRPC_ZLIB_PROVIDER=package \
-        -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out && cmake --install cmake-out && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
-
 WORKDIR /var/tmp/build/
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
@@ -187,6 +166,29 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15
     -GNinja -S . -B cmake-out && \
     cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/grpc
+RUN dnf makecache && dnf install -y c-ares-devel re2-devel
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.63.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_CXX_STANDARD=20 \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -DgRPC_OPENTELEMETRY_PROVIDER=package \
+        -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out && cmake --install cmake-out && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.8.0/sccache-v0.8.0-x86_64-unknown-linux-musl.tar.gz | \

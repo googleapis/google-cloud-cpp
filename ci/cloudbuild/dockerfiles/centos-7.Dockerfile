@@ -95,6 +95,29 @@ RUN curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
     make install && \
     ldconfig && cd /var/tmp && rm -fr build
 
+# We need to patch opentelemetry-cpp to work around a compiler bug in (at least)
+# GCC 7.x. See https://github.com/open-telemetry/opentelemetry-cpp/issues/1014
+# for more details.
+WORKDIR /var/tmp/build/
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    sed -i 's/Stack &GetStack()/Stack \&GetStack() __attribute__((noinline, noclone))/' "api/include/opentelemetry/context/runtime_context.h" && \
+    cmake \
+        -DCMAKE_CXX_STANDARD=14 \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
+        -DBUILD_SHARED_LIBS=ON \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DgRPC_OPENTELEMETRY_PROVIDER=package \
+        -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+
 WORKDIR /var/tmp/build/grpc
 RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.63.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
@@ -109,6 +132,8 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.63.0.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
+        -DgRPC_OPENTELEMETRY_PROVIDER=package \
+        -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
         -GNinja -S . -B cmake-out && \
     cmake --build cmake-out && \
     cmake --build cmake-out --target install && \
@@ -160,27 +185,6 @@ RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.3.tar.gz | \
         -DCMAKE_BUILD_TYPE="Release" \
         -DBUILD_SHARED_LIBS=yes \
         -DBENCHMARK_ENABLE_TESTING=OFF \
-        -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
-    ldconfig && cd /var/tmp && rm -fr build
-
-# We need to patch opentelemetry-cpp to work around a compiler bug in (at least)
-# GCC 7.x. See https://github.com/open-telemetry/opentelemetry-cpp/issues/1014
-# for more details.
-WORKDIR /var/tmp/build/
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    sed -i 's/Stack &GetStack()/Stack \&GetStack() __attribute__((noinline, noclone))/' "api/include/opentelemetry/context/runtime_context.h" && \
-    cmake \
-        -DCMAKE_CXX_STANDARD=14 \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
-        -DBUILD_SHARED_LIBS=ON \
-        -DWITH_EXAMPLES=OFF \
-        -DWITH_ABSEIL=ON \
-        -DBUILD_TESTING=OFF \
-        -DOPENTELEMETRY_INSTALL=ON \
-        -DOPENTELEMETRY_ABI_VERSION_NO=2 \
         -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
