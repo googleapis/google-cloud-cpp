@@ -114,6 +114,15 @@ NodeGroupsConnection::PatchNodeGroup(google::cloud::cpp::compute::node_groups::
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsConnection::PerformMaintenance(
+    google::cloud::cpp::compute::node_groups::v1::
+        PerformMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeGroupsConnection::SetIamPolicy(
     google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&) {

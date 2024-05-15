@@ -253,6 +253,33 @@ NodeGroupsClient::PatchNodeGroup(
   return connection_->PatchNodeGroup(request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsClient::PerformMaintenance(
+    std::string const& project, std::string const& zone,
+    std::string const& node_group,
+    google::cloud::cpp::compute::v1::NodeGroupsPerformMaintenanceRequest const&
+        node_groups_perform_maintenance_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::node_groups::v1::PerformMaintenanceRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_node_group(node_group);
+  *request.mutable_node_groups_perform_maintenance_request_resource() =
+      node_groups_perform_maintenance_request_resource;
+  return connection_->PerformMaintenance(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsClient::PerformMaintenance(
+    google::cloud::cpp::compute::node_groups::v1::
+        PerformMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PerformMaintenance(request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeGroupsClient::SetIamPolicy(
     std::string const& project, std::string const& zone,

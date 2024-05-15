@@ -109,6 +109,12 @@ class MockNodeGroupsConnection
                    PatchNodeGroupRequest const& request),
               (override));
 
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PerformMaintenance,
+              (google::cloud::cpp::compute::node_groups::v1::
+                   PerformMaintenanceRequest const& request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
       (google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&

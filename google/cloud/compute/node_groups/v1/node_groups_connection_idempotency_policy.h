@@ -75,6 +75,10 @@ class NodeGroupsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
           request);
 
+  virtual google::cloud::Idempotency PerformMaintenance(
+      google::cloud::cpp::compute::node_groups::v1::
+          PerformMaintenanceRequest const& request);
+
   virtual google::cloud::Idempotency SetIamPolicy(
       google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
           request);
