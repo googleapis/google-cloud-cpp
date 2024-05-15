@@ -64,6 +64,7 @@ cc_library(
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
         "@com_github_grpc_grpc//:grpc++",
+        "@com_github_grpc_grpc//:grpcpp_otel_plugin",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/algorithm:container",
         "@com_google_absl//absl/strings",
