@@ -140,6 +140,23 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v26.1.tar.gz 
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
+WORKDIR /var/tmp/build/
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_CXX_STANDARD=14 \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
+        -DBUILD_SHARED_LIBS=ON \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+    -S . -B cmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel re2-devel
 RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.63.0.tar.gz | \
@@ -156,24 +173,9 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.63.0.tar.gz | \
       -DgRPC_RE2_PROVIDER=package \
       -DgRPC_SSL_PROVIDER=package \
       -DgRPC_ZLIB_PROVIDER=package \
+      -DgRPC_OPENTELEMETRY_PROVIDER=package \
+      -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
       -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
-    ldconfig && cd /var/tmp && rm -fr build
-
-WORKDIR /var/tmp/build/
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_CXX_STANDARD=14 \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
-        -DBUILD_SHARED_LIBS=ON \
-        -DWITH_EXAMPLES=OFF \
-        -DWITH_ABSEIL=ON \
-        -DBUILD_TESTING=OFF \
-        -DOPENTELEMETRY_INSTALL=ON \
-        -DOPENTELEMETRY_ABI_VERSION_NO=2 \
-    -S . -B cmake-out -GNinja && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
