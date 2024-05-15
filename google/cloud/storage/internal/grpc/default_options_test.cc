@@ -121,8 +121,17 @@ TEST(DefaultOptionsGrpc, DefaultOptionsUploadBuffer) {
 }
 
 TEST(DefaultOptionsGrpc, MetricsEnabled) {
+  ScopedEnvironment env("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",
+                        absl::nullopt);
   auto const options = DefaultOptionsGrpc(Options{});
   EXPECT_TRUE(options.get<storage_experimental::EnableGrpcMetricsOption>());
+}
+
+TEST(DefaultOptionsGrpc, MetricsDisabled) {
+  ScopedEnvironment env("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",
+                        "test-only-unused");
+  auto const options = DefaultOptionsGrpc(Options{});
+  EXPECT_FALSE(options.get<storage_experimental::EnableGrpcMetricsOption>());
 }
 
 TEST(DefaultOptionsGrpc, MetricsPeriod) {
