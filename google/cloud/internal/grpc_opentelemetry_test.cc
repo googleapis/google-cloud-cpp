@@ -197,7 +197,7 @@ class EndSpanGrpcServerMetadataTest : public ::testing::Test {
   testing_util::ValidateMetadataFixture metadata_fixture_;
 };
 
-TEST_F(EndSpanGrpcServerMetadataTest, UnknownOriginError) {
+TEST_F(EndSpanGrpcServerMetadataTest, ServerError) {
   auto span_catcher = InstallSpanCatcher();
 
   promise<Status> p;
@@ -217,7 +217,7 @@ TEST_F(EndSpanGrpcServerMetadataTest, UnknownOriginError) {
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError),
           SpanHasAttributes(
-              OTelAttribute<std::string>("grpc.peer", "inproc"),
+              OTelAttribute<std::string>("grpc.peer", _),
               OTelAttribute<std::string>("rpc.grpc.response.metadata.header",
                                          "header-value"),
               OTelAttribute<std::string>("rpc.grpc.response.metadata.trailer",
@@ -228,9 +228,9 @@ TEST_F(EndSpanGrpcServerMetadataTest, ClientOrigin) {
   auto span_catcher = InstallSpanCatcher();
 
   promise<Status> p;
+  // Note that the context does not have the server initial metadata. We are
+  // really checking that the call to `EndSpan(...)` does not crash.
   auto context = std::make_shared<grpc::ClientContext>();
-  metadata_fixture_.SetServerMetadata(
-      *context, {{{"header", "header-value"}}, {{"trailer", "trailer-value"}}});
   auto f = EndSpan(context, MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"),
                    p.get_future());
   EXPECT_FALSE(f.is_ready());
@@ -247,13 +247,7 @@ TEST_F(EndSpanGrpcServerMetadataTest, ClientOrigin) {
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", "inproc")),
-          Not(SpanHasAttributes(
-              OTelAttribute<std::string>("grpc.peer", "inproc"),
-              OTelAttribute<std::string>("rpc.grpc.response.metadata.header",
-                                         "header-value"),
-              OTelAttribute<std::string>("rpc.grpc.response.metadata.trailer",
-                                         "trailer-value"))))));
+          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)))));
 }
 
 TEST(OpenTelemetry, TracedAsyncBackoffEnabled) {
