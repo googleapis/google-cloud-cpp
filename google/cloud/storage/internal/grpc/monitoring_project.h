@@ -17,6 +17,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+#include "google/cloud/credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
@@ -27,6 +28,18 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * Returns the project to automatically publish GCS+gRPC metrics.
+ */
+absl::optional<Project> MonitoringProject(
+    opentelemetry::sdk::resource::Resource const& resource,
+    Options const& options);
+
+/**
+ * Returns the project associated with @p credentials, if any.
+ */
+absl::optional<Project> MonitoringProject(Credentials const& credentials);
 
 /**
  * Returns the project associated with @p resource.

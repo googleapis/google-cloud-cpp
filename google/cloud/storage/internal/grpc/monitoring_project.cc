@@ -16,12 +16,33 @@
 
 #include "google/cloud/storage/internal/grpc/monitoring_project.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+absl::optional<Project> MonitoringProject(
+    opentelemetry::sdk::resource::Resource const& resource,
+    Options const& options) {
+  auto project = MonitoringProject(resource);
+  if (project) return project;
+  project = MonitoringProject(options);
+  if (project) return project;
+  auto const& credentials = options.get<UnifiedCredentialsOption>();
+  if (!credentials) return absl::nullopt;
+  return MonitoringProject(*credentials);
+}
+
+absl::optional<Project> MonitoringProject(Credentials const& credentials) {
+  auto rest_credentials =
+      google::cloud::rest_internal::MapCredentials(credentials);
+  auto project_id = rest_credentials->project_id();
+  if (!project_id) return absl::nullopt;
+  return Project(*std::move(project_id));
+}
 
 absl::optional<Project> MonitoringProject(
     opentelemetry::sdk::resource::Resource const& resource) {
