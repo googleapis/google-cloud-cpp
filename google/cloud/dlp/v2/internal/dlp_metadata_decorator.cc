@@ -419,6 +419,14 @@ DlpServiceMetadata::GetColumnDataProfile(
   return child_->GetColumnDataProfile(context, options, request);
 }
 
+Status DlpServiceMetadata::DeleteTableDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTableDataProfile(context, options, request);
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceMetadata::HybridInspectDlpJob(
     grpc::ClientContext& context, Options const& options,
@@ -434,6 +442,59 @@ Status DlpServiceMetadata::FinishDlpJob(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->FinishDlpJob(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceMetadata::CreateConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::CreateConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConnection(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceMetadata::GetConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetConnection(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListConnectionsResponse>
+DlpServiceMetadata::ListConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListConnectionsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListConnections(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse>
+DlpServiceMetadata::SearchConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SearchConnections(context, options, request);
+}
+
+Status DlpServiceMetadata::DeleteConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConnection(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceMetadata::UpdateConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateConnection(context, options, request);
 }
 
 void DlpServiceMetadata::SetMetadata(grpc::ClientContext& context,

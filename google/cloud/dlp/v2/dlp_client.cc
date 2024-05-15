@@ -720,6 +720,21 @@ DlpServiceClient::GetColumnDataProfile(
   return connection_->GetColumnDataProfile(request);
 }
 
+Status DlpServiceClient::DeleteTableDataProfile(std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::DeleteTableDataProfileRequest request;
+  request.set_name(name);
+  return connection_->DeleteTableDataProfile(request);
+}
+
+Status DlpServiceClient::DeleteTableDataProfile(
+    google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTableDataProfile(request);
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceClient::HybridInspectDlpJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -741,6 +756,101 @@ Status DlpServiceClient::FinishDlpJob(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FinishDlpJob(request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceClient::CreateConnection(
+    std::string const& parent,
+    google::privacy::dlp::v2::Connection const& connection, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::CreateConnectionRequest request;
+  request.set_parent(parent);
+  *request.mutable_connection() = connection;
+  return connection_->CreateConnection(request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceClient::CreateConnection(
+    google::privacy::dlp::v2::CreateConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConnection(request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceClient::GetConnection(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::GetConnectionRequest request;
+  request.set_name(name);
+  return connection_->GetConnection(request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceClient::GetConnection(
+    google::privacy::dlp::v2::GetConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetConnection(request);
+}
+
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceClient::ListConnections(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::ListConnectionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListConnections(request);
+}
+
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceClient::ListConnections(
+    google::privacy::dlp::v2::ListConnectionsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListConnections(std::move(request));
+}
+
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceClient::SearchConnections(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::SearchConnectionsRequest request;
+  request.set_parent(parent);
+  return connection_->SearchConnections(request);
+}
+
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceClient::SearchConnections(
+    google::privacy::dlp::v2::SearchConnectionsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SearchConnections(std::move(request));
+}
+
+Status DlpServiceClient::DeleteConnection(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::DeleteConnectionRequest request;
+  request.set_name(name);
+  return connection_->DeleteConnection(request);
+}
+
+Status DlpServiceClient::DeleteConnection(
+    google::privacy::dlp::v2::DeleteConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteConnection(request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceClient::UpdateConnection(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::UpdateConnectionRequest request;
+  request.set_name(name);
+  return connection_->UpdateConnection(request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceClient::UpdateConnection(
+    google::privacy::dlp::v2::UpdateConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateConnection(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

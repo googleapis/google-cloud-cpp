@@ -429,6 +429,14 @@ DlpServiceTracingConnection::GetColumnDataProfile(
   return internal::EndSpan(*span, child_->GetColumnDataProfile(request));
 }
 
+Status DlpServiceTracingConnection::DeleteTableDataProfile(
+    google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::DeleteTableDataProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTableDataProfile(request));
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceTracingConnection::HybridInspectDlpJob(
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
@@ -443,6 +451,62 @@ Status DlpServiceTracingConnection::FinishDlpJob(
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::FinishDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FinishDlpJob(request));
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceTracingConnection::CreateConnection(
+    google::privacy::dlp::v2::CreateConnectionRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateConnection(request));
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceTracingConnection::GetConnection(
+    google::privacy::dlp::v2::GetConnectionRequest const& request) {
+  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnection(request));
+}
+
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceTracingConnection::ListConnections(
+    google::privacy::dlp::v2::ListConnectionsRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ListConnections");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListConnections(std::move(request));
+  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::Connection>(
+      std::move(span), std::move(sr));
+}
+
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceTracingConnection::SearchConnections(
+    google::privacy::dlp::v2::SearchConnectionsRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::SearchConnections");
+  internal::OTelScope scope(span);
+  auto sr = child_->SearchConnections(std::move(request));
+  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::Connection>(
+      std::move(span), std::move(sr));
+}
+
+Status DlpServiceTracingConnection::DeleteConnection(
+    google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteConnection(request));
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceTracingConnection::UpdateConnection(
+    google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateConnection(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

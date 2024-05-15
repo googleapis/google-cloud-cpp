@@ -335,12 +335,33 @@ class DlpServiceConnection {
   GetColumnDataProfile(
       google::privacy::dlp::v2::GetColumnDataProfileRequest const& request);
 
+  virtual Status DeleteTableDataProfile(
+      google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request);
+
   virtual StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectDlpJob(
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request);
 
   virtual Status FinishDlpJob(
       google::privacy::dlp::v2::FinishDlpJobRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::Connection> CreateConnection(
+      google::privacy::dlp::v2::CreateConnectionRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::Connection> GetConnection(
+      google::privacy::dlp::v2::GetConnectionRequest const& request);
+
+  virtual StreamRange<google::privacy::dlp::v2::Connection> ListConnections(
+      google::privacy::dlp::v2::ListConnectionsRequest request);
+
+  virtual StreamRange<google::privacy::dlp::v2::Connection> SearchConnections(
+      google::privacy::dlp::v2::SearchConnectionsRequest request);
+
+  virtual Status DeleteConnection(
+      google::privacy::dlp::v2::DeleteConnectionRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
+      google::privacy::dlp::v2::UpdateConnectionRequest const& request);
 };
 
 /**

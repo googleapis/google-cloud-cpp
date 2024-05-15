@@ -253,6 +253,11 @@ class DlpServiceMetadata : public DlpServiceStub {
       google::privacy::dlp::v2::GetColumnDataProfileRequest const& request)
       override;
 
+  Status DeleteTableDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request)
+      override;
+
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
       grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request)
@@ -261,6 +266,34 @@ class DlpServiceMetadata : public DlpServiceStub {
   Status FinishDlpJob(
       grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::FinishDlpJobRequest const& request) override;
+
+  StatusOr<google::privacy::dlp::v2::Connection> CreateConnection(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::CreateConnectionRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::Connection> GetConnection(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetConnectionRequest const& request) override;
+
+  StatusOr<google::privacy::dlp::v2::ListConnectionsResponse> ListConnections(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListConnectionsRequest const& request) override;
+
+  StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse>
+  SearchConnections(grpc::ClientContext& context, Options const& options,
+                    google::privacy::dlp::v2::SearchConnectionsRequest const&
+                        request) override;
+
+  Status DeleteConnection(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::DeleteConnectionRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::UpdateConnectionRequest const& request)
+      override;
 
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,

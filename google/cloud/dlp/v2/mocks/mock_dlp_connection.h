@@ -270,6 +270,11 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       (override));
 
   MOCK_METHOD(
+      Status, DeleteTableDataProfile,
+      (google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::privacy::dlp::v2::HybridInspectResponse>,
       HybridInspectDlpJob,
       (google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request),
@@ -278,6 +283,35 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
   MOCK_METHOD(Status, FinishDlpJob,
               (google::privacy::dlp::v2::FinishDlpJobRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::privacy::dlp::v2::Connection>, CreateConnection,
+      (google::privacy::dlp::v2::CreateConnectionRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::privacy::dlp::v2::Connection>, GetConnection,
+              (google::privacy::dlp::v2::GetConnectionRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::privacy::dlp::v2::Connection>),
+              ListConnections,
+              (google::privacy::dlp::v2::ListConnectionsRequest request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::privacy::dlp::v2::Connection>),
+              SearchConnections,
+              (google::privacy::dlp::v2::SearchConnectionsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      Status, DeleteConnection,
+      (google::privacy::dlp::v2::DeleteConnectionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::privacy::dlp::v2::Connection>, UpdateConnection,
+      (google::privacy::dlp::v2::UpdateConnectionRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
