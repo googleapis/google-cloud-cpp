@@ -71,8 +71,7 @@ Options MetricsExporterOptions(
       Pair("host_id", ByName(attributes, "faas.id",
                              ByName(attributes, sc::kHostId, "unknown"))));
   monitored_resource.mutable_labels()->insert(
-      Pair("instance_id",
-           ByName(attributes, sc::kServiceInstanceId, std::move(uuid))));
+      Pair("instance_id", std::move(uuid)));
   monitored_resource.mutable_labels()->insert(Pair("api", "GRPC"));
 
   result.set<otel_internal::MonitoredResourceOption>(
