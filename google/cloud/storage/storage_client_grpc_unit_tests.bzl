@@ -59,6 +59,7 @@ storage_client_grpc_unit_tests = [
     "internal/grpc/hmac_key_metadata_parser_test.cc",
     "internal/grpc/hmac_key_request_parser_test.cc",
     "internal/grpc/make_cord_test.cc",
+    "internal/grpc/metrics_exporter_impl_test.cc",
     "internal/grpc/metrics_exporter_options_test.cc",
     "internal/grpc/metrics_histograms_test.cc",
     "internal/grpc/metrics_meter_provider_test.cc",

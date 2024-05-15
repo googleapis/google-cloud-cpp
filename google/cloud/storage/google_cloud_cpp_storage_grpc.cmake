@@ -157,6 +157,8 @@ else ()
         internal/grpc/hmac_key_request_parser.h
         internal/grpc/make_cord.cc
         internal/grpc/make_cord.h
+        internal/grpc/metrics_exporter_impl.cc
+        internal/grpc/metrics_exporter_impl.h
         internal/grpc/metrics_exporter_options.cc
         internal/grpc/metrics_exporter_options.h
         internal/grpc/metrics_histograms.cc
@@ -419,6 +421,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc/hmac_key_metadata_parser_test.cc
         internal/grpc/hmac_key_request_parser_test.cc
         internal/grpc/make_cord_test.cc
+        internal/grpc/metrics_exporter_impl_test.cc
         internal/grpc/metrics_exporter_options_test.cc
         internal/grpc/metrics_histograms_test.cc
         internal/grpc/metrics_meter_provider_test.cc
