@@ -53,6 +53,18 @@ idempotency_policy(Options const& options) {
 
 }  // namespace
 
+void PredictionServiceStreamRawPredictStreamingUpdater(
+    google::api::HttpBody const&,
+    google::cloud::aiplatform::v1::StreamRawPredictRequest&) {}
+
+void PredictionServiceServerStreamingPredictStreamingUpdater(
+    google::cloud::aiplatform::v1::StreamingPredictResponse const&,
+    google::cloud::aiplatform::v1::StreamingPredictRequest&) {}
+
+void PredictionServiceStreamGenerateContentStreamingUpdater(
+    google::cloud::aiplatform::v1::GenerateContentResponse const&,
+    google::cloud::aiplatform::v1::GenerateContentRequest&) {}
+
 PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<aiplatform_v1_internal::PredictionServiceStub> stub,
@@ -109,6 +121,7 @@ PredictionServiceConnectionImpl::StreamRawPredict(
       internal::StreamReader<google::api::HttpBody>(
           [resumable] { return resumable->Read(); }));
 }
+
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 PredictionServiceConnectionImpl::DirectPredict(
     google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
@@ -139,6 +152,33 @@ PredictionServiceConnectionImpl::DirectRawPredict(
       *current, request, __func__);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
+PredictionServiceConnectionImpl::AsyncStreamDirectPredict() {
+  return stub_->AsyncStreamDirectPredict(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
+PredictionServiceConnectionImpl::AsyncStreamDirectRawPredict() {
+  return stub_->AsyncStreamDirectRawPredict(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingPredictRequest,
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceConnectionImpl::AsyncStreamingPredict() {
+  return stub_->AsyncStreamingPredict(background_->cq(),
+                                      std::make_shared<grpc::ClientContext>(),
+                                      internal::SaveCurrentOptions());
+}
+
 StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
 PredictionServiceConnectionImpl::ServerStreamingPredict(
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
@@ -160,6 +200,16 @@ PredictionServiceConnectionImpl::ServerStreamingPredict(
           google::cloud::aiplatform::v1::StreamingPredictResponse>(
           [resumable] { return resumable->Read(); }));
 }
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamingRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
+PredictionServiceConnectionImpl::AsyncStreamingRawPredict() {
+  return stub_->AsyncStreamingRawPredict(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceConnectionImpl::Explain(
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
@@ -210,6 +260,7 @@ PredictionServiceConnectionImpl::StreamGenerateContent(
           google::cloud::aiplatform::v1::GenerateContentResponse>(
           [resumable] { return resumable->Read(); }));
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud

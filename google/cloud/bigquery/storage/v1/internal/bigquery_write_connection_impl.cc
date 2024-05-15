@@ -78,6 +78,15 @@ BigQueryWriteConnectionImpl::CreateWriteStream(
       *current, request, __func__);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::bigquery::storage::v1::AppendRowsRequest,
+    google::cloud::bigquery::storage::v1::AppendRowsResponse>>
+BigQueryWriteConnectionImpl::AsyncAppendRows() {
+  return stub_->AsyncAppendRows(background_->cq(),
+                                std::make_shared<grpc::ClientContext>(),
+                                internal::SaveCurrentOptions());
+}
+
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 BigQueryWriteConnectionImpl::GetWriteStream(
     google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&

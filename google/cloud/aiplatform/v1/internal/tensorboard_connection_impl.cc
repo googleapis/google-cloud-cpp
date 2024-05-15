@@ -60,6 +60,10 @@ std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
 
 }  // namespace
 
+void TensorboardServiceReadTensorboardBlobDataStreamingUpdater(
+    google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse const&,
+    google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest&) {}
+
 TensorboardServiceConnectionImpl::TensorboardServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<aiplatform_v1_internal::TensorboardServiceStub> stub,
@@ -729,6 +733,7 @@ TensorboardServiceConnectionImpl::ReadTensorboardBlobData(
           google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>(
           [resumable] { return resumable->Read(); }));
 }
+
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
 TensorboardServiceConnectionImpl::WriteTensorboardExperimentData(
     google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&

@@ -51,6 +51,10 @@ idempotency_policy(Options const& options) {
 
 }  // namespace
 
+void SessionsServerStreamingDetectIntentStreamingUpdater(
+    google::cloud::dialogflow::cx::v3::DetectIntentResponse const&,
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest&) {}
+
 SessionsConnectionImpl::SessionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dialogflow_cx_internal::SessionsStub> stub, Options options)
@@ -95,6 +99,16 @@ SessionsConnectionImpl::ServerStreamingDetectIntent(
           google::cloud::dialogflow::cx::v3::DetectIntentResponse>(
           [resumable] { return resumable->Read(); }));
 }
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
+    google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
+SessionsConnectionImpl::AsyncStreamingDetectIntent() {
+  return stub_->AsyncStreamingDetectIntent(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsConnectionImpl::MatchIntent(
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {

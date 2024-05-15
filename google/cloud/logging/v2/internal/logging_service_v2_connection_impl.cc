@@ -187,6 +187,15 @@ StreamRange<std::string> LoggingServiceV2ConnectionImpl::ListLogs(
       });
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::logging::v2::TailLogEntriesRequest,
+    google::logging::v2::TailLogEntriesResponse>>
+LoggingServiceV2ConnectionImpl::AsyncTailLogEntries() {
+  return stub_->AsyncTailLogEntries(background_->cq(),
+                                    std::make_shared<grpc::ClientContext>(),
+                                    internal::SaveCurrentOptions());
+}
+
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2ConnectionImpl::AsyncWriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const& request) {

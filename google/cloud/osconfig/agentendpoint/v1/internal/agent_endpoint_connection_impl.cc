@@ -57,6 +57,12 @@ idempotency_policy(Options const& options) {
 
 }  // namespace
 
+void AgentEndpointServiceReceiveTaskNotificationStreamingUpdater(
+    google::cloud::osconfig::agentendpoint::v1::
+        ReceiveTaskNotificationResponse const&,
+    google::cloud::osconfig::agentendpoint::v1::
+        ReceiveTaskNotificationRequest&) {}
+
 AgentEndpointServiceConnectionImpl::AgentEndpointServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<
@@ -92,6 +98,7 @@ AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
                                  ReceiveTaskNotificationResponse>(
           [resumable] { return resumable->Read(); }));
 }
+
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 AgentEndpointServiceConnectionImpl::StartNextTask(
     google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&

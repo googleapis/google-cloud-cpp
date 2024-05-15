@@ -100,6 +100,7 @@ BigQueryReadConnectionImpl::ReadRows(
           google::cloud::bigquery::storage::v1::ReadRowsResponse>(
           [resumable] { return resumable->Read(); }));
 }
+
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 BigQueryReadConnectionImpl::SplitReadStream(
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&

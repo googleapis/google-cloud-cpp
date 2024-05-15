@@ -58,6 +58,10 @@ idempotency_policy(Options const& options) {
 
 }  // namespace
 
+void FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater(
+    google::cloud::aiplatform::v1::ReadFeatureValuesResponse const&,
+    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest&) {}
+
 FeaturestoreOnlineServingServiceConnectionImpl::
     FeaturestoreOnlineServingServiceConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -108,6 +112,7 @@ FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(
           google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
           [resumable] { return resumable->Read(); }));
 }
+
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 FeaturestoreOnlineServingServiceConnectionImpl::WriteFeatureValues(
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {

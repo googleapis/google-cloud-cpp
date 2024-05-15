@@ -280,6 +280,15 @@ SpeechConnectionImpl::Recognize(
       *current, request, __func__);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::speech::v2::StreamingRecognizeRequest,
+    google::cloud::speech::v2::StreamingRecognizeResponse>>
+SpeechConnectionImpl::AsyncStreamingRecognize() {
+  return stub_->AsyncStreamingRecognize(background_->cq(),
+                                        std::make_shared<grpc::ClientContext>(),
+                                        internal::SaveCurrentOptions());
+}
+
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
 SpeechConnectionImpl::BatchRecognize(
     google::cloud::speech::v2::BatchRecognizeRequest const& request) {

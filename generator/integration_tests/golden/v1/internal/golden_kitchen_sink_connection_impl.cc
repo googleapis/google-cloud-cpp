@@ -52,6 +52,10 @@ idempotency_policy(Options const& options) {
 
 } // namespace
 
+void GoldenKitchenSinkStreamingReadStreamingUpdater(
+    google::test::admin::database::v1::Response const&,
+    google::test::admin::database::v1::Request&) {}
+
 GoldenKitchenSinkConnectionImpl::GoldenKitchenSinkConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<golden_v1_internal::GoldenKitchenSinkStub> stub,
@@ -181,6 +185,16 @@ GoldenKitchenSinkConnectionImpl::StreamingRead(google::test::admin::database::v1
   return internal::MakeStreamRange(internal::StreamReader<google::test::admin::database::v1::Response>(
       [resumable] { return resumable->Read(); }));
 }
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::Request,
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkConnectionImpl::AsyncStreamingReadWrite() {
+  return stub_->AsyncStreamingReadWrite(background_->cq(),
+                                std::make_shared<grpc::ClientContext>(),
+                                internal::SaveCurrentOptions());
+}
+
 Status
 GoldenKitchenSinkConnectionImpl::ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
