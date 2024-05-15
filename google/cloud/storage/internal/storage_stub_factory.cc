@@ -49,6 +49,10 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   // to send and/or receive those queries.
   args.SetInt(GRPC_ARG_DNS_ENABLE_SRV_QUERIES, 0);
 
+  if (options.has<AuthorityOption>()) {
+    args.SetString(GRPC_ARG_DEFAULT_AUTHORITY, options.get<AuthorityOption>());
+  }
+
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 

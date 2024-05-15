@@ -149,6 +149,8 @@ add_library(
     internal/grpc/ctype_cord_workaround.h
     internal/grpc/default_options.cc
     internal/grpc/default_options.h
+    internal/grpc/enable_metrics.cc
+    internal/grpc/enable_metrics.h
     internal/grpc/hmac_key_metadata_parser.cc
     internal/grpc/hmac_key_metadata_parser.h
     internal/grpc/hmac_key_request_parser.cc
