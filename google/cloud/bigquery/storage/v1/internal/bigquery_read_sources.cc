@@ -25,6 +25,7 @@
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_logging_decorator.cc"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_metadata_decorator.cc"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_option_defaults.cc"
+#include "google/cloud/bigquery/storage/v1/internal/bigquery_read_streaming.cc"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_stub.cc"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_stub_factory.cc"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_tracing_connection.cc"

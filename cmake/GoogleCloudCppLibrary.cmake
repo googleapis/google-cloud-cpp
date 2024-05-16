@@ -189,7 +189,7 @@ function (google_cloud_cpp_add_gapic_library library display_name)
         endif ()
         string(REPLACE "/" "_" ns "${dir}")
         list(APPEND source_globs "${dir}*.h" "${dir}internal/*.h"
-             "${dir}internal/*_sources.cc" "${dir}internal/streaming.cc")
+             "${dir}internal/*_sources.cc")
         list(APPEND mocks_globs "${dir}mocks/*.h")
         list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "${library}_${ns}internal")
         if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")

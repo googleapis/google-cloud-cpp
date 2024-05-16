@@ -322,6 +322,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("service_name", "FrobberService"),
         std::make_pair("sources_cc_path",
                        "google/cloud/frobber/internal/frobber_sources.cc"),
+        std::make_pair("streaming_cc_path",
+                       "google/cloud/frobber/internal/frobber_streaming.cc"),
         std::make_pair("stub_class_name", "FrobberServiceStub"),
         std::make_pair("stub_cc_path",
                        "google/cloud/frobber/internal/frobber_stub.cc"),
