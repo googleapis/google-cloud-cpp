@@ -226,6 +226,10 @@ class NodeGroupsConnection {
       google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
           request);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(google::cloud::cpp::compute::node_groups::v1::
+                         PerformMaintenanceRequest const& request);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
           request);

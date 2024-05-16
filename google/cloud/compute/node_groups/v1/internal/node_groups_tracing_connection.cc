@@ -142,6 +142,17 @@ NodeGroupsTracingConnection::PatchNodeGroup(
   return internal::EndSpan(std::move(span), child_->PatchNodeGroup(request));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::PerformMaintenance(
+    google::cloud::cpp::compute::node_groups::v1::
+        PerformMaintenanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::PerformMaintenance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PerformMaintenance(request));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeGroupsTracingConnection::SetIamPolicy(
     google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&

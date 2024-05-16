@@ -35,7 +35,8 @@
 #include <google/cloud/compute/v1/internal/common_073.pb.h>
 #include <google/cloud/compute/v1/internal/common_112.pb.h>
 #include <google/cloud/compute/v1/internal/common_137.pb.h>
-#include <google/cloud/compute/v1/internal/common_143.pb.h>
+#include <google/cloud/compute/v1/internal/common_138.pb.h>
+#include <google/cloud/compute/v1/internal/common_144.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_GROUPS_V1_NODE_GROUPS_PROTO_EXPORT_H

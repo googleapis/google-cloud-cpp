@@ -30,7 +30,7 @@
 #include <google/cloud/compute/v1/internal/common_121.pb.h>
 #include <google/cloud/compute/v1/internal/common_128.pb.h>
 #include <google/cloud/compute/v1/internal/common_129.pb.h>
-#include <google/cloud/compute/v1/internal/common_138.pb.h>
+#include <google/cloud/compute/v1/internal/common_139.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_HTTPS_PROXIES_V1_TARGET_HTTPS_PROXIES_PROTO_EXPORT_H

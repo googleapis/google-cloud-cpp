@@ -89,6 +89,12 @@ Idempotency NodeGroupsConnectionIdempotencyPolicy::PatchNodeGroup(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NodeGroupsConnectionIdempotencyPolicy::PerformMaintenance(
+    google::cloud::cpp::compute::node_groups::v1::
+        PerformMaintenanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NodeGroupsConnectionIdempotencyPolicy::SetIamPolicy(
     google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
