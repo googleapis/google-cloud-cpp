@@ -304,6 +304,11 @@ DlpServiceConnection::GetColumnDataProfile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status DlpServiceConnection::DeleteTableDataProfile(
+    google::privacy::dlp::v2::DeleteTableDataProfileRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceConnection::HybridInspectDlpJob(
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const&) {
@@ -312,6 +317,45 @@ DlpServiceConnection::HybridInspectDlpJob(
 
 Status DlpServiceConnection::FinishDlpJob(
     google::privacy::dlp::v2::FinishDlpJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceConnection::CreateConnection(
+    google::privacy::dlp::v2::CreateConnectionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceConnection::GetConnection(
+    google::privacy::dlp::v2::GetConnectionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceConnection::ListConnections(
+    google::privacy::dlp::v2::
+        ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::Connection>>();
+}
+
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceConnection::SearchConnections(
+    google::privacy::dlp::v2::
+        SearchConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::Connection>>();
+}
+
+Status DlpServiceConnection::DeleteConnection(
+    google::privacy::dlp::v2::DeleteConnectionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceConnection::UpdateConnection(
+    google::privacy::dlp::v2::UpdateConnectionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -249,6 +249,11 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::GetColumnDataProfile(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteTableDataProfile(
+    google::privacy::dlp::v2::DeleteTableDataProfileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DlpServiceConnectionIdempotencyPolicy::HybridInspectDlpJob(
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -256,6 +261,36 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::HybridInspectDlpJob(
 
 Idempotency DlpServiceConnectionIdempotencyPolicy::FinishDlpJob(
     google::privacy::dlp::v2::FinishDlpJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateConnection(
+    google::privacy::dlp::v2::CreateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetConnection(
+    google::privacy::dlp::v2::GetConnectionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListConnections(
+    google::privacy::dlp::v2::ListConnectionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::SearchConnections(
+    google::privacy::dlp::v2::SearchConnectionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteConnection(
+    google::privacy::dlp::v2::DeleteConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateConnection(
+    google::privacy::dlp::v2::UpdateConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

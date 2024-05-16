@@ -405,6 +405,14 @@ DlpServiceAuth::GetColumnDataProfile(
   return child_->GetColumnDataProfile(context, options, request);
 }
 
+Status DlpServiceAuth::DeleteTableDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTableDataProfile(context, options, request);
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceAuth::HybridInspectDlpJob(
     grpc::ClientContext& context, Options const& options,
@@ -420,6 +428,56 @@ Status DlpServiceAuth::FinishDlpJob(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FinishDlpJob(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceAuth::CreateConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::CreateConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConnection(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceAuth::GetConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetConnection(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListConnectionsResponse>
+DlpServiceAuth::ListConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListConnectionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListConnections(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse>
+DlpServiceAuth::SearchConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SearchConnections(context, options, request);
+}
+
+Status DlpServiceAuth::DeleteConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConnection(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceAuth::UpdateConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateConnection(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

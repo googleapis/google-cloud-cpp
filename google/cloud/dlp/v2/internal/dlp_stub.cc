@@ -544,6 +544,18 @@ DefaultDlpServiceStub::GetColumnDataProfile(
   return response;
 }
 
+Status DefaultDlpServiceStub::DeleteTableDataProfile(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteTableDataProfile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DefaultDlpServiceStub::HybridInspectDlpJob(
     grpc::ClientContext& context, Options const&,
@@ -565,6 +577,77 @@ Status DefaultDlpServiceStub::FinishDlpJob(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return google::cloud::Status();
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DefaultDlpServiceStub::CreateConnection(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::CreateConnectionRequest const& request) {
+  google::privacy::dlp::v2::Connection response;
+  auto status = grpc_stub_->CreateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DefaultDlpServiceStub::GetConnection(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::GetConnectionRequest const& request) {
+  google::privacy::dlp::v2::Connection response;
+  auto status = grpc_stub_->GetConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::ListConnectionsResponse>
+DefaultDlpServiceStub::ListConnections(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::ListConnectionsRequest const& request) {
+  google::privacy::dlp::v2::ListConnectionsResponse response;
+  auto status = grpc_stub_->ListConnections(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse>
+DefaultDlpServiceStub::SearchConnections(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
+  google::privacy::dlp::v2::SearchConnectionsResponse response;
+  auto status = grpc_stub_->SearchConnections(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultDlpServiceStub::DeleteConnection(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DefaultDlpServiceStub::UpdateConnection(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
+  google::privacy::dlp::v2::Connection response;
+  auto status = grpc_stub_->UpdateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

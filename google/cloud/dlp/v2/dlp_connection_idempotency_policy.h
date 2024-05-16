@@ -165,11 +165,32 @@ class DlpServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetColumnDataProfile(
       google::privacy::dlp::v2::GetColumnDataProfileRequest const& request);
 
+  virtual google::cloud::Idempotency DeleteTableDataProfile(
+      google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request);
+
   virtual google::cloud::Idempotency HybridInspectDlpJob(
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request);
 
   virtual google::cloud::Idempotency FinishDlpJob(
       google::privacy::dlp::v2::FinishDlpJobRequest const& request);
+
+  virtual google::cloud::Idempotency CreateConnection(
+      google::privacy::dlp::v2::CreateConnectionRequest const& request);
+
+  virtual google::cloud::Idempotency GetConnection(
+      google::privacy::dlp::v2::GetConnectionRequest const& request);
+
+  virtual google::cloud::Idempotency ListConnections(
+      google::privacy::dlp::v2::ListConnectionsRequest request);
+
+  virtual google::cloud::Idempotency SearchConnections(
+      google::privacy::dlp::v2::SearchConnectionsRequest request);
+
+  virtual google::cloud::Idempotency DeleteConnection(
+      google::privacy::dlp::v2::DeleteConnectionRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateConnection(
+      google::privacy::dlp::v2::UpdateConnectionRequest const& request);
 };
 
 std::unique_ptr<DlpServiceConnectionIdempotencyPolicy>

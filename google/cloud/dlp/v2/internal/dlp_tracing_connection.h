@@ -202,12 +202,37 @@ class DlpServiceTracingConnection : public dlp_v2::DlpServiceConnection {
       google::privacy::dlp::v2::GetColumnDataProfileRequest const& request)
       override;
 
+  Status DeleteTableDataProfile(
+      google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request)
+      override;
+
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request)
       override;
 
   Status FinishDlpJob(
       google::privacy::dlp::v2::FinishDlpJobRequest const& request) override;
+
+  StatusOr<google::privacy::dlp::v2::Connection> CreateConnection(
+      google::privacy::dlp::v2::CreateConnectionRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::Connection> GetConnection(
+      google::privacy::dlp::v2::GetConnectionRequest const& request) override;
+
+  StreamRange<google::privacy::dlp::v2::Connection> ListConnections(
+      google::privacy::dlp::v2::ListConnectionsRequest request) override;
+
+  StreamRange<google::privacy::dlp::v2::Connection> SearchConnections(
+      google::privacy::dlp::v2::SearchConnectionsRequest request) override;
+
+  Status DeleteConnection(
+      google::privacy::dlp::v2::DeleteConnectionRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
+      google::privacy::dlp::v2::UpdateConnectionRequest const& request)
+      override;
 
  private:
   std::shared_ptr<dlp_v2::DlpServiceConnection> child_;

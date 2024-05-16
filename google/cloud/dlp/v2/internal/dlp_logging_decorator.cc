@@ -569,6 +569,18 @@ DlpServiceLogging::GetColumnDataProfile(
       context, options, request, __func__, tracing_options_);
 }
 
+Status DlpServiceLogging::DeleteTableDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::DeleteTableDataProfileRequest const&
+                 request) {
+        return child_->DeleteTableDataProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceLogging::HybridInspectDlpJob(
     grpc::ClientContext& context, Options const& options,
@@ -589,6 +601,77 @@ Status DlpServiceLogging::FinishDlpJob(
       [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
         return child_->FinishDlpJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceLogging::CreateConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::CreateConnectionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::CreateConnectionRequest const& request) {
+        return child_->CreateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceLogging::GetConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetConnectionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::GetConnectionRequest const& request) {
+        return child_->GetConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::ListConnectionsResponse>
+DlpServiceLogging::ListConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListConnectionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::ListConnectionsRequest const& request) {
+        return child_->ListConnections(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse>
+DlpServiceLogging::SearchConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
+        return child_->SearchConnections(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status DlpServiceLogging::DeleteConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
+        return child_->DeleteConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::Connection>
+DlpServiceLogging::UpdateConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
+        return child_->UpdateConnection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

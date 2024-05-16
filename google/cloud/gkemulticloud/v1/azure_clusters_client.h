@@ -141,7 +141,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L690}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L702}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -191,7 +191,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L690}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L702}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -229,7 +229,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L726}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L738}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
@@ -260,7 +260,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L726}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L738}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
@@ -302,7 +302,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L746}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L758}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureClient> ListAzureClients(
@@ -342,7 +342,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L746}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L758}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureClient> ListAzureClients(
@@ -391,7 +391,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L788}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L800}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -438,7 +438,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L401}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L788}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L800}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -921,8 +921,8 @@ class AzureClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L846}
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L883}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L858}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L895}
   ///
   // clang-format on
   StatusOr<
@@ -957,8 +957,8 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L818}
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L837}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L830}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L849}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
@@ -1018,7 +1018,7 @@ class AzureClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L478}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L484}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -1066,7 +1066,7 @@ class AzureClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L478}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L484}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -1114,7 +1114,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L515}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L521}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
@@ -1153,7 +1153,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L515}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L521}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
@@ -1190,7 +1190,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L539}
+  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L545}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
@@ -1221,7 +1221,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L539}
+  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L545}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
@@ -1266,7 +1266,7 @@ class AzureClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L558}
+  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L564}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
@@ -1308,7 +1308,7 @@ class AzureClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L34}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L558}
+  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L564}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
@@ -1354,7 +1354,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L601}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L607}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -1398,7 +1398,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L494}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L601}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L607}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -1434,7 +1434,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L681}
-  /// [google.cloud.gkemulticloud.v1.GetAzureOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L642}
+  /// [google.cloud.gkemulticloud.v1.GetAzureOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L654}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
@@ -1468,7 +1468,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L681}
-  /// [google.cloud.gkemulticloud.v1.GetAzureOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L642}
+  /// [google.cloud.gkemulticloud.v1.GetAzureOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L654}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
@@ -1499,7 +1499,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L705}
-  /// [google.cloud.gkemulticloud.v1.GetAzureJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L658}
+  /// [google.cloud.gkemulticloud.v1.GetAzureJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L670}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
@@ -1530,7 +1530,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L705}
-  /// [google.cloud.gkemulticloud.v1.GetAzureJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L658}
+  /// [google.cloud.gkemulticloud.v1.GetAzureJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L670}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
@@ -1567,7 +1567,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L713}
-  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L671}
+  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L683}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
@@ -1598,7 +1598,7 @@ class AzureClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AzureServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L713}
-  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L671}
+  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L683}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
