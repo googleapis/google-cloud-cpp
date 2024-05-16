@@ -27,14 +27,14 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Returns the monitoring options given the (fully populated) options for
- * Storage.
- */
+/// Returns the monitoring exporter options given the project and resource.
 Options MetricsExporterOptions(
     Project const& project,
-    opentelemetry::sdk::resource::Resource const& resource,
-    Options const& options);
+    opentelemetry::sdk::resource::Resource const& resource);
+
+/// Returns the monitoring exporter connection options given the fully populated
+/// storage options.
+Options MetricsExporterConnectionOptions(Options const& options);
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 

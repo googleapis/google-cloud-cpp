@@ -41,25 +41,8 @@ auto ByName(opentelemetry::sdk::resource::ResourceAttributes const& attributes,
 
 Options MetricsExporterOptions(
     Project const& project,
-    opentelemetry::sdk::resource::Resource const& resource,
-    Options const& options) {
+    opentelemetry::sdk::resource::Resource const& resource) {
   namespace sc = ::opentelemetry::sdk::resource::SemanticConventions;
-  auto result =
-      Options{}
-          .set<otel_internal::ServiceTimeSeriesOption>(true)
-          .set<otel_internal::MetricPrefixOption>("storage.googleapis.com/");
-
-  // We need a UUID because there may be multiple monitored resources within the
-  // same process, and we need these monitored resources to be globally unique
-  // or GCM may complain about the publication rate. There is no information
-  // available that can make this unique enough, all the clients in a service
-  // may be using the same project and bucket (not that buckets are available).
-  //
-  // This is fairly expensive, it requires initializing a new PRNG, and fetching
-  // entropy from the OS. Outside tests, this function will be called a handful
-  // of times, so the performance is not that important.
-  auto uuid =
-      google::cloud::internal::InvocationIdGenerator().MakeInvocationId();
 
   auto const& attributes = resource.GetAttributes();
   auto monitored_resource = google::api::MonitoredResource{};
@@ -71,12 +54,29 @@ Options MetricsExporterOptions(
   labels["cloud_platform"] = ByName(attributes, sc::kCloudPlatform, "unknown");
   labels["host_id"] =
       ByName(attributes, "faas.id", ByName(attributes, sc::kHostId, "unknown"));
-  labels["instance_id"] = std::move(uuid);
+
+  // We need a UUID because there may be multiple monitored resources within the
+  // same process, and we need these monitored resources to be globally unique
+  // or GCM may complain about the publication rate. There is no information
+  // available that can make this unique enough, all the clients in a service
+  // may be using the same project and bucket (not that buckets are available).
+  //
+  // This is fairly expensive, it requires initializing a new PRNG, and fetching
+  // entropy from the OS. Outside tests, this function will be called a handful
+  // of times, so the performance is not that important.
+  labels["instance_id"] =
+      google::cloud::internal::InvocationIdGenerator().MakeInvocationId();
   labels["api"] = "GRPC";
 
-  result.set<otel_internal::MonitoredResourceOption>(
-      std::move(monitored_resource));
+  return Options{}
+      .set<otel_internal::ServiceTimeSeriesOption>(true)
+      .set<otel_internal::MetricPrefixOption>("storage.googleapis.com/")
+      .set<otel_internal::MonitoredResourceOption>(
+          std::move(monitored_resource));
+}
 
+Options MetricsExporterConnectionOptions(Options const& options) {
+  auto result = Options{};
   auto ep_canonical = std::string{"storage.googleapis.com"};
   auto ep_private = std::string{"private.googleapis.com"};
   auto ep_restricted = std::string{"restricted.googleapis.com"};
@@ -95,7 +95,6 @@ Options MetricsExporterOptions(
   if (matches(ep_canonical)) return result;
   if (matches(ep_private)) result.set<EndpointOption>(ep_private);
   if (matches(ep_restricted)) result.set<EndpointOption>(ep_restricted);
-
   return result;
 }
 

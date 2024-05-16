@@ -40,11 +40,7 @@ using ::google::protobuf::TextFormat;
 using ::testing::Contains;
 using ::testing::Pair;
 
-auto TestResource() {
-  return opentelemetry::sdk::resource::Resource::Create({});
-}
-
-TEST(MetricsExporterOptions, DefaultEndpoint) {
+TEST(MetricsExporterConnectionOptions, DefaultEndpoint) {
   // In all these cases the default monitoring endpoint is either the best
   // choice, or the least bad choice.
   struct TestCase {
@@ -83,74 +79,49 @@ TEST(MetricsExporterOptions, DefaultEndpoint) {
       expected_ud = t.universe_domain;
     }
     options = DefaultOptionsGrpc(std::move(options));
-    auto const actual =
-        MetricsExporterOptions(Project("test-only"), TestResource(), options);
+    auto const actual = MetricsExporterConnectionOptions(options);
     EXPECT_FALSE(actual.has<EndpointOption>());
     EXPECT_EQ(actual.get<internal::UniverseDomainOption>(), expected_ud);
-    EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
-    EXPECT_TRUE(actual.get<otel_internal::ServiceTimeSeriesOption>());
-    EXPECT_EQ(actual.get<otel_internal::MetricPrefixOption>(),
-              "storage.googleapis.com/");
   }
 }
 
-TEST(MetricsExporterOptions, PrivateDefaultUD) {
+TEST(MetricsExporterConnectionOptions, PrivateDefaultUD) {
   for (std::string prefix : {"", "google-c2p:///"}) {
     SCOPED_TRACE("Testing with prefix = " + prefix);
-    auto actual = MetricsExporterOptions(
-        Project("test-only"), TestResource(),
+    auto actual = MetricsExporterConnectionOptions(
         Options{}.set<EndpointOption>(prefix + "private.googleapis.com"));
     EXPECT_THAT(actual.get<EndpointOption>(), "private.googleapis.com");
-    EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
-    EXPECT_TRUE(actual.get<otel_internal::ServiceTimeSeriesOption>());
-    EXPECT_EQ(actual.get<otel_internal::MetricPrefixOption>(),
-              "storage.googleapis.com/");
   }
 }
 
-TEST(MetricsExporterOptions, PrivateUD) {
+TEST(MetricsExporterConnectionOptions, PrivateUD) {
   for (std::string prefix : {"", "google-c2p:///"}) {
     SCOPED_TRACE("Testing with prefix = " + prefix);
-    auto actual = MetricsExporterOptions(
-        Project("test-only"), TestResource(),
+    auto actual = MetricsExporterConnectionOptions(
         Options{}
             .set<EndpointOption>(prefix + "private.ud.net")
             .set<internal::UniverseDomainOption>("ud.net"));
     EXPECT_THAT(actual.get<EndpointOption>(), "private.ud.net");
-    EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
-    EXPECT_TRUE(actual.get<otel_internal::ServiceTimeSeriesOption>());
-    EXPECT_EQ(actual.get<otel_internal::MetricPrefixOption>(),
-              "storage.googleapis.com/");
   }
 }
 
-TEST(MetricsExporterOptions, RestrictedDefaultUD) {
+TEST(MetricsExporterConnectionOptions, RestrictedDefaultUD) {
   for (std::string prefix : {"", "google-c2p:///"}) {
     SCOPED_TRACE("Testing with prefix = " + prefix);
-    auto actual = MetricsExporterOptions(
-        Project("test-only"), TestResource(),
+    auto actual = MetricsExporterConnectionOptions(
         Options{}.set<EndpointOption>(prefix + "restricted.googleapis.com"));
     EXPECT_THAT(actual.get<EndpointOption>(), "restricted.googleapis.com");
-    EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
-    EXPECT_TRUE(actual.get<otel_internal::ServiceTimeSeriesOption>());
-    EXPECT_EQ(actual.get<otel_internal::MetricPrefixOption>(),
-              "storage.googleapis.com/");
   }
 }
 
-TEST(MetricsExporterOptions, RestrictedUD) {
+TEST(MetricsExporterConnectionOptions, RestrictedUD) {
   for (std::string prefix : {"", "google-c2p:///"}) {
     SCOPED_TRACE("Testing with prefix = " + prefix);
-    auto actual = MetricsExporterOptions(
-        Project("test-only"), TestResource(),
+    auto actual = MetricsExporterConnectionOptions(
         Options{}
             .set<EndpointOption>(prefix + "restricted.ud.net")
             .set<internal::UniverseDomainOption>("ud.net"));
     EXPECT_THAT(actual.get<EndpointOption>(), "restricted.ud.net");
-    EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
-    EXPECT_TRUE(actual.get<otel_internal::ServiceTimeSeriesOption>());
-    EXPECT_EQ(actual.get<otel_internal::MetricPrefixOption>(),
-              "storage.googleapis.com/");
   }
 }
 
@@ -160,15 +131,13 @@ MATCHER(MatchesInstanceId, "looks like an instance id") {
 }
 
 TEST(MetricsExporterOptions, MonitoredResource) {
-  auto actual =
-      MetricsExporterOptions(Project("test-project"),
-                             opentelemetry::sdk::resource::Resource::Create({
-                                 {"cloud.availability_zone", "us-central1-c"},
-                                 {"cloud.region", "us-central1"},
-                                 {"cloud.platform", "gcp"},
-                                 {"host.id", "test-host-id"},
-                             }),
-                             Options{});
+  auto actual = MetricsExporterOptions(
+      Project("test-project"), opentelemetry::sdk::resource::Resource::Create({
+                                   {"cloud.availability_zone", "us-central1-c"},
+                                   {"cloud.region", "us-central1"},
+                                   {"cloud.platform", "gcp"},
+                                   {"host.id", "test-host-id"},
+                               }));
 
   EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
   auto mr = actual.get<otel_internal::MonitoredResourceOption>();
@@ -183,6 +152,31 @@ TEST(MetricsExporterOptions, MonitoredResource) {
     labels { key: "location" value: "us-central1-c" }
     labels { key: "cloud_platform" value: "gcp" }
     labels { key: "host_id" value: "test-host-id" }
+    labels { key: "api" value: "GRPC" }
+  )pb";
+  auto expected = google::api::MonitoredResource{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpected, &expected));
+  EXPECT_THAT(mr, IsProtoEqual(expected));
+}
+
+TEST(MetricsExporterOptions, DefaultMonitoredResource) {
+  auto actual = MetricsExporterOptions(
+      Project("test-project"),
+      opentelemetry::sdk::resource::Resource::Create({}));
+
+  EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
+  auto mr = actual.get<otel_internal::MonitoredResourceOption>();
+  auto labels = mr.labels();
+  // The `instance_id` label has unpredictable values,
+  EXPECT_THAT(labels, Contains(Pair("instance_id", MatchesInstanceId())));
+  mr.mutable_labels()->erase("instance_id");
+
+  auto constexpr kExpected = R"pb(
+    type: "storage_client"
+    labels { key: "project_id" value: "test-project" }
+    labels { key: "location" value: "global" }
+    labels { key: "cloud_platform" value: "unknown" }
+    labels { key: "host_id" value: "unknown" }
     labels { key: "api" value: "GRPC" }
   )pb";
   auto expected = google::api::MonitoredResource{};
