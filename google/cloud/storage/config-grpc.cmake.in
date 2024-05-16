@@ -16,7 +16,7 @@ include(CMakeFindDependencyMacro)
 find_dependency(google_cloud_cpp_storage)
 find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_grpc_utils)
-find_dependency(google_cloud_cpp_opentelemetry)
+@GOOGLE_CLOUD_CPP_STORAGE_GRPC_FIND_DEPENDENCIES@
 find_dependency(absl)
 find_dependency(Crc32c)
 
