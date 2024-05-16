@@ -286,6 +286,9 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     if (service.omit_stub_factory()) {
       args.emplace_back("--cpp_codegen_opt=omit_stub_factory=true");
     }
+    if (service.omit_streaming_updater()) {
+      args.emplace_back("--cpp_codegen_opt=omit_streaming_updater=true");
+    }
     if (service.generate_round_robin_decorator()) {
       args.emplace_back(
           "--cpp_codegen_opt=generate_round_robin_decorator=true");

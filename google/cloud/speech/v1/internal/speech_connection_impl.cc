@@ -115,6 +115,15 @@ SpeechConnectionImpl::LongRunningRecognize(
       polling_policy(*current), __func__);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::speech::v1::StreamingRecognizeRequest,
+    google::cloud::speech::v1::StreamingRecognizeResponse>>
+SpeechConnectionImpl::AsyncStreamingRecognize() {
+  return stub_->AsyncStreamingRecognize(background_->cq(),
+                                        std::make_shared<grpc::ClientContext>(),
+                                        internal::SaveCurrentOptions());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v1_internal
 }  // namespace cloud

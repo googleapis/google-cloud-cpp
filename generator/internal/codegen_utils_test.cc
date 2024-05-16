@@ -25,6 +25,7 @@ namespace generator_internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
@@ -296,6 +297,14 @@ TEST(ProcessCommandLineArgs, ProcessOmitStubFactory) {
       ",omit_stub_factory=true");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("omit_stub_factory", "true")));
+}
+
+TEST(ProcessCommandLineArgs, ProcessOmitStreamingUpdater) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/bigquery/storage/v1/"
+      ",omit_streaming_updater=true");
+  ASSERT_THAT(result,
+              IsOkAndHolds(Contains(Pair("omit_streaming_updater", "true"))));
 }
 
 TEST(ProcessCommandLineArgs, ProcessGenerateRoundRobinGenerator) {

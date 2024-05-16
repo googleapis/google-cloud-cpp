@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/storage/v1/bigquery_read_connection.h"
-#include "google/cloud/bigquery/storage/v1/internal/bigquery_write_connection_impl.h"
+#include "google/cloud/bigquery/storage/v1/internal/bigquery_read_connection_impl.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -25,15 +24,6 @@ void BigQueryReadReadRowsStreamingUpdater(
     ::google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
     ::google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
   request.set_offset(request.offset() + response.row_count());
-}
-
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::cloud::bigquery::storage::v1::AppendRowsRequest,
-    google::cloud::bigquery::storage::v1::AppendRowsResponse>>
-BigQueryWriteConnectionImpl::AsyncAppendRows() {
-  return stub_->AsyncAppendRows(background_->cq(),
-                                std::make_shared<grpc::ClientContext>(),
-                                google::cloud::internal::SaveCurrentOptions());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

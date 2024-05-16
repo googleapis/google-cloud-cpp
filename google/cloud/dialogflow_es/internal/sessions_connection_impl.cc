@@ -72,6 +72,15 @@ SessionsConnectionImpl::DetectIntent(
       *current, request, __func__);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
+    google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
+SessionsConnectionImpl::AsyncStreamingDetectIntent() {
+  return stub_->AsyncStreamingDetectIntent(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

@@ -153,6 +153,15 @@ ParticipantsConnectionImpl::AnalyzeContent(
       *current, request, __func__);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+ParticipantsConnectionImpl::AsyncStreamingAnalyzeContent() {
+  return stub_->AsyncStreamingAnalyzeContent(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsConnectionImpl::SuggestArticles(
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
