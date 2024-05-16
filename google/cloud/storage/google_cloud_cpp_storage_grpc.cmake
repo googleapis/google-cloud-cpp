@@ -231,18 +231,19 @@ else ()
             google_cloud_cpp_storage_grpc
             PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
     endif ()
-    if (TARGET opentelemetry-cpp::metrics AND TARGET google-cloud-cpp::opentelemetry)
+    if (TARGET opentelemetry-cpp::metrics AND TARGET
+                                              google-cloud-cpp::opentelemetry)
         target_link_libraries(
-            google_cloud_cpp_storage_grpc
-            PUBLIC 
-            google-cloud-cpp::opentelemetry
-            opentelemetry-cpp::metrics)
+            google_cloud_cpp_storage_grpc PUBLIC google-cloud-cpp::opentelemetry
+                                                 opentelemetry-cpp::metrics)
         # Optional dependencies introduced in to the CMake configuration file.
-        set(GOOOGLE_CLOUD_CPP_STORAGE_GRPC_FIND_DEPEDENCIES [===[
+        set(GOOGLE_CLOUD_CPP_STORAGE_GRPC_FIND_DEPENDENCIES
+            [===[
 find_dependency(google_cloud_cpp_opentelemetry)
 find_dependency(opentelemetry-cpp)
 ]===])
-        set(GOOGLE_CLOUD_CPP_STORAGE_GRPC_EXTRA_MODULES "google_cloud_cpp_opentelemetry")
+        set(GOOGLE_CLOUD_CPP_STORAGE_GRPC_EXTRA_MODULES
+            "google_cloud_cpp_opentelemetry")
     endif ()
     if (TARGET gRPC::grpcpp_otel_plugin)
         target_link_libraries(google_cloud_cpp_storage_grpc
