@@ -2995,7 +2995,7 @@ class Client {
                                           Options&&... options) {
     google::cloud::internal::OptionsSpan const span(
         SpanOptions(std::forward<Options>(options)...));
-    auto const host = Endpoint();
+    auto const host = Host();
     internal::V4SignUrlRequest request(std::move(verb), std::move(bucket_name),
                                        std::move(object_name), std::move(host));
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -3494,6 +3494,8 @@ class Client {
       internal::PolicyDocumentV4Request request);
 
   std::string Endpoint() const;
+
+  std::string Host() const;
 
   std::shared_ptr<internal::StorageConnection> connection_;
 };
