@@ -233,6 +233,13 @@ else ()
             google_cloud_cpp_storage_grpc
             PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
     endif ()
+    if (TARGET gRPC::grpcpp_otel_plugin)
+        target_link_libraries(google_cloud_cpp_storage_grpc
+                              PUBLIC gRPC::grpcpp_otel_plugin)
+        target_compile_definitions(
+            google_cloud_cpp_storage_grpc
+            PRIVATE GOOGLE_CLOUD_CPP_GRPC_HAS_OTEL_PLUGIN)
+    endif ()
     set_target_properties(
         google_cloud_cpp_storage_grpc
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage_grpc"
