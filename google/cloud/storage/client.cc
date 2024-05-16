@@ -460,6 +460,7 @@ StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
   if (!signed_blob) {
     return signed_blob.status();
   }
+  request.SetHost(Host());
   std::string signature =
       google::cloud::internal::HexEncode(signed_blob->signed_blob);
   auto required_fields = request.RequiredFormFields();
@@ -483,6 +484,12 @@ std::string CreateRandomPrefixName(std::string const& prefix) {
 
 std::string Client::Endpoint() const {
   return connection_->options().get<RestEndpointOption>();
+}
+
+std::string Client::Host() const {
+  auto const host = Endpoint();
+  auto const prefix = std::string{"https://"};
+  return host.substr(prefix.length());
 }
 
 namespace internal {
