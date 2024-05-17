@@ -913,6 +913,10 @@
 ./include/google/cloud/profiler/v2
 ./include/google/cloud/profiler/v2/internal
 ./include/google/cloud/profiler/v2/mocks
+./include/google/cloud/publicca
+./include/google/cloud/publicca/v1
+./include/google/cloud/publicca/v1/internal
+./include/google/cloud/publicca/v1/mocks
 ./include/google/cloud/pubsub
 ./include/google/cloud/pubsub/admin
 ./include/google/cloud/pubsub/admin/internal
@@ -982,6 +986,8 @@
 ./include/google/cloud/security
 ./include/google/cloud/security/privateca
 ./include/google/cloud/security/privateca/v1
+./include/google/cloud/security/publicca
+./include/google/cloud/security/publicca/v1
 ./include/google/cloud/securitycenter
 ./include/google/cloud/securitycenter/mocks
 ./include/google/cloud/securitycenter/v1
@@ -1393,6 +1399,8 @@
 ./lib64/cmake/google_cloud_cpp_privateca_mocks
 ./lib64/cmake/google_cloud_cpp_profiler
 ./lib64/cmake/google_cloud_cpp_profiler_mocks
+./lib64/cmake/google_cloud_cpp_publicca
+./lib64/cmake/google_cloud_cpp_publicca_mocks
 ./lib64/cmake/google_cloud_cpp_pubsub
 ./lib64/cmake/google_cloud_cpp_pubsub_mocks
 ./lib64/cmake/google_cloud_cpp_pubsublite

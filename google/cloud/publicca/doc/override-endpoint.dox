@@ -1,0 +1,25 @@
+/*!
+@page publicca-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `publicca_v1::PublicCertificateAuthorityServiceClient`:
+
+@snippet public_certificate_authority_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page publicca_v1::PublicCertificateAuthorityServiceClient-endpoint-snippet Override publicca_v1::PublicCertificateAuthorityServiceClient Endpoint Configuration
+
+@snippet google/cloud/publicca/v1/samples/public_certificate_authority_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
