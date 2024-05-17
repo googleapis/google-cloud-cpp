@@ -49,12 +49,12 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the \[Public Certificate Authority
-  API\]\[cloud-service-docs\] service
-- \[Reference doxygen documentation\]\[doxygen-link\] for each release of this
+- Official documentation about the
+  [Public Certificate Authority API][cloud-service-docs] service
+- [Reference doxygen documentation][doxygen-link] for each release of this
   client library
-- Detailed header comments in our \[public `.h`\]\[source-link\] files
-  \[cloud-service-docs\]:
-  https://cloud.google.com/certificate-manager/docs/public-ca \[doxygen-link\]:
-  https://cloud.google.com/cpp/docs/reference/publicca/latest/ \[source-link\]:
-  https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/publicca
+- Detailed header comments in our [public `.h`][source-link] files
+
+[cloud-service-docs]: https://cloud.google.com/certificate-manager/docs/public-ca
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/publicca/latest/
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/publicca
