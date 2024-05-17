@@ -55,6 +55,7 @@ TEST(GrpcMetricsExporter, DisabledBecauseOption) {
 
 TEST(GrpcMetricsExporter, DisabledBecauseNoProject) {
   auto config = MakeMeterProviderConfig(EmptyResource(), TestOptions());
+  EXPECT_FALSE(config.has_value());
 }
 
 TEST(GrpcMetricsExporter, EnabledResourceProject) {
@@ -95,7 +96,7 @@ TEST(GrpcMetricsExporter, EnabledWithTimeout) {
   auto config = MakeMeterProviderConfig(
       FullResource(),
       TestOptions().set<storage_experimental::GrpcMetricsPeriodOption>(
-          std::chrono::seconds(60)));
+          std::chrono::seconds(45)));
   ASSERT_TRUE(config.has_value());
   EXPECT_EQ(config->project, Project("project-id-resource"));
   EXPECT_TRUE(
@@ -104,8 +105,8 @@ TEST(GrpcMetricsExporter, EnabledWithTimeout) {
       config->exporter_options.has<otel_internal::MetricPrefixOption>());
   EXPECT_TRUE(
       config->exporter_options.get<otel_internal::ServiceTimeSeriesOption>());
-  EXPECT_GT(config->reader_options.export_interval_millis,
-            std::chrono::milliseconds(60));
+  EXPECT_EQ(config->reader_options.export_interval_millis,
+            std::chrono::seconds(45));
   EXPECT_GT(config->reader_options.export_timeout_millis,
             std::chrono::milliseconds(0));
 }
