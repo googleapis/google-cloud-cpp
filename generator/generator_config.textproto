@@ -578,6 +578,13 @@ service {
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
+service {
+  service_proto_path: "google/cloud/security/publicca/v1/service.proto"
+  product_path: "google/cloud/publicca/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Certificate Manager
 service {
   service_proto_path: "google/cloud/certificatemanager/v1/certificate_manager.proto"

@@ -220,6 +220,7 @@ declare -A -r LIBRARIES=(
   )"
   ["privateca"]="@com_google_googleapis//google/cloud/security/privateca/v1:privateca_cc_grpc"
   ["profiler"]="@com_google_googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc"
+  ["publicca"]="@com_google_googleapis//google/cloud/security/publicca/v1:publicca_cc_grpc"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc"
   ["pubsublite"]="@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_cc_grpc"
   ["rapidmigrationassessment"]="@com_google_googleapis//google/cloud/rapidmigrationassessment/v1:rapidmigrationassessment_cc_grpc"
