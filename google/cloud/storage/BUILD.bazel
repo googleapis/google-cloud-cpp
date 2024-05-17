@@ -46,7 +46,7 @@ cc_library(
     srcs = google_cloud_cpp_storage_grpc_srcs,
     hdrs = google_cloud_cpp_storage_grpc_hdrs,
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
-    local_defines = select({
+    local_defines = ["GOOGLE_CLOUD_CPP_GRPC_HAS_OTEL_PLUGIN"] + select({
         "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }) + select({
