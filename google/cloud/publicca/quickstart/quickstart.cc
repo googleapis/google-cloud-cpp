@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/publicca/v1/ EDIT HERE _client.h"
+#include "google/cloud/publicca/v1/public_certificate_authority_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -22,18 +22,15 @@ int main(int argc, char* argv[]) try {
     std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
-
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace publicca = ::google::cloud::publicca_v1;
-  auto client =
-      publicca::ServiceClient(publicca::MakeServiceConnection());  // EDIT HERE
+  auto client = publicca::PublicCertificateAuthorityServiceClient(
+      publicca::MakePublicCertificateAuthorityServiceConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
-  }
-
+  auto key = client.CreateExternalAccountKey(location.FullName(), {});
+  if (!key) throw std::move(key).status();
+  std::cout << "Success!\n";
   return 0;
 } catch (google::cloud::Status const& status) {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
