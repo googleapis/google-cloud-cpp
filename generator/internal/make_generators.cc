@@ -179,6 +179,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       sources.push_back(service_vars["metadata_cc_path"]);
       sources.push_back(service_vars["stub_cc_path"]);
       sources.push_back(service_vars["tracing_stub_cc_path"]);
+      if (get_flag("omit_streaming_updater")) {
+        sources.push_back(service_vars["streaming_cc_path"]);
+      }
     }
 
     if (generate_rest_transport) {

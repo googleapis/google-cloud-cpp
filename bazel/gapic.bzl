@@ -34,7 +34,7 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = []):
         "*.cc",
     ]]
 
-    sources_glob = [d + "internal/*_sources.cc" for d in service_dirs] + [d + "internal/streaming.cc" for d in service_dirs]
+    sources_glob = [d + "internal/*_sources.cc" for d in service_dirs]
 
     native.filegroup(
         name = "srcs",
