@@ -41,6 +41,7 @@ application.
   policies.
 - @ref publicca-env - describes environment variables that can configure the
   behavior of the library.
+
 [cloud-service-docs]: https://cloud.google.com/certificate-manager/docs/public-ca
 
 */

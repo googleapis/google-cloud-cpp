@@ -370,6 +370,7 @@ this library.
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
+
 )""";
 
   auto constexpr kText2 =
@@ -505,6 +506,7 @@ which should give you a taste of the $title$ C++ client library API.
   policies.
 - @ref $library$-env - describes environment variables that can configure the
   behavior of the library.
+
 )""";
 
   auto constexpr kText2 = R"""(
