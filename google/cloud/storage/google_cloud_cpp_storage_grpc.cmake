@@ -155,10 +155,10 @@ add_library(
     internal/grpc/hmac_key_request_parser.h
     internal/grpc/make_cord.cc
     internal/grpc/make_cord.h
-    internal/grpc/metrics_exporter_options.cc
-    internal/grpc/metrics_exporter_options.h
     internal/grpc/metrics_exporter_impl.cc
     internal/grpc/metrics_exporter_impl.h
+    internal/grpc/metrics_exporter_options.cc
+    internal/grpc/metrics_exporter_options.h
     internal/grpc/metrics_histograms.cc
     internal/grpc/metrics_histograms.h
     internal/grpc/metrics_meter_provider.cc
