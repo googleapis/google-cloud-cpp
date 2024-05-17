@@ -22,6 +22,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/testing_util/chrono_output.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -30,6 +31,8 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::google::cloud::testing_util::ScopedEnvironment;
 
 auto EmptyResource() {
   return opentelemetry::sdk::resource::Resource::Create({});
@@ -41,6 +44,9 @@ auto FullResource() {
 }
 
 auto TestOptions(Options opts = {}) {
+  // In CI builds this environment variable may be set and affect the behavior
+  // in ways we do not need to (re)test here.
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
   opts.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
       "unused", std::chrono::system_clock::now() + std::chrono::minutes(15)));
   return DefaultOptionsGrpc(std::move(opts));
