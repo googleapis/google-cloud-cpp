@@ -1,0 +1,46 @@
+/*!
+
+@mainpage Public Certificate Authority API C++ Client Library
+
+An idiomatic C++ client library for the [Public Certificate Authority API][cloud-service-docs].
+
+The Public Certificate Authority API may be used to create and manage ACME external account binding keys associated with Google Trust Services' publicly trusted certificate authority.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/publicca/quickstart/` directory,
+which should give you a taste of the Public Certificate Authority API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`publicca_v1::PublicCertificateAuthorityServiceClient`](@ref google::cloud::publicca_v1::PublicCertificateAuthorityServiceClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`publicca_v1::PublicCertificateAuthorityServiceClient`](@ref google::cloud::publicca_v1::PublicCertificateAuthorityServiceClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref publicca-override-endpoint - describes how to override the default
+  endpoint.
+- @ref publicca-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref publicca-override-retry - describes how to change the default retry
+  policies.
+- @ref publicca-env - describes environment variables that can configure the
+  behavior of the library.
+[cloud-service-docs]: https://cloud.google.com/certificate-manager/docs/public-ca
+
+*/

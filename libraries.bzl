@@ -187,6 +187,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "policytroubleshooter",
     "privateca",
     "profiler",
+    "publicca",
     "pubsub",
     "rapidmigrationassessment",
     "recaptchaenterprise",
