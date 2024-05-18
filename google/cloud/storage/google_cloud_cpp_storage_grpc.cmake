@@ -238,6 +238,9 @@ endif ()
 if (TARGET gRPC::grpcpp_otel_plugin)
     target_link_libraries(google_cloud_cpp_storage_grpc
                           PUBLIC gRPC::grpcpp_otel_plugin)
+    # TODO(#14260) - remove this workaround. gRPC does not publish a pkgconfig
+    # module for grpcpp_otel_plugin.
+    set(EXTRA_LIBS "grpcpp_otel_plugin")
     target_compile_definitions(google_cloud_cpp_storage_grpc
                                PRIVATE GOOGLE_CLOUD_CPP_GRPC_HAS_OTEL_PLUGIN)
 endif ()
@@ -264,7 +267,8 @@ google_cloud_cpp_add_pkgconfig(
     "grpc++"
     "absl_optional"
     "absl_strings"
-    "absl_time")
+    "absl_time"
+    LIBS ${EXTRA_LIBS})
 
 install(
     EXPORT storage_grpc-targets
