@@ -268,7 +268,8 @@ google_cloud_cpp_add_pkgconfig(
     "absl_optional"
     "absl_strings"
     "absl_time"
-    LIBS ${EXTRA_LIBS})
+    LIBS
+    ${EXTRA_LIBS})
 
 install(
     EXPORT storage_grpc-targets
