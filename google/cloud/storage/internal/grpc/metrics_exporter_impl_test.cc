@@ -47,8 +47,10 @@ auto TestOptions(Options opts = {}) {
   // In CI builds this environment variable may be set and affect the behavior
   // in ways we do not need to (re)test here.
   auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
-  opts.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
-      "unused", std::chrono::system_clock::now() + std::chrono::minutes(15)));
+  opts.set<storage_experimental::EnableGrpcMetricsOption>(true)
+      .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "unused",
+          std::chrono::system_clock::now() + std::chrono::minutes(15)));
   return DefaultOptionsGrpc(std::move(opts));
 }
 
