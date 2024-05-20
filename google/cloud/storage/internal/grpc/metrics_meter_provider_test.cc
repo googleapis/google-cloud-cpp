@@ -35,6 +35,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
@@ -154,18 +155,19 @@ auto MetricDataNotEmpty() {
       Not(IsEmpty()));
 }
 
-auto constexpr kExportInterval = std::chrono::milliseconds(5);
+auto constexpr kExportInterval = std::chrono::milliseconds(50);
+auto constexpr kExportTimeout = std::chrono::milliseconds(25);
 
 auto TestReaderOptions() {
   opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions
       reader_options;
   reader_options.export_interval_millis = kExportInterval;
-  reader_options.export_timeout_millis =
-      kExportInterval - std::chrono::milliseconds(1);
+  reader_options.export_timeout_millis = kExportTimeout;
   return reader_options;
 }
 
 TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptDuration) {
+  std::atomic<int> export_count{0};
   auto mock = std::make_unique<MockPushMetricExporter>();
   EXPECT_CALL(*mock, Shutdown).WillOnce(Return(true));
   EXPECT_CALL(*mock, GetAggregationTemporality)
@@ -177,14 +179,16 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptDuration) {
           Return(opentelemetry::sdk::common::ExportResult::kSuccess));
   // We use a different condition on the call to validate the real data.
   EXPECT_CALL(*mock, Export(MetricDataNotEmpty()))
-      .Times(::testing::AtLeast(1))
+      .Times(AtLeast(1))
       .WillRepeatedly(
-          [](opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+          [&export_count](
+              opentelemetry::sdk::metrics::ResourceMetrics const& data) {
             EXPECT_THAT(
                 data.scope_metric_data_,
                 Contains(WithMetricsData(Contains(AllOf(
                     MatchesInstrumentName(kDurationMetric),
                     WithPointData(ElementsAre(ExpectedLatencyHistogram())))))));
+            ++export_count;
             return opentelemetry::sdk::common::ExportResult::kSuccess;
           });
 
@@ -197,9 +201,8 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptDuration) {
                                                   "test-only-description", "s");
     // It may take several attempts before the periodic reader exports any data.
     // We do 50 iterations to minimize flakes: each iteration should be enough
-    // to succeed, so we are giving this 50 chances to succeed. And the total
-    // running time (about 250ms) is not too terrible.
-    for (int i = 0; i != 50; ++i) {
+    // to succeed, so we are giving this 50 chances to succeed.
+    for (int i = 0; i != 50 && export_count.load() == 0; ++i) {
       histogram->Record(1.0, opentelemetry::context::Context{});
       std::this_thread::sleep_for(kExportInterval);
     }
@@ -207,7 +210,9 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptDuration) {
 }
 
 TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptSize) {
+  std::atomic<int> export_count{0};
   for (std::string const size_metric : {kRcvdSizeMetric, kSentSizeMetric}) {
+    export_count.store(0);
     SCOPED_TRACE("Testing with " + size_metric);
     auto mock = std::make_unique<MockPushMetricExporter>();
     EXPECT_CALL(*mock, Shutdown).WillOnce(Return(true));
@@ -220,15 +225,16 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptSize) {
             Return(opentelemetry::sdk::common::ExportResult::kSuccess));
     // We use a different condition on the call to validate the real data.
     EXPECT_CALL(*mock, Export(MetricDataNotEmpty()))
-        .Times(::testing::AtLeast(1))
+        .Times(AtLeast(1))
         .WillRepeatedly(
-            [size_metric](
+            [size_metric, &export_count](
                 opentelemetry::sdk::metrics::ResourceMetrics const& data) {
               EXPECT_THAT(
                   data.scope_metric_data_,
                   Contains(WithMetricsData(Contains(AllOf(
                       MatchesInstrumentName(size_metric),
                       WithPointData(ElementsAre(ExpectedSizeHistogram())))))));
+              ++export_count;
               return opentelemetry::sdk::common::ExportResult::kSuccess;
             });
 
@@ -238,9 +244,8 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptSize) {
         size_metric, "test-only-description", "By");
     // It may take several attempts before the periodic reader exports any data.
     // We do 50 iterations to minimize flakes: each iteration should be enough
-    // to succeed, so we are giving this 50 chances to succeed. And the total
-    // running time (about 250ms) is not too terrible.
-    for (int i = 0; i != 50; ++i) {
+    // to succeed, so we are giving this 50 chances to succeed.
+    for (int i = 0; i != 50 && export_count.load() == 0; ++i) {
       histogram->Record(1024.0, opentelemetry::context::Context{});
       std::this_thread::sleep_for(kExportInterval);
     }
