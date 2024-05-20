@@ -269,7 +269,8 @@ google_cloud_cpp_add_pkgconfig(
     "absl_strings"
     "absl_time"
     LIBS
-    ${EXTRA_LIBS})
+    ${EXTRA_LIBS}
+    "opentelemetry_metrics")
 
 install(
     EXPORT storage_grpc-targets
