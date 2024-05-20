@@ -113,7 +113,7 @@ class V2SignUrlRequest {
   V2SignUrlRequest() = default;
   explicit V2SignUrlRequest(
       std::string verb, std::string bucket_name, std::string object_name,
-      std::string host = "https:://storage.googleapis.com")
+      std::string host = "storage.googleapis.com")
       : common_request_(std::move(verb), std::move(bucket_name),
                         std::move(object_name), std::move(host)),
         expiration_time_(DefaultExpirationTime()) {}
@@ -227,7 +227,7 @@ class V4SignUrlRequest {
   V4SignUrlRequest() : expires_(0) {}
   explicit V4SignUrlRequest(std::string verb, std::string bucket_name,
                             std::string object_name,
-                            std::string host = "https://storage.googleapis.com")
+                            std::string host = "storage.googleapis.com")
       : common_request_(std::move(verb), std::move(bucket_name),
                         std::move(object_name), std::move(host)),
         scheme_("https"),
