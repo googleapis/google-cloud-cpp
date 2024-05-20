@@ -210,9 +210,8 @@ TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptDuration) {
 }
 
 TEST(GrpcMetricsExporter, ValidateGrpcClientAttemptSize) {
-  std::atomic<int> export_count{0};
   for (std::string const size_metric : {kRcvdSizeMetric, kSentSizeMetric}) {
-    export_count.store(0);
+    std::atomic<int> export_count{0};
     SCOPED_TRACE("Testing with " + size_metric);
     auto mock = std::make_unique<MockPushMetricExporter>();
     EXPECT_CALL(*mock, Shutdown).WillOnce(Return(true));
