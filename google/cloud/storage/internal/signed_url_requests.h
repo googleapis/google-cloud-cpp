@@ -111,9 +111,9 @@ class SignUrlRequestCommon {
 class V2SignUrlRequest {
  public:
   V2SignUrlRequest() = default;
-  explicit V2SignUrlRequest(
-      std::string verb, std::string bucket_name, std::string object_name,
-      std::string host = "storage.googleapis.com")
+  explicit V2SignUrlRequest(std::string verb, std::string bucket_name,
+                            std::string object_name,
+                            std::string host = "storage.googleapis.com")
       : common_request_(std::move(verb), std::move(bucket_name),
                         std::move(object_name), std::move(host)),
         expiration_time_(DefaultExpirationTime()) {}
