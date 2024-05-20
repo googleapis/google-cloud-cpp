@@ -35,6 +35,9 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+auto constexpr kMetadataServerUniverseDomainPath =
+    "computeMetadata/v1/universe/universe-domain";
+
 StatusOr<std::unique_ptr<rest_internal::RestResponse>>
 DoMetadataServerGetRequest(rest_internal::RestClient& client,
                            std::string const& path, bool recursive) {
@@ -248,7 +251,7 @@ StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(
   rest_internal::RestRequest request;
   request.SetPath(absl::StrCat(internal::GceMetadataScheme(), "://",
                                internal::GceMetadataHostname(), "/",
-                               "computeMetadata/v1/universe/universe_domain"));
+                               kMetadataServerUniverseDomainPath));
   request.AddHeader("metadata-flavor", "Google");
   request.AddQueryParameter("recursive", "true");
 
