@@ -111,17 +111,23 @@ Options DefaultOptionsGrpc(Options options) {
       std::move(options), Options{}.set<GrpcNumChannelsOption>(num_channels));
 }
 
+bool GrpcEnableMetricsIsSafe(int major, int minor, int patch) {
+  // Never happens. No 0.x version is supported or implements the version
+  // macros, but it makes the rest more readable.
+  if (major < 1) return false;
+  if (major > 1) return true;
+  if (minor <= 62) return false;
+  if (minor == 63) return patch >= 1;
+  if (minor == 64) return patch >= 1;
+  return true;
+}
+
 bool GrpcEnableMetricsIsSafe() {
 #ifndef GRPC_CPP_VERSION_MAJOR
   return false;
 #else
-  return (
-      GRPC_CPP_VERSION_MAJOR >= 1 &&
-      (                                                                     //
-          (GRPC_CPP_VERSION_MINOR == 63 && GRPC_CPP_VERSION_PATCH >= 1) ||  //
-          (GRPC_CPP_VERSION_MINOR == 64 && GRPC_CPP_VERSION_PATCH >= 1) ||  //
-          (GRPC_CPP_VERSION_MINOR >= 65)                                    //
-          ));
+  return GrpcEnableMetricsIsSafe(GRPC_CPP_VERSION_MAJOR, GRPC_CPP_VERSION_MINOR,
+                                 GRPC_CPP_VERSION_PATCH);
 #endif  // GRPC_CPP_VERSION_MAJOR
 }
 

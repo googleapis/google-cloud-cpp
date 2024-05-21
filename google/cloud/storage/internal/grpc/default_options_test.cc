@@ -121,6 +121,23 @@ TEST(DefaultOptionsGrpc, DefaultOptionsUploadBuffer) {
   EXPECT_EQ(with_override, 256 * 1024L);
 }
 
+TEST(DefaultOptionsGrpc, GrpcEnableMetricsIsSafe) {
+  EXPECT_FALSE(GrpcEnableMetricsIsSafe(0, 1, 1));
+  EXPECT_FALSE(GrpcEnableMetricsIsSafe(0, 65, 1));
+  EXPECT_FALSE(GrpcEnableMetricsIsSafe(1, 62, 0));
+  EXPECT_FALSE(GrpcEnableMetricsIsSafe(1, 62, 1));
+  EXPECT_FALSE(GrpcEnableMetricsIsSafe(1, 62, 1));
+  EXPECT_FALSE(GrpcEnableMetricsIsSafe(1, 63, 0));
+  EXPECT_FALSE(GrpcEnableMetricsIsSafe(1, 64, 0));
+  EXPECT_TRUE(GrpcEnableMetricsIsSafe(1, 63, 1));
+  EXPECT_TRUE(GrpcEnableMetricsIsSafe(1, 63, 2));
+  EXPECT_TRUE(GrpcEnableMetricsIsSafe(1, 64, 1));
+  EXPECT_TRUE(GrpcEnableMetricsIsSafe(1, 64, 2));
+  EXPECT_TRUE(GrpcEnableMetricsIsSafe(1, 65, 0));
+  EXPECT_TRUE(GrpcEnableMetricsIsSafe(2, 0, 0));
+  EXPECT_TRUE(GrpcEnableMetricsIsSafe(2, 1, 0));
+}
+
 TEST(DefaultOptionsGrpc, MetricsEnabled) {
   ScopedEnvironment env("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",
                         absl::nullopt);

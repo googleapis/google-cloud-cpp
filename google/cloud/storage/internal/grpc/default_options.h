@@ -30,6 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 Options DefaultOptionsGrpc(Options = {});
 
+bool GrpcEnableMetricsIsSafe(int major, int minor, int patch);
 bool GrpcEnableMetricsIsSafe();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
