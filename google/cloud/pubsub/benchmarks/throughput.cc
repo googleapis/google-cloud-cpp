@@ -515,8 +515,7 @@ void PrintSubscriber(std::ostream& os, Config const& config) {
 }
 
 void Print(std::ostream& os, Config const& config) {
-  os << "# Running Cloud Pub/Sub experiment"
-     << "\n# Start time: "
+  os << "# Running Cloud Pub/Sub experiment" << "\n# Start time: "
      << google::cloud::internal::FormatRfc3339(std::chrono::system_clock::now())
      << "\n# Endpoint: " << config.endpoint
      << "\n# Topic ID: " << config.topic_id

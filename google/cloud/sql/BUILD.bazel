@@ -20,7 +20,15 @@ licenses(["notice"])  # Apache 2.0
 
 service_dirs = ["v1/"]
 
-src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
+code_glob = [d + i + f for d in service_dirs for i in [
+    "",
+    "internal/",
+] for f in [
+    "*.h",
+    "*.cc",
+]]
+
+sources_glob = [d + "internal/*_sources.cc" for d in service_dirs]
 
 googleapis_deps = [
     "@com_google_googleapis//google/cloud/sql/v1:sql_cc_proto",

@@ -37,8 +37,7 @@ std::ostream& operator<<(std::ostream& os, Config const& config) {
             << "\n# Minimum Channels: " << config.minimum_channels
             << "\n# Maximum Channels: " << config.maximum_channels
             << "\n# Iteration Duration: " << config.iteration_duration.count()
-            << "s"
-            << "\n# Table Size: " << config.table_size
+            << "s" << "\n# Table Size: " << config.table_size
             << "\n# Query Size: " << config.query_size
             << "\n# Use Only Stubs: " << config.use_only_stubs
             << "\n# Use Only Clients: " << config.use_only_clients
