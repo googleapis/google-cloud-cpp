@@ -31,3 +31,7 @@ RUN_CLANG_TIDY_FIX=YES
 
 # Set to the list of integration tests to run.
 RUN_INTEGRATION_TESTS=YES
+
+# Comma-separate list of integration tests to run against production. It is
+# always a subset of `BAZEL_TARGETS` and/or `ENABLED_FEATURES`.
+RUN_INTEGRATION_TESTS_PRODUCTION="none"
