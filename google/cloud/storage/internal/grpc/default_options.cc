@@ -76,7 +76,6 @@ Options DefaultOptionsGrpc(
         google::cloud::MakeGoogleDefaultCredentials(
             google::cloud::internal::MakeAuthOptions(options)));
   }
-
   auto const testbench =
       GetEnv("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT");
   if (testbench.has_value() && !testbench->empty()) {
