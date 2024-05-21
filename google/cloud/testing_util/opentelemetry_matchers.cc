@@ -110,8 +110,7 @@ std::ostream& operator<<(std::ostream& os, SpanData const& rhs) {
   for (auto const& link : rhs.GetLinks()) {
     os << sep << "Link {span_context="
        << google::cloud::testing_util::ToString(link.GetSpanContext()) << ","
-       << line_sep << "\t"
-       << "attributes=["
+       << line_sep << "\t" << "attributes=["
        << absl::StrJoin(link.GetAttributes(), ", ", AttributeFormatter) << "]}";
     sep = ", \n\t\t\t";
   }

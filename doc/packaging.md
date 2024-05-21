@@ -542,6 +542,119 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
+<summary>Ubuntu (24.04 LTS - Noble Numbat)</summary>
+<br>
+
+Install the minimal development tools, libcurl, OpenSSL and libc-ares:
+
+```bash
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get update && \
+sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        cmake ca-certificates curl git gcc g++ m4 make tar
+```
+
+Ubuntu:24 includes packages for most of the direct dependencies of
+`google-cloud-cpp`:
+
+```bash
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get update && \
+sudo apt-get --no-install-recommends install -y  \
+        libabsl-dev \
+        libcurl4-openssl-dev \
+        libgrpc++-dev protobuf-compiler-grpc \
+        libprotobuf-dev protobuf-compiler \
+        nlohmann-json3-dev
+```
+
+#### Patching pkg-config
+
+If you are not planning to use `pkg-config(1)` you can skip these steps.
+
+Ubuntu's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
+when handling `.pc` files with lots of `Requires:` deps, which happens with
+Abseil. If you plan to use `pkg-config` with any of the installed artifacts, you
+may want to use a recent version of the standard `pkg-config` binary. If not,
+`sudo dnf install pkgconfig` should work.
+
+```bash
+mkdir -p $HOME/Downloads/pkgconf && cd $HOME/Downloads/pkgconf
+rm -f /usr/bin/pkgconf /usr/bin/pkg-config
+curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./configure --prefix=/usr -with-pkg-config-dir=/usr/local/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig && \
+    make -j ${NCPU:-4} && \
+sudo make install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
+ln -s /usr/bin/pkgconf /usr/bin/pkg-config
+```
+
+#### crc32c
+
+The project depends on the Crc32c library, we need to compile this from source:
+
+```bash
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DCRC32C_BUILD_TESTS=OFF \
+        -DCRC32C_BUILD_BENCHMARKS=OFF \
+        -DCRC32C_USE_GLOG=OFF \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### opentelemetry-cpp
+
+The project has an **optional** dependency on the OpenTelemetry library. We
+recommend installing this library because:
+
+- the dependency will become required in the google-cloud-cpp v3.x series.
+- it is needed to produce distributed traces of the library.
+
+```bash
+mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### Compile and install the main project
+
+We can now compile and install `google-cloud-cpp`:
+
+```bash
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -S . -B cmake-out \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
+```
+
+</details>
+
+<details>
 <summary>Ubuntu (22.04 LTS - Jammy Jellyfish)</summary>
 <br>
 

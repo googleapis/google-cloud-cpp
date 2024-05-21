@@ -65,6 +65,13 @@ endif ()
 # gRPC always requires Thread support.
 find_package(Threads REQUIRED)
 
+# ~~~
+# gRPC sometimes requires opentelemetry-cpp::api but it neglects to
+# say `find_dependency(opentelemetry-cpp)`:
+#    https://github.com/grpc/grpc/issues/36624
+# ~~~
+find_package(opentelemetry-cpp CONFIG QUIET)
+
 # Load the module to find protobuf with proper targets. Do not use
 # `find_package()` because we (have to) install this module in non-standard
 # locations.

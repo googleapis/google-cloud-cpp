@@ -35,3 +35,7 @@ common --noenable_bzlmod
 # TODO(#13311) - remove once gRPC works with Bazel v7 or when gRPC stops using
 #     `apple_rules`.
 common:macos --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1
+
+# Build OpenTelemetry assuming Abseil exists. Otherwise we get symbol conflicts
+# between the Abseil implementation and the copy in OTel.
+build --@io_opentelemetry_cpp//api:with_abseil

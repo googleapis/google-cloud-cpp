@@ -206,8 +206,7 @@ int main(int argc, char* argv[]) {
     };
   }
 
-  std::cout << "# Running Cloud Pub/Sub experiment"
-            << "\n# Start time: "
+  std::cout << "# Running Cloud Pub/Sub experiment" << "\n# Start time: "
             << google::cloud::internal::FormatRfc3339(
                    std::chrono::system_clock::now())
             << "\n# Configured topic: " << configured_topic

@@ -57,7 +57,7 @@ cc_library(
     srcs = google_cloud_cpp_storage_grpc_srcs,
     hdrs = google_cloud_cpp_storage_grpc_hdrs,
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
-    local_defines = select({
+    local_defines = ["GOOGLE_CLOUD_CPP_GRPC_HAS_OTEL_PLUGIN"] + select({
         "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }) + select({
@@ -74,6 +74,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_storage",
         "//:grpc_utils",
+        "//:opentelemetry",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
         "@com_github_grpc_grpc//:grpc++",
