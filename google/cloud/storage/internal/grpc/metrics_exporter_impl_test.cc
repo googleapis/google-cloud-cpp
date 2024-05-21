@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
@@ -125,4 +125,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS

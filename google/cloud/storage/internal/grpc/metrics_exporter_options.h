@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_OPTIONS_H
 
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #include "google/cloud/options.h"
 #include "google/cloud/project.h"
@@ -36,7 +36,7 @@ Options MetricsExporterOptions(
 /// storage options.
 Options MetricsExporterConnectionOptions(Options const& options);
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

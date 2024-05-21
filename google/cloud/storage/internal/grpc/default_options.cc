@@ -54,20 +54,6 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
   return (std::max)(kMinimumChannels, static_cast<int>(count));
 }
 
-bool GrpcEnableMetricsIsSafe() {
-#ifndef GRPC_CPP_VERSION_MAJOR
-  return false;
-#else
-  return (
-      GRPC_CPP_VERSION_MAJOR >= 1 &&
-      (                                                                    //
-          (GRPC_CPP_VERSION_MINOR == 63 && GRPC_CPP_VERSION_PATCH > 1) ||  //
-          (GRPC_CPP_VERSION_MINOR == 64 && GRPC_CPP_VERSION_PATCH > 1) ||  //
-          (GRPC_CPP_VERSION_MINOR >= 65)                                   //
-          ));
-#endif  // GRPC_CPP_VERSION_MAJOR
-}
-
 }  // namespace
 
 Options DefaultOptionsGrpc(Options options) {
@@ -123,6 +109,20 @@ Options DefaultOptionsGrpc(Options options) {
       DefaultGrpcNumChannels(options.get<EndpointOption>());
   return google::cloud::internal::MergeOptions(
       std::move(options), Options{}.set<GrpcNumChannelsOption>(num_channels));
+}
+
+bool GrpcEnableMetricsIsSafe() {
+#ifndef GRPC_CPP_VERSION_MAJOR
+  return false;
+#else
+  return (
+      GRPC_CPP_VERSION_MAJOR >= 1 &&
+      (                                                                     //
+          (GRPC_CPP_VERSION_MINOR == 63 && GRPC_CPP_VERSION_PATCH >= 1) ||  //
+          (GRPC_CPP_VERSION_MINOR == 64 && GRPC_CPP_VERSION_PATCH >= 1) ||  //
+          (GRPC_CPP_VERSION_MINOR >= 65)                                    //
+          ));
+#endif  // GRPC_CPP_VERSION_MAJOR
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/enable_metrics.h"
-#if GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#if GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #include "google/cloud/opentelemetry/resource_detector.h"
 #include "google/cloud/storage/grpc_plugin.h"
@@ -55,4 +55,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS

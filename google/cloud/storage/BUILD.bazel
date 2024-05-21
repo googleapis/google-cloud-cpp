@@ -64,7 +64,7 @@ cc_library(
         ":ctype_cord_workaround_enabled": ["GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND"],
         "//conditions:default": [],
     }) + select({
-        ":grpc_metrics_enabled": ["GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS"],
+        ":grpc_metrics_enabled": ["GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS"],
         "//conditions:default": [],
     }),
     visibility = [
@@ -236,7 +236,7 @@ cc_library(
         ":ctype_cord_workaround_enabled": ["GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND"],
         "//conditions:default": [],
     }) + select({
-        ":grpc_metrics_enabled": ["GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS"],
+        ":grpc_metrics_enabled": ["GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS"],
         "//conditions:default": [],
     }),
     deps = [

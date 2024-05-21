@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
 #include "google/cloud/monitoring/v3/metric_connection.h"
@@ -29,10 +29,8 @@
 #include "absl/strings/match.h"
 #include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
-#include <grpcpp/grpcpp.h>
-#if GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
 #include <grpcpp/ext/otel_plugin.h>
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#include <grpcpp/grpcpp.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <chrono>
 #include <mutex>
@@ -65,6 +63,8 @@ class ExporterRegistry {
     return *exporters;
   }
 
+  // Returns `true` if @p authority is newly registered, `false` if @p authority
+  // was already registered.
   bool Register(std::string authority) {
     std::unique_lock<std::mutex> lk(mu_);
     return known_authority_.insert(std::move(authority)).second;
@@ -98,10 +98,7 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
                         options.get<AuthorityOption>()};
 }
 
-void EnableGrpcMetricsImpl(ExporterConfig config) {  // NOLINT
-#if !GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
-  (void)config;
-#else
+void EnableGrpcMetricsImpl(ExporterConfig config) {
   if (!ExporterRegistry::Singleton().Register(config.authority)) return;
 
   // TODO(#13998) - the service is not ready to receive the monitored resource
@@ -170,9 +167,7 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {  // NOLINT
           .BuildAndRegisterGlobal();
   if (!status.ok()) {
     GCP_LOG(ERROR) << "Cannot register provider status=" << status.ToString();
-    return;
   }
-#endif  // GOOGLE_CLOUD_CPP_ENABLE_GRPC_METRICS
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -180,4 +175,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_AUTO_OTEL_METRICS
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
