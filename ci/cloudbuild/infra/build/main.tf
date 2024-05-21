@@ -135,3 +135,19 @@ resource "google_storage_bucket_iam_member" "gcb-owns-ci-cache" {
   role   = "roles/storage.admin"
   member = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
 }
+
+resource "google_artifact_registry_repository" "default" {
+  location      = var.region
+  repository_id = "gcb"
+  description   = "Build images and cache"
+  format        = "DOCKER"
+  cleanup_policies {
+    id     = "Delete images after 30d"
+    action = "DELETE"
+    condition {
+      tag_state    = "ANY"
+      # Remove after 30 days.
+      older_than   = "2592000s"
+    }
+  }
+}
