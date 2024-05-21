@@ -98,6 +98,7 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_rest_internal"
     "google_cloud_cpp_monitoring"
     "google_cloud_cpp_trace"
+    "opentelemetry_metrics"
     "opentelemetry_resources"
     "opentelemetry_trace")
 
