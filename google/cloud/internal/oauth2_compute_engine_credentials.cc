@@ -126,26 +126,26 @@ ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload) {
   auto body = nlohmann::json::parse(payload, nullptr, false);
   // Parse the body, ignoring invalid or missing values.
   auto scopes = [&]() -> std::set<std::string> {
-    // TODO(#13436): refactor to use iterator in the JSON.
-    if (!body.contains("scopes")) return {};
-    auto const& s = body["scopes"];
-    if (s.is_string()) {
-      return absl::StrSplit(s.get<std::string>(), '\n', absl::SkipWhitespace());
+    auto it = body.find("scopes");
+    if (it == body.end()) return {};
+    if (it->is_string()) {
+      return absl::StrSplit(it->get<std::string>(), '\n',
+                            absl::SkipWhitespace());
     }
     // If we cannot parse the `scopes` field as an array of strings, we return
     // an empty set.
-    if (!s.is_array()) return {};
+    if (!it->is_array()) return {};
     std::set<std::string> result;
-    for (auto const& i : s) {
+    for (auto const& i : *it) {
       if (!i.is_string()) return {};
       result.insert(i.get<std::string>());
     }
     return result;
   };
   auto email = [&]() -> std::string {
-    // TODO(#13436): refactor to use iterator in the JSON.
-    if (!body.contains("email") || !body["email"].is_string()) return {};
-    return body.value("email", "");
+    auto it = body.find("email");
+    if (it == body.end() || !it->is_string()) return {};
+    return it->get<std::string>();
   };
   auto universe_domain = [&]() -> std::string {
     auto iter = body.find("universe_domain");
