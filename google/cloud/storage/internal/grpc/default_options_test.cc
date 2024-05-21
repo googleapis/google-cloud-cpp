@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {
@@ -124,7 +125,9 @@ TEST(DefaultOptionsGrpc, MetricsEnabled) {
   ScopedEnvironment env("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",
                         absl::nullopt);
   auto const options = DefaultOptionsGrpc(Options{});
-  EXPECT_TRUE(options.get<storage_experimental::EnableGrpcMetricsOption>());
+  auto const expected = GrpcEnableMetricsIsSafe();
+  EXPECT_EQ(options.get<storage_experimental::EnableGrpcMetricsOption>(),
+            expected);
 }
 
 TEST(DefaultOptionsGrpc, MetricsDisabled) {

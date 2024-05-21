@@ -66,6 +66,7 @@ endif ()
 find_package(Threads REQUIRED)
 
 # ~~~
+# TODO(#14260) - remove this workaround.
 # gRPC sometimes requires opentelemetry-cpp::api but it neglects to
 # say `find_dependency(opentelemetry-cpp)`:
 #    https://github.com/grpc/grpc/issues/36624

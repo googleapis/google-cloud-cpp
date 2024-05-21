@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
 load(":google_cloud_cpp_storage_grpc.bzl", "google_cloud_cpp_storage_grpc_hdrs", "google_cloud_cpp_storage_grpc_srcs")
 load(":google_cloud_cpp_storage_grpc_mocks.bzl", "google_cloud_cpp_storage_grpc_mocks_hdrs")
@@ -35,6 +36,16 @@ config_setting(
     visibility = [":__subpackages__"],
 )
 
+bool_flag(
+    name = "enable_grpc_metrics",
+    build_setting_default = True,
+)
+
+config_setting(
+    name = "grpc_metrics_enabled",
+    flag_values = {":enable_grpc_metrics": "true"},
+)
+
 filegroup(
     name = "public_grpc_hdrs",
     srcs = [h for h in google_cloud_cpp_storage_grpc_hdrs if not h.startswith("internal/")],
@@ -46,11 +57,14 @@ cc_library(
     srcs = google_cloud_cpp_storage_grpc_srcs,
     hdrs = google_cloud_cpp_storage_grpc_hdrs,
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
-    local_defines = ["GOOGLE_CLOUD_CPP_GRPC_HAS_OTEL_PLUGIN"] + select({
+    local_defines = select({
         "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }) + select({
         ":ctype_cord_workaround_enabled": ["GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND"],
+        "//conditions:default": [],
+    }) + select({
+        ":grpc_metrics_enabled": ["GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS"],
         "//conditions:default": [],
     }),
     visibility = [
@@ -60,19 +74,23 @@ cc_library(
     deps = [
         ":google_cloud_cpp_storage",
         "//:grpc_utils",
-        "//:opentelemetry",
         "@com_github_curl_curl//:curl",
         "@com_github_google_crc32c//:crc32c",
         "@com_github_grpc_grpc//:grpc++",
-        "@com_github_grpc_grpc//:grpcpp_otel_plugin",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/algorithm:container",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/time",
         "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
         "@com_google_googleapis//google/storage/v2:storage_cc_proto",
-        "@io_opentelemetry_cpp//sdk/src/metrics",
-    ],
+    ] + select({
+        ":grpc_metrics_enabled": [
+            "//:opentelemetry",
+            "@com_github_grpc_grpc//:grpcpp_otel_plugin",
+            "@io_opentelemetry_cpp//sdk/src/metrics",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 filegroup(
@@ -216,6 +234,9 @@ cc_library(
         "//conditions:default": [],
     }) + select({
         ":ctype_cord_workaround_enabled": ["GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND"],
+        "//conditions:default": [],
+    }) + select({
+        ":grpc_metrics_enabled": ["GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS"],
         "//conditions:default": [],
     }),
     deps = [

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #include "google/cloud/storage/internal/grpc/metrics_exporter_impl.h"
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
@@ -47,8 +47,10 @@ auto TestOptions(Options opts = {}) {
   // In CI builds this environment variable may be set and affect the behavior
   // in ways we do not need to (re)test here.
   auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
-  opts.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
-      "unused", std::chrono::system_clock::now() + std::chrono::minutes(15)));
+  opts.set<storage_experimental::EnableGrpcMetricsOption>(true)
+      .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "unused",
+          std::chrono::system_clock::now() + std::chrono::minutes(15)));
   return DefaultOptionsGrpc(std::move(opts));
 }
 
@@ -123,4 +125,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS

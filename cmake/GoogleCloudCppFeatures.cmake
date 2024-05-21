@@ -333,10 +333,9 @@ macro (google_cloud_cpp_enable_deps)
         # TODO(#13857) - remove backwards compatibility shims
         OR (experimental-storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 storage)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 opentelemetry)
     endif ()
     if (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 monitoring trace)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 monitoring trace opentelemetry)
     endif ()
 endmacro ()
 

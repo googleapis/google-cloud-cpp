@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_IMPL_H
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #include "google/cloud/options.h"
 #include "google/cloud/project.h"
@@ -43,11 +43,13 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
     opentelemetry::sdk::resource::Resource const& resource,
     Options const& options);
 
+void EnableGrpcMetricsImpl(ExporterConfig config);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_METRICS_EXPORTER_IMPL_H
