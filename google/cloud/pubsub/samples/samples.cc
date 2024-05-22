@@ -1024,6 +1024,73 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
       std::move(p.second), __func__);
 }
 
+void OptimisticSubscribe(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 3) {
+    throw examples::Usage{
+        "optimistic-subscribe <project-id> <topic-id> <subscription-id>"};
+  }
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](std::string project_id, std::string topic_id,
+     std::string subscription_id) {
+    // Do not retry the attempts to consume messages.
+    auto subscriber = pubsub::Subscriber(
+        pubsub::MakeSubscriberConnection(
+            pubsub::Subscription(project_id, subscription_id)),
+        google::cloud::Options{}.set<pubsub::RetryPolicyOption>(
+            pubsub::LimitedErrorCountRetryPolicy(
+                /*maximum_failures=*/0)
+                .clone()));
+
+    // [START pubsub_optimistic_subscribe]
+    try {
+      // Try to consume from subscription.
+      auto response = subscriber.Pull();
+      if (!response) {
+        if (response.status().code() ==
+            google::cloud::StatusCode::kUnavailable) {
+          std::cout << "Pull received kUnavailable status: "
+                    << response.status().message() << "\n";
+        } else {
+          throw std::move(response).status();
+        }
+      } else {
+        std::cout << "Received message " << response->message << "\n";
+        std::move(response->handler).ack();
+      }
+    } catch (google::cloud::Status const& status) {
+      // If the subscription does not exist, create the subscription.
+      if (status.code() == google::cloud::StatusCode::kNotFound) {
+        google::cloud::pubsub_admin::SubscriptionAdminClient
+            subscription_admin_client(
+                google::cloud::pubsub_admin::MakeSubscriptionAdminConnection());
+        google::pubsub::v1::Subscription request;
+        request.set_name(
+            pubsub::Subscription(project_id, subscription_id).FullName());
+        request.set_topic(pubsub::Topic(project_id, topic_id).FullName());
+        auto sub = subscription_admin_client.CreateSubscription(request);
+        if (!sub) throw std::move(sub).status();
+      }
+      // Consume from the subscription again.
+      auto response = subscriber.Pull();
+      if (!response) {
+        if (response.status().code() ==
+            google::cloud::StatusCode::kUnavailable) {
+          std::cout << "Pull received kUnavailable status: "
+                    << response.status().message() << "\n";
+        } else {
+          throw std::move(response).status();
+        }
+      } else {
+        std::cout << "Received message " << response->message << "\n";
+        std::move(response->handler).ack();
+      }
+    }
+    // [END pubsub_optimistic_subscribe]
+  }(argv.at(0), argv.at(1), argv.at(2));
+}
+
 void AutoRunAvro(
     std::string const& project_id, std::string const& testdata_directory,
     google::cloud::internal::DefaultPRNG& generator,
@@ -1449,6 +1516,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   PublishHelper(publisher, "SubscriberRetrySettings", 1);
   SubscriberRetrySettings({project_id, subscription_id});
 
+  std::cout << "\nRunning OptomisticSubscribe() sample" << std::endl;
+  PublishHelper(publisher, "OptomisticSubscribe", 1);
+  SubscriberRetrySettings({project_id, topic_id, subscription_id});
+
   std::cout << "\nAutoRun done" << std::endl;
 }
 
@@ -1493,6 +1564,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"subscriber-concurrency-control", SubscriberConcurrencyControl},
       {"subscriber-flow-control-settings", SubscriberFlowControlSettings},
       {"subscriber-retry-settings", SubscriberRetrySettings},
+      {"optimistic-subscribe", OptimisticSubscribe},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
