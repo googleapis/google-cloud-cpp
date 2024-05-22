@@ -23,8 +23,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/terminate_handler.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/util/json_util.h>
 #include <gmock/gmock.h>
 #include <fstream>
@@ -76,7 +76,8 @@ class V4SignedUrlConformanceTest
 class V4PostPolicyConformanceTest : public V4SignedUrlConformanceTest {};
 
 TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
-  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT", absl::nullopt);
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           absl::nullopt);
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
       service_account_key_filename_);
   ASSERT_STATUS_OK(creds);
@@ -178,7 +179,8 @@ INSTANTIATE_TEST_SUITE_P(
     }()));
 
 TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
-  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT", absl::nullopt);
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           absl::nullopt);
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
       service_account_key_filename_);
   ASSERT_STATUS_OK(creds);
