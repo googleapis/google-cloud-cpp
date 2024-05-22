@@ -23,6 +23,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_split.h"
 #include <fstream>
 #include <memory>
 #include <thread>
@@ -487,9 +488,12 @@ std::string Client::Endpoint() const {
 }
 
 std::string Client::Host() const {
-  auto const host = Endpoint();
-  auto const prefix = std::string{"https://"};
-  return host.substr(prefix.length());
+  auto endpoint = Endpoint();
+  auto host = absl::string_view(endpoint);
+  if (!absl::ConsumePrefix(&host, "https://")) {
+    absl::ConsumePrefix(&host, "http://");
+  }
+  return std::string(host);
 }
 
 namespace internal {
