@@ -1516,9 +1516,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   PublishHelper(publisher, "SubscriberRetrySettings", 1);
   SubscriberRetrySettings({project_id, subscription_id});
 
-  std::cout << "\nRunning OptomisticSubscribe() sample" << std::endl;
-  PublishHelper(publisher, "OptomisticSubscribe", 1);
-  SubscriberRetrySettings({project_id, topic_id, subscription_id});
+  std::cout << "\nRunning OptimisticSubscribe() sample" << std::endl;
+  PublishHelper(publisher, "OptimisticSubscribe", 1);
+  OptimisticSubscribe({project_id, topic_id, subscription_id});
 
   std::cout << "\nAutoRun done" << std::endl;
 }
