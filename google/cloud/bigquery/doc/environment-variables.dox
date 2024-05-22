@@ -46,6 +46,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "bigqueryreservation.googleapis.com")
   used by `MakeReservationServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_ROW_ACCESS_POLICY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquery.googleapis.com")
+  used by `MakeRowAccessPolicyServiceConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

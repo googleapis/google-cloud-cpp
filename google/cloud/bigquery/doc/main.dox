@@ -39,6 +39,7 @@ application.
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref google::cloud::bigquery_reservation_v1::ReservationServiceClient)
 - [\c bigquery_storage_v1::BigQueryReadClient](@ref google::cloud::bigquery_storage_v1::BigQueryReadClient)
 - [\c bigquery_storage_v1::BigQueryWriteClient](@ref google::cloud::bigquery_storage_v1::BigQueryWriteClient)
+- [\c bigquery_v2::RowAccessPolicyServiceClient](@ref google::cloud::bigquery_v2::RowAccessPolicyServiceClient)
 <!-- inject-client-list-end -->
 
 ## Next Steps

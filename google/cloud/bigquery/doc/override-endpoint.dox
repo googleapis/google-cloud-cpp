@@ -22,6 +22,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-endpoint-snippet)
 - [\c bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-endpoint-snippet)
 - [\c bigquery_storage_v1::BigQueryWriteClient](@ref bigquery_storage_v1::BigQueryWriteClient-endpoint-snippet)
+- [\c bigquery_v2::RowAccessPolicyServiceClient](@ref bigquery_v2::RowAccessPolicyServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -80,6 +81,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page bigquery_storage_v1::BigQueryWriteClient-endpoint-snippet Override bigquery_storage_v1::BigQueryWriteClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/storage/v1/samples/bigquery_write_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery_v2::RowAccessPolicyServiceClient-endpoint-snippet Override bigquery_v2::RowAccessPolicyServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/v2/samples/row_access_policy_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->
