@@ -92,13 +92,13 @@ TEST(ConnectionOptionsTest, Tracing) {
   EXPECT_TRUE(conn_opts.tracing_enabled("fake-component"));
 
   Options opts = internal::MakeOptions(conn_opts);
-  auto components = opts.get<TracingComponentsOption>();
+  auto components = opts.get<LoggingComponentsOption>();
   EXPECT_TRUE(internal::Contains(components, "fake-component"));
   EXPECT_EQ(conn_opts.components(), components);
 
   conn_opts.disable_tracing("fake-component");
   opts = internal::MakeOptions(conn_opts);
-  components = opts.get<TracingComponentsOption>();
+  components = opts.get<LoggingComponentsOption>();
   EXPECT_FALSE(conn_opts.tracing_enabled("fake-component"));
   EXPECT_FALSE(internal::Contains(components, "fake-component"));
   EXPECT_EQ(conn_opts.components(), components);
@@ -110,7 +110,7 @@ TEST(ConnectionOptionsTest, DefaultTracingUnset) {
   EXPECT_FALSE(conn_opts.tracing_enabled("rpc"));
 
   Options opts = internal::MakeOptions(conn_opts);
-  auto const& components = opts.get<TracingComponentsOption>();
+  auto const& components = opts.get<LoggingComponentsOption>();
   EXPECT_EQ(conn_opts.components(), components);
 }
 
@@ -122,7 +122,7 @@ TEST(ConnectionOptionsTest, DefaultTracingSet) {
   EXPECT_TRUE(conn_opts.tracing_enabled("foo"));
   EXPECT_TRUE(conn_opts.tracing_enabled("bar"));
   EXPECT_TRUE(conn_opts.tracing_enabled("baz"));
-  EXPECT_THAT(internal::MakeOptions(conn_opts).get<TracingComponentsOption>(),
+  EXPECT_THAT(internal::MakeOptions(conn_opts).get<LoggingComponentsOption>(),
               UnorderedElementsAre("foo", "bar", "baz"));
 }
 

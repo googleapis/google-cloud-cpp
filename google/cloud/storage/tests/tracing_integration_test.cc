@@ -63,7 +63,7 @@ class TracingIntegrationTest
 
 TEST_F(TracingIntegrationTest, StorageConnection) {
   auto client =
-      Client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+      Client(Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
 
   ScopedLog log;
   auto const object_name = MakeRandomObjectName();

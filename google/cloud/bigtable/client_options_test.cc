@@ -88,7 +88,7 @@ TEST(ClientOptionsTest, OptionsConstructor) {
           .set<GrpcCredentialOption>(credentials)
           .set<GrpcTracingOptionsOption>(
               TracingOptions{}.SetOptions("single_line_mode=F"))
-          .set<TracingComponentsOption>({"test-component"})
+          .set<LoggingComponentsOption>({"test-component"})
           .set<GrpcNumChannelsOption>(3)
           .set<MinConnectionRefreshOption>(ms(100))
           .set<MaxConnectionRefreshOption>(min(4))
@@ -494,7 +494,7 @@ TEST(ClientOptionsTest, TracingComponents) {
 
   // Check `MakeOptions()`
   auto opts = internal::MakeOptions(std::move(options));
-  EXPECT_THAT(opts.get<TracingComponentsOption>(),
+  EXPECT_THAT(opts.get<LoggingComponentsOption>(),
               testing::UnorderedElementsAre("bar", "baz"));
 }
 

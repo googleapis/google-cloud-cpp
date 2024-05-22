@@ -306,7 +306,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   std::shared_ptr<bigtable::AdminClient> admin_client =
       bigtable::MakeAdminClient(
           bigtable::testing::TableTestEnvironment::project_id(),
-          Options{}.set<TracingComponentsOption>({"rpc"}));
+          Options{}.set<LoggingComponentsOption>({"rpc"}));
   auto table_admin = std::make_unique<bigtable::TableAdmin>(
       admin_client, bigtable::testing::TableTestEnvironment::instance_id());
 

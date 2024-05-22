@@ -35,7 +35,7 @@ TEST(ExternalAccountIntegrationTest, UrlSourced) {
   if (!bucket.has_value()) GTEST_SKIP();
 
   auto credentials = google::cloud::MakeGoogleDefaultCredentials(
-      Options{}.set<TracingComponentsOption>({"auth", "http"}));
+      Options{}.set<LoggingComponentsOption>({"auth", "http"}));
   auto client = rest_internal::MakeDefaultRestClient(
       "https://storage.googleapis.com/",
       Options{}.set<UnifiedCredentialsOption>(credentials));

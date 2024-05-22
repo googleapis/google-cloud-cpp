@@ -38,11 +38,11 @@ std::shared_ptr<TableRestStub> CreateDefaultTableRestStub(Options const& opts) {
 
   stub = std::make_shared<TableMetadata>(std::move(stub));
 
-  if (internal::Contains(local_opts.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(local_opts.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<TableLogging>(
         std::move(stub), local_opts.get<RestTracingOptionsOption>(),
-        local_opts.get<TracingComponentsOption>());
+        local_opts.get<LoggingComponentsOption>());
   }
 
   return stub;

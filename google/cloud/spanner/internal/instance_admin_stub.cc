@@ -218,7 +218,7 @@ std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
 
   stub = std::make_shared<InstanceAdminMetadata>(std::move(stub));
 
-  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(opts.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<InstanceAdminLogging>(
         std::move(stub), opts.get<GrpcTracingOptionsOption>());

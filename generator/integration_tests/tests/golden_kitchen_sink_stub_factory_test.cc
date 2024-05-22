@@ -51,7 +51,7 @@ TEST(GoldenKitchenSinkStubFactoryTest, DefaultStubWithLogging) {
   ScopedLog log;
 
   Options options;
-  options.set<TracingComponentsOption>({"rpc"});
+  options.set<LoggingComponentsOption>({"rpc"});
   auto auth = MakeStubFactoryMockAuth();
   auto default_stub = CreateDefaultGoldenKitchenSinkStub(auth, options);
   auto const log_lines = log.ExtractLines();

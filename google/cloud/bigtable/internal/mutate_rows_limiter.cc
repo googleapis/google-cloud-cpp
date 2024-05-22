@@ -88,7 +88,7 @@ std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(CompletionQueue cq,
   std::function<void(duration)> sleeper = [](duration d) {
     std::this_thread::sleep_for(d);
   };
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     sleeper = [sleeper = std::move(sleeper)](duration d) {
       if (d != duration::zero()) {
         GCP_LOG(DEBUG) << "Throttling BulkApply for " << absl::FromChrono(d);

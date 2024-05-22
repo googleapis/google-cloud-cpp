@@ -66,7 +66,7 @@ TEST(OptionsTest, CommonDefaults) {
   EXPECT_EQ(static_cast<int>(DefaultThreadCount()),
             opts.get<GrpcNumChannelsOption>());
   EXPECT_EQ(internal::DefaultTracingComponents(),
-            opts.get<TracingComponentsOption>());
+            opts.get<LoggingComponentsOption>());
   EXPECT_EQ(internal::DefaultTracingOptions(),
             opts.get<GrpcTracingOptionsOption>());
   EXPECT_TRUE(opts.has<pubsub::RetryPolicyOption>());
@@ -94,7 +94,7 @@ TEST(OptionsTest, UserSetCommonOptions) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<GrpcTracingOptionsOption>(
               TracingOptions{}.SetOptions("single_line_mode=F"))
-          .set<TracingComponentsOption>({"test-component"})
+          .set<LoggingComponentsOption>({"test-component"})
           .set<GrpcNumChannelsOption>(3)
           .set<GrpcBackgroundThreadPoolSizeOption>(5)
           .set<GrpcChannelArgumentsNativeOption>(channel_args)
@@ -104,7 +104,7 @@ TEST(OptionsTest, UserSetCommonOptions) {
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_FALSE(opts.get<GrpcTracingOptionsOption>().single_line_mode());
-  EXPECT_THAT(opts.get<TracingComponentsOption>(), Contains("test-component"));
+  EXPECT_THAT(opts.get<LoggingComponentsOption>(), Contains("test-component"));
   EXPECT_EQ(3U, opts.get<GrpcNumChannelsOption>());
   EXPECT_EQ(5U, opts.get<GrpcBackgroundThreadPoolSizeOption>());
 
@@ -263,7 +263,7 @@ TEST(OptionsTest, DefaultSubscriberOnly) {
   EXPECT_FALSE(opts.has<UnifiedCredentialsOption>());
   EXPECT_FALSE(opts.has<EndpointOption>());
   EXPECT_FALSE(opts.has<GrpcNumChannelsOption>());
-  EXPECT_FALSE(opts.has<TracingComponentsOption>());
+  EXPECT_FALSE(opts.has<LoggingComponentsOption>());
   EXPECT_FALSE(opts.has<GrpcTracingOptionsOption>());
   EXPECT_FALSE(opts.has<pubsub::BackoffPolicyOption>());
   EXPECT_FALSE(opts.has<GrpcBackgroundThreadPoolSizeOption>());
@@ -274,7 +274,7 @@ TEST(OptionsTest, DefaultSubscriberOnly) {
   EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
   EXPECT_TRUE(opts.has<EndpointOption>());
   EXPECT_TRUE(opts.has<GrpcNumChannelsOption>());
-  EXPECT_TRUE(opts.has<TracingComponentsOption>());
+  EXPECT_TRUE(opts.has<LoggingComponentsOption>());
   EXPECT_TRUE(opts.has<GrpcTracingOptionsOption>());
   EXPECT_TRUE(opts.has<GrpcBackgroundThreadPoolSizeOption>());
   EXPECT_TRUE(opts.has<UserAgentProductsOption>());
@@ -287,7 +287,7 @@ TEST(OptionsTest, DefaultPublisherOnly) {
   EXPECT_FALSE(opts.has<UnifiedCredentialsOption>());
   EXPECT_FALSE(opts.has<EndpointOption>());
   EXPECT_FALSE(opts.has<GrpcNumChannelsOption>());
-  EXPECT_FALSE(opts.has<TracingComponentsOption>());
+  EXPECT_FALSE(opts.has<LoggingComponentsOption>());
   EXPECT_FALSE(opts.has<GrpcTracingOptionsOption>());
   EXPECT_FALSE(opts.has<GrpcBackgroundThreadPoolSizeOption>());
   EXPECT_FALSE(opts.has<UserAgentProductsOption>());
@@ -297,7 +297,7 @@ TEST(OptionsTest, DefaultPublisherOnly) {
   EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
   EXPECT_TRUE(opts.has<EndpointOption>());
   EXPECT_TRUE(opts.has<GrpcNumChannelsOption>());
-  EXPECT_TRUE(opts.has<TracingComponentsOption>());
+  EXPECT_TRUE(opts.has<LoggingComponentsOption>());
   EXPECT_TRUE(opts.has<GrpcTracingOptionsOption>());
   EXPECT_TRUE(opts.has<GrpcBackgroundThreadPoolSizeOption>());
   EXPECT_TRUE(opts.has<UserAgentProductsOption>());

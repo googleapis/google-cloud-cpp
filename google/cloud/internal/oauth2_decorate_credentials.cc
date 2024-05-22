@@ -32,7 +32,7 @@ std::shared_ptr<oauth2_internal::Credentials> Decorate(
 std::shared_ptr<oauth2_internal::Credentials> WithLogging(
     std::shared_ptr<oauth2_internal::Credentials> impl, Options const& opts,
     std::string stage) {
-  if (opts.get<TracingComponentsOption>().count("auth") == 0) return impl;
+  if (opts.get<LoggingComponentsOption>().count("auth") == 0) return impl;
   return std::make_shared<oauth2_internal::LoggingCredentials>(
       std::move(stage), TracingOptions(), std::move(impl));
 }

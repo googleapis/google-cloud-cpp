@@ -55,11 +55,11 @@ std::shared_ptr<VpcAccessServiceStub> CreateDefaultVpcAccessServiceStub(
   }
   stub = std::make_shared<VpcAccessServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<VpcAccessServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {
     stub = MakeVpcAccessServiceTracingStub(std::move(stub));

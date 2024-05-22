@@ -136,8 +136,8 @@ std::shared_ptr<MinimalIamCredentialsRest> MakeMinimalIamCredentialsRestStub(
     std::shared_ptr<oauth2_internal::Credentials> credentials, Options options,
     HttpClientFactory client_factory) {
   auto enable_logging =
-      options.get<TracingComponentsOption>().count("rpc") != 0 ||
-      options.get<TracingComponentsOption>().count("raw-client") != 0;
+      options.get<LoggingComponentsOption>().count("rpc") != 0 ||
+      options.get<LoggingComponentsOption>().count("raw-client") != 0;
   std::shared_ptr<MinimalIamCredentialsRest> stub =
       std::make_shared<MinimalIamCredentialsRestStub>(
           std::move(credentials), std::move(options),

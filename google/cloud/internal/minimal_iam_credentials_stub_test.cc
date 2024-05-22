@@ -74,7 +74,7 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenLogging) {
       });
   auto stub = DecorateMinimalIamCredentialsStub(
       mock, Options{}
-                .set<TracingComponentsOption>({"auth"})
+                .set<LoggingComponentsOption>({"auth"})
                 .set<GrpcTracingOptionsOption>(
                     TracingOptions{}.SetOptions("single_line_mode")));
   GenerateAccessTokenRequest request;
@@ -99,7 +99,7 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenNoLogging) {
         return make_ready_future(make_status_or(response));
       });
   auto stub = DecorateMinimalIamCredentialsStub(
-      mock, Options{}.set<TracingComponentsOption>({}));
+      mock, Options{}.set<LoggingComponentsOption>({}));
   GenerateAccessTokenRequest request;
   request.set_name("projects/-/serviceAccounts/test-only-sa@not-valid");
   CompletionQueue cq;
@@ -118,7 +118,7 @@ TEST_F(MinimalIamCredentialsStubTest, SignBlobLogging) {
   EXPECT_CALL(*mock, SignBlob).WillOnce(Return(expected));
   auto stub = DecorateMinimalIamCredentialsStub(
       mock, Options{}
-                .set<TracingComponentsOption>({"auth"})
+                .set<LoggingComponentsOption>({"auth"})
                 .set<GrpcTracingOptionsOption>(
                     TracingOptions{}.SetOptions("single_line_mode")));
   SignBlobRequest request;
@@ -137,7 +137,7 @@ TEST_F(MinimalIamCredentialsStubTest, SignBlobNoLogging) {
   expected.set_signed_blob("test-only-signed");
   EXPECT_CALL(*mock, SignBlob).WillOnce(Return(expected));
   auto stub = DecorateMinimalIamCredentialsStub(
-      mock, Options{}.set<TracingComponentsOption>({}));
+      mock, Options{}.set<LoggingComponentsOption>({}));
   SignBlobRequest request;
   request.set_name("projects/-/serviceAccounts/test-only-sa@not-valid");
   grpc::ClientContext context;
@@ -177,7 +177,7 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenMetadata) {
       });
 
   auto stub = DecorateMinimalIamCredentialsStub(
-      mock, Options{}.set<TracingComponentsOption>({}));
+      mock, Options{}.set<LoggingComponentsOption>({}));
   GenerateAccessTokenRequest request;
   request.set_name("projects/-/serviceAccounts/test-only-sa@not-valid");
   CompletionQueue cq;
@@ -207,7 +207,7 @@ TEST_F(MinimalIamCredentialsStubTest, LoggingComponentNames) {
     auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
     EXPECT_CALL(*mock, SignBlob).WillOnce(Return(SignBlobResponse{}));
     auto stub = DecorateMinimalIamCredentialsStub(
-        mock, Options{}.set<TracingComponentsOption>(c.components));
+        mock, Options{}.set<LoggingComponentsOption>(c.components));
     grpc::ClientContext context;
     (void)stub->SignBlob(context, SignBlobRequest{});
     auto const lines = log_.ExtractLines();

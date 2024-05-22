@@ -307,7 +307,7 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
 
   stub = std::make_shared<DatabaseAdminMetadata>(std::move(stub));
 
-  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(opts.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DatabaseAdminLogging>(
         std::move(stub), opts.get<GrpcTracingOptionsOption>());

@@ -414,7 +414,7 @@ request and response.  Unless you have configured your own logging backend,
 you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
 the program's console.
 
-@see google::cloud::TracingComponentsOption
+@see google::cloud::LoggingComponentsOption
 
 `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...`: modifies the behavior of gRPC tracing,
 including whether messages will be output on multiple lines, or whether

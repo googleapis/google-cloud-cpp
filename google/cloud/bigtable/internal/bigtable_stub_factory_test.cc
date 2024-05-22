@@ -190,7 +190,7 @@ TEST(BigtableStubFactory, LoggingEnabled) {
       std::move(auth), cq,
       Options{}
           .set<GrpcNumChannelsOption>(1)
-          .set<TracingComponentsOption>({"rpc"})
+          .set<LoggingComponentsOption>({"rpc"})
           .set<EndpointOption>("localhost:1")
           .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
       factory.AsStdFunction());
@@ -220,7 +220,7 @@ TEST(BigtableStubFactory, LoggingDisabled) {
       std::move(auth), cq,
       Options{}
           .set<GrpcNumChannelsOption>(1)
-          .set<TracingComponentsOption>({})
+          .set<LoggingComponentsOption>({})
           .set<EndpointOption>("localhost:1")
           .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
       factory.AsStdFunction());

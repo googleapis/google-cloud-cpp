@@ -179,7 +179,7 @@ TEST(TopicAdminConnectionTest, DeleteWithLogging) {
       });
 
   auto topic_admin = MakeTestTopicAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   internal::OptionsSpan span(topic_admin->options());
   auto response = topic_admin->DeleteTopic({topic});
   ASSERT_STATUS_OK(response);
@@ -202,7 +202,7 @@ TEST(TopicAdminConnectionTest, DetachSubscription) {
           });
 
   auto topic_admin = MakeTestTopicAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   internal::OptionsSpan span(topic_admin->options());
   auto response = topic_admin->DetachSubscription({subscription});
   ASSERT_STATUS_OK(response);

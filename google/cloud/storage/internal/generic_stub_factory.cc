@@ -26,7 +26,7 @@ namespace {
 
 bool RequiresLogging(Options const& opts) {
   using ::google::cloud::internal::Contains;
-  auto const& tracing_components = opts.get<TracingComponentsOption>();
+  auto const& tracing_components = opts.get<LoggingComponentsOption>();
   return Contains(tracing_components, "raw-client") ||
          Contains(tracing_components, "rpc");
 }

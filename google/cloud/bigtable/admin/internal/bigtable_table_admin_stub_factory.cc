@@ -55,11 +55,11 @@ std::shared_ptr<BigtableTableAdminStub> CreateDefaultBigtableTableAdminStub(
   }
   stub = std::make_shared<BigtableTableAdminMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<BigtableTableAdminLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {
     stub = MakeBigtableTableAdminTracingStub(std::move(stub));

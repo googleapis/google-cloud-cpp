@@ -42,7 +42,7 @@ Options PopulateAuthOptions(Options options) {
                        .set<AccessTokenLifetimeOption>(kDefaultTokenLifetime));
   // Then apply any overrides.
   return MergeOptions(
-      Options{}.set<TracingComponentsOption>(DefaultTracingComponents()),
+      Options{}.set<LoggingComponentsOption>(DefaultTracingComponents()),
       std::move(options));
 }
 

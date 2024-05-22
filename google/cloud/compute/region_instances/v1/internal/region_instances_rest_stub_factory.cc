@@ -41,11 +41,11 @@ std::shared_ptr<RegionInstancesRestStub> CreateDefaultRegionInstancesRestStub(
   std::shared_ptr<RegionInstancesRestStub> stub =
       std::make_shared<DefaultRegionInstancesRestStub>(std::move(opts));
   stub = std::make_shared<RegionInstancesRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<RegionInstancesRestLogging>(
         std::move(stub), options.get<RestTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   return stub;
 }

@@ -39,7 +39,7 @@ TEST(GoldenKitchenSinkRestStubFactoryTest, DefaultStubWithoutLogging) {
 TEST(GoldenKitchenSinkRestStubFactoryTest, DefaultStubWithLogging) {
   testing_util::ScopedLog log;
   Options options;
-  options.set<TracingComponentsOption>({"rpc"});
+  options.set<LoggingComponentsOption>({"rpc"});
   auto default_stub = CreateDefaultGoldenKitchenSinkRestStub(options);
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,

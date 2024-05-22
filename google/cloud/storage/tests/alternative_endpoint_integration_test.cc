@@ -85,7 +85,7 @@ TEST_F(AlternativeEndpointIntegrationTest, Insert) {
     auto client =
         Client(Options{}
                    .set<RestEndpointOption>("https://" + test.endpoint_host)
-                   .set<TracingComponentsOption>({"raw-client", "http"}));
+                   .set<LoggingComponentsOption>({"raw-client", "http"}));
     auto const object_name = MakeRandomObjectName();
     auto const payload = LoremIpsum();
     StatusOr<ObjectMetadata> meta = client.InsertObject(
@@ -112,7 +112,7 @@ TEST_F(AlternativeEndpointIntegrationTest, Write) {
     auto client =
         Client(Options{}
                    .set<RestEndpointOption>("https://" + test.endpoint_host)
-                   .set<TracingComponentsOption>({"raw-client", "http"}));
+                   .set<LoggingComponentsOption>({"raw-client", "http"}));
 
     auto const object_name = MakeRandomObjectName();
     auto const payload = LoremIpsum();

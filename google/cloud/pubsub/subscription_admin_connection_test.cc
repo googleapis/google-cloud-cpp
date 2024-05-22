@@ -196,7 +196,7 @@ TEST(SubscriptionAdminConnectionTest, DeleteWithLogging) {
           });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   internal::OptionsSpan span(subscription_admin->options());
   auto response = subscription_admin->DeleteSubscription({subscription});
   ASSERT_STATUS_OK(response);
@@ -219,7 +219,7 @@ TEST(SubscriptionAdminConnectionTest, ModifyPushConfig) {
           });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   internal::OptionsSpan span(subscription_admin->options());
   google::pubsub::v1::ModifyPushConfigRequest request;
   request.set_subscription(subscription.FullName());
@@ -362,7 +362,7 @@ TEST(SubscriptionAdminConnectionTest, DeleteSnapshot) {
       });
 
   auto snapshot_admin = MakeTestSubscriptionAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   internal::OptionsSpan span(snapshot_admin->options());
   auto response = snapshot_admin->DeleteSnapshot({snapshot});
   ASSERT_STATUS_OK(response);
@@ -383,7 +383,7 @@ TEST(SubscriptionAdminConnectionTest, Seek) {
       });
 
   auto snapshot_admin = MakeTestSubscriptionAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   internal::OptionsSpan span(snapshot_admin->options());
   google::pubsub::v1::SeekRequest request;
   request.set_subscription(subscription.FullName());

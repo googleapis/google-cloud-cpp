@@ -97,11 +97,11 @@ std::shared_ptr<SubscriberStub> CreateDecoratedStubs(
   stub = std::make_shared<SubscriberMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{},
       internal::HandCraftedLibClientHeader());
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SubscriberLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
 
   if (internal::TracingEnabled(options)) {

@@ -41,11 +41,11 @@ std::shared_ptr<BigQueryJobRestStub> CreateDefaultBigQueryJobRestStub(
 
   stub = std::make_shared<BigQueryJobMetadata>(std::move(stub));
 
-  if (internal::Contains(local_opts.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(local_opts.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<BigQueryJobLogging>(
         std::move(stub), local_opts.get<RestTracingOptionsOption>(),
-        local_opts.get<TracingComponentsOption>());
+        local_opts.get<LoggingComponentsOption>());
   }
   return stub;
 }

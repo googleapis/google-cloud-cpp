@@ -451,7 +451,7 @@ TEST_F(ClientOptionsTest, LoggingWithoutEnv) {
   ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto const options =
       internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
-  EXPECT_FALSE(options.has<TracingComponentsOption>());
+  EXPECT_FALSE(options.has<LoggingComponentsOption>());
 }
 
 TEST_F(ClientOptionsTest, LoggingWithEnv) {
@@ -460,7 +460,7 @@ TEST_F(ClientOptionsTest, LoggingWithEnv) {
   ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", "rpc,http");
   auto const options =
       internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
-  EXPECT_THAT(options.get<TracingComponentsOption>(),
+  EXPECT_THAT(options.get<LoggingComponentsOption>(),
               UnorderedElementsAre("rpc", "http"));
 }
 

@@ -233,7 +233,7 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
   if (logging) {
     for (auto c : absl::StrSplit(*logging, ',')) {
       GCP_LOG(INFO) << "Enabling logging for " << c;
-      o.lookup<TracingComponentsOption>().insert(std::string(c));
+      o.lookup<LoggingComponentsOption>().insert(std::string(c));
     }
   }
 
@@ -332,27 +332,27 @@ ClientOptions::ClientOptions(Options o)
 }
 
 bool ClientOptions::enable_http_tracing() const {
-  return opts_.get<TracingComponentsOption>().count("http") != 0;
+  return opts_.get<LoggingComponentsOption>().count("http") != 0;
 }
 
 ClientOptions& ClientOptions::set_enable_http_tracing(bool enable) {
   if (enable) {
-    opts_.lookup<TracingComponentsOption>().insert("http");
+    opts_.lookup<LoggingComponentsOption>().insert("http");
   } else {
-    opts_.lookup<TracingComponentsOption>().erase("http");
+    opts_.lookup<LoggingComponentsOption>().erase("http");
   }
   return *this;
 }
 
 bool ClientOptions::enable_raw_client_tracing() const {
-  return opts_.get<TracingComponentsOption>().count("raw-client") != 0;
+  return opts_.get<LoggingComponentsOption>().count("raw-client") != 0;
 }
 
 ClientOptions& ClientOptions::set_enable_raw_client_tracing(bool enable) {
   if (enable) {
-    opts_.lookup<TracingComponentsOption>().insert("raw-client");
+    opts_.lookup<LoggingComponentsOption>().insert("raw-client");
   } else {
-    opts_.lookup<TracingComponentsOption>().erase("raw-client");
+    opts_.lookup<LoggingComponentsOption>().erase("raw-client");
   }
   return *this;
 }

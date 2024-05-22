@@ -252,7 +252,7 @@ TEST(MutateRowsLimiter, LoggingEnabled) {
   auto limiter = MakeMutateRowsLimiter(
       CompletionQueue{}, Options{}
                              .set<BulkApplyThrottlingOption>(true)
-                             .set<TracingComponentsOption>({"rpc"}));
+                             .set<LoggingComponentsOption>({"rpc"}));
   // With the default settings, we should expect throttling by the second
   // request. Still, go up to 100 in case instructions are slow.
   for (auto i = 0; i != 100 && lines.empty(); ++i) {
@@ -269,7 +269,7 @@ TEST(MakeMutateRowsLimiter, LoggingDisabled) {
   auto limiter = MakeMutateRowsLimiter(CompletionQueue{},
                                        Options{}
                                            .set<BulkApplyThrottlingOption>(true)
-                                           .set<TracingComponentsOption>({}));
+                                           .set<LoggingComponentsOption>({}));
   // We generally expect throttling by the second response. Still, go up to 5 to
   // be a little bit more conclusive.
   for (auto i = 0; i != 5; ++i) {

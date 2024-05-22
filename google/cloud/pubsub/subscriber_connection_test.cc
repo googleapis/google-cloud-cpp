@@ -87,7 +87,7 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
   CompletionQueue cq;
   auto subscriber = MakeTestSubscriberConnection(
       subscription, mock,
-      UserSuppliedThreadsOption(cq).set<TracingComponentsOption>(
+      UserSuppliedThreadsOption(cq).set<LoggingComponentsOption>(
           {"rpc", "rpc-streams"}));
   std::atomic_flag received_one{false};
   promise<void> waiter;

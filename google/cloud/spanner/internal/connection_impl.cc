@@ -117,7 +117,7 @@ inline std::shared_ptr<spanner::BackoffPolicy> const& BackoffPolicyPrototype() {
 
 inline bool RpcStreamTracingEnabled() {
   return internal::Contains(
-      internal::CurrentOptions().get<TracingComponentsOption>(), "rpc-streams");
+      internal::CurrentOptions().get<LoggingComponentsOption>(), "rpc-streams");
 }
 
 inline TracingOptions const& RpcTracingOptions() {

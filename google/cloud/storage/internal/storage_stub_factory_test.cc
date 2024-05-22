@@ -86,7 +86,7 @@ std::shared_ptr<StorageStub> CreateTestStub(
                  Options{}
                      .set<EndpointOption>("localhost:1")
                      .set<GrpcNumChannelsOption>(kTestChannels)
-                     .set<TracingComponentsOption>({"rpc"})
+                     .set<LoggingComponentsOption>({"rpc"})
                      .set<UnifiedCredentialsOption>(credentials)),
              factory)
       .second;
