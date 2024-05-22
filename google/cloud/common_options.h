@@ -59,7 +59,7 @@ struct UserAgentProductsOption {
 };
 
 /**
- * Return whether tracing is enabled for the given @p component.
+ * Enable logging for a set of components.
  *
  * The C++ clients can log interesting events to help library and application
  * developers troubleshoot problems. To see log messages (maybe lots) you can
@@ -68,10 +68,11 @@ struct UserAgentProductsOption {
  *
  * - rpc
  * - rpc-streams
+ * - auth
  *
  * @ingroup options
  */
-struct TracingComponentsOption {
+struct LoggingComponentsOption {
   using Type = std::set<std::string>;
 };
 
@@ -293,8 +294,26 @@ struct FieldMaskOption {
  * A list of all the common options.
  */
 using CommonOptionList =
-    OptionList<EndpointOption, UserAgentProductsOption, TracingComponentsOption,
+    OptionList<EndpointOption, UserAgentProductsOption, LoggingComponentsOption,
                UserProjectOption, AuthorityOption, CustomHeadersOption>;
+
+/**
+ * Enable logging for a set of components.
+ *
+ * The C++ clients can log interesting events to help library and application
+ * developers troubleshoot problems. To see log messages (maybe lots) you can
+ * enable tracing for the component that interests you. Valid components are
+ * currently:
+ *
+ * - rpc
+ * - rpc-streams
+ * - auth
+ *
+ * @ingroup options
+ *
+ * @deprecated use #google::cloud::LoggingComponentsOption
+ */
+using TracingComponentsOption = LoggingComponentsOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
