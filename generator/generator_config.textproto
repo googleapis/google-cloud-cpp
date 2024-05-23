@@ -1972,7 +1972,7 @@ service {
 # Developer Connect
 service {
   service_proto_path: "google/cloud/developerconnect/v1/developer_connect.proto"
-  product_path: "google/cloud/developer_connect/v1"
+  product_path: "google/cloud/developerconnect/v1"
   initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
 }
