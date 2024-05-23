@@ -129,7 +129,8 @@ void ExampleStatusOr(google::cloud::pubsub_admin::TopicAdminClient client,
     // The actual type of `topic` is
     // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
     // we expect it'll most often be declared with auto like this.
-    for (auto& topic : client.ListTopics(project_id)) {
+    for (auto& topic :
+         client.ListTopics(google::cloud::Project(project_id).FullName())) {
       // Use `topic` like a smart pointer; check it before de-referencing
       if (!topic) {
         // `topic` doesn't contain a value, so `.status()` will contain error
@@ -1282,6 +1283,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const dead_letter_topic =
       google::cloud::pubsub::Topic(project_id, dead_letter_topic_id);
   auto const snapshot_id = RandomSnapshotId(generator);
+  auto const nonexistent_subscription_id = RandomSubscriptionId(generator);
+  auto const nonexistent_subscription = google::cloud::pubsub::Subscription(
+      project_id, nonexistent_subscription_id);
 
   using ::google::cloud::StatusCode;
   auto ignore_emulator_failures =
@@ -1367,7 +1371,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   (void)subscription_admin.CreateSubscription(dead_letter_request);
   cleanup.Defer([subscription_admin, subscription, filtered_subscription,
                  exactly_once_subscription, ordering_subscription,
-                 dead_letter_subscription]() mutable {
+                 dead_letter_subscription, nonexistent_subscription]() mutable {
     std::cout << "\nDelete subscription (" << subscription.subscription_id()
               << ")" << std::endl;
     (void)subscription_admin.DeleteSubscription(subscription.FullName());
@@ -1388,6 +1392,10 @@ void AutoRun(std::vector<std::string> const& argv) {
               << dead_letter_subscription.subscription_id() << ")" << std::endl;
     (void)subscription_admin.DeleteSubscription(
         dead_letter_subscription.FullName());
+    std::cout << "\nDelete subscription ("
+              << nonexistent_subscription.subscription_id() << ")" << std::endl;
+    (void)subscription_admin.DeleteSubscription(
+        nonexistent_subscription.FullName());
   });
 
   ignore_emulator_failures([&] {
@@ -1508,9 +1516,15 @@ void AutoRun(std::vector<std::string> const& argv) {
   PublishHelper(publisher, "SubscriberRetrySettings", 1);
   SubscriberRetrySettings({project_id, subscription_id});
 
-  std::cout << "\nRunning OptimisticSubscribe() sample" << std::endl;
+  std::cout << "\nRunning OptimisticSubscribe() sample [1]" << std::endl;
   PublishHelper(publisher, "OptimisticSubscribe", 1);
   OptimisticSubscribe({project_id, topic_id, subscription_id});
+
+  std::cout << "\nRunning OptimisticSubscribe() sample [2]" << std::endl;
+  OptimisticSubscribe({project_id, topic_id, subscription_id});
+
+  std::cout << "\nRunning OptimisticSubscribe() sample [3]" << std::endl;
+  OptimisticSubscribe({project_id, topic_id, nonexistent_subscription_id});
 
   std::cout << "\nAutoRun done" << std::endl;
 }
