@@ -266,7 +266,7 @@ TEST(CreateSignedPolicyDocTest, SignV4CustomEndpoint) {
       client.GenerateSignedPostPolicyV4(CreatePolicyDocumentV4ForTest());
 
   ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(actual->url, StartsWith("https://storage.mydomain.com"));
+  EXPECT_THAT(actual->url, StartsWith(custom_endpoint));
 }
 
 }  // namespace
