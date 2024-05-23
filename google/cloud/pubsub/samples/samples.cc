@@ -1032,6 +1032,7 @@ void OptimisticSubscribe(std::vector<std::string> const& argv) {
   }
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
+  namespace gc = ::google::cloud;
   [](std::string project_id, std::string topic_id,
      std::string subscription_id) {
     // Do not retry the attempts to consume messages.
@@ -1044,49 +1045,40 @@ void OptimisticSubscribe(std::vector<std::string> const& argv) {
                 .clone()));
 
     // [START pubsub_optimistic_subscribe]
-    try {
-      // Try to consume from subscription.
-      auto response = subscriber.Pull();
-      if (!response) {
-        if (response.status().code() ==
-            google::cloud::StatusCode::kUnavailable) {
-          std::cout << "Pull received kUnavailable status: "
-                    << response.status().message() << "\n";
-        } else {
-          throw std::move(response).status();
-        }
-      } else {
+    auto process_response = [](gc::StatusOr<pubsub::PullResponse> response) {
+      if (response) {
         std::cout << "Received message " << response->message << "\n";
         std::move(response->handler).ack();
+        return gc::Status();
       }
-    } catch (google::cloud::Status const& status) {
-      // If the subscription does not exist, create the subscription.
-      if (status.code() == google::cloud::StatusCode::kNotFound) {
-        google::cloud::pubsub_admin::SubscriptionAdminClient
-            subscription_admin_client(
-                google::cloud::pubsub_admin::MakeSubscriptionAdminConnection());
-        google::pubsub::v1::Subscription request;
-        request.set_name(
-            pubsub::Subscription(project_id, subscription_id).FullName());
-        request.set_topic(pubsub::Topic(project_id, topic_id).FullName());
-        auto sub = subscription_admin_client.CreateSubscription(request);
-        if (!sub) throw std::move(sub).status();
+      if (response.status().code() == gc::StatusCode::kUnavailable &&
+          response.status().message() == "no messages returned") {
+        std::cout << "No messages returned from Pull()\n";
+        return gc::Status();
       }
-      // Consume from the subscription again.
-      auto response = subscriber.Pull();
-      if (!response) {
-        if (response.status().code() ==
-            google::cloud::StatusCode::kUnavailable) {
-          std::cout << "Pull received kUnavailable status: "
-                    << response.status().message() << "\n";
-        } else {
-          throw std::move(response).status();
-        }
-      } else {
-        std::cout << "Received message " << response->message << "\n";
-        std::move(response->handler).ack();
-      }
-    }
+      return response.status();
+    };
+
+    // Instead of checking if the subscription exists, optimistically try to
+    // consume from the subscription.
+    auto status = process_response(subscriber.Pull());
+    if (status.ok()) return;
+    if (status.code() != gc::StatusCode::kNotFound) throw std::move(status);
+
+    // Since the subscription does not exist, create the subscription.
+    pubsub_admin::SubscriptionAdminClient subscription_admin_client(
+        pubsub_admin::MakeSubscriptionAdminConnection());
+    google::pubsub::v1::Subscription request;
+    request.set_name(
+        pubsub::Subscription(project_id, subscription_id).FullName());
+    request.set_topic(
+        pubsub::Topic(project_id, std::move(topic_id)).FullName());
+    auto sub = subscription_admin_client.CreateSubscription(request);
+    if (!sub) throw std::move(sub).status();
+
+    // Consume from the new subscription.
+    status = process_response(subscriber.Pull());
+    if (!status.ok()) throw std::move(status);
     // [END pubsub_optimistic_subscribe]
   }(argv.at(0), argv.at(1), argv.at(2));
 }
