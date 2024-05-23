@@ -120,7 +120,7 @@ TEST(PolicyDocumentV4Request, Printing) {
   std::stringstream stream;
   stream << req;
   EXPECT_EQ(
-      "PolicyDocumentRequest={endpoint_authority=storage.googleapis.com,,"
+      "PolicyDocumentRequest={endpoint_authority=storage.googleapis.com,"
       "{\"conditions\":[{\"bucket\":\"test-bucket\"},{"
       "\"key\":\"test-object\"},{\"x-goog-date\":\"20100616T111111Z\"},{\"x-"
       "goog-credential\":\"/20100616/auto/storage/"
