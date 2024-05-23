@@ -90,8 +90,9 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
   }
   if (last_status.ok()) {
-    return google::cloud::internal::UnavailableError("no messages returned",
-                                                     GCP_ERROR_INFO());
+    return google::cloud::internal::UnavailableError(
+        "no messages returned",
+        GCP_ERROR_INFO().WithMetadata("gl-cpp.error.origin", "client"));
   }
   return google::cloud::internal::RetryLoopError(last_status, __func__,
                                                  retry_policy->IsExhausted());

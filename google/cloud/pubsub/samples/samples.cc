@@ -21,6 +21,7 @@
 #include "google/cloud/pubsub/subscription_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/status_utils.h"
 #include "google/cloud/project.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/example_driver.h"
@@ -1052,9 +1053,9 @@ void OptimisticSubscribe(std::vector<std::string> const& argv) {
         std::move(response->handler).ack();
         return gc::Status();
       }
-      if (response.status().code() == gc::StatusCode::kUnavailable &&
-          response.status().message() == "no messages returned") {
-        std::cout << "No messages returned from Pull()\n";
+      if (gc::internal::IsClientOrigin(response.status())) {
+        std::cout << "Client originated error: " << response.status().message()
+                  << "\n";
         return gc::Status();
       }
       return response.status();
