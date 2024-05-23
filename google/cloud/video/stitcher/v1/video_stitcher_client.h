@@ -127,7 +127,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
+  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L372}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
@@ -166,7 +166,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
+  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L372}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
@@ -202,7 +202,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
+  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L395}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
@@ -241,7 +241,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
+  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L395}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
@@ -268,7 +268,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
+  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L432}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
@@ -298,7 +298,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
+  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L432}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
@@ -331,8 +331,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L444}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L968}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
@@ -368,8 +368,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L444}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L968}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
@@ -407,7 +407,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
+  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L456}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
@@ -446,7 +446,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
+  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L456}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
@@ -474,7 +474,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
+  /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L468}
   /// [google.cloud.video.stitcher.v1.VodSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   // clang-format on
@@ -507,7 +507,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
+  /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L468}
   /// [google.cloud.video.stitcher.v1.VodSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   // clang-format on
@@ -536,7 +536,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
+  /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L483}
   /// [google.cloud.video.stitcher.v1.VodSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   // clang-format on
@@ -567,7 +567,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
+  /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L483}
   /// [google.cloud.video.stitcher.v1.VodSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   // clang-format on
@@ -604,7 +604,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
+  /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L495}
   /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L32}
   ///
   // clang-format on
@@ -644,7 +644,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
+  /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L495}
   /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L32}
   ///
   // clang-format on
@@ -673,7 +673,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
+  /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L522}
   /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L32}
   ///
   // clang-format on
@@ -703,7 +703,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
+  /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L522}
   /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L32}
   ///
   // clang-format on
@@ -741,8 +741,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L46}
+  /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L535}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L48}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -780,8 +780,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L46}
+  /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L535}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L48}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -809,8 +809,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L46}
+  /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L562}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L48}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -839,8 +839,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L46}
+  /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L562}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L48}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -877,8 +877,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
-  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L575}
+  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>
@@ -916,8 +916,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
-  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L575}
+  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>
@@ -944,8 +944,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
-  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L602}
+  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
@@ -974,8 +974,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
-  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L602}
+  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
@@ -1015,7 +1015,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.CreateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
+  /// [google.cloud.video.stitcher.v1.CreateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L614}
   /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   // clang-format on
@@ -1054,7 +1054,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.CreateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
+  /// [google.cloud.video.stitcher.v1.CreateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L614}
   /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   // clang-format on
@@ -1090,7 +1090,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListSlatesRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
+  /// [google.cloud.video.stitcher.v1.ListSlatesRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L662}
   /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   // clang-format on
@@ -1129,7 +1129,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListSlatesRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
+  /// [google.cloud.video.stitcher.v1.ListSlatesRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L662}
   /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   // clang-format on
@@ -1156,7 +1156,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
+  /// [google.cloud.video.stitcher.v1.GetSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L650}
   /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   // clang-format on
@@ -1186,7 +1186,7 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
+  /// [google.cloud.video.stitcher.v1.GetSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L650}
   /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   // clang-format on
@@ -1221,7 +1221,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
-  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
+  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L699}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
@@ -1259,7 +1259,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
-  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
+  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L699}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
@@ -1292,8 +1292,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L709}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L968}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
@@ -1329,8 +1329,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L709}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L968}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
@@ -1358,8 +1358,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
-  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L141}
+  /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L721}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L152}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
@@ -1390,8 +1390,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
-  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L141}
+  /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L721}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L152}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
@@ -1418,8 +1418,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
-  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L141}
+  /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L736}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L152}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
@@ -1448,8 +1448,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
-  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L141}
+  /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L736}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L152}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
@@ -1485,8 +1485,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L748}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L44}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
@@ -1526,8 +1526,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L748}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L44}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
@@ -1565,8 +1565,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L781}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L44}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::LiveConfig> ListLiveConfigs(
@@ -1605,8 +1605,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L781}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L44}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::LiveConfig> ListLiveConfigs(
@@ -1634,8 +1634,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L820}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L44}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
@@ -1665,8 +1665,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L820}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L44}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
@@ -1699,8 +1699,8 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L833}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L968}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
@@ -1736,14 +1736,460 @@ class VideoStitcherServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L833}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L968}
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteLiveConfig(
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the specified LiveConfig. Only update fields specified
+  /// in the call method body.
+  ///
+  /// @param live_config  Required. The LiveConfig resource which replaces the resource on the
+  ///  server.
+  /// @param update_mask  Required. The update mask applies to the resource.
+  ///  For the `FieldMask` definition, see
+  ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.LiveConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L44}
+  /// [google.cloud.video.stitcher.v1.UpdateLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L845}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  UpdateLiveConfig(
+      google::cloud::video::stitcher::v1::LiveConfig const& live_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the specified LiveConfig. Only update fields specified
+  /// in the call method body.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.UpdateLiveConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.LiveConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L44}
+  /// [google.cloud.video.stitcher.v1.UpdateLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L845}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  UpdateLiveConfig(
+      google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Registers the VOD config with the provided unique ID in
+  /// the specified region.
+  ///
+  /// @param parent  Required. The project in which the VOD config should be created, in
+  ///  the form of `projects/{project_number}/locations/{location}`.
+  /// @param vod_config  Required. The VOD config resource to create.
+  /// @param vod_config_id  Required. The unique identifier ID to use for the VOD config.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.VodConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateVodConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L858}
+  /// [google.cloud.video.stitcher.v1.VodConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/vod_configs.proto#L29}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+  CreateVodConfig(
+      std::string const& parent,
+      google::cloud::video::stitcher::v1::VodConfig const& vod_config,
+      std::string const& vod_config_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Registers the VOD config with the provided unique ID in
+  /// the specified region.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.CreateVodConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.VodConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateVodConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L858}
+  /// [google.cloud.video.stitcher.v1.VodConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/vod_configs.proto#L29}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+  CreateVodConfig(
+      google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all VOD configs managed by the Video Stitcher API that
+  /// belong to the specified project and region.
+  ///
+  /// @param parent  Required. The project that contains the list of VOD configs, in the
+  ///  form of `projects/{project_number}/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.VodConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListVodConfigsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L891}
+  /// [google.cloud.video.stitcher.v1.VodConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/vod_configs.proto#L29}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::video::stitcher::v1::VodConfig> ListVodConfigs(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all VOD configs managed by the Video Stitcher API that
+  /// belong to the specified project and region.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.ListVodConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.VodConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListVodConfigsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L891}
+  /// [google.cloud.video.stitcher.v1.VodConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/vod_configs.proto#L29}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::video::stitcher::v1::VodConfig> ListVodConfigs(
+      google::cloud::video::stitcher::v1::ListVodConfigsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the specified VOD config managed by the Video
+  /// Stitcher API service.
+  ///
+  /// @param name  Required. The name of the VOD config to be retrieved, in the form
+  ///  of `projects/{project_number}/locations/{location}/vodConfigs/{id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetVodConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L931}
+  /// [google.cloud.video.stitcher.v1.VodConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/vod_configs.proto#L29}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::video::stitcher::v1::VodConfig> GetVodConfig(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the specified VOD config managed by the Video
+  /// Stitcher API service.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.GetVodConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetVodConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L931}
+  /// [google.cloud.video.stitcher.v1.VodConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/vod_configs.proto#L29}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::video::stitcher::v1::VodConfig> GetVodConfig(
+      google::cloud::video::stitcher::v1::GetVodConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes the specified VOD config.
+  ///
+  /// @param name  Required. The name of the VOD config to be deleted, in the form of
+  ///  `projects/{project_number}/locations/{location}/vodConfigs/{id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.DeleteVodConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L943}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L968}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteVodConfig(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes the specified VOD config.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.DeleteVodConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.DeleteVodConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L943}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L968}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteVodConfig(
+      google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the specified VOD config. Only update fields specified
+  /// in the call method body.
+  ///
+  /// @param vod_config  Required. The VOD config resource which replaces the resource on the
+  ///  server.
+  /// @param update_mask  Required. The update mask applies to the resource.
+  ///  For the `FieldMask` definition, see
+  ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.VodConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.UpdateVodConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L955}
+  /// [google.cloud.video.stitcher.v1.VodConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/vod_configs.proto#L29}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+  UpdateVodConfig(
+      google::cloud::video::stitcher::v1::VodConfig const& vod_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the specified VOD config. Only update fields specified
+  /// in the call method body.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.UpdateVodConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.VodConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.UpdateVodConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L955}
+  /// [google.cloud.video.stitcher.v1.VodConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/vod_configs.proto#L29}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+  UpdateVodConfig(
+      google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request,
       Options opts = {});
 
  private:

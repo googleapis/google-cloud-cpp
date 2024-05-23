@@ -117,6 +117,18 @@ class SecurityCenterManagementConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ValidateEventThreatDetectionCustomModule(
       google::cloud::securitycentermanagement::v1::
           ValidateEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual google::cloud::Idempotency GetSecurityCenterService(
+      google::cloud::securitycentermanagement::v1::
+          GetSecurityCenterServiceRequest const& request);
+
+  virtual google::cloud::Idempotency ListSecurityCenterServices(
+      google::cloud::securitycentermanagement::v1::
+          ListSecurityCenterServicesRequest request);
+
+  virtual google::cloud::Idempotency UpdateSecurityCenterService(
+      google::cloud::securitycentermanagement::v1::
+          UpdateSecurityCenterServiceRequest const& request);
 };
 
 std::unique_ptr<SecurityCenterManagementConnectionIdempotencyPolicy>

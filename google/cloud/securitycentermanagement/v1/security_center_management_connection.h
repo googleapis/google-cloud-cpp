@@ -301,6 +301,22 @@ class SecurityCenterManagementConnection {
   ValidateEventThreatDetectionCustomModule(
       google::cloud::securitycentermanagement::v1::
           ValidateEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  GetSecurityCenterService(google::cloud::securitycentermanagement::v1::
+                               GetSecurityCenterServiceRequest const& request);
+
+  virtual StreamRange<
+      google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  ListSecurityCenterServices(google::cloud::securitycentermanagement::v1::
+                                 ListSecurityCenterServicesRequest request);
+
+  virtual StatusOr<
+      google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  UpdateSecurityCenterService(
+      google::cloud::securitycentermanagement::v1::
+          UpdateSecurityCenterServiceRequest const& request);
 };
 
 /**

@@ -436,6 +436,66 @@ SecurityCenterManagementClient::ValidateEventThreatDetectionCustomModule(
   return connection_->ValidateEventThreatDetectionCustomModule(request);
 }
 
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementClient::GetSecurityCenterService(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycentermanagement::v1::GetSecurityCenterServiceRequest
+      request;
+  request.set_name(name);
+  return connection_->GetSecurityCenterService(request);
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementClient::GetSecurityCenterService(
+    google::cloud::securitycentermanagement::v1::
+        GetSecurityCenterServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSecurityCenterService(request);
+}
+
+StreamRange<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementClient::ListSecurityCenterServices(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycentermanagement::v1::ListSecurityCenterServicesRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListSecurityCenterServices(request);
+}
+
+StreamRange<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementClient::ListSecurityCenterServices(
+    google::cloud::securitycentermanagement::v1::
+        ListSecurityCenterServicesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListSecurityCenterServices(std::move(request));
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementClient::UpdateSecurityCenterService(
+    google::cloud::securitycentermanagement::v1::SecurityCenterService const&
+        security_center_service,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycentermanagement::v1::
+      UpdateSecurityCenterServiceRequest request;
+  *request.mutable_security_center_service() = security_center_service;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateSecurityCenterService(request);
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementClient::UpdateSecurityCenterService(
+    google::cloud::securitycentermanagement::v1::
+        UpdateSecurityCenterServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSecurityCenterService(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycentermanagement_v1
 }  // namespace cloud

@@ -177,6 +177,25 @@ class SecurityCenterManagementLogging : public SecurityCenterManagementStub {
           ValidateEventThreatDetectionCustomModuleRequest const& request)
       override;
 
+  StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  GetSecurityCenterService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycentermanagement::v1::
+          GetSecurityCenterServiceRequest const& request) override;
+
+  StatusOr<google::cloud::securitycentermanagement::v1::
+               ListSecurityCenterServicesResponse>
+  ListSecurityCenterServices(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycentermanagement::v1::
+          ListSecurityCenterServicesRequest const& request) override;
+
+  StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  UpdateSecurityCenterService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycentermanagement::v1::
+          UpdateSecurityCenterServiceRequest const& request) override;
+
  private:
   std::shared_ptr<SecurityCenterManagementStub> child_;
   TracingOptions tracing_options_;

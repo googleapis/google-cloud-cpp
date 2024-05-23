@@ -184,6 +184,30 @@ class MockSecurityCenterManagementConnection
       (google::cloud::securitycentermanagement::v1::
            ValidateEventThreatDetectionCustomModuleRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::securitycentermanagement::v1::SecurityCenterService>,
+      GetSecurityCenterService,
+      (google::cloud::securitycentermanagement::v1::
+           GetSecurityCenterServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::securitycentermanagement::v1::SecurityCenterService>),
+      ListSecurityCenterServices,
+      (google::cloud::securitycentermanagement::v1::
+           ListSecurityCenterServicesRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::securitycentermanagement::v1::SecurityCenterService>,
+      UpdateSecurityCenterService,
+      (google::cloud::securitycentermanagement::v1::
+           UpdateSecurityCenterServiceRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

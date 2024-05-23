@@ -166,6 +166,27 @@ class SecurityCenterManagementStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           ValidateEventThreatDetectionCustomModuleRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  GetSecurityCenterService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycentermanagement::v1::
+          GetSecurityCenterServiceRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::securitycentermanagement::v1::
+                       ListSecurityCenterServicesResponse>
+  ListSecurityCenterServices(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycentermanagement::v1::
+          ListSecurityCenterServicesRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  UpdateSecurityCenterService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycentermanagement::v1::
+          UpdateSecurityCenterServiceRequest const& request) = 0;
 };
 
 class DefaultSecurityCenterManagementStub
@@ -314,6 +335,25 @@ class DefaultSecurityCenterManagementStub
       google::cloud::securitycentermanagement::v1::
           ValidateEventThreatDetectionCustomModuleRequest const& request)
       override;
+
+  StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  GetSecurityCenterService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycentermanagement::v1::
+          GetSecurityCenterServiceRequest const& request) override;
+
+  StatusOr<google::cloud::securitycentermanagement::v1::
+               ListSecurityCenterServicesResponse>
+  ListSecurityCenterServices(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycentermanagement::v1::
+          ListSecurityCenterServicesRequest const& request) override;
+
+  StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  UpdateSecurityCenterService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycentermanagement::v1::
+          UpdateSecurityCenterServiceRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::securitycentermanagement::v1::

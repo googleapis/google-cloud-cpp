@@ -276,6 +276,64 @@ VideoStitcherServiceTracingConnection::DeleteLiveConfig(
   return internal::EndSpan(std::move(span), child_->DeleteLiveConfig(request));
 }
 
+future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+VideoStitcherServiceTracingConnection::UpdateLiveConfig(
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateLiveConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateLiveConfig(request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceTracingConnection::CreateVodConfig(
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::CreateVodConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateVodConfig(request));
+}
+
+StreamRange<google::cloud::video::stitcher::v1::VodConfig>
+VideoStitcherServiceTracingConnection::ListVodConfigs(
+    google::cloud::video::stitcher::v1::ListVodConfigsRequest request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::ListVodConfigs");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListVodConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::video::stitcher::v1::VodConfig>(std::move(span),
+                                                     std::move(sr));
+}
+
+StatusOr<google::cloud::video::stitcher::v1::VodConfig>
+VideoStitcherServiceTracingConnection::GetVodConfig(
+    google::cloud::video::stitcher::v1::GetVodConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::GetVodConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVodConfig(request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceTracingConnection::DeleteVodConfig(
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::DeleteVodConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteVodConfig(request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceTracingConnection::UpdateVodConfig(
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateVodConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateVodConfig(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<video_stitcher_v1::VideoStitcherServiceConnection>

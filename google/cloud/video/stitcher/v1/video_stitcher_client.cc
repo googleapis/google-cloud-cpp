@@ -461,6 +461,116 @@ VideoStitcherServiceClient::DeleteLiveConfig(
   return connection_->DeleteLiveConfig(request);
 }
 
+future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+VideoStitcherServiceClient::UpdateLiveConfig(
+    google::cloud::video::stitcher::v1::LiveConfig const& live_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::stitcher::v1::UpdateLiveConfigRequest request;
+  *request.mutable_live_config() = live_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateLiveConfig(request);
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+VideoStitcherServiceClient::UpdateLiveConfig(
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLiveConfig(request);
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceClient::CreateVodConfig(
+    std::string const& parent,
+    google::cloud::video::stitcher::v1::VodConfig const& vod_config,
+    std::string const& vod_config_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::stitcher::v1::CreateVodConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_vod_config() = vod_config;
+  request.set_vod_config_id(vod_config_id);
+  return connection_->CreateVodConfig(request);
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceClient::CreateVodConfig(
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateVodConfig(request);
+}
+
+StreamRange<google::cloud::video::stitcher::v1::VodConfig>
+VideoStitcherServiceClient::ListVodConfigs(std::string const& parent,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::stitcher::v1::ListVodConfigsRequest request;
+  request.set_parent(parent);
+  return connection_->ListVodConfigs(request);
+}
+
+StreamRange<google::cloud::video::stitcher::v1::VodConfig>
+VideoStitcherServiceClient::ListVodConfigs(
+    google::cloud::video::stitcher::v1::ListVodConfigsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListVodConfigs(std::move(request));
+}
+
+StatusOr<google::cloud::video::stitcher::v1::VodConfig>
+VideoStitcherServiceClient::GetVodConfig(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::stitcher::v1::GetVodConfigRequest request;
+  request.set_name(name);
+  return connection_->GetVodConfig(request);
+}
+
+StatusOr<google::cloud::video::stitcher::v1::VodConfig>
+VideoStitcherServiceClient::GetVodConfig(
+    google::cloud::video::stitcher::v1::GetVodConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetVodConfig(request);
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceClient::DeleteVodConfig(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::stitcher::v1::DeleteVodConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteVodConfig(request);
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceClient::DeleteVodConfig(
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteVodConfig(request);
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceClient::UpdateVodConfig(
+    google::cloud::video::stitcher::v1::VodConfig const& vod_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::stitcher::v1::UpdateVodConfigRequest request;
+  *request.mutable_vod_config() = vod_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateVodConfig(request);
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceClient::UpdateVodConfig(
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateVodConfig(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_stitcher_v1
 }  // namespace cloud

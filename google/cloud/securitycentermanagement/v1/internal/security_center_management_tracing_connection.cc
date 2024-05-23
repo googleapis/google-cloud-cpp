@@ -305,6 +305,42 @@ SecurityCenterManagementTracingConnection::
       *span, child_->ValidateEventThreatDetectionCustomModule(request));
 }
 
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementTracingConnection::GetSecurityCenterService(
+    google::cloud::securitycentermanagement::v1::
+        GetSecurityCenterServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securitycentermanagement_v1::SecurityCenterManagementConnection::"
+      "GetSecurityCenterService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSecurityCenterService(request));
+}
+
+StreamRange<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementTracingConnection::ListSecurityCenterServices(
+    google::cloud::securitycentermanagement::v1::
+        ListSecurityCenterServicesRequest request) {
+  auto span = internal::MakeSpan(
+      "securitycentermanagement_v1::SecurityCenterManagementConnection::"
+      "ListSecurityCenterServices");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListSecurityCenterServices(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securitycentermanagement::v1::SecurityCenterService>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementTracingConnection::UpdateSecurityCenterService(
+    google::cloud::securitycentermanagement::v1::
+        UpdateSecurityCenterServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securitycentermanagement_v1::SecurityCenterManagementConnection::"
+      "UpdateSecurityCenterService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSecurityCenterService(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<securitycentermanagement_v1::SecurityCenterManagementConnection>

@@ -142,6 +142,34 @@ class VideoStitcherServiceTracingConnection
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request) override;
 
+  future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  UpdateLiveConfig(
+      google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+  CreateVodConfig(
+      google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request)
+      override;
+
+  StreamRange<google::cloud::video::stitcher::v1::VodConfig> ListVodConfigs(
+      google::cloud::video::stitcher::v1::ListVodConfigsRequest request)
+      override;
+
+  StatusOr<google::cloud::video::stitcher::v1::VodConfig> GetVodConfig(
+      google::cloud::video::stitcher::v1::GetVodConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteVodConfig(
+      google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+  UpdateVodConfig(
+      google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request)
+      override;
+
  private:
   std::shared_ptr<video_stitcher_v1::VideoStitcherServiceConnection> child_;
 };
