@@ -643,7 +643,7 @@ TEST(V4SignedUrlRequests, BucketBoundHostnameReset) {
 }
 
 TEST(V4SignedUrlRequests, CustomEndpoint) {
-  auto const custom_endpoint_authority = std::string{"mydomain.com"};
+  auto const custom_endpoint_authority = std::string{"storage.mydomain.com"};
   V4SignUrlRequest request("GET", "test-bucket", "test-object",
                            custom_endpoint_authority);
   ASSERT_STATUS_OK(request.Validate());

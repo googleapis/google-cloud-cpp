@@ -490,11 +490,11 @@ std::string Client::Endpoint() const {
 // But the code is rarely used and not in any critical path.
 std::string Client::EndpointAuthority() const {
   auto endpoint = Endpoint();
-  auto host = absl::string_view(endpoint);
-  if (!absl::ConsumePrefix(&host, "https://")) {
-    absl::ConsumePrefix(&host, "http://");
+  auto endpoint_authority = absl::string_view(endpoint);
+  if (!absl::ConsumePrefix(&endpoint_authority, "https://")) {
+    absl::ConsumePrefix(&endpoint_authority, "http://");
   }
-  return std::string(host);
+  return std::string(endpoint_authority);
 }
 
 namespace internal {

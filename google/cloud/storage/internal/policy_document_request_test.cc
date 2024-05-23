@@ -158,7 +158,7 @@ TEST(PolicyDocumentV4Request, Url) {
   PolicyDocumentV4 doc;
   doc.bucket = "test-bucket";
   PolicyDocumentV4Request request(doc);
-  auto const custom_endpoint_authority = std::string{"mydomain.com"};
+  auto const custom_endpoint_authority = std::string{"storage.mydomain.com"};
   request.SetEndpointAuthority(custom_endpoint_authority);
   EXPECT_THAT(request.Url(),
               StartsWith("https://" + custom_endpoint_authority));
@@ -167,7 +167,7 @@ TEST(PolicyDocumentV4Request, Url) {
 TEST(PolicyDocumentV4Request, UrlWithVirtualHostName) {
   PolicyDocumentV4 doc;
   doc.bucket = "test-bucket";
-  auto const custom_endpoint_authority = std::string{"mydomain.com"};
+  auto const custom_endpoint_authority = std::string{"storage.mydomain.com"};
   PolicyDocumentV4Request request(doc);
   request.SetOption(VirtualHostname(true));
   request.SetEndpointAuthority(custom_endpoint_authority);
