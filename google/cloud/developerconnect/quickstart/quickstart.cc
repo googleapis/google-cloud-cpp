@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/developerconnect/v1/ EDIT HERE _client.h"
+#include "google/cloud/developerconnect/v1/developer_connect_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,12 +26,12 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace developerconnect = ::google::cloud::developerconnect_v1;
-  auto client = developerconnect::ServiceClient(
-      developerconnect::MakeServiceConnection());  // EDIT HERE
+  auto client = developerconnect::DeveloperConnectClient(
+      developerconnect::MakeDeveloperConnectConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto c : client.ListConnections(location.FullName())) {
+    if (!c) throw std::move(c).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;

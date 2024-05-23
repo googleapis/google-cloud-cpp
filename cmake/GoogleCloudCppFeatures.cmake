@@ -86,6 +86,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "datastore"
     "datastream"
     "deploy"
+    "developerconnect"
     "dialogflow_cx"
     "dialogflow_es"
     "discoveryengine"
