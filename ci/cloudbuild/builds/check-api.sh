@@ -134,7 +134,7 @@ function check_abi() {
       # Skip `Options::Data<>` which is a private implementation detail.
       # Otherwise, we get false positives when a specific type template
       # parameter is no longer used.
-      -skip-internal-types "(::StubInterface|Options::Data<)"
+      -skip-internal-types "(::StubInterface|::Options::Data<)"
       # The library to compare
       -l "${library}"
       # Compared the saved baseline vs. the dump for the current version
