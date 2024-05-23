@@ -43,6 +43,7 @@ using ::testing::AtLeast;
 using ::testing::AtMost;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::Property;
 using ::testing::StartsWith;
 
