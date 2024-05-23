@@ -342,12 +342,8 @@ std::map<std::string, std::string> PolicyDocumentV4Request::RequiredFormFields()
 }
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r) {
-  using nlohmann::json;
-  json j;
-  j["endpoint_authority"] = r.endpoint_authority();
-
-  return os << "PolicyDocumentRequest={" << std::move(j.dump()) << ","
-            << r.StringToSign() << "}";
+  return os << "PolicyDocumentRequest={endpoint_authority="
+            << r.endpoint_authority() << "," << r.StringToSign() << "}";
 }
 
 }  // namespace internal

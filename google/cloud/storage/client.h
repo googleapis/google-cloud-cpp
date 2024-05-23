@@ -3083,9 +3083,9 @@ class Client {
       PolicyDocumentV4 document, Options&&... options) {
     google::cloud::internal::OptionsSpan const span(
         SpanOptions(std::forward<Options>(options)...));
-    internal::PolicyDocumentV4Request request(std::move(document));
+    internal::PolicyDocumentV4Request request(std::move(document),
+                                              EndpointAuthority());
     request.set_multiple_options(std::forward<Options>(options)...);
-    request.SetEndpointAuthority(EndpointAuthority());
     return SignPolicyDocumentV4(std::move(request));
   }
 

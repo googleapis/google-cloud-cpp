@@ -105,7 +105,14 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentRequest const& r);
 class PolicyDocumentV4Request {
  public:
   PolicyDocumentV4Request()
-      : scheme_("https"), endpoint_authority_("storage.googleapis.com") {}
+      : PolicyDocumentV4Request("storage.googleapis.com") {}
+  explicit PolicyDocumentV4Request(std::string endpoint_authority)
+      : scheme_("https"), endpoint_authority_(std::move(endpoint_authority)) {}
+  PolicyDocumentV4Request(PolicyDocumentV4 document,
+                          std::string endpoint_authority)
+      : PolicyDocumentV4Request(std::move(endpoint_authority)) {
+    document_ = std::move(document);
+  }
   explicit PolicyDocumentV4Request(PolicyDocumentV4 document)
       : PolicyDocumentV4Request() {
     document_ = std::move(document);
@@ -177,10 +184,6 @@ class PolicyDocumentV4Request {
 
   void SetSigningEmail(std::string signing_email) {
     signing_email_ = std::move(signing_email);
-  }
-
-  void SetEndpointAuthority(std::string endpoint_authority) {
-    endpoint_authority_ = std::move(endpoint_authority);
   }
 
   std::string Credentials() const;
