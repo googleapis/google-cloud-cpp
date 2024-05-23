@@ -115,6 +115,28 @@ class VideoStitcherServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteLiveConfig(
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request);
+
+  virtual google::cloud::Idempotency UpdateLiveConfig(
+      google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateVodConfig(
+      google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListVodConfigs(
+      google::cloud::video::stitcher::v1::ListVodConfigsRequest request);
+
+  virtual google::cloud::Idempotency GetVodConfig(
+      google::cloud::video::stitcher::v1::GetVodConfigRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteVodConfig(
+      google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateVodConfig(
+      google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
+          request);
 };
 
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>

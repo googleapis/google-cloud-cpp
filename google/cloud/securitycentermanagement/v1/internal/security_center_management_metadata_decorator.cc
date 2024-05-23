@@ -272,6 +272,39 @@ SecurityCenterManagementMetadata::ValidateEventThreatDetectionCustomModule(
                                                           request);
 }
 
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementMetadata::GetSecurityCenterService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        GetSecurityCenterServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetSecurityCenterService(context, options, request);
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::
+             ListSecurityCenterServicesResponse>
+SecurityCenterManagementMetadata::ListSecurityCenterServices(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        ListSecurityCenterServicesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListSecurityCenterServices(context, options, request);
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementMetadata::UpdateSecurityCenterService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        UpdateSecurityCenterServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("security_center_service.name=",
+                           internal::UrlEncode(
+                               request.security_center_service().name())));
+  return child_->UpdateSecurityCenterService(context, options, request);
+}
+
 void SecurityCenterManagementMetadata::SetMetadata(
     grpc::ClientContext& context, Options const& options,
     std::string const& request_params) {

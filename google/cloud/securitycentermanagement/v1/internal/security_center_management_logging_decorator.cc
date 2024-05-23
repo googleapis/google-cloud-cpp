@@ -340,6 +340,49 @@ SecurityCenterManagementLogging::ValidateEventThreatDetectionCustomModule(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementLogging::GetSecurityCenterService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        GetSecurityCenterServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycentermanagement::v1::
+                 GetSecurityCenterServiceRequest const& request) {
+        return child_->GetSecurityCenterService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::
+             ListSecurityCenterServicesResponse>
+SecurityCenterManagementLogging::ListSecurityCenterServices(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        ListSecurityCenterServicesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycentermanagement::v1::
+                 ListSecurityCenterServicesRequest const& request) {
+        return child_->ListSecurityCenterServices(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementLogging::UpdateSecurityCenterService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        UpdateSecurityCenterServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycentermanagement::v1::
+                 UpdateSecurityCenterServiceRequest const& request) {
+        return child_->UpdateSecurityCenterService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycentermanagement_v1_internal
 }  // namespace cloud

@@ -336,6 +336,52 @@ SecurityCenterManagementTracingStub::ValidateEventThreatDetectionCustomModule(
                                context, options, request));
 }
 
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementTracingStub::GetSecurityCenterService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        GetSecurityCenterServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+      "GetSecurityCenterService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetSecurityCenterService(context, options, request));
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::
+             ListSecurityCenterServicesResponse>
+SecurityCenterManagementTracingStub::ListSecurityCenterServices(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        ListSecurityCenterServicesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+      "ListSecurityCenterServices");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListSecurityCenterServices(context, options, request));
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementTracingStub::UpdateSecurityCenterService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        UpdateSecurityCenterServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securitycentermanagement.v1.SecurityCenterManagement",
+      "UpdateSecurityCenterService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateSecurityCenterService(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<SecurityCenterManagementStub>

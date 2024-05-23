@@ -187,6 +187,46 @@ class VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateLiveConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateVodConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::video::stitcher::v1::ListVodConfigsResponse>
+  ListVodConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::stitcher::v1::ListVodConfigsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::video::stitcher::v1::VodConfig> GetVodConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::stitcher::v1::GetVodConfigRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteVodConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateVodConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -352,6 +392,45 @@ class DefaultVideoStitcherServiceStub : public VideoStitcherServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateLiveConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateVodConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::stitcher::v1::ListVodConfigsResponse>
+  ListVodConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::stitcher::v1::ListVodConfigsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::stitcher::v1::VodConfig> GetVodConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::stitcher::v1::GetVodConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteVodConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateVodConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

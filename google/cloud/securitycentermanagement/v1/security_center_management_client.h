@@ -26,6 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -97,11 +98,12 @@ class SecurityCenterManagementClient {
   /// parent, and inherited modules, inherited from CRM ancestors (no
   /// descendants).
   ///
-  /// @param parent  Required. Name of parent to list effective custom modules. Its format is
-  ///  "organizations/{organization}/locations/{location}",
-  ///  "folders/{folder}/locations/{location}",
+  /// @param parent  Required. Name of parent to list effective custom modules. specified in one
+  ///  of the following formats:
+  ///  * `organizations/{organization}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
   ///  or
-  ///  "projects/{project}/locations/{location}"
+  ///  `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -124,8 +126,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L408}
-  /// [google.cloud.securitycentermanagement.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L455}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L556}
+  /// [google.cloud.securitycentermanagement.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L602}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -168,8 +170,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L408}
-  /// [google.cloud.securitycentermanagement.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L455}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L556}
+  /// [google.cloud.securitycentermanagement.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L602}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -183,13 +185,12 @@ class SecurityCenterManagementClient {
   ///
   /// Gets details of a single EffectiveSecurityHealthAnalyticsCustomModule.
   ///
-  /// @param name  Required. The resource name of the SHA custom module.
+  /// @param name  Required. The full resource name of the custom module, specified in one of
+  ///  the following formats:
   ///  @n
-  ///  Its format is:
-  ///  @n
-  ///    * "organizations/{organization}/locations/{location}/effectiveSecurityHealthAnalyticsCustomModules/{module_id}".
-  ///    * "folders/{folder}/locations/{location}/effectiveSecurityHealthAnalyticsCustomModules/{module_id}".
-  ///    * "projects/{project}/locations/{location}/effectiveSecurityHealthAnalyticsCustomModules/{module_id}".
+  ///  * `organizations/organization/{location}/effectiveSecurityHealthAnalyticsCustomModules/{effective_security_health_analytics_custom_module}`
+  ///  * `folders/folder/{location}/effectiveSecurityHealthAnalyticsCustomModules/{effective_security_health_analytics_custom_module}`
+  ///  * `projects/project/{location}/effectiveSecurityHealthAnalyticsCustomModules/{effective_security_health_analytics_custom_module}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -203,8 +204,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L408}
-  /// [google.cloud.securitycentermanagement.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L488}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L556}
+  /// [google.cloud.securitycentermanagement.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L636}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -235,8 +236,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L408}
-  /// [google.cloud.securitycentermanagement.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L488}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L556}
+  /// [google.cloud.securitycentermanagement.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L636}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -252,11 +253,12 @@ class SecurityCenterManagementClient {
   /// parent. This includes resident modules defined at the scope of the parent,
   /// and inherited modules, inherited from CRM ancestors (no descendants).
   ///
-  /// @param parent  Required. Name of parent to list custom modules. Its format is
-  ///  "organizations/{organization}/locations/{location}",
-  ///  "folders/{folder}/locations/{location}",
-  ///  or
-  ///  "projects/{project}/locations/{location}"
+  /// @param parent  Required. Name of parent organization, folder, or project in which to list
+  ///  custom modules, specified in one of the following formats:
+  ///  @n
+  ///  * `organizations/{organization}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
+  ///  * `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -279,8 +281,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L662}
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
+  /// [google.cloud.securitycentermanagement.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L804}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -322,8 +324,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L662}
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
+  /// [google.cloud.securitycentermanagement.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L804}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -338,11 +340,12 @@ class SecurityCenterManagementClient {
   /// Returns a list of all resident SecurityHealthAnalyticsCustomModules under
   /// the given CRM parent and all of the parent's CRM descendants.
   ///
-  /// @param parent  Required. Name of parent to list custom modules. Its format is
-  ///  "organizations/{organization}/locations/{location}",
-  ///  "folders/{folder}/locations/{location}",
-  ///  or
-  ///  "projects/{project}/locations/{location}"
+  /// @param parent  Required. Name of the parent organization, folder, or project in which to
+  ///  list custom modules, specified in one of the following formats:
+  ///  @n
+  ///  * `organizations/{organization}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
+  ///  * `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -365,8 +368,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L695}
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
+  /// [google.cloud.securitycentermanagement.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L838}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -407,8 +410,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L695}
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
+  /// [google.cloud.securitycentermanagement.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L838}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -436,8 +439,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L728}
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
+  /// [google.cloud.securitycentermanagement.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L872}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -468,8 +471,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L728}
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
+  /// [google.cloud.securitycentermanagement.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L872}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -486,11 +489,12 @@ class SecurityCenterManagementClient {
   /// SecurityHealthAnalyticsCustomModules for all CRM descendants of the given
   /// parent. These modules are enabled by default.
   ///
-  /// @param parent  Required. Name of the parent for the module. Its format is
-  ///  "organizations/{organization}/locations/{location}",
-  ///  "folders/{folder}/locations/{location}",
-  ///  or
-  ///  "projects/{project}/locations/{location}"
+  /// @param parent  Required. Name of the parent organization, folder, or project of the
+  ///  module, specified in one of the following formats:
+  ///  @n
+  ///  * `organizations/{organization}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
+  ///  * `projects/{project}/locations/{location}`
   /// @param security_health_analytics_custom_module  Required. The resource being created
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -505,8 +509,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L739}
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
+  /// [google.cloud.securitycentermanagement.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L883}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -544,8 +548,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L739}
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
+  /// [google.cloud.securitycentermanagement.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L883}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -581,8 +585,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
-  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L768}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
+  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L913}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -620,8 +624,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
-  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L768}
+  /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L656}
+  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L913}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -641,9 +645,9 @@ class SecurityCenterManagementClient {
   ///  @n
   ///  Its format is:
   ///  @n
-  ///    * "organizations/{organization}/locations/{location}/securityHealthAnalyticsCustomModules/{security_health_analytics_custom_module}".
-  ///    * "folders/{folder}/locations/{location}/securityHealthAnalyticsCustomModules/{security_health_analytics_custom_module}".
-  ///    * "projects/{project}/locations/{location}/securityHealthAnalyticsCustomModules/{security_health_analytics_custom_module}".
+  ///    * `organizations/{organization}/locations/{location}/securityHealthAnalyticsCustomModules/{security_health_analytics_custom_module}`.
+  ///    * `folders/{folder}/locations/{location}/securityHealthAnalyticsCustomModules/{security_health_analytics_custom_module}`.
+  ///    * `projects/{project}/locations/{location}/securityHealthAnalyticsCustomModules/{security_health_analytics_custom_module}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -655,7 +659,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L791}
+  /// [google.cloud.securitycentermanagement.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L936}
   ///
   // clang-format on
   Status DeleteSecurityHealthAnalyticsCustomModule(std::string const& name,
@@ -684,7 +688,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L791}
+  /// [google.cloud.securitycentermanagement.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L936}
   ///
   // clang-format on
   Status DeleteSecurityHealthAnalyticsCustomModule(
@@ -716,8 +720,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L818}
-  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1019}
+  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L963}
+  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1164}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -754,8 +758,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L818}
-  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1019}
+  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L963}
+  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1164}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -772,10 +776,10 @@ class SecurityCenterManagementClient {
   /// parent along with modules inherited from its ancestors.
   ///
   /// @param parent  Required. Name of parent to list effective custom modules. Its format is
-  ///  "organizations/{organization}/locations/{location}",
-  ///  "folders/{folder}/locations/{location}",
+  ///  `organizations/{organization}/locations/{location}`,
+  ///  `folders/{folder}/locations/{location}`,
   ///  or
-  ///  "projects/{project}/locations/{location}"
+  ///  `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -798,8 +802,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1046}
-  /// [google.cloud.securitycentermanagement.v1.ListEffectiveEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1097}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1191}
+  /// [google.cloud.securitycentermanagement.v1.ListEffectiveEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1242}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -841,8 +845,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1046}
-  /// [google.cloud.securitycentermanagement.v1.ListEffectiveEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1097}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1191}
+  /// [google.cloud.securitycentermanagement.v1.ListEffectiveEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1242}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -866,9 +870,9 @@ class SecurityCenterManagementClient {
   ///  @n
   ///  Its format is:
   ///  @n
-  ///    * "organizations/{organization}/locations/{location}/effectiveEventThreatDetectionCustomModules/{effective_event_threat_detection_custom_module}".
-  ///    * "folders/{folder}/locations/{location}/effectiveEventThreatDetectionCustomModules/{effective_event_threat_detection_custom_module}".
-  ///    * "projects/{project}/locations/{location}/effectiveEventThreatDetectionCustomModules/{effective_event_threat_detection_custom_module}".
+  ///    * `organizations/{organization}/locations/{location}/effectiveEventThreatDetectionCustomModules/{effective_event_threat_detection_custom_module}`.
+  ///    * `folders/{folder}/locations/{location}/effectiveEventThreatDetectionCustomModules/{effective_event_threat_detection_custom_module}`.
+  ///    * `projects/{project}/locations/{location}/effectiveEventThreatDetectionCustomModules/{effective_event_threat_detection_custom_module}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -882,8 +886,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1046}
-  /// [google.cloud.securitycentermanagement.v1.GetEffectiveEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1130}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1191}
+  /// [google.cloud.securitycentermanagement.v1.GetEffectiveEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1275}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -920,8 +924,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1046}
-  /// [google.cloud.securitycentermanagement.v1.GetEffectiveEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1130}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1191}
+  /// [google.cloud.securitycentermanagement.v1.GetEffectiveEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1275}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -938,10 +942,10 @@ class SecurityCenterManagementClient {
   /// scope of the parent along with modules inherited from ancestors.
   ///
   /// @param parent  Required. Name of parent to list custom modules. Its format is
-  ///  "organizations/{organization}/locations/{location}",
-  ///  "folders/{folder}/locations/{location}",
+  ///  `organizations/{organization}/locations/{location}`,
+  ///  `folders/{folder}/locations/{location}`,
   ///  or
-  ///  "projects/{project}/locations/{location}"
+  ///  `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -964,8 +968,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
-  /// [google.cloud.securitycentermanagement.v1.ListEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1225}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
+  /// [google.cloud.securitycentermanagement.v1.ListEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1370}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -1007,8 +1011,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
-  /// [google.cloud.securitycentermanagement.v1.ListEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1225}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
+  /// [google.cloud.securitycentermanagement.v1.ListEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1370}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -1024,10 +1028,10 @@ class SecurityCenterManagementClient {
   /// given Resource Manager parent and its descendants.
   ///
   /// @param parent  Required. Name of parent to list custom modules. Its format is
-  ///  "organizations/{organization}/locations/{location}",
-  ///  "folders/{folder}/locations/{location}",
+  ///  `organizations/{organization}/locations/{location}`,
+  ///  `folders/{folder}/locations/{location}`,
   ///  or
-  ///  "projects/{project}/locations/{location}"
+  ///  `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1050,8 +1054,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
-  /// [google.cloud.securitycentermanagement.v1.ListDescendantEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1265}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
+  /// [google.cloud.securitycentermanagement.v1.ListDescendantEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1410}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -1092,8 +1096,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
-  /// [google.cloud.securitycentermanagement.v1.ListDescendantEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1265}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
+  /// [google.cloud.securitycentermanagement.v1.ListDescendantEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1410}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -1111,9 +1115,9 @@ class SecurityCenterManagementClient {
   ///  @n
   ///  Its format is:
   ///  @n
-  ///    * "organizations/{organization}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}".
-  ///    * "folders/{folder}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}".
-  ///    * "projects/{project}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}".
+  ///    * `organizations/{organization}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}`.
+  ///    * `folders/{folder}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}`.
+  ///    * `projects/{project}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1127,8 +1131,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
-  /// [google.cloud.securitycentermanagement.v1.GetEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1299}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
+  /// [google.cloud.securitycentermanagement.v1.GetEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1444}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1159,8 +1163,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
-  /// [google.cloud.securitycentermanagement.v1.GetEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1299}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
+  /// [google.cloud.securitycentermanagement.v1.GetEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1444}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1178,10 +1182,10 @@ class SecurityCenterManagementClient {
   /// default.
   ///
   /// @param parent  Required. Name of parent for the module. Its format is
-  ///  "organizations/{organization}/locations/{location}",
-  ///  "folders/{folder}/locations/{location}",
+  ///  `organizations/{organization}/locations/{location}`,
+  ///  `folders/{folder}/locations/{location}`,
   ///  or
-  ///  "projects/{project}/locations/{location}"
+  ///  `projects/{project}/locations/{location}`
   /// @param event_threat_detection_custom_module  Required. The module to create. The
   ///  event_threat_detection_custom_module.name will be ignored and server
   ///  generated.
@@ -1198,8 +1202,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.CreateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1316}
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.CreateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1461}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1237,8 +1241,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.CreateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1316}
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.CreateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1461}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1276,8 +1280,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
-  /// [google.cloud.securitycentermanagement.v1.UpdateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1346}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
+  /// [google.cloud.securitycentermanagement.v1.UpdateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1491}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1316,8 +1320,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
-  /// [google.cloud.securitycentermanagement.v1.UpdateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1346}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1294}
+  /// [google.cloud.securitycentermanagement.v1.UpdateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1491}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1337,9 +1341,9 @@ class SecurityCenterManagementClient {
   ///  @n
   ///  Its format is:
   ///  @n
-  ///    * "organizations/{organization}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}".
-  ///    * "folders/{folder}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}".
-  ///    * "projects/{project}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}".
+  ///    * `organizations/{organization}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}`.
+  ///    * `folders/{folder}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}`.
+  ///    * `projects/{project}/locations/{location}/eventThreatDetectionCustomModules/{event_threat_detection_custom_module}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -1351,7 +1355,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.DeleteEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1370}
+  /// [google.cloud.securitycentermanagement.v1.DeleteEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1515}
   ///
   // clang-format on
   Status DeleteEventThreatDetectionCustomModule(std::string const& name,
@@ -1380,7 +1384,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.DeleteEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1370}
+  /// [google.cloud.securitycentermanagement.v1.DeleteEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1515}
   ///
   // clang-format on
   Status DeleteEventThreatDetectionCustomModule(
@@ -1411,8 +1415,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ValidateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1396}
-  /// [google.cloud.securitycentermanagement.v1.ValidateEventThreatDetectionCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1418}
+  /// [google.cloud.securitycentermanagement.v1.ValidateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1541}
+  /// [google.cloud.securitycentermanagement.v1.ValidateEventThreatDetectionCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1563}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1420,6 +1424,227 @@ class SecurityCenterManagementClient {
   ValidateEventThreatDetectionCustomModule(
       google::cloud::securitycentermanagement::v1::
           ValidateEventThreatDetectionCustomModuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets service settings for the specified Security Command Center service.
+  ///
+  /// @param name  Required. The Security Command Center service to retrieve.
+  ///  @n
+  ///  Formats:
+  ///  @n
+  ///    * organizations/{organization}/locations/{location}/securityCenterServices/{service}
+  ///    * folders/{folder}/locations/{location}/securityCenterServices/{service}
+  ///    * projects/{project}/locations/{location}/securityCenterServices/{service}
+  ///  @n
+  ///  The possible values for id {service} are:
+  ///  @n
+  ///    * container-threat-detection
+  ///    * event-threat-detection
+  ///    * security-health-analytics
+  ///    * vm-threat-detection
+  ///    * web-security-scanner
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycentermanagement.v1.SecurityCenterService])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycentermanagement.v1.GetSecurityCenterServiceRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1600}
+  /// [google.cloud.securitycentermanagement.v1.SecurityCenterService]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L454}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  GetSecurityCenterService(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets service settings for the specified Security Command Center service.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycentermanagement.v1.GetSecurityCenterServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycentermanagement.v1.SecurityCenterService])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycentermanagement.v1.GetSecurityCenterServiceRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1600}
+  /// [google.cloud.securitycentermanagement.v1.SecurityCenterService]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L454}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  GetSecurityCenterService(google::cloud::securitycentermanagement::v1::
+                               GetSecurityCenterServiceRequest const& request,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns a list of all Security Command Center services for the given
+  /// parent.
+  ///
+  /// @param parent  Required. The name of the parent to list Security Command Center services.
+  ///  @n
+  ///  Formats:
+  ///  @n
+  ///    * organizations/{organization}/locations/{location}
+  ///    * folders/{folder}/locations/{location}
+  ///    * projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycentermanagement.v1.SecurityCenterService], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycentermanagement.v1.ListSecurityCenterServicesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1625}
+  /// [google.cloud.securitycentermanagement.v1.SecurityCenterService]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L454}
+  ///
+  // clang-format on
+  StreamRange<
+      google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  ListSecurityCenterServices(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns a list of all Security Command Center services for the given
+  /// parent.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycentermanagement.v1.ListSecurityCenterServicesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycentermanagement.v1.SecurityCenterService], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycentermanagement.v1.ListSecurityCenterServicesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1625}
+  /// [google.cloud.securitycentermanagement.v1.SecurityCenterService]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L454}
+  ///
+  // clang-format on
+  StreamRange<
+      google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  ListSecurityCenterServices(google::cloud::securitycentermanagement::v1::
+                                 ListSecurityCenterServicesRequest request,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a Security Command Center service using the given update mask.
+  ///
+  /// @param security_center_service  Required. The updated service.
+  /// @param update_mask  Required. The list of fields to be updated. Possible values:
+  ///  @n
+  ///    * "intended_enablement_state"
+  ///    * "modules"
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycentermanagement.v1.SecurityCenterService])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycentermanagement.v1.SecurityCenterService]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L454}
+  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityCenterServiceRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1658}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  UpdateSecurityCenterService(
+      google::cloud::securitycentermanagement::v1::SecurityCenterService const&
+          security_center_service,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a Security Command Center service using the given update mask.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycentermanagement.v1.UpdateSecurityCenterServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycentermanagement.v1.SecurityCenterService])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycentermanagement.v1.SecurityCenterService]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L454}
+  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityCenterServiceRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1658}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+  UpdateSecurityCenterService(
+      google::cloud::securitycentermanagement::v1::
+          UpdateSecurityCenterServiceRequest const& request,
       Options opts = {});
 
  private:

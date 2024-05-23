@@ -189,6 +189,43 @@ class MockVideoStitcherServiceConnection
       (google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
+      UpdateLiveConfig,
+      (google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
+              CreateVodConfig,
+              (google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::video::stitcher::v1::VodConfig>),
+      ListVodConfigs,
+      (google::cloud::video::stitcher::v1::ListVodConfigsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::video::stitcher::v1::VodConfig>, GetVodConfig,
+      (google::cloud::video::stitcher::v1::GetVodConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+      DeleteVodConfig,
+      (google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
+              UpdateVodConfig,
+              (google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

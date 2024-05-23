@@ -200,6 +200,28 @@ SecurityCenterManagementConnection::ValidateEventThreatDetectionCustomModule(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementConnection::GetSecurityCenterService(
+    google::cloud::securitycentermanagement::v1::
+        GetSecurityCenterServiceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementConnection::ListSecurityCenterServices(
+    google::cloud::securitycentermanagement::v1::
+        ListSecurityCenterServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::securitycentermanagement::v1::SecurityCenterService>>();
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementConnection::UpdateSecurityCenterService(
+    google::cloud::securitycentermanagement::v1::
+        UpdateSecurityCenterServiceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<SecurityCenterManagementConnection>
 MakeSecurityCenterManagementConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

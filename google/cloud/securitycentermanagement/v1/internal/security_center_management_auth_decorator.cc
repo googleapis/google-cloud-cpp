@@ -246,6 +246,37 @@ SecurityCenterManagementAuth::ValidateEventThreatDetectionCustomModule(
                                                           request);
 }
 
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementAuth::GetSecurityCenterService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        GetSecurityCenterServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSecurityCenterService(context, options, request);
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::
+             ListSecurityCenterServicesResponse>
+SecurityCenterManagementAuth::ListSecurityCenterServices(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        ListSecurityCenterServicesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListSecurityCenterServices(context, options, request);
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+SecurityCenterManagementAuth::UpdateSecurityCenterService(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycentermanagement::v1::
+        UpdateSecurityCenterServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSecurityCenterService(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycentermanagement_v1_internal
 }  // namespace cloud

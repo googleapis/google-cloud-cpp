@@ -328,6 +328,50 @@ DefaultSecurityCenterManagementStub::ValidateEventThreatDetectionCustomModule(
   return response;
 }
 
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+DefaultSecurityCenterManagementStub::GetSecurityCenterService(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycentermanagement::v1::
+        GetSecurityCenterServiceRequest const& request) {
+  google::cloud::securitycentermanagement::v1::SecurityCenterService response;
+  auto status =
+      grpc_stub_->GetSecurityCenterService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::
+             ListSecurityCenterServicesResponse>
+DefaultSecurityCenterManagementStub::ListSecurityCenterServices(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycentermanagement::v1::
+        ListSecurityCenterServicesRequest const& request) {
+  google::cloud::securitycentermanagement::v1::
+      ListSecurityCenterServicesResponse response;
+  auto status =
+      grpc_stub_->ListSecurityCenterServices(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycentermanagement::v1::SecurityCenterService>
+DefaultSecurityCenterManagementStub::UpdateSecurityCenterService(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycentermanagement::v1::
+        UpdateSecurityCenterServiceRequest const& request) {
+  google::cloud::securitycentermanagement::v1::SecurityCenterService response;
+  auto status =
+      grpc_stub_->UpdateSecurityCenterService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycentermanagement_v1_internal
 }  // namespace cloud

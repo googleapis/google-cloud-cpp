@@ -160,6 +160,36 @@ Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteLiveConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateLiveConfig(
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateVodConfig(
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListVodConfigs(
+    google::cloud::video::stitcher::v1::ListVodConfigsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodConfig(
+    google::cloud::video::stitcher::v1::GetVodConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteVodConfig(
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateVodConfig(
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
 MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy() {
   return std::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>();

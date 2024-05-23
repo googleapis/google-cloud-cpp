@@ -210,6 +210,52 @@ VideoStitcherServiceConnection::DeleteLiveConfig(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+VideoStitcherServiceConnection::UpdateLiveConfig(
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceConnection::CreateVodConfig(
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::VodConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::video::stitcher::v1::VodConfig>
+VideoStitcherServiceConnection::ListVodConfigs(
+    google::cloud::video::stitcher::v1::
+        ListVodConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::video::stitcher::v1::VodConfig>>();
+}
+
+StatusOr<google::cloud::video::stitcher::v1::VodConfig>
+VideoStitcherServiceConnection::GetVodConfig(
+    google::cloud::video::stitcher::v1::GetVodConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceConnection::DeleteVodConfig(
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceConnection::UpdateVodConfig(
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::VodConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<VideoStitcherServiceConnection>
 MakeVideoStitcherServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
