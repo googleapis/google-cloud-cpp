@@ -125,12 +125,16 @@ function check_abi() {
       # by some other number indicating the length of the symbol within the
       # "internal" namespace. See: https://en.wikipedia.org/wiki/Name_mangling
       -skip-internal-symbols "(8internal|_internal|4grpc|6google8protobuf|6google3rpc)\d"
-      # We also ignore the raw gRPC Stub class. The generated gRPC headers that
+      # We ignore the raw gRPC Stub class. The generated gRPC headers that
       # contain these classes are installed alongside our headers. When a new
       # RPC is added to a service, these classes gain a pure virtual method. Our
       # customers do not use these classes directly, so this should not
       # constitute a breaking change.
-      -skip-internal-types "::StubInterface"
+      #
+      # Skip `Options::Data<>` which is a private implementation detail.
+      # Otherwise, we get false positives when a specific type template
+      # parameter is no longer used.
+      -skip-internal-types "(::StubInterface|::Options::Data<)"
       # The library to compare
       -l "${library}"
       # Compared the saved baseline vs. the dump for the current version
