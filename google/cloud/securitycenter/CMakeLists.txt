@@ -14,11 +14,11 @@
 # limitations under the License.
 # ~~~
 
-if (WIN32)
+if (WIN32 AND (Protobuf_VERSION VERSION_LESS 27.0))
     message(
         WARNING "Cannot build google/cloud/securitycenter on Windows"
                 " - the protos have enum names that conflict with some system"
-                " macros.")
+                " macros. Update to protobuf >= 27.0.")
     return()
 endif ()
 
