@@ -126,7 +126,7 @@ class PolicyDocumentV4Request {
     return signing_account_delegates_;
   }
 
-  std::string endpoint_authority() { return endpoint_authority_; }
+  std::string endpoint_authority() const { return endpoint_authority_; }
 
   void SetOption(SigningAccount const& o) { signing_account_ = o; }
 

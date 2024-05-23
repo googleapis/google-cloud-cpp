@@ -100,7 +100,8 @@ std::string V2SignUrlRequest::StringToSign() const {
 }
 
 std::ostream& operator<<(std::ostream& os, V2SignUrlRequest const& r) {
-  return os << "SingUrlRequest={" << r.StringToSign() << "}";
+  return os << "SingUrlRequest={" << r.endpoint_authority() << ","
+            << r.StringToSign() << "}";
 }
 
 namespace {
@@ -319,7 +320,7 @@ std::string V4SignUrlRequest::PayloadHashValue() const {
 }
 
 std::ostream& operator<<(std::ostream& os, V4SignUrlRequest const& r) {
-  return os << "V4SignUrlRequest={"
+  return os << "V4SignUrlRequest={" << r.endpoint_authority() << ","
             << r.CanonicalRequest("placeholder-client-id") << ","
             << r.StringToSign("placeholder-client-id") << "}";
 }
