@@ -275,9 +275,11 @@ std::string PolicyDocumentV4Request::Url() const {
     return scheme_ + "://" + *bucket_bound_domain_ + "/";
   }
   if (virtual_host_name_) {
-    return scheme_ + "://" + policy_document().bucket + "." + host_ + "/";
+    return scheme_ + "://" + policy_document().bucket + "." +
+           endpoint_authority_ + "/";
   }
-  return scheme_ + "://" + host_ + "/" + policy_document().bucket + "/";
+  return scheme_ + "://" + endpoint_authority_ + "/" +
+         policy_document().bucket + "/";
 }
 
 std::string PolicyDocumentV4Request::Credentials() const {

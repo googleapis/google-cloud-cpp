@@ -235,14 +235,14 @@ Status V4SignUrlRequest::Validate() {
 }
 
 std::string V4SignUrlRequest::Hostname() {
-  auto host = common_request_.host();
+  auto endpoint_authority = common_request_.endpoint_authority();
   if (virtual_host_name_) {
-    return common_request_.bucket_name() + "." + host;
+    return common_request_.bucket_name() + "." + endpoint_authority;
   }
   if (domain_named_bucket_) {
     return *domain_named_bucket_;
   }
-  return host;
+  return endpoint_authority;
 }
 
 std::string V4SignUrlRequest::HostnameWithBucket() {

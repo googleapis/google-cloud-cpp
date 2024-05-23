@@ -28,6 +28,7 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::StartsWith;
 
 TEST(V2SignedUrlRequests, Sign) {
   V2SignUrlRequest request("GET", "test-bucket", "test-object");
@@ -639,6 +640,14 @@ TEST(V4SignedUrlRequests, BucketBoundHostnameReset) {
       "UNSIGNED-PAYLOAD";
   std::string actual = request.CanonicalRequest("fake-client-id");
   EXPECT_EQ(expected, actual);
+}
+
+TEST(V4SignedUrlRequests, CustomEndpoint) {
+  auto const custom_endpoint_authority = std::string{"mydomain.com"};
+  V4SignUrlRequest request("GET", "test-bucket", "test-object",
+                           custom_endpoint_authority);
+  ASSERT_STATUS_OK(request.Validate());
+  EXPECT_THAT(request.Hostname(), StartsWith(custom_endpoint_authority));
 }
 
 TEST(DefaultCtorsWork, Trivial) {

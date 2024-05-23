@@ -28,6 +28,7 @@ namespace {
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
+using ::testing::StartsWith;
 
 TEST(PolicyDocumentRequest, SigningAccount) {
   PolicyDocumentRequest request;
@@ -151,6 +152,29 @@ TEST(PolicyDocumentV4Request, RequiredFormFields) {
       {"x-goog-date", "20100616T111111Z"},
       {"x-some-header", "header-value"}};
   EXPECT_EQ(expected_fields, req.RequiredFormFields());
+}
+
+TEST(PolicyDocumentV4Request, Url) {
+  PolicyDocumentV4 doc;
+  doc.bucket = "test-bucket";
+  PolicyDocumentV4Request request(doc);
+  auto const custom_endpoint_authority = std::string{"mydomain.com"};
+  request.SetEndpointAuthority(custom_endpoint_authority);
+  EXPECT_THAT(request.Url(),
+              StartsWith("https://" + custom_endpoint_authority));
+}
+
+TEST(PolicyDocumentV4Request, UrlWithVirtualHostName) {
+  PolicyDocumentV4 doc;
+  doc.bucket = "test-bucket";
+  auto const custom_endpoint_authority = std::string{"mydomain.com"};
+  PolicyDocumentV4Request request(doc);
+  request.SetOption(VirtualHostname(true));
+  request.SetEndpointAuthority(custom_endpoint_authority);
+
+  auto const expected_url = std::string{"https://" + doc.bucket + "." +
+                                        custom_endpoint_authority + "/"};
+  EXPECT_EQ(request.Url(), expected_url);
 }
 
 }  // namespace

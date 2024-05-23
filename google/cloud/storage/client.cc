@@ -461,7 +461,6 @@ StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
   if (!signed_blob) {
     return signed_blob.status();
   }
-  request.SetHost(Host());
   std::string signature =
       google::cloud::internal::HexEncode(signed_blob->signed_blob);
   auto required_fields = request.RequiredFormFields();
@@ -487,7 +486,9 @@ std::string Client::Endpoint() const {
   return connection_->options().get<RestEndpointOption>();
 }
 
-std::string Client::Host() const {
+// This can be optimized to not have a lot of string copies.
+// But the code is rarely used and not in any critical path.
+std::string Client::EndpointAuthority() const {
   auto endpoint = Endpoint();
   auto host = absl::string_view(endpoint);
   if (!absl::ConsumePrefix(&host, "https://")) {
