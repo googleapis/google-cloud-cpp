@@ -261,7 +261,7 @@ TEST(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
 
 TEST(CreateSignedPolicyDocTest, SignV4CustomEndpoint) {
   auto const custom_endpoint = std::string{"https://storage.mydomain.com"};
-  auto client = CreateClientForTest(std::move(custom_endpoint));
+  auto client = CreateClientForTest(custom_endpoint);
   auto actual =
       client.GenerateSignedPostPolicyV4(CreatePolicyDocumentV4ForTest());
 
