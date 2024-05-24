@@ -28,6 +28,7 @@ namespace {
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
+using ::testing::StartsWith;
 
 TEST(PolicyDocumentRequest, SigningAccount) {
   PolicyDocumentRequest request;
@@ -119,7 +120,8 @@ TEST(PolicyDocumentV4Request, Printing) {
   std::stringstream stream;
   stream << req;
   EXPECT_EQ(
-      "PolicyDocumentRequest={{\"conditions\":[{\"bucket\":\"test-bucket\"},{"
+      "PolicyDocumentRequest={endpoint_authority=storage.googleapis.com,"
+      "{\"conditions\":[{\"bucket\":\"test-bucket\"},{"
       "\"key\":\"test-object\"},{\"x-goog-date\":\"20100616T111111Z\"},{\"x-"
       "goog-credential\":\"/20100616/auto/storage/"
       "goog4_request\"},{\"x-goog-algorithm\":\"GOOG4-RSA-SHA256\"}],"
@@ -151,6 +153,27 @@ TEST(PolicyDocumentV4Request, RequiredFormFields) {
       {"x-goog-date", "20100616T111111Z"},
       {"x-some-header", "header-value"}};
   EXPECT_EQ(expected_fields, req.RequiredFormFields());
+}
+
+TEST(PolicyDocumentV4Request, Url) {
+  PolicyDocumentV4 doc;
+  doc.bucket = "test-bucket";
+  auto const custom_endpoint_authority = std::string{"storage.mydomain.com"};
+  PolicyDocumentV4Request request(doc, custom_endpoint_authority);
+  EXPECT_THAT(request.Url(),
+              StartsWith("https://" + custom_endpoint_authority));
+}
+
+TEST(PolicyDocumentV4Request, UrlWithVirtualHostName) {
+  PolicyDocumentV4 doc;
+  doc.bucket = "test-bucket";
+  auto const custom_endpoint_authority = std::string{"storage.mydomain.com"};
+  PolicyDocumentV4Request request(doc, custom_endpoint_authority);
+  request.SetOption(VirtualHostname(true));
+
+  auto const expected_url = std::string{"https://" + doc.bucket + "." +
+                                        custom_endpoint_authority + "/"};
+  EXPECT_EQ(request.Url(), expected_url);
 }
 
 }  // namespace

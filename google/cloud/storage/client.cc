@@ -23,6 +23,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_split.h"
 #include <fstream>
 #include <memory>
 #include <thread>
@@ -389,7 +390,7 @@ StatusOr<std::string> Client::SignUrlV2(
   std::string signature = curl.MakeEscapedString(encoded).get();
 
   std::ostringstream os;
-  os << "https://storage.googleapis.com/" << request.bucket_name();
+  os << Endpoint() << '/' << request.bucket_name();
   if (!request.object_name().empty()) {
     os << '/' << curl.MakeEscapedString(request.object_name()).get();
   }
@@ -479,6 +480,21 @@ std::string CreateRandomPrefixName(std::string const& prefix) {
   auto rng = google::cloud::internal::MakeDefaultPRNG();
   return prefix + google::cloud::internal::Sample(rng, kPrefixNameSize,
                                                   "abcdefghijklmnopqrstuvwxyz");
+}
+
+std::string Client::Endpoint() const {
+  return connection_->options().get<RestEndpointOption>();
+}
+
+// This can be optimized to not have a lot of string copies.
+// But the code is rarely used and not in any critical path.
+std::string Client::EndpointAuthority() const {
+  auto endpoint = Endpoint();
+  auto endpoint_authority = absl::string_view(endpoint);
+  if (!absl::ConsumePrefix(&endpoint_authority, "https://")) {
+    absl::ConsumePrefix(&endpoint_authority, "http://");
+  }
+  return std::string(endpoint_authority);
 }
 
 namespace internal {

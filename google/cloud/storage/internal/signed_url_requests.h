@@ -38,14 +38,16 @@ class SignUrlRequestCommon {
  public:
   SignUrlRequestCommon() = default;
   SignUrlRequestCommon(std::string verb, std::string bucket_name,
-                       std::string object_name)
+                       std::string object_name, std::string endpoint_authority)
       : verb_(std::move(verb)),
         bucket_name_(std::move(bucket_name)),
-        object_name_(std::move(object_name)) {}
+        object_name_(std::move(object_name)),
+        endpoint_authority_(std::move(endpoint_authority)) {}
 
   std::string const& verb() const { return verb_; }
   std::string const& bucket_name() const { return bucket_name_; }
   std::string const& object_name() const { return object_name_; }
+  std::string const& endpoint_authority() const { return endpoint_authority_; }
   std::string const& sub_resource() const { return sub_resource_; }
   std::map<std::string, std::string> const& extension_headers() const {
     return extension_headers_;
@@ -94,6 +96,7 @@ class SignUrlRequestCommon {
   std::string verb_;
   std::string bucket_name_;
   std::string object_name_;
+  std::string endpoint_authority_;
   std::string sub_resource_;
   std::map<std::string, std::string> extension_headers_;
   std::multimap<std::string, std::string> query_parameters_;
@@ -108,10 +111,11 @@ class SignUrlRequestCommon {
 class V2SignUrlRequest {
  public:
   V2SignUrlRequest() = default;
-  explicit V2SignUrlRequest(std::string verb, std::string bucket_name,
-                            std::string object_name)
+  explicit V2SignUrlRequest(
+      std::string verb, std::string bucket_name, std::string object_name,
+      std::string endpoint_authority = "storage.googleapis.com")
       : common_request_(std::move(verb), std::move(bucket_name),
-                        std::move(object_name)),
+                        std::move(object_name), std::move(endpoint_authority)),
         expiration_time_(DefaultExpirationTime()) {}
 
   std::string const& verb() const { return common_request_.verb(); }
@@ -120,6 +124,9 @@ class V2SignUrlRequest {
   }
   std::string const& object_name() const {
     return common_request_.object_name();
+  }
+  std::string const& endpoint_authority() const {
+    return common_request_.endpoint_authority();
   }
   std::string const& sub_resource() const {
     return common_request_.sub_resource();
@@ -220,10 +227,11 @@ std::ostream& operator<<(std::ostream& os, V2SignUrlRequest const& r);
 class V4SignUrlRequest {
  public:
   V4SignUrlRequest() : expires_(0) {}
-  explicit V4SignUrlRequest(std::string verb, std::string bucket_name,
-                            std::string object_name)
+  explicit V4SignUrlRequest(
+      std::string verb, std::string bucket_name, std::string object_name,
+      std::string endpoint_authority = "storage.googleapis.com")
       : common_request_(std::move(verb), std::move(bucket_name),
-                        std::move(object_name)),
+                        std::move(object_name), std::move(endpoint_authority)),
         scheme_("https"),
         timestamp_(DefaultTimestamp()),
         expires_(DefaultExpires()),
@@ -235,6 +243,9 @@ class V4SignUrlRequest {
   }
   std::string const& object_name() const {
     return common_request_.object_name();
+  }
+  std::string const& endpoint_authority() const {
+    return common_request_.endpoint_authority();
   }
 
   std::vector<std::string> ObjectNameParts() const;

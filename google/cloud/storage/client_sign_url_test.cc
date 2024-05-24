@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,9 +29,11 @@ namespace {
 
 using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
+using ::testing::StartsWith;
 
 constexpr char kJsonKeyfileContents[] = R"""({
       "type": "service_account",
@@ -105,6 +108,36 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
                                Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_safe));
+}
+
+/// @test Verify that CreateV2SignedUrl() respects the custom endpoint.
+TEST_F(CreateSignedUrlTest, V2SignCustomEndpoint) {
+  auto const custom_endpoint = std::string{"https://storage.mydomain.com"};
+
+  Options options = Options{}
+                        .set<UnifiedCredentialsOption>(
+                            MakeServiceAccountCredentials(kJsonKeyfileContents))
+                        .set<RestEndpointOption>(custom_endpoint);
+  Client client(options);
+  StatusOr<std::string> actual =
+      client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
+  EXPECT_THAT(actual, IsOkAndHolds(StartsWith(custom_endpoint)));
+}
+
+/// @test Verify that CreateV2SignedUrl() respects the custom universe domain.
+TEST_F(CreateSignedUrlTest, V2SignCustomUniverseDomain) {
+  auto const custom_ud = std::string{"mydomain.com"};
+
+  Options options =
+      Options{}
+          .set<UnifiedCredentialsOption>(
+              MakeServiceAccountCredentials(kJsonKeyfileContents))
+          .set<google::cloud::internal::UniverseDomainOption>(custom_ud);
+  Client client(options);
+
+  StatusOr<std::string> actual =
+      client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
+  EXPECT_THAT(actual, IsOkAndHolds(HasSubstr(custom_ud)));
 }
 
 // This is a placeholder service account JSON file that is inactive. It's fine
@@ -229,6 +262,49 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
                                Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_hex));
+}
+
+/// @test Verify that CreateV4SignedUrl() respects the custom endpoint.
+TEST_F(CreateSignedUrlTest, V4SignCustomEndpoint) {
+  auto const custom_endpoint = std::string{"https://storage.mydomain.com"};
+  std::string const bucket_name = "test-bucket";
+  std::string const object_name = "test-object";
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+
+  Options options =
+      Options{}
+          .set<UnifiedCredentialsOption>(
+              MakeServiceAccountCredentials(kJsonKeyfileContentsForV4))
+          .set<RestEndpointOption>(custom_endpoint);
+  Client client(options);
+
+  auto actual = client.CreateV4SignedUrl(
+      "GET", bucket_name, object_name,
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date).value()),
+      SignedUrlDuration(valid_for));
+  EXPECT_THAT(actual, IsOkAndHolds(StartsWith(custom_endpoint)));
+}
+
+/// @test Verify that CreateV4SignUrl() respects the custom universe domain.
+TEST_F(CreateSignedUrlTest, V4SignCustomUniverseDomain) {
+  auto const custom_ud = std::string{"mydomain.com"};
+  std::string const bucket_name = "test-bucket";
+  std::string const object_name = "test-object";
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+
+  Options options =
+      Options{}
+          .set<UnifiedCredentialsOption>(
+              MakeServiceAccountCredentials(kJsonKeyfileContentsForV4))
+          .set<google::cloud::internal::UniverseDomainOption>(custom_ud);
+  Client client(options);
+  auto actual = client.CreateV4SignedUrl(
+      "GET", bucket_name, object_name,
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date).value()),
+      SignedUrlDuration(valid_for));
+  EXPECT_THAT(actual, IsOkAndHolds(HasSubstr(custom_ud)));
 }
 
 TEST_F(CreateSignedUrlTest, V4SignRemoteNoSigningEmail) {

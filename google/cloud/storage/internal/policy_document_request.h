@@ -104,7 +104,15 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentRequest const& r);
 
 class PolicyDocumentV4Request {
  public:
-  PolicyDocumentV4Request() : scheme_("https") {}
+  PolicyDocumentV4Request()
+      : PolicyDocumentV4Request("storage.googleapis.com") {}
+  explicit PolicyDocumentV4Request(std::string endpoint_authority)
+      : scheme_("https"), endpoint_authority_(std::move(endpoint_authority)) {}
+  PolicyDocumentV4Request(PolicyDocumentV4 document,
+                          std::string endpoint_authority)
+      : PolicyDocumentV4Request(std::move(endpoint_authority)) {
+    document_ = std::move(document);
+  }
   explicit PolicyDocumentV4Request(PolicyDocumentV4 document)
       : PolicyDocumentV4Request() {
     document_ = std::move(document);
@@ -124,6 +132,8 @@ class PolicyDocumentV4Request {
   SigningAccountDelegates const& signing_account_delegates() const {
     return signing_account_delegates_;
   }
+
+  std::string endpoint_authority() const { return endpoint_authority_; }
 
   void SetOption(SigningAccount const& o) { signing_account_ = o; }
 
@@ -191,6 +201,7 @@ class PolicyDocumentV4Request {
   absl::optional<std::string> bucket_bound_domain_;
   std::string scheme_;
   bool virtual_host_name_{false};
+  std::string endpoint_authority_;
 };
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r);

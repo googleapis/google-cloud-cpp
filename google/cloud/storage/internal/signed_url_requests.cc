@@ -100,7 +100,8 @@ std::string V2SignUrlRequest::StringToSign() const {
 }
 
 std::ostream& operator<<(std::ostream& os, V2SignUrlRequest const& r) {
-  return os << "SingUrlRequest={" << r.StringToSign() << "}";
+  return os << "SingUrlRequest={" << r.endpoint_authority() << ","
+            << r.StringToSign() << "}";
 }
 
 namespace {
@@ -235,13 +236,14 @@ Status V4SignUrlRequest::Validate() {
 }
 
 std::string V4SignUrlRequest::Hostname() {
+  auto endpoint_authority = common_request_.endpoint_authority();
   if (virtual_host_name_) {
-    return common_request_.bucket_name() + ".storage.googleapis.com";
+    return common_request_.bucket_name() + "." + endpoint_authority;
   }
   if (domain_named_bucket_) {
     return *domain_named_bucket_;
   }
-  return "storage.googleapis.com";
+  return endpoint_authority;
 }
 
 std::string V4SignUrlRequest::HostnameWithBucket() {
@@ -318,7 +320,7 @@ std::string V4SignUrlRequest::PayloadHashValue() const {
 }
 
 std::ostream& operator<<(std::ostream& os, V4SignUrlRequest const& r) {
-  return os << "V4SignUrlRequest={"
+  return os << "V4SignUrlRequest={" << r.endpoint_authority() << ","
             << r.CanonicalRequest("placeholder-client-id") << ","
             << r.StringToSign("placeholder-client-id") << "}";
 }

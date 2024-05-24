@@ -33,6 +33,7 @@ using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::HasSubstr;
 using ::testing::Return;
+using ::testing::StartsWith;
 
 constexpr char kJsonKeyfileContents[] = R"""({
       "type": "service_account",
@@ -58,9 +59,12 @@ std::string Dec64(std::string const& s) {
   return std::string(res.begin(), res.end());
 };
 
-Client CreateClientForTest() {
-  return Client(Options{}.set<UnifiedCredentialsOption>(
-      MakeServiceAccountCredentials(kJsonKeyfileContents)));
+Client CreateClientForTest(
+    std::string endpoint = "https://storage.googleapis.com") {
+  return Client(Options{}
+                    .set<UnifiedCredentialsOption>(
+                        MakeServiceAccountCredentials(kJsonKeyfileContents))
+                    .set<RestEndpointOption>(std::move(endpoint)));
 }
 
 /**
@@ -253,6 +257,16 @@ TEST(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ("https://test-bucket.storage.googleapis.com/", actual->url);
+}
+
+TEST(CreateSignedPolicyDocTest, SignV4CustomEndpoint) {
+  auto const custom_endpoint = std::string{"https://storage.mydomain.com"};
+  auto client = CreateClientForTest(custom_endpoint);
+  auto actual =
+      client.GenerateSignedPostPolicyV4(CreatePolicyDocumentV4ForTest());
+
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(actual->url, StartsWith(custom_endpoint));
 }
 
 }  // namespace

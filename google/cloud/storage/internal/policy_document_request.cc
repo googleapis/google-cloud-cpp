@@ -275,11 +275,11 @@ std::string PolicyDocumentV4Request::Url() const {
     return scheme_ + "://" + *bucket_bound_domain_ + "/";
   }
   if (virtual_host_name_) {
-    return scheme_ + "://" + policy_document().bucket +
-           ".storage.googleapis.com/";
+    return scheme_ + "://" + policy_document().bucket + "." +
+           endpoint_authority_ + "/";
   }
-  return scheme_ + "://storage.googleapis.com/" + policy_document().bucket +
-         "/";
+  return scheme_ + "://" + endpoint_authority_ + "/" +
+         policy_document().bucket + "/";
 }
 
 std::string PolicyDocumentV4Request::Credentials() const {
@@ -342,7 +342,8 @@ std::map<std::string, std::string> PolicyDocumentV4Request::RequiredFormFields()
 }
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r) {
-  return os << "PolicyDocumentRequest={" << r.StringToSign() << "}";
+  return os << "PolicyDocumentRequest={endpoint_authority="
+            << r.endpoint_authority() << "," << r.StringToSign() << "}";
 }
 
 }  // namespace internal
