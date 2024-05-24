@@ -58,11 +58,11 @@ def gl_cpp_development0(name = None):
         http_archive,
         name = "com_google_benchmark",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.3.tar.gz",
-            "https://github.com/google/benchmark/archive/v1.8.3.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.4.tar.gz",
+            "https://github.com/google/benchmark/archive/v1.8.4.tar.gz",
         ],
-        sha256 = "6bc180a57d23d4d9515519f92b0c83d61b05b5bab188961f36ac7b06b0d9e9ce",
-        strip_prefix = "benchmark-1.8.3",
+        sha256 = "3e7059b6b11fb1bbe28e33e02519398ca94c1818874ebed18e504dc6f709be45",
+        strip_prefix = "benchmark-1.8.4",
     )
 
     # An XML parser and generator, this is only used in //docfx.
