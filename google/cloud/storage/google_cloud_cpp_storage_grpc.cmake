@@ -243,10 +243,8 @@ if ((TARGET gRPC::grpcpp_otel_plugin)
         google_cloud_cpp_storage_grpc
         PUBLIC google-cloud-cpp::opentelemetry gRPC::grpcpp_otel_plugin
                opentelemetry-cpp::metrics)
-    # TODO(#14260) - remove this workaround. gRPC does not publish a pkgconfig
-    # module for grpcpp_otel_plugin.
-    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
-    set(EXTRA_LIBS "grpcpp_otel_plugin")
+    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "grpcpp_otel_plugin"
+                      "opentelemetry_metrics")
 endif ()
 set_target_properties(
     google_cloud_cpp_storage_grpc
@@ -271,9 +269,7 @@ google_cloud_cpp_add_pkgconfig(
     "absl_optional"
     "absl_strings"
     "absl_time"
-    ${EXTRA_MODULES}
-    LIBS
-    ${EXTRA_LIBS})
+    ${EXTRA_MODULES})
 
 install(
     EXPORT storage_grpc-targets
