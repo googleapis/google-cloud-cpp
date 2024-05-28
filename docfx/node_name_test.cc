@@ -64,8 +64,8 @@ TEST(NodeName, Class) {
             <param><type>typename T</type></param>
             </templateparamlist>
         </compounddef>
-        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="structgoogle_1_1cloud_1_1LoggingComponentsOption" kind="struct" language="C++" prot="public">
-            <compoundname>google::cloud::LoggingComponentsOption</compoundname>
+        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="structgoogle_1_1cloud_1_1TracingComponentsOption" kind="struct" language="C++" prot="public">
+            <compoundname>google::cloud::TracingComponentsOption</compoundname>
         </compounddef>
         <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1future_3_01void_01_4" kind="class" language="C++" prot="public" final="yes">
             <compoundname>google::cloud::future&lt; void &gt;</compoundname>
@@ -80,8 +80,8 @@ TEST(NodeName, Class) {
   } const cases[] = {
       {"classgoogle_1_1cloud_1_1Status", "Status"},
       {"classgoogle_1_1cloud_1_1StatusOr", "StatusOr<T>"},
-      {"structgoogle_1_1cloud_1_1LoggingComponentsOption",
-       "LoggingComponentsOption"},
+      {"structgoogle_1_1cloud_1_1TracingComponentsOption",
+       "TracingComponentsOption"},
       {"classgoogle_1_1cloud_1_1future_3_01void_01_4", "future< void >"},
   };
 

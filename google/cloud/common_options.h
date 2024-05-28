@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMMON_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMMON_OPTIONS_H
 
+#include "google/cloud/internal/attributes.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <set>
@@ -313,7 +314,8 @@ using CommonOptionList =
  *
  * @deprecated use #google::cloud::LoggingComponentsOption
  */
-using TracingComponentsOption = LoggingComponentsOption;
+using TracingComponentsOption GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Use google::cloud::LoggingComponentsOption") = LoggingComponentsOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
