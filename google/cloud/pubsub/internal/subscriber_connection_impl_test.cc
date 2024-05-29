@@ -43,6 +43,7 @@ using ::testing::AtLeast;
 using ::testing::AtMost;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::Property;
 using ::testing::StartsWith;
 
@@ -454,6 +455,8 @@ TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
   auto response = subscriber->Pull();
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable,
                                  HasSubstr("no messages returned")));
+  EXPECT_THAT(response.status().error_info().metadata(),
+              Contains(Pair("gl-cpp.error.origin", "client")));
 
   cq.Shutdown();
   t.join();

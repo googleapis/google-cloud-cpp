@@ -30,6 +30,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/status_utils.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
