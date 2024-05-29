@@ -594,7 +594,7 @@ TEST_P(DataIntegrationTest, TableApplyWithLogging) {
 
   // Verify that a logging client logs.
   auto logging_table =
-      make_table(Options{}.set<TracingComponentsOption>({"rpc"}));
+      make_table(Options{}.set<LoggingComponentsOption>({"rpc"}));
   Apply(logging_table, row_key, created);
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("MutateRow")));
 

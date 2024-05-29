@@ -91,7 +91,7 @@ struct UnifiedCredentialsOption {
  *
  * @param opts optional configuration values.  Note that the effect of these
  *     parameters depends on the underlying transport. For example,
- *     `TracingComponentsOption` is ignored by gRPC-based services.
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts = {});
 
@@ -127,7 +127,7 @@ std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts = {});
  *
  * @param opts optional configuration values.  Note that the effect of these
  *     parameters depends on the underlying transport. For example,
- *     `TracingComponentsOption` is ignored by gRPC-based services.
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts = {});
 
@@ -147,7 +147,7 @@ std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts = {});
  * @param expiration the expiration time for the token.
  * @param opts optional configuration values.  Note that the effect of these
  *     parameters depends on the underlying transport. For example,
- *     `TracingComponentsOption` is ignored by gRPC-based services.
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
@@ -194,7 +194,7 @@ std::shared_ptr<Credentials> MakeAccessTokenCredentials(
  * impersonate.
  * @param opts optional configuration values.  Note that the effect of these
  *     parameters depends on the underlying transport. For example,
- *     `TracingComponentsOption` is ignored by gRPC-based services.
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
     std::shared_ptr<Credentials> base_credentials,
@@ -240,7 +240,7 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
  * something like Google's secret manager service.
  * @param opts optional configuration values.  Note that the effect of these
  *     parameters depends on the underlying transport. For example,
- *     `TracingComponentsOption` is ignored by gRPC-based services.
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
     std::string json_object, Options opts = {});
@@ -265,7 +265,7 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
  *     file can be created using the [create-cred-config] `gcloud` subcommand.
  * @param opts optional configuration values.  Note that the effect of these
  *     parameters depends on the underlying transport. For example,
- *     `TracingComponentsOption` is ignored by gRPC-based services.
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
  *
  * [create-cred-config]:
  * https://cloud.google.com/sdk/gcloud/reference/iam/workload-identity-pools/create-cred-config
@@ -375,7 +375,7 @@ struct CARootsFilePathOption {
 /// A list of  options related to authentication.
 using UnifiedCredentialsOptionList =
     OptionList<AccessTokenLifetimeOption, CARootsFilePathOption,
-               DelegatesOption, ScopesOption, TracingComponentsOption,
+               DelegatesOption, ScopesOption, LoggingComponentsOption,
                UnifiedCredentialsOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

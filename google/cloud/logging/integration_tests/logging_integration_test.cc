@@ -43,7 +43,7 @@ Options TestFailureOptions() {
   auto const expiration =
       std::chrono::system_clock::now() + std::chrono::minutes(15);
   return Options{}
-      .set<TracingComponentsOption>({"rpc"})
+      .set<LoggingComponentsOption>({"rpc"})
       .set<UnifiedCredentialsOption>(
           MakeAccessTokenCredentials("invalid-access-token", expiration))
       .set<LoggingServiceV2RetryPolicyOption>(
@@ -55,7 +55,7 @@ Options TestFailureOptions() {
 }
 
 Options TestSuccessOptions() {
-  return Options{}.set<TracingComponentsOption>({"rpc"});
+  return Options{}.set<LoggingComponentsOption>({"rpc"});
 }
 
 TEST_F(LoggingIntegrationTest, DeleteLogFailure) {

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -22,11 +23,11 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
 namespace {
 
 using ::testing::Contains;
 using ::testing::ContainsRegex;
+using ::testing::UnorderedElementsAre;
 
 // Tests a generic option by setting it, then getting it.
 template <typename T, typename ValueType = typename T::Type>
@@ -36,12 +37,10 @@ void TestOption(ValueType const& expected) {
       << "Failed with type: " << typeid(T).name();
 }
 
-}  // namespace
-
 TEST(CommonOptionList, RegularOptions) {
   TestOption<EndpointOption>("foo.googleapis.com");
   TestOption<UserAgentProductsOption>({"foo", "bar"});
-  TestOption<TracingComponentsOption>({"foo", "bar", "baz"});
+  TestOption<LoggingComponentsOption>({"foo", "bar", "baz"});
 }
 
 TEST(CommonOptionList, Expected) {
@@ -65,6 +64,13 @@ TEST(CommonOptionList, Unexpected) {
       Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));
 }
 
+TEST(TracingComponentsOption, BackwardsCompat) {
+  auto o = Options{}.set<TracingComponentsOption>({"a", "b", "c"});
+  EXPECT_THAT(o.get<LoggingComponentsOption>(),
+              UnorderedElementsAre("a", "b", "c"));
+}
+
+}  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

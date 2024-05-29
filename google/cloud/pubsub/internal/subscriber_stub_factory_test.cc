@@ -76,7 +76,7 @@ std::shared_ptr<SubscriberStub> CreateTestStub(
   return CreateDecoratedStubs(std::move(cq),
                               google::cloud::Options{}
                                   .set<GrpcNumChannelsOption>(kTestChannels)
-                                  .set<TracingComponentsOption>({"rpc"})
+                                  .set<LoggingComponentsOption>({"rpc"})
                                   .set<UnifiedCredentialsOption>(credentials),
                               factory);
 }

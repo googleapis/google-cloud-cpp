@@ -66,7 +66,7 @@ TEST(Options, Defaults) {
   EXPECT_EQ(opts.get<AuthorityOption>(), "spanner.googleapis.com");
   EXPECT_TRUE(opts.has<UnifiedCredentialsOption>());
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
-  EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
+  EXPECT_THAT(opts.get<LoggingComponentsOption>(), IsEmpty());
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
@@ -110,7 +110,7 @@ TEST(Options, AdminDefaults) {
   auto const expected = grpc::GoogleDefaultCredentials();
   EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
-  EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
+  EXPECT_THAT(opts.get<LoggingComponentsOption>(), IsEmpty());
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
@@ -177,7 +177,7 @@ TEST(Options, TracingComponentsFromEnv) {
   testing_util::ScopedEnvironment tracing_components_env(
       "GOOGLE_CLOUD_CPP_ENABLE_TRACING", "c1,c2,c3");
   auto opts = spanner_internal::DefaultOptions();
-  EXPECT_THAT(opts.get<TracingComponentsOption>(),
+  EXPECT_THAT(opts.get<LoggingComponentsOption>(),
               ElementsAre("c1", "c2", "c3"));
 }
 
@@ -262,9 +262,9 @@ TEST(Options, OverrideTracingComponents) {
   testing_util::ScopedEnvironment tracing_components_env(
       "GOOGLE_CLOUD_CPP_ENABLE_TRACING", "n1,n2,n3");
   std::set<std::string> components{"c1", "c2", "c3"};
-  auto opts = Options{}.set<TracingComponentsOption>(components);
+  auto opts = Options{}.set<LoggingComponentsOption>(components);
   opts = spanner_internal::DefaultOptions(std::move(opts));
-  EXPECT_THAT(opts.get<TracingComponentsOption>(),
+  EXPECT_THAT(opts.get<LoggingComponentsOption>(),
               ElementsAre("c1", "c2", "c3"));
 }
 

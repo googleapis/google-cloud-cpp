@@ -56,7 +56,7 @@ StatusOr<std::string> RetryHttpGet(
     std::string const& url,
     std::function<rest_internal::RestRequest()> const& factory) {
   auto client = rest_internal::MakeDefaultRestClient(
-      url, Options{}.set<TracingComponentsOption>({"http"}));
+      url, Options{}.set<LoggingComponentsOption>({"http"}));
   auto call = [&]() -> StatusOr<std::string> {
     rest_internal::RestContext context;
     return HandleResponse(client->Get(context, factory()));
@@ -69,7 +69,7 @@ StatusOr<std::string> RetryHttpPut(
     std::function<rest_internal::RestRequest()> const& factory,
     std::string const& payload) {
   auto client = rest_internal::MakeDefaultRestClient(
-      url, Options{}.set<TracingComponentsOption>({"http"}));
+      url, Options{}.set<LoggingComponentsOption>({"http"}));
   auto call = [&]() -> StatusOr<std::string> {
     rest_internal::RestContext context;
     return HandleResponse(

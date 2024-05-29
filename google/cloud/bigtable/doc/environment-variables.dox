@@ -27,7 +27,7 @@ output.
 `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams`: turns on tracing for both
 regular RPC calls and streaming RPC calls.
 
-@see google::cloud::TracingComponentsOption
+@see google::cloud::LoggingComponentsOption
 
 `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...`: modifies the behavior of gRPC tracing,
 including whether messages will be output on multiple lines, or whether

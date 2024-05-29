@@ -41,11 +41,11 @@ std::shared_ptr<ImagesRestStub> CreateDefaultImagesRestStub(
   std::shared_ptr<ImagesRestStub> stub =
       std::make_shared<DefaultImagesRestStub>(std::move(opts));
   stub = std::make_shared<ImagesRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<ImagesRestLogging>(
         std::move(stub), options.get<RestTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   return stub;
 }

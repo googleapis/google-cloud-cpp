@@ -206,25 +206,25 @@ class ClientOptions {
 
   /**
    * @deprecated Use google::cloud::Options and
-   *     google::cloud::TracingComponentsOption instead.
+   *     google::cloud::LoggingComponentsOption instead.
    */
   bool enable_http_tracing() const;
 
   /**
    * @deprecated Use google::cloud::Options and
-   *     google::cloud::TracingComponentsOption instead.
+   *     google::cloud::LoggingComponentsOption instead.
    */
   ClientOptions& set_enable_http_tracing(bool enable);
 
   /**
    * @deprecated Use google::cloud::Options and
-   *     google::cloud::TracingComponentsOption instead.
+   *     google::cloud::LoggingComponentsOption instead.
    */
   bool enable_raw_client_tracing() const;
 
   /**
    * @deprecated Use google::cloud::Options and
-   *     google::cloud::TracingComponentsOption instead.
+   *     google::cloud::LoggingComponentsOption instead.
    */
   ClientOptions& set_enable_raw_client_tracing(bool enable);
 

@@ -56,11 +56,11 @@ CreateDefaultResourceSettingsServiceStub(
   }
   stub = std::make_shared<ResourceSettingsServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ResourceSettingsServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {
     stub = MakeResourceSettingsServiceTracingStub(std::move(stub));

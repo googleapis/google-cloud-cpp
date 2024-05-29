@@ -166,7 +166,7 @@ class CaptureSendHeaderBackend : public LogBackend {
 TEST_F(ThreadIntegrationTest, ReuseConnections) {
   auto log_backend = std::make_shared<CaptureSendHeaderBackend>();
 
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+  Client client(Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
 
   std::string bucket_name = MakeRandomBucketName();
 

@@ -165,7 +165,7 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
   auto tested =
       Client(Options{}
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                 .set<TracingComponentsOption>({}));
+                 .set<LoggingComponentsOption>({}));
 
   auto const impl = ClientImplDetails::GetConnection(tested);
   ASSERT_THAT(impl, NotNull());
@@ -185,7 +185,7 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
   auto tested =
       Client(Options{}
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                 .set<TracingComponentsOption>({"raw-client"}));
+                 .set<LoggingComponentsOption>({"raw-client"}));
 
   auto const impl = ClientImplDetails::GetConnection(tested);
   ASSERT_THAT(impl, NotNull());
@@ -206,7 +206,7 @@ TEST_F(ClientTest, OTelEnableTracing) {
   // environment there may not be other credentials configured.
   auto options = Options{}
                      .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                     .set<TracingComponentsOption>({"raw-client"});
+                     .set<LoggingComponentsOption>({"raw-client"});
 
   auto tested = Client(EnableTracing(std::move(options)));
   auto const impl = ClientImplDetails::GetConnection(tested);
@@ -226,7 +226,7 @@ TEST_F(ClientTest, OTelDisableTracing) {
   // environment there may not be other credentials configured.
   auto options = Options{}
                      .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                     .set<TracingComponentsOption>({"raw-client"});
+                     .set<LoggingComponentsOption>({"raw-client"});
 
   auto tested = Client(DisableTracing(std::move(options)));
   auto const impl = ClientImplDetails::GetConnection(tested);

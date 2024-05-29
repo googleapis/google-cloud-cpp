@@ -206,7 +206,7 @@ TEST_F(GrpcImpersonateServiceAccountIntegrationTest, BlockingCallWithToken) {
   ASSERT_THAT(config, Not(IsNull()));
   auto under_test = GrpcImpersonateServiceAccount::Create(
       background.cq(), *config,
-      Options{}.set<TracingComponentsOption>({"rpc"}));
+      Options{}.set<LoggingComponentsOption>({"rpc"}));
 
   auto channel = under_test->CreateChannel("bigtableadmin.googleapis.com",
                                            grpc::ChannelArguments{});
@@ -246,7 +246,7 @@ TEST_F(GrpcImpersonateServiceAccountIntegrationTest, AsyncCallWithToken) {
   ASSERT_THAT(config, Not(IsNull()));
   auto under_test = GrpcImpersonateServiceAccount::Create(
       background.cq(), *config,
-      Options{}.set<TracingComponentsOption>({"rpc"}));
+      Options{}.set<LoggingComponentsOption>({"rpc"}));
 
   auto channel = under_test->CreateChannel("bigtableadmin.googleapis.com",
                                            grpc::ChannelArguments{});

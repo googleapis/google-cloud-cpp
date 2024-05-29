@@ -41,11 +41,11 @@ std::shared_ptr<UrlMapsRestStub> CreateDefaultUrlMapsRestStub(
   std::shared_ptr<UrlMapsRestStub> stub =
       std::make_shared<DefaultUrlMapsRestStub>(std::move(opts));
   stub = std::make_shared<UrlMapsRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<UrlMapsRestLogging>(
         std::move(stub), options.get<RestTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   return stub;
 }

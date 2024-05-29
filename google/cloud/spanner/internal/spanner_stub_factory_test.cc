@@ -53,7 +53,7 @@ TEST(DecorateSpannerStub, Auth) {
       std::chrono::system_clock::now() + std::chrono::minutes(5));
   auto opts = Options{}
                   .set<UnifiedCredentialsOption>(credentials)
-                  .set<TracingComponentsOption>({"rpc"});
+                  .set<LoggingComponentsOption>({"rpc"});
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto auth = internal::CreateAuthenticationStrategy(background.cq(), opts);
   auto stub = DecorateSpannerStub(mock, spanner::Database("foo", "bar", "baz"),
@@ -97,7 +97,7 @@ TEST(DecorateSpannerStub, Logging) {
       .WillOnce(Return(internal::AbortedError("fail")));
   auto opts = Options{}
                   .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                  .set<TracingComponentsOption>({"rpc"});
+                  .set<LoggingComponentsOption>({"rpc"});
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto auth = internal::CreateAuthenticationStrategy(background.cq(), opts);
   auto stub = DecorateSpannerStub(mock, spanner::Database("foo", "bar", "baz"),

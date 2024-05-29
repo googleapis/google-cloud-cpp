@@ -42,11 +42,11 @@ CreateDefaultTargetHttpsProxiesRestStub(Options const& options) {
   std::shared_ptr<TargetHttpsProxiesRestStub> stub =
       std::make_shared<DefaultTargetHttpsProxiesRestStub>(std::move(opts));
   stub = std::make_shared<TargetHttpsProxiesRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<TargetHttpsProxiesRestLogging>(
         std::move(stub), options.get<RestTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   return stub;
 }

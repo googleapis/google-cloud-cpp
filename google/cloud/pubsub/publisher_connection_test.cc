@@ -95,7 +95,7 @@ TEST(PublisherConnectionTest, Metadata) {
       });
 
   auto publisher = MakeTestPublisherConnection(
-      topic, mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      topic, mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -119,7 +119,7 @@ TEST(PublisherConnectionTest, Logging) {
       });
 
   auto publisher = MakeTestPublisherConnection(
-      topic, mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      topic, mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();

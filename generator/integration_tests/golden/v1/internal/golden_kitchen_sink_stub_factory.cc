@@ -54,12 +54,12 @@ CreateDefaultGoldenKitchenSinkStub(
   stub = std::make_shared<GoldenKitchenSinkMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<GoldenKitchenSinkLogging>(
         std::move(stub),
         options.get<GrpcTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {
     stub = MakeGoldenKitchenSinkTracingStub(std::move(stub));

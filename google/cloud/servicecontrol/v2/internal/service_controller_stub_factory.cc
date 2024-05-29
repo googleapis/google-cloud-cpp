@@ -54,11 +54,11 @@ std::shared_ptr<ServiceControllerStub> CreateDefaultServiceControllerStub(
   }
   stub = std::make_shared<ServiceControllerMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ServiceControllerLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {
     stub = MakeServiceControllerTracingStub(std::move(stub));

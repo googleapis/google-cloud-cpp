@@ -41,11 +41,11 @@ std::shared_ptr<SqlFlagsServiceRestStub> CreateDefaultSqlFlagsServiceRestStub(
   std::shared_ptr<SqlFlagsServiceRestStub> stub =
       std::make_shared<DefaultSqlFlagsServiceRestStub>(std::move(opts));
   stub = std::make_shared<SqlFlagsServiceRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<SqlFlagsServiceRestLogging>(
         std::move(stub), options.get<RestTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   return stub;
 }

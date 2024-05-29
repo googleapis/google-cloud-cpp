@@ -71,8 +71,8 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
   if (e && !e->empty()) {
     opts.set<OpenTelemetryTracingOption>(true);
   }
-  if (!opts.has<TracingComponentsOption>()) {
-    opts.set<TracingComponentsOption>(DefaultTracingComponents());
+  if (!opts.has<LoggingComponentsOption>()) {
+    opts.set<LoggingComponentsOption>(DefaultTracingComponents());
   }
 
   auto& products = opts.lookup<UserAgentProductsOption>();

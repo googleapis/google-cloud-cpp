@@ -519,27 +519,27 @@ class ClientOptions {
    * be enabled by clients configured with this option.
    *
    * @deprecated Please configure `google::cloud::Options` with
-   *     `google::cloud::TracingComponentsOption` instead.
+   *     `google::cloud::LoggingComponentsOption` instead.
    */
   GOOGLE_CLOUD_CPP_DEPRECATED(
       "use `google::cloud::Options` with "
-      "`google::cloud::TracingComponentsOption` instead")
+      "`google::cloud::LoggingComponentsOption` instead")
   bool tracing_enabled(std::string const& component) const {
     return google::cloud::internal::Contains(
-        opts_.get<TracingComponentsOption>(), component);
+        opts_.get<LoggingComponentsOption>(), component);
   }
 
   /**
    * Enable tracing for @p component in clients configured with this object.
    *
    * @deprecated Please configure `google::cloud::Options` with
-   *     `google::cloud::TracingComponentsOption` instead.
+   *     `google::cloud::LoggingComponentsOption` instead.
    */
   GOOGLE_CLOUD_CPP_DEPRECATED(
       "use `google::cloud::Options` with "
-      "`google::cloud::TracingComponentsOption` instead")
+      "`google::cloud::LoggingComponentsOption` instead")
   ClientOptions& enable_tracing(std::string const& component) {
-    opts_.lookup<TracingComponentsOption>().insert(component);
+    opts_.lookup<LoggingComponentsOption>().insert(component);
     return *this;
   }
 
@@ -547,13 +547,13 @@ class ClientOptions {
    * Disable tracing for @p component in clients configured with this object.
    *
    * @deprecated Please configure `google::cloud::Options` with
-   *     `google::cloud::TracingComponentsOption` instead.
+   *     `google::cloud::LoggingComponentsOption` instead.
    */
   GOOGLE_CLOUD_CPP_DEPRECATED(
       "use `google::cloud::Options` with "
-      "`google::cloud::TracingComponentsOption` instead")
+      "`google::cloud::LoggingComponentsOption` instead")
   ClientOptions& disable_tracing(std::string const& component) {
-    opts_.lookup<TracingComponentsOption>().erase(component);
+    opts_.lookup<LoggingComponentsOption>().erase(component);
     return *this;
   }
 

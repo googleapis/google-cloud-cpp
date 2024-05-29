@@ -56,12 +56,12 @@ CreateDefaultGoldenThingAdminStub(
   stub = std::make_shared<GoldenThingAdminMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<GoldenThingAdminLogging>(
         std::move(stub),
         options.get<GrpcTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {
     stub = MakeGoldenThingAdminTracingStub(std::move(stub));

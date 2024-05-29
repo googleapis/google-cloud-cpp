@@ -87,7 +87,7 @@ TEST(BlockingPublisherConnectionTest, Metadata) {
       });
 
   auto publisher = MakeTestPublisherConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   google::cloud::internal::OptionsSpan span(publisher->options());
   auto response = publisher->Publish(
       {topic, MessageBuilder{}.SetData("test-data-0").Build()});
@@ -111,7 +111,7 @@ TEST(BlockingPublisherConnectionTest, Logging) {
       });
 
   auto publisher = MakeTestPublisherConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+      mock, Options{}.set<LoggingComponentsOption>({"rpc"}));
   google::cloud::internal::OptionsSpan span(publisher->options());
   auto response = publisher->Publish(
       {topic, MessageBuilder{}.SetData("test-data-0").Build()});

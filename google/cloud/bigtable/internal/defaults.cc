@@ -204,7 +204,7 @@ Options DefaultOptions(Options opts) {
 
   // Fill any missing default values.
   auto defaults = Options{}
-                      .set<TracingComponentsOption>(
+                      .set<LoggingComponentsOption>(
                           ::google::cloud::internal::DefaultTracingComponents())
                       .set<GrpcTracingOptionsOption>(
                           ::google::cloud::internal::DefaultTracingOptions())

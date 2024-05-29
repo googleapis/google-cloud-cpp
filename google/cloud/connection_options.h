@@ -69,7 +69,7 @@ class ConnectionOptions {
       std::shared_ptr<grpc::ChannelCredentials> credentials)
       : opts_(Options{}
                   .set<GrpcCredentialOption>(std::move(credentials))
-                  .set<TracingComponentsOption>(
+                  .set<LoggingComponentsOption>(
                       internal::DefaultTracingComponents())
                   .set<GrpcTracingOptionsOption>(
                       internal::DefaultTracingOptions())
@@ -159,43 +159,43 @@ class ConnectionOptions {
    * developers troubleshoot problems. This flag returns true if tracing should
    * be enabled by clients configured with this option.
    *
-   * @deprecated Use `Options` and `TracingComponentsOption`
+   * @deprecated Use `Options` and `LoggingComponentsOption`
    */
-  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `TracingComponentsOption`")
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `LoggingComponentsOption`")
   bool tracing_enabled(std::string const& component) const {
-    return internal::Contains(opts_.get<TracingComponentsOption>(), component);
+    return internal::Contains(opts_.get<LoggingComponentsOption>(), component);
   }
 
   /**
    * Enable tracing for @p component in clients configured with this object.
    *
-   * @deprecated Use `Options` and `TracingComponentsOption`
+   * @deprecated Use `Options` and `LoggingComponentsOption`
    */
-  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `TracingComponentsOption`")
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `LoggingComponentsOption`")
   ConnectionOptions& enable_tracing(std::string const& component) {
-    opts_.lookup<TracingComponentsOption>().insert(component);
+    opts_.lookup<LoggingComponentsOption>().insert(component);
     return *this;
   }
 
   /**
    * Disable tracing for @p component in clients configured with this object.
    *
-   * @deprecated Use `Options` and `TracingComponentsOption`
+   * @deprecated Use `Options` and `LoggingComponentsOption`
    */
-  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `TracingComponentsOption`")
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `LoggingComponentsOption`")
   ConnectionOptions& disable_tracing(std::string const& component) {
-    opts_.lookup<TracingComponentsOption>().erase(component);
+    opts_.lookup<LoggingComponentsOption>().erase(component);
     return *this;
   }
 
   /**
    * Return the set of tracing components.
    *
-   * @deprecated Use `Options` and `TracingComponentsOption`
+   * @deprecated Use `Options` and `LoggingComponentsOption`
    */
-  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `TracingComponentsOption`")
+  GOOGLE_CLOUD_CPP_DEPRECATED("Use `Options` and `LoggingComponentsOption`")
   std::set<std::string> const& components() const {
-    return opts_.get<TracingComponentsOption>();
+    return opts_.get<LoggingComponentsOption>();
   }
 
   /**

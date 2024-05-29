@@ -31,7 +31,7 @@ namespace internal {
  * Add default values for common options, including:
  *  - `AuthorityOption`
  *  - `EndpointOption`
- *  - `TracingComponentsOption`
+ *  - `LoggingComponentsOption`
  *  - `UserAgentProductsOption`
  *  - `UserProjectOption`
  *

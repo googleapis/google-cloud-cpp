@@ -204,7 +204,7 @@ class AsyncAccessTokenGeneratorTracing : public MinimalIamCredentialsStub {
 std::shared_ptr<MinimalIamCredentialsStub> DecorateMinimalIamCredentialsStub(
     std::shared_ptr<MinimalIamCredentialsStub> impl, Options const& options) {
   impl = std::make_shared<AsyncAccessTokenGeneratorMetadata>(std::move(impl));
-  auto const& components = options.get<TracingComponentsOption>();
+  auto const& components = options.get<LoggingComponentsOption>();
   if (Contains(components, "auth") || Contains(components, "rpc")) {
     impl = std::make_shared<AsyncAccessTokenGeneratorLogging>(
         std::move(impl), options.get<GrpcTracingOptionsOption>());

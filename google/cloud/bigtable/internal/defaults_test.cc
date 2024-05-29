@@ -100,7 +100,7 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<GrpcTracingOptionsOption>(
               TracingOptions{}.SetOptions("single_line_mode=F"))
-          .set<TracingComponentsOption>({"test-component"})
+          .set<LoggingComponentsOption>({"test-component"})
           .set<GrpcNumChannelsOption>(3)
           .set<GrpcBackgroundThreadPoolSizeOption>(5)
           .set<GrpcChannelArgumentsNativeOption>(channel_args)
@@ -114,7 +114,7 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
   EXPECT_FALSE(opts.get<GrpcTracingOptionsOption>().single_line_mode());
-  EXPECT_THAT(opts.get<TracingComponentsOption>(), Contains("test-component"));
+  EXPECT_THAT(opts.get<LoggingComponentsOption>(), Contains("test-component"));
   EXPECT_EQ(3U, opts.get<GrpcNumChannelsOption>());
   EXPECT_EQ(5U, opts.get<GrpcBackgroundThreadPoolSizeOption>());
 

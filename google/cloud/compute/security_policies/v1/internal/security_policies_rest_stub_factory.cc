@@ -41,11 +41,11 @@ std::shared_ptr<SecurityPoliciesRestStub> CreateDefaultSecurityPoliciesRestStub(
   std::shared_ptr<SecurityPoliciesRestStub> stub =
       std::make_shared<DefaultSecurityPoliciesRestStub>(std::move(opts));
   stub = std::make_shared<SecurityPoliciesRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<SecurityPoliciesRestLogging>(
         std::move(stub), options.get<RestTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   return stub;
 }

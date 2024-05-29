@@ -216,7 +216,7 @@ std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
                                            Options options) {
   options = internal::DefaultDataOptions(std::move(options));
   bool tracing_enabled = google::cloud::internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc");
+      options.get<LoggingComponentsOption>(), "rpc");
   auto tracing_options = options.get<GrpcTracingOptionsOption>();
 
   std::shared_ptr<DataClient> client = std::make_shared<DefaultDataClient>(

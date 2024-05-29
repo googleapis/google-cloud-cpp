@@ -175,7 +175,7 @@ CurlImpl::CurlImpl(CurlHandle handle,
   CurlInitializeOnce(options);
 
   logging_enabled_ = google::cloud::internal::Contains(
-      options.get<TracingComponentsOption>(), "http");
+      options.get<LoggingComponentsOption>(), "http");
   follow_location_ = options.get<CurlFollowLocationOption>();
 
   socket_options_.recv_buffer_size_ =

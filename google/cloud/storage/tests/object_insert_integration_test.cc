@@ -336,7 +336,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+  Client client(Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
@@ -362,7 +362,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_P(ObjectInsertIntegrationTest, InsertMultipartWithUserIp) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+  Client client(Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
@@ -379,7 +379,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertMultipartWithUserIp) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIp) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+  Client client(Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
@@ -405,7 +405,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIp) {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_P(ObjectInsertIntegrationTest, InsertMultipartWithUserIpBlank) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+  Client client(Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   // Make sure at least one connection was created before we run the test, the
@@ -433,7 +433,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertMultipartWithUserIpBlank) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+  Client client(Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   // Make sure at least one connection was created before we run the test, the

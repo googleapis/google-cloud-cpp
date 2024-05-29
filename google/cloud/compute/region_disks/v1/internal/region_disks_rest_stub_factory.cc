@@ -41,11 +41,11 @@ std::shared_ptr<RegionDisksRestStub> CreateDefaultRegionDisksRestStub(
   std::shared_ptr<RegionDisksRestStub> stub =
       std::make_shared<DefaultRegionDisksRestStub>(std::move(opts));
   stub = std::make_shared<RegionDisksRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<RegionDisksRestLogging>(
         std::move(stub), options.get<RestTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   return stub;
 }

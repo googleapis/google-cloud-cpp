@@ -43,11 +43,11 @@ std::shared_ptr<SpannerStub> DecorateSpannerStub(
       std::multimap<std::string, std::string>{
           {"google-cloud-resource-prefix", db.FullName()}},
       internal::HandCraftedLibClientHeader());
-  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(opts.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SpannerLogging>(
         std::move(stub), opts.get<GrpcTracingOptionsOption>(),
-        opts.get<TracingComponentsOption>());
+        opts.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(opts)) {
     stub = MakeSpannerTracingStub(std::move(stub));

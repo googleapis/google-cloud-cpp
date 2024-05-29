@@ -384,7 +384,7 @@ TEST_F(InstanceAdminIntegrationTest,
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
   auto instance_admin_client = bigtable::MakeInstanceAdminClient(
-      project_id_, Options{}.set<TracingComponentsOption>({"rpc"}));
+      project_id_, Options{}.set<LoggingComponentsOption>({"rpc"}));
   auto instance_admin =
       std::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
 

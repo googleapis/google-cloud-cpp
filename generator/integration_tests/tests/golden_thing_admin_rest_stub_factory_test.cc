@@ -38,7 +38,7 @@ TEST(GoldenThingAdminRestStubFactoryTest, DefaultStubWithoutLogging) {
 TEST(GoldenThingAdminRestStubFactoryTest, DefaultStubWithLogging) {
   testing_util::ScopedLog log;
   Options options;
-  options.set<TracingComponentsOption>({"rpc"});
+  options.set<LoggingComponentsOption>({"rpc"});
   auto default_stub = CreateDefaultGoldenThingAdminRestStub(options);
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,

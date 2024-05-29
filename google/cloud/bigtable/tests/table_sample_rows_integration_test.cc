@@ -72,7 +72,7 @@ class SampleRowsIntegrationTest
     auto table =
         Table(MakeDataConnection(
                   Options{}
-                      .set<TracingComponentsOption>({"rpc"})
+                      .set<LoggingComponentsOption>({"rpc"})
                       .set<GrpcTracingOptionsOption>(TracingOptions())),
               TableResource(TableTestEnvironment::project_id(),
                             TableTestEnvironment::instance_id(),

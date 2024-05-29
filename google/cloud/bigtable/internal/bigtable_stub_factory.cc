@@ -100,11 +100,11 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
       std::multimap<std::string, std::string>{
           {"bigtable-features", FeaturesMetadata()}},
       internal::HandCraftedLibClientHeader());
-  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<BigtableLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {
     stub = MakeBigtableTracingStub(std::move(stub));

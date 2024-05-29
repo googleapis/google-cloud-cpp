@@ -83,12 +83,12 @@ CreateDecoratedStubs(google::cloud::CompletionQueue cq, Options const& options,
   stub = std::make_shared<StorageMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{},
       internal::HandCraftedLibClientHeader());
-  if (google::cloud::internal::Contains(options.get<TracingComponentsOption>(),
+  if (google::cloud::internal::Contains(options.get<LoggingComponentsOption>(),
                                         "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<StorageLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
-        options.get<TracingComponentsOption>());
+        options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {
     stub = MakeStorageTracingStub(std::move(stub));

@@ -35,7 +35,7 @@ The application needs to do two things to enable logging:
   [LogSink](@ref google::cloud::LogSink::Instance).
 - Second, you must configure what gets logged. Typically, you initialize
   the `*Connection` object with a
-  [TracingComponentsOption](@ref google::cloud::TracingComponentsOption).
+  [LoggingComponentsOption](@ref google::cloud::LoggingComponentsOption).
   Consult the documentation for each `*Client` class to find what tracing
   components are available.
 
