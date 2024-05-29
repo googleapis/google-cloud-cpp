@@ -113,7 +113,7 @@ struct PostQueryResults {
 
   TableSchema schema;
   JobReference job_reference;
-  std::vector<Struct> rows;
+  std::vector<RowData> rows;
   std::vector<ErrorProto> errors;
   SessionInfo session_info;
   DmlStats dml_stats;
@@ -151,7 +151,7 @@ struct GetQueryResults {
   bool job_complete = false;
   bool cache_hit = false;
 
-  std::vector<Struct> rows;
+  std::vector<RowData> rows;
   std::vector<ErrorProto> errors;
 
   std::string DebugString(absl::string_view name,

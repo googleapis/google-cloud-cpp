@@ -33,6 +33,7 @@ using ::google::cloud::bigquery_v2_minimal_testing::AssertParamValueEquals;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryParameter;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryParameterType;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryParameterValue;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeRowData;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeSystemVariables;
 
 TEST(CommonV2ResourcesTest, QueryParameterTypeFromJson) {
@@ -426,6 +427,154 @@ TEST(CommonV2ResourcesTest, SystemVariablesToFromJson) {
   from_json(actual_json, actual);
 
   AssertEquals(expected, actual);
+}
+
+TEST(CommonV2ResourcesTest, ColumnDataToJson) {
+  auto const expected_json =
+      R"({
+          "v":"12345"
+      })"_json;
+
+  ColumnData expected;
+  expected.value = "12345";
+
+  nlohmann::json actual_json;
+  to_json(actual_json, expected);
+
+  EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(CommonV2ResourcesTest, ColumnDataFromJson) {
+  std::string text =
+      R"({
+          "v":"12345"
+      })";
+  auto json = nlohmann::json::parse(text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  ColumnData actual;
+  from_json(json, actual);
+
+  ColumnData expected;
+  expected.value = "12345";
+
+  EXPECT_EQ(expected.value, actual.value);
+}
+
+TEST(CommonV2ResourcesTest, RowDataToJson) {
+  auto const expected_json =
+      R"({
+        "f":[
+          {
+            "v":"12345"
+          },
+          {
+            "v":"89012"
+          }
+        ]
+      })"_json;
+
+  RowData expected;
+  expected.columns.push_back(ColumnData{"12345"});
+  expected.columns.push_back(ColumnData{"89012"});
+
+  nlohmann::json actual_json;
+  to_json(actual_json, expected);
+
+  EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(CommonV2ResourcesTest, RowDataFromJson) {
+  std::string text =
+      R"({
+        "f":[
+          {
+            "v":"12345"
+          },
+          {
+            "v":"89012"
+          }
+        ]
+      })";
+  auto json = nlohmann::json::parse(text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  RowData actual;
+  from_json(json, actual);
+
+  RowData expected;
+  expected.columns.push_back(ColumnData{"12345"});
+  expected.columns.push_back(ColumnData{"89012"});
+
+  EXPECT_TRUE(std::equal(expected.columns.begin(), expected.columns.end(),
+                         actual.columns.begin()));
+}
+
+TEST(CommonV2ResourcesTest, ColumnsDebugString) {
+  ColumnData column_data;
+  column_data.value = "12345";
+
+  EXPECT_EQ(column_data.DebugString("ColumnData", TracingOptions{}),
+            R"(ColumnData {)"
+            R"( value: "12345")"
+            R"( })");
+
+  EXPECT_EQ(column_data.DebugString("ColumnData",
+                                    TracingOptions{}.SetOptions(
+                                        "truncate_string_field_longer_than=2")),
+            R"(ColumnData {)"
+            R"( value: "12...<truncated>...")"
+            R"( })");
+
+  EXPECT_EQ(column_data.DebugString("ColumnData", TracingOptions{}.SetOptions(
+                                                      "single_line_mode=F")),
+            R"(ColumnData {
+  value: "12345"
+})");
+}
+
+TEST(CommonV2ResourcesTest, RowDataDebugString) {
+  RowData row_data = MakeRowData();
+
+  EXPECT_EQ(row_data.DebugString("RowData", TracingOptions{}),
+            R"(RowData { columns { value: "col1" })"
+            R"( columns { value: "col2" } columns {)"
+            R"( value: "col3" } columns {)"
+            R"( value: "col4" } columns {)"
+            R"( value: "col5" } columns { value: "col6" } })");
+
+  EXPECT_EQ(row_data.DebugString("RowData",
+                                 TracingOptions{}.SetOptions(
+                                     "truncate_string_field_longer_than=2")),
+            R"(RowData { columns { value: "co...<truncated>..." })"
+            R"( columns { value: "co...<truncated>..." })"
+            R"( columns { value: "co...<truncated>..." })"
+            R"( columns { value: "co...<truncated>..." })"
+            R"( columns { value: "co...<truncated>..." })"
+            R"( columns { value: "co...<truncated>..." } })");
+
+  EXPECT_EQ(row_data.DebugString(
+                "RowData", TracingOptions{}.SetOptions("single_line_mode=F")),
+            R"(RowData {
+  columns {
+    value: "col1"
+  }
+  columns {
+    value: "col2"
+  }
+  columns {
+    value: "col3"
+  }
+  columns {
+    value: "col4"
+  }
+  columns {
+    value: "col5"
+  }
+  columns {
+    value: "col6"
+  }
+})");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -1991,32 +1991,21 @@ TEST(QueryResponseTest, DebugString) {
       response->DebugString("QueryResponse", TracingOptions{}),
       R"(QueryResponse {)"
       R"( http_response {)"
-      R"( status_code: 200)"
-      R"( payload: REDACTED)"
-      R"( })"
+      R"( status_code: 200 payload: REDACTED })"
       R"( query_results {)"
-      R"( kind: "query-kind")"
-      R"( page_token: "np123")"
-      R"( total_rows: 1000)"
-      R"( total_bytes_processed: 1000)"
-      R"( num_dml_affected_rows: 5)"
-      R"( job_complete: true)"
-      R"( cache_hit: true)"
-      R"( rows { fields {)"
-      R"( key: "bool-key")"
-      R"( value { value_kind: true } })"
-      R"( fields { key: "double-key")"
-      R"( value { value_kind: 3.4 })"
-      R"( } fields { key: "string-key" value { value_kind: "val3" } } })"
-      R"( schema { fields {)"
-      R"( name: "fname-1" type: "" mode: "fmode" description: "")"
-      R"( collation: "" default_value_expression: "" max_length: 0)"
-      R"( precision: 0 scale: 0)"
-      R"( categories { } policy_tags { })"
+      R"( kind: "query-kind" page_token: "np123")"
+      R"( total_rows: 1000 total_bytes_processed: 1000 num_dml_affected_rows: 5)"
+      R"( job_complete: true cache_hit: true)"
+      R"( rows { columns { value: "col1" } columns { value: "col2" })"
+      R"( columns { value: "col3" } columns { value: "col4" })"
+      R"( columns { value: "col5" } columns { value: "col6" } })"
+      R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
+      R"( description: "" collation: "" default_value_expression: "")"
+      R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
-      R"( session_info { session_id: "123" })"
-      R"( dml_stats { inserted_row_count: 10 deleted_row_count: 10 updated_row_count: 10 } } })");
+      R"( session_info { session_id: "123" } dml_stats { inserted_row_count: 10)"
+      R"( deleted_row_count: 10 updated_row_count: 10 } } })");
 
   EXPECT_EQ(
       response->DebugString(
@@ -2025,20 +2014,18 @@ TEST(QueryResponseTest, DebugString) {
       R"(QueryResponse { http_response {)"
       R"( status_code: 200 payload: REDACTED })"
       R"( query_results { kind: "query-k...<truncated>...")"
-      R"( page_token: "np123" total_rows: 1000)"
-      R"( total_bytes_processed: 1000 num_dml_affected_rows: 5)"
-      R"( job_complete: true cache_hit: true)"
-      R"( rows { fields { key: "bool-key" value { value_kind: true } })"
-      R"( fields { key: "double-key" value { value_kind: 3.4 } })"
-      R"( fields { key: "string-key" value { value_kind: "val3" } } })"
+      R"( page_token: "np123" total_rows: 1000 total_bytes_processed: 1000)"
+      R"( num_dml_affected_rows: 5 job_complete: true cache_hit: true)"
+      R"( rows { columns { value: "col1" } columns { value: "col2" })"
+      R"( columns { value: "col3" } columns { value: "col4" })"
+      R"( columns { value: "col5" } columns { value: "col6" } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
-      R"( max_length: 0 precision: 0 scale: 0 categories { })"
-      R"( policy_tags { })"
+      R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
-      R"( session_info { session_id: "123" } dml_stats { inserted_row_count: 10)"
-      R"( deleted_row_count: 10 updated_row_count: 10 } } })");
+      R"( session_info { session_id: "123" } dml_stats {)"
+      R"( inserted_row_count: 10 deleted_row_count: 10 updated_row_count: 10 } } })");
 
   EXPECT_EQ(response->DebugString("QueryResponse", TracingOptions{}.SetOptions(
                                                        "single_line_mode=F")),
@@ -2056,23 +2043,23 @@ TEST(QueryResponseTest, DebugString) {
     job_complete: true
     cache_hit: true
     rows {
-      fields {
-        key: "bool-key"
-        value {
-          value_kind: true
-        }
+      columns {
+        value: "col1"
       }
-      fields {
-        key: "double-key"
-        value {
-          value_kind: 3.4
-        }
+      columns {
+        value: "col2"
       }
-      fields {
-        key: "string-key"
-        value {
-          value_kind: "val3"
-        }
+      columns {
+        value: "col3"
+      }
+      columns {
+        value: "col4"
+      }
+      columns {
+        value: "col5"
+      }
+      columns {
+        value: "col6"
       }
     }
     schema {
@@ -2157,31 +2144,17 @@ TEST(GetQueryResultsResponseTest, DebugString) {
 
   EXPECT_EQ(
       response->DebugString("GetQueryResultsResponse", TracingOptions{}),
-      R"(GetQueryResultsResponse {)"
-      R"( http_response {)"
-      R"( status_code: 200)"
-      R"( payload: REDACTED)"
-      R"( })"
-      R"( get_query_results {)"
-      R"( kind: "query-kind")"
-      R"( etag: "query-etag")"
-      R"( page_token: "np123")"
-      R"( total_rows: 1000)"
-      R"( total_bytes_processed: 1000)"
-      R"( num_dml_affected_rows: 5)"
-      R"( job_complete: true)"
-      R"( cache_hit: true)"
-      R"( rows { fields {)"
-      R"( key: "bool-key")"
-      R"( value { value_kind: true } })"
-      R"( fields { key: "double-key")"
-      R"( value { value_kind: 3.4 })"
-      R"( } fields { key: "string-key" value { value_kind: "val3" } } })"
-      R"( schema { fields {)"
-      R"( name: "fname-1" type: "" mode: "fmode" description: "")"
-      R"( collation: "" default_value_expression: "" max_length: 0)"
-      R"( precision: 0 scale: 0)"
-      R"( categories { } policy_tags { })"
+      R"(GetQueryResultsResponse { http_response {)"
+      R"( status_code: 200 payload: REDACTED } get_query_results {)"
+      R"( kind: "query-kind" etag: "query-etag" page_token: "np123")"
+      R"( total_rows: 1000 total_bytes_processed: 1000)"
+      R"( num_dml_affected_rows: 5 job_complete: true cache_hit: true)"
+      R"( rows { columns { value: "col1" } columns { value: "col2" })"
+      R"( columns { value: "col3" } columns { value: "col4" })"
+      R"( columns { value: "col5" } columns { value: "col6" } })"
+      R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
+      R"( description: "" collation: "" default_value_expression: "")"
+      R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" } } })");
 
@@ -2192,17 +2165,15 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       R"(GetQueryResultsResponse { http_response {)"
       R"( status_code: 200 payload: REDACTED })"
       R"( get_query_results { kind: "query-k...<truncated>...")"
-      R"( etag: "query-e...<truncated>...")"
-      R"( page_token: "np123" total_rows: 1000)"
-      R"( total_bytes_processed: 1000 num_dml_affected_rows: 5)"
-      R"( job_complete: true cache_hit: true)"
-      R"( rows { fields { key: "bool-key" value { value_kind: true } })"
-      R"( fields { key: "double-key" value { value_kind: 3.4 } })"
-      R"( fields { key: "string-key" value { value_kind: "val3" } } })"
+      R"( etag: "query-e...<truncated>..." page_token: "np123")"
+      R"( total_rows: 1000 total_bytes_processed: 1000)"
+      R"( num_dml_affected_rows: 5 job_complete: true cache_hit: true)"
+      R"( rows { columns { value: "col1" } columns { value: "col2" })"
+      R"( columns { value: "col3" } columns { value: "col4" })"
+      R"( columns { value: "col5" } columns { value: "col6" } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
-      R"( max_length: 0 precision: 0 scale: 0 categories { })"
-      R"( policy_tags { })"
+      R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" } } })");
 
@@ -2224,23 +2195,23 @@ TEST(GetQueryResultsResponseTest, DebugString) {
     job_complete: true
     cache_hit: true
     rows {
-      fields {
-        key: "bool-key"
-        value {
-          value_kind: true
-        }
+      columns {
+        value: "col1"
       }
-      fields {
-        key: "double-key"
-        value {
-          value_kind: 3.4
-        }
+      columns {
+        value: "col2"
       }
-      fields {
-        key: "string-key"
-        value {
-          value_kind: "val3"
-        }
+      columns {
+        value: "col3"
+      }
+      columns {
+        value: "col4"
+      }
+      columns {
+        value: "col5"
+      }
+      columns {
+        value: "col6"
       }
     }
     schema {
