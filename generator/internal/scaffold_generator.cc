@@ -401,7 +401,7 @@ void GenerateBuild(std::ostream& os,
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@google_cloud_cpp//bazel:gapic.bzl", "cc_gapic_library")
+load("//bazel:gapic.bzl", "cc_gapic_library")
 
 package(default_visibility = ["//visibility:private"])
 
