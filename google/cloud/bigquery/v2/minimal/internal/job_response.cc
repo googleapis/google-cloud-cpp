@@ -240,7 +240,7 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
   if (json->contains("rows")) {
     for (auto const& kv : json->at("rows").items()) {
       auto const& json_struct_obj = kv.value();
-      auto const& row = json_struct_obj.get<Struct>();
+      auto const& row = json_struct_obj.get<RowData>();
       query_results.rows.push_back(row);
     }
   }
@@ -394,7 +394,7 @@ GetQueryResultsResponse::BuildFromHttpResponse(
   if (json->contains("rows")) {
     for (auto const& kv : json->at("rows").items()) {
       auto const& json_struct_obj = kv.value();
-      auto const& row = json_struct_obj.get<Struct>();
+      auto const& row = json_struct_obj.get<RowData>();
       get_query_results.rows.push_back(row);
     }
   }

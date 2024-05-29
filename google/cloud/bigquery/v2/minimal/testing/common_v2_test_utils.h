@@ -30,6 +30,7 @@ bigquery_v2_minimal_internal::QueryParameter MakeQueryParameter();
 bigquery_v2_minimal_internal::SystemVariables MakeSystemVariables();
 bigquery_v2_minimal_internal::DatasetReference MakeDatasetReference();
 bigquery_v2_minimal_internal::ConnectionProperty MakeConnectionProperty();
+bigquery_v2_minimal_internal::RowData MakeRowData();
 
 void AssertParamValueEquals(
     bigquery_v2_minimal_internal::QueryParameterValue& expected,

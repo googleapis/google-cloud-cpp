@@ -622,6 +622,46 @@ void from_json(nlohmann::json const& j, QueryParameter& q) {
   SafeGetTo(q.parameter_type, j, "parameterType");
   SafeGetTo(q.parameter_value, j, "parameterValue");
 }
+
+void to_json(nlohmann::json& j, RowData const& r) {
+  j = nlohmann::json{{"f", r.columns}};
+}
+void from_json(nlohmann::json const& j, RowData& r) {
+  SafeGetTo(r.columns, j, "f");
+}
+
+void to_json(nlohmann::json& j, ColumnData const& c) {
+  j = nlohmann::json{{"v", c.value}};
+}
+void from_json(nlohmann::json const& j, ColumnData& c) {
+  SafeGetTo(c.value, j, "v");
+}
+
+bool operator==(ColumnData const& lhs, ColumnData const& rhs) {
+  return lhs.value == rhs.value;
+}
+
+bool operator==(RowData const& lhs, RowData const& rhs) {
+  return std::equal(lhs.columns.begin(), lhs.columns.end(),
+                    rhs.columns.begin());
+}
+
+std::string ColumnData::DebugString(absl::string_view name,
+                                    TracingOptions const& options,
+                                    int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string RowData::DebugString(absl::string_view name,
+                                 TracingOptions const& options,
+                                 int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("columns", columns)
+      .Build();
+}
+
 // NOLINTEND(misc-no-recursion)
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

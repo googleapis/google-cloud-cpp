@@ -21,12 +21,14 @@ namespace cloud {
 namespace bigquery_v2_minimal_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_internal::ColumnData;
 using ::google::cloud::bigquery_v2_minimal_internal::ConnectionProperty;
 using ::google::cloud::bigquery_v2_minimal_internal::DatasetReference;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameter;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameterStructType;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameterType;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameterValue;
+using ::google::cloud::bigquery_v2_minimal_internal::RowData;
 using ::google::cloud::bigquery_v2_minimal_internal::StandardSqlDataType;
 using ::google::cloud::bigquery_v2_minimal_internal::StandardSqlField;
 using ::google::cloud::bigquery_v2_minimal_internal::StandardSqlStructType;
@@ -157,6 +159,18 @@ SystemVariables MakeSystemVariables() {
   expected.values.fields.insert({"string-key", val3});
 
   return expected;
+}
+
+RowData MakeRowData() {
+  RowData result;
+  result.columns.push_back(ColumnData{"col1"});
+  result.columns.push_back(ColumnData{"col2"});
+  result.columns.push_back(ColumnData{"col3"});
+  result.columns.push_back(ColumnData{"col4"});
+  result.columns.push_back(ColumnData{"col5"});
+  result.columns.push_back(ColumnData{"col6"});
+
+  return result;
 }
 
 void AssertParamValueEquals(QueryParameterValue& expected,

@@ -37,7 +37,7 @@ using ::google::cloud::bigquery_v2_minimal_internal::QueryRequest;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeConnectionProperty;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeDatasetReference;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryParameter;
-using ::google::cloud::bigquery_v2_minimal_testing::MakeSystemVariables;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeRowData;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeTable;
 
 using ::testing::IsEmpty;
@@ -158,7 +158,7 @@ PostQueryResults MakePostQueryResults() {
   expected.kind = "query-kind";
   expected.num_dml_affected_rows = 5;
   expected.page_token = "np123";
-  expected.rows.push_back(MakeSystemVariables().values);
+  expected.rows.push_back(MakeRowData());
 
   expected.schema = MakeTable().schema;
   expected.total_bytes_processed = 1000;
@@ -181,7 +181,7 @@ GetQueryResults MakeGetQueryResults() {
   expected.etag = "query-etag";
   expected.num_dml_affected_rows = 5;
   expected.page_token = "np123";
-  expected.rows.push_back(MakeSystemVariables().values);
+  expected.rows.push_back(MakeRowData());
 
   expected.schema = MakeTable().schema;
   expected.total_bytes_processed = 1000;

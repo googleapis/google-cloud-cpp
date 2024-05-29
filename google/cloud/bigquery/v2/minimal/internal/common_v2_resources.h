@@ -314,6 +314,27 @@ void to_json(nlohmann::json& j, Struct const& s);
 void from_json(nlohmann::json const& j, Struct& s);
 bool operator==(Struct const& lhs, Struct const& rhs);
 
+struct ColumnData {
+  std::string value;
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+void to_json(nlohmann::json& j, ColumnData const& c);
+void from_json(nlohmann::json const& j, ColumnData& c);
+bool operator==(ColumnData const& lhs, ColumnData const& rhs);
+
+struct RowData {
+  std::vector<ColumnData> columns;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+void to_json(nlohmann::json& j, RowData const& r);
+void from_json(nlohmann::json const& j, RowData& r);
+bool operator==(RowData const& lhs, RowData const& rhs);
+
 // Represents the system variables that can be given to a query job.
 // System variables can be used to check information during query execution.
 //
