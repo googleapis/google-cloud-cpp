@@ -18,9 +18,7 @@ permissions:
 jobs:
   cmake:
     name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
-    runs-on:
-      group: cpp-runners
-      labels: 'windows-2022'
+    runs-on: windows-latest
     permissions:
       contents: 'read'
       id-token: 'write'
