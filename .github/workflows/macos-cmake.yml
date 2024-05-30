@@ -18,7 +18,7 @@ permissions:
 jobs:
   cmake:
     name: cmake + ${{ matrix.os }} + ${{ matrix.shard }}
-    runs-on: ${{ matrix.os }}-xlarge
+    runs-on: macos-latest
     permissions:
       contents: 'read'
       id-token: 'write'
