@@ -18,7 +18,7 @@ permissions:
 jobs:
   cmake:
     name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
-    runs-on: windows-latest
+    runs-on: windows-2022
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -67,7 +67,7 @@ jobs:
       run: |
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
         core1_features=(bigtable pubsub pubsublite)
-        core2_features=(spanner storage)        
+        core2_features=(spanner storage)
         # These are the libraries with the most "clients". To build the list
         # run something like this and create shards:
         #
@@ -86,7 +86,7 @@ jobs:
           dialogflow_cx
           dialogflow_es
           aiplatform
-        )    
+        )
         shard2_features=(
           policytroubleshooter
           profiler
@@ -177,11 +177,11 @@ jobs:
           # it out.
           skipped_features=(null)
           skipped_features+=("${core1_features[@]}")
-          skipped_features+=("${core2_features[@]}")        
+          skipped_features+=("${core2_features[@]}")
           skipped_features+=(compute)
           skipped_features+=("${shard1_features[@]}")
           skipped_features+=("${shard2_features[@]}")
-          skipped_features+=("${shard3_features[@]}")                        
+          skipped_features+=("${shard3_features[@]}")
           # We use vcpkg in this build, which ships with Protobuf v21.x.
           # Both `asset` and `channel` require Protobuf >= 23.x to compile on
           # Windows.

@@ -14,7 +14,7 @@ permissions:
 jobs:
   bazel:
     name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }}
-    runs-on: windows-latest
+    runs-on: windows-2022
     permissions:
       contents: 'read'
       id-token: 'write'
