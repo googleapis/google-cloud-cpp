@@ -13,6 +13,11 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Public Certificate Authority API](/google/cloud/publicca/README.md)
 
+### Updated Libraries
+
+- [KMS](/google/cloud/kms/README.md) - new `AutokeyClient` and
+  `AutokeyAdminClient`
+
 ## v2.24.0 - 2024-05
 
 ### No longer testing with MSVC 2019
