@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   bazel:
-    name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }}
+    name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }} + ${{ matrix.shard }}
     runs-on: windows-2022
     permissions:
       contents: 'read'
@@ -26,6 +26,37 @@ jobs:
         # - dbg creates very large debugging files and GHA has limited storage.
         # - fastbuild also takes too much storage.
         compilation_mode: [ opt ]
+        shard: [ Core, Compute, Other ]
+        include:
+        - shard: Core
+          targets:
+          - //google/cloud:all
+          # - //generator/...  # Does not build on Windows
+          # - //docfx/...      # Does not build on Windows
+          - //google/cloud/bigtable/...
+          - //google/cloud/pubsub/...
+          - //google/cloud/pubsublite/...
+          - //google/cloud/spanner/...
+          - //google/cloud/storage/...
+        - shard: Compute
+          targets:
+          - //google/cloud/compute/...
+        - shard: Other
+          targets:
+          - //...
+          # Skip top-level targets (e.g. //:bigtable).
+          - -//:all
+          # From Core
+          - -//google/cloud:all
+          - -//generator/...
+          - -//docfx/...
+          - -//google/cloud/bigtable/...
+          - -//google/cloud/pubsub/...
+          - -//google/cloud/pubsublite/...
+          - -//google/cloud/spanner/...
+          - -//google/cloud/storage/...
+          # From Compute
+          - -//google/cloud/compute/...
     steps:
     - uses: actions/checkout@v4
       with:
@@ -50,7 +81,7 @@ jobs:
         # Using a short name like this avoids the problem in most cases.
         mkdir -p 'c:\b' || true
         export BAZEL_ROOT='c:\b'
-        ci/gha/builds/windows-bazel.sh ${{ matrix.compilation_mode }}
+        ci/gha/builds/windows-bazel.sh ${{ matrix.compilation_mode }} ${{ join(matrix.targets, ' ') }}
     env:
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.msvc }}/${{ matrix.compilation_mode }}
       GHA_TEST_BUCKET: "gcs-grpc-team-cloud-cpp-testing-bucket"

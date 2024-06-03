@@ -43,7 +43,7 @@ export BAZEL_VC="${VCINSTALLDIR}"
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 time {
-  io::run bazelisk "${args[@]}" test "${test_args[@]}" --test_tag_filters=-integration-test -- //...
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" --test_tag_filters=-integration-test -- //google/cloud:status_test "$@"
 }
 
 TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
