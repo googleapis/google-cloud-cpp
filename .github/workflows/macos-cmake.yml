@@ -18,7 +18,7 @@ permissions:
 jobs:
   cmake:
     name: cmake + ${{ matrix.os }} + ${{ matrix.shard }}
-    runs-on: ${{ matrix.os }}-xlarge
+    runs-on: macos-14
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         exclude-from-full-trick: [ true ]
-        os: [ macos-13 ]
+        os: [ macos-14 ]
         shard: [ Core, Compute, Shard1, Other ]
         exclude:
         # Only full builds include shards with generated code.

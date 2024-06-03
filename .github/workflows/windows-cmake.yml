@@ -18,9 +18,7 @@ permissions:
 jobs:
   cmake:
     name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
-    runs-on:
-      group: cpp-runners
-      labels: 'windows-2022'
+    runs-on: windows-2022
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -32,11 +30,17 @@ jobs:
         msvc: [ msvc-2022 ]
         build_type: [ Debug, Release ]
         arch: [ x64, x86 ]
-        shard: [Core, Compute, Other]
+        shard: [Core1, Core2, Compute, Shard1, Shard2, Shard3, Other]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Compute
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard1
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard2
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard3
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
         # No need to duplicate testing with x86 mode and Debug mode
@@ -62,15 +66,122 @@ jobs:
       shell: bash
       run: |
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
-        core_features=(bigtable pubsub pubsublite spanner storage)
-        if [[ "${{ matrix.shard }}" == "Core" ]]; then
-          features="$(printf ",%s" "${core_features[@]}")"
+        core1_features=(bigtable pubsub pubsublite)
+        core2_features=(spanner storage)
+        # These are the libraries with the most "clients". To build the list
+        # run something like this and create shards:
+        #
+        # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
+        #    egrep -v "(bigtable/|internal/|pubsub/|spanner/|storage/)" |
+        #    cut -f -3 -d/| sort | uniq -c | sort -n |
+        #    awk '{ s += $1; print s, $0}'
+        #
+        shard1_features=(
+          appengine
+          dataproc
+          discoveryengine
+          monitoring
+          retail
+          sql
+          dialogflow_cx
+          dialogflow_es
+          aiplatform
+        )
+        shard2_features=(
+          policytroubleshooter
+          profiler
+          pubsublite
+          redis
+          securitycenter
+          servicedirectory
+          tpu
+          trace
+          vision
+          workflows
+          beyondcorp
+          billing
+          binaryauthorization
+          gkemulticloud
+          logging
+          notebooks
+          osconfig
+          servicecontrol
+          speech
+          support
+          video
+          datacatalog
+          iam
+          kms
+          run
+          talent
+          contentwarehouse
+          dataplex
+          bigquery
+          resourcemanager
+        )
+        shard3_features=(
+          securesourcemanager
+          securitycentermanagement
+          servicehealth
+          servicemanagement
+          serviceusage
+          shell
+          storagecontrol
+          storageinsights
+          storagetransfer
+          tasks
+          telcoautomation
+          texttospeech
+          timeseriesinsights
+          translate
+          videointelligence
+          vmmigration
+          vmwareengine
+          vpcaccess
+          webrisk
+          websecurityscanner
+          workstations
+          automl
+          cloudbuild
+          cloudcontrolspartner
+          composer
+          containeranalysis
+          datastore
+          eventarc
+          functions
+          iap
+          language
+          metastore
+          networkconnectivity
+          networkservices
+        )
+        if [[ "${{ matrix.shard }}" == "Core1" ]]; then
+          features="$(printf ",%s" "${core1_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Core2" ]]; then
+          features="$(printf ",%s" "${core2_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "Compute" ]]; then
           echo "features=compute" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "Shard1" ]]; then
+          features="$(printf ",%s" "${shard1_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "Shard2" ]]; then
+          features="$(printf ",%s" "${shard2_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "Shard3" ]]; then
+          features="$(printf ",%s" "${shard3_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         else
-          skipped_features=("${core_features[@]}")
+          # The "-" before the first element gets consumed somewhere, so pad
+          # it out.
+          skipped_features=(null)
+          skipped_features+=("${core1_features[@]}")
+          skipped_features+=("${core2_features[@]}")
           skipped_features+=(compute)
+          skipped_features+=("${shard1_features[@]}")
+          skipped_features+=("${shard2_features[@]}")
+          skipped_features+=("${shard3_features[@]}")
           # We use vcpkg in this build, which ships with Protobuf v21.x.
           # Both `asset` and `channel` require Protobuf >= 23.x to compile on
           # Windows.

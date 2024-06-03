@@ -14,9 +14,7 @@ permissions:
 jobs:
   bazel:
     name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }}
-    runs-on:
-      group: cpp-runners
-      labels: 'windows-2022'
+    runs-on: windows-2022
     permissions:
       contents: 'read'
       id-token: 'write'
