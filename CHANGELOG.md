@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.25.0 - TBD
+## v2.25.0 - 2024-06
 
 ### New Libraries
 
@@ -17,6 +17,34 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [KMS](/google/cloud/kms/README.md) - new `AutokeyClient` and
   `AutokeyAdminClient`
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- docs(pubsub): add optimistic subscribe example ([#14272](https://github.com/googleapis/google-cloud-cpp/pull/14272))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add Interval justification ([#14123](https://github.com/googleapis/google-cloud-cpp/pull/14123))
+- fix(spanner): correct use of Interval offset in Timestamp addition ([#14121](https://github.com/googleapis/google-cloud-cpp/pull/14121))
+- feat(spanner): add Interval/Timestamp/time-zone operations ([#14120](https://github.com/googleapis/google-cloud-cpp/pull/14120))
+
+### [Security Center](/google/cloud/securitycenter/README.md)
+
+- feat(securitycenter): re-enable on windows ([#14282](https://github.com/googleapis/google-cloud-cpp/pull/14282))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Respect custom endpoint for SignedUrl ([#14179](https://github.com/googleapis/google-cloud-cpp/pull/14179))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(bazel): do not reference repo name ([#14287](https://github.com/googleapis/google-cloud-cpp/pull/14287))
+- fix(common): support libc++ >= 18.1 ([#14151](https://github.com/googleapis/google-cloud-cpp/pull/14151))
+- fix(common): out of range access in handle cleanup ([#14134](https://github.com/googleapis/google-cloud-cpp/pull/14134))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-05-22T18:51:58-07:00](https://github.com/googleapis/googleapis/tree/30717c0b0c9966906880703208a4c820411565c4)
 
 ## v2.24.0 - 2024-05
 
