@@ -81,6 +81,8 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c kms_inventory_v1::KeyDashboardServiceClient](@ref kms_inventory_v1::KeyDashboardServiceClient-retry-snippet)
 - [\c kms_inventory_v1::KeyTrackingServiceClient](@ref kms_inventory_v1::KeyTrackingServiceClient-retry-snippet)
+- [\c kms_v1::AutokeyAdminClient](@ref kms_v1::AutokeyAdminClient-retry-snippet)
+- [\c kms_v1::AutokeyClient](@ref kms_v1::AutokeyClient-retry-snippet)
 - [\c kms_v1::EkmServiceClient](@ref kms_v1::EkmServiceClient-retry-snippet)
 - [\c kms_v1::KeyManagementServiceClient](@ref kms_v1::KeyManagementServiceClient-retry-snippet)
 
@@ -119,6 +121,30 @@ This shows how to override the retry policies for kms_inventory_v1::KeyTrackingS
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/kms/inventory/v1/samples/key_tracking_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page kms_v1::AutokeyAdminClient-retry-snippet Override kms_v1::AutokeyAdminClient Retry Policies
+
+This shows how to override the retry policies for kms_v1::AutokeyAdminClient:
+
+@snippet google/cloud/kms/v1/samples/autokey_admin_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/kms/v1/samples/autokey_admin_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page kms_v1::AutokeyClient-retry-snippet Override kms_v1::AutokeyClient Retry Policies
+
+This shows how to override the retry policies for kms_v1::AutokeyClient:
+
+@snippet google/cloud/kms/v1/samples/autokey_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/kms/v1/samples/autokey_client_samples.cc custom-idempotency-policy
 
 */
 

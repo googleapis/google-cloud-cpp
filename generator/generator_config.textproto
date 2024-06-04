@@ -2481,6 +2481,20 @@ service {
 
 # KMS
 service {
+  service_proto_path: "google/cloud/kms/v1/autokey.proto"
+  product_path: "google/cloud/kms/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/kms/v1/autokey_admin.proto"
+  product_path: "google/cloud/kms/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/kms/v1/service.proto"
   product_path: "google/cloud/kms/v1"
   forwarding_product_path: "google/cloud/kms"
