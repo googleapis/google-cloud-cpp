@@ -15,6 +15,8 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c kms_inventory_v1::KeyDashboardServiceClient](@ref kms_inventory_v1::KeyDashboardServiceClient-service-account-snippet)
 - [\c kms_inventory_v1::KeyTrackingServiceClient](@ref kms_inventory_v1::KeyTrackingServiceClient-service-account-snippet)
+- [\c kms_v1::AutokeyAdminClient](@ref kms_v1::AutokeyAdminClient-service-account-snippet)
+- [\c kms_v1::AutokeyClient](@ref kms_v1::AutokeyClient-service-account-snippet)
 - [\c kms_v1::EkmServiceClient](@ref kms_v1::EkmServiceClient-service-account-snippet)
 - [\c kms_v1::KeyManagementServiceClient](@ref kms_v1::KeyManagementServiceClient-service-account-snippet)
 
@@ -43,6 +45,18 @@ guide for more details.
 /*! @page kms_inventory_v1::KeyTrackingServiceClient-service-account-snippet Override kms_inventory_v1::KeyTrackingServiceClient Authentication Defaults
 
 @snippet google/cloud/kms/inventory/v1/samples/key_tracking_client_samples.cc with-service-account
+
+*/
+
+/*! @page kms_v1::AutokeyAdminClient-service-account-snippet Override kms_v1::AutokeyAdminClient Authentication Defaults
+
+@snippet google/cloud/kms/v1/samples/autokey_admin_client_samples.cc with-service-account
+
+*/
+
+/*! @page kms_v1::AutokeyClient-service-account-snippet Override kms_v1::AutokeyClient Authentication Defaults
+
+@snippet google/cloud/kms/v1/samples/autokey_client_samples.cc with-service-account
 
 */
 

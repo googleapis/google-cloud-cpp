@@ -10,6 +10,14 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_AUTOKEY_ADMIN_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudkms.googleapis.com")
+  used by `MakeAutokeyAdminConnection()`.
+
+- `GOOGLE_CLOUD_CPP_AUTOKEY_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudkms.googleapis.com")
+  used by `MakeAutokeyConnection()`.
+
 - `GOOGLE_CLOUD_CPP_EKM_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "cloudkms.googleapis.com")
   used by `MakeEkmServiceConnection()`.

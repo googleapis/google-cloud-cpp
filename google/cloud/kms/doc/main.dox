@@ -34,6 +34,8 @@ application.
 
 - [\c kms_inventory_v1::KeyDashboardServiceClient](@ref google::cloud::kms_inventory_v1::KeyDashboardServiceClient)
 - [\c kms_inventory_v1::KeyTrackingServiceClient](@ref google::cloud::kms_inventory_v1::KeyTrackingServiceClient)
+- [\c kms_v1::AutokeyAdminClient](@ref google::cloud::kms_v1::AutokeyAdminClient)
+- [\c kms_v1::AutokeyClient](@ref google::cloud::kms_v1::AutokeyClient)
 - [\c kms_v1::EkmServiceClient](@ref google::cloud::kms_v1::EkmServiceClient)
 - [\c kms_v1::KeyManagementServiceClient](@ref google::cloud::kms_v1::KeyManagementServiceClient)
 <!-- inject-client-list-end -->
