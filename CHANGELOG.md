@@ -35,7 +35,6 @@ the APIs in these libraries are stable, and are ready for production use.
 ### [Storage](/google/cloud/storage/README.md)
 
 - feat(storage): Respect custom endpoint for SignedUrl ([#14179](https://github.com/googleapis/google-cloud-cpp/pull/14179))
-- fix(GCS+gRPC): correct handling of gRPC versions ([#14267](https://github.com/googleapis/google-cloud-cpp/pull/14267))
 
 ### [Common Libraries](/google/cloud/README.md)
 
