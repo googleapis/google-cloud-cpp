@@ -72,6 +72,8 @@ jobs:
     # Note that in other runners the publisher is GitHub. If we trust GitHub
     # to run the VM, we should trust their runners.
     - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # @v1.13.0
+      with:
+        toolset: 14.39
     - name: Build google-cloud-cpp
       shell: bash
       run: |
