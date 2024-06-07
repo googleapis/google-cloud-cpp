@@ -206,11 +206,14 @@ cmake --log-level WARNING -GNinja -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
 cmake --build "${out_dir}"
 env -C "${out_dir}" ctest "${ctest_args[@]}"
 
+io::log_h1 "Build and run quickstarts"
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
 feature_list="$(printf "%s;" $(features::libraries))"
 # GCS+gRPC and OpenTelemetry also have quickstarts.
-feature_list="${feature_list}experimental-storage_grpc;opentelemetry"
+feature_list="${feature_list}opentelemetry"
+
+io::log_h2 "Most features"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
@@ -218,6 +221,15 @@ cmake -G Ninja \
   "-DFEATURES=${feature_list}"
 cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
 
+io::log_h2 "GCS+gRPC"
+cmake -G Ninja \
+  -S "${PROJECT_ROOT}/ci/verify_quickstart" \
+  -B "${PROJECT_ROOT}/cmake-out/quickstart" \
+  "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}" \
+  "-DFEATURES=experimental-storage_grpc"
+cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
+
+io::log_h2 "Delete installed artifacts and run compiled quickstarts"
 # Deletes all the installed artifacts, and installs only the runtime components
 # to verify that we can still execute the compiled quickstart programs.
 rm -rf "${INSTALL_PREFIX:?}"/{include,lib64}
