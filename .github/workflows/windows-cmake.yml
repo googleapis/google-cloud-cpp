@@ -77,7 +77,7 @@ jobs:
         echo "Available VC toolsets: ${toolset_versions[@]}"
         toolset_version=""
         for v in "${toolset_versions[@]}"; do
-          if [ -z "${version}" ]; then
+          if [ -z "${toolset_version}" ]; then
             toolset_version=${v}
           elif ! echo ${v} | grep -q "^14\.40\."; then
             toolset_version=${v}
