@@ -58,6 +58,30 @@ jobs:
           # From Compute
           - -//google/cloud/compute/...
     steps:
+    # TODO(14314) - remove this VC Toolset workaround
+    - name: Select VC Toolset
+      id: vctoolset
+      shell: bash
+      run: |
+        # upb does not compile with the compiler that comes with the 14.40.33807
+        # VC toolset. To workaround this, we list the available toolset
+        # versions, then pick the latest one that is not 14.40.*. If 14.40.* is
+        # the only compiler version, we use that.
+        #
+        # See https://github.com/protocolbuffers/protobuf/issues/17032 for more
+        # details.
+        toolset_versions=($(ls "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC"))
+        echo "Available VC toolsets: ${toolset_versions[@]}"
+        toolset_version=""
+        for v in "${toolset_versions[@]}"; do
+          if [ -z "${version}" ]; then
+            toolset_version=${v}
+          elif ! echo ${v} | grep -q "^14\.40\."; then
+            toolset_version=${v}
+          fi
+        done
+        echo "Using VC toolset: ${toolset_version}"
+        echo "toolset_version=${toolset_version}" >> "${GITHUB_OUTPUT}"
     - uses: actions/checkout@v4
       with:
         ref: ${{ inputs.checkout-ref }}
@@ -72,6 +96,9 @@ jobs:
     # Note that in other runners the publisher is GitHub. If we trust GitHub
     # to run the VM, we should trust their runners.
     - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # @v1.13.0
+      # TODO(14314) - remove this VC Toolset workaround
+      with:
+        toolset: ${{ steps.vctoolset.outputs.toolset_version }}
     - name: Build google-cloud-cpp
       shell: bash
       run: |
