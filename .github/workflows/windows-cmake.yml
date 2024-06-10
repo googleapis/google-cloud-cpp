@@ -237,6 +237,7 @@ jobs:
         .build/vcpkg/bootstrap-vcpkg.sh -disableMetrics
         # TODO(14314) - remove this VC Toolset workaround
         echo "set(VCPKG_PLATFORM_TOOLSET_VERSION ${{ steps.vctoolset.outputs.toolset_version }})" >> .build/vcpkg/triplets/x64-windows.cmake
+        echo "set(VCPKG_PLATFORM_TOOLSET_VERSION ${{ steps.vctoolset.outputs.toolset_version }})" >> .build/vcpkg/triplets/x86-windows.cmake
     # go/github-actions#gha-bestpractices explains why we use a SHA instead of
     # a named version for this runner. We could avoid using this runner with the
     # ideas from:
