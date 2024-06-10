@@ -53,25 +53,72 @@ class DeveloperConnectTracingConnection
       google::cloud::developerconnect::v1::CreateConnectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+  CreateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
   UpdateConnection(
       google::cloud::developerconnect::v1::UpdateConnectionRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+  UpdateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteConnection(
       google::cloud::developerconnect::v1::DeleteConnectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
   CreateGitRepositoryLink(
       google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
+  CreateGitRepositoryLink(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteGitRepositoryLink(
       google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteGitRepositoryLink(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
   ListGitRepositoryLinks(

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_DEVELOPER_CONNECT_CLIENT_H
 
 #include "google/cloud/developerconnect/v1/developer_connect_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -259,6 +261,22 @@ class DeveloperConnectClient {
 
   // clang-format off
   ///
+  /// @copybrief CreateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::developerconnect::v1::Connection const& connection,
+      std::string const& connection_id, Options opts = {});
+
+  // clang-format off
+  ///
   /// Creates a new Connection in a given project and location.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -299,6 +317,37 @@ class DeveloperConnectClient {
 
   // clang-format off
   ///
+  /// @copybrief CreateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+  CreateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
   /// Updates the parameters of a single Connection.
   ///
   /// @param connection  Required. The resource being updated
@@ -333,6 +382,22 @@ class DeveloperConnectClient {
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
   UpdateConnection(
+      google::cloud::developerconnect::v1::Connection const& connection,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::developerconnect::v1::Connection const& connection,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -378,6 +443,37 @@ class DeveloperConnectClient {
 
   // clang-format off
   ///
+  /// @copybrief UpdateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+  UpdateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
   /// Deletes a single Connection.
   ///
   /// @param name  Required. Name of the resource
@@ -407,6 +503,20 @@ class DeveloperConnectClient {
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteConnection(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -450,6 +560,37 @@ class DeveloperConnectClient {
 
   // clang-format off
   ///
+  /// @copybrief DeleteConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
   /// Creates a GitRepositoryLink. Upon linking a Git Repository, Developer
   /// Connect will configure the Git Repository to send webhook events to
   /// Developer Connect. Connections that use Firebase GitHub Application will
@@ -489,6 +630,23 @@ class DeveloperConnectClient {
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
   CreateGitRepositoryLink(
       std::string const& parent,
+      google::cloud::developerconnect::v1::GitRepositoryLink const&
+          git_repository_link,
+      std::string const& git_repository_link_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGitRepositoryLink
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::developerconnect::v1::GitRepositoryLink const&
           git_repository_link,
       std::string const& git_repository_link_id, Options opts = {});
@@ -539,6 +697,37 @@ class DeveloperConnectClient {
 
   // clang-format off
   ///
+  /// @copybrief CreateGitRepositoryLink
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGitRepositoryLink
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
+  CreateGitRepositoryLink(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
+
+  // clang-format off
+  ///
   /// Deletes a single GitRepositoryLink.
   ///
   /// @param name  Required. Name of the resource
@@ -568,6 +757,20 @@ class DeveloperConnectClient {
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteGitRepositoryLink(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGitRepositoryLink
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -608,6 +811,37 @@ class DeveloperConnectClient {
       google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
           request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGitRepositoryLink
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGitRepositoryLink
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteGitRepositoryLink(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///

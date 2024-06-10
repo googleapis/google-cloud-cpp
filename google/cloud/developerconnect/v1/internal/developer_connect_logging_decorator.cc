@@ -80,6 +80,20 @@ DeveloperConnectLogging::AsyncCreateConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectLogging::CreateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::CreateConnectionRequest const&
+                 request) {
+        return child_->CreateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectLogging::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +112,20 @@ DeveloperConnectLogging::AsyncUpdateConnection(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectLogging::UpdateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+                 request) {
+        return child_->UpdateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,6 +148,20 @@ DeveloperConnectLogging::AsyncDeleteConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectLogging::DeleteConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+                 request) {
+        return child_->DeleteConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectLogging::AsyncCreateGitRepositoryLink(
     google::cloud::CompletionQueue& cq,
@@ -140,6 +182,20 @@ DeveloperConnectLogging::AsyncCreateGitRepositoryLink(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectLogging::CreateGitRepositoryLink(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 CreateGitRepositoryLinkRequest const& request) {
+        return child_->CreateGitRepositoryLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectLogging::AsyncDeleteGitRepositoryLink(
     google::cloud::CompletionQueue& cq,
@@ -158,6 +214,20 @@ DeveloperConnectLogging::AsyncDeleteGitRepositoryLink(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectLogging::DeleteGitRepositoryLink(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::
+                 DeleteGitRepositoryLinkRequest const& request) {
+        return child_->DeleteGitRepositoryLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse>

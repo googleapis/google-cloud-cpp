@@ -76,6 +76,19 @@ DefaultDeveloperConnectStub::AsyncCreateConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::CreateConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::CreateConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDeveloperConnectStub::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
@@ -94,6 +107,19 @@ DefaultDeveloperConnectStub::AsyncUpdateConnection(
         return grpc_stub_->AsyncUpdateConnection(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::UpdateConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -116,6 +142,19 @@ DefaultDeveloperConnectStub::AsyncDeleteConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::DeleteConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDeveloperConnectStub::AsyncCreateGitRepositoryLink(
     google::cloud::CompletionQueue& cq,
@@ -136,6 +175,20 @@ DefaultDeveloperConnectStub::AsyncCreateGitRepositoryLink(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::CreateGitRepositoryLink(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateGitRepositoryLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDeveloperConnectStub::AsyncDeleteGitRepositoryLink(
     google::cloud::CompletionQueue& cq,
@@ -154,6 +207,20 @@ DefaultDeveloperConnectStub::AsyncDeleteGitRepositoryLink(
         return grpc_stub_->AsyncDeleteGitRepositoryLink(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDeveloperConnectStub::DeleteGitRepositoryLink(
+    grpc::ClientContext& context, Options,
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteGitRepositoryLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse>

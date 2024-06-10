@@ -72,6 +72,19 @@ DeveloperConnectTracingStub::AsyncCreateConnection(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::CreateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "CreateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateConnection(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectTracingStub::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +101,19 @@ DeveloperConnectTracingStub::AsyncUpdateConnection(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::UpdateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "UpdateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateConnection(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectTracingStub::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
@@ -102,6 +128,19 @@ DeveloperConnectTracingStub::AsyncDeleteConnection(
   auto f =
       child_->AsyncDeleteConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::DeleteConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "DeleteConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteConnection(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -121,6 +160,21 @@ DeveloperConnectTracingStub::AsyncCreateGitRepositoryLink(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::CreateGitRepositoryLink(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "CreateGitRepositoryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateGitRepositoryLink(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectTracingStub::AsyncDeleteGitRepositoryLink(
     google::cloud::CompletionQueue& cq,
@@ -136,6 +190,21 @@ DeveloperConnectTracingStub::AsyncDeleteGitRepositoryLink(
   auto f = child_->AsyncDeleteGitRepositoryLink(cq, context, std::move(options),
                                                 request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::DeleteGitRepositoryLink(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect",
+      "DeleteGitRepositoryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteGitRepositoryLink(context, options, request));
 }
 
 StatusOr<google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse>

@@ -56,10 +56,20 @@ class DeveloperConnectTracingStub : public DeveloperConnectStub {
       google::cloud::developerconnect::v1::CreateConnectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      grpc::ClientContext& context, Options options,
       google::cloud::developerconnect::v1::UpdateConnectionRequest const&
           request) override;
 
@@ -70,6 +80,11 @@ class DeveloperConnectTracingStub : public DeveloperConnectStub {
       google::cloud::developerconnect::v1::DeleteConnectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGitRepositoryLink(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -77,10 +92,20 @@ class DeveloperConnectTracingStub : public DeveloperConnectStub {
       google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
+      grpc::ClientContext& context, Options options,
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGitRepositoryLink(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
+      grpc::ClientContext& context, Options options,
       google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
           request) override;
 

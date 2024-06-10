@@ -71,6 +71,15 @@ DeveloperConnectAuth::AsyncCreateConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation> DeveloperConnectAuth::CreateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +99,15 @@ DeveloperConnectAuth::AsyncUpdateConnection(
         return child->AsyncUpdateConnection(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DeveloperConnectAuth::UpdateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateConnection(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -113,6 +131,15 @@ DeveloperConnectAuth::AsyncDeleteConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation> DeveloperConnectAuth::DeleteConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncCreateGitRepositoryLink(
     google::cloud::CompletionQueue& cq,
@@ -134,6 +161,16 @@ DeveloperConnectAuth::AsyncCreateGitRepositoryLink(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectAuth::CreateGitRepositoryLink(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGitRepositoryLink(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncDeleteGitRepositoryLink(
     google::cloud::CompletionQueue& cq,
@@ -153,6 +190,16 @@ DeveloperConnectAuth::AsyncDeleteGitRepositoryLink(
         return child->AsyncDeleteGitRepositoryLink(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectAuth::DeleteGitRepositoryLink(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGitRepositoryLink(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse>

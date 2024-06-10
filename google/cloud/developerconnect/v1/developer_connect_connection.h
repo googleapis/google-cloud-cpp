@@ -22,8 +22,10 @@
 #include "google/cloud/developerconnect/v1/developer_connect_connection_idempotency_policy.h"
 #include "google/cloud/developerconnect/v1/internal/developer_connect_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,10 +201,28 @@ class DeveloperConnectConnection {
       google::cloud::developerconnect::v1::CreateConnectionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+  CreateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::developerconnect::v1::Connection>>
   UpdateConnection(
       google::cloud::developerconnect::v1::UpdateConnectionRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+  UpdateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -210,17 +230,47 @@ class DeveloperConnectConnection {
       google::cloud::developerconnect::v1::DeleteConnectionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
   CreateGitRepositoryLink(
       google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
+  CreateGitRepositoryLink(ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteGitRepositoryLink(
       google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteGitRepositoryLink(ExperimentalTag,
+                          google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
   ListGitRepositoryLinks(

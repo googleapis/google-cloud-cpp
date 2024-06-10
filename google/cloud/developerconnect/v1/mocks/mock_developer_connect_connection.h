@@ -59,6 +59,9 @@ class MockDeveloperConnectConnection
                    request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::developerconnect::v1::Connection>>,
       CreateConnection,
@@ -67,12 +70,44 @@ class MockDeveloperConnectConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateConnection,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::developerconnect::v1::CreateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::developerconnect::v1::Connection>>,
+              CreateConnection,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateConnection(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::developerconnect::v1::Connection>>,
       UpdateConnection,
       (google::cloud::developerconnect::v1::UpdateConnectionRequest const&
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateConnection,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::developerconnect::v1::Connection>>,
+              UpdateConnection,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
       DeleteConnection,
@@ -81,17 +116,60 @@ class MockDeveloperConnectConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteConnection,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
+      DeleteConnection,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateGitRepositoryLink)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateGitRepositoryLink(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>,
       CreateGitRepositoryLink,
       (google::cloud::developerconnect::v1::
            CreateGitRepositoryLinkRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateGitRepositoryLink,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::developerconnect::v1::
+                   CreateGitRepositoryLinkRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>,
+      CreateGitRepositoryLink,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteGitRepositoryLink)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteGitRepositoryLink(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
       DeleteGitRepositoryLink,
       (google::cloud::developerconnect::v1::
            DeleteGitRepositoryLinkRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteGitRepositoryLink,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::developerconnect::v1::
+                   DeleteGitRepositoryLinkRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>,
+      DeleteGitRepositoryLink,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

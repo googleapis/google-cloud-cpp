@@ -60,6 +60,22 @@ DeveloperConnectConnection::CreateConnection(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnection::CreateConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::developerconnect::v1::CreateConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+DeveloperConnectConnection::CreateConnection(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
 DeveloperConnectConnection::UpdateConnection(
     google::cloud::developerconnect::v1::UpdateConnectionRequest const&) {
@@ -68,9 +84,41 @@ DeveloperConnectConnection::UpdateConnection(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnection::UpdateConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+DeveloperConnectConnection::UpdateConnection(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
 DeveloperConnectConnection::DeleteConnection(
     google::cloud::developerconnect::v1::DeleteConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnection::DeleteConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnection::DeleteConnection(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -85,10 +133,44 @@ DeveloperConnectConnection::CreateGitRepositoryLink(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnection::CreateGitRepositoryLink(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::developerconnect::v1::
+        CreateGitRepositoryLinkRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
+DeveloperConnectConnection::CreateGitRepositoryLink(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
 DeveloperConnectConnection::DeleteGitRepositoryLink(
     google::cloud::developerconnect::v1::
         DeleteGitRepositoryLinkRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnection::DeleteGitRepositoryLink(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::developerconnect::v1::
+        DeleteGitRepositoryLinkRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnection::DeleteGitRepositoryLink(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
