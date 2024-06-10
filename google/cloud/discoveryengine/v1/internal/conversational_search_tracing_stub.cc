@@ -113,6 +113,96 @@ ConversationalSearchServiceTracingStub::ListConversations(
       context, *span, child_->ListConversations(context, options, request));
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceTracingStub::AnswerQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ConversationalSearchService",
+      "AnswerQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->AnswerQuery(context, options, request));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Answer>
+ConversationalSearchServiceTracingStub::GetAnswer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ConversationalSearchService",
+      "GetAnswer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAnswer(context, options, request));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceTracingStub::CreateSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ConversationalSearchService",
+      "CreateSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateSession(context, options, request));
+}
+
+Status ConversationalSearchServiceTracingStub::DeleteSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ConversationalSearchService",
+      "DeleteSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSession(context, options, request));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceTracingStub::UpdateSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ConversationalSearchService",
+      "UpdateSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSession(context, options, request));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceTracingStub::GetSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ConversationalSearchService",
+      "GetSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetSession(context, options, request));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse>
+ConversationalSearchServiceTracingStub::ListSessions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::ListSessionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ConversationalSearchService",
+      "ListSessions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListSessions(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<ConversationalSearchServiceStub>

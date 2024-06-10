@@ -215,6 +215,11 @@ class DatasetServiceConnection {
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
           request);
 
+  virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  UpdateDatasetVersion(
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
+          request);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDatasetVersion(

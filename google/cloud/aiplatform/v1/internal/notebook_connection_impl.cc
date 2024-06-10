@@ -202,6 +202,22 @@ NotebookServiceConnectionImpl::DeleteNotebookRuntimeTemplate(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceConnectionImpl::UpdateNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateNotebookRuntimeTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 UpdateNotebookRuntimeTemplateRequest const& request) {
+        return stub_->UpdateNotebookRuntimeTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
 NotebookServiceConnectionImpl::AssignNotebookRuntime(
     google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&

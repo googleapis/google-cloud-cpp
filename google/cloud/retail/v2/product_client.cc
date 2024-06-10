@@ -116,6 +116,14 @@ Status ProductServiceClient::DeleteProduct(
   return connection_->DeleteProduct(request);
 }
 
+future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
+ProductServiceClient::PurgeProducts(
+    google::cloud::retail::v2::PurgeProductsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeProducts(request);
+}
+
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceClient::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request,

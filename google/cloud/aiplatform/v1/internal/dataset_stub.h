@@ -83,6 +83,12 @@ class DatasetServiceStub {
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  UpdateDatasetVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteDatasetVersion(
       google::cloud::CompletionQueue& cq,
@@ -213,6 +219,11 @@ class DefaultDatasetServiceStub : public DatasetServiceStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
+      override;
+
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDatasetVersion(

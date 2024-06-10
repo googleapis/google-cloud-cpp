@@ -87,6 +87,18 @@ Status ProductServiceMetadata::DeleteProduct(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ProductServiceMetadata::AsyncPurgeProducts(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncPurgeProducts(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

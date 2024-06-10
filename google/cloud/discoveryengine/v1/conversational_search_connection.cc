@@ -76,6 +76,49 @@ ConversationalSearchServiceConnection::ListConversations(
       StreamRange<google::cloud::discoveryengine::v1::Conversation>>();
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceConnection::AnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Answer>
+ConversationalSearchServiceConnection::GetAnswer(
+    google::cloud::discoveryengine::v1::GetAnswerRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceConnection::CreateSession(
+    google::cloud::discoveryengine::v1::CreateSessionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ConversationalSearchServiceConnection::DeleteSession(
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceConnection::UpdateSession(
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceConnection::GetSession(
+    google::cloud::discoveryengine::v1::GetSessionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceConnection::ListSessions(
+    google::cloud::discoveryengine::v1::
+        ListSessionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::discoveryengine::v1::Session>>();
+}
+
 std::shared_ptr<ConversationalSearchServiceConnection>
 MakeConversationalSearchServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

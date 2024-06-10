@@ -187,8 +187,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.PurgeUserEventsRequest]: @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L36}
-  /// [google.cloud.retail.v2.PurgeUserEventsResponse]: @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L79}
+  /// [google.cloud.retail.v2.PurgeUserEventsRequest]: @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L126}
+  /// [google.cloud.retail.v2.PurgeUserEventsResponse]: @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
@@ -232,8 +232,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L222}
-  /// [google.cloud.retail.v2.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L356}
+  /// [google.cloud.retail.v2.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L228}
+  /// [google.cloud.retail.v2.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L362}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>

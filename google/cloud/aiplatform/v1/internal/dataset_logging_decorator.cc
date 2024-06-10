@@ -164,6 +164,19 @@ DatasetServiceLogging::AsyncCreateDatasetVersion(
       tracing_options_);
 }
 
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceLogging::UpdateDatasetVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
+                 request) {
+        return child_->UpdateDatasetVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncDeleteDatasetVersion(
     google::cloud::CompletionQueue& cq,

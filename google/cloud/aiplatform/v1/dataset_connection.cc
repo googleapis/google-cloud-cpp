@@ -98,6 +98,12 @@ DatasetServiceConnection::CreateDatasetVersion(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceConnection::UpdateDatasetVersion(
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceConnection::DeleteDatasetVersion(
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&) {

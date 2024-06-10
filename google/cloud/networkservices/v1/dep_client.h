@@ -114,8 +114,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L314}
-  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L372}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
+  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L383}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -153,8 +153,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L314}
-  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L372}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
+  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L383}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -183,8 +183,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L410}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L314}
+  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L421}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -213,8 +213,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L410}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L314}
+  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L421}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -253,8 +253,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L423}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L314}
+  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L434}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -295,8 +295,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L423}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L314}
+  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L434}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -310,7 +310,7 @@ class DepServiceClient {
   /// Updates the parameters of the specified `LbTrafficExtension` resource.
   ///
   /// @param lb_traffic_extension  Required. `LbTrafficExtension` resource being updated.
-  /// @param update_mask  Required. Used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. Used to specify the fields to be overwritten in the
   ///  `LbTrafficExtension` resource by the update.
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field is overwritten if it is in the mask. If the
@@ -335,8 +335,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L314}
-  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L461}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
+  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L472}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -375,8 +375,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L314}
-  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L461}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L315}
+  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L472}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -412,7 +412,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L494}
+  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L505}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -449,7 +449,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L494}
+  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L505}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -488,8 +488,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L526}
-  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L584}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
+  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L606}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
@@ -527,8 +527,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L526}
-  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L584}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
+  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L606}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
@@ -556,8 +556,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L622}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L526}
+  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L644}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
@@ -586,8 +586,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L622}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L526}
+  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L644}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
@@ -625,8 +625,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L635}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L526}
+  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L657}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -666,8 +666,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L635}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L526}
+  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L657}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -681,7 +681,7 @@ class DepServiceClient {
   /// Updates the parameters of the specified `LbRouteExtension` resource.
   ///
   /// @param lb_route_extension  Required. `LbRouteExtension` resource being updated.
-  /// @param update_mask  Required. Used to specify the fields to be overwritten in the
+  /// @param update_mask  Optional. Used to specify the fields to be overwritten in the
   ///  `LbRouteExtension` resource by the update.
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field is overwritten if it is in the mask. If the
@@ -706,8 +706,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L526}
-  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L673}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
+  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L695}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -746,8 +746,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L526}
-  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L673}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L537}
+  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L695}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -783,7 +783,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L706}
+  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L728}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -820,7 +820,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L706}
+  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L728}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on

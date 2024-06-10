@@ -95,6 +95,21 @@ NotebookServiceTracingStub::AsyncDeleteNotebookRuntimeTemplate(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceTracingStub::UpdateNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "UpdateNotebookRuntimeTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateNotebookRuntimeTemplate(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncAssignNotebookRuntime(
     google::cloud::CompletionQueue& cq,

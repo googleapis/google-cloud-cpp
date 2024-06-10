@@ -73,6 +73,12 @@ class MockCloudRedisClusterConnection
       CreateCluster,
       (google::cloud::redis::cluster::v1::CreateClusterRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>,
+              GetClusterCertificateAuthority,
+              (google::cloud::redis::cluster::v1::
+                   GetClusterCertificateAuthorityRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

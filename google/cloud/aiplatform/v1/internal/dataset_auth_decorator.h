@@ -86,6 +86,11 @@ class DatasetServiceAuth : public DatasetServiceStub {
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDatasetVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

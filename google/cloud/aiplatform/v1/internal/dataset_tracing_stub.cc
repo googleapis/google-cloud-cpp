@@ -138,6 +138,18 @@ DatasetServiceTracingStub::AsyncCreateDatasetVersion(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceTracingStub::UpdateDatasetVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.DatasetService", "UpdateDatasetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateDatasetVersion(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceTracingStub::AsyncDeleteDatasetVersion(
     google::cloud::CompletionQueue& cq,

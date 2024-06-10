@@ -60,6 +60,11 @@ class NotebookServiceTracingConnection
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request) override;
 
+  StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+  UpdateNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
   AssignNotebookRuntime(
       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&

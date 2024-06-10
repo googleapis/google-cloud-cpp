@@ -62,6 +62,10 @@ class DatasetServiceConnectionIdempotencyPolicy {
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
           request);
 
+  virtual google::cloud::Idempotency UpdateDatasetVersion(
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteDatasetVersion(
       google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
           request);

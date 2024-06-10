@@ -229,8 +229,8 @@ class SchemaServiceClient {
   ///  `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}`.
   /// @param schema  Required. The [Schema][google.cloud.discoveryengine.v1.Schema] to create.
   /// @param schema_id  Required. The ID to use for the
-  ///  [Schema][google.cloud.discoveryengine.v1.Schema], which will become the
-  ///  final component of the
+  ///  [Schema][google.cloud.discoveryengine.v1.Schema], which becomes the final
+  ///  component of the
   ///  [Schema.name][google.cloud.discoveryengine.v1.Schema.name].
   ///  @n
   ///  This field should conform to

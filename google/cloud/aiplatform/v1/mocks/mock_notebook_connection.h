@@ -75,6 +75,12 @@ class MockNotebookServiceConnection
            DeleteNotebookRuntimeTemplateRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>,
+              UpdateNotebookRuntimeTemplate,
+              (google::cloud::aiplatform::v1::
+                   UpdateNotebookRuntimeTemplateRequest const& request),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>,
       AssignNotebookRuntime,

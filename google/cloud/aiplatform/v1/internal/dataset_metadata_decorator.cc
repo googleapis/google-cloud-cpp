@@ -130,6 +130,17 @@ DatasetServiceMetadata::AsyncCreateDatasetVersion(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceMetadata::UpdateDatasetVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("dataset_version.name=",
+                   internal::UrlEncode(request.dataset_version().name())));
+  return child_->UpdateDatasetVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceMetadata::AsyncDeleteDatasetVersion(
     google::cloud::CompletionQueue& cq,

@@ -216,6 +216,14 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::DeleteCluster(
 }
 
 StatusOr<google::container::v1::ListOperationsResponse>
+ClusterManagerClient::ListOperations(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::container::v1::ListOperationsRequest request;
+  request.set_parent(parent);
+  return connection_->ListOperations(request);
+}
+
+StatusOr<google::container::v1::ListOperationsResponse>
 ClusterManagerClient::ListOperations(
     google::container::v1::ListOperationsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

@@ -91,6 +91,20 @@ Status ProductServiceTracingStub::DeleteProduct(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ProductServiceTracingStub::AsyncPurgeProducts(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "PurgeProducts");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncPurgeProducts(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ProductServiceTracingStub::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

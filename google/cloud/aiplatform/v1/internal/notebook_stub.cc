@@ -101,6 +101,20 @@ DefaultNotebookServiceStub::AsyncDeleteNotebookRuntimeTemplate(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+DefaultNotebookServiceStub::UpdateNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  google::cloud::aiplatform::v1::NotebookRuntimeTemplate response;
+  auto status =
+      grpc_stub_->UpdateNotebookRuntimeTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncAssignNotebookRuntime(
     google::cloud::CompletionQueue& cq,

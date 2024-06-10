@@ -209,6 +209,11 @@ class NotebookServiceConnection {
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request);
 
+  virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+  UpdateNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+          request);
+
   virtual future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
   AssignNotebookRuntime(
       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&

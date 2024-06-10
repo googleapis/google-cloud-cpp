@@ -112,7 +112,7 @@ class UserEventServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.UserEvent]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event.proto#L36}
-  /// [google.cloud.discoveryengine.v1.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L94}
+  /// [google.cloud.discoveryengine.v1.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L98}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
@@ -147,7 +147,7 @@ class UserEventServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L71}
-  /// [google.cloud.discoveryengine.v1.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L109}
+  /// [google.cloud.discoveryengine.v1.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L125}
   ///
   // clang-format on
   StatusOr<google::api::HttpBody> CollectUserEvent(
@@ -157,7 +157,7 @@ class UserEventServiceClient {
 
   // clang-format off
   ///
-  /// Bulk import of User events. Request processing might be
+  /// Bulk import of user events. Request processing might be
   /// synchronous. Events that already exist are skipped.
   /// Use this method for backfilling historical user events.
   ///

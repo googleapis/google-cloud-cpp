@@ -119,7 +119,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.Catalog]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L369}
+  /// [google.cloud.retail.v2.Catalog]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L494}
   /// [google.cloud.retail.v2.ListCatalogsRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L207}
   ///
   // clang-format on
@@ -159,7 +159,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.Catalog]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L369}
+  /// [google.cloud.retail.v2.Catalog]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L494}
   /// [google.cloud.retail.v2.ListCatalogsRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L207}
   ///
   // clang-format on
@@ -197,7 +197,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.Catalog]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L369}
+  /// [google.cloud.retail.v2.Catalog]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L494}
   /// [google.cloud.retail.v2.UpdateCatalogRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L258}
   ///
   // clang-format on
@@ -228,7 +228,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.Catalog]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L369}
+  /// [google.cloud.retail.v2.Catalog]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L494}
   /// [google.cloud.retail.v2.UpdateCatalogRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L258}
   ///
   // clang-format on
@@ -433,7 +433,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.CompletionConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L285}
+  /// [google.cloud.retail.v2.CompletionConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L410}
   /// [google.cloud.retail.v2.GetCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L340}
   ///
   // clang-format on
@@ -463,7 +463,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.CompletionConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L285}
+  /// [google.cloud.retail.v2.CompletionConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L410}
   /// [google.cloud.retail.v2.GetCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L340}
   ///
   // clang-format on
@@ -507,11 +507,11 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.CompletionConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L285}
-  /// [google.cloud.retail.v2.CompletionConfig.auto_learning]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L328}
-  /// [google.cloud.retail.v2.CompletionConfig.matching_order]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L307}
-  /// [google.cloud.retail.v2.CompletionConfig.max_suggestions]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L314}
-  /// [google.cloud.retail.v2.CompletionConfig.min_prefix_length]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L321}
+  /// [google.cloud.retail.v2.CompletionConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L410}
+  /// [google.cloud.retail.v2.CompletionConfig.auto_learning]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L453}
+  /// [google.cloud.retail.v2.CompletionConfig.matching_order]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L432}
+  /// [google.cloud.retail.v2.CompletionConfig.max_suggestions]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L439}
+  /// [google.cloud.retail.v2.CompletionConfig.min_prefix_length]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L446}
   /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L354}
   ///
   // clang-format on
@@ -542,7 +542,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.CompletionConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L285}
+  /// [google.cloud.retail.v2.CompletionConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L410}
   /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L354}
   ///
   // clang-format on
@@ -569,7 +569,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
+  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L377}
   /// [google.cloud.retail.v2.GetAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L383}
   ///
   // clang-format on
@@ -599,7 +599,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
+  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L377}
   /// [google.cloud.retail.v2.GetAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L383}
   ///
   // clang-format on
@@ -640,8 +640,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
-  /// [google.cloud.retail.v2.AttributesConfig.catalog_attributes]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L274}
+  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L377}
+  /// [google.cloud.retail.v2.AttributesConfig.catalog_attributes]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L399}
   /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L397}
   ///
   // clang-format on
@@ -679,7 +679,7 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
+  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L377}
   /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L397}
   ///
   // clang-format on
@@ -716,8 +716,8 @@ class CatalogServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.AddCatalogAttributeRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L416}
-  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
-  /// [google.cloud.retail.v2.CatalogAttribute]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
+  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L377}
+  /// [google.cloud.retail.v2.CatalogAttribute]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L90}
   ///
   // clang-format on
   StatusOr<google::cloud::retail::v2::AttributesConfig> AddCatalogAttribute(
@@ -752,8 +752,8 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
-  /// [google.cloud.retail.v2.CatalogAttribute]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
+  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L377}
+  /// [google.cloud.retail.v2.CatalogAttribute]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L90}
   /// [google.cloud.retail.v2.RemoveCatalogAttributeRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L435}
   ///
   // clang-format on
@@ -791,9 +791,9 @@ class CatalogServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
-  /// [google.cloud.retail.v2.CatalogAttribute]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
-  /// [google.cloud.retail.v2.CatalogAttribute.key]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L176}
+  /// [google.cloud.retail.v2.AttributesConfig]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L377}
+  /// [google.cloud.retail.v2.CatalogAttribute]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L90}
+  /// [google.cloud.retail.v2.CatalogAttribute.key]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L294}
   /// [google.cloud.retail.v2.ReplaceCatalogAttributeRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L453}
   ///
   // clang-format on

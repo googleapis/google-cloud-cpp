@@ -81,6 +81,18 @@ CloudRedisClusterTracingConnection::CreateCluster(
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
+StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+CloudRedisClusterTracingConnection::GetClusterCertificateAuthority(
+    google::cloud::redis::cluster::v1::
+        GetClusterCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::"
+      "GetClusterCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetClusterCertificateAuthority(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<redis_cluster_v1::CloudRedisClusterConnection>

@@ -101,6 +101,20 @@ NotebookServiceLogging::AsyncDeleteNotebookRuntimeTemplate(
       tracing_options_);
 }
 
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceLogging::UpdateNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 UpdateNotebookRuntimeTemplateRequest const& request) {
+        return child_->UpdateNotebookRuntimeTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceLogging::AsyncAssignNotebookRuntime(
     google::cloud::CompletionQueue& cq,

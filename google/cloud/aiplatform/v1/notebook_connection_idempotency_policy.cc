@@ -61,6 +61,13 @@ NotebookServiceConnectionIdempotencyPolicy::DeleteNotebookRuntimeTemplate(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+NotebookServiceConnectionIdempotencyPolicy::UpdateNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::
+        UpdateNotebookRuntimeTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NotebookServiceConnectionIdempotencyPolicy::AssignNotebookRuntime(
     google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;

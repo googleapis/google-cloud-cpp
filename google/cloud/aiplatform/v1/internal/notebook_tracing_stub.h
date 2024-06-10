@@ -66,6 +66,12 @@ class NotebookServiceTracingStub : public NotebookServiceStub {
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request) override;
 
+  StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+  UpdateNotebookRuntimeTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncAssignNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

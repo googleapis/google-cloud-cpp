@@ -112,6 +112,20 @@ DefaultCloudRedisClusterStub::AsyncCreateCluster(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+DefaultCloudRedisClusterStub::GetClusterCertificateAuthority(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::
+        GetClusterCertificateAuthorityRequest const& request) {
+  google::cloud::redis::cluster::v1::CertificateAuthority response;
+  auto status =
+      grpc_stub_->GetClusterCertificateAuthority(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisClusterStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -71,6 +71,39 @@ class ConversationalSearchServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::ListConversationsRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+  AnswerQuery(grpc::ClientContext& context, Options const& options,
+              google::cloud::discoveryengine::v1::AnswerQueryRequest const&
+                  request) = 0;
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetAnswerRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::CreateSessionRequest const&
+          request) = 0;
+
+  virtual Status DeleteSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::DeleteSessionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateSessionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetSessionRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse>
+  ListSessions(grpc::ClientContext& context, Options const& options,
+               google::cloud::discoveryengine::v1::ListSessionsRequest const&
+                   request) = 0;
 };
 
 class DefaultConversationalSearchServiceStub
@@ -113,6 +146,41 @@ class DefaultConversationalSearchServiceStub
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::ListConversationsRequest const&
           request) override;
+
+  StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetAnswerRequest const& request)
+      override;
+
+  StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::CreateSessionRequest const& request)
+      override;
+
+  Status DeleteSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request)
+      override;
+
+  StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request)
+      override;
+
+  StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetSessionRequest const& request)
+      override;
+
+  StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse>
+  ListSessions(grpc::ClientContext& context, Options const& options,
+               google::cloud::discoveryengine::v1::ListSessionsRequest const&
+                   request) override;
 
  private:
   std::unique_ptr<google::cloud::discoveryengine::v1::

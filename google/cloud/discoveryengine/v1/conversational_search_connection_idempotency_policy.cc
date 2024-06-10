@@ -71,6 +71,45 @@ ConversationalSearchServiceConnectionIdempotencyPolicy::ListConversations(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::AnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::GetAnswer(
+    google::cloud::discoveryengine::v1::GetAnswerRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::CreateSession(
+    google::cloud::discoveryengine::v1::CreateSessionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::DeleteSession(
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::UpdateSession(
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::GetSession(
+    google::cloud::discoveryengine::v1::GetSessionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::ListSessions(
+    google::cloud::discoveryengine::v1::ListSessionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ConversationalSearchServiceConnectionIdempotencyPolicy>
 MakeDefaultConversationalSearchServiceConnectionIdempotencyPolicy() {
   return std::make_unique<

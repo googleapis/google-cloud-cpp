@@ -86,6 +86,42 @@ class MockConversationalSearchServiceConnection
       ListConversations,
       (google::cloud::discoveryengine::v1::ListConversationsRequest request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>,
+      AnswerQuery,
+      (google::cloud::discoveryengine::v1::AnswerQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Answer>, GetAnswer,
+      (google::cloud::discoveryengine::v1::GetAnswerRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Session>, CreateSession,
+      (google::cloud::discoveryengine::v1::CreateSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteSession,
+      (google::cloud::discoveryengine::v1::DeleteSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Session>, UpdateSession,
+      (google::cloud::discoveryengine::v1::UpdateSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Session>, GetSession,
+      (google::cloud::discoveryengine::v1::GetSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::discoveryengine::v1::Session>),
+              ListSessions,
+              (google::cloud::discoveryengine::v1::ListSessionsRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

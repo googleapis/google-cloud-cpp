@@ -102,6 +102,75 @@ ConversationalSearchServiceTracingConnection::ListConversations(
                                                         std::move(sr));
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceTracingConnection::AnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::AnswerQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AnswerQuery(request));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Answer>
+ConversationalSearchServiceTracingConnection::GetAnswer(
+    google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::GetAnswer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAnswer(request));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceTracingConnection::CreateSession(
+    google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "CreateSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateSession(request));
+}
+
+Status ConversationalSearchServiceTracingConnection::DeleteSession(
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "DeleteSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteSession(request));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceTracingConnection::UpdateSession(
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "UpdateSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSession(request));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceTracingConnection::GetSession(
+    google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::GetSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSession(request));
+}
+
+StreamRange<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceTracingConnection::ListSessions(
+    google::cloud::discoveryengine::v1::ListSessionsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "ListSessions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListSessions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::Session>(std::move(span),
+                                                   std::move(sr));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection>

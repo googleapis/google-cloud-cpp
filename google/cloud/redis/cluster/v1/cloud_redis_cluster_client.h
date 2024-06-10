@@ -26,6 +26,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -146,8 +147,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L286}
-  /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L193}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L326}
+  /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L219}
   ///
   // clang-format on
   StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
@@ -193,8 +194,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L286}
-  /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L193}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L326}
+  /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L219}
   ///
   // clang-format on
   StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
@@ -221,8 +222,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L286}
-  /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L261}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L326}
+  /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
@@ -251,8 +252,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L286}
-  /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L261}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L326}
+  /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L287}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
@@ -295,8 +296,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L286}
-  /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L242}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L326}
+  /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
@@ -337,8 +338,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L286}
-  /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L242}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L326}
+  /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
@@ -373,7 +374,7 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L272}
+  /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L298}
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
@@ -411,7 +412,7 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L272}
+  /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L298}
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
@@ -462,8 +463,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L286}
-  /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L164}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L326}
+  /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
@@ -508,12 +509,72 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L286}
-  /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L164}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L326}
+  /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the details of certificate authority information for Redis cluster.
+  ///
+  /// @param name  Required. Redis cluster certificate authority resource name using the form:
+  ///      `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}/certificateAuthority`
+  ///  where `location_id` refers to a GCP region.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.redis.cluster.v1.CertificateAuthority])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.redis.cluster.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L524}
+  /// [google.cloud.redis.cluster.v1.GetClusterCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L313}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+  GetClusterCertificateAuthority(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the details of certificate authority information for Redis cluster.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.redis.cluster.v1.GetClusterCertificateAuthorityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.redis.cluster.v1.CertificateAuthority])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.redis.cluster.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L524}
+  /// [google.cloud.redis.cluster.v1.GetClusterCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L313}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+  GetClusterCertificateAuthority(
+      google::cloud::redis::cluster::v1::
+          GetClusterCertificateAuthorityRequest const& request,
       Options opts = {});
 
  private:

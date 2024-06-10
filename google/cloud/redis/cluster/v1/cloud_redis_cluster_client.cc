@@ -119,6 +119,25 @@ CloudRedisClusterClient::CreateCluster(
   return connection_->CreateCluster(request);
 }
 
+StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+CloudRedisClusterClient::GetClusterCertificateAuthority(std::string const& name,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest
+      request;
+  request.set_name(name);
+  return connection_->GetClusterCertificateAuthority(request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+CloudRedisClusterClient::GetClusterCertificateAuthority(
+    google::cloud::redis::cluster::v1::
+        GetClusterCertificateAuthorityRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetClusterCertificateAuthority(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_cluster_v1
 }  // namespace cloud

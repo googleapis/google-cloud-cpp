@@ -157,6 +157,15 @@ DatasetServiceAuth::AsyncCreateDatasetVersion(
       });
 }
 
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceAuth::UpdateDatasetVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDatasetVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceAuth::AsyncDeleteDatasetVersion(
     google::cloud::CompletionQueue& cq,
