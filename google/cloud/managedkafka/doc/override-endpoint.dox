@@ -1,0 +1,25 @@
+/*!
+@page managedkafka-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `managedkafka_v1::ManagedKafkaClient`:
+
+@snippet managed_kafka_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page managedkafka_v1::ManagedKafkaClient-endpoint-snippet Override managedkafka_v1::ManagedKafkaClient Endpoint Configuration
+
+@snippet google/cloud/managedkafka/v1/samples/managed_kafka_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
