@@ -16,6 +16,7 @@
 #include "generator/testing/descriptor_pool_fixture.h"
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/text_format.h>
@@ -30,6 +31,7 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::testing::Eq;
+using ::testing::ValuesIn;
 
 TEST(PaginationTest, PaginationAIP4233Success) {
   FileDescriptorProto service_file;
@@ -573,6 +575,179 @@ TEST(PaginationTest, PaginationRestItemsNotRepeated) {
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+}
+
+auto constexpr kBigQueryText = R"pb(
+  name: "google/bigquery/bq.proto"
+  package: "google.cloud.bigquery.v2"
+  message_type { name: "Model" }
+  message_type { name: "ListFormatTable" }
+  message_type { name: "ListFormatJob" }
+  message_type { name: "ListFormatDataset" }
+)pb";
+
+auto constexpr kProtobufText = R"pb(
+  name: "google/protobuf/pb.proto"
+  package: "google.protobuf"
+  message_type { name: "Int32Value" }
+  message_type { name: "UInt32Value" }
+  message_type { name: "Struct" }
+)pb";
+
+struct BigQueryTestParams {
+  std::string const max_results_field_type_message_name;
+  std::string const items_field_name;
+  std::string const items_field_type_message_name;
+};
+
+class BigQueryTestFixture
+    : public ::testing::TestWithParam<BigQueryTestParams> {
+ public:
+  void AddDependenciesToDatabase() {
+    FileDescriptorProto proto_file;
+    google::protobuf::TextFormat::ParseFromString(kProtobufText, &proto_file);
+    simple_db_.Add(proto_file);
+    FileDescriptorProto bq_file;
+    google::protobuf::TextFormat::ParseFromString(kBigQueryText, &bq_file);
+    simple_db_.Add(bq_file);
+  }
+
+ protected:
+  google::protobuf::SimpleDescriptorDatabase simple_db_;
+  generator_testing::ErrorCollector collector_;
+};
+
+TEST_P(BigQueryTestFixture, DetermineBigQueryPagination) {
+  BigQueryTestParams params = GetParam();
+  AddDependenciesToDatabase();
+  FileDescriptorProto service_file;
+  /// @cond
+  std::string service_text = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.service"
+    dependency: "google/protobuf/pb.proto"
+    dependency: "google/bigquery/bq.proto"
+    message_type {
+      name: "Input"
+      field {
+        name: "max_results"
+        number: 1
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "max_results_field_type_message_name_placeholder"
+      }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "items_field_name_placeholder"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "items_field_type_message_name_placeholder"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "Paginated"
+        input_type: "google.service.Input"
+        output_type: "google.service.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+
+  // Replace the template text with parameters.
+  service_text = absl::StrReplaceAll(
+      service_text, {{"max_results_field_type_message_name_placeholder",
+                      params.max_results_field_type_message_name},
+                     {"items_field_name_placeholder", params.items_field_name},
+                     {"items_field_type_message_name_placeholder",
+                      params.items_field_type_message_name}});
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(service_text,
+                                                            &service_file));
+  simple_db_.Add(service_file);
+  DescriptorPool pool(&simple_db_, &collector_);
+  auto const* service_file_descriptor =
+      pool.FindFileByName("google/foo/v1/service.proto");
+
+  EXPECT_TRUE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+  auto result =
+      DeterminePagination(*service_file_descriptor->service(0)->method(0));
+  EXPECT_TRUE(result.has_value());
+  EXPECT_EQ(result->range_output_field_name, params.items_field_name);
+  EXPECT_EQ(result->range_output_type->full_name(),
+            params.items_field_type_message_name);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    BigQueryTests, BigQueryTestFixture,
+    ValuesIn<BigQueryTestParams>(
+        {{.max_results_field_type_message_name = "google.protobuf.Int32Value",
+          .items_field_name = "jobs",
+          .items_field_type_message_name =
+              "google.cloud.bigquery.v2.ListFormatJob"},
+         {.max_results_field_type_message_name = "google.protobuf.UInt32Value",
+          .items_field_name = "rows",
+          .items_field_type_message_name = "google.protobuf.Struct"},
+         {.max_results_field_type_message_name = "google.protobuf.UInt32Value",
+          .items_field_name = "tables",
+          .items_field_type_message_name =
+              "google.cloud.bigquery.v2.ListFormatTable"},
+         {.max_results_field_type_message_name = "google.protobuf.UInt32Value",
+          .items_field_name = "datasets",
+          .items_field_type_message_name =
+              "google.cloud.bigquery.v2.ListFormatDataset"},
+         {.max_results_field_type_message_name = "google.protobuf.UInt32Value",
+          .items_field_name = "models",
+          .items_field_type_message_name = "google.cloud.bigquery.v2.Model"}}));
+
+TEST(PaginationTest, PaginationBigQuerySpecialCaseSuccess) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Struct" }
+    message_type {
+      name: "Input"
+      field { name: "max_results" number: 1 type: TYPE_UINT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "rows"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Struct"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "Paginated"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+  auto result =
+      DeterminePagination(*service_file_descriptor->service(0)->method(0));
+  EXPECT_TRUE(result.has_value());
+  EXPECT_EQ(result->range_output_field_name, "rows");
+  EXPECT_EQ(result->range_output_type->full_name(), "google.protobuf.Struct");
 }
 
 auto constexpr kAnnotationsProto = R"""(
