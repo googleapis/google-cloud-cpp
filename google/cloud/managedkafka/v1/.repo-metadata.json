@@ -1,7 +1,7 @@
 {
     "api_id": "managedkafka.googleapis.com",
     "api_shortname": "managedkafka",
-    "client_documentation": "https://cloud.google.com/cpp/docs/reference/managed-kafka/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/managedkafka/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1376234%20status=open",
     "language": "cpp",
