@@ -177,6 +177,7 @@ declare -A -r LIBRARIES=(
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
   ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
+  ["managedkafka"]="@com_google_googleapis//google/cloud/managedkafka/v1:managedkafka_cc_grpc"
   ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
   ["metastore"]="$(
     printf ",%s" \
