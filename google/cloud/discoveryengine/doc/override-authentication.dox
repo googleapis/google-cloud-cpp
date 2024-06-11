@@ -14,10 +14,14 @@ The following example shows how to explicitly load a service account key file:
 Follow these links to find examples for other \c *Client classes:
 
 - [\c discoveryengine_v1::CompletionServiceClient](@ref discoveryengine_v1::CompletionServiceClient-service-account-snippet)
+- [\c discoveryengine_v1::ControlServiceClient](@ref discoveryengine_v1::ControlServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref discoveryengine_v1::ConversationalSearchServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::DataStoreServiceClient](@ref discoveryengine_v1::DataStoreServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::EngineServiceClient](@ref discoveryengine_v1::EngineServiceClient-service-account-snippet)
+- [\c discoveryengine_v1::GroundedGenerationServiceClient](@ref discoveryengine_v1::GroundedGenerationServiceClient-service-account-snippet)
+- [\c discoveryengine_v1::ProjectServiceClient](@ref discoveryengine_v1::ProjectServiceClient-service-account-snippet)
+- [\c discoveryengine_v1::RankServiceClient](@ref discoveryengine_v1::RankServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::RecommendationServiceClient](@ref discoveryengine_v1::RecommendationServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::SchemaServiceClient](@ref discoveryengine_v1::SchemaServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::SearchServiceClient](@ref discoveryengine_v1::SearchServiceClient-service-account-snippet)
@@ -46,6 +50,12 @@ guide for more details.
 
 */
 
+/*! @page discoveryengine_v1::ControlServiceClient-service-account-snippet Override discoveryengine_v1::ControlServiceClient Authentication Defaults
+
+@snippet google/cloud/discoveryengine/v1/samples/control_client_samples.cc with-service-account
+
+*/
+
 /*! @page discoveryengine_v1::ConversationalSearchServiceClient-service-account-snippet Override discoveryengine_v1::ConversationalSearchServiceClient Authentication Defaults
 
 @snippet google/cloud/discoveryengine/v1/samples/conversational_search_client_samples.cc with-service-account
@@ -67,6 +77,24 @@ guide for more details.
 /*! @page discoveryengine_v1::EngineServiceClient-service-account-snippet Override discoveryengine_v1::EngineServiceClient Authentication Defaults
 
 @snippet google/cloud/discoveryengine/v1/samples/engine_client_samples.cc with-service-account
+
+*/
+
+/*! @page discoveryengine_v1::GroundedGenerationServiceClient-service-account-snippet Override discoveryengine_v1::GroundedGenerationServiceClient Authentication Defaults
+
+@snippet google/cloud/discoveryengine/v1/samples/grounded_generation_client_samples.cc with-service-account
+
+*/
+
+/*! @page discoveryengine_v1::ProjectServiceClient-service-account-snippet Override discoveryengine_v1::ProjectServiceClient Authentication Defaults
+
+@snippet google/cloud/discoveryengine/v1/samples/project_client_samples.cc with-service-account
+
+*/
+
+/*! @page discoveryengine_v1::RankServiceClient-service-account-snippet Override discoveryengine_v1::RankServiceClient Authentication Defaults
+
+@snippet google/cloud/discoveryengine/v1/samples/rank_client_samples.cc with-service-account
 
 */
 

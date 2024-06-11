@@ -14,10 +14,14 @@ For example, this will override the default endpoint for `discoveryengine_v1::Co
 Follow these links to find examples for other \c *Client classes:
 
 - [\c discoveryengine_v1::CompletionServiceClient](@ref discoveryengine_v1::CompletionServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::ControlServiceClient](@ref discoveryengine_v1::ControlServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref discoveryengine_v1::ConversationalSearchServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::DataStoreServiceClient](@ref discoveryengine_v1::DataStoreServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::EngineServiceClient](@ref discoveryengine_v1::EngineServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::GroundedGenerationServiceClient](@ref discoveryengine_v1::GroundedGenerationServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::ProjectServiceClient](@ref discoveryengine_v1::ProjectServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::RankServiceClient](@ref discoveryengine_v1::RankServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::RecommendationServiceClient](@ref discoveryengine_v1::RecommendationServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::SchemaServiceClient](@ref discoveryengine_v1::SchemaServiceClient-endpoint-snippet)
 - [\c discoveryengine_v1::SearchServiceClient](@ref discoveryengine_v1::SearchServiceClient-endpoint-snippet)
@@ -33,6 +37,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page discoveryengine_v1::CompletionServiceClient-endpoint-snippet Override discoveryengine_v1::CompletionServiceClient Endpoint Configuration
 
 @snippet google/cloud/discoveryengine/v1/samples/completion_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::ControlServiceClient-endpoint-snippet Override discoveryengine_v1::ControlServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/control_client_samples.cc set-client-endpoint
 
 */
 
@@ -57,6 +67,24 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page discoveryengine_v1::EngineServiceClient-endpoint-snippet Override discoveryengine_v1::EngineServiceClient Endpoint Configuration
 
 @snippet google/cloud/discoveryengine/v1/samples/engine_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::GroundedGenerationServiceClient-endpoint-snippet Override discoveryengine_v1::GroundedGenerationServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/grounded_generation_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::ProjectServiceClient-endpoint-snippet Override discoveryengine_v1::ProjectServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/project_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::RankServiceClient-endpoint-snippet Override discoveryengine_v1::RankServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/rank_client_samples.cc set-client-endpoint
 
 */
 

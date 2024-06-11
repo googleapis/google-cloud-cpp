@@ -14,6 +14,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
   used by `MakeCompletionServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_CONTROL_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
+  used by `MakeControlServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_CONVERSATIONAL_SEARCH_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
   used by `MakeConversationalSearchServiceConnection()`.
@@ -29,6 +33,18 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_ENGINE_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
   used by `MakeEngineServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_GROUNDED_GENERATION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
+  used by `MakeGroundedGenerationServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PROJECT_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
+  used by `MakeProjectServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RANK_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "discoveryengine.googleapis.com")
+  used by `MakeRankServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_RECOMMENDATION_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "discoveryengine.googleapis.com")

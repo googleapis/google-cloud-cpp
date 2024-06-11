@@ -83,10 +83,14 @@ This will override the polling policies for `discoveryengine_v1::CompletionServi
 Follow these links to find examples for other \c *Client classes:
 
 - [\c discoveryengine_v1::CompletionServiceClient](@ref discoveryengine_v1::CompletionServiceClient-retry-snippet)
+- [\c discoveryengine_v1::ControlServiceClient](@ref discoveryengine_v1::ControlServiceClient-retry-snippet)
 - [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref discoveryengine_v1::ConversationalSearchServiceClient-retry-snippet)
 - [\c discoveryengine_v1::DataStoreServiceClient](@ref discoveryengine_v1::DataStoreServiceClient-retry-snippet)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-retry-snippet)
 - [\c discoveryengine_v1::EngineServiceClient](@ref discoveryengine_v1::EngineServiceClient-retry-snippet)
+- [\c discoveryengine_v1::GroundedGenerationServiceClient](@ref discoveryengine_v1::GroundedGenerationServiceClient-retry-snippet)
+- [\c discoveryengine_v1::ProjectServiceClient](@ref discoveryengine_v1::ProjectServiceClient-retry-snippet)
+- [\c discoveryengine_v1::RankServiceClient](@ref discoveryengine_v1::RankServiceClient-retry-snippet)
 - [\c discoveryengine_v1::RecommendationServiceClient](@ref discoveryengine_v1::RecommendationServiceClient-retry-snippet)
 - [\c discoveryengine_v1::SchemaServiceClient](@ref discoveryengine_v1::SchemaServiceClient-retry-snippet)
 - [\c discoveryengine_v1::SearchServiceClient](@ref discoveryengine_v1::SearchServiceClient-retry-snippet)
@@ -116,6 +120,18 @@ This shows how to override the retry policies for discoveryengine_v1::Completion
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/discoveryengine/v1/samples/completion_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page discoveryengine_v1::ControlServiceClient-retry-snippet Override discoveryengine_v1::ControlServiceClient Retry Policies
+
+This shows how to override the retry policies for discoveryengine_v1::ControlServiceClient:
+
+@snippet google/cloud/discoveryengine/v1/samples/control_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/discoveryengine/v1/samples/control_client_samples.cc custom-idempotency-policy
 
 */
 
@@ -164,6 +180,42 @@ This shows how to override the retry policies for discoveryengine_v1::EngineServ
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/discoveryengine/v1/samples/engine_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page discoveryengine_v1::GroundedGenerationServiceClient-retry-snippet Override discoveryengine_v1::GroundedGenerationServiceClient Retry Policies
+
+This shows how to override the retry policies for discoveryengine_v1::GroundedGenerationServiceClient:
+
+@snippet google/cloud/discoveryengine/v1/samples/grounded_generation_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/discoveryengine/v1/samples/grounded_generation_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page discoveryengine_v1::ProjectServiceClient-retry-snippet Override discoveryengine_v1::ProjectServiceClient Retry Policies
+
+This shows how to override the retry policies for discoveryengine_v1::ProjectServiceClient:
+
+@snippet google/cloud/discoveryengine/v1/samples/project_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/discoveryengine/v1/samples/project_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page discoveryengine_v1::RankServiceClient-retry-snippet Override discoveryengine_v1::RankServiceClient Retry Policies
+
+This shows how to override the retry policies for discoveryengine_v1::RankServiceClient:
+
+@snippet google/cloud/discoveryengine/v1/samples/rank_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/discoveryengine/v1/samples/rank_client_samples.cc custom-idempotency-policy
 
 */
 

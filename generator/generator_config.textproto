@@ -2196,6 +2196,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/discoveryengine/v1/control_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/discoveryengine/v1/conversational_search_service.proto"
   product_path: "google/cloud/discoveryengine/v1"
   initial_copyright_year: "2023"
@@ -2218,6 +2225,27 @@ service {
 
 service {
   service_proto_path: "google/cloud/discoveryengine/v1/engine_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/discoveryengine/v1/grounded_generation_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/discoveryengine/v1/project_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/discoveryengine/v1/rank_service.proto"
   product_path: "google/cloud/discoveryengine/v1"
   initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
