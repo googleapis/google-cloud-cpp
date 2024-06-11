@@ -15,7 +15,11 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### Updated Libraries
 
-- [Discovery Engine](/google/cloud/discoveryengine/README.md) - new `ControlServiceClient` added.
+- [Discovery Engine](/google/cloud/discoveryengine/README.md):
+  - `ControlServiceClient` added
+  - `GroundedGenerationServiceClient` added
+  - `ProjectServiceClient` added
+  - `RankServiceClient` added
 
 ## v2.25.0 - 2024-06
 
