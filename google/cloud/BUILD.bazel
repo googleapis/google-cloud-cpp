@@ -300,7 +300,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_common",
         "@com_github_curl_curl//:curl",
-        "@com_github_nlohmann_json//:nlohmann_json",
+        "@com_github_nlohmann_json//:json",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/types:span",
     ] + select({

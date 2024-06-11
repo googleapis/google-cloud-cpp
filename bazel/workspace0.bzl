@@ -212,7 +212,6 @@ def gl_cpp_workspace0(name = None):
         ],
         sha256 = "0d8ef5af7f9794e3263480193c491549b2ba6cc74bb018906202ada498a79406",
         strip_prefix = "json-3.11.3",
-        build_file = Label("//bazel:nlohmann_json.BUILD"),
     )
 
     # Load google/crc32c, a library to efficiently compute CRC32C checksums.
