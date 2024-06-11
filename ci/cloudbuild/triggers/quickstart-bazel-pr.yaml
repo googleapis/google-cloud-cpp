@@ -25,7 +25,7 @@ includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: quickstart-bazel-pr
 substitutions:
   _BUILD_NAME: quickstart-bazel
-  _DISTRO: ubuntu-focal
+  _DISTRO: ubuntu-24.04
   _TRIGGER_TYPE: pr
 tags:
 - pr
