@@ -34,40 +34,50 @@ ControlServiceTracingConnection::ControlServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::Control>
-ControlServiceTracingConnection::CreateControl(google::cloud::discoveryengine::v1::CreateControlRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ControlServiceConnection::CreateControl");
+ControlServiceTracingConnection::CreateControl(
+    google::cloud::discoveryengine::v1::CreateControlRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ControlServiceConnection::CreateControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateControl(request));
 }
 
-Status
-ControlServiceTracingConnection::DeleteControl(google::cloud::discoveryengine::v1::DeleteControlRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ControlServiceConnection::DeleteControl");
+Status ControlServiceTracingConnection::DeleteControl(
+    google::cloud::discoveryengine::v1::DeleteControlRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ControlServiceConnection::DeleteControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteControl(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Control>
-ControlServiceTracingConnection::UpdateControl(google::cloud::discoveryengine::v1::UpdateControlRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ControlServiceConnection::UpdateControl");
+ControlServiceTracingConnection::UpdateControl(
+    google::cloud::discoveryengine::v1::UpdateControlRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ControlServiceConnection::UpdateControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateControl(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Control>
-ControlServiceTracingConnection::GetControl(google::cloud::discoveryengine::v1::GetControlRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ControlServiceConnection::GetControl");
+ControlServiceTracingConnection::GetControl(
+    google::cloud::discoveryengine::v1::GetControlRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ControlServiceConnection::GetControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetControl(request));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Control>
-ControlServiceTracingConnection::ListControls(google::cloud::discoveryengine::v1::ListControlsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ControlServiceConnection::ListControls");
+ControlServiceTracingConnection::ListControls(
+    google::cloud::discoveryengine::v1::ListControlsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ControlServiceConnection::ListControls");
   internal::OTelScope scope(span);
   auto sr = child_->ListControls(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::Control>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::Control>(std::move(span),
+                                                   std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

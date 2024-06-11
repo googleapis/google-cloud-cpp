@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_CONTROL_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_CONTROL_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/control_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/control_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class ControlServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ControlServiceLimitedErrorCountRetryPolicy : public ControlServiceRetryPolicy {
+class ControlServiceLimitedErrorCountRetryPolicy
+    : public ControlServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class ControlServiceLimitedErrorCountRetryPolicy : public ControlServiceRetryPol
    *     @p maximum_failures == 0.
    */
   explicit ControlServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ControlServiceLimitedErrorCountRetryPolicy(
       ControlServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ControlServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ControlServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ControlServiceLimitedErrorCountRetryPolicy(
       ControlServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ControlServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ControlServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class ControlServiceLimitedErrorCountRetryPolicy : public ControlServiceRetryPol
   using BaseType = ControlServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::ControlServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      discoveryengine_v1_internal::ControlServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class ControlServiceLimitedTimeRetryPolicy : public ControlServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ControlServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ControlServiceLimitedTimeRetryPolicy(ControlServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ControlServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ControlServiceLimitedTimeRetryPolicy(ControlServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ControlServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ControlServiceLimitedTimeRetryPolicy(
+      ControlServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ControlServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ControlServiceLimitedTimeRetryPolicy(
+      ControlServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ControlServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class ControlServiceLimitedTimeRetryPolicy : public ControlServiceRetryPolicy {
   using BaseType = ControlServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::ControlServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      discoveryengine_v1_internal::ControlServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,20 +182,20 @@ class ControlServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::Control>
-  CreateControl(google::cloud::discoveryengine::v1::CreateControlRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::Control> CreateControl(
+      google::cloud::discoveryengine::v1::CreateControlRequest const& request);
 
-  virtual Status
-  DeleteControl(google::cloud::discoveryengine::v1::DeleteControlRequest const& request);
+  virtual Status DeleteControl(
+      google::cloud::discoveryengine::v1::DeleteControlRequest const& request);
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::Control>
-  UpdateControl(google::cloud::discoveryengine::v1::UpdateControlRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::Control> UpdateControl(
+      google::cloud::discoveryengine::v1::UpdateControlRequest const& request);
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::Control>
-  GetControl(google::cloud::discoveryengine::v1::GetControlRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::Control> GetControl(
+      google::cloud::discoveryengine::v1::GetControlRequest const& request);
 
-  virtual StreamRange<google::cloud::discoveryengine::v1::Control>
-  ListControls(google::cloud::discoveryengine::v1::ListControlsRequest request);
+  virtual StreamRange<google::cloud::discoveryengine::v1::Control> ListControls(
+      google::cloud::discoveryengine::v1::ListControlsRequest request);
 };
 
 /**

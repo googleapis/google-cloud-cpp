@@ -36,64 +36,67 @@ class ControlServiceStub {
   virtual ~ControlServiceStub() = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Control> CreateControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::CreateControlRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::CreateControlRequest const&
+          request) = 0;
 
   virtual Status DeleteControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::DeleteControlRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::DeleteControlRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Control> UpdateControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::UpdateControlRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateControlRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Control> GetControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetControlRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse> ListControls(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListControlsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse>
+  ListControls(grpc::ClientContext& context, Options const& options,
+               google::cloud::discoveryengine::v1::ListControlsRequest const&
+                   request) = 0;
 };
 
 class DefaultControlServiceStub : public ControlServiceStub {
  public:
   explicit DefaultControlServiceStub(
-      std::unique_ptr<google::cloud::discoveryengine::v1::ControlService::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::cloud::discoveryengine::v1::ControlService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::Control> CreateControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::CreateControlRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::CreateControlRequest const& request)
+      override;
 
   Status DeleteControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::DeleteControlRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::DeleteControlRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Control> UpdateControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::UpdateControlRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateControlRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Control> GetControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetControlRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetControlRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse> ListControls(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListControlsRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse>
+  ListControls(grpc::ClientContext& context, Options const& options,
+               google::cloud::discoveryengine::v1::ListControlsRequest const&
+                   request) override;
 
  private:
-  std::unique_ptr<google::cloud::discoveryengine::v1::ControlService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::discoveryengine::v1::ControlService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

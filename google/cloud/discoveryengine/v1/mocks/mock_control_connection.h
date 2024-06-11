@@ -42,29 +42,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockControlServiceConnection : public discoveryengine_v1::ControlServiceConnection {
+class MockControlServiceConnection
+    : public discoveryengine_v1::ControlServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Control>,
-  CreateControl,
-  (google::cloud::discoveryengine::v1::CreateControlRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Control>, CreateControl,
+      (google::cloud::discoveryengine::v1::CreateControlRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteControl,
-  (google::cloud::discoveryengine::v1::DeleteControlRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteControl,
+      (google::cloud::discoveryengine::v1::DeleteControlRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Control>,
-  UpdateControl,
-  (google::cloud::discoveryengine::v1::UpdateControlRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Control>, UpdateControl,
+      (google::cloud::discoveryengine::v1::UpdateControlRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Control>,
-  GetControl,
-  (google::cloud::discoveryengine::v1::GetControlRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Control>, GetControl,
+      (google::cloud::discoveryengine::v1::GetControlRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::discoveryengine::v1::Control>),
-  ListControls,
-  (google::cloud::discoveryengine::v1::ListControlsRequest request), (override));
+              ListControls,
+              (google::cloud::discoveryengine::v1::ListControlsRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

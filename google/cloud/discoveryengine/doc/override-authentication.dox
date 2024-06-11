@@ -14,6 +14,7 @@ The following example shows how to explicitly load a service account key file:
 Follow these links to find examples for other \c *Client classes:
 
 - [\c discoveryengine_v1::CompletionServiceClient](@ref discoveryengine_v1::CompletionServiceClient-service-account-snippet)
+- [\c discoveryengine_v1::ControlServiceClient](@ref discoveryengine_v1::ControlServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref discoveryengine_v1::ConversationalSearchServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::DataStoreServiceClient](@ref discoveryengine_v1::DataStoreServiceClient-service-account-snippet)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-service-account-snippet)
@@ -43,6 +44,12 @@ guide for more details.
 /*! @page discoveryengine_v1::CompletionServiceClient-service-account-snippet Override discoveryengine_v1::CompletionServiceClient Authentication Defaults
 
 @snippet google/cloud/discoveryengine/v1/samples/completion_client_samples.cc with-service-account
+
+*/
+
+/*! @page discoveryengine_v1::ControlServiceClient-service-account-snippet Override discoveryengine_v1::ControlServiceClient Authentication Defaults
+
+@snippet google/cloud/discoveryengine/v1/samples/control_client_samples.cc with-service-account
 
 */
 

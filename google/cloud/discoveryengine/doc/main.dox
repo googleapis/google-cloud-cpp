@@ -33,6 +33,7 @@ parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
 - [\c discoveryengine_v1::CompletionServiceClient](@ref google::cloud::discoveryengine_v1::CompletionServiceClient)
+- [\c discoveryengine_v1::ControlServiceClient](@ref google::cloud::discoveryengine_v1::ControlServiceClient)
 - [\c discoveryengine_v1::ConversationalSearchServiceClient](@ref google::cloud::discoveryengine_v1::ConversationalSearchServiceClient)
 - [\c discoveryengine_v1::DataStoreServiceClient](@ref google::cloud::discoveryengine_v1::DataStoreServiceClient)
 - [\c discoveryengine_v1::DocumentServiceClient](@ref google::cloud::discoveryengine_v1::DocumentServiceClient)

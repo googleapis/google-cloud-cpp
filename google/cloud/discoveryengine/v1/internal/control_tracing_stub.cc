@@ -31,11 +31,12 @@ ControlServiceTracingStub::ControlServiceTracingStub(
     std::shared_ptr<ControlServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::discoveryengine::v1::Control> ControlServiceTracingStub::CreateControl(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Control>
+ControlServiceTracingStub::CreateControl(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateControlRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ControlService", "CreateControl");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ControlService", "CreateControl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -43,43 +44,46 @@ StatusOr<google::cloud::discoveryengine::v1::Control> ControlServiceTracingStub:
 }
 
 Status ControlServiceTracingStub::DeleteControl(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteControlRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ControlService", "DeleteControl");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ControlService", "DeleteControl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteControl(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Control> ControlServiceTracingStub::UpdateControl(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Control>
+ControlServiceTracingStub::UpdateControl(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateControlRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ControlService", "UpdateControl");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ControlService", "UpdateControl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateControl(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Control> ControlServiceTracingStub::GetControl(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Control>
+ControlServiceTracingStub::GetControl(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetControlRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ControlService", "GetControl");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ControlService", "GetControl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetControl(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse> ControlServiceTracingStub::ListControls(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse>
+ControlServiceTracingStub::ListControls(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListControlsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ControlService", "ListControls");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ControlService", "ListControls");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
