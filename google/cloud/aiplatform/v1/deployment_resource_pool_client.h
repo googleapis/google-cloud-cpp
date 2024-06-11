@@ -125,7 +125,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L101}
-  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L34}
+  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
@@ -166,7 +166,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L101}
-  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L34}
+  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
@@ -195,7 +195,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L34}
+  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
   /// [google.cloud.aiplatform.v1.GetDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L132}
   ///
   // clang-format on
@@ -225,7 +225,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L34}
+  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
   /// [google.cloud.aiplatform.v1.GetDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L132}
   ///
   // clang-format on
@@ -263,7 +263,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L34}
+  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
   /// [google.cloud.aiplatform.v1.ListDeploymentResourcePoolsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L145}
   ///
   // clang-format on
@@ -302,7 +302,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L34}
+  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
   /// [google.cloud.aiplatform.v1.ListDeploymentResourcePoolsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L145}
   ///
   // clang-format on

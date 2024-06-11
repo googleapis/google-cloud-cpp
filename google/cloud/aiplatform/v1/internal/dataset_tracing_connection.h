@@ -71,6 +71,10 @@ class DatasetServiceTracingConnection
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDatasetVersion(
       google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)

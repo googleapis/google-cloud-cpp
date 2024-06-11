@@ -153,6 +153,45 @@ Status ProductServiceConnectionImpl::DeleteProduct(
       *current, request, __func__);
 }
 
+future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
+ProductServiceConnectionImpl::PurgeProducts(
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PurgeProducts(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::PurgeProductsResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::retail::v2::PurgeProductsRequest const& request) {
+        return stub->AsyncPurgeProducts(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::PurgeProductsResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceConnectionImpl::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request) {

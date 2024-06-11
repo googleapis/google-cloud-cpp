@@ -97,6 +97,21 @@ CloudRedisClusterTracingStub::AsyncCreateCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+CloudRedisClusterTracingStub::GetClusterCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::
+        GetClusterCertificateAuthorityRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.redis.cluster.v1.CloudRedisCluster",
+                             "GetClusterCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetClusterCertificateAuthority(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

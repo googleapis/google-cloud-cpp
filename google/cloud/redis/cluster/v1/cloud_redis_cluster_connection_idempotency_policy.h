@@ -51,6 +51,10 @@ class CloudRedisClusterConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency CreateCluster(
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
+
+  virtual google::cloud::Idempotency GetClusterCertificateAuthority(
+      google::cloud::redis::cluster::v1::
+          GetClusterCertificateAuthorityRequest const& request);
 };
 
 std::unique_ptr<CloudRedisClusterConnectionIdempotencyPolicy>

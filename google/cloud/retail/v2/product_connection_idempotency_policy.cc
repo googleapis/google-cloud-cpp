@@ -59,6 +59,11 @@ Idempotency ProductServiceConnectionIdempotencyPolicy::DeleteProduct(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ProductServiceConnectionIdempotencyPolicy::PurgeProducts(
+    google::cloud::retail::v2::PurgeProductsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ProductServiceConnectionIdempotencyPolicy::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const&) {
   return Idempotency::kNonIdempotent;

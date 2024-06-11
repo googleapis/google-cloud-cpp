@@ -97,6 +97,16 @@ CloudRedisClusterMetadata::AsyncCreateCluster(
                                     request);
 }
 
+StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+CloudRedisClusterMetadata::GetClusterCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::
+        GetClusterCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetClusterCertificateAuthority(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

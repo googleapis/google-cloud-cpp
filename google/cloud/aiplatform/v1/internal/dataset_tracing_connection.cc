@@ -108,6 +108,15 @@ DatasetServiceTracingConnection::CreateDatasetVersion(
                            child_->CreateDatasetVersion(request));
 }
 
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceTracingConnection::UpdateDatasetVersion(
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::UpdateDatasetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateDatasetVersion(request));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceTracingConnection::DeleteDatasetVersion(
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {

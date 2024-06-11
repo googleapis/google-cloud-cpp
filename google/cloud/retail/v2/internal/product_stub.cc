@@ -91,6 +91,24 @@ Status DefaultProductServiceStub::DeleteProduct(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultProductServiceStub::AsyncPurgeProducts(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::retail::v2::PurgeProductsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::retail::v2::PurgeProductsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncPurgeProducts(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

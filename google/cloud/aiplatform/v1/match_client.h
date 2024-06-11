@@ -110,7 +110,7 @@ class MatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FindNeighborsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/match_service.proto#L61}
-  /// [google.cloud.aiplatform.v1.FindNeighborsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/match_service.proto#L125}
+  /// [google.cloud.aiplatform.v1.FindNeighborsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/match_service.proto#L138}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
@@ -141,8 +141,8 @@ class MatchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ReadIndexDatapointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/match_service.proto#L153}
-  /// [google.cloud.aiplatform.v1.ReadIndexDatapointsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/match_service.proto#L173}
+  /// [google.cloud.aiplatform.v1.ReadIndexDatapointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/match_service.proto#L169}
+  /// [google.cloud.aiplatform.v1.ReadIndexDatapointsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/match_service.proto#L189}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>

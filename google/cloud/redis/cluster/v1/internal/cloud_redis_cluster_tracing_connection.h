@@ -59,6 +59,11 @@ class CloudRedisClusterTracingConnection
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
       override;
 
+  StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+  GetClusterCertificateAuthority(
+      google::cloud::redis::cluster::v1::
+          GetClusterCertificateAuthorityRequest const& request) override;
+
  private:
   std::shared_ptr<redis_cluster_v1::CloudRedisClusterConnection> child_;
 };

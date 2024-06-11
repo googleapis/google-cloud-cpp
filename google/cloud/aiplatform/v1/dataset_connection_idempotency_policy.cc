@@ -74,6 +74,11 @@ Idempotency DatasetServiceConnectionIdempotencyPolicy::CreateDatasetVersion(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DatasetServiceConnectionIdempotencyPolicy::UpdateDatasetVersion(
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteDatasetVersion(
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&) {
   return Idempotency::kNonIdempotent;

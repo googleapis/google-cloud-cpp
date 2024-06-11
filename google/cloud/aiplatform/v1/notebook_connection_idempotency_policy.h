@@ -53,6 +53,10 @@ class NotebookServiceConnectionIdempotencyPolicy {
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request);
 
+  virtual google::cloud::Idempotency UpdateNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+          request);
+
   virtual google::cloud::Idempotency AssignNotebookRuntime(
       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
           request);

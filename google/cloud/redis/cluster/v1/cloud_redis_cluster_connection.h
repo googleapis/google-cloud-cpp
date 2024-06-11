@@ -202,6 +202,11 @@ class CloudRedisClusterConnection {
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   CreateCluster(
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
+
+  virtual StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+  GetClusterCertificateAuthority(
+      google::cloud::redis::cluster::v1::
+          GetClusterCertificateAuthorityRequest const& request);
 };
 
 /**

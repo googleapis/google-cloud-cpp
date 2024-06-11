@@ -179,6 +179,25 @@ DatasetServiceClient::CreateDatasetVersion(
   return connection_->CreateDatasetVersion(request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceClient::UpdateDatasetVersion(
+    google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateDatasetVersionRequest request;
+  *request.mutable_dataset_version() = dataset_version;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDatasetVersion(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceClient::UpdateDatasetVersion(
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDatasetVersion(request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceClient::DeleteDatasetVersion(std::string const& name,
                                            Options opts) {

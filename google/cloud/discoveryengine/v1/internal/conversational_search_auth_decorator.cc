@@ -89,6 +89,68 @@ ConversationalSearchServiceAuth::ListConversations(
   return child_->ListConversations(context, options, request);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceAuth::AnswerQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AnswerQuery(context, options, request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Answer>
+ConversationalSearchServiceAuth::GetAnswer(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAnswer(context, options, request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceAuth::CreateSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSession(context, options, request);
+}
+
+Status ConversationalSearchServiceAuth::DeleteSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSession(context, options, request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceAuth::UpdateSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSession(context, options, request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceAuth::GetSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSession(context, options, request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse>
+ConversationalSearchServiceAuth::ListSessions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::ListSessionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListSessions(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1_internal
 }  // namespace cloud

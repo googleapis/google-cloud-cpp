@@ -158,6 +158,18 @@ DefaultDatasetServiceStub::AsyncCreateDatasetVersion(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DefaultDatasetServiceStub::UpdateDatasetVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
+  google::cloud::aiplatform::v1::DatasetVersion response;
+  auto status = grpc_stub_->UpdateDatasetVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatasetServiceStub::AsyncDeleteDatasetVersion(
     google::cloud::CompletionQueue& cq,

@@ -92,6 +92,24 @@ Status ProductServiceLogging::DeleteProduct(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ProductServiceLogging::AsyncPurgeProducts(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::retail::v2::PurgeProductsRequest const& request) {
+        return child_->AsyncPurgeProducts(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

@@ -88,6 +88,18 @@ NotebookServiceMetadata::AsyncDeleteNotebookRuntimeTemplate(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceMetadata::UpdateNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("notebook_runtime_template.name=",
+                           internal::UrlEncode(
+                               request.notebook_runtime_template().name())));
+  return child_->UpdateNotebookRuntimeTemplate(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncAssignNotebookRuntime(
     google::cloud::CompletionQueue& cq,

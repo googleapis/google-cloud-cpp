@@ -60,6 +60,27 @@ class ConversationalSearchServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListConversations(
       google::cloud::discoveryengine::v1::ListConversationsRequest request);
+
+  virtual google::cloud::Idempotency AnswerQuery(
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request);
+
+  virtual google::cloud::Idempotency GetAnswer(
+      google::cloud::discoveryengine::v1::GetAnswerRequest const& request);
+
+  virtual google::cloud::Idempotency CreateSession(
+      google::cloud::discoveryengine::v1::CreateSessionRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteSession(
+      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateSession(
+      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request);
+
+  virtual google::cloud::Idempotency GetSession(
+      google::cloud::discoveryengine::v1::GetSessionRequest const& request);
+
+  virtual google::cloud::Idempotency ListSessions(
+      google::cloud::discoveryengine::v1::ListSessionsRequest request);
 };
 
 std::unique_ptr<ConversationalSearchServiceConnectionIdempotencyPolicy>

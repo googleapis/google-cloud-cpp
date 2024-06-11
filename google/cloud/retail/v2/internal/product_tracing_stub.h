@@ -57,6 +57,12 @@ class ProductServiceTracingStub : public ProductServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteProductRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncPurgeProducts(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::PurgeProductsRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportProducts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

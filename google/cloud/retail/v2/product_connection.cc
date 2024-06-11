@@ -69,6 +69,14 @@ Status ProductServiceConnection::DeleteProduct(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
+ProductServiceConnection::PurgeProducts(
+    google::cloud::retail::v2::PurgeProductsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceConnection::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const&) {

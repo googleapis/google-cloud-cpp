@@ -108,6 +108,27 @@ NotebookServiceClient::DeleteNotebookRuntimeTemplate(
   return connection_->DeleteNotebookRuntimeTemplate(request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceClient::UpdateNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::NotebookRuntimeTemplate const&
+        notebook_runtime_template,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest request;
+  *request.mutable_notebook_runtime_template() = notebook_runtime_template;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateNotebookRuntimeTemplate(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceClient::UpdateNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNotebookRuntimeTemplate(request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
 NotebookServiceClient::AssignNotebookRuntime(
     std::string const& parent, std::string const& notebook_runtime_template,

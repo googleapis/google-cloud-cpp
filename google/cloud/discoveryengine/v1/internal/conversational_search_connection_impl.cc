@@ -187,6 +187,131 @@ ConversationalSearchServiceConnectionImpl::ListConversations(
       });
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceConnectionImpl::AnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AnswerQuery(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::AnswerQueryRequest const&
+                 request) {
+        return stub_->AnswerQuery(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Answer>
+ConversationalSearchServiceConnectionImpl::GetAnswer(
+    google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAnswer(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+        return stub_->GetAnswer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceConnectionImpl::CreateSession(
+    google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSession(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateSessionRequest const&
+                 request) {
+        return stub_->CreateSession(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status ConversationalSearchServiceConnectionImpl::DeleteSession(
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSession(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteSessionRequest const&
+                 request) {
+        return stub_->DeleteSession(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceConnectionImpl::UpdateSession(
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSession(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::UpdateSessionRequest const&
+                 request) {
+        return stub_->UpdateSession(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceConnectionImpl::GetSession(
+    google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSession(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::GetSessionRequest const&
+                 request) {
+        return stub_->GetSession(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceConnectionImpl::ListSessions(
+    google::cloud::discoveryengine::v1::ListSessionsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSessions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::discoveryengine::v1::Session>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           discoveryengine_v1::ConversationalSearchServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::discoveryengine::v1::ListSessionsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::discoveryengine::v1::ListSessionsRequest const&
+                    request) {
+              return stub->ListSessions(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::discoveryengine::v1::ListSessionsResponse r) {
+        std::vector<google::cloud::discoveryengine::v1::Session> result(
+            r.sessions().size());
+        auto& messages = *r.mutable_sessions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1_internal
 }  // namespace cloud

@@ -68,6 +68,12 @@ class MockProductServiceConnection
               (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>,
+      PurgeProducts,
+      (google::cloud::retail::v2::PurgeProductsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>,
       ImportProducts,
       (google::cloud::retail::v2::ImportProductsRequest const& request),

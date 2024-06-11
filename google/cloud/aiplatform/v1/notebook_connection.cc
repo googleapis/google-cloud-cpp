@@ -70,6 +70,13 @@ NotebookServiceConnection::DeleteNotebookRuntimeTemplate(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceConnection::UpdateNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::
+        UpdateNotebookRuntimeTemplateRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
 NotebookServiceConnection::AssignNotebookRuntime(
     google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&) {

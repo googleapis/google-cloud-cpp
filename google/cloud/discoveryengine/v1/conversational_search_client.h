@@ -115,8 +115,8 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ConverseConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L155}
-  /// [google.cloud.discoveryengine.v1.ConverseConversationResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L236}
+  /// [google.cloud.discoveryengine.v1.ConverseConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L274}
+  /// [google.cloud.discoveryengine.v1.ConverseConversationResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L355}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
@@ -148,8 +148,8 @@ class ConversationalSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ConverseConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L155}
-  /// [google.cloud.discoveryengine.v1.ConverseConversationResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L236}
+  /// [google.cloud.discoveryengine.v1.ConverseConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L274}
+  /// [google.cloud.discoveryengine.v1.ConverseConversationResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L355}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
@@ -182,7 +182,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L248}
+  /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L367}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
@@ -217,7 +217,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L248}
+  /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L367}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
@@ -246,7 +246,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L278}
+  /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L397}
   ///
   // clang-format on
   Status DeleteConversation(std::string const& name, Options opts = {});
@@ -276,7 +276,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L278}
+  /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L397}
   ///
   // clang-format on
   Status DeleteConversation(
@@ -316,7 +316,7 @@ class ConversationalSearchServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
   /// [google.cloud.discoveryengine.v1.Conversation.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L58}
-  /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L263}
+  /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L382}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
@@ -352,7 +352,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L263}
+  /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L382}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
@@ -380,7 +380,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L290}
+  /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L409}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
@@ -410,7 +410,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L290}
+  /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L409}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
@@ -447,7 +447,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L302}
+  /// [google.cloud.discoveryengine.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L421}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Conversation>
@@ -487,12 +487,431 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Conversation]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversation.proto#L34}
-  /// [google.cloud.discoveryengine.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L302}
+  /// [google.cloud.discoveryengine.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L421}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Conversation>
   ListConversations(
       google::cloud::discoveryengine::v1::ListConversationsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Answer query method.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.AnswerQueryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.AnswerQueryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.AnswerQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L471}
+  /// [google.cloud.discoveryengine.v1.AnswerQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L785}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Answer.
+  ///
+  /// @param name  Required. The resource name of the Answer to get. Format:
+  ///  `projects/{project_number}/locations/{location_id}/collections/{collection}/engines/{engine_id}/sessions/{session_id}/answers/{answer_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.Answer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.Answer]: @googleapis_reference_link{google/cloud/discoveryengine/v1/answer.proto#L34}
+  /// [google.cloud.discoveryengine.v1.GetAnswerRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L805}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Answer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.GetAnswerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.Answer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.Answer]: @googleapis_reference_link{google/cloud/discoveryengine/v1/answer.proto#L34}
+  /// [google.cloud.discoveryengine.v1.GetAnswerRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L805}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
+      google::cloud::discoveryengine::v1::GetAnswerRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a Session.
+  ///
+  /// If the [Session][google.cloud.discoveryengine.v1.Session] to create already
+  /// exists, an ALREADY_EXISTS error is returned.
+  ///
+  /// @param parent  Required. Full resource name of parent data store. Format:
+  ///  `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}`
+  /// @param session  Required. The session to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.Session])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L817}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
+      std::string const& parent,
+      google::cloud::discoveryengine::v1::Session const& session,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a Session.
+  ///
+  /// If the [Session][google.cloud.discoveryengine.v1.Session] to create already
+  /// exists, an ALREADY_EXISTS error is returned.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.CreateSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.Session])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L817}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
+      google::cloud::discoveryengine::v1::CreateSessionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a Session.
+  ///
+  /// If the [Session][google.cloud.discoveryengine.v1.Session] to delete does
+  /// not exist, a NOT_FOUND error is returned.
+  ///
+  /// @param name  Required. The resource name of the Session to delete. Format:
+  ///  `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}/sessions/{session_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L847}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  ///
+  // clang-format on
+  Status DeleteSession(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a Session.
+  ///
+  /// If the [Session][google.cloud.discoveryengine.v1.Session] to delete does
+  /// not exist, a NOT_FOUND error is returned.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.DeleteSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L847}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  ///
+  // clang-format on
+  Status DeleteSession(
+      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a Session.
+  ///
+  /// [Session][google.cloud.discoveryengine.v1.Session] action type cannot be
+  /// changed. If the [Session][google.cloud.discoveryengine.v1.Session] to
+  /// update does not exist, a NOT_FOUND error is returned.
+  ///
+  /// @param session  Required. The Session to update.
+  /// @param update_mask  Indicates which fields in the provided
+  ///  [Session][google.cloud.discoveryengine.v1.Session] to update. The following
+  ///  are NOT supported:
+  ///  @n
+  ///  * [Session.name][google.cloud.discoveryengine.v1.Session.name]
+  ///  @n
+  ///  If not set or empty, all supported fields are updated.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.Session])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  /// [google.cloud.discoveryengine.v1.Session.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L67}
+  /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L832}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
+      google::cloud::discoveryengine::v1::Session const& session,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a Session.
+  ///
+  /// [Session][google.cloud.discoveryengine.v1.Session] action type cannot be
+  /// changed. If the [Session][google.cloud.discoveryengine.v1.Session] to
+  /// update does not exist, a NOT_FOUND error is returned.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.UpdateSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.Session])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L832}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
+      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Session.
+  ///
+  /// @param name  Required. The resource name of the Session to get. Format:
+  ///  `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}/sessions/{session_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.Session])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L859}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Session.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.GetSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.Session])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L859}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
+      google::cloud::discoveryengine::v1::GetSessionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all Sessions by their parent
+  /// [DataStore][google.cloud.discoveryengine.v1.DataStore].
+  ///
+  /// @param parent  Required. The data store resource name. Format:
+  ///  `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.discoveryengine.v1.Session], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L871}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::discoveryengine::v1::Session> ListSessions(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all Sessions by their parent
+  /// [DataStore][google.cloud.discoveryengine.v1.DataStore].
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.ListSessionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.discoveryengine.v1.Session], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L871}
+  /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L33}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::discoveryengine::v1::Session> ListSessions(
+      google::cloud::discoveryengine::v1::ListSessionsRequest request,
       Options opts = {});
 
  private:

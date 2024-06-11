@@ -75,6 +75,13 @@ CloudRedisClusterConnection::CreateCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+CloudRedisClusterConnection::GetClusterCertificateAuthority(
+    google::cloud::redis::cluster::v1::
+        GetClusterCertificateAuthorityRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<CloudRedisClusterConnection> MakeCloudRedisClusterConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -107,8 +107,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.ListClustersRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3048}
-  /// [google.container.v1.ListClustersResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3067}
+  /// [google.container.v1.ListClustersRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3162}
+  /// [google.container.v1.ListClustersResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3181}
   ///
   // clang-format on
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
@@ -138,8 +138,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.ListClustersRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3048}
-  /// [google.container.v1.ListClustersResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3067}
+  /// [google.container.v1.ListClustersRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3162}
+  /// [google.container.v1.ListClustersResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3181}
   ///
   // clang-format on
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
@@ -165,8 +165,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Cluster]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L1639}
-  /// [google.container.v1.GetClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2606}
+  /// [google.container.v1.Cluster]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L1706}
+  /// [google.container.v1.GetClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2710}
   ///
   // clang-format on
   StatusOr<google::container::v1::Cluster> GetCluster(std::string const& name,
@@ -195,8 +195,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Cluster]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L1639}
-  /// [google.container.v1.GetClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2606}
+  /// [google.container.v1.Cluster]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L1706}
+  /// [google.container.v1.GetClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2710}
   ///
   // clang-format on
   StatusOr<google::container::v1::Cluster> GetCluster(
@@ -237,8 +237,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CreateClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2584}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.CreateClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2688}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> CreateCluster(
@@ -281,8 +281,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CreateClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2584}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.CreateClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2688}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> CreateCluster(
@@ -309,8 +309,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.UpdateClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2628}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.UpdateClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2732}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> UpdateCluster(
@@ -340,8 +340,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.UpdateClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2628}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.UpdateClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2732}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> UpdateCluster(
@@ -371,8 +371,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.UpdateNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2653}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.UpdateNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2757}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> UpdateNodePool(
@@ -402,8 +402,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetNodePoolAutoscalingRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2789}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetNodePoolAutoscalingRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2903}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetNodePoolAutoscaling(
@@ -440,8 +440,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetLoggingServiceRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2819}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetLoggingServiceRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2933}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetLoggingService(
@@ -471,8 +471,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetLoggingServiceRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2819}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetLoggingServiceRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2933}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetLoggingService(
@@ -509,8 +509,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetMonitoringServiceRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2854}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetMonitoringServiceRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2968}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetMonitoringService(
@@ -540,8 +540,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetMonitoringServiceRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2854}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetMonitoringServiceRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2968}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetMonitoringService(
@@ -569,8 +569,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetAddonsConfigRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2889}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetAddonsConfigRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3003}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetAddonsConfig(
@@ -601,8 +601,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetAddonsConfigRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2889}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetAddonsConfigRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3003}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetAddonsConfig(
@@ -638,8 +638,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetLocationsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2915}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetLocationsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3029}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetLocations(
@@ -672,8 +672,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetLocationsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2915}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetLocationsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3029}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetLocations(
@@ -709,8 +709,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.UpdateMasterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2946}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.UpdateMasterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3060}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> UpdateMaster(
@@ -740,8 +740,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.UpdateMasterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2946}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.UpdateMasterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3060}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> UpdateMaster(
@@ -773,8 +773,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetMasterAuthRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2980}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetMasterAuthRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3094}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetMasterAuth(
@@ -808,8 +808,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.DeleteClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3026}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.DeleteClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3140}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> DeleteCluster(
@@ -846,13 +846,40 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.DeleteClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3026}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.DeleteClusterRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3140}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> DeleteCluster(
       google::container::v1::DeleteClusterRequest const& request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all operations in a project in a specific zone or all zones.
+  ///
+  /// @param parent  The parent (project and location) where the operations will be listed.
+  ///  Specified in the format `projects/*/locations/*`.
+  ///  Location "-" matches all zones and all regions.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.container.v1.ListOperationsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.container.v1.ListOperationsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3214}
+  /// [google.container.v1.ListOperationsResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3255}
+  ///
+  // clang-format on
+  StatusOr<google::container::v1::ListOperationsResponse> ListOperations(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -877,8 +904,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.ListOperationsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3100}
-  /// [google.container.v1.ListOperationsResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3141}
+  /// [google.container.v1.ListOperationsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3214}
+  /// [google.container.v1.ListOperationsResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3255}
   ///
   // clang-format on
   StatusOr<google::container::v1::ListOperationsResponse> ListOperations(
@@ -904,8 +931,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.GetOperationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3078}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.GetOperationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3192}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> GetOperation(
@@ -934,8 +961,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.GetOperationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3078}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.GetOperationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3192}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> GetOperation(
@@ -959,7 +986,7 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CancelOperationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3119}
+  /// [google.container.v1.CancelOperationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3233}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -985,7 +1012,7 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CancelOperationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3119}
+  /// [google.container.v1.CancelOperationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3233}
   ///
   // clang-format on
   Status CancelOperation(
@@ -1011,8 +1038,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.GetServerConfigRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3151}
-  /// [google.container.v1.ServerConfig]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3169}
+  /// [google.container.v1.GetServerConfigRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3265}
+  /// [google.container.v1.ServerConfig]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3283}
   ///
   // clang-format on
   StatusOr<google::container::v1::ServerConfig> GetServerConfig(
@@ -1041,8 +1068,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.GetServerConfigRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3151}
-  /// [google.container.v1.ServerConfig]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3169}
+  /// [google.container.v1.GetServerConfigRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3265}
+  /// [google.container.v1.ServerConfig]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3283}
   ///
   // clang-format on
   StatusOr<google::container::v1::ServerConfig> GetServerConfig(
@@ -1073,8 +1100,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.GetJSONWebKeysRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4479}
-  /// [google.container.v1.GetJSONWebKeysResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4516}
+  /// [google.container.v1.GetJSONWebKeysRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4597}
+  /// [google.container.v1.GetJSONWebKeysResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4634}
   ///
   // clang-format on
   StatusOr<google::container::v1::GetJSONWebKeysResponse> GetJSONWebKeys(
@@ -1100,8 +1127,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.ListNodePoolsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3255}
-  /// [google.container.v1.ListNodePoolsResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3886}
+  /// [google.container.v1.ListNodePoolsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3369}
+  /// [google.container.v1.ListNodePoolsResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4000}
   ///
   // clang-format on
   StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
@@ -1130,8 +1157,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.ListNodePoolsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3255}
-  /// [google.container.v1.ListNodePoolsResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3886}
+  /// [google.container.v1.ListNodePoolsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3369}
+  /// [google.container.v1.ListNodePoolsResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4000}
   ///
   // clang-format on
   StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
@@ -1158,8 +1185,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.GetNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3277}
-  /// [google.container.v1.NodePool]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3338}
+  /// [google.container.v1.GetNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3391}
+  /// [google.container.v1.NodePool]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3452}
   ///
   // clang-format on
   StatusOr<google::container::v1::NodePool> GetNodePool(std::string const& name,
@@ -1188,8 +1215,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.GetNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3277}
-  /// [google.container.v1.NodePool]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3338}
+  /// [google.container.v1.GetNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3391}
+  /// [google.container.v1.NodePool]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3452}
   ///
   // clang-format on
   StatusOr<google::container::v1::NodePool> GetNodePool(
@@ -1217,8 +1244,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CreateNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3202}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.CreateNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3316}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> CreateNodePool(
@@ -1248,8 +1275,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CreateNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3202}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.CreateNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3316}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> CreateNodePool(
@@ -1276,8 +1303,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.DeleteNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3228}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.DeleteNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3342}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> DeleteNodePool(
@@ -1306,8 +1333,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.DeleteNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3228}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.DeleteNodePoolRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3342}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> DeleteNodePool(
@@ -1336,7 +1363,7 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CompleteNodePoolUpgradeRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3845}
+  /// [google.container.v1.CompleteNodePoolUpgradeRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3959}
   ///
   // clang-format on
   Status CompleteNodePoolUpgrade(
@@ -1364,8 +1391,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.RollbackNodePoolUpgradeRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3855}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.RollbackNodePoolUpgradeRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3969}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
@@ -1395,8 +1422,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.RollbackNodePoolUpgradeRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3855}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.RollbackNodePoolUpgradeRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3969}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
@@ -1426,8 +1453,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetNodePoolManagementRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3784}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetNodePoolManagementRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3898}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetNodePoolManagement(
@@ -1457,8 +1484,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetLabelsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4051}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetLabelsRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4165}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetLabels(
@@ -1485,8 +1512,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetLegacyAbacRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4086}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetLegacyAbacRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4200}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetLegacyAbac(
@@ -1515,8 +1542,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetLegacyAbacRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4086}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetLegacyAbacRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4200}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetLegacyAbac(
@@ -1542,8 +1569,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.StartIPRotationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4112}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.StartIPRotationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4226}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> StartIPRotation(
@@ -1572,8 +1599,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.StartIPRotationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4112}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.StartIPRotationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4226}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> StartIPRotation(
@@ -1599,8 +1626,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CompleteIPRotationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4137}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.CompleteIPRotationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4251}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> CompleteIPRotation(
@@ -1629,8 +1656,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CompleteIPRotationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4137}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
+  /// [google.container.v1.CompleteIPRotationRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4251}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> CompleteIPRotation(
@@ -1662,9 +1689,9 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.NodePool.locations]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3546}
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetNodePoolSizeRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3814}
+  /// [google.container.v1.NodePool.locations]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3660}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetNodePoolSizeRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L3928}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetNodePoolSize(
@@ -1691,8 +1718,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetNetworkPolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4246}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetNetworkPolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4363}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetNetworkPolicy(
@@ -1723,8 +1750,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetNetworkPolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4246}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetNetworkPolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4363}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetNetworkPolicy(
@@ -1756,8 +1783,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetMaintenancePolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4271}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetMaintenancePolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4388}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
@@ -1788,8 +1815,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetMaintenancePolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4271}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetMaintenancePolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4388}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
@@ -1820,8 +1847,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2326}
-  /// [google.container.v1.SetMaintenancePolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4271}
+  /// [google.container.v1.Operation]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L2430}
+  /// [google.container.v1.SetMaintenancePolicyRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4388}
   ///
   // clang-format on
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
@@ -1860,8 +1887,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.ListUsableSubnetworksRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4788}
-  /// [google.container.v1.UsableSubnetwork]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4861}
+  /// [google.container.v1.ListUsableSubnetworksRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4910}
+  /// [google.container.v1.UsableSubnetwork]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4983}
   ///
   // clang-format on
   StreamRange<google::container::v1::UsableSubnetwork> ListUsableSubnetworks(
@@ -1892,8 +1919,8 @@ class ClusterManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.container.v1.CheckAutopilotCompatibilityRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4524}
-  /// [google.container.v1.CheckAutopilotCompatibilityResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4572}
+  /// [google.container.v1.CheckAutopilotCompatibilityRequest]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4642}
+  /// [google.container.v1.CheckAutopilotCompatibilityResponse]: @googleapis_reference_link{google/container/v1/cluster_service.proto#L4690}
   ///
   // clang-format on
   StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>

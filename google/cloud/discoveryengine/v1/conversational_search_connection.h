@@ -227,6 +227,28 @@ class ConversationalSearchServiceConnection {
   virtual StreamRange<google::cloud::discoveryengine::v1::Conversation>
   ListConversations(
       google::cloud::discoveryengine::v1::ListConversationsRequest request);
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+  AnswerQuery(
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request);
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
+      google::cloud::discoveryengine::v1::GetAnswerRequest const& request);
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
+      google::cloud::discoveryengine::v1::CreateSessionRequest const& request);
+
+  virtual Status DeleteSession(
+      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request);
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
+      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request);
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
+      google::cloud::discoveryengine::v1::GetSessionRequest const& request);
+
+  virtual StreamRange<google::cloud::discoveryengine::v1::Session> ListSessions(
+      google::cloud::discoveryengine::v1::ListSessionsRequest request);
 };
 
 /**

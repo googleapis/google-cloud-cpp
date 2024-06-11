@@ -59,6 +59,12 @@ class ProductServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteProductRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncPurgeProducts(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::PurgeProductsRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncImportProducts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -143,6 +149,12 @@ class DefaultProductServiceStub : public ProductServiceStub {
   Status DeleteProduct(
       grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteProductRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncPurgeProducts(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::PurgeProductsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportProducts(
       google::cloud::CompletionQueue& cq,

@@ -106,6 +106,89 @@ DefaultConversationalSearchServiceStub::ListConversations(
   return response;
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+DefaultConversationalSearchServiceStub::AnswerQuery(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  google::cloud::discoveryengine::v1::AnswerQueryResponse response;
+  auto status = grpc_stub_->AnswerQuery(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Answer>
+DefaultConversationalSearchServiceStub::GetAnswer(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+  google::cloud::discoveryengine::v1::Answer response;
+  auto status = grpc_stub_->GetAnswer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+DefaultConversationalSearchServiceStub::CreateSession(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
+  google::cloud::discoveryengine::v1::Session response;
+  auto status = grpc_stub_->CreateSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultConversationalSearchServiceStub::DeleteSession(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+DefaultConversationalSearchServiceStub::UpdateSession(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
+  google::cloud::discoveryengine::v1::Session response;
+  auto status = grpc_stub_->UpdateSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+DefaultConversationalSearchServiceStub::GetSession(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
+  google::cloud::discoveryengine::v1::Session response;
+  auto status = grpc_stub_->GetSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse>
+DefaultConversationalSearchServiceStub::ListSessions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::ListSessionsRequest const& request) {
+  google::cloud::discoveryengine::v1::ListSessionsResponse response;
+  auto status = grpc_stub_->ListSessions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1_internal
 }  // namespace cloud

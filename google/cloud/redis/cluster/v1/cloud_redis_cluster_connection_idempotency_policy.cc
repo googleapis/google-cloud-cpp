@@ -59,6 +59,13 @@ Idempotency CloudRedisClusterConnectionIdempotencyPolicy::CreateCluster(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+CloudRedisClusterConnectionIdempotencyPolicy::GetClusterCertificateAuthority(
+    google::cloud::redis::cluster::v1::
+        GetClusterCertificateAuthorityRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CloudRedisClusterConnectionIdempotencyPolicy>
 MakeDefaultCloudRedisClusterConnectionIdempotencyPolicy() {
   return std::make_unique<CloudRedisClusterConnectionIdempotencyPolicy>();

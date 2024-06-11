@@ -79,6 +79,15 @@ Status ProductServiceTracingConnection::DeleteProduct(
   return internal::EndSpan(*span, child_->DeleteProduct(request));
 }
 
+future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
+ProductServiceTracingConnection::PurgeProducts(
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ProductServiceConnection::PurgeProducts");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PurgeProducts(request));
+}
+
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceTracingConnection::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request) {

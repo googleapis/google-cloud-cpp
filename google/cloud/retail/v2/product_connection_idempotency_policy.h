@@ -52,6 +52,9 @@ class ProductServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteProduct(
       google::cloud::retail::v2::DeleteProductRequest const& request);
 
+  virtual google::cloud::Idempotency PurgeProducts(
+      google::cloud::retail::v2::PurgeProductsRequest const& request);
+
   virtual google::cloud::Idempotency ImportProducts(
       google::cloud::retail::v2::ImportProductsRequest const& request);
 

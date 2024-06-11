@@ -93,6 +93,16 @@ NotebookServiceAuth::AsyncDeleteNotebookRuntimeTemplate(
       });
 }
 
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceAuth::UpdateNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateNotebookRuntimeTemplate(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncAssignNotebookRuntime(
     google::cloud::CompletionQueue& cq,

@@ -68,6 +68,12 @@ class CloudRedisClusterStub {
       google::cloud::redis::cluster::v1::CreateClusterRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+  GetClusterCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::
+          GetClusterCertificateAuthorityRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -121,6 +127,12 @@ class DefaultCloudRedisClusterStub : public CloudRedisClusterStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
       override;
+
+  StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+  GetClusterCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::
+          GetClusterCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

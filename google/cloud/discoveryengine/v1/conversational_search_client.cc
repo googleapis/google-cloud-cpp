@@ -145,6 +145,118 @@ ConversationalSearchServiceClient::ListConversations(
   return connection_->ListConversations(std::move(request));
 }
 
+StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceClient::AnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AnswerQuery(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Answer>
+ConversationalSearchServiceClient::GetAnswer(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::GetAnswerRequest request;
+  request.set_name(name);
+  return connection_->GetAnswer(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Answer>
+ConversationalSearchServiceClient::GetAnswer(
+    google::cloud::discoveryengine::v1::GetAnswerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAnswer(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceClient::CreateSession(
+    std::string const& parent,
+    google::cloud::discoveryengine::v1::Session const& session, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::CreateSessionRequest request;
+  request.set_parent(parent);
+  *request.mutable_session() = session;
+  return connection_->CreateSession(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceClient::CreateSession(
+    google::cloud::discoveryengine::v1::CreateSessionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSession(request);
+}
+
+Status ConversationalSearchServiceClient::DeleteSession(std::string const& name,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::DeleteSessionRequest request;
+  request.set_name(name);
+  return connection_->DeleteSession(request);
+}
+
+Status ConversationalSearchServiceClient::DeleteSession(
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSession(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceClient::UpdateSession(
+    google::cloud::discoveryengine::v1::Session const& session,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::UpdateSessionRequest request;
+  *request.mutable_session() = session;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateSession(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceClient::UpdateSession(
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSession(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceClient::GetSession(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::GetSessionRequest request;
+  request.set_name(name);
+  return connection_->GetSession(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceClient::GetSession(
+    google::cloud::discoveryengine::v1::GetSessionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSession(request);
+}
+
+StreamRange<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceClient::ListSessions(std::string const& parent,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::ListSessionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListSessions(request);
+}
+
+StreamRange<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceClient::ListSessions(
+    google::cloud::discoveryengine::v1::ListSessionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListSessions(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1
 }  // namespace cloud

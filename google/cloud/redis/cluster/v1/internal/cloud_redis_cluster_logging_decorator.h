@@ -70,6 +70,12 @@ class CloudRedisClusterLogging : public CloudRedisClusterStub {
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
       override;
 
+  StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+  GetClusterCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::
+          GetClusterCertificateAuthorityRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

@@ -325,6 +325,21 @@ DatasetServiceConnectionImpl::CreateDatasetVersion(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+DatasetServiceConnectionImpl::UpdateDatasetVersion(
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDatasetVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
+                 request) {
+        return stub_->UpdateDatasetVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceConnectionImpl::DeleteDatasetVersion(
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {

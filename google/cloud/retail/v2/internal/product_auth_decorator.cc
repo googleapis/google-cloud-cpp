@@ -73,6 +73,26 @@ Status ProductServiceAuth::DeleteProduct(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ProductServiceAuth::AsyncPurgeProducts(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncPurgeProducts(cq, *std::move(context),
+                                         std::move(options), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

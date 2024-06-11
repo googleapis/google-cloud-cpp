@@ -80,6 +80,18 @@ NotebookServiceTracingConnection::DeleteNotebookRuntimeTemplate(
                            child_->DeleteNotebookRuntimeTemplate(request));
 }
 
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceTracingConnection::UpdateNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::NotebookServiceConnection::"
+      "UpdateNotebookRuntimeTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateNotebookRuntimeTemplate(request));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
 NotebookServiceTracingConnection::AssignNotebookRuntime(
     google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&

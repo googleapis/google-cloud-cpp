@@ -46,6 +46,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// resource is not in a Cloud Organization.
 /// For all requests, returns a `google.rpc.Status` with
 /// `google.rpc.Code.INVALID_ARGUMENT` if the request is malformed.
+/// (== deprecation_description Resource Settings is deprecated. As of November
+/// 7, 2023, no organizations will be onboarded for any of the enabled settings,
+/// and the service will be shut down on October 1, 2024. ==)
 ///
 /// @par Equality
 ///
@@ -103,8 +106,8 @@ class ResourceSettingsServiceClient {
   ///
   /// Lists all the settings that are available on the Cloud resource `parent`.
   ///
-  /// @param parent  Required. The Cloud resource that parents the setting. Must be in one of the
-  ///  following forms:
+  /// @param parent  Required. The Cloud resource that parents the setting. Must be in one of
+  ///  the following forms:
   ///  @n
   ///  * `projects/{project_number}`
   ///  * `projects/{project_id}`
@@ -132,8 +135,8 @@ class ResourceSettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.resourcesettings.v1.ListSettingsRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L238}
-  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L115}
+  /// [google.cloud.resourcesettings.v1.ListSettingsRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L243}
+  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L112}
   ///
   // clang-format on
   StreamRange<google::cloud::resourcesettings::v1::Setting> ListSettings(
@@ -171,8 +174,8 @@ class ResourceSettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.resourcesettings.v1.ListSettingsRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L238}
-  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L115}
+  /// [google.cloud.resourcesettings.v1.ListSettingsRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L243}
+  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L112}
   ///
   // clang-format on
   StreamRange<google::cloud::resourcesettings::v1::Setting> ListSettings(
@@ -186,7 +189,8 @@ class ResourceSettingsServiceClient {
   /// Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the
   /// setting does not exist.
   ///
-  /// @param name  Required. The name of the setting to get. See [Setting][google.cloud.resourcesettings.v1.Setting] for naming
+  /// @param name  Required. The name of the setting to get. See
+  ///  [Setting][google.cloud.resourcesettings.v1.Setting] for naming
   ///  requirements.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -201,8 +205,8 @@ class ResourceSettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.resourcesettings.v1.GetSettingRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L273}
-  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L115}
+  /// [google.cloud.resourcesettings.v1.GetSettingRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L276}
+  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L112}
   ///
   // clang-format on
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
@@ -234,8 +238,8 @@ class ResourceSettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.resourcesettings.v1.GetSettingRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L273}
-  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L115}
+  /// [google.cloud.resourcesettings.v1.GetSettingRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L276}
+  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L112}
   ///
   // clang-format on
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
@@ -280,8 +284,8 @@ class ResourceSettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L115}
-  /// [google.cloud.resourcesettings.v1.UpdateSettingRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L288}
+  /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L112}
+  /// [google.cloud.resourcesettings.v1.UpdateSettingRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L292}
   ///
   // clang-format on
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
