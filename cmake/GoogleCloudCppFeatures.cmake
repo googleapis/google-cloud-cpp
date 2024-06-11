@@ -108,6 +108,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "language"
     "logging"
     "managedidentities"
+    "managedkafka"
     "memcache"
     "metastore"
     "migrationcenter"

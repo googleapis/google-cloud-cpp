@@ -2577,6 +2577,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Managed Kafka
+service {
+  service_proto_path: "google/cloud/managedkafka/v1/managed_kafka.proto"
+  product_path: "google/cloud/managedkafka/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Memcache
 service {
   service_proto_path: "google/cloud/memcache/v1/cloud_memcache.proto"

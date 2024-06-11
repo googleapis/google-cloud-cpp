@@ -806,6 +806,10 @@
 ./include/google/cloud/managedidentities/v1
 ./include/google/cloud/managedidentities/v1/internal
 ./include/google/cloud/managedidentities/v1/mocks
+./include/google/cloud/managedkafka
+./include/google/cloud/managedkafka/v1
+./include/google/cloud/managedkafka/v1/internal
+./include/google/cloud/managedkafka/v1/mocks
 ./include/google/cloud/memcache
 ./include/google/cloud/memcache/mocks
 ./include/google/cloud/memcache/v1
@@ -1363,6 +1367,8 @@
 ./lib64/cmake/google_cloud_cpp_logging_mocks
 ./lib64/cmake/google_cloud_cpp_managedidentities
 ./lib64/cmake/google_cloud_cpp_managedidentities_mocks
+./lib64/cmake/google_cloud_cpp_managedkafka
+./lib64/cmake/google_cloud_cpp_managedkafka_mocks
 ./lib64/cmake/google_cloud_cpp_memcache
 ./lib64/cmake/google_cloud_cpp_memcache_mocks
 ./lib64/cmake/google_cloud_cpp_metastore
