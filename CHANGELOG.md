@@ -13,6 +13,10 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Managed Kafka API](/google/cloud/managedkafka/README.md)
 
+### Updated Libraries
+
+- [Discovery Engine](/google/cloud/discoveryengine/README.md) - new `ControlServiceClient` added.
+
 ## v2.25.0 - 2024-06
 
 ### New Libraries
