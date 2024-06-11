@@ -224,6 +224,72 @@ TEST(AsyncLongRunningTest,
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
+TEST(AsyncLongRunningTest,
+     AwaitPollThenSuccessResponseWithBespokeOperationTypes) {
+  Response expected;
+  expected.set_seconds(123456);
+  BespokeOperationType starting_op;
+  starting_op.set_name("test-op-name");
+  starting_op.set_is_done(false);
+  BespokeOperationType done_op = starting_op;
+  done_op.set_is_done(true);
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockBespokeOperationStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
+                    ImmutableOptions const& options,
+                    BespokeGetOperationRequestType const&) {
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
+        return make_ready_future(make_status_or(done_op));
+      });
+  auto polling_policy = std::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*polling_policy, clone()).Times(0);
+  EXPECT_CALL(*polling_policy, OnFailure).Times(0);
+  EXPECT_CALL(*polling_policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+  auto options = internal::MakeImmutableOptions(
+      Options{}.set<StringOption>(CurrentTestName()));
+  auto actual =
+      AsyncRestAwaitLongRunningOperation<Response, BespokeOperationType,
+                                         BespokeGetOperationRequestType,
+                                         BespokeCancelOperationRequestType>(
+          cq, options, starting_op,
+          [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
+                 internal::ImmutableOptions options,
+                 BespokeGetOperationRequestType const& request) {
+            return mock->AsyncGetOperation(cq, std::move(context),
+                                           std::move(options), request);
+          },
+          [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
+                 internal::ImmutableOptions options,
+                 BespokeCancelOperationRequestType const& request) {
+            return mock->AsyncCancelOperation(cq, std::move(context),
+                                              std::move(options), request);
+          },
+          [&](StatusOr<BespokeOperationType> const&,
+              std::string const&) -> StatusOr<Response> { return expected; },
+          std::move(polling_policy), "test-function",
+          [](BespokeOperationType const& op) { return op.is_done(); },
+          [](std::string const& s, BespokeGetOperationRequestType& op) {
+            op.set_name(s);
+          },
+          [](std::string const& s, BespokeCancelOperationRequestType& op) {
+            op.set_name(s);
+          })
+          .get();
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  ASSERT_THAT(actual, IsOk());
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

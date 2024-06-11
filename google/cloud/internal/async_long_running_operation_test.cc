@@ -308,6 +308,151 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled));
 }
 
+TEST(AsyncLongRunningTest, AwaitPollThenSuccessMetadata) {
+  Response expected;
+  expected.set_seconds(123456);
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+  google::longrunning::Operation done_op = starting_op;
+  done_op.set_done(true);
+  done_op.mutable_metadata()->PackFrom(expected);
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
+                    google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
+        return make_ready_future(make_status_or(done_op));
+      });
+  auto polling_policy = std::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*polling_policy, clone()).Times(0);
+  EXPECT_CALL(*polling_policy, OnFailure).Times(0);
+  EXPECT_CALL(*polling_policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+  auto current =
+      MakeImmutableOptions(Options{}.set<StringOption>(CurrentTestName()));
+  auto actual = AsyncAwaitLongRunningOperation<Response>(
+                    cq, current, starting_op, MakePoll(mock), MakeCancel(mock),
+                    &ExtractLongRunningResultMetadata<Response>,
+                    std::move(polling_policy), "test-function")
+                    .get();
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  ASSERT_THAT(actual, IsOk());
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(AsyncLongRunningTest, AwaitPollThenSuccessResponse) {
+  Response expected;
+  expected.set_seconds(123456);
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+  google::longrunning::Operation done_op = starting_op;
+  done_op.set_done(true);
+  done_op.mutable_response()->PackFrom(expected);
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
+                    google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
+        return make_ready_future(make_status_or(done_op));
+      });
+  auto polling_policy = std::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*polling_policy, clone()).Times(0);
+  EXPECT_CALL(*polling_policy, OnFailure).Times(0);
+  EXPECT_CALL(*polling_policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+  auto current =
+      MakeImmutableOptions(Options{}.set<StringOption>(CurrentTestName()));
+  auto actual = AsyncAwaitLongRunningOperation<Response>(
+                    cq, current, starting_op, MakePoll(mock), MakeCancel(mock),
+                    &ExtractLongRunningResultResponse<Response>,
+                    std::move(polling_policy), "test-function")
+                    .get();
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  ASSERT_THAT(actual, IsOk());
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(AsyncLongRunningTest, AwaitPollThenCancel) {
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  AsyncSequencer<void> timer;
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([&timer](std::chrono::nanoseconds) {
+        return timer.PushBack().then([](future<void>) {
+          return make_status_or(std::chrono::system_clock::now());
+        });
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
+                    google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
+        return make_ready_future(make_status_or(starting_op));
+      })
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
+                    google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status{StatusCode::kCancelled, "cancelled"}));
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([&](CompletionQueue&, auto, ImmutableOptions const& options,
+                    google::longrunning::CancelOperationRequest const&) {
+        EXPECT_EQ(options->get<StringOption>(), CurrentTestName());
+        return make_ready_future(Status{});
+      });
+  auto polling_policy = std::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*polling_policy, clone()).Times(0);
+  EXPECT_CALL(*polling_policy, OnFailure)
+      .WillRepeatedly([](Status const& status) {
+        return status.code() != StatusCode::kCancelled;
+      });
+  EXPECT_CALL(*polling_policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+  auto current =
+      MakeImmutableOptions(Options{}.set<StringOption>(CurrentTestName()));
+  auto pending = AsyncAwaitLongRunningOperation<Response>(
+      cq, current, starting_op, MakePoll(mock), MakeCancel(mock),
+      &ExtractLongRunningResultMetadata<Response>, std::move(polling_policy),
+      "test-function");
+
+  // Wait until the polling loop is backing off for a second time.
+  timer.PopFront().set_value();
+  auto t = timer.PopFront();
+  {
+    // cancel the long running operation
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
+  // release timer
+  t.set_value();
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto actual = pending.get();
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

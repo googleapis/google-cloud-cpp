@@ -71,6 +71,40 @@ future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
       });
 }
 
+/*
+ * AsyncAwaitRestLongRunningOperation for services that do not conform to
+ * AIP-151.
+ */
+template <typename ReturnType, typename OperationType,
+          typename GetOperationRequestType, typename CancelOperationRequestType,
+          typename CompletionQueue>
+future<StatusOr<ReturnType>> AsyncRestAwaitLongRunningOperation(
+    CompletionQueue cq, internal::ImmutableOptions options,
+    OperationType operation,
+    AsyncRestPollLongRunningOperation<OperationType, GetOperationRequestType>
+        poll,
+    AsyncRestCancelLongRunningOperation<CancelOperationRequestType> cancel,
+    LongRunningOperationValueExtractor<ReturnType, OperationType>
+        value_extractor,
+    std::unique_ptr<PollingPolicy> polling_policy, char const* location,
+    std::function<bool(OperationType const&)> is_operation_done,
+    std::function<void(std::string const&, GetOperationRequestType&)>
+        get_request_set_operation_name,
+    std::function<void(std::string const&, CancelOperationRequestType&)>
+        cancel_request_set_operation_name) {
+  auto loc = std::string{location};
+  return AsyncRestPollingLoop<OperationType, GetOperationRequestType,
+                              CancelOperationRequestType>(
+             std::move(cq), std::move(options),
+             make_ready_future(StatusOr<OperationType>(operation)),
+             std::move(poll), std::move(cancel), std::move(polling_policy),
+             std::move(location), is_operation_done,
+             get_request_set_operation_name, cancel_request_set_operation_name)
+      .then([value_extractor, loc](future<StatusOr<OperationType>> g) {
+        return value_extractor(g.get(), loc);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud

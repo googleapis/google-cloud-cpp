@@ -141,6 +141,35 @@ future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
       });
 }
 
+/**
+ * Asynchronously polls an already started long-running operation.
+ */
+template <typename ReturnType, typename CompletionQueue>
+future<StatusOr<ReturnType>> AsyncRestAwaitLongRunningOperation(
+    CompletionQueue cq, internal::ImmutableOptions options,
+    google::longrunning::Operation const& operation,
+    AsyncRestPollLongRunningOperation<google::longrunning::Operation,
+                                      google::longrunning::GetOperationRequest>
+        poll,
+    AsyncRestCancelLongRunningOperation<
+        google::longrunning::CancelOperationRequest>
+        cancel,
+    LongRunningOperationValueExtractor<ReturnType,
+                                       google::longrunning::Operation>
+        value_extractor,
+    std::unique_ptr<PollingPolicy> polling_policy, char const* location) {
+  auto loc = std::string{location};
+  return AsyncRestPollingLoopAip151(
+             std::move(cq), std::move(options),
+             make_ready_future(
+                 StatusOr<google::longrunning::Operation>(operation)),
+             std::move(poll), std::move(cancel), std::move(polling_policy),
+             std::move(location))
+      .then([value_extractor, loc](auto g) {
+        return value_extractor(g.get(), loc);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
