@@ -444,10 +444,9 @@ cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        # Use the same version of zlib and c-ares that gRPC does.
-        "//external:madler_zlib",
-        "//external:cares",
         ":define-ca-bundle-location",
+        "@com_github_cares_cares//:ares",
+        "@zlib",
     ] + select({
         ":windows": [],
         "//conditions:default": [
