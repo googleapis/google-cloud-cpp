@@ -535,6 +535,8 @@ TEST_F(LongrunningVarsTest,
       service_file_descriptor->service(0)->method(1);
   VarsDictionary vars;
   SetLongrunningOperationMethodVars(*method, vars);
+  EXPECT_THAT(vars, Contains(Pair("longrunning_operation_type",
+                                  "google::longrunning::Operation")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_metadata_type",
                                   "google::protobuf::Struct")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
@@ -580,6 +582,8 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationMethodVarsBespokeLRO) {
   EXPECT_FALSE(IsGRPCLongrunningOperation(*method));
   EXPECT_TRUE(IsHttpLongrunningOperation(*method));
   SetLongrunningOperationMethodVars(*method, vars);
+  EXPECT_THAT(vars, Contains(Pair("longrunning_operation_type",
+                                  "my::service::v1::Operation")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
                                   "my::service::v1::Operation")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_message_type",
@@ -638,6 +642,11 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCGlobal) {
       r.set_project(request.project());
       r.set_operation(op);
 )""")));
+  EXPECT_THAT(vars,
+              Contains(Pair("longrunning_await_set_operation_fields", R"""(
+      r.set_project(info.project);
+      r.set_operation(info.operation);
+)""")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                               rest_internal::DetermineApiVersion("v1", *options),
@@ -674,6 +683,10 @@ TEST_F(LongrunningVarsTest,
   EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
       r.set_operation(op);
 )""")));
+  EXPECT_THAT(vars,
+              Contains(Pair("longrunning_await_set_operation_fields", R"""(
+      r.set_operation(info.operation);
+)""")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                               rest_internal::DetermineApiVersion("v1", *options),
@@ -706,6 +719,12 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCRegion) {
       r.set_project(request.project());
       r.set_region(request.region());
       r.set_operation(op);
+)""")));
+  EXPECT_THAT(vars,
+              Contains(Pair("longrunning_await_set_operation_fields", R"""(
+      r.set_project(info.project);
+      r.set_region(info.region);
+      r.set_operation(info.operation);
 )""")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
@@ -743,6 +762,12 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCZone) {
       r.set_project(request.project());
       r.set_zone(request.zone());
       r.set_operation(op);
+)""")));
+  EXPECT_THAT(vars,
+              Contains(Pair("longrunning_await_set_operation_fields", R"""(
+      r.set_project(info.project);
+      r.set_zone(info.zone);
+      r.set_operation(info.operation);
 )""")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
