@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storagecontrol/v2/testing/remove_stale_folders.h"
 #include "google/cloud/storagecontrol/v2/mocks/mock_storage_control_connection.h"
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
-#include "google/cloud/storagecontrol/v2/testing/remove_stale_folders.h"
 
 namespace google {
 namespace cloud {
@@ -22,19 +22,19 @@ namespace storagecontrol_v2 {
 namespace testing {
 
 TEST(RemoveStaleFoldersTest, RemoveStaleFolders) {
-    auto mock_connection
-        = std::make_shared<google::cloud::storagecontrol_v2_mocks::MockStorageControlConnection>();
-    EXPECT_CALL(*mock_connection, ListFolders)
-       .WillOnce([](google::storage::control::v2::ListFoldersRequest const& r) {
-            EXPECT_EQ(r.parent(), "fake-parent");
-            StreamRange<google::storage::control::v2::Folder> response;
+  auto mock_connection = std::make_shared<
+      google::cloud::storagecontrol_v2_mocks::MockStorageControlConnection>();
+  EXPECT_CALL(*mock_connection, ListFolders)
+      .WillOnce([](google::storage::control::v2::ListFoldersRequest const& r) {
+        EXPECT_EQ(r.parent(), "fake-parent");
+        StreamRange<google::storage::control::v2::Folder> response;
 
-            return response;
-       });
-    auto client = google::cloud::storagecontrol_v2::StorageControlClient(mock_connection);
-
+        return response;
+      });
+  auto client =
+      google::cloud::storagecontrol_v2::StorageControlClient(mock_connection);
 }
-} // namespace testing
-} // namespace storagecontrol_v2
-} // namespace cloud
-} // namespace google
+}  // namespace testing
+}  // namespace storagecontrol_v2
+}  // namespace cloud
+}  // namespace google
