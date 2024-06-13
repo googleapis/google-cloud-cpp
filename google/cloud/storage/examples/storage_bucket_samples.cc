@@ -146,6 +146,7 @@ void CreateBucketDualRegion(google::cloud::storage::Client client,
 
 void CreateBucketWithHNS(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
+  // [START storage_create_bucket_hierarchical_namespace]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -153,15 +154,17 @@ void CreateBucketWithHNS(google::cloud::storage::Client client,
         bucket_name,
         gcs::BucketMetadata()
             .set_hierarchical_namespace(
-                gcs::BucketHierarchicalNamespace{/*.enabled=*/true})
+                gcs::BucketHierarchicalNamespace{true})
             .set_iam_configuration(gcs::BucketIamConfiguration{
-                gcs::UniformBucketLevelAccess{/*.enabled=*/true, {}},
+                gcs::UniformBucketLevelAccess{true, {}},
                 absl::nullopt}));
     if (!metadata) throw std::move(metadata).status();
 
     std::cout << "Bucket " << metadata->name() << " created."
               << "\nFull Metadata: " << *metadata << "\n";
-  }(std::move(client), argv.at(0));
+  }
+  // [END storage_create_bucket_hierarchical_namespace]
+  (std::move(client), argv.at(0));
 }
 
 void GetBucketMetadata(google::cloud::storage::Client client,
