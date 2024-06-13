@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <iostream>
@@ -109,36 +110,39 @@ void RenameFolder(::google::cloud::storagecontrol_v2::StorageControlClient clien
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void AutoRun(::google::cloud::storagecontrol_v2::StorageControlClient client,
-              std::vector<std::string> const& argv) {
+void AutoRun(std::vector<std::string> const& argv) {
     namespace examples = ::google::cloud::testing_util;
     namespace storagecontrol = ::google::cloud::storagecontrol_v2;
-    if (argv.size() != 1) throw examples::Usage{"auto"};
-    [](storagecontrol::StorageControlClient client,
-        std::string const& bucket_name) {
-      auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-      auto const prefix = "storage-control-samples";
-      auto const folder_id =
-        prefix + std::string{"-"} + google::cloud::internal::Sample(generator, 32, "abcdefghijklmnopqrstuvwxyz");
-      auto const dest_folder_id = 
-        prefix + std::string{"-"} + google::cloud::internal::Sample(generator, 32, "abcdefghijklmnopqrstuvwxyz");
+    if (!argv.empty()) throw examples::Usage{"auto"};
+    examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_FOLDER_BUCKET_NAME"
+    });
+    auto const bucket_name =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_FOLDER_BUCKET_NAME").value();
+    
+    auto client =
+      storagecontrol::StorageControlClient(storagecontrol::MakeStorageControlConnection());
+    auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+    auto const prefix = "storage-control-samples";
+    auto const folder_id =
+      prefix + std::string{"-"} + google::cloud::internal::Sample(generator, 32, "abcdefghijklmnopqrstuvwxyz");
+    auto const dest_folder_id = 
+      prefix + std::string{"-"} + google::cloud::internal::Sample(generator, 32, "abcdefghijklmnopqrstuvwxyz");
 
-      std::cout << "\nRunning CreateFolder() example" << std::endl;
-      CreateFolder(client, {bucket_name, folder_id});
+    std::cout << "\nRunning CreateFolder() example" << std::endl;
+    CreateFolder(client, {bucket_name, folder_id});
 
-      std::cout << "\nRunning GetFolder() example" << std::endl;
-      GetFolder(client, {bucket_name, folder_id});
+    std::cout << "\nRunning GetFolder() example" << std::endl;
+    GetFolder(client, {bucket_name, folder_id});
 
-      std::cout << "\nRunning ListFolders() example" << std::endl;
-      ListFolders(client, {bucket_name});
+    std::cout << "\nRunning ListFolders() example" << std::endl;
+    ListFolders(client, {bucket_name});
 
-      std::cout << "\nRunning RenameFolder() example" << std::endl;
-      RenameFolder(client, {bucket_name, folder_id, dest_folder_id});
+    std::cout << "\nRunning RenameFolder() example" << std::endl;
+    RenameFolder(client, {bucket_name, folder_id, dest_folder_id});
 
-      std::cout << "\nRunning DeleteFolder() example" << std::endl;
-      DeleteFolder(client, {bucket_name, dest_folder_id});
-    }
-    (std::move(client), argv.at(0));
+    std::cout << "\nRunning DeleteFolder() example" << std::endl;
+    DeleteFolder(client, {bucket_name, dest_folder_id});
 }
 
 } // namespace
@@ -173,7 +177,7 @@ int main(int argc, char* argv[]) {
       make_entry("get-folder", {"bucket-name", "folder-id"}, GetFolder),
       make_entry("list-folders", {"bucket-name"}, ListFolders),
       make_entry("rename-folder", {"bucket-name", "source-folder-id", "dest-folder-id"}, RenameFolder),
-      make_entry("auto", {"bucket-name"}, AutoRun),
+      {"auto", AutoRun},
     });
     return example.Run(argc, argv);
 }
