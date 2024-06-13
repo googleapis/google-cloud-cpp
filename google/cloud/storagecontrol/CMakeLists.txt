@@ -20,6 +20,39 @@ google_cloud_cpp_add_gapic_library(storagecontrol "Cloud Storage API" TRANSITION
                                    SERVICE_DIRS "v2/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_library(
+        storagecontrol_client_testing # cmake-format: sort
+        v2/testing/remove_stale_folders.cc v2/testing/remove_stale_folders.h)
+    target_link_libraries(storagecontrol_client_testing
+                          PUBLIC google-cloud-cpp::storagecontrol)
+    google_cloud_cpp_add_common_options(storagecontrol_client_testing)
+    target_include_directories(
+        storagecontrol_client_testing
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<INSTALL_INTERFACE:include>)
+    target_compile_options(storagecontrol_client_testing
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    create_bazel_config(storagecontrol_client_testing)
+
+    # List the unit tests, then setup the targets and dependencies
+    set(storagecontrol_client_unit_tests
+        # cmake-format: sort
+        v2/testing/remove_stale_folders_test.cc)
+    foreach (fname ${storagecontrol_client_unit_tests})
+        google_cloud_cpp_add_executable(target "storagecontrol" "${fname}")
+        target_link_libraries(
+            ${target}
+            PRIVATE storagecontrol_client_testing google_cloud_cpp_testing
+                    google-cloud-cpp::storagecontrol GTest::gmock_main
+                    GTest::gmock GTest::gtest)
+        google_cloud_cpp_add_common_options(${target})
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
+    # Export the list of unit tests so the Bazel BUILD file can pick it up.
+    export_list_to_bazel("storagecontrol_client_unit_tests.bzl"
+                         "storagecontrol_client_unit_tests" YEAR "2024")
+    include(FindBenchmarkWithWorkarounds)
+
     add_executable(storagecontrol_quickstart "quickstart/quickstart.cc")
     target_link_libraries(storagecontrol_quickstart
                           PRIVATE google-cloud-cpp::storagecontrol)
