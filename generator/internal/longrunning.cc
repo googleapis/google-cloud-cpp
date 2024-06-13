@@ -95,6 +95,9 @@ bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
 void SetLongrunningOperationMethodVars(
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars) {
+  method_vars["longrunning_operation_type"] =
+      ProtoNameToCppName(method.output_type()->full_name());
+
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
@@ -194,6 +197,10 @@ void SetLongrunningOperationServiceVars(
       r.set_project(request.project());
       r.set_operation(op);
 )""";
+        service_vars["longrunning_await_set_operation_fields"] = R"""(
+      r.set_project(info.project);
+      r.set_operation(info.operation);
+)""";
         auto global_lro_path = absl::StrFormat(
             R"""(absl::StrCat("/compute/",
                               rest_internal::DetermineApiVersion("%s", *options),
@@ -216,6 +223,9 @@ void SetLongrunningOperationServiceVars(
             "DeleteOperationRequest";
         service_vars["longrunning_set_operation_fields"] = R"""(
       r.set_operation(op);
+)""";
+        service_vars["longrunning_await_set_operation_fields"] = R"""(
+      r.set_operation(info.operation);
 )""";
         auto global_org_lro_path = absl::StrFormat(
             R"""(absl::StrCat("/compute/",
@@ -240,6 +250,11 @@ void SetLongrunningOperationServiceVars(
       r.set_region(request.region());
       r.set_operation(op);
 )""";
+        service_vars["longrunning_await_set_operation_fields"] = R"""(
+      r.set_project(info.project);
+      r.set_region(info.region);
+      r.set_operation(info.operation);
+)""";
         auto region_lro_path = absl::StrFormat(
             R"""(absl::StrCat("/compute/",
                               rest_internal::DetermineApiVersion("%s", *options),
@@ -263,6 +278,11 @@ void SetLongrunningOperationServiceVars(
       r.set_project(request.project());
       r.set_zone(request.zone());
       r.set_operation(op);
+)""";
+        service_vars["longrunning_await_set_operation_fields"] = R"""(
+      r.set_project(info.project);
+      r.set_zone(info.zone);
+      r.set_operation(info.operation);
 )""";
         auto zone_lro_path = absl::StrFormat(
             R"""(absl::StrCat("/compute/",
