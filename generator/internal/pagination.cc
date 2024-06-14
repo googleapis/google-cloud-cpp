@@ -188,6 +188,53 @@ google::cloud::optional<PaginationInfo> DetermineBigQueryPagination(
   return {};
 }
 
+// For the BigQuery v2 proto definitions, the paging conventions
+// do not adhere to aip-4233 for the following rpcs:
+//   - JobService.ListJobs
+//   - JobService.GetQueryResults
+//   - TableService.ListTables
+//   - DatasetService.ListDatasets
+//   - ModelService.ListModels
+//   - TableDataService.List
+// This method adds custom code to handle these cases.
+google::cloud::optional<PaginationInfo> DetermineBigQueryPagination(
+    MethodDescriptor const& method) {
+  Descriptor const* request_message = method.input_type();
+  Descriptor const* response_message = method.output_type();
+
+  if (!(FieldExistsAndIsMessage(
+            *request_message, "max_results",
+            {"google.protobuf.UInt32Value", "google.protobuf.Int32Value"}) ||
+        FieldExistsAndIsType(*request_message, "max_results",
+                             FieldDescriptor::TYPE_UINT32)) ||
+      !FieldExistsAndIsType(*request_message, "page_token",
+                            FieldDescriptor::TYPE_STRING) ||
+      !FieldExistsAndIsType(*response_message, "next_page_token",
+                            FieldDescriptor::TYPE_STRING)) {
+    return {};
+  }
+
+  std::unordered_map<std::string, std::string> items_map = {
+      {"jobs", "google.cloud.bigquery.v2.ListFormatJob"},
+      {"datasets", "google.cloud.bigquery.v2.ListFormatDataset"},
+      {"models", "google.cloud.bigquery.v2.Model"},
+      {"rows", "google.protobuf.Struct"},
+      {"tables", "google.cloud.bigquery.v2.ListFormatTable"}};
+  for (auto const& kv : items_map) {
+    auto field_name = kv.first;
+    auto field_type_message_name = kv.second;
+    if (FieldExistsAndIsMessage(*response_message, field_name,
+                                {field_type_message_name})) {
+      FieldDescriptor const* items =
+          response_message->FindFieldByName(field_name);
+      if (!items->is_repeated()) return {};
+      return PaginationInfo{items->name(), items->message_type(), {}};
+    }
+  }
+
+  return {};
+}
+
 }  // namespace
 
 google::cloud::optional<PaginationInfo> DeterminePagination(

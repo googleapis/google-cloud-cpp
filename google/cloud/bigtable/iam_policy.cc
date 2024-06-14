@@ -39,8 +39,8 @@ google::iam::v1::Policy IamPolicy(
 }
 
 std::ostream& operator<<(std::ostream& os, google::iam::v1::Policy const& rhs) {
-  os << "IamPolicy={version=" << rhs.version()
-     << ", bindings=" << "IamBindings={";
+  os << "IamPolicy={version=" << rhs.version() << ", bindings="
+     << "IamBindings={";
   bool first = true;
   for (auto const& binding : rhs.bindings()) {
     os << (first ? "" : ", ") << binding;

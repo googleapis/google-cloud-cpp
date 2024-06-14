@@ -50,10 +50,11 @@ ObjectMetadata MockObject(std::string const& bucket_name,
         "timeStorageClassUpdated": "2018-05-19T19:31:34Z",
         "updated": "2018-05-19T19:31:24Z",
 )""";
-  text << R"("bucket": ")" << bucket_name << "\"," << R"("generation": ")"
-       << generation << "\"," << R"("id": ")" << bucket_name << "/"
-       << object_name << "/" << generation << "\"," << R"("name": ")"
-       << object_name << "\"}";
+  text << R"("bucket": ")" << bucket_name << "\","
+       << R"("generation": ")" << generation << "\","
+       << R"("id": ")" << bucket_name << "/" << object_name << "/" << generation
+       << "\","
+       << R"("name": ")" << object_name << "\"}";
   return internal::ObjectMetadataParser::FromString(text.str()).value();
 }
 
