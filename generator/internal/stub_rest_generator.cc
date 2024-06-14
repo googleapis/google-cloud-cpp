@@ -80,6 +80,12 @@ class $stub_rest_class_name$ {
       google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) = 0;
 )""");
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual StatusOr<$response_type$> $method_name$(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, $request_type$ const& request) = 0;
+)""");
+
     } else {
       if (IsResponseTypeEmpty(method)) {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
@@ -185,6 +191,13 @@ class Default$stub_rest_class_name$ : public $stub_rest_class_name$ {
       google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
 )""");
+
+        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  StatusOr<$response_type$> $method_name$(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, $request_type$ const& request) override;
+)""");
+
       } else {
         if (IsResponseTypeEmpty(method)) {
           HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
@@ -356,6 +369,19 @@ Default$stub_rest_class_name$::Async$method_name$(
   });
 }
 )""");
+
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<$response_type$>
+Default$stub_rest_class_name$::$method_name$(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      $request_type$ const& request) {
+  return rest_internal::$method_http_verb$<$response_type$>(
+      *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
+      $method_rest_path$$method_http_query_parameters$);
+}
+)""");
+
     } else {
       if (IsResponseTypeEmpty(method)) {
         CcPrintMethod(method, __FILE__, __LINE__, R"""(

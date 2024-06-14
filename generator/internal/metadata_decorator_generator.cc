@@ -260,6 +260,20 @@ $metadata_class_name$::Async$method_name$(
       cq, std::move(context), std::move(options), request);
 }
 )""");
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<google::longrunning::Operation>
+$metadata_class_name$::$method_name$(
+    grpc::ClientContext& context,
+    Options options,
+    $request_type$ const& request) {
+)""");
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    SetMetadataText(method, kReference, "options"));
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return child_->$method_name$(context, options, request);
+}
+)""");
+
       continue;
     }
     if (IsStreamingRead(method)) {

@@ -64,6 +64,12 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
       google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
 )""");
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  StatusOr<google::longrunning::Operation> $method_name$(
+      grpc::ClientContext& context,
+      Options options,
+      $request_type$ const& request) override;
+)""");
       continue;
     }
     if (IsStreamingRead(method)) {

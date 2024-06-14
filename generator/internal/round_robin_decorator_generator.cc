@@ -160,6 +160,17 @@ $round_robin_class_name$::Async$method_name$(
       cq, std::move(context), std::move(options), request);
 }
 )""");
+
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<google::longrunning::Operation>
+$round_robin_class_name$::$method_name$(
+      grpc::ClientContext& context,
+      Options options,
+      $request_type$ const& request) {
+  return Child()->$method_name$(context, options, request);
+}
+)""");
+
       continue;
     }
     if (IsResponseTypeEmpty(method)) {

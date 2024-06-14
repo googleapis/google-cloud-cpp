@@ -185,6 +185,19 @@ $auth_class_name$::Async$method_name$(
       });
 }
 )""");
+
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<google::longrunning::Operation>
+$auth_class_name$::$method_name$(
+      grpc::ClientContext& context,
+      Options options,
+      $request_type$ const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->$method_name$(context, options, request);
+}
+)""");
+
       continue;
     }
     if (IsStreamingRead(method)) {

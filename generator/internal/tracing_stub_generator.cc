@@ -192,6 +192,21 @@ $tracing_stub_class_name$::Async$method_name$(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 )""");
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<google::longrunning::Operation>
+$tracing_stub_class_name$::$method_name$(
+      grpc::ClientContext& context,
+      Options options,
+      $request_type$ const& request) {
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
+      CcPrintMethod(method, __FILE__, __LINE__, request_id_fragment);
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->$method_name$(context, options, request));
+}
+)""");
       continue;
     }
     if (IsStreamingRead(method)) {
