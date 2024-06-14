@@ -94,6 +94,23 @@ void ListFolders(google::cloud::storagecontrol_v2::StorageControlClient client,
   (std::move(client), argv.at(0));
 }
 
+google::cloud::Status RemoveStaleFolders(google::cloud::storagecontrol_v2::StorageControlClient client,
+     std::string const& bucket_name, std::string const& prefix,
+     std::chrono::system_clock::time_point created_time_limit) {
+
+    std::regex re(prefix + R"re(-[a-z]{32})re");
+    auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
+    for (auto folder : client.ListFolders(parent)) {
+      if (!folder) return std::move(folder).status();
+      if (!std::regex_match(folder->name(), re)) continue;
+      auto const create_time =
+          google::cloud::internal::ToChronoTimePoint(folder->create_time());
+      if (create_time > created_time_limit) continue;
+      (void)client.DeleteFolder(folder->name());
+    }
+    return {};
+}
+
 void RenameFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
                   std::vector<std::string> const& argv) {
   // [START storage_control_rename_folder]
@@ -142,23 +159,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   // This is the only example that cleans up stale folders. The examples run in
   // parallel (within a build and across the builds), having multiple examples
   // doing the same cleanup is probably more trouble than it is worth.
-  [](google::cloud::storagecontrol_v2::StorageControlClient client,
-     std::string const& bucket_name, std::string const& prefix,
-     std::chrono::system_clock::time_point created_time_limit)
-      -> google::cloud::Status {
-    std::cout << "\nRemoving stale folders for examples" << std::endl;
-    std::regex re(prefix + R"re(-[a-z]{32})re");
-    auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
-    for (auto folder : client.ListFolders(parent)) {
-      if (!folder) return std::move(folder).status();
-      if (!std::regex_match(folder->name(), re)) continue;
-      auto const create_time =
-          google::cloud::internal::ToChronoTimePoint(folder->create_time());
-      if (create_time > created_time_limit) continue;
-      (void)client.DeleteFolder(folder->name());
-    }
-    return {};
-  }(std::move(client), bucket_name, prefix, create_time_limit);
+  std::cout << "\nRemoving stale folders for examples" << std::endl;
+  RemoveStaleFolders(client, bucket_name, prefix, create_time_limit);
 
   std::cout << "\nRunning CreateFolder() example" << std::endl;
   CreateFolder(client, {bucket_name, folder_id});
@@ -197,7 +199,6 @@ int main(int argc, char* argv[]) {
       }
       auto client = storagecontrol::StorageControlClient(
           storagecontrol::MakeStorageControlConnection());
-      ;
       command(client, std::move(argv));
     };
     return google::cloud::testing_util::Commands::value_type(std::move(name),
