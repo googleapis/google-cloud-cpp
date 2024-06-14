@@ -680,6 +680,107 @@ Status DefaultVideoStitcherServiceStub::CancelOperation(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncUpdateLiveConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::UpdateLiveConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateLiveConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncCreateVodConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::CreateVodConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateVodConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::cloud::video::stitcher::v1::ListVodConfigsResponse>
+DefaultVideoStitcherServiceStub::ListVodConfigs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::video::stitcher::v1::ListVodConfigsRequest const& request) {
+  google::cloud::video::stitcher::v1::ListVodConfigsResponse response;
+  auto status = grpc_stub_->ListVodConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::video::stitcher::v1::VodConfig>
+DefaultVideoStitcherServiceStub::GetVodConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::video::stitcher::v1::GetVodConfigRequest const& request) {
+  google::cloud::video::stitcher::v1::VodConfig response;
+  auto status = grpc_stub_->GetVodConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncDeleteVodConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::DeleteVodConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteVodConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncUpdateVodConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::UpdateVodConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateVodConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultVideoStitcherServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

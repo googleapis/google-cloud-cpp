@@ -583,6 +583,105 @@ Status VideoStitcherServiceAuth::CancelOperation(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+VideoStitcherServiceAuth::AsyncUpdateLiveConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateLiveConfig(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VideoStitcherServiceAuth::AsyncCreateVodConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateVodConfig(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::cloud::video::stitcher::v1::ListVodConfigsResponse>
+VideoStitcherServiceAuth::ListVodConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::stitcher::v1::ListVodConfigsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListVodConfigs(context, options, request);
+}
+
+StatusOr<google::cloud::video::stitcher::v1::VodConfig>
+VideoStitcherServiceAuth::GetVodConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::stitcher::v1::GetVodConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetVodConfig(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VideoStitcherServiceAuth::AsyncDeleteVodConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteVodConfig(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VideoStitcherServiceAuth::AsyncUpdateVodConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateVodConfig(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

@@ -36,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 auto constexpr kMetadataServerUniverseDomainPath =
-    "computeMetadata/v1/universe/universe-domain";
+    "computeMetadata/v1/universe/universe_domain";
 
 StatusOr<std::unique_ptr<rest_internal::RestResponse>>
 DoMetadataServerGetRequest(rest_internal::RestClient& client,
