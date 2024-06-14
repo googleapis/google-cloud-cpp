@@ -52,6 +52,15 @@ RegionTargetHttpProxiesRestMetadata::AsyncDeleteTargetHttpProxy(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpProxiesRestMetadata::DeleteTargetHttpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_http_proxies::v1::
+        DeleteTargetHttpProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteTargetHttpProxy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
 RegionTargetHttpProxiesRestMetadata::GetTargetHttpProxy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -73,6 +82,15 @@ RegionTargetHttpProxiesRestMetadata::AsyncInsertTargetHttpProxy(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpProxiesRestMetadata::InsertTargetHttpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_http_proxies::v1::
+        InsertTargetHttpProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertTargetHttpProxy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
 RegionTargetHttpProxiesRestMetadata::ListRegionTargetHttpProxies(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -92,6 +110,15 @@ RegionTargetHttpProxiesRestMetadata::AsyncSetUrlMap(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetUrlMap(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpProxiesRestMetadata::SetUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_http_proxies::v1::
+        SetUrlMapRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetUrlMap(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

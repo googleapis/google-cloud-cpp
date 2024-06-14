@@ -68,6 +68,14 @@ UserEventServiceAuth::AsyncPurgeUserEvents(
       });
 }
 
+StatusOr<google::longrunning::Operation> UserEventServiceAuth::PurgeUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PurgeUserEvents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceAuth::AsyncImportUserEvents(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +96,14 @@ UserEventServiceAuth::AsyncImportUserEvents(
       });
 }
 
+StatusOr<google::longrunning::Operation> UserEventServiceAuth::ImportUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportUserEventsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportUserEvents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceAuth::AsyncRejoinUserEvents(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +122,14 @@ UserEventServiceAuth::AsyncRejoinUserEvents(
         return child->AsyncRejoinUserEvents(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> UserEventServiceAuth::RejoinUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RejoinUserEvents(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -54,6 +54,15 @@ SessionControllerMetadata::AsyncCreateSession(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerMetadata::CreateSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSession(context, options, request);
+}
+
 StatusOr<google::cloud::dataproc::v1::Session>
 SessionControllerMetadata::GetSession(
     grpc::ClientContext& context, Options const& options,
@@ -84,6 +93,15 @@ SessionControllerMetadata::AsyncTerminateSession(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerMetadata::TerminateSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->TerminateSession(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerMetadata::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
@@ -94,6 +112,15 @@ SessionControllerMetadata::AsyncDeleteSession(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSession(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+SessionControllerMetadata::DeleteSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSession(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

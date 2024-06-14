@@ -61,6 +61,18 @@ DefaultPredictionServiceStub::AsyncBatchPredict(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultPredictionServiceStub::BatchPredict(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::BatchPredictRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchPredict(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultPredictionServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

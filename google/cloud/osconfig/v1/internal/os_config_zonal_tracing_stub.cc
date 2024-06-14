@@ -48,6 +48,21 @@ OsConfigZonalServiceTracingStub::AsyncCreateOSPolicyAssignment(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceTracingStub::CreateOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigZonalService",
+                             "CreateOSPolicyAssignment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateOSPolicyAssignment(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceTracingStub::AsyncUpdateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
@@ -63,6 +78,21 @@ OsConfigZonalServiceTracingStub::AsyncUpdateOSPolicyAssignment(
   auto f = child_->AsyncUpdateOSPolicyAssignment(cq, context,
                                                  std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceTracingStub::UpdateOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigZonalService",
+                             "UpdateOSPolicyAssignment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateOSPolicyAssignment(context, options, request));
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -122,6 +152,21 @@ OsConfigZonalServiceTracingStub::AsyncDeleteOSPolicyAssignment(
   auto f = child_->AsyncDeleteOSPolicyAssignment(cq, context,
                                                  std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceTracingStub::DeleteOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigZonalService",
+                             "DeleteOSPolicyAssignment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteOSPolicyAssignment(context, options, request));
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>

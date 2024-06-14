@@ -69,6 +69,18 @@ CloudRedisClusterTracingStub::AsyncUpdateCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingStub::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "UpdateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCluster(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterTracingStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +95,18 @@ CloudRedisClusterTracingStub::AsyncDeleteCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingStub::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "DeleteCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCluster(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterTracingStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +119,18 @@ CloudRedisClusterTracingStub::AsyncCreateCluster(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCluster(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingStub::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "CreateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateCluster(context, options, request));
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>

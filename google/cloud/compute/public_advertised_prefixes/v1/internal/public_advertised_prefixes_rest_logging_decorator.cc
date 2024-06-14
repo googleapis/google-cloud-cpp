@@ -55,6 +55,20 @@ PublicAdvertisedPrefixesRestLogging::AsyncAnnounce(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestLogging::Announce(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        AnnounceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                 AnnounceRequest const& request) {
+        return child_->Announce(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestLogging::AsyncDeletePublicAdvertisedPrefix(
     CompletionQueue& cq,
@@ -73,6 +87,21 @@ PublicAdvertisedPrefixesRestLogging::AsyncDeletePublicAdvertisedPrefix(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestLogging::DeletePublicAdvertisedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        DeletePublicAdvertisedPrefixRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                 DeletePublicAdvertisedPrefixRequest const& request) {
+        return child_->DeletePublicAdvertisedPrefix(rest_context, options,
+                                                    request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -110,6 +139,21 @@ PublicAdvertisedPrefixesRestLogging::AsyncInsertPublicAdvertisedPrefix(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestLogging::InsertPublicAdvertisedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        InsertPublicAdvertisedPrefixRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                 InsertPublicAdvertisedPrefixRequest const& request) {
+        return child_->InsertPublicAdvertisedPrefix(rest_context, options,
+                                                    request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefixList>
 PublicAdvertisedPrefixesRestLogging::ListPublicAdvertisedPrefixes(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -145,6 +189,21 @@ PublicAdvertisedPrefixesRestLogging::AsyncPatchPublicAdvertisedPrefix(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestLogging::PatchPublicAdvertisedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        PatchPublicAdvertisedPrefixRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                 PatchPublicAdvertisedPrefixRequest const& request) {
+        return child_->PatchPublicAdvertisedPrefix(rest_context, options,
+                                                   request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestLogging::AsyncWithdraw(
     CompletionQueue& cq,
@@ -163,6 +222,20 @@ PublicAdvertisedPrefixesRestLogging::AsyncWithdraw(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestLogging::Withdraw(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        WithdrawRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                 WithdrawRequest const& request) {
+        return child_->Withdraw(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

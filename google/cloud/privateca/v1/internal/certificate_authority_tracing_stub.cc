@@ -118,6 +118,21 @@ CertificateAuthorityServiceTracingStub::AsyncActivateCertificateAuthority(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::ActivateCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        ActivateCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "ActivateCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ActivateCertificateAuthority(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncCreateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
@@ -133,6 +148,21 @@ CertificateAuthorityServiceTracingStub::AsyncCreateCertificateAuthority(
   auto f = child_->AsyncCreateCertificateAuthority(cq, context,
                                                    std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::CreateCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        CreateCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "CreateCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateCertificateAuthority(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -152,6 +182,21 @@ CertificateAuthorityServiceTracingStub::AsyncDisableCertificateAuthority(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::DisableCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        DisableCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "DisableCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DisableCertificateAuthority(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncEnableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +212,21 @@ CertificateAuthorityServiceTracingStub::AsyncEnableCertificateAuthority(
   auto f = child_->AsyncEnableCertificateAuthority(cq, context,
                                                    std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::EnableCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        EnableCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "EnableCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->EnableCertificateAuthority(context, options, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::
@@ -233,6 +293,21 @@ CertificateAuthorityServiceTracingStub::AsyncUndeleteCertificateAuthority(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::UndeleteCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UndeleteCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "UndeleteCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UndeleteCertificateAuthority(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncDeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
@@ -248,6 +323,21 @@ CertificateAuthorityServiceTracingStub::AsyncDeleteCertificateAuthority(
   auto f = child_->AsyncDeleteCertificateAuthority(cq, context,
                                                    std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::DeleteCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        DeleteCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "DeleteCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteCertificateAuthority(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -267,6 +357,21 @@ CertificateAuthorityServiceTracingStub::AsyncUpdateCertificateAuthority(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::UpdateCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UpdateCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "UpdateCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateCertificateAuthority(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncCreateCaPool(
     google::cloud::CompletionQueue& cq,
@@ -283,6 +388,20 @@ CertificateAuthorityServiceTracingStub::AsyncCreateCaPool(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::CreateCaPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::CreateCaPoolRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "CreateCaPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateCaPool(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncUpdateCaPool(
     google::cloud::CompletionQueue& cq,
@@ -297,6 +416,20 @@ CertificateAuthorityServiceTracingStub::AsyncUpdateCaPool(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateCaPool(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::UpdateCaPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "UpdateCaPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCaPool(context, options, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
@@ -339,6 +472,20 @@ CertificateAuthorityServiceTracingStub::AsyncDeleteCaPool(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCaPool(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::DeleteCaPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "DeleteCaPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCaPool(context, options, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
@@ -403,6 +550,21 @@ CertificateAuthorityServiceTracingStub::AsyncUpdateCertificateRevocationList(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::UpdateCertificateRevocationList(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UpdateCertificateRevocationListRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "UpdateCertificateRevocationList");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateCertificateRevocationList(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncCreateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
@@ -420,6 +582,21 @@ CertificateAuthorityServiceTracingStub::AsyncCreateCertificateTemplate(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::CreateCertificateTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        CreateCertificateTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "CreateCertificateTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateCertificateTemplate(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncDeleteCertificateTemplate(
     google::cloud::CompletionQueue& cq,
@@ -435,6 +612,21 @@ CertificateAuthorityServiceTracingStub::AsyncDeleteCertificateTemplate(
   auto f = child_->AsyncDeleteCertificateTemplate(cq, context,
                                                   std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::DeleteCertificateTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        DeleteCertificateTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "DeleteCertificateTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteCertificateTemplate(context, options, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -483,6 +675,21 @@ CertificateAuthorityServiceTracingStub::AsyncUpdateCertificateTemplate(
   auto f = child_->AsyncUpdateCertificateTemplate(cq, context,
                                                   std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceTracingStub::UpdateCertificateTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UpdateCertificateTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "UpdateCertificateTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateCertificateTemplate(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

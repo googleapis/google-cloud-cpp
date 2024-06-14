@@ -104,6 +104,18 @@ VizierServiceTracingStub::AsyncSuggestTrials(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+VizierServiceTracingStub::SuggestTrials(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
+                                     "SuggestTrials");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SuggestTrials(context, options, request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceTracingStub::CreateTrial(
     grpc::ClientContext& context, Options const& options,
@@ -189,6 +201,20 @@ VizierServiceTracingStub::AsyncCheckTrialEarlyStoppingState(
   auto f = child_->AsyncCheckTrialEarlyStoppingState(
       cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VizierServiceTracingStub::CheckTrialEarlyStoppingState(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
+                                     "CheckTrialEarlyStoppingState");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CheckTrialEarlyStoppingState(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>

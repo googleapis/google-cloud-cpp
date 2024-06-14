@@ -69,6 +69,19 @@ BackupDRTracingStub::AsyncCreateManagementServer(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::CreateManagementServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateManagementServer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateManagementServer(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupDRTracingStub::AsyncDeleteManagementServer(
     google::cloud::CompletionQueue& cq,
@@ -82,6 +95,19 @@ BackupDRTracingStub::AsyncDeleteManagementServer(
   auto f = child_->AsyncDeleteManagementServer(cq, context, std::move(options),
                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::DeleteManagementServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteManagementServer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteManagementServer(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

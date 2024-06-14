@@ -54,6 +54,15 @@ VpcAccessServiceMetadata::AsyncCreateConnector(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceMetadata::CreateConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConnector(context, options, request);
+}
+
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceMetadata::GetConnector(
     grpc::ClientContext& context, Options const& options,
@@ -82,6 +91,15 @@ VpcAccessServiceMetadata::AsyncDeleteConnector(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConnector(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceMetadata::DeleteConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConnector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

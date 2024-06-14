@@ -98,6 +98,14 @@ ProductServiceMetadata::AsyncPurgeProducts(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> ProductServiceMetadata::PurgeProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeProducts(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +116,14 @@ ProductServiceMetadata::AsyncImportProducts(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportProducts(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> ProductServiceMetadata::ImportProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportProductsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportProducts(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -123,6 +139,15 @@ ProductServiceMetadata::AsyncSetInventory(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> ProductServiceMetadata::SetInventory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::SetInventoryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("inventory.name=",
+                           internal::UrlEncode(request.inventory().name())));
+  return child_->SetInventory(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncAddFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
@@ -133,6 +158,15 @@ ProductServiceMetadata::AsyncAddFulfillmentPlaces(
               absl::StrCat("product=", internal::UrlEncode(request.product())));
   return child_->AsyncAddFulfillmentPlaces(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceMetadata::AddFulfillmentPlaces(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("product=", internal::UrlEncode(request.product())));
+  return child_->AddFulfillmentPlaces(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -147,6 +181,15 @@ ProductServiceMetadata::AsyncRemoveFulfillmentPlaces(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceMetadata::RemoveFulfillmentPlaces(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("product=", internal::UrlEncode(request.product())));
+  return child_->RemoveFulfillmentPlaces(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncAddLocalInventories(
     google::cloud::CompletionQueue& cq,
@@ -159,6 +202,15 @@ ProductServiceMetadata::AsyncAddLocalInventories(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceMetadata::AddLocalInventories(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("product=", internal::UrlEncode(request.product())));
+  return child_->AddLocalInventories(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
@@ -169,6 +221,15 @@ ProductServiceMetadata::AsyncRemoveLocalInventories(
               absl::StrCat("product=", internal::UrlEncode(request.product())));
   return child_->AsyncRemoveLocalInventories(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceMetadata::RemoveLocalInventories(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("product=", internal::UrlEncode(request.product())));
+  return child_->RemoveLocalInventories(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

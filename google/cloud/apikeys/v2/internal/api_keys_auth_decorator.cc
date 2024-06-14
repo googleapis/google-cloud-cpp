@@ -50,6 +50,14 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncCreateKey(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysAuth::CreateKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::CreateKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateKey(context, options, request);
+}
+
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysAuth::ListKeys(
     grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
@@ -94,6 +102,14 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncUpdateKey(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysAuth::UpdateKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateKey(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -113,6 +129,14 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncDeleteKey(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysAuth::DeleteKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteKey(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -130,6 +154,14 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncUndeleteKey(
         return child->AsyncUndeleteKey(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ApiKeysAuth::UndeleteKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeleteKey(context, options, request);
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysAuth::LookupKey(

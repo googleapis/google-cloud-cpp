@@ -125,6 +125,14 @@ MigrationCenterAuth::AsyncCreateImportJob(
       });
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::CreateImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateImportJob(context, options, request);
+}
+
 StatusOr<google::cloud::migrationcenter::v1::ListImportJobsResponse>
 MigrationCenterAuth::ListImportJobs(
     grpc::ClientContext& context, Options const& options,
@@ -163,6 +171,14 @@ MigrationCenterAuth::AsyncDeleteImportJob(
       });
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::DeleteImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteImportJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncUpdateImportJob(
     google::cloud::CompletionQueue& cq,
@@ -181,6 +197,14 @@ MigrationCenterAuth::AsyncUpdateImportJob(
         return child->AsyncUpdateImportJob(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::UpdateImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateImportJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -204,6 +228,15 @@ MigrationCenterAuth::AsyncValidateImportJob(
       });
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::ValidateImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ValidateImportJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncRunImportJob(
     google::cloud::CompletionQueue& cq,
@@ -222,6 +255,14 @@ MigrationCenterAuth::AsyncRunImportJob(
         return child->AsyncRunImportJob(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::RunImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunImportJob(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
@@ -265,6 +306,16 @@ MigrationCenterAuth::AsyncCreateImportDataFile(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterAuth::CreateImportDataFile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateImportDataFile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncDeleteImportDataFile(
     google::cloud::CompletionQueue& cq,
@@ -284,6 +335,16 @@ MigrationCenterAuth::AsyncDeleteImportDataFile(
         return child->AsyncDeleteImportDataFile(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterAuth::DeleteImportDataFile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteImportDataFile(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListGroupsResponse>
@@ -324,6 +385,14 @@ MigrationCenterAuth::AsyncCreateGroup(
       });
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::CreateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncUpdateGroup(
     google::cloud::CompletionQueue& cq,
@@ -344,6 +413,14 @@ MigrationCenterAuth::AsyncUpdateGroup(
       });
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::UpdateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncDeleteGroup(
     google::cloud::CompletionQueue& cq,
@@ -362,6 +439,14 @@ MigrationCenterAuth::AsyncDeleteGroup(
         return child->AsyncDeleteGroup(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::DeleteGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGroup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -385,6 +470,15 @@ MigrationCenterAuth::AsyncAddAssetsToGroup(
       });
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::AddAssetsToGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddAssetsToGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncRemoveAssetsFromGroup(
     google::cloud::CompletionQueue& cq,
@@ -404,6 +498,16 @@ MigrationCenterAuth::AsyncRemoveAssetsFromGroup(
         return child->AsyncRemoveAssetsFromGroup(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterAuth::RemoveAssetsFromGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RemoveAssetsFromGroup(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListErrorFramesResponse>
@@ -462,6 +566,14 @@ MigrationCenterAuth::AsyncCreateSource(
       });
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::CreateSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSource(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncUpdateSource(
     google::cloud::CompletionQueue& cq,
@@ -482,6 +594,14 @@ MigrationCenterAuth::AsyncUpdateSource(
       });
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::UpdateSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSource(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncDeleteSource(
     google::cloud::CompletionQueue& cq,
@@ -500,6 +620,14 @@ MigrationCenterAuth::AsyncDeleteSource(
         return child->AsyncDeleteSource(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::DeleteSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSource(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListPreferenceSetsResponse>
@@ -543,6 +671,16 @@ MigrationCenterAuth::AsyncCreatePreferenceSet(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterAuth::CreatePreferenceSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePreferenceSet(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncUpdatePreferenceSet(
     google::cloud::CompletionQueue& cq,
@@ -564,6 +702,16 @@ MigrationCenterAuth::AsyncUpdatePreferenceSet(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterAuth::UpdatePreferenceSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePreferenceSet(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncDeletePreferenceSet(
     google::cloud::CompletionQueue& cq,
@@ -583,6 +731,16 @@ MigrationCenterAuth::AsyncDeletePreferenceSet(
         return child->AsyncDeletePreferenceSet(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterAuth::DeletePreferenceSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePreferenceSet(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Settings>
@@ -614,6 +772,14 @@ MigrationCenterAuth::AsyncUpdateSettings(
       });
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::UpdateSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSettings(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncCreateReportConfig(
     google::cloud::CompletionQueue& cq,
@@ -633,6 +799,16 @@ MigrationCenterAuth::AsyncCreateReportConfig(
         return child->AsyncCreateReportConfig(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterAuth::CreateReportConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateReportConfig(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
@@ -675,6 +851,16 @@ MigrationCenterAuth::AsyncDeleteReportConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterAuth::DeleteReportConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteReportConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterAuth::AsyncCreateReport(
     google::cloud::CompletionQueue& cq,
@@ -693,6 +879,14 @@ MigrationCenterAuth::AsyncCreateReport(
         return child->AsyncCreateReport(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::CreateReport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateReport(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Report>
@@ -731,6 +925,14 @@ MigrationCenterAuth::AsyncDeleteReport(
         return child->AsyncDeleteReport(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterAuth::DeleteReport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteReport(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

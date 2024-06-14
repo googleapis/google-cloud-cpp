@@ -53,6 +53,14 @@ VideoIntelligenceServiceMetadata::AsyncAnnotateVideo(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoIntelligenceServiceMetadata::AnnotateVideo(
+    grpc::ClientContext& context, Options options,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+  SetMetadata(context, options);
+  return child_->AnnotateVideo(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoIntelligenceServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

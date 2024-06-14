@@ -51,6 +51,14 @@ DataplexServiceAuth::AsyncCreateLake(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::CreateLake(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateLake(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncUpdateLake(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +79,14 @@ DataplexServiceAuth::AsyncUpdateLake(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::UpdateLake(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateLake(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncDeleteLake(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +105,14 @@ DataplexServiceAuth::AsyncDeleteLake(
         return child->AsyncDeleteLake(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::DeleteLake(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteLake(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListLakesResponse>
@@ -137,6 +161,14 @@ DataplexServiceAuth::AsyncCreateZone(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::CreateZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateZone(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncUpdateZone(
     google::cloud::CompletionQueue& cq,
@@ -157,6 +189,14 @@ DataplexServiceAuth::AsyncUpdateZone(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::UpdateZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateZone(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncDeleteZone(
     google::cloud::CompletionQueue& cq,
@@ -175,6 +215,14 @@ DataplexServiceAuth::AsyncDeleteZone(
         return child->AsyncDeleteZone(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::DeleteZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteZone(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListZonesResponse>
@@ -223,6 +271,14 @@ DataplexServiceAuth::AsyncCreateAsset(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::CreateAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAsset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncUpdateAsset(
     google::cloud::CompletionQueue& cq,
@@ -243,6 +299,14 @@ DataplexServiceAuth::AsyncUpdateAsset(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::UpdateAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAsset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
@@ -261,6 +325,14 @@ DataplexServiceAuth::AsyncDeleteAsset(
         return child->AsyncDeleteAsset(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::DeleteAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAsset(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAssetsResponse>
@@ -309,6 +381,14 @@ DataplexServiceAuth::AsyncCreateTask(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::CreateTask(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTask(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncUpdateTask(
     google::cloud::CompletionQueue& cq,
@@ -329,6 +409,14 @@ DataplexServiceAuth::AsyncUpdateTask(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::UpdateTask(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTask(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncDeleteTask(
     google::cloud::CompletionQueue& cq,
@@ -347,6 +435,14 @@ DataplexServiceAuth::AsyncDeleteTask(
         return child->AsyncDeleteTask(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::DeleteTask(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTask(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListTasksResponse>
@@ -420,6 +516,14 @@ DataplexServiceAuth::AsyncCreateEnvironment(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEnvironment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -440,6 +544,14 @@ DataplexServiceAuth::AsyncUpdateEnvironment(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::UpdateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEnvironment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceAuth::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -458,6 +570,14 @@ DataplexServiceAuth::AsyncDeleteEnvironment(
         return child->AsyncDeleteEnvironment(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceAuth::DeleteEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>

@@ -62,6 +62,14 @@ JobServiceMetadata::AsyncBatchCreateJobs(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> JobServiceMetadata::BatchCreateJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchCreateJobs(context, options, request);
+}
+
 StatusOr<google::cloud::talent::v4::Job> JobServiceMetadata::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetJobRequest const& request) {
@@ -91,6 +99,14 @@ JobServiceMetadata::AsyncBatchUpdateJobs(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> JobServiceMetadata::BatchUpdateJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchUpdateJobs(context, options, request);
+}
+
 Status JobServiceMetadata::DeleteJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteJobRequest const& request) {
@@ -109,6 +125,14 @@ JobServiceMetadata::AsyncBatchDeleteJobs(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchDeleteJobs(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> JobServiceMetadata::BatchDeleteJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchDeleteJobs(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::ListJobsResponse>

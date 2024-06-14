@@ -93,6 +93,17 @@ WebRiskServiceTracingStub::AsyncSubmitUri(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> WebRiskServiceTracingStub::SubmitUri(
+    grpc::ClientContext& context, Options options,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "SubmitUri");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SubmitUri(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WebRiskServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -106,6 +106,19 @@ EntityTypesTracingStub::AsyncExportEntityTypes(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingStub::ExportEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.EntityTypes", "ExportEntityTypes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ExportEntityTypes(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesTracingStub::AsyncImportEntityTypes(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +133,19 @@ EntityTypesTracingStub::AsyncImportEntityTypes(
   auto f =
       child_->AsyncImportEntityTypes(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingStub::ImportEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.EntityTypes", "ImportEntityTypes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ImportEntityTypes(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

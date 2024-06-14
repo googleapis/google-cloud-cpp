@@ -54,6 +54,20 @@ MachineImagesRestLogging::AsyncDeleteMachineImage(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesRestLogging::DeleteMachineImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        DeleteMachineImageRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::machine_images::v1::
+                 DeleteMachineImageRequest const& request) {
+        return child_->DeleteMachineImage(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
 MachineImagesRestLogging::GetMachineImage(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -100,6 +114,20 @@ MachineImagesRestLogging::AsyncInsertMachineImage(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesRestLogging::InsertMachineImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        InsertMachineImageRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::machine_images::v1::
+                 InsertMachineImageRequest const& request) {
+        return child_->InsertMachineImage(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImageList>

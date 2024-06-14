@@ -107,6 +107,23 @@ DefaultServiceAttachmentsRestStub::AsyncDeleteServiceAttachment(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultServiceAttachmentsRestStub::DeleteServiceAttachment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        DeleteServiceAttachmentRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "serviceAttachments", "/",
+                   request.service_attachment()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
 DefaultServiceAttachmentsRestStub::GetServiceAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -175,6 +192,22 @@ DefaultServiceAttachmentsRestStub::AsyncInsertServiceAttachment(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultServiceAttachmentsRestStub::InsertServiceAttachment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        InsertServiceAttachmentRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.service_attachment_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "serviceAttachments"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
 DefaultServiceAttachmentsRestStub::ListServiceAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -231,6 +264,23 @@ DefaultServiceAttachmentsRestStub::AsyncPatchServiceAttachment(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultServiceAttachmentsRestStub::PatchServiceAttachment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        PatchServiceAttachmentRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.service_attachment_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "serviceAttachments", "/",
+                   request.service_attachment()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

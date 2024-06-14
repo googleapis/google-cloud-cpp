@@ -54,6 +54,20 @@ RegionDisksRestLogging::AsyncAddResourcePolicies(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::AddResourcePolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::
+        AddResourcePoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 AddResourcePoliciesRequest const& request) {
+        return child_->AddResourcePolicies(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncBulkInsert(
     CompletionQueue& cq,
@@ -72,6 +86,20 @@ RegionDisksRestLogging::AsyncBulkInsert(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::BulkInsert(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 BulkInsertRequest const& request) {
+        return child_->BulkInsert(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -94,6 +122,20 @@ RegionDisksRestLogging::AsyncCreateSnapshot(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::CreateSnapshot(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 CreateSnapshotRequest const& request) {
+        return child_->CreateSnapshot(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncDeleteDisk(
     CompletionQueue& cq,
@@ -112,6 +154,20 @@ RegionDisksRestLogging::AsyncDeleteDisk(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::DeleteDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 DeleteDiskRequest const& request) {
+        return child_->DeleteDisk(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk> RegionDisksRestLogging::GetDisk(
@@ -162,6 +218,20 @@ RegionDisksRestLogging::AsyncInsertDisk(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::InsertDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 InsertDiskRequest const& request) {
+        return child_->InsertDisk(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::DiskList>
 RegionDisksRestLogging::ListRegionDisks(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -196,6 +266,20 @@ RegionDisksRestLogging::AsyncRemoveResourcePolicies(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::RemoveResourcePolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::
+        RemoveResourcePoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 RemoveResourcePoliciesRequest const& request) {
+        return child_->RemoveResourcePolicies(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncResize(
     CompletionQueue& cq,
@@ -214,6 +298,20 @@ RegionDisksRestLogging::AsyncResize(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::Resize(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
+                 request) {
+        return child_->Resize(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -251,6 +349,21 @@ RegionDisksRestLogging::AsyncSetLabels(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
+              request) {
+        return child_->SetLabels(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncStartAsyncReplication(
     CompletionQueue& cq,
@@ -269,6 +382,20 @@ RegionDisksRestLogging::AsyncStartAsyncReplication(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::StartAsyncReplication(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::
+        StartAsyncReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 StartAsyncReplicationRequest const& request) {
+        return child_->StartAsyncReplication(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -291,6 +418,20 @@ RegionDisksRestLogging::AsyncStopAsyncReplication(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::StopAsyncReplication(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::
+        StopAsyncReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 StopAsyncReplicationRequest const& request) {
+        return child_->StopAsyncReplication(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestLogging::AsyncStopGroupAsyncReplication(
     CompletionQueue& cq,
@@ -309,6 +450,21 @@ RegionDisksRestLogging::AsyncStopGroupAsyncReplication(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::StopGroupAsyncReplication(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::
+        StopGroupAsyncReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 StopGroupAsyncReplicationRequest const& request) {
+        return child_->StopGroupAsyncReplication(rest_context, options,
+                                                 request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -343,6 +499,20 @@ RegionDisksRestLogging::AsyncUpdateDisk(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionDisksRestLogging::UpdateDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_disks::v1::
+                 UpdateDiskRequest const& request) {
+        return child_->UpdateDisk(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

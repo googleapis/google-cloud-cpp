@@ -91,10 +91,20 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ImportAptArtifacts(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportYumArtifacts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ImportYumArtifacts(
+      grpc::ClientContext& context, Options options,
       google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
           request) override;
 
@@ -116,6 +126,11 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) override;
+
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
       grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
@@ -125,6 +140,11 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      grpc::ClientContext& context, Options options,
       google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
           request) override;
 
@@ -146,6 +166,11 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::DeletePackageRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeletePackage(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) override;
+
   StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
   ListVersions(
       grpc::ClientContext& context, Options const& options,
@@ -164,10 +189,20 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteVersion(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteVersions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteVersions(
+      grpc::ClientContext& context, Options options,
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request) override;
 

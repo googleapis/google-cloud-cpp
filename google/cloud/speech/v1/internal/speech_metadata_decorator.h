@@ -50,6 +50,11 @@ class SpeechMetadata : public SpeechStub {
       google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> LongRunningRecognize(
+      grpc::ClientContext& context, Options options,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
+      override;
+
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>

@@ -50,6 +50,12 @@ class MachineImagesRestLogging : public MachineImagesRestStub {
       google::cloud::cpp::compute::machine_images::v1::
           DeleteMachineImageRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImage(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::machine_images::v1::
+          DeleteMachineImageRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImage(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -67,6 +73,12 @@ class MachineImagesRestLogging : public MachineImagesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::machine_images::v1::
+          InsertMachineImageRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImage(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::machine_images::v1::
           InsertMachineImageRequest const& request) override;
 

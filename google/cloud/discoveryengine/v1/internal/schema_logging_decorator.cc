@@ -78,6 +78,18 @@ SchemaServiceLogging::AsyncCreateSchema(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceLogging::CreateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateSchemaRequest const&
+                 request) {
+        return child_->CreateSchema(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceLogging::AsyncUpdateSchema(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +109,18 @@ SchemaServiceLogging::AsyncUpdateSchema(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceLogging::UpdateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::UpdateSchemaRequest const&
+                 request) {
+        return child_->UpdateSchema(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceLogging::AsyncDeleteSchema(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +138,18 @@ SchemaServiceLogging::AsyncDeleteSchema(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SchemaServiceLogging::DeleteSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
+                 request) {
+        return child_->DeleteSchema(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -45,6 +45,10 @@ class AutokeyMetadata : public AutokeyStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateKeyHandle(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
+
   StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetKeyHandleRequest const& request) override;

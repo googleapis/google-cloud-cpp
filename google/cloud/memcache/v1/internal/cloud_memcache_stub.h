@@ -53,10 +53,18 @@ class CloudMemcacheStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::memcache::v1::CreateInstanceRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::CreateInstanceRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::memcache::v1::UpdateInstanceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::memcache::v1::UpdateInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -66,10 +74,18 @@ class CloudMemcacheStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::memcache::v1::UpdateParametersRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateParameters(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::UpdateParametersRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::memcache::v1::DeleteInstanceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::memcache::v1::DeleteInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncApplyParameters(
@@ -78,11 +94,20 @@ class CloudMemcacheStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::memcache::v1::ApplyParametersRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ApplyParameters(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::ApplyParametersRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncRescheduleMaintenance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      grpc::ClientContext& context, Options options,
       google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
           request) = 0;
 
@@ -124,10 +149,20 @@ class DefaultCloudMemcacheStub : public CloudMemcacheStub {
       google::cloud::memcache::v1::CreateInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::CreateInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::memcache::v1::UpdateInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::memcache::v1::UpdateInstanceRequest const& request)
       override;
 
@@ -138,10 +173,20 @@ class DefaultCloudMemcacheStub : public CloudMemcacheStub {
       google::cloud::memcache::v1::UpdateParametersRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateParameters(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::UpdateParametersRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::memcache::v1::DeleteInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::memcache::v1::DeleteInstanceRequest const& request)
       override;
 
@@ -152,10 +197,20 @@ class DefaultCloudMemcacheStub : public CloudMemcacheStub {
       google::cloud::memcache::v1::ApplyParametersRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ApplyParameters(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::ApplyParametersRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      grpc::ClientContext& context, Options options,
       google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
       override;
 

@@ -135,6 +135,16 @@ ArtifactRegistryMetadata::AsyncImportAptArtifacts(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::ImportAptArtifacts(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportAptArtifacts(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -146,6 +156,16 @@ ArtifactRegistryMetadata::AsyncImportYumArtifacts(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportYumArtifacts(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::ImportYumArtifacts(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportYumArtifacts(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
@@ -181,6 +201,16 @@ ArtifactRegistryMetadata::AsyncCreateRepository(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::CreateRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateRepository(context, options, request);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryMetadata::UpdateRepository(
     grpc::ClientContext& context, Options const& options,
@@ -203,6 +233,16 @@ ArtifactRegistryMetadata::AsyncDeleteRepository(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRepository(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::DeleteRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRepository(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
@@ -237,6 +277,16 @@ ArtifactRegistryMetadata::AsyncDeletePackage(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::DeletePackage(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeletePackage(context, options, request);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
 ArtifactRegistryMetadata::ListVersions(
     grpc::ClientContext& context, Options const& options,
@@ -269,6 +319,16 @@ ArtifactRegistryMetadata::AsyncDeleteVersion(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::DeleteVersion(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncBatchDeleteVersions(
     google::cloud::CompletionQueue& cq,
@@ -280,6 +340,16 @@ ArtifactRegistryMetadata::AsyncBatchDeleteVersions(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchDeleteVersions(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::BatchDeleteVersions(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchDeleteVersions(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>

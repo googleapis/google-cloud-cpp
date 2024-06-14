@@ -49,6 +49,18 @@ DefaultDataScanServiceStub::AsyncCreateDataScan(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataScanServiceStub::CreateDataScan(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDataScan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataScanServiceStub::AsyncUpdateDataScan(
     google::cloud::CompletionQueue& cq,
@@ -67,6 +79,18 @@ DefaultDataScanServiceStub::AsyncUpdateDataScan(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataScanServiceStub::UpdateDataScan(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDataScan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataScanServiceStub::AsyncDeleteDataScan(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +107,18 @@ DefaultDataScanServiceStub::AsyncDeleteDataScan(
         return grpc_stub_->AsyncDeleteDataScan(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataScanServiceStub::DeleteDataScan(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataScan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::DataScan>

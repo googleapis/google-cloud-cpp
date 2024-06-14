@@ -45,6 +45,17 @@ ServiceUsageTracingStub::AsyncEnableService(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ServiceUsageTracingStub::EnableService(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::EnableServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
+                                     "EnableService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->EnableService(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
@@ -58,6 +69,18 @@ ServiceUsageTracingStub::AsyncDisableService(
   auto f =
       child_->AsyncDisableService(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceUsageTracingStub::DisableService(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::DisableServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
+                                     "DisableService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DisableService(context, options, request));
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
@@ -97,6 +120,18 @@ ServiceUsageTracingStub::AsyncBatchEnableServices(
   auto f = child_->AsyncBatchEnableServices(cq, context, std::move(options),
                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceUsageTracingStub::BatchEnableServices(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
+                                     "BatchEnableServices");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->BatchEnableServices(context, options, request));
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>

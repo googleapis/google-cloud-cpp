@@ -96,6 +96,23 @@ DefaultInstanceSettingsRestStub::AsyncPatchInstanceSettings(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstanceSettingsRestStub::PatchInstanceSettings(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instance_settings::v1::
+        PatchInstanceSettingsRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.instance_settings_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instanceSettings"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("update_mask", request.update_mask())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstanceSettingsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

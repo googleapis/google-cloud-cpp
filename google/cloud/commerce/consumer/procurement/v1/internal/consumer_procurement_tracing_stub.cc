@@ -49,6 +49,21 @@ ConsumerProcurementServiceTracingStub::AsyncPlaceOrder(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceTracingStub::PlaceOrder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.commerce.consumer.procurement.v1."
+      "ConsumerProcurementService",
+      "PlaceOrder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->PlaceOrder(context, options, request));
+}
+
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 ConsumerProcurementServiceTracingStub::GetOrder(
     grpc::ClientContext& context, Options const& options,

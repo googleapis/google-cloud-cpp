@@ -377,6 +377,17 @@ DefaultDataCatalogStub::AsyncReconcileTags(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDataCatalogStub::ReconcileTags(
+    grpc::ClientContext& context, Options,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ReconcileTags(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DefaultDataCatalogStub::StarEntry(
     grpc::ClientContext& context, Options const&,
@@ -452,6 +463,17 @@ DefaultDataCatalogStub::AsyncImportEntries(
         return grpc_stub_->AsyncImportEntries(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDataCatalogStub::ImportEntries(
+    grpc::ClientContext& context, Options,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportEntries(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

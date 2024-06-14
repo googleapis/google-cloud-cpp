@@ -68,6 +68,14 @@ ServicesAuth::AsyncUpdateService(
       });
 }
 
+StatusOr<google::longrunning::Operation> ServicesAuth::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServicesAuth::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +94,14 @@ ServicesAuth::AsyncDeleteService(
         return child->AsyncDeleteService(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ServicesAuth::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteService(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

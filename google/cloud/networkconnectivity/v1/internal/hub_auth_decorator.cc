@@ -67,6 +67,14 @@ future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncCreateHub(
       });
 }
 
+StatusOr<google::longrunning::Operation> HubServiceAuth::CreateHub(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateHub(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncUpdateHub(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -86,6 +94,14 @@ future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncUpdateHub(
       });
 }
 
+StatusOr<google::longrunning::Operation> HubServiceAuth::UpdateHub(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateHub(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncDeleteHub(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -103,6 +119,14 @@ future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncDeleteHub(
         return child->AsyncDeleteHub(cq, *std::move(context),
                                      std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> HubServiceAuth::DeleteHub(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteHub(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
@@ -153,6 +177,14 @@ HubServiceAuth::AsyncCreateSpoke(
       });
 }
 
+StatusOr<google::longrunning::Operation> HubServiceAuth::CreateSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSpoke(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncUpdateSpoke(
     google::cloud::CompletionQueue& cq,
@@ -171,6 +203,14 @@ HubServiceAuth::AsyncUpdateSpoke(
         return child->AsyncUpdateSpoke(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> HubServiceAuth::UpdateSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSpoke(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -194,6 +234,15 @@ HubServiceAuth::AsyncRejectHubSpoke(
       });
 }
 
+StatusOr<google::longrunning::Operation> HubServiceAuth::RejectHubSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RejectHubSpoke(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncAcceptHubSpoke(
     google::cloud::CompletionQueue& cq,
@@ -215,6 +264,15 @@ HubServiceAuth::AsyncAcceptHubSpoke(
       });
 }
 
+StatusOr<google::longrunning::Operation> HubServiceAuth::AcceptHubSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AcceptHubSpoke(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
@@ -233,6 +291,14 @@ HubServiceAuth::AsyncDeleteSpoke(
         return child->AsyncDeleteSpoke(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> HubServiceAuth::DeleteSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSpoke(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::RouteTable>

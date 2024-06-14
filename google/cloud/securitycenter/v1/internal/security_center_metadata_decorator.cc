@@ -54,6 +54,15 @@ SecurityCenterMetadata::AsyncBulkMuteFindings(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+SecurityCenterMetadata::BulkMuteFindings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BulkMuteFindings(context, options, request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterMetadata::CreateSecurityHealthAnalyticsCustomModule(
     grpc::ClientContext& context, Options const& options,
@@ -322,6 +331,16 @@ SecurityCenterMetadata::AsyncRunAssetDiscovery(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncRunAssetDiscovery(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecurityCenterMetadata::RunAssetDiscovery(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RunAssetDiscovery(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>

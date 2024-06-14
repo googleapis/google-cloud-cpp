@@ -61,6 +61,18 @@ DefaultCloudShellServiceStub::AsyncStartEnvironment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudShellServiceStub::StartEnvironment(
+    grpc::ClientContext& context, Options,
+    google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncAuthorizeEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -78,6 +90,18 @@ DefaultCloudShellServiceStub::AsyncAuthorizeEnvironment(
         return grpc_stub_->AsyncAuthorizeEnvironment(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudShellServiceStub::AuthorizeEnvironment(
+    grpc::ClientContext& context, Options,
+    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AuthorizeEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -98,6 +122,18 @@ DefaultCloudShellServiceStub::AsyncAddPublicKey(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudShellServiceStub::AddPublicKey(
+    grpc::ClientContext& context, Options,
+    google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AddPublicKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncRemovePublicKey(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +150,18 @@ DefaultCloudShellServiceStub::AsyncRemovePublicKey(
         return grpc_stub_->AsyncRemovePublicKey(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudShellServiceStub::RemovePublicKey(
+    grpc::ClientContext& context, Options,
+    google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RemovePublicKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

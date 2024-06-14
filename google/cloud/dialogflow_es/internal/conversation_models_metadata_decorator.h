@@ -47,6 +47,11 @@ class ConversationModelsMetadata : public ConversationModelsStub {
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConversationModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+          request) override;
+
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
   GetConversationModel(
       grpc::ClientContext& context, Options const& options,
@@ -66,10 +71,20 @@ class ConversationModelsMetadata : public ConversationModelsStub {
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteConversationModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeployConversationModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeployConversationModel(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
           request) override;
 
@@ -78,6 +93,11 @@ class ConversationModelsMetadata : public ConversationModelsStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UndeployConversationModel(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
           request) override;
 
@@ -99,6 +119,11 @@ class ConversationModelsMetadata : public ConversationModelsStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::
+          CreateConversationModelEvaluationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::
           CreateConversationModelEvaluationRequest const& request) override;
 

@@ -50,6 +50,12 @@ class SnapshotsRestLogging : public SnapshotsRestStub {
       google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshot(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -70,6 +76,12 @@ class SnapshotsRestLogging : public SnapshotsRestStub {
       google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshot(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::SnapshotList> ListSnapshots(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -86,6 +98,12 @@ class SnapshotsRestLogging : public SnapshotsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
           request) override;
 

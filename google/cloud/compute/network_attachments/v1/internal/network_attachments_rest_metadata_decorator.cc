@@ -61,6 +61,15 @@ NetworkAttachmentsRestMetadata::AsyncDeleteNetworkAttachment(
                                               std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkAttachmentsRestMetadata::DeleteNetworkAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::
+        DeleteNetworkAttachmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteNetworkAttachment(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
 NetworkAttachmentsRestMetadata::GetNetworkAttachment(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -91,6 +100,15 @@ NetworkAttachmentsRestMetadata::AsyncInsertNetworkAttachment(
                                               std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkAttachmentsRestMetadata::InsertNetworkAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::
+        InsertNetworkAttachmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertNetworkAttachment(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
 NetworkAttachmentsRestMetadata::ListNetworkAttachments(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -110,6 +128,15 @@ NetworkAttachmentsRestMetadata::AsyncPatchNetworkAttachment(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchNetworkAttachment(cq, std::move(rest_context),
                                              std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkAttachmentsRestMetadata::PatchNetworkAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchNetworkAttachment(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

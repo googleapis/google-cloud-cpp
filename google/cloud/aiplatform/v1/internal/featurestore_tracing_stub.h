@@ -45,6 +45,11 @@ class FeaturestoreServiceTracingStub : public FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateFeaturestore(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request)
@@ -63,6 +68,11 @@ class FeaturestoreServiceTracingStub : public FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateFeaturestore(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeaturestore(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -70,10 +80,20 @@ class FeaturestoreServiceTracingStub : public FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteFeaturestore(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEntityType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateEntityType(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request)
       override;
 
@@ -99,6 +119,11 @@ class FeaturestoreServiceTracingStub : public FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteEntityType(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeature(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -106,10 +131,20 @@ class FeaturestoreServiceTracingStub : public FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateFeatures(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
       override;
 
@@ -134,10 +169,20 @@ class FeaturestoreServiceTracingStub : public FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteFeature(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ImportFeatureValues(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request)
       override;
 
@@ -148,6 +193,11 @@ class FeaturestoreServiceTracingStub : public FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> BatchReadFeatureValues(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -155,10 +205,20 @@ class FeaturestoreServiceTracingStub : public FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ExportFeatureValues(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFeatureValues(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request)
       override;
 

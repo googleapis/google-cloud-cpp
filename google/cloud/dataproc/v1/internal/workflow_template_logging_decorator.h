@@ -58,11 +58,21 @@ class WorkflowTemplateServiceLogging : public WorkflowTemplateServiceStub {
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncInstantiateInlineWorkflowTemplate(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::
+          InstantiateInlineWorkflowTemplateRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request) override;
 

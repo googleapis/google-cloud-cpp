@@ -50,6 +50,18 @@ DefaultRepositoryManagerStub::AsyncCreateConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultRepositoryManagerStub::CreateConnection(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 DefaultRepositoryManagerStub::GetConnection(
     grpc::ClientContext& context, Options const&,
@@ -93,6 +105,18 @@ DefaultRepositoryManagerStub::AsyncUpdateConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultRepositoryManagerStub::UpdateConnection(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +134,18 @@ DefaultRepositoryManagerStub::AsyncDeleteConnection(
         return grpc_stub_->AsyncDeleteConnection(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultRepositoryManagerStub::DeleteConnection(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -131,6 +167,18 @@ DefaultRepositoryManagerStub::AsyncCreateRepository(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultRepositoryManagerStub::CreateRepository(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncBatchCreateRepositories(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +197,20 @@ DefaultRepositoryManagerStub::AsyncBatchCreateRepositories(
         return grpc_stub_->AsyncBatchCreateRepositories(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultRepositoryManagerStub::BatchCreateRepositories(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BatchCreateRepositories(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
@@ -192,6 +254,18 @@ DefaultRepositoryManagerStub::AsyncDeleteRepository(
         return grpc_stub_->AsyncDeleteRepository(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultRepositoryManagerStub::DeleteRepository(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>

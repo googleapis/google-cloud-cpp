@@ -69,6 +69,15 @@ ImageAnnotatorAuth::AsyncAsyncBatchAnnotateImages(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorAuth::AsyncBatchAnnotateImages(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AsyncBatchAnnotateImages(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorAuth::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +96,15 @@ ImageAnnotatorAuth::AsyncAsyncBatchAnnotateFiles(
         return child->AsyncAsyncBatchAnnotateFiles(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorAuth::AsyncBatchAnnotateFiles(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AsyncBatchAnnotateFiles(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

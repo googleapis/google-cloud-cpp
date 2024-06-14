@@ -52,6 +52,14 @@ SpeechAuth::AsyncCreateRecognizer(
       });
 }
 
+StatusOr<google::longrunning::Operation> SpeechAuth::CreateRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRecognizer(context, options, request);
+}
+
 StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
 SpeechAuth::ListRecognizers(
     grpc::ClientContext& context, Options const& options,
@@ -89,6 +97,14 @@ SpeechAuth::AsyncUpdateRecognizer(
       });
 }
 
+StatusOr<google::longrunning::Operation> SpeechAuth::UpdateRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRecognizer(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncDeleteRecognizer(
     google::cloud::CompletionQueue& cq,
@@ -109,6 +125,14 @@ SpeechAuth::AsyncDeleteRecognizer(
       });
 }
 
+StatusOr<google::longrunning::Operation> SpeechAuth::DeleteRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRecognizer(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncUndeleteRecognizer(
     google::cloud::CompletionQueue& cq,
@@ -127,6 +151,14 @@ SpeechAuth::AsyncUndeleteRecognizer(
         return child->AsyncUndeleteRecognizer(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> SpeechAuth::UndeleteRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeleteRecognizer(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse> SpeechAuth::Recognize(
@@ -176,6 +208,14 @@ SpeechAuth::AsyncBatchRecognize(
       });
 }
 
+StatusOr<google::longrunning::Operation> SpeechAuth::BatchRecognize(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchRecognize(context, options, request);
+}
+
 StatusOr<google::cloud::speech::v2::Config> SpeechAuth::GetConfig(
     grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetConfigRequest const& request) {
@@ -210,6 +250,14 @@ SpeechAuth::AsyncCreateCustomClass(
         return child->AsyncCreateCustomClass(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> SpeechAuth::CreateCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCustomClass(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
@@ -249,6 +297,14 @@ SpeechAuth::AsyncUpdateCustomClass(
       });
 }
 
+StatusOr<google::longrunning::Operation> SpeechAuth::UpdateCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCustomClass(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncDeleteCustomClass(
     google::cloud::CompletionQueue& cq,
@@ -267,6 +323,14 @@ SpeechAuth::AsyncDeleteCustomClass(
         return child->AsyncDeleteCustomClass(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> SpeechAuth::DeleteCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCustomClass(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -289,6 +353,14 @@ SpeechAuth::AsyncUndeleteCustomClass(
       });
 }
 
+StatusOr<google::longrunning::Operation> SpeechAuth::UndeleteCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeleteCustomClass(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncCreatePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -307,6 +379,14 @@ SpeechAuth::AsyncCreatePhraseSet(
         return child->AsyncCreatePhraseSet(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> SpeechAuth::CreatePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePhraseSet(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
@@ -346,6 +426,14 @@ SpeechAuth::AsyncUpdatePhraseSet(
       });
 }
 
+StatusOr<google::longrunning::Operation> SpeechAuth::UpdatePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePhraseSet(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncDeletePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -366,6 +454,14 @@ SpeechAuth::AsyncDeletePhraseSet(
       });
 }
 
+StatusOr<google::longrunning::Operation> SpeechAuth::DeletePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePhraseSet(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechAuth::AsyncUndeletePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -384,6 +480,14 @@ SpeechAuth::AsyncUndeletePhraseSet(
         return child->AsyncUndeletePhraseSet(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> SpeechAuth::UndeletePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeletePhraseSet(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> SpeechAuth::AsyncGetOperation(

@@ -67,6 +67,17 @@ ServicesTracingStub::AsyncUpdateService(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ServicesTracingStub::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateServiceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Services", "UpdateService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateService(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServicesTracingStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -79,6 +90,17 @@ ServicesTracingStub::AsyncDeleteService(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteService(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ServicesTracingStub::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteServiceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Services", "DeleteService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteService(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

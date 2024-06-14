@@ -60,6 +60,15 @@ CompletionServiceAuth::AsyncImportCompletionData(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceAuth::ImportCompletionData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportCompletionData(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

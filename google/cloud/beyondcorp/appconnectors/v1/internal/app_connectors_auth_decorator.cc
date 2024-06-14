@@ -73,6 +73,16 @@ AppConnectorsServiceAuth::AsyncCreateAppConnector(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceAuth::CreateAppConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAppConnector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceAuth::AsyncUpdateAppConnector(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +102,16 @@ AppConnectorsServiceAuth::AsyncUpdateAppConnector(
         return child->AsyncUpdateAppConnector(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceAuth::UpdateAppConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAppConnector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -115,6 +135,16 @@ AppConnectorsServiceAuth::AsyncDeleteAppConnector(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceAuth::DeleteAppConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAppConnector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceAuth::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,
@@ -134,6 +164,15 @@ AppConnectorsServiceAuth::AsyncReportStatus(
         return child->AsyncReportStatus(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AppConnectorsServiceAuth::ReportStatus(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReportStatus(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

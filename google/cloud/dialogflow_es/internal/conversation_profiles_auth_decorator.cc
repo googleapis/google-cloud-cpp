@@ -101,6 +101,16 @@ ConversationProfilesAuth::AsyncSetSuggestionFeatureConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationProfilesAuth::SetSuggestionFeatureConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetSuggestionFeatureConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesAuth::AsyncClearSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +130,16 @@ ConversationProfilesAuth::AsyncClearSuggestionFeatureConfig(
         return child->AsyncClearSuggestionFeatureConfig(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationProfilesAuth::ClearSuggestionFeatureConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ClearSuggestionFeatureConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

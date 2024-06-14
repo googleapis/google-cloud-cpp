@@ -68,6 +68,14 @@ ConfigAuth::AsyncCreateDeployment(
       });
 }
 
+StatusOr<google::longrunning::Operation> ConfigAuth::CreateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::CreateDeploymentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDeployment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigAuth::AsyncUpdateDeployment(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +96,14 @@ ConfigAuth::AsyncUpdateDeployment(
       });
 }
 
+StatusOr<google::longrunning::Operation> ConfigAuth::UpdateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UpdateDeploymentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDeployment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigAuth::AsyncDeleteDeployment(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +122,14 @@ ConfigAuth::AsyncDeleteDeployment(
         return child->AsyncDeleteDeployment(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ConfigAuth::DeleteDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeleteDeploymentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
@@ -197,6 +221,14 @@ ConfigAuth::AsyncLockDeployment(
       });
 }
 
+StatusOr<google::longrunning::Operation> ConfigAuth::LockDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::LockDeploymentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->LockDeployment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigAuth::AsyncUnlockDeployment(
     google::cloud::CompletionQueue& cq,
@@ -215,6 +247,14 @@ ConfigAuth::AsyncUnlockDeployment(
         return child->AsyncUnlockDeployment(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ConfigAuth::UnlockDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UnlockDeploymentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UnlockDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> ConfigAuth::ExportLockInfo(
@@ -242,6 +282,14 @@ future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncCreatePreview(
         return child->AsyncCreatePreview(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ConfigAuth::CreatePreview(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::CreatePreviewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePreview(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Preview> ConfigAuth::GetPreview(
@@ -278,6 +326,14 @@ future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncDeletePreview(
         return child->AsyncDeletePreview(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ConfigAuth::DeletePreview(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeletePreviewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePreview(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>

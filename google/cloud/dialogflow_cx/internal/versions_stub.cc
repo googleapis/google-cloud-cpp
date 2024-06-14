@@ -74,6 +74,17 @@ DefaultVersionsStub::AsyncCreateVersion(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVersionsStub::CreateVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 DefaultVersionsStub::UpdateVersion(
     grpc::ClientContext& context, Options const&,
@@ -114,6 +125,17 @@ DefaultVersionsStub::AsyncLoadVersion(
         return grpc_stub_->AsyncLoadVersion(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultVersionsStub::LoadVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->LoadVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>

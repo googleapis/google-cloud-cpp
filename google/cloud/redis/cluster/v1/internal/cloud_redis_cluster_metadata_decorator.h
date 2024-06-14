@@ -57,6 +57,11 @@ class CloudRedisClusterMetadata : public CloudRedisClusterStub {
       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -64,10 +69,20 @@ class CloudRedisClusterMetadata : public CloudRedisClusterStub {
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
       override;
 

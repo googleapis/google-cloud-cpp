@@ -55,6 +55,21 @@ LicensesRestLogging::AsyncDeleteLicense(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+LicensesRestLogging::DeleteLicense(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+              request) {
+        return child_->DeleteLicense(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::License>
 LicensesRestLogging::GetLicense(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -103,6 +118,21 @@ LicensesRestLogging::AsyncInsertLicense(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+LicensesRestLogging::InsertLicense(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+              request) {
+        return child_->InsertLicense(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse>

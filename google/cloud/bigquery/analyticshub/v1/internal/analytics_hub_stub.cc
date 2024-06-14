@@ -207,6 +207,19 @@ DefaultAnalyticsHubServiceStub::AsyncSubscribeDataExchange(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAnalyticsHubServiceStub::SubscribeDataExchange(
+    grpc::ClientContext& context, Options,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SubscribeDataExchange(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncRefreshSubscription(
     google::cloud::CompletionQueue& cq,
@@ -225,6 +238,19 @@ DefaultAnalyticsHubServiceStub::AsyncRefreshSubscription(
         return grpc_stub_->AsyncRefreshSubscription(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAnalyticsHubServiceStub::RefreshSubscription(
+    grpc::ClientContext& context, Options,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RefreshSubscription(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -301,6 +327,19 @@ DefaultAnalyticsHubServiceStub::AsyncDeleteSubscription(
         return grpc_stub_->AsyncDeleteSubscription(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAnalyticsHubServiceStub::DeleteSubscription(
+    grpc::ClientContext& context, Options,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSubscription(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::GetIamPolicy(

@@ -73,6 +73,16 @@ CloudRedisClusterMetadata::AsyncUpdateCluster(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("cluster.name=",
+                           internal::UrlEncode(request.cluster().name())));
+  return child_->UpdateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +95,15 @@ CloudRedisClusterMetadata::AsyncDeleteCluster(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +114,15 @@ CloudRedisClusterMetadata::AsyncCreateCluster(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateCluster(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCluster(context, options, request);
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>

@@ -84,6 +84,17 @@ DefaultGoldenThingAdminRestStub::AsyncCreateDatabase(
   });
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultGoldenThingAdminRestStub::CreateDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  return rest_internal::Post<google::longrunning::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases"),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("create_statement", request.create_statement())}));
+}
+
 StatusOr<google::test::admin::database::v1::Database>
 DefaultGoldenThingAdminRestStub::GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -118,6 +129,17 @@ DefaultGoldenThingAdminRestStub::AsyncUpdateDatabaseDdl(
     });
     return f.get();
   });
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGoldenThingAdminRestStub::UpdateDatabaseDdl(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  return rest_internal::Patch<google::longrunning::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.database(), "/", "ddl"),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("operation_id", request.operation_id())}));
 }
 
 Status DefaultGoldenThingAdminRestStub::DropDatabase(
@@ -195,6 +217,17 @@ DefaultGoldenThingAdminRestStub::AsyncCreateBackup(
   });
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultGoldenThingAdminRestStub::CreateBackup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::test::admin::database::v1::CreateBackupRequest const& request) {
+  return rest_internal::Post<google::longrunning::Operation>(
+      *service_, rest_context, request.backup(), false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "backups"),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("backup_id", request.backup_id())}));
+}
+
 StatusOr<google::test::admin::database::v1::Backup>
 DefaultGoldenThingAdminRestStub::GetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -262,6 +295,18 @@ DefaultGoldenThingAdminRestStub::AsyncRestoreDatabase(
     });
     return f.get();
   });
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGoldenThingAdminRestStub::RestoreDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  return rest_internal::Post<google::longrunning::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases", ":restore"),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("database_id", request.database_id()),
+        std::make_pair("backup", request.backup())}));
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>

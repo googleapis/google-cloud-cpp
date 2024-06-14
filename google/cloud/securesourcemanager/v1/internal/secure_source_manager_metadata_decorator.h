@@ -58,10 +58,20 @@ class SecureSourceManagerMetadata : public SecureSourceManagerStub {
       google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
           request) override;
 
@@ -83,10 +93,20 @@ class SecureSourceManagerMetadata : public SecureSourceManagerStub {
       google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRepository(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      grpc::ClientContext& context, Options options,
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
           request) override;
 

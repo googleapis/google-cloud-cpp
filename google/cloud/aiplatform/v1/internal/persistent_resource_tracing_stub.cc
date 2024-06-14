@@ -48,6 +48,21 @@ PersistentResourceServiceTracingStub::AsyncCreatePersistentResource(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceTracingStub::CreatePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PersistentResourceService",
+      "CreatePersistentResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreatePersistentResource(context, options, request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
 PersistentResourceServiceTracingStub::GetPersistentResource(
     grpc::ClientContext& context, Options const& options,
@@ -94,6 +109,21 @@ PersistentResourceServiceTracingStub::AsyncDeletePersistentResource(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceTracingStub::DeletePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PersistentResourceService",
+      "DeletePersistentResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeletePersistentResource(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PersistentResourceServiceTracingStub::AsyncUpdatePersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +141,21 @@ PersistentResourceServiceTracingStub::AsyncUpdatePersistentResource(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceTracingStub::UpdatePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PersistentResourceService",
+      "UpdatePersistentResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdatePersistentResource(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PersistentResourceServiceTracingStub::AsyncRebootPersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +171,21 @@ PersistentResourceServiceTracingStub::AsyncRebootPersistentResource(
   auto f = child_->AsyncRebootPersistentResource(cq, context,
                                                  std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceTracingStub::RebootPersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PersistentResourceService",
+      "RebootPersistentResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->RebootPersistentResource(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

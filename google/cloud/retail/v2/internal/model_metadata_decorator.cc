@@ -54,6 +54,14 @@ ModelServiceMetadata::AsyncCreateModel(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateModel(context, options, request);
+}
+
 StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::GetModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetModelRequest const& request) {
@@ -114,6 +122,14 @@ ModelServiceMetadata::AsyncTuneModel(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncTuneModel(cq, std::move(context), std::move(options),
                                 request);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::TuneModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->TuneModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

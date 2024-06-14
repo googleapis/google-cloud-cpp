@@ -68,6 +68,14 @@ ManagedKafkaAuth::AsyncCreateCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> ManagedKafkaAuth::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaAuth::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +96,14 @@ ManagedKafkaAuth::AsyncUpdateCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> ManagedKafkaAuth::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaAuth::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +122,14 @@ ManagedKafkaAuth::AsyncDeleteCluster(
         return child->AsyncDeleteCluster(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ManagedKafkaAuth::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCluster(context, options, request);
 }
 
 StatusOr<google::cloud::managedkafka::v1::ListTopicsResponse>

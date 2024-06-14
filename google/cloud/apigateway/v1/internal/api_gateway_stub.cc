@@ -73,6 +73,18 @@ DefaultApiGatewayServiceStub::AsyncCreateGateway(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultApiGatewayServiceStub::CreateGateway(
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +103,18 @@ DefaultApiGatewayServiceStub::AsyncUpdateGateway(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultApiGatewayServiceStub::UpdateGateway(
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +131,18 @@ DefaultApiGatewayServiceStub::AsyncDeleteGateway(
         return grpc_stub_->AsyncDeleteGateway(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultApiGatewayServiceStub::DeleteGateway(
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
@@ -151,6 +187,18 @@ DefaultApiGatewayServiceStub::AsyncCreateApi(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultApiGatewayServiceStub::CreateApi(
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateApi(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncUpdateApi(
     google::cloud::CompletionQueue& cq,
@@ -169,6 +217,18 @@ DefaultApiGatewayServiceStub::AsyncUpdateApi(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultApiGatewayServiceStub::UpdateApi(
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateApi(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncDeleteApi(
     google::cloud::CompletionQueue& cq,
@@ -185,6 +245,18 @@ DefaultApiGatewayServiceStub::AsyncDeleteApi(
         return grpc_stub_->AsyncDeleteApi(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultApiGatewayServiceStub::DeleteApi(
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteApi(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
@@ -230,6 +302,18 @@ DefaultApiGatewayServiceStub::AsyncCreateApiConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultApiGatewayServiceStub::CreateApiConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateApiConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncUpdateApiConfig(
     google::cloud::CompletionQueue& cq,
@@ -249,6 +333,18 @@ DefaultApiGatewayServiceStub::AsyncUpdateApiConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultApiGatewayServiceStub::UpdateApiConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateApiConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncDeleteApiConfig(
     google::cloud::CompletionQueue& cq,
@@ -266,6 +362,18 @@ DefaultApiGatewayServiceStub::AsyncDeleteApiConfig(
         return grpc_stub_->AsyncDeleteApiConfig(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultApiGatewayServiceStub::DeleteApiConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteApiConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -74,6 +74,18 @@ DefaultCloudRedisClusterStub::AsyncUpdateCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::UpdateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisClusterStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +105,18 @@ DefaultCloudRedisClusterStub::AsyncDeleteCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::DeleteCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisClusterStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +134,18 @@ DefaultCloudRedisClusterStub::AsyncCreateCluster(
         return grpc_stub_->AsyncCreateCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::CreateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>

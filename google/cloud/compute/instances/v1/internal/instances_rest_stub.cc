@@ -82,6 +82,24 @@ DefaultInstancesRestStub::AsyncAddAccessConfig(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::AddAccessConfig(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.access_config_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "addAccessConfig"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("network_interface", request.network_interface()),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncAddResourcePolicies(
     CompletionQueue& cq,
@@ -117,6 +135,24 @@ DefaultInstancesRestStub::AsyncAddResourcePolicies(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::AddResourcePolicies(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        AddResourcePoliciesRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instances_add_resource_policies_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "addResourcePolicies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
@@ -182,6 +218,24 @@ DefaultInstancesRestStub::AsyncAttachDisk(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::AttachDisk(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.attached_disk_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "attachDisk"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("force_attach", request.force_attach() ? "1" : "0"),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncBulkInsert(
     CompletionQueue& cq,
@@ -217,6 +271,22 @@ DefaultInstancesRestStub::AsyncBulkInsert(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::BulkInsert(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.bulk_insert_instance_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", "bulkInsert"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncDeleteInstance(
     CompletionQueue& cq,
@@ -249,6 +319,22 @@ DefaultInstancesRestStub::AsyncDeleteInstance(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::DeleteInstance(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -289,6 +375,25 @@ DefaultInstancesRestStub::AsyncDeleteAccessConfig(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::DeleteAccessConfig(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "deleteAccessConfig"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("access_config", request.access_config()),
+           std::make_pair("network_interface", request.network_interface()),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncDetachDisk(
     CompletionQueue& cq,
@@ -322,6 +427,24 @@ DefaultInstancesRestStub::AsyncDetachDisk(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::DetachDisk(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "detachDisk"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("device_name", request.device_name()),
+           std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Instance>
@@ -479,6 +602,26 @@ DefaultInstancesRestStub::AsyncInsertInstance(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::InsertInstance(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.instance_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("source_instance_template",
+                          request.source_instance_template()),
+           std::make_pair("source_machine_image",
+                          request.source_machine_image())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceList>
 DefaultInstancesRestStub::ListInstances(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -558,6 +701,23 @@ DefaultInstancesRestStub::AsyncPerformMaintenance(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::PerformMaintenance(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "performMaintenance"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncRemoveResourcePolicies(
     CompletionQueue& cq,
@@ -595,6 +755,24 @@ DefaultInstancesRestStub::AsyncRemoveResourcePolicies(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::RemoveResourcePolicies(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        RemoveResourcePoliciesRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instances_remove_resource_policies_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "removeResourcePolicies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncReset(
     CompletionQueue& cq,
@@ -628,6 +806,22 @@ DefaultInstancesRestStub::AsyncReset(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::Reset(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "reset"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncResume(
     CompletionQueue& cq,
@@ -659,6 +853,22 @@ DefaultInstancesRestStub::AsyncResume(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::Resume(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "resume"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
@@ -712,6 +922,25 @@ DefaultInstancesRestStub::AsyncSetDeletionProtection(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetDeletionProtection(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        SetDeletionProtectionRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.resource(),
+                   "/", "setDeletionProtection"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("deletion_protection",
+                          request.deletion_protection() ? "1" : "0"),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
     CompletionQueue& cq,
@@ -747,6 +976,25 @@ DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetDiskAutoDelete(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setDiskAutoDelete"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("auto_delete", request.auto_delete() ? "1" : "0"),
+           std::make_pair("device_name", request.device_name()),
+           std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -800,6 +1048,24 @@ DefaultInstancesRestStub::AsyncSetLabels(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetLabels(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.instances_set_labels_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setLabels"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncSetMachineResources(
     CompletionQueue& cq,
@@ -837,6 +1103,24 @@ DefaultInstancesRestStub::AsyncSetMachineResources(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetMachineResources(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        SetMachineResourcesRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instances_set_machine_resources_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setMachineResources"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncSetMachineType(
     CompletionQueue& cq,
@@ -872,6 +1156,24 @@ DefaultInstancesRestStub::AsyncSetMachineType(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetMachineType(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instances_set_machine_type_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setMachineType"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncSetMetadata(
     CompletionQueue& cq,
@@ -904,6 +1206,23 @@ DefaultInstancesRestStub::AsyncSetMetadata(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetMetadata(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.metadata_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setMetadata"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -942,6 +1261,24 @@ DefaultInstancesRestStub::AsyncSetMinCpuPlatform(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetMinCpuPlatform(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instances_set_min_cpu_platform_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setMinCpuPlatform"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncSetName(
     CompletionQueue& cq,
@@ -976,6 +1313,23 @@ DefaultInstancesRestStub::AsyncSetName(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetName(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.instances_set_name_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setName"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncSetScheduling(
     CompletionQueue& cq,
@@ -1008,6 +1362,23 @@ DefaultInstancesRestStub::AsyncSetScheduling(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetScheduling(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.scheduling_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setScheduling"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1045,6 +1416,24 @@ DefaultInstancesRestStub::AsyncSetSecurityPolicy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetSecurityPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instances_set_security_policy_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setSecurityPolicy"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncSetServiceAccount(
     CompletionQueue& cq,
@@ -1078,6 +1467,24 @@ DefaultInstancesRestStub::AsyncSetServiceAccount(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetServiceAccount(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instances_set_service_account_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setServiceAccount"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1116,6 +1523,24 @@ DefaultInstancesRestStub::AsyncSetShieldedInstanceIntegrityPolicy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetShieldedInstanceIntegrityPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        SetShieldedInstanceIntegrityPolicyRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.shielded_instance_integrity_policy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setShieldedInstanceIntegrityPolicy"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncSetTags(
     CompletionQueue& cq,
@@ -1147,6 +1572,22 @@ DefaultInstancesRestStub::AsyncSetTags(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SetTags(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.tags_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "setTags"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1187,6 +1628,25 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::SimulateMaintenanceEvent(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        SimulateMaintenanceEventRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "simulateMaintenanceEvent"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("with_extended_notifications",
+                          request.with_extended_notifications() ? "1" : "0")}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncStart(
     CompletionQueue& cq,
@@ -1218,6 +1678,22 @@ DefaultInstancesRestStub::AsyncStart(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::Start(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "start"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1257,6 +1733,24 @@ DefaultInstancesRestStub::AsyncStartWithEncryptionKey(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::StartWithEncryptionKey(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        StartWithEncryptionKeyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instances_start_with_encryption_key_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "startWithEncryptionKey"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncStop(
     CompletionQueue& cq,
@@ -1292,6 +1786,24 @@ DefaultInstancesRestStub::AsyncStop(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::Stop(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "stop"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("discard_local_ssd",
+                          request.discard_local_ssd() ? "1" : "0"),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncSuspend(
     CompletionQueue& cq,
@@ -1325,6 +1837,24 @@ DefaultInstancesRestStub::AsyncSuspend(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::Suspend(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "suspend"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("discard_local_ssd",
+                          request.discard_local_ssd() ? "1" : "0"),
+           std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1381,6 +1911,25 @@ DefaultInstancesRestStub::AsyncUpdateInstance(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::UpdateInstance(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
+        request) {
+  return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.instance_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("minimal_action", request.minimal_action()),
+           std::make_pair("most_disruptive_allowed_action",
+                          request.most_disruptive_allowed_action()),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncUpdateAccessConfig(
     CompletionQueue& cq,
@@ -1419,6 +1968,24 @@ DefaultInstancesRestStub::AsyncUpdateAccessConfig(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::UpdateAccessConfig(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.access_config_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "updateAccessConfig"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("network_interface", request.network_interface()),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncUpdateDisplayDevice(
     CompletionQueue& cq,
@@ -1453,6 +2020,23 @@ DefaultInstancesRestStub::AsyncUpdateDisplayDevice(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::UpdateDisplayDevice(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        UpdateDisplayDeviceRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.display_device_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "updateDisplayDevice"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1493,6 +2077,24 @@ DefaultInstancesRestStub::AsyncUpdateNetworkInterface(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::UpdateNetworkInterface(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        UpdateNetworkInterfaceRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.network_interface_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "updateNetworkInterface"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("network_interface", request.network_interface()),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncUpdateShieldedInstanceConfig(
     CompletionQueue& cq,
@@ -1527,6 +2129,24 @@ DefaultInstancesRestStub::AsyncUpdateShieldedInstanceConfig(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::UpdateShieldedInstanceConfig(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        UpdateShieldedInstanceConfigRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.shielded_instance_config_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "updateShieldedInstanceConfig"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

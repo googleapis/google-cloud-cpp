@@ -83,6 +83,20 @@ MetricsScopesLogging::AsyncCreateMonitoredProject(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MetricsScopesLogging::CreateMonitoredProject(
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::metricsscope::v1::
+                 CreateMonitoredProjectRequest const& request) {
+        return child_->CreateMonitoredProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesLogging::AsyncDeleteMonitoredProject(
     google::cloud::CompletionQueue& cq,
@@ -101,6 +115,20 @@ MetricsScopesLogging::AsyncDeleteMonitoredProject(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+MetricsScopesLogging::DeleteMonitoredProject(
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::metricsscope::v1::
+                 DeleteMonitoredProjectRequest const& request) {
+        return child_->DeleteMonitoredProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

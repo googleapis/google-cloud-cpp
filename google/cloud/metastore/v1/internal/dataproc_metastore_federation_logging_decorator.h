@@ -57,6 +57,11 @@ class DataprocMetastoreFederationLogging
       google::cloud::metastore::v1::CreateFederationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateFederation(
+      grpc::ClientContext& context, Options options,
+      google::cloud::metastore::v1::CreateFederationRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFederation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -64,10 +69,20 @@ class DataprocMetastoreFederationLogging
       google::cloud::metastore::v1::UpdateFederationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateFederation(
+      grpc::ClientContext& context, Options options,
+      google::cloud::metastore::v1::UpdateFederationRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFederation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::metastore::v1::DeleteFederationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFederation(
+      grpc::ClientContext& context, Options options,
       google::cloud::metastore::v1::DeleteFederationRequest const& request)
       override;
 

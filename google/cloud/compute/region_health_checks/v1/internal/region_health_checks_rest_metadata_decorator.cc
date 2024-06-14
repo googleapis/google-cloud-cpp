@@ -52,6 +52,15 @@ RegionHealthChecksRestMetadata::AsyncDeleteHealthCheck(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthChecksRestMetadata::DeleteHealthCheck(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_checks::v1::
+        DeleteHealthCheckRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteHealthCheck(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
 RegionHealthChecksRestMetadata::GetHealthCheck(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -71,6 +80,15 @@ RegionHealthChecksRestMetadata::AsyncInsertHealthCheck(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertHealthCheck(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthChecksRestMetadata::InsertHealthCheck(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_checks::v1::
+        InsertHealthCheckRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertHealthCheck(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckList>
@@ -94,6 +112,15 @@ RegionHealthChecksRestMetadata::AsyncPatchHealthCheck(
                                        std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthChecksRestMetadata::PatchHealthCheck(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_checks::v1::
+        PatchHealthCheckRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchHealthCheck(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksRestMetadata::AsyncUpdateHealthCheck(
     CompletionQueue& cq,
@@ -104,6 +131,15 @@ RegionHealthChecksRestMetadata::AsyncUpdateHealthCheck(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateHealthCheck(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthChecksRestMetadata::UpdateHealthCheck(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_checks::v1::
+        UpdateHealthCheckRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateHealthCheck(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

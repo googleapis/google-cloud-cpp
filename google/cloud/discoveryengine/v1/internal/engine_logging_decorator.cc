@@ -52,6 +52,18 @@ EngineServiceLogging::AsyncCreateEngine(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EngineServiceLogging::CreateEngine(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateEngineRequest const&
+                 request) {
+        return child_->CreateEngine(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EngineServiceLogging::AsyncDeleteEngine(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +81,18 @@ EngineServiceLogging::AsyncDeleteEngine(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EngineServiceLogging::DeleteEngine(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteEngineRequest const&
+                 request) {
+        return child_->DeleteEngine(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>

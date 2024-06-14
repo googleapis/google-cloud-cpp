@@ -81,6 +81,18 @@ BigtableTableAdminTracingStub::AsyncUpdateTable(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingStub::UpdateTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "UpdateTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateTable(context, options, request));
+}
+
 Status BigtableTableAdminTracingStub::DeleteTable(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
@@ -106,6 +118,18 @@ BigtableTableAdminTracingStub::AsyncUndeleteTable(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingStub::UndeleteTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "UndeleteTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UndeleteTable(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminTracingStub::AsyncCreateAuthorizedView(
     google::cloud::CompletionQueue& cq,
@@ -119,6 +143,18 @@ BigtableTableAdminTracingStub::AsyncCreateAuthorizedView(
   auto f = child_->AsyncCreateAuthorizedView(cq, context, std::move(options),
                                              request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingStub::CreateAuthorizedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CreateAuthorizedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateAuthorizedView(context, options, request));
 }
 
 StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
@@ -158,6 +194,18 @@ BigtableTableAdminTracingStub::AsyncUpdateAuthorizedView(
   auto f = child_->AsyncUpdateAuthorizedView(cq, context, std::move(options),
                                              request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingStub::UpdateAuthorizedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "UpdateAuthorizedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateAuthorizedView(context, options, request));
 }
 
 Status BigtableTableAdminTracingStub::DeleteAuthorizedView(
@@ -235,6 +283,18 @@ BigtableTableAdminTracingStub::AsyncCreateBackup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingStub::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CreateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateBackup(context, options, request));
+}
+
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminTracingStub::GetBackup(
     grpc::ClientContext& context, Options const& options,
@@ -296,6 +356,18 @@ BigtableTableAdminTracingStub::AsyncRestoreTable(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingStub::RestoreTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::RestoreTableRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "RestoreTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RestoreTable(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminTracingStub::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -308,6 +380,18 @@ BigtableTableAdminTracingStub::AsyncCopyBackup(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCopyBackup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingStub::CopyBackup(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CopyBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CopyBackup(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminTracingStub::GetIamPolicy(

@@ -106,6 +106,15 @@ LineageMetadata::AsyncDeleteProcess(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> LineageMetadata::DeleteProcess(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteProcess(context, options, request);
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageMetadata::CreateRun(
     grpc::ClientContext& context, Options const& options,
@@ -152,6 +161,14 @@ LineageMetadata::AsyncDeleteRun(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRun(cq, std::move(context), std::move(options),
                                 request);
+}
+
+StatusOr<google::longrunning::Operation> LineageMetadata::DeleteRun(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRun(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>

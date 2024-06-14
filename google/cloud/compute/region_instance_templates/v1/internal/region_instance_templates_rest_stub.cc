@@ -82,6 +82,23 @@ DefaultRegionInstanceTemplatesRestStub::AsyncDeleteInstanceTemplate(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionInstanceTemplatesRestStub::DeleteInstanceTemplate(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_instance_templates::v1::
+        DeleteInstanceTemplateRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "instanceTemplates", "/",
+                   request.instance_template()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
 DefaultRegionInstanceTemplatesRestStub::GetInstanceTemplate(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -130,6 +147,22 @@ DefaultRegionInstanceTemplatesRestStub::AsyncInsertInstanceTemplate(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionInstanceTemplatesRestStub::InsertInstanceTemplate(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_instance_templates::v1::
+        InsertInstanceTemplateRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.instance_template_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "instanceTemplates"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>

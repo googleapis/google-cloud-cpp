@@ -121,6 +121,20 @@ DefaultConversationProfilesStub::AsyncSetSuggestionFeatureConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultConversationProfilesStub::SetSuggestionFeatureConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->SetSuggestionFeatureConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationProfilesStub::AsyncClearSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
@@ -140,6 +154,20 @@ DefaultConversationProfilesStub::AsyncClearSuggestionFeatureConfig(
                                                              cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConversationProfilesStub::ClearSuggestionFeatureConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ClearSuggestionFeatureConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

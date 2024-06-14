@@ -125,6 +125,20 @@ CertificateAuthorityServiceLogging::AsyncActivateCertificateAuthority(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::ActivateCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        ActivateCertificateAuthorityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 ActivateCertificateAuthorityRequest const& request) {
+        return child_->ActivateCertificateAuthority(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceLogging::AsyncCreateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +157,20 @@ CertificateAuthorityServiceLogging::AsyncCreateCertificateAuthority(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::CreateCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        CreateCertificateAuthorityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 CreateCertificateAuthorityRequest const& request) {
+        return child_->CreateCertificateAuthority(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -165,6 +193,20 @@ CertificateAuthorityServiceLogging::AsyncDisableCertificateAuthority(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::DisableCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        DisableCertificateAuthorityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 DisableCertificateAuthorityRequest const& request) {
+        return child_->DisableCertificateAuthority(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceLogging::AsyncEnableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
@@ -183,6 +225,20 @@ CertificateAuthorityServiceLogging::AsyncEnableCertificateAuthority(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::EnableCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        EnableCertificateAuthorityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 EnableCertificateAuthorityRequest const& request) {
+        return child_->EnableCertificateAuthority(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::security::privateca::v1::
@@ -249,6 +305,20 @@ CertificateAuthorityServiceLogging::AsyncUndeleteCertificateAuthority(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::UndeleteCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UndeleteCertificateAuthorityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 UndeleteCertificateAuthorityRequest const& request) {
+        return child_->UndeleteCertificateAuthority(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceLogging::AsyncDeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
@@ -267,6 +337,20 @@ CertificateAuthorityServiceLogging::AsyncDeleteCertificateAuthority(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::DeleteCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        DeleteCertificateAuthorityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 DeleteCertificateAuthorityRequest const& request) {
+        return child_->DeleteCertificateAuthority(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -289,6 +373,20 @@ CertificateAuthorityServiceLogging::AsyncUpdateCertificateAuthority(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::UpdateCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UpdateCertificateAuthorityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 UpdateCertificateAuthorityRequest const& request) {
+        return child_->UpdateCertificateAuthority(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceLogging::AsyncCreateCaPool(
     google::cloud::CompletionQueue& cq,
@@ -309,6 +407,20 @@ CertificateAuthorityServiceLogging::AsyncCreateCaPool(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::CreateCaPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::CreateCaPoolRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::CreateCaPoolRequest const&
+                 request) {
+        return child_->CreateCaPool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceLogging::AsyncUpdateCaPool(
     google::cloud::CompletionQueue& cq,
@@ -327,6 +439,20 @@ CertificateAuthorityServiceLogging::AsyncUpdateCaPool(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::UpdateCaPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
+                 request) {
+        return child_->UpdateCaPool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
@@ -373,6 +499,20 @@ CertificateAuthorityServiceLogging::AsyncDeleteCaPool(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::DeleteCaPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
+                 request) {
+        return child_->DeleteCaPool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
@@ -439,6 +579,21 @@ CertificateAuthorityServiceLogging::AsyncUpdateCertificateRevocationList(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::UpdateCertificateRevocationList(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UpdateCertificateRevocationListRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 UpdateCertificateRevocationListRequest const& request) {
+        return child_->UpdateCertificateRevocationList(context, options,
+                                                       request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceLogging::AsyncCreateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
@@ -459,6 +614,20 @@ CertificateAuthorityServiceLogging::AsyncCreateCertificateTemplate(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::CreateCertificateTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        CreateCertificateTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 CreateCertificateTemplateRequest const& request) {
+        return child_->CreateCertificateTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceLogging::AsyncDeleteCertificateTemplate(
     google::cloud::CompletionQueue& cq,
@@ -477,6 +646,20 @@ CertificateAuthorityServiceLogging::AsyncDeleteCertificateTemplate(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::DeleteCertificateTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        DeleteCertificateTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 DeleteCertificateTemplateRequest const& request) {
+        return child_->DeleteCertificateTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -526,6 +709,20 @@ CertificateAuthorityServiceLogging::AsyncUpdateCertificateTemplate(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceLogging::UpdateCertificateTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UpdateCertificateTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::privateca::v1::
+                 UpdateCertificateTemplateRequest const& request) {
+        return child_->UpdateCertificateTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

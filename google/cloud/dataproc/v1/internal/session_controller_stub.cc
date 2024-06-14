@@ -49,6 +49,18 @@ DefaultSessionControllerStub::AsyncCreateSession(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSessionControllerStub::CreateSession(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dataproc::v1::Session>
 DefaultSessionControllerStub::GetSession(
     grpc::ClientContext& context, Options const&,
@@ -92,6 +104,18 @@ DefaultSessionControllerStub::AsyncTerminateSession(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSessionControllerStub::TerminateSession(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->TerminateSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSessionControllerStub::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +132,18 @@ DefaultSessionControllerStub::AsyncDeleteSession(
         return grpc_stub_->AsyncDeleteSession(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSessionControllerStub::DeleteSession(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

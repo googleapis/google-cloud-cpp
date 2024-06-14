@@ -68,6 +68,14 @@ ConfigServiceV2Auth::AsyncCreateBucketAsync(
       });
 }
 
+StatusOr<google::longrunning::Operation> ConfigServiceV2Auth::CreateBucketAsync(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CreateBucketRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBucketAsync(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Auth::AsyncUpdateBucketAsync(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +94,14 @@ ConfigServiceV2Auth::AsyncUpdateBucketAsync(
         return child->AsyncUpdateBucketAsync(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Auth::UpdateBucketAsync(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::UpdateBucketRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBucketAsync(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Auth::CreateBucket(
@@ -220,6 +236,14 @@ ConfigServiceV2Auth::AsyncCreateLink(
       });
 }
 
+StatusOr<google::longrunning::Operation> ConfigServiceV2Auth::CreateLink(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CreateLinkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateLink(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Auth::AsyncDeleteLink(
     google::cloud::CompletionQueue& cq,
@@ -238,6 +262,14 @@ ConfigServiceV2Auth::AsyncDeleteLink(
         return child->AsyncDeleteLink(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Auth::DeleteLink(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::DeleteLinkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteLink(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListLinksResponse> ConfigServiceV2Auth::ListLinks(
@@ -351,6 +383,14 @@ ConfigServiceV2Auth::AsyncCopyLogEntries(
         return child->AsyncCopyLogEntries(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Auth::CopyLogEntries(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CopyLogEntriesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CopyLogEntries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

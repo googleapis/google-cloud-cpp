@@ -61,6 +61,13 @@ SpeechMetadata::AsyncLongRunningRecognize(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechMetadata::LongRunningRecognize(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+  SetMetadata(context, options);
+  return child_->LongRunningRecognize(context, options, request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>

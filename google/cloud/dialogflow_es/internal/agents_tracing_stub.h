@@ -60,10 +60,19 @@ class AgentsTracingStub : public AgentsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> TrainAgent(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportAgent(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::ExportAgentRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportAgent(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::ExportAgentRequest const& request)
       override;
 
@@ -74,10 +83,20 @@ class AgentsTracingStub : public AgentsStub {
       google::cloud::dialogflow::v2::ImportAgentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ImportAgent(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreAgent(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RestoreAgent(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request)
       override;
 

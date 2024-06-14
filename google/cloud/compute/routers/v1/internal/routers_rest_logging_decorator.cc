@@ -69,6 +69,21 @@ RoutersRestLogging::AsyncDeleteRouter(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestLogging::DeleteRouter(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+              request) {
+        return child_->DeleteRouter(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Router> RoutersRestLogging::GetRouter(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
@@ -145,6 +160,21 @@ RoutersRestLogging::AsyncInsertRouter(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestLogging::InsertRouter(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+              request) {
+        return child_->InsertRouter(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
 RoutersRestLogging::ListRouters(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -179,6 +209,20 @@ RoutersRestLogging::AsyncPatchRouter(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestLogging::PatchRouter(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+                 request) {
+        return child_->PatchRouter(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
 RoutersRestLogging::Preview(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -211,6 +255,21 @@ RoutersRestLogging::AsyncUpdateRouter(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestLogging::UpdateRouter(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+              request) {
+        return child_->UpdateRouter(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

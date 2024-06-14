@@ -49,6 +49,17 @@ DefaultIndexServiceStub::AsyncCreateIndex(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultIndexServiceStub::CreateIndex(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::Index>
 DefaultIndexServiceStub::GetIndex(
     grpc::ClientContext& context, Options const&,
@@ -91,6 +102,17 @@ DefaultIndexServiceStub::AsyncUpdateIndex(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultIndexServiceStub::UpdateIndex(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexServiceStub::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +129,17 @@ DefaultIndexServiceStub::AsyncDeleteIndex(
         return grpc_stub_->AsyncDeleteIndex(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultIndexServiceStub::DeleteIndex(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>

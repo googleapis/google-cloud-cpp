@@ -50,6 +50,18 @@ DefaultSecurityCenterStub::AsyncBulkMuteFindings(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSecurityCenterStub::BulkMuteFindings(
+    grpc::ClientContext& context, Options,
+    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BulkMuteFindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 DefaultSecurityCenterStub::CreateSecurityHealthAnalyticsCustomModule(
     grpc::ClientContext& context, Options const&,
@@ -412,6 +424,19 @@ DefaultSecurityCenterStub::AsyncRunAssetDiscovery(
         return grpc_stub_->AsyncRunAssetDiscovery(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecurityCenterStub::RunAssetDiscovery(
+    grpc::ClientContext& context, Options,
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunAssetDiscovery(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>

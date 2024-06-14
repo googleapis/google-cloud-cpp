@@ -54,6 +54,14 @@ BatchControllerMetadata::AsyncCreateBatch(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> BatchControllerMetadata::CreateBatch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBatch(context, options, request);
+}
+
 StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerMetadata::GetBatch(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {

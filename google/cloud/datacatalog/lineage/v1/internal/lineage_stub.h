@@ -76,6 +76,11 @@ class LineageStub {
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteProcess(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
       grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::CreateRunRequest const&
@@ -100,6 +105,11 @@ class LineageStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteRun(
+      grpc::ClientContext& context, Options options,
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
           request) = 0;
 
@@ -197,6 +207,11 @@ class DefaultLineageStub : public LineageStub {
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteProcess(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+          request) override;
+
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
       grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request)
@@ -221,6 +236,11 @@ class DefaultLineageStub : public LineageStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteRun(
+      grpc::ClientContext& context, Options options,
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request)
       override;
 

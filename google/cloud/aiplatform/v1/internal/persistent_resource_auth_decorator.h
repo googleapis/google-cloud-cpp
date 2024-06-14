@@ -47,6 +47,11 @@ class PersistentResourceServiceAuth : public PersistentResourceServiceStub {
       google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreatePersistentResource(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+          request) override;
+
   StatusOr<google::cloud::aiplatform::v1::PersistentResource>
   GetPersistentResource(
       grpc::ClientContext& context, Options const& options,
@@ -67,6 +72,11 @@ class PersistentResourceServiceAuth : public PersistentResourceServiceStub {
       google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeletePersistentResource(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdatePersistentResource(
       google::cloud::CompletionQueue& cq,
@@ -75,11 +85,21 @@ class PersistentResourceServiceAuth : public PersistentResourceServiceStub {
       google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdatePersistentResource(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncRebootPersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RebootPersistentResource(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
           request) override;
 

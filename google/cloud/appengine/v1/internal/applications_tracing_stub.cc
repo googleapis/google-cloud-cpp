@@ -58,6 +58,18 @@ ApplicationsTracingStub::AsyncCreateApplication(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ApplicationsTracingStub::CreateApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
+                                     "CreateApplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateApplication(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsTracingStub::AsyncUpdateApplication(
     google::cloud::CompletionQueue& cq,
@@ -73,6 +85,18 @@ ApplicationsTracingStub::AsyncUpdateApplication(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ApplicationsTracingStub::UpdateApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
+                                     "UpdateApplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateApplication(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsTracingStub::AsyncRepairApplication(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +110,18 @@ ApplicationsTracingStub::AsyncRepairApplication(
   auto f =
       child_->AsyncRepairApplication(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ApplicationsTracingStub::RepairApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::RepairApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
+                                     "RepairApplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RepairApplication(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

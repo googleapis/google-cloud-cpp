@@ -68,6 +68,20 @@ SnapshotSettingsRestLogging::AsyncPatchSnapshotSettings(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotSettingsRestLogging::PatchSnapshotSettings(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        PatchSnapshotSettingsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::snapshot_settings::v1::
+                 PatchSnapshotSettingsRequest const& request) {
+        return child_->PatchSnapshotSettings(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

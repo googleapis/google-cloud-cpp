@@ -48,6 +48,10 @@ class GoldenThingAdminRestStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
+
   virtual StatusOr<google::test::admin::database::v1::Database> GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
@@ -57,6 +61,10 @@ class GoldenThingAdminRestStub {
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
 
   virtual Status DropDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -84,6 +92,10 @@ class GoldenThingAdminRestStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateBackup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
+
   virtual StatusOr<google::test::admin::database::v1::Backup> GetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::test::admin::database::v1::GetBackupRequest const& request) = 0;
@@ -105,6 +117,10 @@ class GoldenThingAdminRestStub {
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> RestoreDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -159,6 +175,10 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
+
   StatusOr<google::test::admin::database::v1::Database> GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) override;
@@ -168,6 +188,10 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   Status DropDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -195,6 +219,10 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::test::admin::database::v1::CreateBackupRequest const& request) override;
+
   StatusOr<google::test::admin::database::v1::Backup> GetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::test::admin::database::v1::GetBackupRequest const& request) override;
@@ -216,6 +244,10 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
       google::cloud::rest_internal::RestContext& rest_context,

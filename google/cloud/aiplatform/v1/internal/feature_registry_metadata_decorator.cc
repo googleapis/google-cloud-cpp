@@ -54,6 +54,15 @@ FeatureRegistryServiceMetadata::AsyncCreateFeatureGroup(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceMetadata::CreateFeatureGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFeatureGroup(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
 FeatureRegistryServiceMetadata::GetFeatureGroup(
     grpc::ClientContext& context, Options const& options,
@@ -86,6 +95,17 @@ FeatureRegistryServiceMetadata::AsyncUpdateFeatureGroup(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceMetadata::UpdateFeatureGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("feature_group.name=",
+                   internal::UrlEncode(request.feature_group().name())));
+  return child_->UpdateFeatureGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceMetadata::AsyncDeleteFeatureGroup(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +118,15 @@ FeatureRegistryServiceMetadata::AsyncDeleteFeatureGroup(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceMetadata::DeleteFeatureGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFeatureGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceMetadata::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +137,15 @@ FeatureRegistryServiceMetadata::AsyncCreateFeature(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateFeature(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceMetadata::CreateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFeature(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
@@ -141,6 +179,16 @@ FeatureRegistryServiceMetadata::AsyncUpdateFeature(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceMetadata::UpdateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("feature.name=",
+                           internal::UrlEncode(request.feature().name())));
+  return child_->UpdateFeature(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceMetadata::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
@@ -151,6 +199,15 @@ FeatureRegistryServiceMetadata::AsyncDeleteFeature(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteFeature(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceMetadata::DeleteFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFeature(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

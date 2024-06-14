@@ -50,6 +50,18 @@ DefaultLivestreamServiceStub::AsyncCreateChannel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::CreateChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 DefaultLivestreamServiceStub::ListChannels(
     grpc::ClientContext& context, Options const&,
@@ -93,6 +105,18 @@ DefaultLivestreamServiceStub::AsyncDeleteChannel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::DeleteChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +134,18 @@ DefaultLivestreamServiceStub::AsyncUpdateChannel(
         return grpc_stub_->AsyncUpdateChannel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::UpdateChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -131,6 +167,18 @@ DefaultLivestreamServiceStub::AsyncStartChannel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::StartChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::StartChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncStopChannel(
     google::cloud::CompletionQueue& cq,
@@ -150,6 +198,18 @@ DefaultLivestreamServiceStub::AsyncStopChannel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::StopChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::StopChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +227,18 @@ DefaultLivestreamServiceStub::AsyncCreateInput(
         return grpc_stub_->AsyncCreateInput(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::CreateInput(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::CreateInputRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInput(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
@@ -212,6 +284,18 @@ DefaultLivestreamServiceStub::AsyncDeleteInput(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::DeleteInput(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInput(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncUpdateInput(
     google::cloud::CompletionQueue& cq,
@@ -229,6 +313,18 @@ DefaultLivestreamServiceStub::AsyncUpdateInput(
         return grpc_stub_->AsyncUpdateInput(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::UpdateInput(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInput(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
@@ -297,6 +393,18 @@ DefaultLivestreamServiceStub::AsyncCreateAsset(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::CreateAsset(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
@@ -314,6 +422,18 @@ DefaultLivestreamServiceStub::AsyncDeleteAsset(
         return grpc_stub_->AsyncDeleteAsset(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::DeleteAsset(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
@@ -369,6 +489,18 @@ DefaultLivestreamServiceStub::AsyncUpdatePool(
         return grpc_stub_->AsyncUpdatePool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::UpdatePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdatePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

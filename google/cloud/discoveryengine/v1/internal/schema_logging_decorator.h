@@ -56,6 +56,11 @@ class SchemaServiceLogging : public SchemaServiceStub {
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSchema(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSchema(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -63,10 +68,20 @@ class SchemaServiceLogging : public SchemaServiceStub {
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateSchema(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchema(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteSchema(
+      grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
       override;
 

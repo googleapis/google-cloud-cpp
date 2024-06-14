@@ -65,6 +65,16 @@ ContactCenterInsightsMetadata::AsyncUploadConversation(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::UploadConversation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->UploadConversation(context, options, request);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsMetadata::UpdateConversation(
     grpc::ClientContext& context, Options const& options,
@@ -118,6 +128,16 @@ ContactCenterInsightsMetadata::AsyncCreateAnalysis(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::CreateAnalysis(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAnalysis(context, options, request);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsMetadata::GetAnalysis(
     grpc::ClientContext& context, Options const& options,
@@ -160,6 +180,16 @@ ContactCenterInsightsMetadata::AsyncBulkAnalyzeConversations(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::BulkAnalyzeConversations(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BulkAnalyzeConversations(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncBulkDeleteConversations(
     google::cloud::CompletionQueue& cq,
@@ -171,6 +201,16 @@ ContactCenterInsightsMetadata::AsyncBulkDeleteConversations(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBulkDeleteConversations(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::BulkDeleteConversations(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BulkDeleteConversations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -186,6 +226,16 @@ ContactCenterInsightsMetadata::AsyncIngestConversations(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::IngestConversations(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->IngestConversations(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
@@ -199,6 +249,16 @@ ContactCenterInsightsMetadata::AsyncExportInsightsData(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::ExportInsightsData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ExportInsightsData(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncCreateIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -210,6 +270,16 @@ ContactCenterInsightsMetadata::AsyncCreateIssueModel(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateIssueModel(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::CreateIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -256,6 +326,16 @@ ContactCenterInsightsMetadata::AsyncDeleteIssueModel(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::DeleteIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteIssueModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncDeployIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -269,6 +349,16 @@ ContactCenterInsightsMetadata::AsyncDeployIssueModel(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::DeployIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeployIssueModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncUndeployIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -280,6 +370,16 @@ ContactCenterInsightsMetadata::AsyncUndeployIssueModel(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeployIssueModel(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::UndeployIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UndeployIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>

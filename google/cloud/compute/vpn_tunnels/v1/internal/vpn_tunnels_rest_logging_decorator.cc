@@ -68,6 +68,20 @@ VpnTunnelsRestLogging::AsyncDeleteVpnTunnel(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsRestLogging::DeleteVpnTunnel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::vpn_tunnels::v1::
+                 DeleteVpnTunnelRequest const& request) {
+        return child_->DeleteVpnTunnel(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
 VpnTunnelsRestLogging::GetVpnTunnel(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -100,6 +114,20 @@ VpnTunnelsRestLogging::AsyncInsertVpnTunnel(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsRestLogging::InsertVpnTunnel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::vpn_tunnels::v1::
+                 InsertVpnTunnelRequest const& request) {
+        return child_->InsertVpnTunnel(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList>
@@ -135,6 +163,21 @@ VpnTunnelsRestLogging::AsyncSetLabels(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsRestLogging::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+              request) {
+        return child_->SetLabels(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

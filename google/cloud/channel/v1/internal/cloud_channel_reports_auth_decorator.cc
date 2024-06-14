@@ -51,6 +51,15 @@ CloudChannelReportsServiceAuth::AsyncRunReportJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelReportsServiceAuth::RunReportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::RunReportJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunReportJob(context, options, request);
+}
+
 StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
 CloudChannelReportsServiceAuth::FetchReportResults(
     grpc::ClientContext& context, Options const& options,

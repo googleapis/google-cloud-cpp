@@ -50,6 +50,18 @@ DefaultIndexEndpointServiceStub::AsyncCreateIndexEndpoint(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultIndexEndpointServiceStub::CreateIndexEndpoint(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateIndexEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 DefaultIndexEndpointServiceStub::GetIndexEndpoint(
     grpc::ClientContext& context, Options const&,
@@ -105,6 +117,18 @@ DefaultIndexEndpointServiceStub::AsyncDeleteIndexEndpoint(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultIndexEndpointServiceStub::DeleteIndexEndpoint(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteIndexEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexEndpointServiceStub::AsyncDeployIndex(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +145,18 @@ DefaultIndexEndpointServiceStub::AsyncDeployIndex(
         return grpc_stub_->AsyncDeployIndex(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultIndexEndpointServiceStub::DeployIndex(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeployIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -141,6 +177,18 @@ DefaultIndexEndpointServiceStub::AsyncUndeployIndex(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultIndexEndpointServiceStub::UndeployIndex(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeployIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexEndpointServiceStub::AsyncMutateDeployedIndex(
     google::cloud::CompletionQueue& cq,
@@ -158,6 +206,18 @@ DefaultIndexEndpointServiceStub::AsyncMutateDeployedIndex(
         return grpc_stub_->AsyncMutateDeployedIndex(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultIndexEndpointServiceStub::MutateDeployedIndex(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MutateDeployedIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

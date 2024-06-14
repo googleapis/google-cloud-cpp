@@ -59,6 +59,15 @@ JobControllerAuth::AsyncSubmitJobAsOperation(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+JobControllerAuth::SubmitJobAsOperation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SubmitJobAsOperation(context, options, request);
+}
+
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerAuth::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetJobRequest const& request) {

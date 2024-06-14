@@ -54,6 +54,14 @@ SpeechMetadata::AsyncCreateRecognizer(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechMetadata::CreateRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateRecognizer(context, options, request);
+}
+
 StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
 SpeechMetadata::ListRecognizers(
     grpc::ClientContext& context, Options const& options,
@@ -84,6 +92,15 @@ SpeechMetadata::AsyncUpdateRecognizer(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechMetadata::UpdateRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("recognizer.name=",
+                           internal::UrlEncode(request.recognizer().name())));
+  return child_->UpdateRecognizer(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechMetadata::AsyncDeleteRecognizer(
     google::cloud::CompletionQueue& cq,
@@ -96,6 +113,14 @@ SpeechMetadata::AsyncDeleteRecognizer(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechMetadata::DeleteRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRecognizer(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechMetadata::AsyncUndeleteRecognizer(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +131,14 @@ SpeechMetadata::AsyncUndeleteRecognizer(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeleteRecognizer(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> SpeechMetadata::UndeleteRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UndeleteRecognizer(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse>
@@ -143,6 +176,15 @@ SpeechMetadata::AsyncBatchRecognize(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechMetadata::BatchRecognize(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("recognizer=", internal::UrlEncode(request.recognizer())));
+  return child_->BatchRecognize(context, options, request);
+}
+
 StatusOr<google::cloud::speech::v2::Config> SpeechMetadata::GetConfig(
     grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetConfigRequest const& request) {
@@ -170,6 +212,14 @@ SpeechMetadata::AsyncCreateCustomClass(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateCustomClass(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> SpeechMetadata::CreateCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCustomClass(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
@@ -202,6 +252,15 @@ SpeechMetadata::AsyncUpdateCustomClass(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechMetadata::UpdateCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("custom_class.name=",
+                           internal::UrlEncode(request.custom_class().name())));
+  return child_->UpdateCustomClass(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechMetadata::AsyncDeleteCustomClass(
     google::cloud::CompletionQueue& cq,
@@ -212,6 +271,14 @@ SpeechMetadata::AsyncDeleteCustomClass(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCustomClass(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> SpeechMetadata::DeleteCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCustomClass(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -226,6 +293,14 @@ SpeechMetadata::AsyncUndeleteCustomClass(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechMetadata::UndeleteCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UndeleteCustomClass(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechMetadata::AsyncCreatePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -236,6 +311,14 @@ SpeechMetadata::AsyncCreatePhraseSet(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreatePhraseSet(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> SpeechMetadata::CreatePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreatePhraseSet(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
@@ -268,6 +351,15 @@ SpeechMetadata::AsyncUpdatePhraseSet(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechMetadata::UpdatePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("phrase_set.name=",
+                           internal::UrlEncode(request.phrase_set().name())));
+  return child_->UpdatePhraseSet(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechMetadata::AsyncDeletePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -280,6 +372,14 @@ SpeechMetadata::AsyncDeletePhraseSet(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechMetadata::DeletePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeletePhraseSet(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechMetadata::AsyncUndeletePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -290,6 +390,14 @@ SpeechMetadata::AsyncUndeletePhraseSet(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeletePhraseSet(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> SpeechMetadata::UndeletePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UndeletePhraseSet(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

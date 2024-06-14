@@ -86,6 +86,17 @@ DefaultJobServiceStub::AsyncDeleteCustomJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultJobServiceStub::DeleteCustomJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCustomJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultJobServiceStub::CancelCustomJob(
     grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
@@ -152,6 +163,19 @@ DefaultJobServiceStub::AsyncDeleteDataLabelingJob(
         return grpc_stub_->AsyncDeleteDataLabelingJob(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultJobServiceStub::DeleteDataLabelingJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataLabelingJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultJobServiceStub::CancelDataLabelingJob(
@@ -229,6 +253,20 @@ DefaultJobServiceStub::AsyncDeleteHyperparameterTuningJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultJobServiceStub::DeleteHyperparameterTuningJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteHyperparameterTuningJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultJobServiceStub::CancelHyperparameterTuningJob(
     grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
@@ -294,6 +332,17 @@ DefaultJobServiceStub::AsyncDeleteNasJob(
         return grpc_stub_->AsyncDeleteNasJob(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultJobServiceStub::DeleteNasJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteNasJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultJobServiceStub::CancelNasJob(
@@ -393,6 +442,20 @@ DefaultJobServiceStub::AsyncDeleteBatchPredictionJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultJobServiceStub::DeleteBatchPredictionJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteBatchPredictionJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultJobServiceStub::CancelBatchPredictionJob(
     grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
@@ -487,6 +550,20 @@ DefaultJobServiceStub::AsyncUpdateModelDeploymentMonitoringJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultJobServiceStub::UpdateModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::
+        UpdateModelDeploymentMonitoringJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateModelDeploymentMonitoringJob(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteModelDeploymentMonitoringJob(
     google::cloud::CompletionQueue& cq,
@@ -506,6 +583,20 @@ DefaultJobServiceStub::AsyncDeleteModelDeploymentMonitoringJob(
                                                                    request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultJobServiceStub::DeleteModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::
+        DeleteModelDeploymentMonitoringJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteModelDeploymentMonitoringJob(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultJobServiceStub::PauseModelDeploymentMonitoringJob(

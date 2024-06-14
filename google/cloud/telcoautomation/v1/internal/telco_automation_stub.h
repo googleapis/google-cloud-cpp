@@ -59,11 +59,21 @@ class TelcoAutomationStub {
       google::cloud::telcoautomation::v1::
           CreateOrchestrationClusterRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::telcoautomation::v1::
+          CreateOrchestrationClusterRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteOrchestrationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::telcoautomation::v1::
+          DeleteOrchestrationClusterRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::telcoautomation::v1::
           DeleteOrchestrationClusterRequest const& request) = 0;
 
@@ -83,10 +93,20 @@ class TelcoAutomationStub {
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateEdgeSlm(
+      grpc::ClientContext& context, Options options,
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEdgeSlm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
+      grpc::ClientContext& context, Options options,
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
           request) = 0;
 
@@ -307,11 +327,21 @@ class DefaultTelcoAutomationStub : public TelcoAutomationStub {
       google::cloud::telcoautomation::v1::
           CreateOrchestrationClusterRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::telcoautomation::v1::
+          CreateOrchestrationClusterRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteOrchestrationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::telcoautomation::v1::
+          DeleteOrchestrationClusterRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::telcoautomation::v1::
           DeleteOrchestrationClusterRequest const& request) override;
 
@@ -332,10 +362,20 @@ class DefaultTelcoAutomationStub : public TelcoAutomationStub {
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateEdgeSlm(
+      grpc::ClientContext& context, Options options,
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEdgeSlm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
+      grpc::ClientContext& context, Options options,
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request)
       override;
 

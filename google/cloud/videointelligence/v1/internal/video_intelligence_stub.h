@@ -45,6 +45,11 @@ class VideoIntelligenceServiceStub {
       google::cloud::videointelligence::v1::AnnotateVideoRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> AnnotateVideo(
+      grpc::ClientContext& context, Options options,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -73,6 +78,11 @@ class DefaultVideoIntelligenceServiceStub
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> AnnotateVideo(
+      grpc::ClientContext& context, Options options,
       google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
       override;
 

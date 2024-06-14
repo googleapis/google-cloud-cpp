@@ -69,10 +69,20 @@ class AgentsTracingStub : public AgentsStub {
       google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ExportAgent(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreAgent(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RestoreAgent(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request)
       override;
 

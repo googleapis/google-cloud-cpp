@@ -72,6 +72,15 @@ BackupDRMetadata::AsyncCreateManagementServer(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::CreateManagementServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateManagementServer(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupDRMetadata::AsyncDeleteManagementServer(
     google::cloud::CompletionQueue& cq,
@@ -82,6 +91,15 @@ BackupDRMetadata::AsyncDeleteManagementServer(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteManagementServer(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::DeleteManagementServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteManagementServer(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

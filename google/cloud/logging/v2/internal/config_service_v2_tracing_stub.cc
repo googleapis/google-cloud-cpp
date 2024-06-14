@@ -69,6 +69,18 @@ ConfigServiceV2TracingStub::AsyncCreateBucketAsync(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2TracingStub::CreateBucketAsync(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CreateBucketRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
+                                     "CreateBucketAsync");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateBucketAsync(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2TracingStub::AsyncUpdateBucketAsync(
     google::cloud::CompletionQueue& cq,
@@ -82,6 +94,18 @@ ConfigServiceV2TracingStub::AsyncUpdateBucketAsync(
   auto f =
       child_->AsyncUpdateBucketAsync(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2TracingStub::UpdateBucketAsync(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::UpdateBucketRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
+                                     "UpdateBucketAsync");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateBucketAsync(context, options, request));
 }
 
 StatusOr<google::logging::v2::LogBucket>
@@ -256,6 +280,17 @@ ConfigServiceV2TracingStub::AsyncCreateLink(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ConfigServiceV2TracingStub::CreateLink(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CreateLinkRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "CreateLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateLink(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2TracingStub::AsyncDeleteLink(
     google::cloud::CompletionQueue& cq,
@@ -268,6 +303,17 @@ ConfigServiceV2TracingStub::AsyncDeleteLink(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteLink(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2TracingStub::DeleteLink(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::DeleteLinkRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "DeleteLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteLink(context, options, request));
 }
 
 StatusOr<google::logging::v2::ListLinksResponse>
@@ -412,6 +458,18 @@ ConfigServiceV2TracingStub::AsyncCopyLogEntries(
   auto f =
       child_->AsyncCopyLogEntries(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2TracingStub::CopyLogEntries(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CopyLogEntriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
+                                     "CopyLogEntries");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CopyLogEntries(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

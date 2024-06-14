@@ -54,6 +54,15 @@ SpecialistPoolServiceMetadata::AsyncCreateSpecialistPool(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceMetadata::CreateSpecialistPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSpecialistPool(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceMetadata::GetSpecialistPool(
     grpc::ClientContext& context, Options const& options,
@@ -84,6 +93,15 @@ SpecialistPoolServiceMetadata::AsyncDeleteSpecialistPool(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceMetadata::DeleteSpecialistPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSpecialistPool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpecialistPoolServiceMetadata::AsyncUpdateSpecialistPool(
     google::cloud::CompletionQueue& cq,
@@ -96,6 +114,17 @@ SpecialistPoolServiceMetadata::AsyncUpdateSpecialistPool(
                    internal::UrlEncode(request.specialist_pool().name())));
   return child_->AsyncUpdateSpecialistPool(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceMetadata::UpdateSpecialistPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("specialist_pool.name=",
+                   internal::UrlEncode(request.specialist_pool().name())));
+  return child_->UpdateSpecialistPool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

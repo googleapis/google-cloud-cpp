@@ -67,6 +67,20 @@ ContactCenterInsightsLogging::AsyncUploadConversation(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::UploadConversation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 UploadConversationRequest const& request) {
+        return child_->UploadConversation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsLogging::UpdateConversation(
     grpc::ClientContext& context, Options const& options,
@@ -143,6 +157,21 @@ ContactCenterInsightsLogging::AsyncCreateAnalysis(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::CreateAnalysis(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+              request) {
+        return child_->CreateAnalysis(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsLogging::GetAnalysis(
     grpc::ClientContext& context, Options const& options,
@@ -206,6 +235,20 @@ ContactCenterInsightsLogging::AsyncBulkAnalyzeConversations(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::BulkAnalyzeConversations(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 BulkAnalyzeConversationsRequest const& request) {
+        return child_->BulkAnalyzeConversations(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncBulkDeleteConversations(
     google::cloud::CompletionQueue& cq,
@@ -224,6 +267,20 @@ ContactCenterInsightsLogging::AsyncBulkDeleteConversations(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::BulkDeleteConversations(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 BulkDeleteConversationsRequest const& request) {
+        return child_->BulkDeleteConversations(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -246,6 +303,20 @@ ContactCenterInsightsLogging::AsyncIngestConversations(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::IngestConversations(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 IngestConversationsRequest const& request) {
+        return child_->IngestConversations(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
@@ -266,6 +337,20 @@ ContactCenterInsightsLogging::AsyncExportInsightsData(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::ExportInsightsData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 ExportInsightsDataRequest const& request) {
+        return child_->ExportInsightsData(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncCreateIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -284,6 +369,20 @@ ContactCenterInsightsLogging::AsyncCreateIssueModel(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::CreateIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 CreateIssueModelRequest const& request) {
+        return child_->CreateIssueModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -349,6 +448,20 @@ ContactCenterInsightsLogging::AsyncDeleteIssueModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::DeleteIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 DeleteIssueModelRequest const& request) {
+        return child_->DeleteIssueModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncDeployIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -369,6 +482,20 @@ ContactCenterInsightsLogging::AsyncDeployIssueModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::DeployIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 DeployIssueModelRequest const& request) {
+        return child_->DeployIssueModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncUndeployIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -387,6 +514,20 @@ ContactCenterInsightsLogging::AsyncUndeployIssueModel(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsLogging::UndeployIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 UndeployIssueModelRequest const& request) {
+        return child_->UndeployIssueModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>

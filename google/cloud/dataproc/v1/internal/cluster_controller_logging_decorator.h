@@ -46,10 +46,20 @@ class ClusterControllerLogging : public ClusterControllerStub {
       google::cloud::dataproc::v1::CreateClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::CreateClusterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataproc::v1::UpdateClusterRequest const& request)
       override;
 
@@ -59,16 +69,29 @@ class ClusterControllerLogging : public ClusterControllerStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::StopClusterRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> StopCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::StopClusterRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStartCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::StartClusterRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> StartCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::StartClusterRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataproc::v1::DeleteClusterRequest const& request)
       override;
 
@@ -84,6 +107,11 @@ class ClusterControllerLogging : public ClusterControllerStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DiagnoseCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request)
       override;
 

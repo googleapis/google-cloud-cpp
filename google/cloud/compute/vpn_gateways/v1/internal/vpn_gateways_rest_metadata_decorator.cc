@@ -59,6 +59,15 @@ VpnGatewaysRestMetadata::AsyncDeleteVpnGateway(
                                        std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnGatewaysRestMetadata::DeleteVpnGateway(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::
+        DeleteVpnGatewayRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteVpnGateway(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
 VpnGatewaysRestMetadata::GetVpnGateway(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -89,6 +98,15 @@ VpnGatewaysRestMetadata::AsyncInsertVpnGateway(
                                        std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnGatewaysRestMetadata::InsertVpnGateway(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::
+        InsertVpnGatewayRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertVpnGateway(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayList>
 VpnGatewaysRestMetadata::ListVpnGateways(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -108,6 +126,15 @@ VpnGatewaysRestMetadata::AsyncSetLabels(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnGatewaysRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

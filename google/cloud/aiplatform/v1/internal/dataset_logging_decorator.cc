@@ -52,6 +52,18 @@ DatasetServiceLogging::AsyncCreateDataset(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceLogging::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+        return child_->CreateDataset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceLogging::GetDataset(
     grpc::ClientContext& context, Options const& options,
@@ -109,6 +121,18 @@ DatasetServiceLogging::AsyncDeleteDataset(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceLogging::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+        return child_->DeleteDataset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncImportData(
     google::cloud::CompletionQueue& cq,
@@ -125,6 +149,17 @@ DatasetServiceLogging::AsyncImportData(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DatasetServiceLogging::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ImportDataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ImportDataRequest const& request) {
+        return child_->ImportData(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -145,6 +180,17 @@ DatasetServiceLogging::AsyncExportData(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceLogging::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportDataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ExportDataRequest const& request) {
+        return child_->ExportData(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncCreateDatasetVersion(
     google::cloud::CompletionQueue& cq,
@@ -162,6 +208,19 @@ DatasetServiceLogging::AsyncCreateDatasetVersion(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceLogging::CreateDatasetVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+                 request) {
+        return child_->CreateDatasetVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
@@ -194,6 +253,19 @@ DatasetServiceLogging::AsyncDeleteDatasetVersion(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceLogging::DeleteDatasetVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+                 request) {
+        return child_->DeleteDatasetVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
@@ -240,6 +312,20 @@ DatasetServiceLogging::AsyncRestoreDatasetVersion(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceLogging::RestoreDatasetVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+                 request) {
+        return child_->RestoreDatasetVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
@@ -298,6 +384,19 @@ DatasetServiceLogging::AsyncDeleteSavedQuery(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceLogging::DeleteSavedQuery(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
+                 request) {
+        return child_->DeleteSavedQuery(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>

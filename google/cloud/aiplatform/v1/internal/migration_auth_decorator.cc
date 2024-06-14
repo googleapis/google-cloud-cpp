@@ -62,6 +62,16 @@ MigrationServiceAuth::AsyncBatchMigrateResources(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationServiceAuth::BatchMigrateResources(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchMigrateResources(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

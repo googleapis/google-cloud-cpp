@@ -107,6 +107,23 @@ DefaultPacketMirroringsRestStub::AsyncDeletePacketMirroring(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultPacketMirroringsRestStub::DeletePacketMirroring(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        DeletePacketMirroringRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "packetMirrorings", "/",
+                   request.packet_mirroring()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
 DefaultPacketMirroringsRestStub::GetPacketMirroring(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -155,6 +172,22 @@ DefaultPacketMirroringsRestStub::AsyncInsertPacketMirroring(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultPacketMirroringsRestStub::InsertPacketMirroring(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        InsertPacketMirroringRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.packet_mirroring_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "packetMirrorings"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList>
@@ -213,6 +246,23 @@ DefaultPacketMirroringsRestStub::AsyncPatchPacketMirroring(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultPacketMirroringsRestStub::PatchPacketMirroring(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        PatchPacketMirroringRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.packet_mirroring_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "packetMirrorings", "/",
+                   request.packet_mirroring()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

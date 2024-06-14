@@ -113,6 +113,18 @@ AgentsLogging::AsyncExportAgent(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AgentsLogging::ExportAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::ExportAgentRequest const&
+                 request) {
+        return child_->ExportAgent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AgentsLogging::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
@@ -130,6 +142,18 @@ AgentsLogging::AsyncRestoreAgent(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AgentsLogging::RestoreAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&
+                 request) {
+        return child_->RestoreAgent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>

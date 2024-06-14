@@ -54,6 +54,14 @@ ModelServiceMetadata::AsyncUploadModel(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::UploadModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UploadModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->UploadModel(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceMetadata::GetModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelRequest const& request) {
@@ -103,6 +111,16 @@ ModelServiceMetadata::AsyncUpdateExplanationDataset(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceMetadata::UpdateExplanationDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("model=", internal::UrlEncode(request.model())));
+  return child_->UpdateExplanationDataset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
@@ -115,6 +133,14 @@ ModelServiceMetadata::AsyncDeleteModel(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncDeleteModelVersion(
     google::cloud::CompletionQueue& cq,
@@ -125,6 +151,15 @@ ModelServiceMetadata::AsyncDeleteModelVersion(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteModelVersion(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ModelServiceMetadata::DeleteModelVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteModelVersion(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
@@ -148,6 +183,14 @@ ModelServiceMetadata::AsyncExportModel(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::ExportModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncCopyModel(
     google::cloud::CompletionQueue& cq,
@@ -158,6 +201,14 @@ ModelServiceMetadata::AsyncCopyModel(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCopyModel(cq, std::move(context), std::move(options),
                                 request);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::CopyModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CopyModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CopyModel(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>

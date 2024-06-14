@@ -75,6 +75,18 @@ ConfigLogging::AsyncCreateDeployment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ConfigLogging::CreateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::CreateDeploymentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::CreateDeploymentRequest const& request) {
+        return child_->CreateDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncUpdateDeployment(
     google::cloud::CompletionQueue& cq,
@@ -94,6 +106,18 @@ ConfigLogging::AsyncUpdateDeployment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ConfigLogging::UpdateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UpdateDeploymentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::UpdateDeploymentRequest const& request) {
+        return child_->UpdateDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncDeleteDeployment(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +135,18 @@ ConfigLogging::AsyncDeleteDeployment(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ConfigLogging::DeleteDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeleteDeploymentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::DeleteDeploymentRequest const& request) {
+        return child_->DeleteDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
@@ -226,6 +262,17 @@ ConfigLogging::AsyncLockDeployment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ConfigLogging::LockDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::LockDeploymentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::LockDeploymentRequest const& request) {
+        return child_->LockDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncUnlockDeployment(
     google::cloud::CompletionQueue& cq,
@@ -243,6 +290,18 @@ ConfigLogging::AsyncUnlockDeployment(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ConfigLogging::UnlockDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UnlockDeploymentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::UnlockDeploymentRequest const& request) {
+        return child_->UnlockDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> ConfigLogging::ExportLockInfo(
@@ -272,6 +331,17 @@ ConfigLogging::AsyncCreatePreview(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ConfigLogging::CreatePreview(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::CreatePreviewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::CreatePreviewRequest const& request) {
+        return child_->CreatePreview(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::config::v1::Preview> ConfigLogging::GetPreview(
@@ -313,6 +383,17 @@ ConfigLogging::AsyncDeletePreview(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ConfigLogging::DeletePreview(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeletePreviewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::DeletePreviewRequest const& request) {
+        return child_->DeletePreview(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>

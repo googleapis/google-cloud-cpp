@@ -50,6 +50,15 @@ LicensesRestMetadata::AsyncDeleteLicense(
                                     std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+LicensesRestMetadata::DeleteLicense(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteLicense(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::License>
 LicensesRestMetadata::GetLicense(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -78,6 +87,15 @@ LicensesRestMetadata::AsyncInsertLicense(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertLicense(cq, std::move(rest_context),
                                     std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+LicensesRestMetadata::InsertLicense(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertLicense(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse>

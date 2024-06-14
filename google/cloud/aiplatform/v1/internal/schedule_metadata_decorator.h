@@ -52,6 +52,11 @@ class ScheduleServiceMetadata : public ScheduleServiceStub {
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteSchedule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetScheduleRequest const& request)

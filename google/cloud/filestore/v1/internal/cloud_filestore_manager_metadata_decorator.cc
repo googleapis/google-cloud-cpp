@@ -72,6 +72,15 @@ CloudFilestoreManagerMetadata::AsyncCreateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +92,16 @@ CloudFilestoreManagerMetadata::AsyncUpdateInstance(
                            internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->UpdateInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -97,6 +116,15 @@ CloudFilestoreManagerMetadata::AsyncRestoreInstance(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::RestoreInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RestoreInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerMetadata::AsyncRevertInstance(
     google::cloud::CompletionQueue& cq,
@@ -109,6 +137,15 @@ CloudFilestoreManagerMetadata::AsyncRevertInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::RevertInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RevertInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -119,6 +156,15 @@ CloudFilestoreManagerMetadata::AsyncDeleteInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInstance(context, options, request);
 }
 
 StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
@@ -151,6 +197,15 @@ CloudFilestoreManagerMetadata::AsyncCreateSnapshot(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::CreateSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSnapshot(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerMetadata::AsyncDeleteSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -161,6 +216,15 @@ CloudFilestoreManagerMetadata::AsyncDeleteSnapshot(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSnapshot(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::DeleteSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSnapshot(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -174,6 +238,16 @@ CloudFilestoreManagerMetadata::AsyncUpdateSnapshot(
                            internal::UrlEncode(request.snapshot().name())));
   return child_->AsyncUpdateSnapshot(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::UpdateSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("snapshot.name=",
+                           internal::UrlEncode(request.snapshot().name())));
+  return child_->UpdateSnapshot(context, options, request);
 }
 
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
@@ -206,6 +280,15 @@ CloudFilestoreManagerMetadata::AsyncCreateBackup(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::CreateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerMetadata::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -216,6 +299,15 @@ CloudFilestoreManagerMetadata::AsyncDeleteBackup(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteBackup(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::DeleteBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -229,6 +321,16 @@ CloudFilestoreManagerMetadata::AsyncUpdateBackup(
                            internal::UrlEncode(request.backup().name())));
   return child_->AsyncUpdateBackup(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerMetadata::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::UpdateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("backup.name=",
+                           internal::UrlEncode(request.backup().name())));
+  return child_->UpdateBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

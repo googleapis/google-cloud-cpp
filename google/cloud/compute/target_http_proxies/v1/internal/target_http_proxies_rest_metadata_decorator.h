@@ -55,6 +55,12 @@ class TargetHttpProxiesRestMetadata : public TargetHttpProxiesRestStub {
       google::cloud::cpp::compute::target_http_proxies::v1::
           DeleteTargetHttpProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          DeleteTargetHttpProxyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -66,6 +72,12 @@ class TargetHttpProxiesRestMetadata : public TargetHttpProxiesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          InsertTargetHttpProxyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_http_proxies::v1::
           InsertTargetHttpProxyRequest const& request) override;
 
@@ -84,11 +96,23 @@ class TargetHttpProxiesRestMetadata : public TargetHttpProxiesRestStub {
       google::cloud::cpp::compute::target_http_proxies::v1::
           PatchTargetHttpProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          PatchTargetHttpProxyRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          SetUrlMapRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_http_proxies::v1::
           SetUrlMapRequest const& request) override;
 

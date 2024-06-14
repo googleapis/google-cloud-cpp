@@ -59,6 +59,15 @@ SslPoliciesRestMetadata::AsyncDeleteSslPolicy(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslPoliciesRestMetadata::DeleteSslPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteSslPolicy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
 SslPoliciesRestMetadata::GetSslPolicy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -78,6 +87,15 @@ SslPoliciesRestMetadata::AsyncInsertSslPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertSslPolicy(cq, std::move(rest_context),
                                       std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslPoliciesRestMetadata::InsertSslPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertSslPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
@@ -109,6 +127,15 @@ SslPoliciesRestMetadata::AsyncPatchSslPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchSslPolicy(cq, std::move(rest_context),
                                      std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslPoliciesRestMetadata::PatchSslPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchSslPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

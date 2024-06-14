@@ -67,6 +67,17 @@ IDSTracingStub::AsyncCreateEndpoint(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> IDSTracingStub::CreateEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "CreateEndpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateEndpoint(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IDSTracingStub::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
@@ -80,6 +91,17 @@ IDSTracingStub::AsyncDeleteEndpoint(
   auto f =
       child_->AsyncDeleteEndpoint(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> IDSTracingStub::DeleteEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "DeleteEndpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEndpoint(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

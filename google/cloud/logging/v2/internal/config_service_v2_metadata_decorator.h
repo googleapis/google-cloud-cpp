@@ -54,10 +54,18 @@ class ConfigServiceV2Metadata : public ConfigServiceV2Stub {
       google::cloud::internal::ImmutableOptions options,
       google::logging::v2::CreateBucketRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateBucketAsync(
+      grpc::ClientContext& context, Options options,
+      google::logging::v2::CreateBucketRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBucketAsync(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::logging::v2::UpdateBucketRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateBucketAsync(
+      grpc::ClientContext& context, Options options,
       google::logging::v2::UpdateBucketRequest const& request) override;
 
   StatusOr<google::logging::v2::LogBucket> CreateBucket(
@@ -122,10 +130,18 @@ class ConfigServiceV2Metadata : public ConfigServiceV2Stub {
       google::cloud::internal::ImmutableOptions options,
       google::logging::v2::CreateLinkRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateLink(
+      grpc::ClientContext& context, Options options,
+      google::logging::v2::CreateLinkRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteLink(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::logging::v2::DeleteLinkRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteLink(
+      grpc::ClientContext& context, Options options,
       google::logging::v2::DeleteLinkRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLinksResponse> ListLinks(
@@ -176,6 +192,10 @@ class ConfigServiceV2Metadata : public ConfigServiceV2Stub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::logging::v2::CopyLogEntriesRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CopyLogEntries(
+      grpc::ClientContext& context, Options options,
       google::logging::v2::CopyLogEntriesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -84,6 +84,14 @@ StorageControlAuth::AsyncRenameFolder(
       });
 }
 
+StatusOr<google::longrunning::Operation> StorageControlAuth::RenameFolder(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::RenameFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RenameFolder(context, options, request);
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlAuth::GetStorageLayout(
     grpc::ClientContext& context, Options const& options,

@@ -51,6 +51,15 @@ VideoIntelligenceServiceAuth::AsyncAnnotateVideo(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+VideoIntelligenceServiceAuth::AnnotateVideo(
+    grpc::ClientContext& context, Options options,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AnnotateVideo(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoIntelligenceServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -59,6 +59,14 @@ ApplicationsAuth::AsyncCreateApplication(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApplicationsAuth::CreateApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateApplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateApplication(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsAuth::AsyncUpdateApplication(
     google::cloud::CompletionQueue& cq,
@@ -79,6 +87,14 @@ ApplicationsAuth::AsyncUpdateApplication(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApplicationsAuth::UpdateApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateApplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateApplication(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsAuth::AsyncRepairApplication(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +113,14 @@ ApplicationsAuth::AsyncRepairApplication(
         return child->AsyncRepairApplication(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ApplicationsAuth::RepairApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::RepairApplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RepairApplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

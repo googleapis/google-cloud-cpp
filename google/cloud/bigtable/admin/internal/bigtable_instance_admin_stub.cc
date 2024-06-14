@@ -49,6 +49,18 @@ DefaultBigtableInstanceAdminStub::AsyncCreateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBigtableInstanceAdminStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::bigtable::admin::v2::Instance>
 DefaultBigtableInstanceAdminStub::GetInstance(
     grpc::ClientContext& context, Options const&,
@@ -104,6 +116,18 @@ DefaultBigtableInstanceAdminStub::AsyncPartialUpdateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBigtableInstanceAdminStub::PartialUpdateInstance(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PartialUpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultBigtableInstanceAdminStub::DeleteInstance(
     grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
@@ -131,6 +155,18 @@ DefaultBigtableInstanceAdminStub::AsyncCreateCluster(
         return grpc_stub_->AsyncCreateCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBigtableInstanceAdminStub::CreateCluster(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::CreateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
@@ -174,6 +210,18 @@ DefaultBigtableInstanceAdminStub::AsyncUpdateCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBigtableInstanceAdminStub::UpdateCluster(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::Cluster const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncPartialUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -191,6 +239,18 @@ DefaultBigtableInstanceAdminStub::AsyncPartialUpdateCluster(
         return grpc_stub_->AsyncPartialUpdateCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBigtableInstanceAdminStub::PartialUpdateCluster(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PartialUpdateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultBigtableInstanceAdminStub::DeleteCluster(
@@ -257,6 +317,18 @@ DefaultBigtableInstanceAdminStub::AsyncUpdateAppProfile(
         return grpc_stub_->AsyncUpdateAppProfile(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBigtableInstanceAdminStub::UpdateAppProfile(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAppProfile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultBigtableInstanceAdminStub::DeleteAppProfile(

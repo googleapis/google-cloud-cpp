@@ -92,6 +92,14 @@ IntentsAuth::AsyncBatchUpdateIntents(
       });
 }
 
+StatusOr<google::longrunning::Operation> IntentsAuth::BatchUpdateIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchUpdateIntents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IntentsAuth::AsyncBatchDeleteIntents(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +118,14 @@ IntentsAuth::AsyncBatchDeleteIntents(
         return child->AsyncBatchDeleteIntents(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> IntentsAuth::BatchDeleteIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchDeleteIntents(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> IntentsAuth::AsyncGetOperation(

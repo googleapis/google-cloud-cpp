@@ -45,6 +45,12 @@ class RoutesRestStub {
       google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -56,6 +62,12 @@ class RoutesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
           request) = 0;
 
@@ -97,6 +109,12 @@ class DefaultRoutesRestStub : public RoutesRestStub {
       google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -107,6 +125,12 @@ class DefaultRoutesRestStub : public RoutesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
           request) override;
 

@@ -78,6 +78,19 @@ ImageAnnotatorLogging::AsyncAsyncBatchAnnotateImages(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorLogging::AsyncBatchAnnotateImages(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+                 request) {
+        return child_->AsyncBatchAnnotateImages(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorLogging::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +108,19 @@ ImageAnnotatorLogging::AsyncAsyncBatchAnnotateFiles(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorLogging::AsyncBatchAnnotateFiles(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+                 request) {
+        return child_->AsyncBatchAnnotateFiles(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

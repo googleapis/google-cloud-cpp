@@ -51,6 +51,20 @@ DefaultManagedIdentitiesServiceStub::AsyncCreateMicrosoftAdDomain(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultManagedIdentitiesServiceStub::CreateMicrosoftAdDomain(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateMicrosoftAdDomain(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 DefaultManagedIdentitiesServiceStub::ResetAdminPassword(
     grpc::ClientContext& context, Options const&,
@@ -107,6 +121,18 @@ DefaultManagedIdentitiesServiceStub::AsyncUpdateDomain(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultManagedIdentitiesServiceStub::UpdateDomain(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDomain(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncDeleteDomain(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +152,18 @@ DefaultManagedIdentitiesServiceStub::AsyncDeleteDomain(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultManagedIdentitiesServiceStub::DeleteDomain(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDomain(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncAttachTrust(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +181,18 @@ DefaultManagedIdentitiesServiceStub::AsyncAttachTrust(
         return grpc_stub_->AsyncAttachTrust(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultManagedIdentitiesServiceStub::AttachTrust(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AttachTrust(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -166,6 +216,19 @@ DefaultManagedIdentitiesServiceStub::AsyncReconfigureTrust(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultManagedIdentitiesServiceStub::ReconfigureTrust(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ReconfigureTrust(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncDetachTrust(
     google::cloud::CompletionQueue& cq,
@@ -185,6 +248,18 @@ DefaultManagedIdentitiesServiceStub::AsyncDetachTrust(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultManagedIdentitiesServiceStub::DetachTrust(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DetachTrust(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncValidateTrust(
     google::cloud::CompletionQueue& cq,
@@ -202,6 +277,18 @@ DefaultManagedIdentitiesServiceStub::AsyncValidateTrust(
         return grpc_stub_->AsyncValidateTrust(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultManagedIdentitiesServiceStub::ValidateTrust(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ValidateTrust(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

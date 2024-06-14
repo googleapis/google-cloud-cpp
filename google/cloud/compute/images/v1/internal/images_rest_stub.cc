@@ -78,6 +78,22 @@ DefaultImagesRestStub::AsyncDeleteImage(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultImagesRestStub::DeleteImage(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "images", "/", request.image()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultImagesRestStub::AsyncDeprecate(
     CompletionQueue& cq,
@@ -110,6 +126,21 @@ DefaultImagesRestStub::AsyncDeprecate(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultImagesRestStub::Deprecate(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.deprecation_status_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "images", "/", request.image(), "/", "deprecate"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
@@ -191,6 +222,23 @@ DefaultImagesRestStub::AsyncInsertImage(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultImagesRestStub::InsertImage(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.image_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "images"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("force_create", request.force_create() ? "1" : "0"),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ImageList>
 DefaultImagesRestStub::ListImages(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -243,6 +291,21 @@ DefaultImagesRestStub::AsyncPatchImage(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultImagesRestStub::PatchImage(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.image_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "images", "/", request.image()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultImagesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -288,6 +351,20 @@ DefaultImagesRestStub::AsyncSetLabels(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultImagesRestStub::SetLabels(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.global_set_labels_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "images", "/", request.resource(), "/", "setLabels"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

@@ -56,6 +56,17 @@ SimulatorTracingStub::AsyncCreateReplay(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> SimulatorTracingStub::CreateReplay(
+    grpc::ClientContext& context, Options options,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.policysimulator.v1.Simulator", "CreateReplay");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateReplay(context, options, request));
+}
+
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 SimulatorTracingStub::ListReplayResults(
     grpc::ClientContext& context, Options const& options,

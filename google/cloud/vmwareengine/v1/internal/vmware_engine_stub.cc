@@ -74,6 +74,18 @@ DefaultVmwareEngineStub::AsyncCreatePrivateCloud(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreatePrivateCloud(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreatePrivateCloud(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdatePrivateCloud(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +103,18 @@ DefaultVmwareEngineStub::AsyncUpdatePrivateCloud(
         return grpc_stub_->AsyncUpdatePrivateCloud(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdatePrivateCloud(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdatePrivateCloud(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,6 +136,18 @@ DefaultVmwareEngineStub::AsyncDeletePrivateCloud(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::DeletePrivateCloud(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeletePrivateCloud(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUndeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
@@ -130,6 +166,19 @@ DefaultVmwareEngineStub::AsyncUndeletePrivateCloud(
         return grpc_stub_->AsyncUndeletePrivateCloud(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UndeletePrivateCloud(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeletePrivateCloud(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListClustersResponse>
@@ -175,6 +224,17 @@ DefaultVmwareEngineStub::AsyncCreateCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVmwareEngineStub::CreateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -194,6 +254,17 @@ DefaultVmwareEngineStub::AsyncUpdateCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVmwareEngineStub::UpdateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -211,6 +282,17 @@ DefaultVmwareEngineStub::AsyncDeleteCluster(
         return grpc_stub_->AsyncDeleteCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultVmwareEngineStub::DeleteCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodesResponse>
@@ -299,6 +381,19 @@ DefaultVmwareEngineStub::AsyncCreateExternalAddress(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreateExternalAddress(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateExternalAddress(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateExternalAddress(
     google::cloud::CompletionQueue& cq,
@@ -320,6 +415,19 @@ DefaultVmwareEngineStub::AsyncUpdateExternalAddress(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdateExternalAddress(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateExternalAddress(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteExternalAddress(
     google::cloud::CompletionQueue& cq,
@@ -339,6 +447,19 @@ DefaultVmwareEngineStub::AsyncDeleteExternalAddress(
         return grpc_stub_->AsyncDeleteExternalAddress(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::DeleteExternalAddress(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteExternalAddress(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse>
@@ -382,6 +503,17 @@ DefaultVmwareEngineStub::AsyncUpdateSubnet(
         return grpc_stub_->AsyncUpdateSubnet(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultVmwareEngineStub::UpdateSubnet(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSubnet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse>
@@ -431,6 +563,20 @@ DefaultVmwareEngineStub::AsyncCreateExternalAccessRule(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreateExternalAccessRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateExternalAccessRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateExternalAccessRule(
     google::cloud::CompletionQueue& cq,
@@ -451,6 +597,20 @@ DefaultVmwareEngineStub::AsyncUpdateExternalAccessRule(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdateExternalAccessRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateExternalAccessRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteExternalAccessRule(
     google::cloud::CompletionQueue& cq,
@@ -469,6 +629,20 @@ DefaultVmwareEngineStub::AsyncDeleteExternalAccessRule(
         return grpc_stub_->AsyncDeleteExternalAccessRule(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::DeleteExternalAccessRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteExternalAccessRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse>
@@ -515,6 +689,19 @@ DefaultVmwareEngineStub::AsyncCreateLoggingServer(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreateLoggingServer(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateLoggingServer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateLoggingServer(
     google::cloud::CompletionQueue& cq,
@@ -535,6 +722,19 @@ DefaultVmwareEngineStub::AsyncUpdateLoggingServer(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdateLoggingServer(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateLoggingServer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteLoggingServer(
     google::cloud::CompletionQueue& cq,
@@ -553,6 +753,19 @@ DefaultVmwareEngineStub::AsyncDeleteLoggingServer(
         return grpc_stub_->AsyncDeleteLoggingServer(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::DeleteLoggingServer(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteLoggingServer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
@@ -625,6 +838,19 @@ DefaultVmwareEngineStub::AsyncResetNsxCredentials(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::ResetNsxCredentials(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ResetNsxCredentials(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncResetVcenterCredentials(
     google::cloud::CompletionQueue& cq,
@@ -644,6 +870,20 @@ DefaultVmwareEngineStub::AsyncResetVcenterCredentials(
         return grpc_stub_->AsyncResetVcenterCredentials(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::ResetVcenterCredentials(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ResetVcenterCredentials(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
@@ -676,6 +916,19 @@ DefaultVmwareEngineStub::AsyncUpdateDnsForwarding(
         return grpc_stub_->AsyncUpdateDnsForwarding(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdateDnsForwarding(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDnsForwarding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
@@ -723,6 +976,19 @@ DefaultVmwareEngineStub::AsyncCreateNetworkPeering(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreateNetworkPeering(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateNetworkPeering(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteNetworkPeering(
     google::cloud::CompletionQueue& cq,
@@ -743,6 +1009,19 @@ DefaultVmwareEngineStub::AsyncDeleteNetworkPeering(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::DeleteNetworkPeering(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteNetworkPeering(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateNetworkPeering(
     google::cloud::CompletionQueue& cq,
@@ -761,6 +1040,19 @@ DefaultVmwareEngineStub::AsyncUpdateNetworkPeering(
         return grpc_stub_->AsyncUpdateNetworkPeering(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdateNetworkPeering(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateNetworkPeering(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse>
@@ -794,6 +1086,20 @@ DefaultVmwareEngineStub::AsyncCreateHcxActivationKey(
         return grpc_stub_->AsyncCreateHcxActivationKey(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreateHcxActivationKey(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateHcxActivationKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse>
@@ -867,6 +1173,19 @@ DefaultVmwareEngineStub::AsyncCreateNetworkPolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreateNetworkPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateNetworkPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
@@ -887,6 +1206,19 @@ DefaultVmwareEngineStub::AsyncUpdateNetworkPolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdateNetworkPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateNetworkPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteNetworkPolicy(
     google::cloud::CompletionQueue& cq,
@@ -905,6 +1237,19 @@ DefaultVmwareEngineStub::AsyncDeleteNetworkPolicy(
         return grpc_stub_->AsyncDeleteNetworkPolicy(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::DeleteNetworkPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteNetworkPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse>
@@ -957,6 +1302,20 @@ DefaultVmwareEngineStub::AsyncCreateManagementDnsZoneBinding(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreateManagementDnsZoneBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateManagementDnsZoneBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
@@ -976,6 +1335,20 @@ DefaultVmwareEngineStub::AsyncUpdateManagementDnsZoneBinding(
                                                                cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdateManagementDnsZoneBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateManagementDnsZoneBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -999,6 +1372,20 @@ DefaultVmwareEngineStub::AsyncDeleteManagementDnsZoneBinding(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::DeleteManagementDnsZoneBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteManagementDnsZoneBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncRepairManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
@@ -1018,6 +1405,20 @@ DefaultVmwareEngineStub::AsyncRepairManagementDnsZoneBinding(
                                                                cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::RepairManagementDnsZoneBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RepairManagementDnsZoneBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -1040,6 +1441,20 @@ DefaultVmwareEngineStub::AsyncCreateVmwareEngineNetwork(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreateVmwareEngineNetwork(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateVmwareEngineNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncUpdateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
@@ -1060,6 +1475,20 @@ DefaultVmwareEngineStub::AsyncUpdateVmwareEngineNetwork(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdateVmwareEngineNetwork(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateVmwareEngineNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeleteVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
@@ -1078,6 +1507,20 @@ DefaultVmwareEngineStub::AsyncDeleteVmwareEngineNetwork(
         return grpc_stub_->AsyncDeleteVmwareEngineNetwork(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::DeleteVmwareEngineNetwork(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteVmwareEngineNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -1129,6 +1572,20 @@ DefaultVmwareEngineStub::AsyncCreatePrivateConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::CreatePrivateConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreatePrivateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
 DefaultVmwareEngineStub::GetPrivateConnection(
     grpc::ClientContext& context, Options const&,
@@ -1177,6 +1634,20 @@ DefaultVmwareEngineStub::AsyncUpdatePrivateConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::UpdatePrivateConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdatePrivateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmwareEngineStub::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
@@ -1196,6 +1667,20 @@ DefaultVmwareEngineStub::AsyncDeletePrivateConnection(
         return grpc_stub_->AsyncDeletePrivateConnection(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::DeletePrivateConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeletePrivateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<
@@ -1235,6 +1720,20 @@ DefaultVmwareEngineStub::AsyncGrantDnsBindPermission(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::GrantDnsBindPermission(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->GrantDnsBindPermission(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
 DefaultVmwareEngineStub::GetDnsBindPermission(
     grpc::ClientContext& context, Options const&,
@@ -1267,6 +1766,20 @@ DefaultVmwareEngineStub::AsyncRevokeDnsBindPermission(
         return grpc_stub_->AsyncRevokeDnsBindPermission(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmwareEngineStub::RevokeDnsBindPermission(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RevokeDnsBindPermission(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

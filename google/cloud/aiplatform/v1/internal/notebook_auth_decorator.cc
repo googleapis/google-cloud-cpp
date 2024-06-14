@@ -52,6 +52,16 @@ NotebookServiceAuth::AsyncCreateNotebookRuntimeTemplate(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceAuth::CreateNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateNotebookRuntimeTemplate(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
 NotebookServiceAuth::GetNotebookRuntimeTemplate(
     grpc::ClientContext& context, Options const& options,
@@ -93,6 +103,16 @@ NotebookServiceAuth::AsyncDeleteNotebookRuntimeTemplate(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceAuth::DeleteNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteNotebookRuntimeTemplate(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
 NotebookServiceAuth::UpdateNotebookRuntimeTemplate(
     grpc::ClientContext& context, Options const& options,
@@ -122,6 +142,16 @@ NotebookServiceAuth::AsyncAssignNotebookRuntime(
         return child->AsyncAssignNotebookRuntime(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceAuth::AssignNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AssignNotebookRuntime(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
@@ -163,6 +193,16 @@ NotebookServiceAuth::AsyncDeleteNotebookRuntime(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceAuth::DeleteNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteNotebookRuntime(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncUpgradeNotebookRuntime(
     google::cloud::CompletionQueue& cq,
@@ -184,6 +224,16 @@ NotebookServiceAuth::AsyncUpgradeNotebookRuntime(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceAuth::UpgradeNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpgradeNotebookRuntime(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncStartNotebookRuntime(
     google::cloud::CompletionQueue& cq,
@@ -202,6 +252,15 @@ NotebookServiceAuth::AsyncStartNotebookRuntime(
         return child->AsyncStartNotebookRuntime(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceAuth::StartNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartNotebookRuntime(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

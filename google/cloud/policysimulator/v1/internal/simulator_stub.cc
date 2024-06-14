@@ -62,6 +62,17 @@ DefaultSimulatorStub::AsyncCreateReplay(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSimulatorStub::CreateReplay(
+    grpc::ClientContext& context, Options,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateReplay(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 DefaultSimulatorStub::ListReplayResults(
     grpc::ClientContext& context, Options const&,

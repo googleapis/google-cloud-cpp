@@ -54,6 +54,21 @@ PersistentResourceServiceLogging::AsyncCreatePersistentResource(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceLogging::CreatePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+              request) {
+        return child_->CreatePersistentResource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
 PersistentResourceServiceLogging::GetPersistentResource(
     grpc::ClientContext& context, Options const& options,
@@ -104,6 +119,21 @@ PersistentResourceServiceLogging::AsyncDeletePersistentResource(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceLogging::DeletePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+              request) {
+        return child_->DeletePersistentResource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PersistentResourceServiceLogging::AsyncUpdatePersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -125,6 +155,21 @@ PersistentResourceServiceLogging::AsyncUpdatePersistentResource(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceLogging::UpdatePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+              request) {
+        return child_->UpdatePersistentResource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PersistentResourceServiceLogging::AsyncRebootPersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -144,6 +189,21 @@ PersistentResourceServiceLogging::AsyncRebootPersistentResource(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceLogging::RebootPersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+              request) {
+        return child_->RebootPersistentResource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -53,10 +53,18 @@ class ExecutionsAuth : public ExecutionsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::DeleteExecutionRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCancelExecution(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::run::v2::CancelExecutionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CancelExecution(
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

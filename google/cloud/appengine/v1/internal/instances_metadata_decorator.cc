@@ -71,6 +71,14 @@ InstancesMetadata::AsyncDeleteInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> InstancesMetadata::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstancesMetadata::AsyncDebugInstance(
     google::cloud::CompletionQueue& cq,
@@ -81,6 +89,14 @@ InstancesMetadata::AsyncDebugInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDebugInstance(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> InstancesMetadata::DebugInstance(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DebugInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DebugInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

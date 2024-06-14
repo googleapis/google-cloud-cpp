@@ -72,6 +72,15 @@ FunctionServiceMetadata::AsyncCreateFunction(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+FunctionServiceMetadata::CreateFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v2::CreateFunctionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFunction(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FunctionServiceMetadata::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +94,16 @@ FunctionServiceMetadata::AsyncUpdateFunction(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+FunctionServiceMetadata::UpdateFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v2::UpdateFunctionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("function.name=",
+                           internal::UrlEncode(request.function().name())));
+  return child_->UpdateFunction(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FunctionServiceMetadata::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +114,15 @@ FunctionServiceMetadata::AsyncDeleteFunction(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteFunction(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+FunctionServiceMetadata::DeleteFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v2::DeleteFunctionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFunction(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>

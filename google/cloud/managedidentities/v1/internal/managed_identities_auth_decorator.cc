@@ -52,6 +52,16 @@ ManagedIdentitiesServiceAuth::AsyncCreateMicrosoftAdDomain(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceAuth::CreateMicrosoftAdDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMicrosoftAdDomain(context, options, request);
+}
+
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceAuth::ResetAdminPassword(
     grpc::ClientContext& context, Options const& options,
@@ -100,6 +110,15 @@ ManagedIdentitiesServiceAuth::AsyncUpdateDomain(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceAuth::UpdateDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDomain(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncDeleteDomain(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +139,15 @@ ManagedIdentitiesServiceAuth::AsyncDeleteDomain(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceAuth::DeleteDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDomain(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncAttachTrust(
     google::cloud::CompletionQueue& cq,
@@ -138,6 +166,15 @@ ManagedIdentitiesServiceAuth::AsyncAttachTrust(
         return child->AsyncAttachTrust(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceAuth::AttachTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AttachTrust(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -161,6 +198,16 @@ ManagedIdentitiesServiceAuth::AsyncReconfigureTrust(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceAuth::ReconfigureTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReconfigureTrust(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncDetachTrust(
     google::cloud::CompletionQueue& cq,
@@ -181,6 +228,15 @@ ManagedIdentitiesServiceAuth::AsyncDetachTrust(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceAuth::DetachTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DetachTrust(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncValidateTrust(
     google::cloud::CompletionQueue& cq,
@@ -199,6 +255,15 @@ ManagedIdentitiesServiceAuth::AsyncValidateTrust(
         return child->AsyncValidateTrust(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceAuth::ValidateTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ValidateTrust(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

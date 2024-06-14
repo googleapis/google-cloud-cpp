@@ -63,6 +63,15 @@ CompletionServiceMetadata::AsyncImportCompletionData(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceMetadata::ImportCompletionData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportCompletionData(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

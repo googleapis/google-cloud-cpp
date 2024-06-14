@@ -96,6 +96,19 @@ StorageControlTracingStub::AsyncRenameFolder(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+StorageControlTracingStub::RenameFolder(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::RenameFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "RenameFolder");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RenameFolder(context, options, request));
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlTracingStub::GetStorageLayout(
     grpc::ClientContext& context, Options const& options,

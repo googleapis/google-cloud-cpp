@@ -46,6 +46,11 @@ class DataStoreServiceAuth : public DataStoreServiceStub {
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDataStore(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request)
+      override;
+
   StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetDataStoreRequest const& request)
@@ -61,6 +66,11 @@ class DataStoreServiceAuth : public DataStoreServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataStore(
+      grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request)
       override;
 

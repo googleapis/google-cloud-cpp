@@ -55,6 +55,18 @@ SpeechLogging::AsyncCreateRecognizer(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SpeechLogging::CreateRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+        return child_->CreateRecognizer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
 SpeechLogging::ListRecognizers(
     grpc::ClientContext& context, Options const& options,
@@ -97,6 +109,18 @@ SpeechLogging::AsyncUpdateRecognizer(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SpeechLogging::UpdateRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+        return child_->UpdateRecognizer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechLogging::AsyncDeleteRecognizer(
     google::cloud::CompletionQueue& cq,
@@ -116,6 +140,18 @@ SpeechLogging::AsyncDeleteRecognizer(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SpeechLogging::DeleteRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+        return child_->DeleteRecognizer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechLogging::AsyncUndeleteRecognizer(
     google::cloud::CompletionQueue& cq,
@@ -133,6 +169,18 @@ SpeechLogging::AsyncUndeleteRecognizer(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SpeechLogging::UndeleteRecognizer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+        return child_->UndeleteRecognizer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse> SpeechLogging::Recognize(
@@ -187,6 +235,17 @@ SpeechLogging::AsyncBatchRecognize(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SpeechLogging::BatchRecognize(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+        return child_->BatchRecognize(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::speech::v2::Config> SpeechLogging::GetConfig(
     grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetConfigRequest const& request) {
@@ -226,6 +285,18 @@ SpeechLogging::AsyncCreateCustomClass(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SpeechLogging::CreateCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+        return child_->CreateCustomClass(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
@@ -271,6 +342,18 @@ SpeechLogging::AsyncUpdateCustomClass(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SpeechLogging::UpdateCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+        return child_->UpdateCustomClass(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechLogging::AsyncDeleteCustomClass(
     google::cloud::CompletionQueue& cq,
@@ -288,6 +371,18 @@ SpeechLogging::AsyncDeleteCustomClass(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SpeechLogging::DeleteCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+        return child_->DeleteCustomClass(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -309,6 +404,18 @@ SpeechLogging::AsyncUndeleteCustomClass(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SpeechLogging::UndeleteCustomClass(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::speech::v2::UndeleteCustomClassRequest const&
+                 request) {
+        return child_->UndeleteCustomClass(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechLogging::AsyncCreatePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -325,6 +432,17 @@ SpeechLogging::AsyncCreatePhraseSet(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SpeechLogging::CreatePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+        return child_->CreatePhraseSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
@@ -368,6 +486,17 @@ SpeechLogging::AsyncUpdatePhraseSet(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SpeechLogging::UpdatePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+        return child_->UpdatePhraseSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechLogging::AsyncDeletePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -384,6 +513,17 @@ SpeechLogging::AsyncDeletePhraseSet(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SpeechLogging::DeletePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+        return child_->DeletePhraseSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -403,6 +543,18 @@ SpeechLogging::AsyncUndeletePhraseSet(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> SpeechLogging::UndeletePhraseSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+        return child_->UndeletePhraseSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

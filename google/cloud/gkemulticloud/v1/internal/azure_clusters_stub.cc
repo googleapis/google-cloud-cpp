@@ -50,6 +50,18 @@ DefaultAzureClustersStub::AsyncCreateAzureClient(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAzureClustersStub::CreateAzureClient(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAzureClient(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 DefaultAzureClustersStub::GetAzureClient(
     grpc::ClientContext& context, Options const&,
@@ -93,6 +105,18 @@ DefaultAzureClustersStub::AsyncDeleteAzureClient(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAzureClustersStub::DeleteAzureClient(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAzureClient(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncCreateAzureCluster(
     google::cloud::CompletionQueue& cq,
@@ -113,6 +137,19 @@ DefaultAzureClustersStub::AsyncCreateAzureCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAzureClustersStub::CreateAzureCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAzureCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncUpdateAzureCluster(
     google::cloud::CompletionQueue& cq,
@@ -131,6 +168,19 @@ DefaultAzureClustersStub::AsyncUpdateAzureCluster(
         return grpc_stub_->AsyncUpdateAzureCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAzureClustersStub::UpdateAzureCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAzureCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
@@ -175,6 +225,19 @@ DefaultAzureClustersStub::AsyncDeleteAzureCluster(
         return grpc_stub_->AsyncDeleteAzureCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAzureClustersStub::DeleteAzureCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAzureCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<
@@ -227,6 +290,19 @@ DefaultAzureClustersStub::AsyncCreateAzureNodePool(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAzureClustersStub::CreateAzureNodePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAzureNodePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncUpdateAzureNodePool(
     google::cloud::CompletionQueue& cq,
@@ -245,6 +321,19 @@ DefaultAzureClustersStub::AsyncUpdateAzureNodePool(
         return grpc_stub_->AsyncUpdateAzureNodePool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAzureClustersStub::UpdateAzureNodePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAzureNodePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
@@ -290,6 +379,19 @@ DefaultAzureClustersStub::AsyncDeleteAzureNodePool(
         return grpc_stub_->AsyncDeleteAzureNodePool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAzureClustersStub::DeleteAzureNodePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAzureNodePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>

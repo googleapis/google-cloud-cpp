@@ -68,6 +68,12 @@ class RegionInstanceGroupsRestMetadata : public RegionInstanceGroupsRestStub {
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_instance_groups::v1::
+          SetNamedPortsRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

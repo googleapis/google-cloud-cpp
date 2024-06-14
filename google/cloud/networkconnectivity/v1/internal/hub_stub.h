@@ -55,6 +55,11 @@ class HubServiceStub {
       google::cloud::networkconnectivity::v1::CreateHubRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateHub(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::CreateHubRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateHub(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -62,10 +67,20 @@ class HubServiceStub {
       google::cloud::networkconnectivity::v1::UpdateHubRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateHub(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::UpdateHubRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteHub(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::DeleteHubRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteHub(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkconnectivity::v1::DeleteHubRequest const&
           request) = 0;
 
@@ -93,10 +108,20 @@ class HubServiceStub {
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateSpoke(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateSpoke(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateSpoke(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
           request) = 0;
 
@@ -107,6 +132,11 @@ class HubServiceStub {
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> RejectHubSpoke(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncAcceptHubSpoke(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -114,10 +144,20 @@ class HubServiceStub {
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> AcceptHubSpoke(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSpoke(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSpoke(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
           request) = 0;
 
@@ -194,6 +234,11 @@ class DefaultHubServiceStub : public HubServiceStub {
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateHub(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::CreateHubRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateHub(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -201,10 +246,20 @@ class DefaultHubServiceStub : public HubServiceStub {
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateHub(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteHub(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteHub(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request)
       override;
 
@@ -231,10 +286,20 @@ class DefaultHubServiceStub : public HubServiceStub {
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSpoke(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSpoke(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateSpoke(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request)
       override;
 
@@ -245,6 +310,11 @@ class DefaultHubServiceStub : public HubServiceStub {
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> RejectHubSpoke(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncAcceptHubSpoke(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -252,10 +322,20 @@ class DefaultHubServiceStub : public HubServiceStub {
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> AcceptHubSpoke(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSpoke(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteSpoke(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request)
       override;
 

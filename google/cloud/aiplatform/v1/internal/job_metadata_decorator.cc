@@ -81,6 +81,14 @@ JobServiceMetadata::AsyncDeleteCustomJob(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> JobServiceMetadata::DeleteCustomJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCustomJob(context, options, request);
+}
+
 Status JobServiceMetadata::CancelCustomJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
@@ -128,6 +136,16 @@ JobServiceMetadata::AsyncDeleteDataLabelingJob(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDataLabelingJob(cq, std::move(context),
                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceMetadata::DeleteDataLabelingJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDataLabelingJob(context, options, request);
 }
 
 Status JobServiceMetadata::CancelDataLabelingJob(
@@ -182,6 +200,16 @@ JobServiceMetadata::AsyncDeleteHyperparameterTuningJob(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceMetadata::DeleteHyperparameterTuningJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteHyperparameterTuningJob(context, options, request);
+}
+
 Status JobServiceMetadata::CancelHyperparameterTuningJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
@@ -227,6 +255,14 @@ JobServiceMetadata::AsyncDeleteNasJob(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteNasJob(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> JobServiceMetadata::DeleteNasJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteNasJob(context, options, request);
 }
 
 Status JobServiceMetadata::CancelNasJob(
@@ -296,6 +332,16 @@ JobServiceMetadata::AsyncDeleteBatchPredictionJob(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteBatchPredictionJob(cq, std::move(context),
                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceMetadata::DeleteBatchPredictionJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBatchPredictionJob(context, options, request);
 }
 
 Status JobServiceMetadata::CancelBatchPredictionJob(
@@ -368,6 +414,19 @@ JobServiceMetadata::AsyncUpdateModelDeploymentMonitoringJob(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceMetadata::UpdateModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::
+        UpdateModelDeploymentMonitoringJobRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("model_deployment_monitoring_job.name=",
+                   internal::UrlEncode(
+                       request.model_deployment_monitoring_job().name())));
+  return child_->UpdateModelDeploymentMonitoringJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncDeleteModelDeploymentMonitoringJob(
     google::cloud::CompletionQueue& cq,
@@ -379,6 +438,16 @@ JobServiceMetadata::AsyncDeleteModelDeploymentMonitoringJob(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteModelDeploymentMonitoringJob(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceMetadata::DeleteModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::
+        DeleteModelDeploymentMonitoringJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteModelDeploymentMonitoringJob(context, options, request);
 }
 
 Status JobServiceMetadata::PauseModelDeploymentMonitoringJob(

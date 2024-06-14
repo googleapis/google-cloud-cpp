@@ -77,6 +77,20 @@ DefaultReachabilityServiceStub::AsyncCreateConnectivityTest(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultReachabilityServiceStub::CreateConnectivityTest(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateConnectivityTest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +109,20 @@ DefaultReachabilityServiceStub::AsyncUpdateConnectivityTest(
         return grpc_stub_->AsyncUpdateConnectivityTest(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultReachabilityServiceStub::UpdateConnectivityTest(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateConnectivityTest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -117,6 +145,19 @@ DefaultReachabilityServiceStub::AsyncRerunConnectivityTest(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultReachabilityServiceStub::RerunConnectivityTest(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RerunConnectivityTest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
@@ -135,6 +176,20 @@ DefaultReachabilityServiceStub::AsyncDeleteConnectivityTest(
         return grpc_stub_->AsyncDeleteConnectivityTest(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultReachabilityServiceStub::DeleteConnectivityTest(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteConnectivityTest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

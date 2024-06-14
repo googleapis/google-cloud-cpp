@@ -82,6 +82,23 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefix(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultGlobalPublicDelegatedPrefixesRestStub::DeletePublicDelegatedPrefix(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        DeletePublicDelegatedPrefixRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "publicDelegatedPrefixes", "/",
+                   request.public_delegated_prefix()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
 DefaultGlobalPublicDelegatedPrefixesRestStub::GetPublicDelegatedPrefix(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -130,6 +147,23 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefix(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultGlobalPublicDelegatedPrefixesRestStub::InsertPublicDelegatedPrefix(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        InsertPublicDelegatedPrefixRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.public_delegated_prefix_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "publicDelegatedPrefixes"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
@@ -187,6 +221,24 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncPatchPublicDelegatedPrefix(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultGlobalPublicDelegatedPrefixesRestStub::PatchPublicDelegatedPrefix(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        PatchPublicDelegatedPrefixRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.public_delegated_prefix_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "publicDelegatedPrefixes", "/",
+                   request.public_delegated_prefix()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

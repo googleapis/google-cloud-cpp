@@ -65,6 +65,18 @@ SimulatorLogging::AsyncCreateReplay(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SimulatorLogging::CreateReplay(
+    grpc::ClientContext& context, Options options,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::policysimulator::v1::CreateReplayRequest const&
+                 request) {
+        return child_->CreateReplay(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 SimulatorLogging::ListReplayResults(
     grpc::ClientContext& context, Options const& options,

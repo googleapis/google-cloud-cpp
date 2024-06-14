@@ -58,6 +58,18 @@ ScheduleServiceTracingStub::AsyncDeleteSchedule(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ScheduleServiceTracingStub::DeleteSchedule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ScheduleService", "DeleteSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSchedule(context, options, request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceTracingStub::GetSchedule(
     grpc::ClientContext& context, Options const& options,

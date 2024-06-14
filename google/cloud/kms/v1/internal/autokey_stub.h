@@ -44,6 +44,10 @@ class AutokeyStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::kms::v1::CreateKeyHandleRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateKeyHandle(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::CreateKeyHandleRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetKeyHandleRequest const& request) = 0;
@@ -78,6 +82,10 @@ class DefaultAutokeyStub : public AutokeyStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateKeyHandle(
+      grpc::ClientContext& context, Options options,
       google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(

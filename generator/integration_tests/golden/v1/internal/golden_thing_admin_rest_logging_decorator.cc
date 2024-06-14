@@ -66,6 +66,20 @@ GoldenThingAdminRestLogging::AsyncCreateDatabase(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestLogging::CreateDatabase(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+        return child_->CreateDatabase(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminRestLogging::GetDatabase(
     rest_internal::RestContext& rest_context,
@@ -96,6 +110,20 @@ GoldenThingAdminRestLogging::AsyncUpdateDatabaseDdl(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestLogging::UpdateDatabaseDdl(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+        return child_->UpdateDatabaseDdl(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 Status
@@ -186,6 +214,20 @@ GoldenThingAdminRestLogging::AsyncCreateBackup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestLogging::CreateBackup(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::test::admin::database::v1::CreateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::test::admin::database::v1::CreateBackupRequest const& request) {
+        return child_->CreateBackup(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminRestLogging::GetBackup(
     rest_internal::RestContext& rest_context,
@@ -258,6 +300,20 @@ GoldenThingAdminRestLogging::AsyncRestoreDatabase(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestLogging::RestoreDatabase(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+        return child_->RestoreDatabase(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>

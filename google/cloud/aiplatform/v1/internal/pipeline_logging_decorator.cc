@@ -94,6 +94,20 @@ PipelineServiceLogging::AsyncDeleteTrainingPipeline(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+PipelineServiceLogging::DeleteTrainingPipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+                 request) {
+        return child_->DeleteTrainingPipeline(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 Status PipelineServiceLogging::CancelTrainingPipeline(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
@@ -165,6 +179,19 @@ PipelineServiceLogging::AsyncDeletePipelineJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+PipelineServiceLogging::DeletePipelineJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeletePipelineJobRequest const&
+                 request) {
+        return child_->DeletePipelineJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceLogging::AsyncBatchDeletePipelineJobs(
     google::cloud::CompletionQueue& cq,
@@ -184,6 +211,21 @@ PipelineServiceLogging::AsyncBatchDeletePipelineJobs(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+PipelineServiceLogging::BatchDeletePipelineJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+              request) {
+        return child_->BatchDeletePipelineJobs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status PipelineServiceLogging::CancelPipelineJob(
@@ -217,6 +259,21 @@ PipelineServiceLogging::AsyncBatchCancelPipelineJobs(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+PipelineServiceLogging::BatchCancelPipelineJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+              request) {
+        return child_->BatchCancelPipelineJobs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

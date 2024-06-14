@@ -44,6 +44,10 @@ class JobsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::CreateJobRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::CreateJobRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::run::v2::Job> GetJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetJobRequest const& request) = 0;
@@ -58,16 +62,28 @@ class JobsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::UpdateJobRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::UpdateJobRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::DeleteJobRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::DeleteJobRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRunJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::run::v2::RunJobRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> RunJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::RunJobRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -110,6 +126,10 @@ class DefaultJobsStub : public JobsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::CreateJobRequest const& request) override;
+
   StatusOr<google::cloud::run::v2::Job> GetJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetJobRequest const& request) override;
@@ -124,16 +144,28 @@ class DefaultJobsStub : public JobsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::UpdateJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::UpdateJobRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::DeleteJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::DeleteJobRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRunJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::run::v2::RunJobRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RunJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::RunJobRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

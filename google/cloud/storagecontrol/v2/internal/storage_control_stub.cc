@@ -96,6 +96,18 @@ DefaultStorageControlStub::AsyncRenameFolder(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultStorageControlStub::RenameFolder(
+    grpc::ClientContext& context, Options,
+    google::storage::control::v2::RenameFolderRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RenameFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 DefaultStorageControlStub::GetStorageLayout(
     grpc::ClientContext& context, Options const&,

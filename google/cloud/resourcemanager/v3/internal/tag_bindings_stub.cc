@@ -63,6 +63,19 @@ DefaultTagBindingsStub::AsyncCreateTagBinding(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultTagBindingsStub::CreateTagBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTagBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagBindingsStub::AsyncDeleteTagBinding(
     google::cloud::CompletionQueue& cq,
@@ -81,6 +94,19 @@ DefaultTagBindingsStub::AsyncDeleteTagBinding(
         return grpc_stub_->AsyncDeleteTagBinding(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTagBindingsStub::DeleteTagBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTagBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>

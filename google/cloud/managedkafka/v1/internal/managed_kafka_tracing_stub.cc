@@ -69,6 +69,17 @@ ManagedKafkaTracingStub::AsyncCreateCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ManagedKafkaTracingStub::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedkafka.v1.ManagedKafka", "CreateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateCluster(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaTracingStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +94,17 @@ ManagedKafkaTracingStub::AsyncUpdateCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ManagedKafkaTracingStub::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedkafka.v1.ManagedKafka", "UpdateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCluster(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaTracingStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +117,17 @@ ManagedKafkaTracingStub::AsyncDeleteCluster(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCluster(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ManagedKafkaTracingStub::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedkafka.v1.ManagedKafka", "DeleteCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCluster(context, options, request));
 }
 
 StatusOr<google::cloud::managedkafka::v1::ListTopicsResponse>

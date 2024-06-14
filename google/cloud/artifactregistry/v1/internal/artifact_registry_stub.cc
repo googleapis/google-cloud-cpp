@@ -155,6 +155,19 @@ DefaultArtifactRegistryStub::AsyncImportAptArtifacts(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultArtifactRegistryStub::ImportAptArtifacts(
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportAptArtifacts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -173,6 +186,19 @@ DefaultArtifactRegistryStub::AsyncImportYumArtifacts(
         return grpc_stub_->AsyncImportYumArtifacts(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultArtifactRegistryStub::ImportYumArtifacts(
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportYumArtifacts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
@@ -222,6 +248,19 @@ DefaultArtifactRegistryStub::AsyncCreateRepository(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultArtifactRegistryStub::CreateRepository(
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 DefaultArtifactRegistryStub::UpdateRepository(
     grpc::ClientContext& context, Options const&,
@@ -254,6 +293,19 @@ DefaultArtifactRegistryStub::AsyncDeleteRepository(
         return grpc_stub_->AsyncDeleteRepository(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultArtifactRegistryStub::DeleteRepository(
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
@@ -301,6 +353,19 @@ DefaultArtifactRegistryStub::AsyncDeletePackage(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultArtifactRegistryStub::DeletePackage(
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeletePackage(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
 DefaultArtifactRegistryStub::ListVersions(
     grpc::ClientContext& context, Options const&,
@@ -346,6 +411,19 @@ DefaultArtifactRegistryStub::AsyncDeleteVersion(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultArtifactRegistryStub::DeleteVersion(
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncBatchDeleteVersions(
     google::cloud::CompletionQueue& cq,
@@ -364,6 +442,19 @@ DefaultArtifactRegistryStub::AsyncBatchDeleteVersions(
         return grpc_stub_->AsyncBatchDeleteVersions(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultArtifactRegistryStub::BatchDeleteVersions(
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchDeleteVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>

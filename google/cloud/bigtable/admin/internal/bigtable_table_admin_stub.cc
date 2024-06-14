@@ -85,6 +85,18 @@ DefaultBigtableTableAdminStub::AsyncUpdateTable(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBigtableTableAdminStub::UpdateTable(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTable(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultBigtableTableAdminStub::DeleteTable(
     grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
@@ -114,6 +126,18 @@ DefaultBigtableTableAdminStub::AsyncUndeleteTable(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBigtableTableAdminStub::UndeleteTable(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeleteTable(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableTableAdminStub::AsyncCreateAuthorizedView(
     google::cloud::CompletionQueue& cq,
@@ -131,6 +155,18 @@ DefaultBigtableTableAdminStub::AsyncCreateAuthorizedView(
         return grpc_stub_->AsyncCreateAuthorizedView(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBigtableTableAdminStub::CreateAuthorizedView(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAuthorizedView(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
@@ -174,6 +210,18 @@ DefaultBigtableTableAdminStub::AsyncUpdateAuthorizedView(
         return grpc_stub_->AsyncUpdateAuthorizedView(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBigtableTableAdminStub::UpdateAuthorizedView(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAuthorizedView(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultBigtableTableAdminStub::DeleteAuthorizedView(
@@ -254,6 +302,18 @@ DefaultBigtableTableAdminStub::AsyncCreateBackup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBigtableTableAdminStub::CreateBackup(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::CreateBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::bigtable::admin::v2::Backup>
 DefaultBigtableTableAdminStub::GetBackup(
     grpc::ClientContext& context, Options const&,
@@ -319,6 +379,18 @@ DefaultBigtableTableAdminStub::AsyncRestoreTable(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBigtableTableAdminStub::RestoreTable(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::RestoreTableRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestoreTable(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableTableAdminStub::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -335,6 +407,18 @@ DefaultBigtableTableAdminStub::AsyncCopyBackup(
         return grpc_stub_->AsyncCopyBackup(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBigtableTableAdminStub::CopyBackup(
+    grpc::ClientContext& context, Options,
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CopyBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::GetIamPolicy(

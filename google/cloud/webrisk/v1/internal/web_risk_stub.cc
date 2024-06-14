@@ -97,6 +97,17 @@ DefaultWebRiskServiceStub::AsyncSubmitUri(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultWebRiskServiceStub::SubmitUri(
+    grpc::ClientContext& context, Options,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SubmitUri(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultWebRiskServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

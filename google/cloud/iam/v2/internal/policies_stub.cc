@@ -71,6 +71,17 @@ DefaultPoliciesStub::AsyncCreatePolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultPoliciesStub::CreatePolicy(
+    grpc::ClientContext& context, Options,
+    google::iam::v2::CreatePolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreatePolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultPoliciesStub::AsyncUpdatePolicy(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +99,17 @@ DefaultPoliciesStub::AsyncUpdatePolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultPoliciesStub::UpdatePolicy(
+    grpc::ClientContext& context, Options,
+    google::iam::v2::UpdatePolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdatePolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultPoliciesStub::AsyncDeletePolicy(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +125,17 @@ DefaultPoliciesStub::AsyncDeletePolicy(
         return grpc_stub_->AsyncDeletePolicy(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultPoliciesStub::DeletePolicy(
+    grpc::ClientContext& context, Options,
+    google::iam::v2::DeletePolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeletePolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

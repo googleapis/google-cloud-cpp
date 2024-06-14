@@ -52,6 +52,19 @@ MetadataServiceLogging::AsyncCreateMetadataStore(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::CreateMetadataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
+                 request) {
+        return child_->CreateMetadataStore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
 MetadataServiceLogging::GetMetadataStore(
     grpc::ClientContext& context, Options const& options,
@@ -95,6 +108,19 @@ MetadataServiceLogging::AsyncDeleteMetadataStore(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::DeleteMetadataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
+                 request) {
+        return child_->DeleteMetadataStore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
@@ -167,6 +193,18 @@ MetadataServiceLogging::AsyncDeleteArtifact(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> MetadataServiceLogging::DeleteArtifact(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+        return child_->DeleteArtifact(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncPurgeArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -184,6 +222,18 @@ MetadataServiceLogging::AsyncPurgeArtifacts(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MetadataServiceLogging::PurgeArtifacts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+        return child_->PurgeArtifacts(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
@@ -256,6 +306,18 @@ MetadataServiceLogging::AsyncDeleteContext(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> MetadataServiceLogging::DeleteContext(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+        return child_->DeleteContext(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncPurgeContexts(
     google::cloud::CompletionQueue& cq,
@@ -273,6 +335,18 @@ MetadataServiceLogging::AsyncPurgeContexts(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MetadataServiceLogging::PurgeContexts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+        return child_->PurgeContexts(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<
@@ -403,6 +477,19 @@ MetadataServiceLogging::AsyncDeleteExecution(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::DeleteExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteExecutionRequest const&
+                 request) {
+        return child_->DeleteExecution(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncPurgeExecutions(
     google::cloud::CompletionQueue& cq,
@@ -420,6 +507,19 @@ MetadataServiceLogging::AsyncPurgeExecutions(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::PurgeExecutions(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::PurgeExecutionsRequest const&
+                 request) {
+        return child_->PurgeExecutions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>

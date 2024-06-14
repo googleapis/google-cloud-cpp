@@ -54,6 +54,15 @@ VideoStitcherServiceMetadata::AsyncCreateCdnKey(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::CreateCdnKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCdnKey(context, options, request);
+}
+
 StatusOr<google::cloud::video::stitcher::v1::ListCdnKeysResponse>
 VideoStitcherServiceMetadata::ListCdnKeys(
     grpc::ClientContext& context, Options const& options,
@@ -84,6 +93,15 @@ VideoStitcherServiceMetadata::AsyncDeleteCdnKey(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::DeleteCdnKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCdnKey(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncUpdateCdnKey(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +113,16 @@ VideoStitcherServiceMetadata::AsyncUpdateCdnKey(
                            internal::UrlEncode(request.cdn_key().name())));
   return child_->AsyncUpdateCdnKey(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::UpdateCdnKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("cdn_key.name=",
+                           internal::UrlEncode(request.cdn_key().name())));
+  return child_->UpdateCdnKey(context, options, request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
@@ -188,6 +216,15 @@ VideoStitcherServiceMetadata::AsyncCreateSlate(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::CreateSlate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSlate(context, options, request);
+}
+
 StatusOr<google::cloud::video::stitcher::v1::ListSlatesResponse>
 VideoStitcherServiceMetadata::ListSlates(
     grpc::ClientContext& context, Options const& options,
@@ -219,6 +256,16 @@ VideoStitcherServiceMetadata::AsyncUpdateSlate(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::UpdateSlate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("slate.name=", internal::UrlEncode(request.slate().name())));
+  return child_->UpdateSlate(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncDeleteSlate(
     google::cloud::CompletionQueue& cq,
@@ -229,6 +276,15 @@ VideoStitcherServiceMetadata::AsyncDeleteSlate(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSlate(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::DeleteSlate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSlate(context, options, request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
@@ -263,6 +319,16 @@ VideoStitcherServiceMetadata::AsyncCreateLiveConfig(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::CreateLiveConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateLiveConfig(context, options, request);
+}
+
 StatusOr<google::cloud::video::stitcher::v1::ListLiveConfigsResponse>
 VideoStitcherServiceMetadata::ListLiveConfigs(
     grpc::ClientContext& context, Options const& options,
@@ -294,6 +360,16 @@ VideoStitcherServiceMetadata::AsyncDeleteLiveConfig(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::DeleteLiveConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteLiveConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncUpdateLiveConfig(
     google::cloud::CompletionQueue& cq,
@@ -308,6 +384,17 @@ VideoStitcherServiceMetadata::AsyncUpdateLiveConfig(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::UpdateLiveConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("live_config.name=",
+                           internal::UrlEncode(request.live_config().name())));
+  return child_->UpdateLiveConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncCreateVodConfig(
     google::cloud::CompletionQueue& cq,
@@ -318,6 +405,15 @@ VideoStitcherServiceMetadata::AsyncCreateVodConfig(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateVodConfig(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::CreateVodConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateVodConfig(context, options, request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListVodConfigsResponse>
@@ -350,6 +446,15 @@ VideoStitcherServiceMetadata::AsyncDeleteVodConfig(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::DeleteVodConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteVodConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceMetadata::AsyncUpdateVodConfig(
     google::cloud::CompletionQueue& cq,
@@ -361,6 +466,16 @@ VideoStitcherServiceMetadata::AsyncUpdateVodConfig(
                            internal::UrlEncode(request.vod_config().name())));
   return child_->AsyncUpdateVodConfig(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceMetadata::UpdateVodConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("vod_config.name=",
+                           internal::UrlEncode(request.vod_config().name())));
+  return child_->UpdateVodConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

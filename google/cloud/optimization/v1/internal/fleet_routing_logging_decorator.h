@@ -51,6 +51,11 @@ class FleetRoutingLogging : public FleetRoutingStub {
       google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchOptimizeTours(
+      grpc::ClientContext& context, Options options,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

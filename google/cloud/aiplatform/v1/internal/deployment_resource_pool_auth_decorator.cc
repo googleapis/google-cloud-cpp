@@ -52,6 +52,16 @@ DeploymentResourcePoolServiceAuth::AsyncCreateDeploymentResourcePool(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceAuth::CreateDeploymentResourcePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDeploymentResourcePool(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceAuth::GetDeploymentResourcePool(
     grpc::ClientContext& context, Options const& options,
@@ -91,6 +101,16 @@ DeploymentResourcePoolServiceAuth::AsyncDeleteDeploymentResourcePool(
         return child->AsyncDeleteDeploymentResourcePool(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceAuth::DeleteDeploymentResourcePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDeploymentResourcePool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

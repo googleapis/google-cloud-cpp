@@ -52,6 +52,19 @@ DataStoreServiceLogging::AsyncCreateDataStore(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataStoreServiceLogging::CreateDataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
+                 request) {
+        return child_->CreateDataStore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
 DataStoreServiceLogging::GetDataStore(
     grpc::ClientContext& context, Options const& options,
@@ -95,6 +108,19 @@ DataStoreServiceLogging::AsyncDeleteDataStore(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataStoreServiceLogging::DeleteDataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
+                 request) {
+        return child_->DeleteDataStore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>

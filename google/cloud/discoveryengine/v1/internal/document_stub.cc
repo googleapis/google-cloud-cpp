@@ -109,6 +109,18 @@ DefaultDocumentServiceStub::AsyncImportDocuments(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDocumentServiceStub::ImportDocuments(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportDocuments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentServiceStub::AsyncPurgeDocuments(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +138,18 @@ DefaultDocumentServiceStub::AsyncPurgeDocuments(
         return grpc_stub_->AsyncPurgeDocuments(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDocumentServiceStub::PurgeDocuments(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PurgeDocuments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

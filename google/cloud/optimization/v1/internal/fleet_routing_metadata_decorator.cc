@@ -63,6 +63,15 @@ FleetRoutingMetadata::AsyncBatchOptimizeTours(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FleetRoutingMetadata::BatchOptimizeTours(
+    grpc::ClientContext& context, Options options,
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchOptimizeTours(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FleetRoutingMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

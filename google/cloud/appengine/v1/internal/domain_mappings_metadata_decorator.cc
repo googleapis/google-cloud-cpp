@@ -72,6 +72,15 @@ DomainMappingsMetadata::AsyncCreateDomainMapping(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsMetadata::CreateDomainMapping(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDomainMapping(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncUpdateDomainMapping(
     google::cloud::CompletionQueue& cq,
@@ -84,6 +93,15 @@ DomainMappingsMetadata::AsyncUpdateDomainMapping(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsMetadata::UpdateDomainMapping(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateDomainMapping(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncDeleteDomainMapping(
     google::cloud::CompletionQueue& cq,
@@ -94,6 +112,15 @@ DomainMappingsMetadata::AsyncDeleteDomainMapping(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDomainMapping(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DomainMappingsMetadata::DeleteDomainMapping(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDomainMapping(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

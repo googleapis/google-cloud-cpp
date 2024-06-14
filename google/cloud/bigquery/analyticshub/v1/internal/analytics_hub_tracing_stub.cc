@@ -215,6 +215,20 @@ AnalyticsHubServiceTracingStub::AsyncSubscribeDataExchange(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceTracingStub::SubscribeDataExchange(
+    grpc::ClientContext& context, Options options,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "SubscribeDataExchange");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->SubscribeDataExchange(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceTracingStub::AsyncRefreshSubscription(
     google::cloud::CompletionQueue& cq,
@@ -230,6 +244,20 @@ AnalyticsHubServiceTracingStub::AsyncRefreshSubscription(
   auto f = child_->AsyncRefreshSubscription(cq, context, std::move(options),
                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceTracingStub::RefreshSubscription(
+    grpc::ClientContext& context, Options options,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "RefreshSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RefreshSubscription(context, options, request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -305,6 +333,20 @@ AnalyticsHubServiceTracingStub::AsyncDeleteSubscription(
   auto f =
       child_->AsyncDeleteSubscription(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceTracingStub::DeleteSubscription(
+    grpc::ClientContext& context, Options options,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "DeleteSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteSubscription(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceTracingStub::GetIamPolicy(

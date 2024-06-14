@@ -52,6 +52,15 @@ ProjectServiceAuth::AsyncProvisionProject(
       });
 }
 
+StatusOr<google::longrunning::Operation> ProjectServiceAuth::ProvisionProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ProvisionProject(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

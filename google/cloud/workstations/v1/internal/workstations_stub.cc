@@ -78,6 +78,20 @@ DefaultWorkstationsStub::AsyncCreateWorkstationCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::CreateWorkstationCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateWorkstationCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncUpdateWorkstationCluster(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +112,20 @@ DefaultWorkstationsStub::AsyncUpdateWorkstationCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::UpdateWorkstationCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateWorkstationCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncDeleteWorkstationCluster(
     google::cloud::CompletionQueue& cq,
@@ -116,6 +144,20 @@ DefaultWorkstationsStub::AsyncDeleteWorkstationCluster(
         return grpc_stub_->AsyncDeleteWorkstationCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::DeleteWorkstationCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteWorkstationCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -181,6 +223,20 @@ DefaultWorkstationsStub::AsyncCreateWorkstationConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::CreateWorkstationConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateWorkstationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncUpdateWorkstationConfig(
     google::cloud::CompletionQueue& cq,
@@ -202,6 +258,20 @@ DefaultWorkstationsStub::AsyncUpdateWorkstationConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::UpdateWorkstationConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateWorkstationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncDeleteWorkstationConfig(
     google::cloud::CompletionQueue& cq,
@@ -221,6 +291,20 @@ DefaultWorkstationsStub::AsyncDeleteWorkstationConfig(
         return grpc_stub_->AsyncDeleteWorkstationConfig(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::DeleteWorkstationConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteWorkstationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::Workstation>
@@ -280,6 +364,18 @@ DefaultWorkstationsStub::AsyncCreateWorkstation(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::CreateWorkstation(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncUpdateWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -297,6 +393,18 @@ DefaultWorkstationsStub::AsyncUpdateWorkstation(
         return grpc_stub_->AsyncUpdateWorkstation(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::UpdateWorkstation(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -318,6 +426,18 @@ DefaultWorkstationsStub::AsyncDeleteWorkstation(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::DeleteWorkstation(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncStartWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -337,6 +457,18 @@ DefaultWorkstationsStub::AsyncStartWorkstation(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::StartWorkstation(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncStopWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -354,6 +486,18 @@ DefaultWorkstationsStub::AsyncStopWorkstation(
         return grpc_stub_->AsyncStopWorkstation(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultWorkstationsStub::StopWorkstation(
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>

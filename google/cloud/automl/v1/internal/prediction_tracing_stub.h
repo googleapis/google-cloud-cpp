@@ -48,6 +48,10 @@ class PredictionServiceTracingStub : public PredictionServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> BatchPredict(
+      grpc::ClientContext& context, Options options,
+      google::cloud::automl::v1::BatchPredictRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

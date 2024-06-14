@@ -83,6 +83,21 @@ AppHubLogging::AsyncCreateServiceProjectAttachment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubLogging::CreateServiceProjectAttachment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::
+                 CreateServiceProjectAttachmentRequest const& request) {
+        return child_->CreateServiceProjectAttachment(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
 AppHubLogging::GetServiceProjectAttachment(
     grpc::ClientContext& context, Options const& options,
@@ -116,6 +131,21 @@ AppHubLogging::AsyncDeleteServiceProjectAttachment(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+AppHubLogging::DeleteServiceProjectAttachment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::
+                 DeleteServiceProjectAttachmentRequest const& request) {
+        return child_->DeleteServiceProjectAttachment(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -202,6 +232,17 @@ AppHubLogging::AsyncCreateService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AppHubLogging::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::CreateServiceRequest const& request) {
+        return child_->CreateService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::apphub::v1::Service> AppHubLogging::GetService(
     grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetServiceRequest const& request) {
@@ -231,6 +272,17 @@ AppHubLogging::AsyncUpdateService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AppHubLogging::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+        return child_->UpdateService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -247,6 +299,17 @@ AppHubLogging::AsyncDeleteService(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AppHubLogging::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+        return child_->DeleteService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
@@ -318,6 +381,17 @@ AppHubLogging::AsyncCreateWorkload(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AppHubLogging::CreateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+        return child_->CreateWorkload(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::apphub::v1::Workload> AppHubLogging::GetWorkload(
     grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetWorkloadRequest const& request) {
@@ -347,6 +421,17 @@ AppHubLogging::AsyncUpdateWorkload(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AppHubLogging::UpdateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+        return child_->UpdateWorkload(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncDeleteWorkload(
     google::cloud::CompletionQueue& cq,
@@ -363,6 +448,17 @@ AppHubLogging::AsyncDeleteWorkload(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AppHubLogging::DeleteWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+        return child_->DeleteWorkload(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
@@ -397,6 +493,18 @@ AppHubLogging::AsyncCreateApplication(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AppHubLogging::CreateApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+        return child_->CreateApplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::apphub::v1::Application> AppHubLogging::GetApplication(
     grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetApplicationRequest const& request) {
@@ -427,6 +535,18 @@ AppHubLogging::AsyncUpdateApplication(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AppHubLogging::UpdateApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+        return child_->UpdateApplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncDeleteApplication(
     google::cloud::CompletionQueue& cq,
@@ -444,6 +564,18 @@ AppHubLogging::AsyncDeleteApplication(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AppHubLogging::DeleteApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+        return child_->DeleteApplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

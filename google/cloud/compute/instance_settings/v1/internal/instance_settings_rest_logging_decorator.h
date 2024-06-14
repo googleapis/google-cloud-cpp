@@ -56,6 +56,12 @@ class InstanceSettingsRestLogging : public InstanceSettingsRestStub {
       google::cloud::cpp::compute::instance_settings::v1::
           PatchInstanceSettingsRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_settings::v1::
+          PatchInstanceSettingsRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

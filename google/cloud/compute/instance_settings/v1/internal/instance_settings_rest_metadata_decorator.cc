@@ -60,6 +60,15 @@ InstanceSettingsRestMetadata::AsyncPatchInstanceSettings(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceSettingsRestMetadata::PatchInstanceSettings(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_settings::v1::
+        PatchInstanceSettingsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchInstanceSettings(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceSettingsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

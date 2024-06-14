@@ -96,6 +96,17 @@ DefaultGkeHubStub::AsyncCreateMembership(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::CreateMembership(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateMembership(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +123,17 @@ DefaultGkeHubStub::AsyncCreateFeature(
         return grpc_stub_->AsyncCreateFeature(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::CreateFeature(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateFeature(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -132,6 +154,17 @@ DefaultGkeHubStub::AsyncDeleteMembership(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::DeleteMembership(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteMembership(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
@@ -148,6 +181,17 @@ DefaultGkeHubStub::AsyncDeleteFeature(
         return grpc_stub_->AsyncDeleteFeature(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::DeleteFeature(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFeature(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -168,6 +212,17 @@ DefaultGkeHubStub::AsyncUpdateMembership(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::UpdateMembership(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateMembership(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncUpdateFeature(
     google::cloud::CompletionQueue& cq,
@@ -184,6 +239,17 @@ DefaultGkeHubStub::AsyncUpdateFeature(
         return grpc_stub_->AsyncUpdateFeature(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::UpdateFeature(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateFeature(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>

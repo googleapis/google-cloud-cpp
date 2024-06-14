@@ -90,6 +90,20 @@ DefaultPipelineServiceStub::AsyncDeleteTrainingPipeline(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultPipelineServiceStub::DeleteTrainingPipeline(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteTrainingPipeline(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultPipelineServiceStub::CancelTrainingPipeline(
     grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
@@ -158,6 +172,18 @@ DefaultPipelineServiceStub::AsyncDeletePipelineJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultPipelineServiceStub::DeletePipelineJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeletePipelineJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultPipelineServiceStub::AsyncBatchDeletePipelineJobs(
     google::cloud::CompletionQueue& cq,
@@ -177,6 +203,20 @@ DefaultPipelineServiceStub::AsyncBatchDeletePipelineJobs(
         return grpc_stub_->AsyncBatchDeletePipelineJobs(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultPipelineServiceStub::BatchDeletePipelineJobs(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BatchDeletePipelineJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultPipelineServiceStub::CancelPipelineJob(
@@ -209,6 +249,20 @@ DefaultPipelineServiceStub::AsyncBatchCancelPipelineJobs(
         return grpc_stub_->AsyncBatchCancelPipelineJobs(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultPipelineServiceStub::BatchCancelPipelineJobs(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BatchCancelPipelineJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

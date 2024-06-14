@@ -75,6 +75,19 @@ DefaultEnvironmentsStub::AsyncCreateEnvironment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEnvironmentsStub::CreateEnvironment(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +106,19 @@ DefaultEnvironmentsStub::AsyncUpdateEnvironment(
         return grpc_stub_->AsyncUpdateEnvironment(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEnvironmentsStub::UpdateEnvironment(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultEnvironmentsStub::DeleteEnvironment(
@@ -141,6 +167,19 @@ DefaultEnvironmentsStub::AsyncRunContinuousTest(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEnvironmentsStub::RunContinuousTest(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunContinuousTest(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
 DefaultEnvironmentsStub::ListContinuousTestResults(
     grpc::ClientContext& context, Options const&,
@@ -172,6 +211,17 @@ DefaultEnvironmentsStub::AsyncDeployFlow(
         return grpc_stub_->AsyncDeployFlow(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEnvironmentsStub::DeployFlow(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeployFlow(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

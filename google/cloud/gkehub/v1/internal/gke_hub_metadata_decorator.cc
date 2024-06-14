@@ -88,6 +88,14 @@ GkeHubMetadata::AsyncCreateMembership(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> GkeHubMetadata::CreateMembership(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMembership(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 GkeHubMetadata::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +106,14 @@ GkeHubMetadata::AsyncCreateFeature(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateFeature(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::CreateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFeature(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,6 +128,14 @@ GkeHubMetadata::AsyncDeleteMembership(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> GkeHubMetadata::DeleteMembership(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMembership(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 GkeHubMetadata::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
@@ -122,6 +146,14 @@ GkeHubMetadata::AsyncDeleteFeature(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteFeature(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::DeleteFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFeature(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -136,6 +168,14 @@ GkeHubMetadata::AsyncUpdateMembership(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> GkeHubMetadata::UpdateMembership(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateMembership(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 GkeHubMetadata::AsyncUpdateFeature(
     google::cloud::CompletionQueue& cq,
@@ -146,6 +186,14 @@ GkeHubMetadata::AsyncUpdateFeature(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpdateFeature(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::UpdateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateFeature(context, options, request);
 }
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>

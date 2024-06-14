@@ -48,6 +48,12 @@ class BackendServicesRestMetadata : public BackendServicesRestStub {
       google::cloud::cpp::compute::backend_services::v1::
           AddSignedUrlKeyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_services::v1::
+          AddSignedUrlKeyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
   AggregatedListBackendServices(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -63,11 +69,23 @@ class BackendServicesRestMetadata : public BackendServicesRestStub {
       google::cloud::cpp::compute::backend_services::v1::
           DeleteBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_services::v1::
+          DeleteBackendServiceRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteSignedUrlKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::backend_services::v1::
+          DeleteSignedUrlKeyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_services::v1::
           DeleteSignedUrlKeyRequest const& request) override;
 
@@ -98,6 +116,12 @@ class BackendServicesRestMetadata : public BackendServicesRestStub {
       google::cloud::cpp::compute::backend_services::v1::
           InsertBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_services::v1::
+          InsertBackendServiceRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
   ListBackendServices(google::cloud::rest_internal::RestContext& rest_context,
                       Options const& options,
@@ -118,11 +142,23 @@ class BackendServicesRestMetadata : public BackendServicesRestStub {
       google::cloud::cpp::compute::backend_services::v1::
           PatchBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_services::v1::
+          PatchBackendServiceRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetEdgeSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::backend_services::v1::
+          SetEdgeSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_services::v1::
           SetEdgeSecurityPolicyRequest const& request) override;
 
@@ -140,6 +176,12 @@ class BackendServicesRestMetadata : public BackendServicesRestStub {
       google::cloud::cpp::compute::backend_services::v1::
           SetSecurityPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_services::v1::
+          SetSecurityPolicyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
                      Options const& options,
@@ -151,6 +193,12 @@ class BackendServicesRestMetadata : public BackendServicesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::backend_services::v1::
+          UpdateBackendServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::backend_services::v1::
           UpdateBackendServiceRequest const& request) override;
 

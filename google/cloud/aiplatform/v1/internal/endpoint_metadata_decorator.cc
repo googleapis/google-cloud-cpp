@@ -54,6 +54,15 @@ EndpointServiceMetadata::AsyncCreateEndpoint(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+EndpointServiceMetadata::CreateEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEndpoint(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 EndpointServiceMetadata::GetEndpoint(
     grpc::ClientContext& context, Options const& options,
@@ -94,6 +103,15 @@ EndpointServiceMetadata::AsyncDeleteEndpoint(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+EndpointServiceMetadata::DeleteEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEndpoint(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EndpointServiceMetadata::AsyncDeployModel(
     google::cloud::CompletionQueue& cq,
@@ -105,6 +123,15 @@ EndpointServiceMetadata::AsyncDeployModel(
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
   return child_->AsyncDeployModel(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> EndpointServiceMetadata::DeployModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeployModelRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
+  return child_->DeployModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,6 +147,15 @@ EndpointServiceMetadata::AsyncUndeployModel(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> EndpointServiceMetadata::UndeployModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
+  return child_->UndeployModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EndpointServiceMetadata::AsyncMutateDeployedModel(
     google::cloud::CompletionQueue& cq,
@@ -131,6 +167,16 @@ EndpointServiceMetadata::AsyncMutateDeployedModel(
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
   return child_->AsyncMutateDeployedModel(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+EndpointServiceMetadata::MutateDeployedModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
+  return child_->MutateDeployedModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

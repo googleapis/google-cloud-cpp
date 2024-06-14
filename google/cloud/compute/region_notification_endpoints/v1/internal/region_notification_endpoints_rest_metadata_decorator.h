@@ -50,6 +50,13 @@ class RegionNotificationEndpointsRestMetadata
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           DeleteNotificationEndpointRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNotificationEndpoint(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          DeleteNotificationEndpointRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
   GetNotificationEndpoint(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -62,6 +69,13 @@ class RegionNotificationEndpointsRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          InsertNotificationEndpointRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNotificationEndpoint(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           InsertNotificationEndpointRequest const& request) override;
 

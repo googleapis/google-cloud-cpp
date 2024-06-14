@@ -71,6 +71,13 @@ ServiceManagerMetadata::AsyncCreateService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerMetadata::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::CreateServiceRequest const& request) {
+  SetMetadata(context, options);
+  return child_->CreateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -84,6 +91,15 @@ ServiceManagerMetadata::AsyncDeleteService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerMetadata::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("service_name=",
+                           internal::UrlEncode(request.service_name())));
+  return child_->DeleteService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +111,16 @@ ServiceManagerMetadata::AsyncUndeleteService(
                            internal::UrlEncode(request.service_name())));
   return child_->AsyncUndeleteService(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceManagerMetadata::UndeleteService(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("service_name=",
+                           internal::UrlEncode(request.service_name())));
+  return child_->UndeleteService(context, options, request);
 }
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
@@ -143,6 +169,17 @@ ServiceManagerMetadata::AsyncSubmitConfigSource(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ServiceManagerMetadata::SubmitConfigSource(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("service_name=",
+                           internal::UrlEncode(request.service_name())));
+  return child_->SubmitConfigSource(context, options, request);
+}
+
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 ServiceManagerMetadata::ListServiceRollouts(
     grpc::ClientContext& context, Options const& options,
@@ -179,6 +216,17 @@ ServiceManagerMetadata::AsyncCreateServiceRollout(
                            internal::UrlEncode(request.service_name())));
   return child_->AsyncCreateServiceRollout(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceManagerMetadata::CreateServiceRollout(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("service_name=",
+                           internal::UrlEncode(request.service_name())));
+  return child_->CreateServiceRollout(context, options, request);
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>

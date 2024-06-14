@@ -70,6 +70,14 @@ DomainsAuth::AsyncRegisterDomain(
       });
 }
 
+StatusOr<google::longrunning::Operation> DomainsAuth::RegisterDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::RegisterDomainRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RegisterDomain(context, options, request);
+}
+
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
 DomainsAuth::RetrieveTransferParameters(
     grpc::ClientContext& context, Options const& options,
@@ -98,6 +106,14 @@ DomainsAuth::AsyncTransferDomain(
         return child->AsyncTransferDomain(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DomainsAuth::TransferDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::TransferDomainRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TransferDomain(context, options, request);
 }
 
 StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
@@ -137,6 +153,14 @@ DomainsAuth::AsyncUpdateRegistration(
       });
 }
 
+StatusOr<google::longrunning::Operation> DomainsAuth::UpdateRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRegistration(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainsAuth::AsyncConfigureManagementSettings(
     google::cloud::CompletionQueue& cq,
@@ -158,6 +182,16 @@ DomainsAuth::AsyncConfigureManagementSettings(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DomainsAuth::ConfigureManagementSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ConfigureManagementSettings(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainsAuth::AsyncConfigureDnsSettings(
     google::cloud::CompletionQueue& cq,
@@ -176,6 +210,14 @@ DomainsAuth::AsyncConfigureDnsSettings(
         return child->AsyncConfigureDnsSettings(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DomainsAuth::ConfigureDnsSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ConfigureDnsSettings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -199,6 +241,15 @@ DomainsAuth::AsyncConfigureContactSettings(
       });
 }
 
+StatusOr<google::longrunning::Operation> DomainsAuth::ConfigureContactSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ConfigureContactSettings(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainsAuth::AsyncExportRegistration(
     google::cloud::CompletionQueue& cq,
@@ -219,6 +270,14 @@ DomainsAuth::AsyncExportRegistration(
       });
 }
 
+StatusOr<google::longrunning::Operation> DomainsAuth::ExportRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportRegistration(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainsAuth::AsyncDeleteRegistration(
     google::cloud::CompletionQueue& cq,
@@ -237,6 +296,14 @@ DomainsAuth::AsyncDeleteRegistration(
         return child->AsyncDeleteRegistration(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DomainsAuth::DeleteRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRegistration(context, options, request);
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>

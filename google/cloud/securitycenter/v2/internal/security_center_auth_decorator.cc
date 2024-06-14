@@ -62,6 +62,14 @@ SecurityCenterAuth::AsyncBulkMuteFindings(
       });
 }
 
+StatusOr<google::longrunning::Operation> SecurityCenterAuth::BulkMuteFindings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BulkMuteFindings(context, options, request);
+}
+
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
 SecurityCenterAuth::CreateBigQueryExport(
     grpc::ClientContext& context, Options const& options,

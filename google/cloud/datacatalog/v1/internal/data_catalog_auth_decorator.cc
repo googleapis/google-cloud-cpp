@@ -288,6 +288,14 @@ DataCatalogAuth::AsyncReconcileTags(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataCatalogAuth::ReconcileTags(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReconcileTags(context, options, request);
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogAuth::StarEntry(
     grpc::ClientContext& context, Options const& options,
@@ -349,6 +357,14 @@ DataCatalogAuth::AsyncImportEntries(
         return child->AsyncImportEntries(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataCatalogAuth::ImportEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportEntries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

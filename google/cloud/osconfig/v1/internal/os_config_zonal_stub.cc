@@ -51,6 +51,20 @@ DefaultOsConfigZonalServiceStub::AsyncCreateOSPolicyAssignment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultOsConfigZonalServiceStub::CreateOSPolicyAssignment(
+    grpc::ClientContext& context, Options,
+    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateOSPolicyAssignment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultOsConfigZonalServiceStub::AsyncUpdateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +83,20 @@ DefaultOsConfigZonalServiceStub::AsyncUpdateOSPolicyAssignment(
         return grpc_stub_->AsyncUpdateOSPolicyAssignment(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOsConfigZonalServiceStub::UpdateOSPolicyAssignment(
+    grpc::ClientContext& context, Options,
+    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateOSPolicyAssignment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -129,6 +157,20 @@ DefaultOsConfigZonalServiceStub::AsyncDeleteOSPolicyAssignment(
         return grpc_stub_->AsyncDeleteOSPolicyAssignment(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOsConfigZonalServiceStub::DeleteOSPolicyAssignment(
+    grpc::ClientContext& context, Options,
+    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteOSPolicyAssignment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>

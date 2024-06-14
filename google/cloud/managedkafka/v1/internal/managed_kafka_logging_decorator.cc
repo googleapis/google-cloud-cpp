@@ -78,6 +78,18 @@ ManagedKafkaLogging::AsyncCreateCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ManagedKafkaLogging::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::CreateClusterRequest const&
+                 request) {
+        return child_->CreateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaLogging::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +109,18 @@ ManagedKafkaLogging::AsyncUpdateCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ManagedKafkaLogging::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::UpdateClusterRequest const&
+                 request) {
+        return child_->UpdateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaLogging::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +138,18 @@ ManagedKafkaLogging::AsyncDeleteCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ManagedKafkaLogging::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::DeleteClusterRequest const&
+                 request) {
+        return child_->DeleteCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::managedkafka::v1::ListTopicsResponse>

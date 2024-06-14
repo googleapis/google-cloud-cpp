@@ -53,6 +53,11 @@ class MigrationServiceStub {
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> BatchMigrateResources(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -86,6 +91,11 @@ class DefaultMigrationServiceStub : public MigrationServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> BatchMigrateResources(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request) override;
 

@@ -46,6 +46,18 @@ NodeGroupControllerTracingStub::AsyncCreateNodeGroup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerTracingStub::CreateNodeGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.NodeGroupController", "CreateNodeGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateNodeGroup(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerTracingStub::AsyncResizeNodeGroup(
     google::cloud::CompletionQueue& cq,
@@ -59,6 +71,18 @@ NodeGroupControllerTracingStub::AsyncResizeNodeGroup(
   auto f =
       child_->AsyncResizeNodeGroup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerTracingStub::ResizeNodeGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.NodeGroupController", "ResizeNodeGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ResizeNodeGroup(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>

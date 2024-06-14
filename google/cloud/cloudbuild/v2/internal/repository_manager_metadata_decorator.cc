@@ -54,6 +54,15 @@ RepositoryManagerMetadata::AsyncCreateConnection(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerMetadata::CreateConnection(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConnection(context, options, request);
+}
+
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 RepositoryManagerMetadata::GetConnection(
     grpc::ClientContext& context, Options const& options,
@@ -85,6 +94,16 @@ RepositoryManagerMetadata::AsyncUpdateConnection(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerMetadata::UpdateConnection(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("connection.name=",
+                           internal::UrlEncode(request.connection().name())));
+  return child_->UpdateConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +114,15 @@ RepositoryManagerMetadata::AsyncDeleteConnection(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConnection(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerMetadata::DeleteConnection(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConnection(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,6 +137,15 @@ RepositoryManagerMetadata::AsyncCreateRepository(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerMetadata::CreateRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateRepository(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncBatchCreateRepositories(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +157,16 @@ RepositoryManagerMetadata::AsyncBatchCreateRepositories(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchCreateRepositories(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerMetadata::BatchCreateRepositories(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchCreateRepositories(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
@@ -150,6 +197,15 @@ RepositoryManagerMetadata::AsyncDeleteRepository(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRepository(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerMetadata::DeleteRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRepository(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>

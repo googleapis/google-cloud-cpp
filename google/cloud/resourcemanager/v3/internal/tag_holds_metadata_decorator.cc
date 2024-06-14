@@ -54,6 +54,14 @@ TagHoldsMetadata::AsyncCreateTagHold(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsMetadata::CreateTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTagHold(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsMetadata::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
@@ -64,6 +72,14 @@ TagHoldsMetadata::AsyncDeleteTagHold(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTagHold(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> TagHoldsMetadata::DeleteTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTagHold(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>

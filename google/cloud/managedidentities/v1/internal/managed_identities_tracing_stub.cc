@@ -48,6 +48,21 @@ ManagedIdentitiesServiceTracingStub::AsyncCreateMicrosoftAdDomain(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingStub::CreateMicrosoftAdDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "CreateMicrosoftAdDomain");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateMicrosoftAdDomain(context, options, request));
+}
+
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceTracingStub::ResetAdminPassword(
     grpc::ClientContext& context, Options const& options,
@@ -103,6 +118,19 @@ ManagedIdentitiesServiceTracingStub::AsyncUpdateDomain(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingStub::UpdateDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "UpdateDomain");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDomain(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncDeleteDomain(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +146,19 @@ ManagedIdentitiesServiceTracingStub::AsyncDeleteDomain(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingStub::DeleteDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "DeleteDomain");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDomain(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncAttachTrust(
     google::cloud::CompletionQueue& cq,
@@ -131,6 +172,19 @@ ManagedIdentitiesServiceTracingStub::AsyncAttachTrust(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncAttachTrust(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingStub::AttachTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "AttachTrust");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->AttachTrust(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -150,6 +204,20 @@ ManagedIdentitiesServiceTracingStub::AsyncReconfigureTrust(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingStub::ReconfigureTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "ReconfigureTrust");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ReconfigureTrust(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncDetachTrust(
     google::cloud::CompletionQueue& cq,
@@ -165,6 +233,19 @@ ManagedIdentitiesServiceTracingStub::AsyncDetachTrust(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingStub::DetachTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "DetachTrust");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DetachTrust(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncValidateTrust(
     google::cloud::CompletionQueue& cq,
@@ -178,6 +259,19 @@ ManagedIdentitiesServiceTracingStub::AsyncValidateTrust(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncValidateTrust(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingStub::ValidateTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "ValidateTrust");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ValidateTrust(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

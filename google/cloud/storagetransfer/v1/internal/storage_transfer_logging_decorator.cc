@@ -143,6 +143,19 @@ StorageTransferServiceLogging::AsyncRunTransferJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+StorageTransferServiceLogging::RunTransferJob(
+    grpc::ClientContext& context, Options options,
+    google::storagetransfer::v1::RunTransferJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::storagetransfer::v1::RunTransferJobRequest const& request) {
+        return child_->RunTransferJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 Status StorageTransferServiceLogging::DeleteTransferJob(
     grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {

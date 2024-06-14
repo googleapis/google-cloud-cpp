@@ -76,6 +76,14 @@ future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncCreateFolder(
       });
 }
 
+StatusOr<google::longrunning::Operation> FoldersAuth::CreateFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFolder(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncUpdateFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -93,6 +101,14 @@ future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncUpdateFolder(
         return child->AsyncUpdateFolder(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> FoldersAuth::UpdateFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFolder(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncMoveFolder(
@@ -114,6 +130,14 @@ future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncMoveFolder(
       });
 }
 
+StatusOr<google::longrunning::Operation> FoldersAuth::MoveFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MoveFolder(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncDeleteFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -131,6 +155,14 @@ future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncDeleteFolder(
         return child->AsyncDeleteFolder(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> FoldersAuth::DeleteFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFolder(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -151,6 +183,14 @@ FoldersAuth::AsyncUndeleteFolder(
         return child->AsyncUndeleteFolder(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> FoldersAuth::UndeleteFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeleteFolder(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> FoldersAuth::GetIamPolicy(

@@ -71,6 +71,14 @@ WorkflowsMetadata::AsyncCreateWorkflow(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsMetadata::CreateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateWorkflow(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsMetadata::AsyncDeleteWorkflow(
     google::cloud::CompletionQueue& cq,
@@ -81,6 +89,14 @@ WorkflowsMetadata::AsyncDeleteWorkflow(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteWorkflow(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> WorkflowsMetadata::DeleteWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteWorkflow(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -94,6 +110,15 @@ WorkflowsMetadata::AsyncUpdateWorkflow(
                            internal::UrlEncode(request.workflow().name())));
   return child_->AsyncUpdateWorkflow(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> WorkflowsMetadata::UpdateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("workflow.name=",
+                           internal::UrlEncode(request.workflow().name())));
+  return child_->UpdateWorkflow(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

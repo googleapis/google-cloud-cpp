@@ -52,6 +52,19 @@ AssuredWorkloadsServiceLogging::AsyncCreateWorkload(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+AssuredWorkloadsServiceLogging::CreateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
+                 request) {
+        return child_->CreateWorkload(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceLogging::UpdateWorkload(
     grpc::ClientContext& context, Options const& options,

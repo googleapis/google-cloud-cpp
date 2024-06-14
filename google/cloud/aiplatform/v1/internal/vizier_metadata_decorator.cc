@@ -97,6 +97,14 @@ VizierServiceMetadata::AsyncSuggestTrials(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> VizierServiceMetadata::SuggestTrials(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SuggestTrials(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceMetadata::CreateTrial(
     grpc::ClientContext& context, Options const& options,
@@ -162,6 +170,17 @@ VizierServiceMetadata::AsyncCheckTrialEarlyStoppingState(
       absl::StrCat("trial_name=", internal::UrlEncode(request.trial_name())));
   return child_->AsyncCheckTrialEarlyStoppingState(cq, std::move(context),
                                                    std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VizierServiceMetadata::CheckTrialEarlyStoppingState(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("trial_name=", internal::UrlEncode(request.trial_name())));
+  return child_->CheckTrialEarlyStoppingState(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceMetadata::StopTrial(

@@ -80,6 +80,24 @@ DefaultNodeGroupsRestStub::AsyncAddNodes(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeGroupsRestStub::AddNodes(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.node_groups_add_nodes_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "nodeGroups", "/", request.node_group(),
+                   "/", "addNodes"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
 DefaultNodeGroupsRestStub::AggregatedListNodeGroups(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -140,6 +158,23 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodeGroup(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeGroupsRestStub::DeleteNodeGroup(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "nodeGroups", "/",
+                   request.node_group()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncDeleteNodes(
     CompletionQueue& cq,
@@ -173,6 +208,24 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodes(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeGroupsRestStub::DeleteNodes(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.node_groups_delete_nodes_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "nodeGroups", "/", request.node_group(),
+                   "/", "deleteNodes"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
@@ -242,6 +295,24 @@ DefaultNodeGroupsRestStub::AsyncInsertNodeGroup(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeGroupsRestStub::InsertNodeGroup(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.node_group_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "nodeGroups"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("initial_node_count",
+                          std::to_string(request.initial_node_count())),
+           std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupList>
@@ -322,6 +393,23 @@ DefaultNodeGroupsRestStub::AsyncPatchNodeGroup(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeGroupsRestStub::PatchNodeGroup(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
+        request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.node_group_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "nodeGroups", "/",
+                   request.node_group()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncPerformMaintenance(
     CompletionQueue& cq,
@@ -357,6 +445,24 @@ DefaultNodeGroupsRestStub::AsyncPerformMaintenance(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeGroupsRestStub::PerformMaintenance(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_groups::v1::
+        PerformMaintenanceRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.node_groups_perform_maintenance_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "nodeGroups", "/", request.node_group(),
+                   "/", "performMaintenance"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -410,6 +516,24 @@ DefaultNodeGroupsRestStub::AsyncSetNodeTemplate(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeGroupsRestStub::SetNodeTemplate(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.node_groups_set_node_template_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "nodeGroups", "/", request.node_group(),
+                   "/", "setNodeTemplate"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncSimulateMaintenanceEvent(
     CompletionQueue& cq,
@@ -446,6 +570,24 @@ DefaultNodeGroupsRestStub::AsyncSimulateMaintenanceEvent(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeGroupsRestStub::SimulateMaintenanceEvent(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_groups::v1::
+        SimulateMaintenanceEventRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.node_groups_simulate_maintenance_event_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "nodeGroups", "/", request.node_group(),
+                   "/", "simulateMaintenanceEvent"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

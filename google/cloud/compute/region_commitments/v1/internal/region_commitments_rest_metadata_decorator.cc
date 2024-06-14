@@ -70,6 +70,15 @@ RegionCommitmentsRestMetadata::AsyncInsertCommitment(
                                        std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionCommitmentsRestMetadata::InsertCommitment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertCommitmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertCommitment(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
 RegionCommitmentsRestMetadata::ListRegionCommitments(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -89,6 +98,15 @@ RegionCommitmentsRestMetadata::AsyncUpdateCommitment(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateCommitment(cq, std::move(rest_context),
                                        std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionCommitmentsRestMetadata::UpdateCommitment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateCommitmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateCommitment(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

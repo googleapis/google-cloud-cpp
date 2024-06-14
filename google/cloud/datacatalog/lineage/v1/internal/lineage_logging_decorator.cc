@@ -127,6 +127,20 @@ LineageLogging::AsyncDeleteProcess(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> LineageLogging::DeleteProcess(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+              request) {
+        return child_->DeleteProcess(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageLogging::CreateRun(
     grpc::ClientContext& context, Options const& options,
@@ -192,6 +206,18 @@ future<StatusOr<google::longrunning::Operation>> LineageLogging::AsyncDeleteRun(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> LineageLogging::DeleteRun(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
+                 request) {
+        return child_->DeleteRun(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>

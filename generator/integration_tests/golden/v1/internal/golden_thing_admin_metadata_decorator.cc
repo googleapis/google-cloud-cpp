@@ -64,6 +64,15 @@ GoldenThingAdminMetadata::AsyncCreateDatabase(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminMetadata::CreateDatabase(
+    grpc::ClientContext& context,
+    Options options,
+    google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDatabase(context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminMetadata::GetDatabase(
     grpc::ClientContext& context,
@@ -82,6 +91,15 @@ GoldenThingAdminMetadata::AsyncUpdateDatabaseDdl(
   SetMetadata(*context, *options, absl::StrCat("database=", internal::UrlEncode(request.database())));
   return child_->AsyncUpdateDatabaseDdl(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminMetadata::UpdateDatabaseDdl(
+    grpc::ClientContext& context,
+    Options options,
+    google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("database=", internal::UrlEncode(request.database())));
+  return child_->UpdateDatabaseDdl(context, options, request);
 }
 
 Status
@@ -180,6 +198,15 @@ GoldenThingAdminMetadata::AsyncCreateBackup(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminMetadata::CreateBackup(
+    grpc::ClientContext& context,
+    Options options,
+    google::test::admin::database::v1::CreateBackupRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackup(context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminMetadata::GetBackup(
     grpc::ClientContext& context,
@@ -227,6 +254,15 @@ GoldenThingAdminMetadata::AsyncRestoreDatabase(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminMetadata::RestoreDatabase(
+    grpc::ClientContext& context,
+    Options options,
+    google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RestoreDatabase(context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 GoldenThingAdminMetadata::ListDatabaseOperations(
     grpc::ClientContext& context,
@@ -254,6 +290,15 @@ GoldenThingAdminMetadata::AsyncLongRunningWithoutRouting(
   SetMetadata(*context, *options);
   return child_->AsyncLongRunningWithoutRouting(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminMetadata::LongRunningWithoutRouting(
+    grpc::ClientContext& context,
+    Options options,
+    google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  SetMetadata(context, options);
+  return child_->LongRunningWithoutRouting(context, options, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

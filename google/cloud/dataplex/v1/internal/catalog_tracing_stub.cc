@@ -46,6 +46,18 @@ CatalogServiceTracingStub::AsyncCreateEntryType(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::CreateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "CreateEntryType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateEntryType(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceTracingStub::AsyncUpdateEntryType(
     google::cloud::CompletionQueue& cq,
@@ -61,6 +73,18 @@ CatalogServiceTracingStub::AsyncUpdateEntryType(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::UpdateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "UpdateEntryType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateEntryType(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceTracingStub::AsyncDeleteEntryType(
     google::cloud::CompletionQueue& cq,
@@ -74,6 +98,18 @@ CatalogServiceTracingStub::AsyncDeleteEntryType(
   auto f =
       child_->AsyncDeleteEntryType(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::DeleteEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "DeleteEntryType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEntryType(context, options, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse>
@@ -115,6 +151,18 @@ CatalogServiceTracingStub::AsyncCreateAspectType(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::CreateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "CreateAspectType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateAspectType(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceTracingStub::AsyncUpdateAspectType(
     google::cloud::CompletionQueue& cq,
@@ -130,6 +178,18 @@ CatalogServiceTracingStub::AsyncUpdateAspectType(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::UpdateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "UpdateAspectType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateAspectType(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceTracingStub::AsyncDeleteAspectType(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +203,18 @@ CatalogServiceTracingStub::AsyncDeleteAspectType(
   auto f =
       child_->AsyncDeleteAspectType(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::DeleteAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "DeleteAspectType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAspectType(context, options, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse>
@@ -184,6 +256,18 @@ CatalogServiceTracingStub::AsyncCreateEntryGroup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::CreateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "CreateEntryGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateEntryGroup(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceTracingStub::AsyncUpdateEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -199,6 +283,18 @@ CatalogServiceTracingStub::AsyncUpdateEntryGroup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::UpdateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "UpdateEntryGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateEntryGroup(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceTracingStub::AsyncDeleteEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -212,6 +308,18 @@ CatalogServiceTracingStub::AsyncDeleteEntryGroup(
   auto f =
       child_->AsyncDeleteEntryGroup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::DeleteEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "DeleteEntryGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEntryGroup(context, options, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse>

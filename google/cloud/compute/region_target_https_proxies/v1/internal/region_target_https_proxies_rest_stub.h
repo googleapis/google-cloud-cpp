@@ -46,6 +46,13 @@ class RegionTargetHttpsProxiesRestStub {
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           DeleteTargetHttpsProxyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetHttpsProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_target_https_proxies::v1::
+          DeleteTargetHttpsProxyRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
   GetTargetHttpsProxy(google::cloud::rest_internal::RestContext& rest_context,
                       Options const& options,
@@ -57,6 +64,13 @@ class RegionTargetHttpsProxiesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_target_https_proxies::v1::
+          InsertTargetHttpsProxyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetHttpsProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           InsertTargetHttpsProxyRequest const& request) = 0;
 
@@ -75,6 +89,13 @@ class RegionTargetHttpsProxiesRestStub {
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           PatchTargetHttpsProxyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchTargetHttpsProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_target_https_proxies::v1::
+          PatchTargetHttpsProxyRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetSslCertificates(
       google::cloud::CompletionQueue& cq,
@@ -83,11 +104,23 @@ class RegionTargetHttpsProxiesRestStub {
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           SetSslCertificatesRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSslCertificates(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_target_https_proxies::
+                         v1::SetSslCertificatesRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_target_https_proxies::v1::
+          SetUrlMapRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           SetUrlMapRequest const& request) = 0;
 
@@ -125,6 +158,12 @@ class DefaultRegionTargetHttpsProxiesRestStub
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           DeleteTargetHttpsProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpsProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_target_https_proxies::v1::
+          DeleteTargetHttpsProxyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
   GetTargetHttpsProxy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -137,6 +176,12 @@ class DefaultRegionTargetHttpsProxiesRestStub
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_target_https_proxies::v1::
+          InsertTargetHttpsProxyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpsProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           InsertTargetHttpsProxyRequest const& request) override;
 
@@ -155,6 +200,12 @@ class DefaultRegionTargetHttpsProxiesRestStub
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           PatchTargetHttpsProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpsProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_target_https_proxies::v1::
+          PatchTargetHttpsProxyRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetSslCertificates(
       google::cloud::CompletionQueue& cq,
@@ -163,10 +214,22 @@ class DefaultRegionTargetHttpsProxiesRestStub
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           SetSslCertificatesRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_target_https_proxies::v1::
+          SetSslCertificatesRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_target_https_proxies::v1::
+          SetUrlMapRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           SetUrlMapRequest const& request) override;
 

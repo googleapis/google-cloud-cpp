@@ -73,6 +73,17 @@ BatchServiceLogging::AsyncDeleteJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> BatchServiceLogging::DeleteJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::batch::v1::DeleteJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::batch::v1::DeleteJobRequest const& request) {
+        return child_->DeleteJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::batch::v1::ListJobsResponse>
 BatchServiceLogging::ListJobs(
     grpc::ClientContext& context, Options const& options,

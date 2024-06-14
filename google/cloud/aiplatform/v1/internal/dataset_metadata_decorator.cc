@@ -54,6 +54,14 @@ DatasetServiceMetadata::AsyncCreateDataset(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceMetadata::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDataset(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceMetadata::GetDataset(
     grpc::ClientContext& context, Options const& options,
@@ -94,6 +102,14 @@ DatasetServiceMetadata::AsyncDeleteDataset(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceMetadata::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDataset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceMetadata::AsyncImportData(
     google::cloud::CompletionQueue& cq,
@@ -104,6 +120,14 @@ DatasetServiceMetadata::AsyncImportData(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncImportData(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> DatasetServiceMetadata::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ImportDataRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ImportData(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -118,6 +142,14 @@ DatasetServiceMetadata::AsyncExportData(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceMetadata::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportDataRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportData(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceMetadata::AsyncCreateDatasetVersion(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +160,15 @@ DatasetServiceMetadata::AsyncCreateDatasetVersion(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateDatasetVersion(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceMetadata::CreateDatasetVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDatasetVersion(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
@@ -151,6 +192,15 @@ DatasetServiceMetadata::AsyncDeleteDatasetVersion(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDatasetVersion(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceMetadata::DeleteDatasetVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDatasetVersion(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
@@ -182,6 +232,16 @@ DatasetServiceMetadata::AsyncRestoreDatasetVersion(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRestoreDatasetVersion(cq, std::move(context),
                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceMetadata::RestoreDatasetVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RestoreDatasetVersion(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
@@ -221,6 +281,15 @@ DatasetServiceMetadata::AsyncDeleteSavedQuery(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSavedQuery(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceMetadata::DeleteSavedQuery(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSavedQuery(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>

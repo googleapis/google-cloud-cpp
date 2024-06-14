@@ -74,6 +74,17 @@ DefaultHubServiceStub::AsyncCreateHub(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::CreateHub(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateHub(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncUpdateHub(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +104,17 @@ DefaultHubServiceStub::AsyncUpdateHub(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::UpdateHub(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateHub(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncDeleteHub(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +132,17 @@ DefaultHubServiceStub::AsyncDeleteHub(
         return grpc_stub_->AsyncDeleteHub(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::DeleteHub(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteHub(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
@@ -168,6 +201,17 @@ DefaultHubServiceStub::AsyncCreateSpoke(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::CreateSpoke(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSpoke(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncUpdateSpoke(
     google::cloud::CompletionQueue& cq,
@@ -185,6 +229,17 @@ DefaultHubServiceStub::AsyncUpdateSpoke(
         return grpc_stub_->AsyncUpdateSpoke(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::UpdateSpoke(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSpoke(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -208,6 +263,18 @@ DefaultHubServiceStub::AsyncRejectHubSpoke(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::RejectHubSpoke(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RejectHubSpoke(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncAcceptHubSpoke(
     google::cloud::CompletionQueue& cq,
@@ -229,6 +296,18 @@ DefaultHubServiceStub::AsyncAcceptHubSpoke(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::AcceptHubSpoke(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AcceptHubSpoke(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
@@ -246,6 +325,17 @@ DefaultHubServiceStub::AsyncDeleteSpoke(
         return grpc_stub_->AsyncDeleteSpoke(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::DeleteSpoke(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSpoke(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::RouteTable>

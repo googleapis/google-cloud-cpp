@@ -55,6 +55,12 @@ class TargetVpnGatewaysRestMetadata : public TargetVpnGatewaysRestStub {
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           DeleteTargetVpnGatewayRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateway(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          DeleteTargetVpnGatewayRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
   GetTargetVpnGateway(google::cloud::rest_internal::RestContext& rest_context,
                       Options const& options,
@@ -66,6 +72,12 @@ class TargetVpnGatewaysRestMetadata : public TargetVpnGatewaysRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          InsertTargetVpnGatewayRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateway(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           InsertTargetVpnGatewayRequest const& request) override;
 
@@ -81,6 +93,12 @@ class TargetVpnGatewaysRestMetadata : public TargetVpnGatewaysRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          SetLabelsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           SetLabelsRequest const& request) override;
 

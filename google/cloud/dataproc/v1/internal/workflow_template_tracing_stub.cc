@@ -75,6 +75,21 @@ WorkflowTemplateServiceTracingStub::AsyncInstantiateWorkflowTemplate(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceTracingStub::InstantiateWorkflowTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataproc.v1.WorkflowTemplateService",
+                             "InstantiateWorkflowTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->InstantiateWorkflowTemplate(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceTracingStub::AsyncInstantiateInlineWorkflowTemplate(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +105,21 @@ WorkflowTemplateServiceTracingStub::AsyncInstantiateInlineWorkflowTemplate(
   auto f = child_->AsyncInstantiateInlineWorkflowTemplate(
       cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceTracingStub::InstantiateInlineWorkflowTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataproc.v1.WorkflowTemplateService",
+                             "InstantiateInlineWorkflowTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->InstantiateInlineWorkflowTemplate(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

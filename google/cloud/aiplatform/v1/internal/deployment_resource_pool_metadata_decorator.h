@@ -49,6 +49,11 @@ class DeploymentResourcePoolServiceMetadata
       google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request) override;
+
   StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
   GetDeploymentResourcePool(
       grpc::ClientContext& context, Options const& options,
@@ -66,6 +71,11 @@ class DeploymentResourcePoolServiceMetadata
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
           request) override;
 

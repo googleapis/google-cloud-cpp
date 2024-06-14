@@ -62,6 +62,14 @@ TagBindingsMetadata::AsyncCreateTagBinding(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> TagBindingsMetadata::CreateTagBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+        request) {
+  SetMetadata(context, options);
+  return child_->CreateTagBinding(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagBindingsMetadata::AsyncDeleteTagBinding(
     google::cloud::CompletionQueue& cq,
@@ -73,6 +81,15 @@ TagBindingsMetadata::AsyncDeleteTagBinding(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTagBinding(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> TagBindingsMetadata::DeleteTagBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTagBinding(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>

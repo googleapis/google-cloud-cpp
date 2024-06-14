@@ -61,6 +61,18 @@ DefaultDocumentProcessorServiceStub::AsyncBatchProcessDocuments(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::BatchProcessDocuments(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::BatchProcessRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchProcessDocuments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DefaultDocumentProcessorServiceStub::FetchProcessorTypes(
     grpc::ClientContext& context, Options const&,
@@ -141,6 +153,19 @@ DefaultDocumentProcessorServiceStub::AsyncTrainProcessorVersion(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::TrainProcessorVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->TrainProcessorVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DefaultDocumentProcessorServiceStub::GetProcessorVersion(
     grpc::ClientContext& context, Options const&,
@@ -186,6 +211,20 @@ DefaultDocumentProcessorServiceStub::AsyncDeleteProcessorVersion(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::DeleteProcessorVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteProcessorVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
@@ -204,6 +243,20 @@ DefaultDocumentProcessorServiceStub::AsyncDeployProcessorVersion(
         return grpc_stub_->AsyncDeployProcessorVersion(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::DeployProcessorVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeployProcessorVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -225,6 +278,20 @@ DefaultDocumentProcessorServiceStub::AsyncUndeployProcessorVersion(
         return grpc_stub_->AsyncUndeployProcessorVersion(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::UndeployProcessorVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UndeployProcessorVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
@@ -258,6 +325,18 @@ DefaultDocumentProcessorServiceStub::AsyncDeleteProcessor(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::DeleteProcessor(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteProcessor(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncEnableProcessor(
     google::cloud::CompletionQueue& cq,
@@ -277,6 +356,18 @@ DefaultDocumentProcessorServiceStub::AsyncEnableProcessor(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::EnableProcessor(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->EnableProcessor(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDisableProcessor(
     google::cloud::CompletionQueue& cq,
@@ -294,6 +385,18 @@ DefaultDocumentProcessorServiceStub::AsyncDisableProcessor(
         return grpc_stub_->AsyncDisableProcessor(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::DisableProcessor(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DisableProcessor(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -317,6 +420,20 @@ DefaultDocumentProcessorServiceStub::AsyncSetDefaultProcessorVersion(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::SetDefaultProcessorVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->SetDefaultProcessorVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncReviewDocument(
     google::cloud::CompletionQueue& cq,
@@ -334,6 +451,18 @@ DefaultDocumentProcessorServiceStub::AsyncReviewDocument(
         return grpc_stub_->AsyncReviewDocument(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::ReviewDocument(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ReviewDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -355,6 +484,20 @@ DefaultDocumentProcessorServiceStub::AsyncEvaluateProcessorVersion(
         return grpc_stub_->AsyncEvaluateProcessorVersion(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDocumentProcessorServiceStub::EvaluateProcessorVersion(
+    grpc::ClientContext& context, Options,
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->EvaluateProcessorVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::documentai::v1::Evaluation>

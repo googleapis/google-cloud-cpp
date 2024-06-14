@@ -108,6 +108,17 @@ DefaultAgentsStub::AsyncExportAgent(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAgentsStub::ExportAgent(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportAgent(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
@@ -125,6 +136,17 @@ DefaultAgentsStub::AsyncRestoreAgent(
         return grpc_stub_->AsyncRestoreAgent(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAgentsStub::RestoreAgent(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestoreAgent(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>

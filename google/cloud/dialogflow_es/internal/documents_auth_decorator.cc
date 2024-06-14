@@ -68,6 +68,14 @@ DocumentsAuth::AsyncCreateDocument(
       });
 }
 
+StatusOr<google::longrunning::Operation> DocumentsAuth::CreateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDocument(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentsAuth::AsyncImportDocuments(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +94,14 @@ DocumentsAuth::AsyncImportDocuments(
         return child->AsyncImportDocuments(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DocumentsAuth::ImportDocuments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportDocuments(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,6 +124,14 @@ DocumentsAuth::AsyncDeleteDocument(
       });
 }
 
+StatusOr<google::longrunning::Operation> DocumentsAuth::DeleteDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDocument(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentsAuth::AsyncUpdateDocument(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +150,14 @@ DocumentsAuth::AsyncUpdateDocument(
         return child->AsyncUpdateDocument(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DocumentsAuth::UpdateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDocument(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -148,6 +180,14 @@ DocumentsAuth::AsyncReloadDocument(
       });
 }
 
+StatusOr<google::longrunning::Operation> DocumentsAuth::ReloadDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReloadDocument(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentsAuth::AsyncExportDocument(
     google::cloud::CompletionQueue& cq,
@@ -166,6 +206,14 @@ DocumentsAuth::AsyncExportDocument(
         return child->AsyncExportDocument(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DocumentsAuth::ExportDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportDocument(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

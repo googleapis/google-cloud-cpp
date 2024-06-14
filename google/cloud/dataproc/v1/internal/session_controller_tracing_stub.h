@@ -45,6 +45,11 @@ class SessionControllerTracingStub : public SessionControllerStub {
       google::cloud::dataproc::v1::CreateSessionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request)
+      override;
+
   StatusOr<google::cloud::dataproc::v1::Session> GetSession(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetSessionRequest const& request) override;
@@ -60,10 +65,20 @@ class SessionControllerTracingStub : public SessionControllerStub {
       google::cloud::dataproc::v1::TerminateSessionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> TerminateSession(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteSession(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataproc::v1::DeleteSessionRequest const& request)
       override;
 

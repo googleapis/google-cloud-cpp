@@ -112,6 +112,23 @@ DefaultNetworkEdgeSecurityServicesRestStub::
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkEdgeSecurityServicesRestStub::DeleteNetworkEdgeSecurityService(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        DeleteNetworkEdgeSecurityServiceRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "networkEdgeSecurityServices", "/",
+                   request.network_edge_security_service()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
 DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityService(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -166,6 +183,25 @@ DefaultNetworkEdgeSecurityServicesRestStub::
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkEdgeSecurityServicesRestStub::InsertNetworkEdgeSecurityService(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        InsertNetworkEdgeSecurityServiceRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.network_edge_security_service_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "networkEdgeSecurityServices"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("validate_only",
+                          request.validate_only() ? "1" : "0")}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEdgeSecurityServicesRestStub::
     AsyncPatchNetworkEdgeSecurityService(
@@ -203,6 +239,26 @@ DefaultNetworkEdgeSecurityServicesRestStub::
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkEdgeSecurityServicesRestStub::PatchNetworkEdgeSecurityService(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        PatchNetworkEdgeSecurityServiceRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.network_edge_security_service_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "networkEdgeSecurityServices", "/",
+                   request.network_edge_security_service()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("paths", request.paths()),
+           std::make_pair("request_id", request.request_id()),
+           std::make_pair("update_mask", request.update_mask())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

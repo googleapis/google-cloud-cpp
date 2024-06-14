@@ -52,6 +52,18 @@ CatalogServiceLogging::AsyncCreateEntryType(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceLogging::CreateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
+        return child_->CreateEntryType(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceLogging::AsyncUpdateEntryType(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +83,18 @@ CatalogServiceLogging::AsyncUpdateEntryType(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceLogging::UpdateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
+        return child_->UpdateEntryType(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceLogging::AsyncDeleteEntryType(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +112,18 @@ CatalogServiceLogging::AsyncDeleteEntryType(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceLogging::DeleteEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
+        return child_->DeleteEntryType(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse>
@@ -134,6 +170,19 @@ CatalogServiceLogging::AsyncCreateAspectType(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::CreateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
+        return child_->CreateAspectType(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceLogging::AsyncUpdateAspectType(
     google::cloud::CompletionQueue& cq,
@@ -153,6 +202,19 @@ CatalogServiceLogging::AsyncUpdateAspectType(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::UpdateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
+        return child_->UpdateAspectType(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceLogging::AsyncDeleteAspectType(
     google::cloud::CompletionQueue& cq,
@@ -170,6 +232,19 @@ CatalogServiceLogging::AsyncDeleteAspectType(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::DeleteAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
+        return child_->DeleteAspectType(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse>
@@ -216,6 +291,19 @@ CatalogServiceLogging::AsyncCreateEntryGroup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::CreateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
+        return child_->CreateEntryGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceLogging::AsyncUpdateEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -235,6 +323,19 @@ CatalogServiceLogging::AsyncUpdateEntryGroup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::UpdateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
+        return child_->UpdateEntryGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceLogging::AsyncDeleteEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -252,6 +353,19 @@ CatalogServiceLogging::AsyncDeleteEntryGroup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::DeleteEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
+        return child_->DeleteEntryGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse>

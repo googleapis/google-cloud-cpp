@@ -46,12 +46,22 @@ class RapidMigrationAssessmentStub {
       google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateCollector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateAnnotation(google::cloud::CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
                         google::cloud::rapidmigrationassessment::v1::
                             CreateAnnotationRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateAnnotation(
+      grpc::ClientContext& context, Options options,
+      google::cloud::rapidmigrationassessment::v1::
+          CreateAnnotationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
   GetAnnotation(
@@ -79,10 +89,20 @@ class RapidMigrationAssessmentStub {
       google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateCollector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteCollector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCollector(
+      grpc::ClientContext& context, Options options,
       google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
           request) = 0;
 
@@ -93,6 +113,11 @@ class RapidMigrationAssessmentStub {
       google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ResumeCollector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncRegisterCollector(google::cloud::CompletionQueue& cq,
                          std::shared_ptr<grpc::ClientContext> context,
@@ -100,10 +125,20 @@ class RapidMigrationAssessmentStub {
                          google::cloud::rapidmigrationassessment::v1::
                              RegisterCollectorRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> RegisterCollector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::rapidmigrationassessment::v1::
+          RegisterCollectorRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncPauseCollector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> PauseCollector(
+      grpc::ClientContext& context, Options options,
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request) = 0;
 
@@ -138,10 +173,20 @@ class DefaultRapidMigrationAssessmentStub
       google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateCollector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAnnotation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::rapidmigrationassessment::v1::
+          CreateAnnotationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAnnotation(
+      grpc::ClientContext& context, Options options,
       google::cloud::rapidmigrationassessment::v1::
           CreateAnnotationRequest const& request) override;
 
@@ -169,10 +214,20 @@ class DefaultRapidMigrationAssessmentStub
       google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateCollector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCollector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteCollector(
+      grpc::ClientContext& context, Options options,
       google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
           request) override;
 
@@ -183,6 +238,11 @@ class DefaultRapidMigrationAssessmentStub
       google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ResumeCollector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRegisterCollector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -190,10 +250,20 @@ class DefaultRapidMigrationAssessmentStub
       google::cloud::rapidmigrationassessment::v1::
           RegisterCollectorRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> RegisterCollector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::rapidmigrationassessment::v1::
+          RegisterCollectorRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncPauseCollector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> PauseCollector(
+      grpc::ClientContext& context, Options options,
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request) override;
 

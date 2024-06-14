@@ -78,6 +78,21 @@ TelcoAutomationTracingStub::AsyncCreateOrchestrationCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationTracingStub::CreateOrchestrationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.telcoautomation.v1.TelcoAutomation",
+                             "CreateOrchestrationCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateOrchestrationCluster(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationTracingStub::AsyncDeleteOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +108,21 @@ TelcoAutomationTracingStub::AsyncDeleteOrchestrationCluster(
   auto f = child_->AsyncDeleteOrchestrationCluster(cq, context,
                                                    std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationTracingStub::DeleteOrchestrationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.telcoautomation.v1.TelcoAutomation",
+                             "DeleteOrchestrationCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteOrchestrationCluster(context, options, request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
@@ -133,6 +163,18 @@ TelcoAutomationTracingStub::AsyncCreateEdgeSlm(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationTracingStub::CreateEdgeSlm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.telcoautomation.v1.TelcoAutomation", "CreateEdgeSlm");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateEdgeSlm(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationTracingStub::AsyncDeleteEdgeSlm(
     google::cloud::CompletionQueue& cq,
@@ -145,6 +187,18 @@ TelcoAutomationTracingStub::AsyncDeleteEdgeSlm(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteEdgeSlm(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationTracingStub::DeleteEdgeSlm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.telcoautomation.v1.TelcoAutomation", "DeleteEdgeSlm");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEdgeSlm(context, options, request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>

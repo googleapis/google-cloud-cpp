@@ -194,6 +194,18 @@ DefaultAdminServiceStub::AsyncSeekSubscription(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAdminServiceStub::SeekSubscription(
+    grpc::ClientContext& context, Options,
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SeekSubscription(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 DefaultAdminServiceStub::CreateReservation(
     grpc::ClientContext& context, Options const&,

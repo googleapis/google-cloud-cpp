@@ -77,6 +77,19 @@ CloudFunctionsServiceLogging::AsyncCreateFunction(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceLogging::CreateFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::functions::v1::CreateFunctionRequest const& request) {
+        return child_->CreateFunction(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceLogging::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
@@ -96,6 +109,19 @@ CloudFunctionsServiceLogging::AsyncUpdateFunction(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceLogging::UpdateFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+        return child_->UpdateFunction(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceLogging::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
@@ -113,6 +139,19 @@ CloudFunctionsServiceLogging::AsyncDeleteFunction(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceLogging::DeleteFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+        return child_->DeleteFunction(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>

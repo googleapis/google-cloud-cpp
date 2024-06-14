@@ -53,10 +53,18 @@ class DocumentsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateDocument(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncImportDocuments(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ImportDocuments(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteDocument(
@@ -65,10 +73,18 @@ class DocumentsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteDocument(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDocument(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncReloadDocument(
@@ -77,10 +93,18 @@ class DocumentsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ReloadDocument(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncExportDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ExportDocument(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -122,10 +146,20 @@ class DefaultDocumentsStub : public DocumentsStub {
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDocument(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportDocuments(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ImportDocuments(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request)
       override;
 
@@ -136,10 +170,20 @@ class DefaultDocumentsStub : public DocumentsStub {
       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteDocument(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateDocument(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request)
       override;
 
@@ -150,10 +194,20 @@ class DefaultDocumentsStub : public DocumentsStub {
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ReloadDocument(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportDocument(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request)
       override;
 

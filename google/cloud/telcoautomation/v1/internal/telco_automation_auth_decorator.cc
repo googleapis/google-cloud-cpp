@@ -72,6 +72,16 @@ TelcoAutomationAuth::AsyncCreateOrchestrationCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationAuth::CreateOrchestrationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateOrchestrationCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationAuth::AsyncDeleteOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +101,16 @@ TelcoAutomationAuth::AsyncDeleteOrchestrationCluster(
         return child->AsyncDeleteOrchestrationCluster(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationAuth::DeleteOrchestrationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteOrchestrationCluster(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
@@ -131,6 +151,14 @@ TelcoAutomationAuth::AsyncCreateEdgeSlm(
       });
 }
 
+StatusOr<google::longrunning::Operation> TelcoAutomationAuth::CreateEdgeSlm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEdgeSlm(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationAuth::AsyncDeleteEdgeSlm(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +177,14 @@ TelcoAutomationAuth::AsyncDeleteEdgeSlm(
         return child->AsyncDeleteEdgeSlm(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TelcoAutomationAuth::DeleteEdgeSlm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEdgeSlm(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>

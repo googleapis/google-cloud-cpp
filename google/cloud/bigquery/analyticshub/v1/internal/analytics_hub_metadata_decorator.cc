@@ -178,6 +178,16 @@ AnalyticsHubServiceMetadata::AsyncSubscribeDataExchange(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceMetadata::SubscribeDataExchange(
+    grpc::ClientContext& context, Options options,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SubscribeDataExchange(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceMetadata::AsyncRefreshSubscription(
     google::cloud::CompletionQueue& cq,
@@ -189,6 +199,16 @@ AnalyticsHubServiceMetadata::AsyncRefreshSubscription(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRefreshSubscription(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceMetadata::RefreshSubscription(
+    grpc::ClientContext& context, Options options,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RefreshSubscription(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -244,6 +264,16 @@ AnalyticsHubServiceMetadata::AsyncDeleteSubscription(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSubscription(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceMetadata::DeleteSubscription(
+    grpc::ClientContext& context, Options options,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSubscription(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceMetadata::GetIamPolicy(

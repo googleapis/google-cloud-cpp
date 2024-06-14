@@ -79,6 +79,22 @@ DefaultMachineImagesRestStub::AsyncDeleteMachineImage(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultMachineImagesRestStub::DeleteMachineImage(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        DeleteMachineImageRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "machineImages", "/", request.machine_image()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
 DefaultMachineImagesRestStub::GetMachineImage(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -145,6 +161,23 @@ DefaultMachineImagesRestStub::AsyncInsertMachineImage(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultMachineImagesRestStub::InsertMachineImage(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        InsertMachineImageRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.machine_image_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "machineImages"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("source_instance", request.source_instance())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImageList>

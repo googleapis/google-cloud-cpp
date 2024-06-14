@@ -138,6 +138,19 @@ CloudChannelServiceLogging::AsyncProvisionCloudIdentity(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::ProvisionCloudIdentity(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::ProvisionCloudIdentityRequest const&
+                 request) {
+        return child_->ProvisionCloudIdentity(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
 CloudChannelServiceLogging::ListEntitlements(
     grpc::ClientContext& context, Options const& options,
@@ -208,6 +221,19 @@ CloudChannelServiceLogging::AsyncCreateEntitlement(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::CreateEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+        return child_->CreateEntitlement(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncChangeParameters(
     google::cloud::CompletionQueue& cq,
@@ -225,6 +251,19 @@ CloudChannelServiceLogging::AsyncChangeParameters(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::ChangeParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeParametersRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::ChangeParametersRequest const& request) {
+        return child_->ChangeParameters(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -246,6 +285,19 @@ CloudChannelServiceLogging::AsyncChangeRenewalSettings(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::ChangeRenewalSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::ChangeRenewalSettingsRequest const&
+                 request) {
+        return child_->ChangeRenewalSettings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncChangeOffer(
     google::cloud::CompletionQueue& cq,
@@ -262,6 +314,18 @@ CloudChannelServiceLogging::AsyncChangeOffer(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::ChangeOffer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeOfferRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::ChangeOfferRequest const& request) {
+        return child_->ChangeOffer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -283,6 +347,19 @@ CloudChannelServiceLogging::AsyncStartPaidService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::StartPaidService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+        return child_->StartPaidService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncSuspendEntitlement(
     google::cloud::CompletionQueue& cq,
@@ -300,6 +377,19 @@ CloudChannelServiceLogging::AsyncSuspendEntitlement(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::SuspendEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::SuspendEntitlementRequest const&
+                 request) {
+        return child_->SuspendEntitlement(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -321,6 +411,19 @@ CloudChannelServiceLogging::AsyncCancelEntitlement(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::CancelEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+        return child_->CancelEntitlement(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncActivateEntitlement(
     google::cloud::CompletionQueue& cq,
@@ -338,6 +441,19 @@ CloudChannelServiceLogging::AsyncActivateEntitlement(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::ActivateEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::ActivateEntitlementRequest const&
+                 request) {
+        return child_->ActivateEntitlement(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -359,6 +475,19 @@ CloudChannelServiceLogging::AsyncTransferEntitlements(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::TransferEntitlements(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::TransferEntitlementsRequest const&
+                 request) {
+        return child_->TransferEntitlements(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncTransferEntitlementsToGoogle(
     google::cloud::CompletionQueue& cq,
@@ -378,6 +507,21 @@ CloudChannelServiceLogging::AsyncTransferEntitlementsToGoogle(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceLogging::TransferEntitlementsToGoogle(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+              request) {
+        return child_->TransferEntitlementsToGoogle(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>

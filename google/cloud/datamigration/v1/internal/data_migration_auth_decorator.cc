@@ -69,6 +69,15 @@ DataMigrationServiceAuth::AsyncCreateMigrationJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::CreateMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncUpdateMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +96,15 @@ DataMigrationServiceAuth::AsyncUpdateMigrationJob(
         return child->AsyncUpdateMigrationJob(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::UpdateMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateMigrationJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,6 +127,15 @@ DataMigrationServiceAuth::AsyncDeleteMigrationJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::DeleteMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncStartMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -127,6 +154,15 @@ DataMigrationServiceAuth::AsyncStartMigrationJob(
         return child->AsyncStartMigrationJob(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::StartMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartMigrationJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -149,6 +185,15 @@ DataMigrationServiceAuth::AsyncStopMigrationJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::StopMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncResumeMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +212,15 @@ DataMigrationServiceAuth::AsyncResumeMigrationJob(
         return child->AsyncResumeMigrationJob(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::ResumeMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResumeMigrationJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -189,6 +243,15 @@ DataMigrationServiceAuth::AsyncPromoteMigrationJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::PromoteMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PromoteMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncVerifyMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -209,6 +272,15 @@ DataMigrationServiceAuth::AsyncVerifyMigrationJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::VerifyMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->VerifyMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncRestartMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -227,6 +299,15 @@ DataMigrationServiceAuth::AsyncRestartMigrationJob(
         return child->AsyncRestartMigrationJob(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::RestartMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestartMigrationJob(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
@@ -286,6 +367,16 @@ DataMigrationServiceAuth::AsyncCreateConnectionProfile(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::CreateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConnectionProfile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -305,6 +396,16 @@ DataMigrationServiceAuth::AsyncUpdateConnectionProfile(
         return child->AsyncUpdateConnectionProfile(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::UpdateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateConnectionProfile(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -328,6 +429,16 @@ DataMigrationServiceAuth::AsyncDeleteConnectionProfile(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::DeleteConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConnectionProfile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
@@ -347,6 +458,16 @@ DataMigrationServiceAuth::AsyncCreatePrivateConnection(
         return child->AsyncCreatePrivateConnection(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::CreatePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePrivateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
@@ -386,6 +507,16 @@ DataMigrationServiceAuth::AsyncDeletePrivateConnection(
         return child->AsyncDeletePrivateConnection(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::DeletePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePrivateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -428,6 +559,16 @@ DataMigrationServiceAuth::AsyncCreateConversionWorkspace(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::CreateConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncUpdateConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -449,6 +590,16 @@ DataMigrationServiceAuth::AsyncUpdateConversionWorkspace(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::UpdateConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncDeleteConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -468,6 +619,16 @@ DataMigrationServiceAuth::AsyncDeleteConversionWorkspace(
         return child->AsyncDeleteConversionWorkspace(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::DeleteConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConversionWorkspace(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
@@ -526,6 +687,16 @@ DataMigrationServiceAuth::AsyncSeedConversionWorkspace(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::SeedConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SeedConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncImportMappingRules(
     google::cloud::CompletionQueue& cq,
@@ -544,6 +715,15 @@ DataMigrationServiceAuth::AsyncImportMappingRules(
         return child->AsyncImportMappingRules(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::ImportMappingRules(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportMappingRules(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -567,6 +747,16 @@ DataMigrationServiceAuth::AsyncConvertConversionWorkspace(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::ConvertConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ConvertConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncCommitConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -586,6 +776,16 @@ DataMigrationServiceAuth::AsyncCommitConversionWorkspace(
         return child->AsyncCommitConversionWorkspace(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::CommitConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CommitConversionWorkspace(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -609,6 +809,16 @@ DataMigrationServiceAuth::AsyncRollbackConversionWorkspace(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::RollbackConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RollbackConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncApplyConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -628,6 +838,16 @@ DataMigrationServiceAuth::AsyncApplyConversionWorkspace(
         return child->AsyncApplyConversionWorkspace(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceAuth::ApplyConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ApplyConversionWorkspace(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>

@@ -78,6 +78,19 @@ DataMigrationServiceLogging::AsyncCreateMigrationJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::CreateMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::CreateMigrationJobRequest const&
+                 request) {
+        return child_->CreateMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncUpdateMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +108,19 @@ DataMigrationServiceLogging::AsyncUpdateMigrationJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::UpdateMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::UpdateMigrationJobRequest const&
+                 request) {
+        return child_->UpdateMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -116,6 +142,19 @@ DataMigrationServiceLogging::AsyncDeleteMigrationJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::DeleteMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::DeleteMigrationJobRequest const&
+                 request) {
+        return child_->DeleteMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncStartMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -133,6 +172,19 @@ DataMigrationServiceLogging::AsyncStartMigrationJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::StartMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::StartMigrationJobRequest const&
+                 request) {
+        return child_->StartMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -154,6 +206,19 @@ DataMigrationServiceLogging::AsyncStopMigrationJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::StopMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
+        return child_->StopMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncResumeMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -171,6 +236,19 @@ DataMigrationServiceLogging::AsyncResumeMigrationJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::ResumeMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::ResumeMigrationJobRequest const&
+                 request) {
+        return child_->ResumeMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -192,6 +270,19 @@ DataMigrationServiceLogging::AsyncPromoteMigrationJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::PromoteMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::PromoteMigrationJobRequest const&
+                 request) {
+        return child_->PromoteMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncVerifyMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -211,6 +302,19 @@ DataMigrationServiceLogging::AsyncVerifyMigrationJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::VerifyMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::VerifyMigrationJobRequest const&
+                 request) {
+        return child_->VerifyMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncRestartMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -228,6 +332,19 @@ DataMigrationServiceLogging::AsyncRestartMigrationJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::RestartMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::RestartMigrationJobRequest const&
+                 request) {
+        return child_->RestartMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
@@ -302,6 +419,20 @@ DataMigrationServiceLogging::AsyncCreateConnectionProfile(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::CreateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+                 request) {
+        return child_->CreateConnectionProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -320,6 +451,20 @@ DataMigrationServiceLogging::AsyncUpdateConnectionProfile(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::UpdateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+                 request) {
+        return child_->UpdateConnectionProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -342,6 +487,20 @@ DataMigrationServiceLogging::AsyncDeleteConnectionProfile(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::DeleteConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+                 request) {
+        return child_->DeleteConnectionProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
@@ -360,6 +519,20 @@ DataMigrationServiceLogging::AsyncCreatePrivateConnection(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::CreatePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+                 request) {
+        return child_->CreatePrivateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
@@ -406,6 +579,20 @@ DataMigrationServiceLogging::AsyncDeletePrivateConnection(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::DeletePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+                 request) {
+        return child_->DeletePrivateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -456,6 +643,21 @@ DataMigrationServiceLogging::AsyncCreateConversionWorkspace(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::CreateConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+              request) {
+        return child_->CreateConversionWorkspace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncUpdateConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -477,6 +679,21 @@ DataMigrationServiceLogging::AsyncUpdateConversionWorkspace(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::UpdateConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+              request) {
+        return child_->UpdateConversionWorkspace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncDeleteConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -496,6 +713,21 @@ DataMigrationServiceLogging::AsyncDeleteConversionWorkspace(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::DeleteConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+              request) {
+        return child_->DeleteConversionWorkspace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
@@ -569,6 +801,20 @@ DataMigrationServiceLogging::AsyncSeedConversionWorkspace(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::SeedConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+                 request) {
+        return child_->SeedConversionWorkspace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncImportMappingRules(
     google::cloud::CompletionQueue& cq,
@@ -586,6 +832,19 @@ DataMigrationServiceLogging::AsyncImportMappingRules(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::ImportMappingRules(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::ImportMappingRulesRequest const&
+                 request) {
+        return child_->ImportMappingRules(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -609,6 +868,21 @@ DataMigrationServiceLogging::AsyncConvertConversionWorkspace(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::ConvertConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+              request) {
+        return child_->ConvertConversionWorkspace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncCommitConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -628,6 +902,21 @@ DataMigrationServiceLogging::AsyncCommitConversionWorkspace(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::CommitConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+              request) {
+        return child_->CommitConversionWorkspace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -651,6 +940,21 @@ DataMigrationServiceLogging::AsyncRollbackConversionWorkspace(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::RollbackConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+              request) {
+        return child_->RollbackConversionWorkspace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceLogging::AsyncApplyConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -669,6 +973,20 @@ DataMigrationServiceLogging::AsyncApplyConversionWorkspace(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceLogging::ApplyConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+                 request) {
+        return child_->ApplyConversionWorkspace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>

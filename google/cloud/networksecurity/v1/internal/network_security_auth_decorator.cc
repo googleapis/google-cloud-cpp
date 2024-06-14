@@ -72,6 +72,16 @@ NetworkSecurityAuth::AsyncCreateAuthorizationPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::CreateAuthorizationPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAuthorizationPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityAuth::AsyncUpdateAuthorizationPolicy(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +103,16 @@ NetworkSecurityAuth::AsyncUpdateAuthorizationPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::UpdateAuthorizationPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAuthorizationPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityAuth::AsyncDeleteAuthorizationPolicy(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +132,16 @@ NetworkSecurityAuth::AsyncDeleteAuthorizationPolicy(
         return child->AsyncDeleteAuthorizationPolicy(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::DeleteAuthorizationPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAuthorizationPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
@@ -155,6 +185,16 @@ NetworkSecurityAuth::AsyncCreateServerTlsPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::CreateServerTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateServerTlsPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityAuth::AsyncUpdateServerTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -176,6 +216,16 @@ NetworkSecurityAuth::AsyncUpdateServerTlsPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::UpdateServerTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateServerTlsPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityAuth::AsyncDeleteServerTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -195,6 +245,16 @@ NetworkSecurityAuth::AsyncDeleteServerTlsPolicy(
         return child->AsyncDeleteServerTlsPolicy(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::DeleteServerTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteServerTlsPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
@@ -238,6 +298,16 @@ NetworkSecurityAuth::AsyncCreateClientTlsPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::CreateClientTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateClientTlsPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityAuth::AsyncUpdateClientTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -259,6 +329,16 @@ NetworkSecurityAuth::AsyncUpdateClientTlsPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::UpdateClientTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateClientTlsPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityAuth::AsyncDeleteClientTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -278,6 +358,16 @@ NetworkSecurityAuth::AsyncDeleteClientTlsPolicy(
         return child->AsyncDeleteClientTlsPolicy(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::DeleteClientTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteClientTlsPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

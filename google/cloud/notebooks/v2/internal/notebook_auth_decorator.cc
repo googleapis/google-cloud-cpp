@@ -69,6 +69,14 @@ NotebookServiceAuth::AsyncCreateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> NotebookServiceAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v2::CreateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +95,14 @@ NotebookServiceAuth::AsyncUpdateInstance(
         return child->AsyncUpdateInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NotebookServiceAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v2::UpdateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,6 +125,14 @@ NotebookServiceAuth::AsyncDeleteInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> NotebookServiceAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v2::DeleteInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncStartInstance(
     google::cloud::CompletionQueue& cq,
@@ -127,6 +151,14 @@ NotebookServiceAuth::AsyncStartInstance(
         return child->AsyncStartInstance(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NotebookServiceAuth::StartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v2::StartInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -149,6 +181,14 @@ NotebookServiceAuth::AsyncStopInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> NotebookServiceAuth::StopInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v2::StopInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncResetInstance(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +207,14 @@ NotebookServiceAuth::AsyncResetInstance(
         return child->AsyncResetInstance(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NotebookServiceAuth::ResetInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v2::ResetInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResetInstance(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
@@ -199,6 +247,14 @@ NotebookServiceAuth::AsyncUpgradeInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> NotebookServiceAuth::UpgradeInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpgradeInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncRollbackInstance(
     google::cloud::CompletionQueue& cq,
@@ -219,6 +275,14 @@ NotebookServiceAuth::AsyncRollbackInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> NotebookServiceAuth::RollbackInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v2::RollbackInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RollbackInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncDiagnoseInstance(
     google::cloud::CompletionQueue& cq,
@@ -237,6 +301,14 @@ NotebookServiceAuth::AsyncDiagnoseInstance(
         return child->AsyncDiagnoseInstance(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NotebookServiceAuth::DiagnoseInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DiagnoseInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

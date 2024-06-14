@@ -69,6 +69,20 @@ TargetHttpProxiesRestLogging::AsyncDeleteTargetHttpProxy(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetHttpProxiesRestLogging::DeleteTargetHttpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        DeleteTargetHttpProxyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 DeleteTargetHttpProxyRequest const& request) {
+        return child_->DeleteTargetHttpProxy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
 TargetHttpProxiesRestLogging::GetTargetHttpProxy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -101,6 +115,20 @@ TargetHttpProxiesRestLogging::AsyncInsertTargetHttpProxy(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetHttpProxiesRestLogging::InsertTargetHttpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        InsertTargetHttpProxyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 InsertTargetHttpProxyRequest const& request) {
+        return child_->InsertTargetHttpProxy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
@@ -137,6 +165,20 @@ TargetHttpProxiesRestLogging::AsyncPatchTargetHttpProxy(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetHttpProxiesRestLogging::PatchTargetHttpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        PatchTargetHttpProxyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 PatchTargetHttpProxyRequest const& request) {
+        return child_->PatchTargetHttpProxy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestLogging::AsyncSetUrlMap(
     CompletionQueue& cq,
@@ -155,6 +197,20 @@ TargetHttpProxiesRestLogging::AsyncSetUrlMap(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetHttpProxiesRestLogging::SetUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        SetUrlMapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 SetUrlMapRequest const& request) {
+        return child_->SetUrlMap(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

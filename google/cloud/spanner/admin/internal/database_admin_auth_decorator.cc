@@ -61,6 +61,15 @@ DatabaseAdminAuth::AsyncCreateDatabase(
       });
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminAuth::CreateDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDatabase(context, options, request);
+}
+
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminAuth::GetDatabase(
     grpc::ClientContext& context, Options const& options,
@@ -91,6 +100,15 @@ DatabaseAdminAuth::AsyncUpdateDatabase(
       });
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminAuth::UpdateDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDatabase(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminAuth::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +128,15 @@ DatabaseAdminAuth::AsyncUpdateDatabaseDdl(
         return child->AsyncUpdateDatabaseDdl(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminAuth::UpdateDatabaseDdl(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDatabaseDdl(context, options, request);
 }
 
 Status DatabaseAdminAuth::DropDatabase(
@@ -175,6 +202,14 @@ DatabaseAdminAuth::AsyncCreateBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminAuth::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminAuth::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -193,6 +228,14 @@ DatabaseAdminAuth::AsyncCopyBackup(
         return child->AsyncCopyBackup(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminAuth::CopyBackup(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CopyBackup(context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -249,6 +292,15 @@ DatabaseAdminAuth::AsyncRestoreDatabase(
         return child->AsyncRestoreDatabase(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminAuth::RestoreDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestoreDatabase(context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>

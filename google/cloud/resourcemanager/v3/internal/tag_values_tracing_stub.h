@@ -59,6 +59,11 @@ class TagValuesTracingStub : public TagValuesStub {
       google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateTagValue(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTagValue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -66,10 +71,20 @@ class TagValuesTracingStub : public TagValuesStub {
       google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateTagValue(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagValue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTagValue(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
       override;
 

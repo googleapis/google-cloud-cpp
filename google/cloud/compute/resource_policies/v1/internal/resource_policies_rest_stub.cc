@@ -107,6 +107,23 @@ DefaultResourcePoliciesRestStub::AsyncDeleteResourcePolicy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultResourcePoliciesRestStub::DeleteResourcePolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        DeleteResourcePolicyRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "resourcePolicies", "/",
+                   request.resource_policy()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
 DefaultResourcePoliciesRestStub::GetResourcePolicy(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -175,6 +192,22 @@ DefaultResourcePoliciesRestStub::AsyncInsertResourcePolicy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultResourcePoliciesRestStub::InsertResourcePolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        InsertResourcePolicyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.resource_policy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "resourcePolicies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
 DefaultResourcePoliciesRestStub::ListResourcePolicies(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -232,6 +265,24 @@ DefaultResourcePoliciesRestStub::AsyncPatchResourcePolicy(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultResourcePoliciesRestStub::PatchResourcePolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePolicyRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.resource_policy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "resourcePolicies", "/",
+                   request.resource_policy()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("update_mask", request.update_mask())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

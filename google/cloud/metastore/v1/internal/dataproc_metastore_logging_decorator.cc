@@ -76,6 +76,19 @@ DataprocMetastoreLogging::AsyncCreateService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::CreateServiceRequest const& request) {
+        return child_->CreateService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreLogging::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +108,19 @@ DataprocMetastoreLogging::AsyncUpdateService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::UpdateServiceRequest const& request) {
+        return child_->UpdateService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreLogging::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +138,19 @@ DataprocMetastoreLogging::AsyncDeleteService(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::DeleteServiceRequest const& request) {
+        return child_->DeleteService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
@@ -159,6 +198,19 @@ DataprocMetastoreLogging::AsyncCreateMetadataImport(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::CreateMetadataImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::CreateMetadataImportRequest const&
+                 request) {
+        return child_->CreateMetadataImport(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreLogging::AsyncUpdateMetadataImport(
     google::cloud::CompletionQueue& cq,
@@ -176,6 +228,19 @@ DataprocMetastoreLogging::AsyncUpdateMetadataImport(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::UpdateMetadataImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::UpdateMetadataImportRequest const&
+                 request) {
+        return child_->UpdateMetadataImport(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -197,6 +262,19 @@ DataprocMetastoreLogging::AsyncExportMetadata(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::ExportMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::ExportMetadataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::ExportMetadataRequest const& request) {
+        return child_->ExportMetadata(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreLogging::AsyncRestoreService(
     google::cloud::CompletionQueue& cq,
@@ -214,6 +292,19 @@ DataprocMetastoreLogging::AsyncRestoreService(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::RestoreService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::RestoreServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::RestoreServiceRequest const& request) {
+        return child_->RestoreService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
@@ -258,6 +349,17 @@ DataprocMetastoreLogging::AsyncCreateBackup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreLogging::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::CreateBackupRequest const& request) {
+        return child_->CreateBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreLogging::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -274,6 +376,17 @@ DataprocMetastoreLogging::AsyncDeleteBackup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataprocMetastoreLogging::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::DeleteBackupRequest const& request) {
+        return child_->DeleteBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -295,6 +408,19 @@ DataprocMetastoreLogging::AsyncQueryMetadata(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::QueryMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+        return child_->QueryMetadata(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreLogging::AsyncMoveTableToDatabase(
     google::cloud::CompletionQueue& cq,
@@ -312,6 +438,19 @@ DataprocMetastoreLogging::AsyncMoveTableToDatabase(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::MoveTableToDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::MoveTableToDatabaseRequest const&
+                 request) {
+        return child_->MoveTableToDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -332,6 +471,20 @@ DataprocMetastoreLogging::AsyncAlterMetadataResourceLocation(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreLogging::AlterMetadataResourceLocation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::
+                 AlterMetadataResourceLocationRequest const& request) {
+        return child_->AlterMetadataResourceLocation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

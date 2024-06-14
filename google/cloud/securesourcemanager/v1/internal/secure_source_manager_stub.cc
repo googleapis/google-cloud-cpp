@@ -77,6 +77,19 @@ DefaultSecureSourceManagerStub::AsyncCreateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecureSourceManagerStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -96,6 +109,19 @@ DefaultSecureSourceManagerStub::AsyncDeleteInstance(
         return grpc_stub_->AsyncDeleteInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::DeleteInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::ListRepositoriesResponse>
@@ -145,6 +171,19 @@ DefaultSecureSourceManagerStub::AsyncCreateRepository(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::CreateRepository(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecureSourceManagerStub::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
@@ -164,6 +203,19 @@ DefaultSecureSourceManagerStub::AsyncDeleteRepository(
         return grpc_stub_->AsyncDeleteRepository(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::DeleteRepository(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy>

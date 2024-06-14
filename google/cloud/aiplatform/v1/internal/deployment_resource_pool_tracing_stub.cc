@@ -49,6 +49,21 @@ DeploymentResourcePoolServiceTracingStub::AsyncCreateDeploymentResourcePool(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceTracingStub::CreateDeploymentResourcePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.DeploymentResourcePoolService",
+      "CreateDeploymentResourcePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateDeploymentResourcePool(context, options, request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceTracingStub::GetDeploymentResourcePool(
     grpc::ClientContext& context, Options const& options,
@@ -94,6 +109,21 @@ DeploymentResourcePoolServiceTracingStub::AsyncDeleteDeploymentResourcePool(
   auto f = child_->AsyncDeleteDeploymentResourcePool(
       cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceTracingStub::DeleteDeploymentResourcePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.DeploymentResourcePoolService",
+      "DeleteDeploymentResourcePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteDeploymentResourcePool(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -51,6 +51,11 @@ class CompletionServiceStub {
       google::cloud::retail::v2::ImportCompletionDataRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ImportCompletionData(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::ImportCompletionDataRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -82,6 +87,11 @@ class DefaultCompletionServiceStub : public CompletionServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ImportCompletionData(
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::ImportCompletionDataRequest const& request)
       override;
 

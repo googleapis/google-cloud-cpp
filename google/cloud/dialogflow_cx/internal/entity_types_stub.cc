@@ -110,6 +110,19 @@ DefaultEntityTypesStub::AsyncExportEntityTypes(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEntityTypesStub::ExportEntityTypes(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportEntityTypes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEntityTypesStub::AsyncImportEntityTypes(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +141,19 @@ DefaultEntityTypesStub::AsyncImportEntityTypes(
         return grpc_stub_->AsyncImportEntityTypes(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEntityTypesStub::ImportEntityTypes(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportEntityTypes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

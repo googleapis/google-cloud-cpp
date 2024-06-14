@@ -55,6 +55,12 @@ class DatabaseAdminRestMetadata : public DatabaseAdminRestStub {
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request) override;
+
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -69,11 +75,23 @@ class DatabaseAdminRestMetadata : public DatabaseAdminRestStub {
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
+
   google::cloud::future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) override;
 
@@ -113,11 +131,23 @@ class DatabaseAdminRestMetadata : public DatabaseAdminRestStub {
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request)
+      override;
+
   google::cloud::future<StatusOr<google::longrunning::Operation>>
   AsyncCopyBackup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CopyBackup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::CopyBackupRequest const& request)
       override;
 
@@ -150,6 +180,12 @@ class DatabaseAdminRestMetadata : public DatabaseAdminRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request) override;
 

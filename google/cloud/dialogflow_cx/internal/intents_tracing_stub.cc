@@ -103,6 +103,17 @@ IntentsTracingStub::AsyncImportIntents(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> IntentsTracingStub::ImportIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Intents",
+                                     "ImportIntents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ImportIntents(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IntentsTracingStub::AsyncExportIntents(
     google::cloud::CompletionQueue& cq,
@@ -115,6 +126,17 @@ IntentsTracingStub::AsyncExportIntents(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncExportIntents(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> IntentsTracingStub::ExportIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Intents",
+                                     "ExportIntents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportIntents(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -48,6 +48,17 @@ DefaultApiKeysStub::AsyncCreateKey(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultApiKeysStub::CreateKey(
+    grpc::ClientContext& context, Options,
+    google::api::apikeys::v2::CreateKeyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::api::apikeys::v2::ListKeysResponse>
 DefaultApiKeysStub::ListKeys(
     grpc::ClientContext& context, Options const&,
@@ -100,6 +111,17 @@ DefaultApiKeysStub::AsyncUpdateKey(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultApiKeysStub::UpdateKey(
+    grpc::ClientContext& context, Options,
+    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiKeysStub::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
@@ -115,6 +137,17 @@ DefaultApiKeysStub::AsyncDeleteKey(
         return grpc_stub_->AsyncDeleteKey(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultApiKeysStub::DeleteKey(
+    grpc::ClientContext& context, Options,
+    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -133,6 +166,17 @@ DefaultApiKeysStub::AsyncUndeleteKey(
         return grpc_stub_->AsyncUndeleteKey(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultApiKeysStub::UndeleteKey(
+    grpc::ClientContext& context, Options,
+    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeleteKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>

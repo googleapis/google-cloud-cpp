@@ -51,6 +51,15 @@ InstanceGroupsRestMetadata::AsyncAddInstances(
                                    std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestMetadata::AddInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddInstances(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
 InstanceGroupsRestMetadata::AggregatedListInstanceGroups(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -72,6 +81,15 @@ InstanceGroupsRestMetadata::AsyncDeleteInstanceGroup(
                                           std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestMetadata::DeleteInstanceGroup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        DeleteInstanceGroupRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteInstanceGroup(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
 InstanceGroupsRestMetadata::GetInstanceGroup(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -91,6 +109,15 @@ InstanceGroupsRestMetadata::AsyncInsertInstanceGroup(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertInstanceGroup(cq, std::move(rest_context),
                                           std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestMetadata::InsertInstanceGroup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        InsertInstanceGroupRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertInstanceGroup(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
@@ -123,6 +150,15 @@ InstanceGroupsRestMetadata::AsyncRemoveInstances(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestMetadata::RemoveInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        RemoveInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->RemoveInstances(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestMetadata::AsyncSetNamedPorts(
     CompletionQueue& cq,
@@ -133,6 +169,15 @@ InstanceGroupsRestMetadata::AsyncSetNamedPorts(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetNamedPorts(cq, std::move(rest_context),
                                     std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestMetadata::SetNamedPorts(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        SetNamedPortsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetNamedPorts(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

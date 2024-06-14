@@ -66,6 +66,17 @@ JobControllerMetadata::AsyncSubmitJobAsOperation(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+JobControllerMetadata::SubmitJobAsOperation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region())));
+  return child_->SubmitJobAsOperation(context, options, request);
+}
+
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetJobRequest const& request) {

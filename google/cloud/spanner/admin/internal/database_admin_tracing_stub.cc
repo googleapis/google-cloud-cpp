@@ -59,6 +59,19 @@ DatabaseAdminTracingStub::AsyncCreateDatabase(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DatabaseAdminTracingStub::CreateDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "CreateDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateDatabase(context, options, request));
+}
+
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminTracingStub::GetDatabase(
     grpc::ClientContext& context, Options const& options,
@@ -87,6 +100,19 @@ DatabaseAdminTracingStub::AsyncUpdateDatabase(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DatabaseAdminTracingStub::UpdateDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "UpdateDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDatabase(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
@@ -101,6 +127,19 @@ DatabaseAdminTracingStub::AsyncUpdateDatabaseDdl(
   auto f =
       child_->AsyncUpdateDatabaseDdl(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DatabaseAdminTracingStub::UpdateDatabaseDdl(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "UpdateDatabaseDdl");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateDatabaseDdl(context, options, request));
 }
 
 Status DatabaseAdminTracingStub::DropDatabase(
@@ -175,6 +214,17 @@ DatabaseAdminTracingStub::AsyncCreateBackup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminTracingStub::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "CreateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateBackup(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -187,6 +237,17 @@ DatabaseAdminTracingStub::AsyncCopyBackup(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCopyBackup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminTracingStub::CopyBackup(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "CopyBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CopyBackup(context, options, request));
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -250,6 +311,19 @@ DatabaseAdminTracingStub::AsyncRestoreDatabase(
   auto f =
       child_->AsyncRestoreDatabase(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DatabaseAdminTracingStub::RestoreDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "RestoreDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RestoreDatabase(context, options, request));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>

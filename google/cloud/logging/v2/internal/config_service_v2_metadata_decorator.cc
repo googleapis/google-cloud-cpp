@@ -71,6 +71,15 @@ ConfigServiceV2Metadata::AsyncCreateBucketAsync(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Metadata::CreateBucketAsync(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CreateBucketRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBucketAsync(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Metadata::AsyncUpdateBucketAsync(
     google::cloud::CompletionQueue& cq,
@@ -81,6 +90,15 @@ ConfigServiceV2Metadata::AsyncUpdateBucketAsync(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpdateBucketAsync(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Metadata::UpdateBucketAsync(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::UpdateBucketRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateBucketAsync(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Metadata::CreateBucket(
@@ -212,6 +230,14 @@ ConfigServiceV2Metadata::AsyncCreateLink(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigServiceV2Metadata::CreateLink(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CreateLinkRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateLink(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Metadata::AsyncDeleteLink(
     google::cloud::CompletionQueue& cq,
@@ -222,6 +248,14 @@ ConfigServiceV2Metadata::AsyncDeleteLink(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteLink(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Metadata::DeleteLink(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::DeleteLinkRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteLink(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListLinksResponse>
@@ -328,6 +362,14 @@ ConfigServiceV2Metadata::AsyncCopyLogEntries(
   SetMetadata(*context, *options);
   return child_->AsyncCopyLogEntries(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Metadata::CopyLogEntries(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CopyLogEntriesRequest const& request) {
+  SetMetadata(context, options);
+  return child_->CopyLogEntries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

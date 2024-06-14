@@ -50,6 +50,17 @@ DefaultTagHoldsStub::AsyncCreateTagHold(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultTagHoldsStub::CreateTagHold(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTagHold(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagHoldsStub::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
@@ -67,6 +78,17 @@ DefaultTagHoldsStub::AsyncDeleteTagHold(
         return grpc_stub_->AsyncDeleteTagHold(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultTagHoldsStub::DeleteTagHold(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTagHold(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>

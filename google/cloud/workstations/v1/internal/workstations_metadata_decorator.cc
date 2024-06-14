@@ -75,6 +75,16 @@ WorkstationsMetadata::AsyncCreateWorkstationCluster(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsMetadata::CreateWorkstationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateWorkstationCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsMetadata::AsyncUpdateWorkstationCluster(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +100,18 @@ WorkstationsMetadata::AsyncUpdateWorkstationCluster(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsMetadata::UpdateWorkstationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("workstation_cluster.name=",
+                   internal::UrlEncode(request.workstation_cluster().name())));
+  return child_->UpdateWorkstationCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsMetadata::AsyncDeleteWorkstationCluster(
     google::cloud::CompletionQueue& cq,
@@ -101,6 +123,16 @@ WorkstationsMetadata::AsyncDeleteWorkstationCluster(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteWorkstationCluster(cq, std::move(context),
                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsMetadata::DeleteWorkstationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteWorkstationCluster(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -146,6 +178,16 @@ WorkstationsMetadata::AsyncCreateWorkstationConfig(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsMetadata::CreateWorkstationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateWorkstationConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsMetadata::AsyncUpdateWorkstationConfig(
     google::cloud::CompletionQueue& cq,
@@ -161,6 +203,18 @@ WorkstationsMetadata::AsyncUpdateWorkstationConfig(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsMetadata::UpdateWorkstationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("workstation_config.name=",
+                   internal::UrlEncode(request.workstation_config().name())));
+  return child_->UpdateWorkstationConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsMetadata::AsyncDeleteWorkstationConfig(
     google::cloud::CompletionQueue& cq,
@@ -172,6 +226,16 @@ WorkstationsMetadata::AsyncDeleteWorkstationConfig(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteWorkstationConfig(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsMetadata::DeleteWorkstationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteWorkstationConfig(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::Workstation>
@@ -214,6 +278,15 @@ WorkstationsMetadata::AsyncCreateWorkstation(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsMetadata::CreateWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateWorkstation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsMetadata::AsyncUpdateWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -225,6 +298,16 @@ WorkstationsMetadata::AsyncUpdateWorkstation(
                            internal::UrlEncode(request.workstation().name())));
   return child_->AsyncUpdateWorkstation(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsMetadata::UpdateWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("workstation.name=",
+                           internal::UrlEncode(request.workstation().name())));
+  return child_->UpdateWorkstation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -239,6 +322,15 @@ WorkstationsMetadata::AsyncDeleteWorkstation(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsMetadata::DeleteWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteWorkstation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsMetadata::AsyncStartWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -251,6 +343,14 @@ WorkstationsMetadata::AsyncStartWorkstation(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsMetadata::StartWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartWorkstation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsMetadata::AsyncStopWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -261,6 +361,14 @@ WorkstationsMetadata::AsyncStopWorkstation(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStopWorkstation(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsMetadata::StopWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StopWorkstation(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>

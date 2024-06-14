@@ -58,10 +58,20 @@ class AppGatewaysServiceLogging : public AppGatewaysServiceStub {
       google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateAppGateway(
+      grpc::ClientContext& context, Options options,
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAppGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAppGateway(
+      grpc::ClientContext& context, Options options,
       google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
           request) override;
 

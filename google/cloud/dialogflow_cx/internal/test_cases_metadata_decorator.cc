@@ -100,6 +100,14 @@ TestCasesMetadata::AsyncRunTestCase(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> TestCasesMetadata::RunTestCase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RunTestCase(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TestCasesMetadata::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +119,15 @@ TestCasesMetadata::AsyncBatchRunTestCases(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchRunTestCases(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> TestCasesMetadata::BatchRunTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchRunTestCases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -135,6 +152,14 @@ TestCasesMetadata::AsyncImportTestCases(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> TestCasesMetadata::ImportTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportTestCases(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TestCasesMetadata::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
@@ -145,6 +170,14 @@ TestCasesMetadata::AsyncExportTestCases(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncExportTestCases(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> TestCasesMetadata::ExportTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ExportTestCases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>

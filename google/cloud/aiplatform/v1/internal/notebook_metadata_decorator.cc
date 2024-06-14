@@ -55,6 +55,16 @@ NotebookServiceMetadata::AsyncCreateNotebookRuntimeTemplate(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::CreateNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateNotebookRuntimeTemplate(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
 NotebookServiceMetadata::GetNotebookRuntimeTemplate(
     grpc::ClientContext& context, Options const& options,
@@ -88,6 +98,16 @@ NotebookServiceMetadata::AsyncDeleteNotebookRuntimeTemplate(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::DeleteNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteNotebookRuntimeTemplate(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
 NotebookServiceMetadata::UpdateNotebookRuntimeTemplate(
     grpc::ClientContext& context, Options const& options,
@@ -111,6 +131,16 @@ NotebookServiceMetadata::AsyncAssignNotebookRuntime(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncAssignNotebookRuntime(cq, std::move(context),
                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::AssignNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AssignNotebookRuntime(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
@@ -144,6 +174,16 @@ NotebookServiceMetadata::AsyncDeleteNotebookRuntime(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::DeleteNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteNotebookRuntime(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncUpgradeNotebookRuntime(
     google::cloud::CompletionQueue& cq,
@@ -157,6 +197,16 @@ NotebookServiceMetadata::AsyncUpgradeNotebookRuntime(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::UpgradeNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpgradeNotebookRuntime(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncStartNotebookRuntime(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +217,15 @@ NotebookServiceMetadata::AsyncStartNotebookRuntime(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStartNotebookRuntime(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::StartNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartNotebookRuntime(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

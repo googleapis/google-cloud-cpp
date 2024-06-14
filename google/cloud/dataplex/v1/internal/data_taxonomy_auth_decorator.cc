@@ -51,6 +51,15 @@ DataTaxonomyServiceAuth::AsyncCreateDataTaxonomy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceAuth::CreateDataTaxonomy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDataTaxonomy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncUpdateDataTaxonomy(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +80,15 @@ DataTaxonomyServiceAuth::AsyncUpdateDataTaxonomy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceAuth::UpdateDataTaxonomy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDataTaxonomy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncDeleteDataTaxonomy(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +107,15 @@ DataTaxonomyServiceAuth::AsyncDeleteDataTaxonomy(
         return child->AsyncDeleteDataTaxonomy(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceAuth::DeleteDataTaxonomy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDataTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataTaxonomiesResponse>
@@ -130,6 +157,16 @@ DataTaxonomyServiceAuth::AsyncCreateDataAttributeBinding(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceAuth::CreateDataAttributeBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDataAttributeBinding(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncUpdateDataAttributeBinding(
     google::cloud::CompletionQueue& cq,
@@ -151,6 +188,16 @@ DataTaxonomyServiceAuth::AsyncUpdateDataAttributeBinding(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceAuth::UpdateDataAttributeBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDataAttributeBinding(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncDeleteDataAttributeBinding(
     google::cloud::CompletionQueue& cq,
@@ -170,6 +217,16 @@ DataTaxonomyServiceAuth::AsyncDeleteDataAttributeBinding(
         return child->AsyncDeleteDataAttributeBinding(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceAuth::DeleteDataAttributeBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDataAttributeBinding(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributeBindingsResponse>
@@ -212,6 +269,15 @@ DataTaxonomyServiceAuth::AsyncCreateDataAttribute(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceAuth::CreateDataAttribute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDataAttribute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncUpdateDataAttribute(
     google::cloud::CompletionQueue& cq,
@@ -232,6 +298,15 @@ DataTaxonomyServiceAuth::AsyncUpdateDataAttribute(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceAuth::UpdateDataAttribute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDataAttribute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncDeleteDataAttribute(
     google::cloud::CompletionQueue& cq,
@@ -250,6 +325,15 @@ DataTaxonomyServiceAuth::AsyncDeleteDataAttribute(
         return child->AsyncDeleteDataAttribute(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceAuth::DeleteDataAttribute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDataAttribute(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributesResponse>

@@ -80,6 +80,19 @@ DefaultAppConnectionsServiceStub::AsyncCreateAppConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAppConnectionsServiceStub::CreateAppConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnections::v1::
+        CreateAppConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAppConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppConnectionsServiceStub::AsyncUpdateAppConnection(
     google::cloud::CompletionQueue& cq,
@@ -100,6 +113,19 @@ DefaultAppConnectionsServiceStub::AsyncUpdateAppConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAppConnectionsServiceStub::UpdateAppConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnections::v1::
+        UpdateAppConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAppConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppConnectionsServiceStub::AsyncDeleteAppConnection(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +144,19 @@ DefaultAppConnectionsServiceStub::AsyncDeleteAppConnection(
         return grpc_stub_->AsyncDeleteAppConnection(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAppConnectionsServiceStub::DeleteAppConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnections::v1::
+        DeleteAppConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAppConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::

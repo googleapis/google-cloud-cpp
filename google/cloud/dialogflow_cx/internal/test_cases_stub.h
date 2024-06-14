@@ -68,11 +68,20 @@ class TestCasesStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> RunTestCase(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncBatchRunTestCases(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> BatchRunTestCases(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request) = 0;
 
@@ -89,10 +98,20 @@ class TestCasesStub {
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ImportTestCases(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncExportTestCases(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ExportTestCases(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
           request) = 0;
 
@@ -164,10 +183,20 @@ class DefaultTestCasesStub : public TestCasesStub {
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RunTestCase(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchRunTestCases(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> BatchRunTestCases(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request) override;
 
@@ -184,10 +213,20 @@ class DefaultTestCasesStub : public TestCasesStub {
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ImportTestCases(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportTestCases(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportTestCases(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request)
       override;
 

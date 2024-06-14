@@ -69,6 +69,20 @@ SubnetworksRestLogging::AsyncDeleteSubnetwork(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestLogging::DeleteSubnetwork(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::subnetworks::v1::
+                 DeleteSubnetworkRequest const& request) {
+        return child_->DeleteSubnetwork(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestLogging::AsyncExpandIpCidrRange(
     CompletionQueue& cq,
@@ -87,6 +101,20 @@ SubnetworksRestLogging::AsyncExpandIpCidrRange(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestLogging::ExpandIpCidrRange(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::subnetworks::v1::
+                 ExpandIpCidrRangeRequest const& request) {
+        return child_->ExpandIpCidrRange(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
@@ -135,6 +163,20 @@ SubnetworksRestLogging::AsyncInsertSubnetwork(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestLogging::InsertSubnetwork(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::subnetworks::v1::
+                 InsertSubnetworkRequest const& request) {
+        return child_->InsertSubnetwork(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkList>
@@ -186,6 +228,20 @@ SubnetworksRestLogging::AsyncPatchSubnetwork(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestLogging::PatchSubnetwork(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::subnetworks::v1::
+                 PatchSubnetworkRequest const& request) {
+        return child_->PatchSubnetwork(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SubnetworksRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -218,6 +274,20 @@ SubnetworksRestLogging::AsyncSetPrivateIpGoogleAccess(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestLogging::SetPrivateIpGoogleAccess(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::subnetworks::v1::
+                 SetPrivateIpGoogleAccessRequest const& request) {
+        return child_->SetPrivateIpGoogleAccess(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

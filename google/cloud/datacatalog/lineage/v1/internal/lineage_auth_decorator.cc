@@ -102,6 +102,15 @@ LineageAuth::AsyncDeleteProcess(
       });
 }
 
+StatusOr<google::longrunning::Operation> LineageAuth::DeleteProcess(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteProcess(context, options, request);
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageAuth::CreateRun(
     grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
@@ -152,6 +161,14 @@ future<StatusOr<google::longrunning::Operation>> LineageAuth::AsyncDeleteRun(
         return child->AsyncDeleteRun(cq, *std::move(context),
                                      std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> LineageAuth::DeleteRun(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRun(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>

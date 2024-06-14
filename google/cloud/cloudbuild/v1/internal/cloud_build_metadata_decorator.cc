@@ -75,6 +75,33 @@ CloudBuildMetadata::AsyncCreateBuild(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildMetadata::CreateBuild(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::devtools::cloudbuild::v1::CreateBuildRequest>{
+        "location=",
+        {
+            {[](google::devtools::cloudbuild::v1::CreateBuildRequest const&
+                    request) -> std::string const& { return request.parent(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->CreateBuild(context, options, request);
+}
+
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildMetadata::GetBuild(
     grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
@@ -189,6 +216,33 @@ CloudBuildMetadata::AsyncRetryBuild(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildMetadata::RetryBuild(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::devtools::cloudbuild::v1::RetryBuildRequest>{
+        "location=",
+        {
+            {[](google::devtools::cloudbuild::v1::RetryBuildRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/builds/[^/]+",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->RetryBuild(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncApproveBuild(
     google::cloud::CompletionQueue& cq,
@@ -218,6 +272,33 @@ CloudBuildMetadata::AsyncApproveBuild(
   }
   return child_->AsyncApproveBuild(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> CloudBuildMetadata::ApproveBuild(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::devtools::cloudbuild::v1::ApproveBuildRequest>{
+        "location=",
+        {
+            {[](google::devtools::cloudbuild::v1::ApproveBuildRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/builds/[^/]+",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->ApproveBuild(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
@@ -399,6 +480,33 @@ CloudBuildMetadata::AsyncRunBuildTrigger(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildMetadata::RunBuildTrigger(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::devtools::cloudbuild::v1::RunBuildTriggerRequest>{
+        "location=",
+        {
+            {[](google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/triggers/[^/]+",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->RunBuildTrigger(context, options, request);
+}
+
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildMetadata::ReceiveTriggerWebhook(
     grpc::ClientContext& context, Options const& options,
@@ -440,6 +548,33 @@ CloudBuildMetadata::AsyncCreateWorkerPool(
   }
   return child_->AsyncCreateWorkerPool(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> CloudBuildMetadata::CreateWorkerPool(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::devtools::cloudbuild::v1::CreateWorkerPoolRequest>{
+        "location=",
+        {
+            {[](google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
+                    request) -> std::string const& { return request.parent(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->CreateWorkerPool(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
@@ -501,6 +636,33 @@ CloudBuildMetadata::AsyncDeleteWorkerPool(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildMetadata::DeleteWorkerPool(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest>{
+        "location=",
+        {
+            {[](google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/workerPools/[^/]+",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->DeleteWorkerPool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncUpdateWorkerPool(
     google::cloud::CompletionQueue& cq,
@@ -532,6 +694,35 @@ CloudBuildMetadata::AsyncUpdateWorkerPool(
   }
   return child_->AsyncUpdateWorkerPool(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> CloudBuildMetadata::UpdateWorkerPool(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest>{
+        "location=",
+        {
+            {[](google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
+                    request) -> std::string const& {
+               return request.worker_pool().name();
+             },
+             std::regex{"projects/[^/]+/locations/([^/]+)/workerPools/[^/]+",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->UpdateWorkerPool(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>

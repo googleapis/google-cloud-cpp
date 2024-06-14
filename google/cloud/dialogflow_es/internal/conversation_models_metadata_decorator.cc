@@ -55,6 +55,16 @@ ConversationModelsMetadata::AsyncCreateConversationModel(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsMetadata::CreateConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConversationModel(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsMetadata::GetConversationModel(
     grpc::ClientContext& context, Options const& options,
@@ -87,6 +97,16 @@ ConversationModelsMetadata::AsyncDeleteConversationModel(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsMetadata::DeleteConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConversationModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsMetadata::AsyncDeployConversationModel(
     google::cloud::CompletionQueue& cq,
@@ -100,6 +120,16 @@ ConversationModelsMetadata::AsyncDeployConversationModel(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsMetadata::DeployConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeployConversationModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsMetadata::AsyncUndeployConversationModel(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +141,16 @@ ConversationModelsMetadata::AsyncUndeployConversationModel(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeployConversationModel(cq, std::move(context),
                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsMetadata::UndeployConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UndeployConversationModel(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -145,6 +185,16 @@ ConversationModelsMetadata::AsyncCreateConversationModelEvaluation(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateConversationModelEvaluation(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsMetadata::CreateConversationModelEvaluation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::
+        CreateConversationModelEvaluationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConversationModelEvaluation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

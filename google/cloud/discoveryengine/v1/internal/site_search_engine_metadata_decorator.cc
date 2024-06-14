@@ -65,6 +65,16 @@ SiteSearchEngineServiceMetadata::AsyncCreateTargetSite(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::CreateTargetSite(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTargetSite(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceMetadata::AsyncBatchCreateTargetSites(
     google::cloud::CompletionQueue& cq,
@@ -76,6 +86,16 @@ SiteSearchEngineServiceMetadata::AsyncBatchCreateTargetSites(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchCreateTargetSites(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::BatchCreateTargetSites(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchCreateTargetSites(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
@@ -101,6 +121,17 @@ SiteSearchEngineServiceMetadata::AsyncUpdateTargetSite(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::UpdateTargetSite(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("target_site.name=",
+                           internal::UrlEncode(request.target_site().name())));
+  return child_->UpdateTargetSite(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceMetadata::AsyncDeleteTargetSite(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +143,16 @@ SiteSearchEngineServiceMetadata::AsyncDeleteTargetSite(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTargetSite(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::DeleteTargetSite(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTargetSite(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse>
@@ -137,6 +178,17 @@ SiteSearchEngineServiceMetadata::AsyncEnableAdvancedSiteSearch(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::EnableAdvancedSiteSearch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
+  return child_->EnableAdvancedSiteSearch(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceMetadata::AsyncDisableAdvancedSiteSearch(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +201,17 @@ SiteSearchEngineServiceMetadata::AsyncDisableAdvancedSiteSearch(
                            internal::UrlEncode(request.site_search_engine())));
   return child_->AsyncDisableAdvancedSiteSearch(cq, std::move(context),
                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::DisableAdvancedSiteSearch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
+  return child_->DisableAdvancedSiteSearch(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -164,6 +227,16 @@ SiteSearchEngineServiceMetadata::AsyncRecrawlUris(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::RecrawlUris(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
+  return child_->RecrawlUris(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceMetadata::AsyncBatchVerifyTargetSites(
     google::cloud::CompletionQueue& cq,
@@ -175,6 +248,16 @@ SiteSearchEngineServiceMetadata::AsyncBatchVerifyTargetSites(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchVerifyTargetSites(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::BatchVerifyTargetSites(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchVerifyTargetSites(context, options, request);
 }
 
 StatusOr<

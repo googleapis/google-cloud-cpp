@@ -55,6 +55,20 @@ RegionInstanceGroupManagersRestLogging::AsyncAbandonInstances(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::AbandonInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        AbandonInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 AbandonInstancesRequest const& request) {
+        return child_->AbandonInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestLogging::AsyncApplyUpdatesToInstances(
     CompletionQueue& cq,
@@ -73,6 +87,20 @@ RegionInstanceGroupManagersRestLogging::AsyncApplyUpdatesToInstances(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::ApplyUpdatesToInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        ApplyUpdatesToInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 ApplyUpdatesToInstancesRequest const& request) {
+        return child_->ApplyUpdatesToInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -95,6 +123,20 @@ RegionInstanceGroupManagersRestLogging::AsyncCreateInstances(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::CreateInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        CreateInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 CreateInstancesRequest const& request) {
+        return child_->CreateInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestLogging::AsyncDeleteInstanceGroupManager(
     CompletionQueue& cq,
@@ -113,6 +155,21 @@ RegionInstanceGroupManagersRestLogging::AsyncDeleteInstanceGroupManager(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::DeleteInstanceGroupManager(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        DeleteInstanceGroupManagerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 DeleteInstanceGroupManagerRequest const& request) {
+        return child_->DeleteInstanceGroupManager(rest_context, options,
+                                                  request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -135,6 +192,20 @@ RegionInstanceGroupManagersRestLogging::AsyncDeleteInstances(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::DeleteInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        DeleteInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 DeleteInstancesRequest const& request) {
+        return child_->DeleteInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestLogging::AsyncDeletePerInstanceConfigs(
     CompletionQueue& cq,
@@ -153,6 +224,20 @@ RegionInstanceGroupManagersRestLogging::AsyncDeletePerInstanceConfigs(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::DeletePerInstanceConfigs(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        DeletePerInstanceConfigsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 DeletePerInstanceConfigsRequest const& request) {
+        return child_->DeletePerInstanceConfigs(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -187,6 +272,21 @@ RegionInstanceGroupManagersRestLogging::AsyncInsertInstanceGroupManager(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::InsertInstanceGroupManager(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        InsertInstanceGroupManagerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 InsertInstanceGroupManagerRequest const& request) {
+        return child_->InsertInstanceGroupManager(rest_context, options,
+                                                  request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupManagerList>
@@ -269,6 +369,21 @@ RegionInstanceGroupManagersRestLogging::AsyncPatchInstanceGroupManager(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::PatchInstanceGroupManager(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        PatchInstanceGroupManagerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 PatchInstanceGroupManagerRequest const& request) {
+        return child_->PatchInstanceGroupManager(rest_context, options,
+                                                 request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestLogging::AsyncPatchPerInstanceConfigs(
     CompletionQueue& cq,
@@ -287,6 +402,20 @@ RegionInstanceGroupManagersRestLogging::AsyncPatchPerInstanceConfigs(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::PatchPerInstanceConfigs(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        PatchPerInstanceConfigsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 PatchPerInstanceConfigsRequest const& request) {
+        return child_->PatchPerInstanceConfigs(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -309,6 +438,20 @@ RegionInstanceGroupManagersRestLogging::AsyncRecreateInstances(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::RecreateInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        RecreateInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 RecreateInstancesRequest const& request) {
+        return child_->RecreateInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestLogging::AsyncResize(
     CompletionQueue& cq,
@@ -327,6 +470,20 @@ RegionInstanceGroupManagersRestLogging::AsyncResize(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::Resize(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        ResizeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 ResizeRequest const& request) {
+        return child_->Resize(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -349,6 +506,20 @@ RegionInstanceGroupManagersRestLogging::AsyncSetInstanceTemplate(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::SetInstanceTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        SetInstanceTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 SetInstanceTemplateRequest const& request) {
+        return child_->SetInstanceTemplate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestLogging::AsyncSetTargetPools(
     CompletionQueue& cq,
@@ -369,6 +540,20 @@ RegionInstanceGroupManagersRestLogging::AsyncSetTargetPools(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::SetTargetPools(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        SetTargetPoolsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 SetTargetPoolsRequest const& request) {
+        return child_->SetTargetPools(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestLogging::AsyncUpdatePerInstanceConfigs(
     CompletionQueue& cq,
@@ -387,6 +572,20 @@ RegionInstanceGroupManagersRestLogging::AsyncUpdatePerInstanceConfigs(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestLogging::UpdatePerInstanceConfigs(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        UpdatePerInstanceConfigsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instance_group_managers::v1::
+                 UpdatePerInstanceConfigsRequest const& request) {
+        return child_->UpdatePerInstanceConfigs(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

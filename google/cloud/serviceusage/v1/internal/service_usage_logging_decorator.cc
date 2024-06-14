@@ -52,6 +52,18 @@ ServiceUsageLogging::AsyncEnableService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ServiceUsageLogging::EnableService(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::EnableServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::api::serviceusage::v1::EnableServiceRequest const& request) {
+        return child_->EnableService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageLogging::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +81,18 @@ ServiceUsageLogging::AsyncDisableService(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ServiceUsageLogging::DisableService(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::DisableServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::api::serviceusage::v1::DisableServiceRequest const& request) {
+        return child_->DisableService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
@@ -113,6 +137,19 @@ ServiceUsageLogging::AsyncBatchEnableServices(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceUsageLogging::BatchEnableServices(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::serviceusage::v1::BatchEnableServicesRequest const&
+                 request) {
+        return child_->BatchEnableServices(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>

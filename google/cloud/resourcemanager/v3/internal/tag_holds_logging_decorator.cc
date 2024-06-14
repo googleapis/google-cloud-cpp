@@ -52,6 +52,18 @@ TagHoldsLogging::AsyncCreateTagHold(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsLogging::CreateTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateTagHoldRequest const&
+                 request) {
+        return child_->CreateTagHold(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsLogging::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +81,18 @@ TagHoldsLogging::AsyncDeleteTagHold(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TagHoldsLogging::DeleteTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&
+                 request) {
+        return child_->DeleteTagHold(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>

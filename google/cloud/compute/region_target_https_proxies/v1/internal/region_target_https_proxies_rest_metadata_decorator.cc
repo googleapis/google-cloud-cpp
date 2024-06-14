@@ -52,6 +52,15 @@ RegionTargetHttpsProxiesRestMetadata::AsyncDeleteTargetHttpsProxy(
                                              std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesRestMetadata::DeleteTargetHttpsProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        DeleteTargetHttpsProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteTargetHttpsProxy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
 RegionTargetHttpsProxiesRestMetadata::GetTargetHttpsProxy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -71,6 +80,15 @@ RegionTargetHttpsProxiesRestMetadata::AsyncInsertTargetHttpsProxy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertTargetHttpsProxy(cq, std::move(rest_context),
                                              std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesRestMetadata::InsertTargetHttpsProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        InsertTargetHttpsProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertTargetHttpsProxy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxyList>
@@ -94,6 +112,15 @@ RegionTargetHttpsProxiesRestMetadata::AsyncPatchTargetHttpsProxy(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesRestMetadata::PatchTargetHttpsProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        PatchTargetHttpsProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchTargetHttpsProxy(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesRestMetadata::AsyncSetSslCertificates(
     CompletionQueue& cq,
@@ -106,6 +133,15 @@ RegionTargetHttpsProxiesRestMetadata::AsyncSetSslCertificates(
                                          std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesRestMetadata::SetSslCertificates(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        SetSslCertificatesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetSslCertificates(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesRestMetadata::AsyncSetUrlMap(
     CompletionQueue& cq,
@@ -116,6 +152,15 @@ RegionTargetHttpsProxiesRestMetadata::AsyncSetUrlMap(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetUrlMap(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesRestMetadata::SetUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        SetUrlMapRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetUrlMap(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

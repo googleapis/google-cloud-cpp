@@ -51,6 +51,14 @@ CloudBuildAuth::AsyncCreateBuild(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildAuth::CreateBuild(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBuild(context, options, request);
+}
+
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildAuth::GetBuild(
     grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
@@ -96,6 +104,14 @@ CloudBuildAuth::AsyncRetryBuild(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildAuth::RetryBuild(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RetryBuild(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncApproveBuild(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +130,14 @@ CloudBuildAuth::AsyncApproveBuild(
         return child->AsyncApproveBuild(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudBuildAuth::ApproveBuild(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ApproveBuild(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
@@ -183,6 +207,14 @@ CloudBuildAuth::AsyncRunBuildTrigger(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildAuth::RunBuildTrigger(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunBuildTrigger(context, options, request);
+}
+
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildAuth::ReceiveTriggerWebhook(
     grpc::ClientContext& context, Options const& options,
@@ -211,6 +243,14 @@ CloudBuildAuth::AsyncCreateWorkerPool(
         return child->AsyncCreateWorkerPool(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudBuildAuth::CreateWorkerPool(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateWorkerPool(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
@@ -242,6 +282,14 @@ CloudBuildAuth::AsyncDeleteWorkerPool(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildAuth::DeleteWorkerPool(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteWorkerPool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncUpdateWorkerPool(
     google::cloud::CompletionQueue& cq,
@@ -260,6 +308,14 @@ CloudBuildAuth::AsyncUpdateWorkerPool(
         return child->AsyncUpdateWorkerPool(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudBuildAuth::UpdateWorkerPool(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateWorkerPool(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>

@@ -72,6 +72,14 @@ SchemaServiceMetadata::AsyncCreateSchema(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceMetadata::CreateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSchema(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceMetadata::AsyncUpdateSchema(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +93,15 @@ SchemaServiceMetadata::AsyncUpdateSchema(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceMetadata::UpdateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("schema.name=",
+                           internal::UrlEncode(request.schema().name())));
+  return child_->UpdateSchema(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceMetadata::AsyncDeleteSchema(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +112,14 @@ SchemaServiceMetadata::AsyncDeleteSchema(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSchema(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> SchemaServiceMetadata::DeleteSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSchema(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

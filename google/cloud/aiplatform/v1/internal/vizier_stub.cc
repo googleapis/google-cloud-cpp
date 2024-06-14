@@ -108,6 +108,18 @@ DefaultVizierServiceStub::AsyncSuggestTrials(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVizierServiceStub::SuggestTrials(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SuggestTrials(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::CreateTrial(
     grpc::ClientContext& context, Options const&,
@@ -198,6 +210,20 @@ DefaultVizierServiceStub::AsyncCheckTrialEarlyStoppingState(
                                                              cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVizierServiceStub::CheckTrialEarlyStoppingState(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CheckTrialEarlyStoppingState(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>

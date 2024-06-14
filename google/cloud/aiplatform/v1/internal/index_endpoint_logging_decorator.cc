@@ -52,6 +52,19 @@ IndexEndpointServiceLogging::AsyncCreateIndexEndpoint(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceLogging::CreateIndexEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
+                 request) {
+        return child_->CreateIndexEndpoint(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceLogging::GetIndexEndpoint(
     grpc::ClientContext& context, Options const& options,
@@ -110,6 +123,19 @@ IndexEndpointServiceLogging::AsyncDeleteIndexEndpoint(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceLogging::DeleteIndexEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&
+                 request) {
+        return child_->DeleteIndexEndpoint(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IndexEndpointServiceLogging::AsyncDeployIndex(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +152,18 @@ IndexEndpointServiceLogging::AsyncDeployIndex(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceLogging::DeployIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+        return child_->DeployIndex(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -147,6 +185,19 @@ IndexEndpointServiceLogging::AsyncUndeployIndex(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceLogging::UndeployIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
+        return child_->UndeployIndex(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IndexEndpointServiceLogging::AsyncMutateDeployedIndex(
     google::cloud::CompletionQueue& cq,
@@ -164,6 +215,19 @@ IndexEndpointServiceLogging::AsyncMutateDeployedIndex(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceLogging::MutateDeployedIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&
+                 request) {
+        return child_->MutateDeployedIndex(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

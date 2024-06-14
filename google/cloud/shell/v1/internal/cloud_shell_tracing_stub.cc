@@ -58,6 +58,18 @@ CloudShellServiceTracingStub::AsyncStartEnvironment(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudShellServiceTracingStub::StartEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.shell.v1.CloudShellService",
+                                     "StartEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->StartEnvironment(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceTracingStub::AsyncAuthorizeEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +83,18 @@ CloudShellServiceTracingStub::AsyncAuthorizeEnvironment(
   auto f = child_->AsyncAuthorizeEnvironment(cq, context, std::move(options),
                                              request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudShellServiceTracingStub::AuthorizeEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.shell.v1.CloudShellService",
+                                     "AuthorizeEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->AuthorizeEnvironment(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -87,6 +111,18 @@ CloudShellServiceTracingStub::AsyncAddPublicKey(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudShellServiceTracingStub::AddPublicKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.shell.v1.CloudShellService",
+                                     "AddPublicKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->AddPublicKey(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceTracingStub::AsyncRemovePublicKey(
     google::cloud::CompletionQueue& cq,
@@ -100,6 +136,18 @@ CloudShellServiceTracingStub::AsyncRemovePublicKey(
   auto f =
       child_->AsyncRemovePublicKey(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudShellServiceTracingStub::RemovePublicKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.shell.v1.CloudShellService",
+                                     "RemovePublicKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RemovePublicKey(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

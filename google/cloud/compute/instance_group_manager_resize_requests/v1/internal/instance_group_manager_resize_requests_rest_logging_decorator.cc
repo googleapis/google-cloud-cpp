@@ -57,6 +57,21 @@ InstanceGroupManagerResizeRequestsRestLogging::AsyncCancel(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagerResizeRequestsRestLogging::Cancel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+        CancelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::instance_group_manager_resize_requests::
+              v1::CancelRequest const& request) {
+        return child_->Cancel(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsRestLogging::
     AsyncDeleteInstanceGroupManagerResizeRequest(
@@ -78,6 +93,24 @@ InstanceGroupManagerResizeRequestsRestLogging::
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagerResizeRequestsRestLogging::
+    DeleteInstanceGroupManagerResizeRequest(
+        rest_internal::RestContext& rest_context, Options const& options,
+        google::cloud::cpp::compute::instance_group_manager_resize_requests::
+            v1::DeleteInstanceGroupManagerResizeRequestRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::instance_group_manager_resize_requests::
+              v1::DeleteInstanceGroupManagerResizeRequestRequest const&
+                  request) {
+        return child_->DeleteInstanceGroupManagerResizeRequest(
+            rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>
@@ -118,6 +151,24 @@ InstanceGroupManagerResizeRequestsRestLogging::
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagerResizeRequestsRestLogging::
+    InsertInstanceGroupManagerResizeRequest(
+        rest_internal::RestContext& rest_context, Options const& options,
+        google::cloud::cpp::compute::instance_group_manager_resize_requests::
+            v1::InsertInstanceGroupManagerResizeRequestRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::instance_group_manager_resize_requests::
+              v1::InsertInstanceGroupManagerResizeRequestRequest const&
+                  request) {
+        return child_->InsertInstanceGroupManagerResizeRequest(
+            rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::

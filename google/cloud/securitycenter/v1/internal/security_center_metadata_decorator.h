@@ -46,6 +46,11 @@ class SecurityCenterMetadata : public SecurityCenterStub {
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
+      override;
+
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   CreateSecurityHealthAnalyticsCustomModule(
@@ -203,6 +208,11 @@ class SecurityCenterMetadata : public SecurityCenterStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RunAssetDiscovery(
+      grpc::ClientContext& context, Options options,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request) override;
 

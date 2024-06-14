@@ -68,6 +68,14 @@ WorkflowsAuth::AsyncCreateWorkflow(
       });
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsAuth::CreateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateWorkflow(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsAuth::AsyncDeleteWorkflow(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +96,14 @@ WorkflowsAuth::AsyncDeleteWorkflow(
       });
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsAuth::DeleteWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteWorkflow(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsAuth::AsyncUpdateWorkflow(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +122,14 @@ WorkflowsAuth::AsyncUpdateWorkflow(
         return child->AsyncUpdateWorkflow(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> WorkflowsAuth::UpdateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateWorkflow(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

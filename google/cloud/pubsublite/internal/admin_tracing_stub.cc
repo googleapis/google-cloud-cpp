@@ -190,6 +190,18 @@ AdminServiceTracingStub::AsyncSeekSubscription(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AdminServiceTracingStub::SeekSubscription(
+    grpc::ClientContext& context, Options options,
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
+                                     "SeekSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SeekSubscription(context, options, request));
+}
+
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceTracingStub::CreateReservation(
     grpc::ClientContext& context, Options const& options,

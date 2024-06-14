@@ -52,6 +52,19 @@ BigtableInstanceAdminLogging::AsyncCreateInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+        return child_->CreateInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminLogging::GetInstance(
     grpc::ClientContext& context, Options const& options,
@@ -107,6 +120,19 @@ BigtableInstanceAdminLogging::AsyncPartialUpdateInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::PartialUpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
+                 request) {
+        return child_->PartialUpdateInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 Status BigtableInstanceAdminLogging::DeleteInstance(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
@@ -135,6 +161,18 @@ BigtableInstanceAdminLogging::AsyncCreateCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::CreateClusterRequest const& request) {
+        return child_->CreateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
@@ -179,6 +217,18 @@ BigtableInstanceAdminLogging::AsyncUpdateCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::Cluster const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::Cluster const& request) {
+        return child_->UpdateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncPartialUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -196,6 +246,19 @@ BigtableInstanceAdminLogging::AsyncPartialUpdateCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::PartialUpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::PartialUpdateClusterRequest const&
+                 request) {
+        return child_->PartialUpdateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status BigtableInstanceAdminLogging::DeleteCluster(
@@ -264,6 +327,19 @@ BigtableInstanceAdminLogging::AsyncUpdateAppProfile(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::UpdateAppProfile(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+        return child_->UpdateAppProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status BigtableInstanceAdminLogging::DeleteAppProfile(

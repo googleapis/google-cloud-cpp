@@ -88,6 +88,14 @@ AgentsMetadata::AsyncTrainAgent(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> AgentsMetadata::TrainAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->TrainAgent(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AgentsMetadata::AsyncExportAgent(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +106,14 @@ AgentsMetadata::AsyncExportAgent(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncExportAgent(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> AgentsMetadata::ExportAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ExportAgent(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,6 +128,14 @@ AgentsMetadata::AsyncImportAgent(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> AgentsMetadata::ImportAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportAgent(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AgentsMetadata::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
@@ -122,6 +146,14 @@ AgentsMetadata::AsyncRestoreAgent(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncRestoreAgent(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> AgentsMetadata::RestoreAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RestoreAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ValidationResult>

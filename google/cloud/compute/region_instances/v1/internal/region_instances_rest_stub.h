@@ -45,6 +45,12 @@ class RegionInstancesRestStub {
       google::cloud::cpp::compute::region_instances::v1::
           BulkInsertRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_instances::v1::
+          BulkInsertRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -74,6 +80,12 @@ class DefaultRegionInstancesRestStub : public RegionInstancesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_instances::v1::
+          BulkInsertRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_instances::v1::
           BulkInsertRequest const& request) override;
 

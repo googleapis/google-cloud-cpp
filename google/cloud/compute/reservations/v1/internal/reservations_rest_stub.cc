@@ -105,6 +105,23 @@ DefaultReservationsRestStub::AsyncDeleteReservation(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultReservationsRestStub::DeleteReservation(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        DeleteReservationRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "reservations", "/",
+                   request.reservation()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
 DefaultReservationsRestStub::GetReservation(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -171,6 +188,22 @@ DefaultReservationsRestStub::AsyncInsertReservation(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultReservationsRestStub::InsertReservation(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        InsertReservationRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.reservation_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "reservations"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ReservationList>
 DefaultReservationsRestStub::ListReservations(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -225,6 +258,24 @@ DefaultReservationsRestStub::AsyncResize(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultReservationsRestStub::Resize(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.reservations_resize_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "reservations", "/",
+                   request.reservation(), "/", "resize"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -294,6 +345,25 @@ DefaultReservationsRestStub::AsyncUpdateReservation(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultReservationsRestStub::UpdateReservation(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        UpdateReservationRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.reservation_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "reservations", "/",
+                   request.reservation()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("paths", request.paths()),
+           std::make_pair("request_id", request.request_id()),
+           std::make_pair("update_mask", request.update_mask())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

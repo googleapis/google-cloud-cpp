@@ -55,6 +55,12 @@ class NetworkAttachmentsRestMetadata : public NetworkAttachmentsRestStub {
       google::cloud::cpp::compute::network_attachments::v1::
           DeleteNetworkAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_attachments::v1::
+          DeleteNetworkAttachmentRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
   GetNetworkAttachment(google::cloud::rest_internal::RestContext& rest_context,
                        Options const& options,
@@ -75,6 +81,12 @@ class NetworkAttachmentsRestMetadata : public NetworkAttachmentsRestStub {
       google::cloud::cpp::compute::network_attachments::v1::
           InsertNetworkAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_attachments::v1::
+          InsertNetworkAttachmentRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
   ListNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -87,6 +99,12 @@ class NetworkAttachmentsRestMetadata : public NetworkAttachmentsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_attachments::v1::
+          PatchNetworkAttachmentRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworkAttachment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_attachments::v1::
           PatchNetworkAttachmentRequest const& request) override;
 

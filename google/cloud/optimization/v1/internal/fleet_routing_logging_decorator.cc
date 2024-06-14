@@ -65,6 +65,19 @@ FleetRoutingLogging::AsyncBatchOptimizeTours(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FleetRoutingLogging::BatchOptimizeTours(
+    grpc::ClientContext& context, Options options,
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+                 request) {
+        return child_->BatchOptimizeTours(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FleetRoutingLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -73,6 +73,18 @@ DefaultNotebookServiceStub::AsyncCreateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::CreateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncRegisterInstance(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +102,18 @@ DefaultNotebookServiceStub::AsyncRegisterInstance(
         return grpc_stub_->AsyncRegisterInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::RegisterInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::RegisterInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RegisterInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,6 +136,20 @@ DefaultNotebookServiceStub::AsyncSetInstanceAccelerator(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::SetInstanceAccelerator(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->SetInstanceAccelerator(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncSetInstanceMachineType(
     google::cloud::CompletionQueue& cq,
@@ -132,6 +170,20 @@ DefaultNotebookServiceStub::AsyncSetInstanceMachineType(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::SetInstanceMachineType(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->SetInstanceMachineType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncUpdateInstanceConfig(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +201,18 @@ DefaultNotebookServiceStub::AsyncUpdateInstanceConfig(
         return grpc_stub_->AsyncUpdateInstanceConfig(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::UpdateInstanceConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::UpdateInstanceConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstanceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -172,6 +236,20 @@ DefaultNotebookServiceStub::AsyncUpdateShieldedInstanceConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::UpdateShieldedInstanceConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateShieldedInstanceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncSetInstanceLabels(
     google::cloud::CompletionQueue& cq,
@@ -189,6 +267,18 @@ DefaultNotebookServiceStub::AsyncSetInstanceLabels(
         return grpc_stub_->AsyncSetInstanceLabels(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::SetInstanceLabels(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SetInstanceLabels(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
@@ -223,6 +313,18 @@ DefaultNotebookServiceStub::AsyncDeleteInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::DeleteInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::DeleteInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncStartInstance(
     google::cloud::CompletionQueue& cq,
@@ -239,6 +341,18 @@ DefaultNotebookServiceStub::AsyncStartInstance(
         return grpc_stub_->AsyncStartInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::StartInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::StartInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -259,6 +373,18 @@ DefaultNotebookServiceStub::AsyncStopInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::StopInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::StopInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncResetInstance(
     google::cloud::CompletionQueue& cq,
@@ -275,6 +401,18 @@ DefaultNotebookServiceStub::AsyncResetInstance(
         return grpc_stub_->AsyncResetInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::ResetInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::ResetInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ResetInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -294,6 +432,18 @@ DefaultNotebookServiceStub::AsyncReportInstanceInfo(
         return grpc_stub_->AsyncReportInstanceInfo(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::ReportInstanceInfo(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ReportInstanceInfo(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
@@ -339,6 +489,18 @@ DefaultNotebookServiceStub::AsyncUpgradeInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::UpgradeInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::UpgradeInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpgradeInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncRollbackInstance(
     google::cloud::CompletionQueue& cq,
@@ -356,6 +518,18 @@ DefaultNotebookServiceStub::AsyncRollbackInstance(
         return grpc_stub_->AsyncRollbackInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::RollbackInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::RollbackInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RollbackInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -377,6 +551,18 @@ DefaultNotebookServiceStub::AsyncDiagnoseInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::DiagnoseInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DiagnoseInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncUpgradeInstanceInternal(
     google::cloud::CompletionQueue& cq,
@@ -395,6 +581,20 @@ DefaultNotebookServiceStub::AsyncUpgradeInstanceInternal(
         return grpc_stub_->AsyncUpgradeInstanceInternal(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::UpgradeInstanceInternal(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpgradeInstanceInternal(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::notebooks::v1::ListEnvironmentsResponse>
@@ -440,6 +640,18 @@ DefaultNotebookServiceStub::AsyncCreateEnvironment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::CreateEnvironment(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::CreateEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -457,6 +669,18 @@ DefaultNotebookServiceStub::AsyncDeleteEnvironment(
         return grpc_stub_->AsyncDeleteEnvironment(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::DeleteEnvironment(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse>
@@ -501,6 +725,18 @@ DefaultNotebookServiceStub::AsyncDeleteSchedule(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::DeleteSchedule(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::DeleteScheduleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncCreateSchedule(
     google::cloud::CompletionQueue& cq,
@@ -517,6 +753,18 @@ DefaultNotebookServiceStub::AsyncCreateSchedule(
         return grpc_stub_->AsyncCreateSchedule(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::CreateSchedule(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::CreateScheduleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -536,6 +784,18 @@ DefaultNotebookServiceStub::AsyncTriggerSchedule(
         return grpc_stub_->AsyncTriggerSchedule(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::TriggerSchedule(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::TriggerScheduleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->TriggerSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse>
@@ -581,6 +841,18 @@ DefaultNotebookServiceStub::AsyncDeleteExecution(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::DeleteExecution(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::DeleteExecutionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteExecution(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncCreateExecution(
     google::cloud::CompletionQueue& cq,
@@ -598,6 +870,18 @@ DefaultNotebookServiceStub::AsyncCreateExecution(
         return grpc_stub_->AsyncCreateExecution(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::CreateExecution(
+    grpc::ClientContext& context, Options,
+    google::cloud::notebooks::v1::CreateExecutionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateExecution(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

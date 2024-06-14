@@ -62,6 +62,19 @@ MigrationServiceTracingStub::AsyncBatchMigrateResources(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationServiceTracingStub::BatchMigrateResources(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.MigrationService", "BatchMigrateResources");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->BatchMigrateResources(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

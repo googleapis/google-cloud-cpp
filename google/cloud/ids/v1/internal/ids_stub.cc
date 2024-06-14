@@ -72,6 +72,17 @@ DefaultIDSStub::AsyncCreateEndpoint(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultIDSStub::CreateEndpoint(
+    grpc::ClientContext& context, Options,
+    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultIDSStub::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +99,17 @@ DefaultIDSStub::AsyncDeleteEndpoint(
         return grpc_stub_->AsyncDeleteEndpoint(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultIDSStub::DeleteEndpoint(
+    grpc::ClientContext& context, Options,
+    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

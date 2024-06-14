@@ -51,10 +51,18 @@ class ServicesTracingStub : public ServicesStub {
       google::cloud::internal::ImmutableOptions options,
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateService(
+      grpc::ClientContext& context, Options options,
+      google::appengine::v1::UpdateServiceRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DeleteServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteService(
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

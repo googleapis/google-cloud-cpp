@@ -62,6 +62,18 @@ JobControllerLogging::AsyncSubmitJobAsOperation(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+JobControllerLogging::SubmitJobAsOperation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+        return child_->SubmitJobAsOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerLogging::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetJobRequest const& request) {

@@ -44,16 +44,28 @@ class DataScanServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateDataScanRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateDataScan(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateDataScan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateDataScanRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateDataScan(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataScan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDataScan(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteDataScanRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
@@ -116,6 +128,11 @@ class DefaultDataScanServiceStub : public DataScanServiceStub {
       google::cloud::dataplex::v1::CreateDataScanRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDataScan(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDataScan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -123,10 +140,20 @@ class DefaultDataScanServiceStub : public DataScanServiceStub {
       google::cloud::dataplex::v1::UpdateDataScanRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateDataScan(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataScan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataScan(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteDataScanRequest const& request)
       override;
 

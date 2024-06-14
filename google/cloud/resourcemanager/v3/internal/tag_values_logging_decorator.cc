@@ -92,6 +92,18 @@ TagValuesLogging::AsyncCreateTagValue(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TagValuesLogging::CreateTagValue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateTagValueRequest const&
+                 request) {
+        return child_->CreateTagValue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagValuesLogging::AsyncUpdateTagValue(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +123,18 @@ TagValuesLogging::AsyncUpdateTagValue(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TagValuesLogging::UpdateTagValue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
+                 request) {
+        return child_->UpdateTagValue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagValuesLogging::AsyncDeleteTagValue(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +152,18 @@ TagValuesLogging::AsyncDeleteTagValue(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TagValuesLogging::DeleteTagValue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteTagValueRequest const&
+                 request) {
+        return child_->DeleteTagValue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> TagValuesLogging::GetIamPolicy(

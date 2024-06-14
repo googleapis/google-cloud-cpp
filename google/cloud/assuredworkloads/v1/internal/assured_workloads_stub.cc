@@ -50,6 +50,18 @@ DefaultAssuredWorkloadsServiceStub::AsyncCreateWorkload(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAssuredWorkloadsServiceStub::CreateWorkload(
+    grpc::ClientContext& context, Options,
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateWorkload(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 DefaultAssuredWorkloadsServiceStub::UpdateWorkload(
     grpc::ClientContext& context, Options const&,

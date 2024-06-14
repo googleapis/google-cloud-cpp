@@ -90,6 +90,18 @@ FoldersLogging::AsyncCreateFolder(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> FoldersLogging::CreateFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateFolderRequest const&
+                 request) {
+        return child_->CreateFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FoldersLogging::AsyncUpdateFolder(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +119,18 @@ FoldersLogging::AsyncUpdateFolder(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> FoldersLogging::UpdateFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::UpdateFolderRequest const&
+                 request) {
+        return child_->UpdateFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -128,6 +152,18 @@ FoldersLogging::AsyncMoveFolder(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> FoldersLogging::MoveFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::MoveFolderRequest const&
+                 request) {
+        return child_->MoveFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FoldersLogging::AsyncDeleteFolder(
     google::cloud::CompletionQueue& cq,
@@ -147,6 +183,18 @@ FoldersLogging::AsyncDeleteFolder(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> FoldersLogging::DeleteFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteFolderRequest const&
+                 request) {
+        return child_->DeleteFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FoldersLogging::AsyncUndeleteFolder(
     google::cloud::CompletionQueue& cq,
@@ -164,6 +212,18 @@ FoldersLogging::AsyncUndeleteFolder(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> FoldersLogging::UndeleteFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
+                 request) {
+        return child_->UndeleteFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> FoldersLogging::GetIamPolicy(

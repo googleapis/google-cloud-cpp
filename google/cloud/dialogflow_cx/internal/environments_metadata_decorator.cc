@@ -73,6 +73,16 @@ EnvironmentsMetadata::AsyncCreateEnvironment(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsMetadata::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEnvironment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +95,17 @@ EnvironmentsMetadata::AsyncUpdateEnvironment(
                            internal::UrlEncode(request.environment().name())));
   return child_->AsyncUpdateEnvironment(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+EnvironmentsMetadata::UpdateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("environment.name=",
+                           internal::UrlEncode(request.environment().name())));
+  return child_->UpdateEnvironment(context, options, request);
 }
 
 Status EnvironmentsMetadata::DeleteEnvironment(
@@ -120,6 +141,17 @@ EnvironmentsMetadata::AsyncRunContinuousTest(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsMetadata::RunContinuousTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("environment=", internal::UrlEncode(request.environment())));
+  return child_->RunContinuousTest(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
 EnvironmentsMetadata::ListContinuousTestResults(
     grpc::ClientContext& context, Options const& options,
@@ -141,6 +173,15 @@ EnvironmentsMetadata::AsyncDeployFlow(
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
   return child_->AsyncDeployFlow(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsMetadata::DeployFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("environment=", internal::UrlEncode(request.environment())));
+  return child_->DeployFlow(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

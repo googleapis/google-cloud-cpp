@@ -99,6 +99,18 @@ DefaultTranslationServiceStub::AsyncBatchTranslateText(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::BatchTranslateText(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchTranslateText(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTranslationServiceStub::AsyncBatchTranslateDocument(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +132,20 @@ DefaultTranslationServiceStub::AsyncBatchTranslateDocument(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::BatchTranslateDocument(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BatchTranslateDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTranslationServiceStub::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
@@ -137,6 +163,18 @@ DefaultTranslationServiceStub::AsyncCreateGlossary(
         return grpc_stub_->AsyncCreateGlossary(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::CreateGlossary(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::CreateGlossaryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateGlossary(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
@@ -180,6 +218,18 @@ DefaultTranslationServiceStub::AsyncDeleteGlossary(
         return grpc_stub_->AsyncDeleteGlossary(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::DeleteGlossary(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteGlossary(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>

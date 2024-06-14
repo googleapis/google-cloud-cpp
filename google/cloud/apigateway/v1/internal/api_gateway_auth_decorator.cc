@@ -69,6 +69,14 @@ ApiGatewayServiceAuth::AsyncCreateGateway(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::CreateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +97,14 @@ ApiGatewayServiceAuth::AsyncUpdateGateway(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::UpdateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +123,14 @@ ApiGatewayServiceAuth::AsyncDeleteGateway(
         return child->AsyncDeleteGateway(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::DeleteGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGateway(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
@@ -146,6 +170,14 @@ ApiGatewayServiceAuth::AsyncCreateApi(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::CreateApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateApi(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncUpdateApi(
     google::cloud::CompletionQueue& cq,
@@ -166,6 +198,14 @@ ApiGatewayServiceAuth::AsyncUpdateApi(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::UpdateApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateApi(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncDeleteApi(
     google::cloud::CompletionQueue& cq,
@@ -184,6 +224,14 @@ ApiGatewayServiceAuth::AsyncDeleteApi(
         return child->AsyncDeleteApi(cq, *std::move(context),
                                      std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::DeleteApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteApi(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
@@ -224,6 +272,14 @@ ApiGatewayServiceAuth::AsyncCreateApiConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::CreateApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateApiConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncUpdateApiConfig(
     google::cloud::CompletionQueue& cq,
@@ -244,6 +300,14 @@ ApiGatewayServiceAuth::AsyncUpdateApiConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::UpdateApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateApiConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncDeleteApiConfig(
     google::cloud::CompletionQueue& cq,
@@ -262,6 +326,14 @@ ApiGatewayServiceAuth::AsyncDeleteApiConfig(
         return child->AsyncDeleteApiConfig(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::DeleteApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteApiConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

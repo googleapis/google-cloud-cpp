@@ -51,6 +51,15 @@ NodeGroupControllerAuth::AsyncCreateNodeGroup(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerAuth::CreateNodeGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateNodeGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerAuth::AsyncResizeNodeGroup(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +78,15 @@ NodeGroupControllerAuth::AsyncResizeNodeGroup(
         return child->AsyncResizeNodeGroup(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerAuth::ResizeNodeGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResizeNodeGroup(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>

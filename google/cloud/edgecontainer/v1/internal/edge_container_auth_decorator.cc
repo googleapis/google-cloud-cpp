@@ -69,6 +69,14 @@ EdgeContainerAuth::AsyncCreateCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerAuth::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerAuth::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +95,14 @@ EdgeContainerAuth::AsyncUpdateCluster(
         return child->AsyncUpdateCluster(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerAuth::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,6 +125,14 @@ EdgeContainerAuth::AsyncUpgradeCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerAuth::UpgradeCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpgradeCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerAuth::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -127,6 +151,14 @@ EdgeContainerAuth::AsyncDeleteCluster(
         return child->AsyncDeleteCluster(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerAuth::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCluster(context, options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -187,6 +219,14 @@ EdgeContainerAuth::AsyncCreateNodePool(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerAuth::CreateNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateNodePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerAuth::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
@@ -207,6 +247,14 @@ EdgeContainerAuth::AsyncUpdateNodePool(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerAuth::UpdateNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateNodePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerAuth::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
@@ -225,6 +273,14 @@ EdgeContainerAuth::AsyncDeleteNodePool(
         return child->AsyncDeleteNodePool(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerAuth::DeleteNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
@@ -285,6 +341,15 @@ EdgeContainerAuth::AsyncCreateVpnConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerAuth::CreateVpnConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateVpnConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerAuth::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
@@ -304,6 +369,15 @@ EdgeContainerAuth::AsyncDeleteVpnConnection(
         return child->AsyncDeleteVpnConnection(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerAuth::DeleteVpnConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteVpnConnection(context, options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ServerConfig>

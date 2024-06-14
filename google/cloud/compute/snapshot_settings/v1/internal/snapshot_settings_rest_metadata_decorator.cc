@@ -60,6 +60,15 @@ SnapshotSettingsRestMetadata::AsyncPatchSnapshotSettings(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotSettingsRestMetadata::PatchSnapshotSettings(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        PatchSnapshotSettingsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchSnapshotSettings(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

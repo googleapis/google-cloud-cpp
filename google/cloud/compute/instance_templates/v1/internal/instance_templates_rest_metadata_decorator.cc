@@ -61,6 +61,15 @@ InstanceTemplatesRestMetadata::AsyncDeleteInstanceTemplate(
                                              std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceTemplatesRestMetadata::DeleteInstanceTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_templates::v1::
+        DeleteInstanceTemplateRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteInstanceTemplate(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
 InstanceTemplatesRestMetadata::GetInstanceTemplate(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -89,6 +98,15 @@ InstanceTemplatesRestMetadata::AsyncInsertInstanceTemplate(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertInstanceTemplate(cq, std::move(rest_context),
                                              std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceTemplatesRestMetadata::InsertInstanceTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_templates::v1::
+        InsertInstanceTemplateRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertInstanceTemplate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>

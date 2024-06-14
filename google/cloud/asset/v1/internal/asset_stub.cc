@@ -49,6 +49,17 @@ DefaultAssetServiceStub::AsyncExportAssets(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAssetServiceStub::ExportAssets(
+    grpc::ClientContext& context, Options,
+    google::cloud::asset::v1::ExportAssetsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportAssets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::asset::v1::ListAssetsResponse>
 DefaultAssetServiceStub::ListAssets(
     grpc::ClientContext& context, Options const&,
@@ -184,6 +195,20 @@ DefaultAssetServiceStub::AsyncAnalyzeIamPolicyLongrunning(
                                                             cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAssetServiceStub::AnalyzeIamPolicyLongrunning(
+    grpc::ClientContext& context, Options,
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->AnalyzeIamPolicyLongrunning(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>

@@ -76,6 +76,18 @@ VmMigrationLogging::AsyncCreateSource(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::CreateSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
+        return child_->CreateSource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncUpdateSource(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +107,18 @@ VmMigrationLogging::AsyncUpdateSource(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::UpdateSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
+        return child_->UpdateSource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteSource(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +136,18 @@ VmMigrationLogging::AsyncDeleteSource(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::DeleteSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
+        return child_->DeleteSource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
@@ -177,6 +213,21 @@ VmMigrationLogging::AsyncCreateUtilizationReport(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::CreateUtilizationReport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
+              request) {
+        return child_->CreateUtilizationReport(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteUtilizationReport(
     google::cloud::CompletionQueue& cq,
@@ -196,6 +247,21 @@ VmMigrationLogging::AsyncDeleteUtilizationReport(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::DeleteUtilizationReport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
+              request) {
+        return child_->DeleteUtilizationReport(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
@@ -248,6 +314,20 @@ VmMigrationLogging::AsyncCreateDatacenterConnector(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::CreateDatacenterConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::
+                 CreateDatacenterConnectorRequest const& request) {
+        return child_->CreateDatacenterConnector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteDatacenterConnector(
     google::cloud::CompletionQueue& cq,
@@ -266,6 +346,20 @@ VmMigrationLogging::AsyncDeleteDatacenterConnector(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::DeleteDatacenterConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::
+                 DeleteDatacenterConnectorRequest const& request) {
+        return child_->DeleteDatacenterConnector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -287,6 +381,18 @@ VmMigrationLogging::AsyncUpgradeAppliance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::UpgradeAppliance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
+                 request) {
+        return child_->UpgradeAppliance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateMigratingVm(
     google::cloud::CompletionQueue& cq,
@@ -304,6 +410,18 @@ VmMigrationLogging::AsyncCreateMigratingVm(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::CreateMigratingVm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CreateMigratingVmRequest const&
+                 request) {
+        return child_->CreateMigratingVm(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
@@ -351,6 +469,18 @@ VmMigrationLogging::AsyncUpdateMigratingVm(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::UpdateMigratingVm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&
+                 request) {
+        return child_->UpdateMigratingVm(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteMigratingVm(
     google::cloud::CompletionQueue& cq,
@@ -368,6 +498,18 @@ VmMigrationLogging::AsyncDeleteMigratingVm(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::DeleteMigratingVm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&
+                 request) {
+        return child_->DeleteMigratingVm(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -389,6 +531,18 @@ VmMigrationLogging::AsyncStartMigration(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::StartMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::StartMigrationRequest const&
+                 request) {
+        return child_->StartMigration(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncResumeMigration(
     google::cloud::CompletionQueue& cq,
@@ -406,6 +560,18 @@ VmMigrationLogging::AsyncResumeMigration(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::ResumeMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::ResumeMigrationRequest const&
+                 request) {
+        return child_->ResumeMigration(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -427,6 +593,18 @@ VmMigrationLogging::AsyncPauseMigration(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::PauseMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::PauseMigrationRequest const&
+                 request) {
+        return child_->PauseMigration(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncFinalizeMigration(
     google::cloud::CompletionQueue& cq,
@@ -444,6 +622,18 @@ VmMigrationLogging::AsyncFinalizeMigration(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::FinalizeMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::FinalizeMigrationRequest const&
+                 request) {
+        return child_->FinalizeMigration(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -465,6 +655,18 @@ VmMigrationLogging::AsyncCreateCloneJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::CreateCloneJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CreateCloneJobRequest const&
+                 request) {
+        return child_->CreateCloneJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCancelCloneJob(
     google::cloud::CompletionQueue& cq,
@@ -482,6 +684,18 @@ VmMigrationLogging::AsyncCancelCloneJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::CancelCloneJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CancelCloneJobRequest const&
+                 request) {
+        return child_->CancelCloneJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse>
@@ -529,6 +743,18 @@ VmMigrationLogging::AsyncCreateCutoverJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::CreateCutoverJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CreateCutoverJobRequest const&
+                 request) {
+        return child_->CreateCutoverJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCancelCutoverJob(
     google::cloud::CompletionQueue& cq,
@@ -546,6 +772,18 @@ VmMigrationLogging::AsyncCancelCutoverJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::CancelCutoverJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CancelCutoverJobRequest const&
+                 request) {
+        return child_->CancelCutoverJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
@@ -616,6 +854,18 @@ VmMigrationLogging::AsyncCreateGroup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::CreateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
+        return child_->CreateGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncUpdateGroup(
     google::cloud::CompletionQueue& cq,
@@ -633,6 +883,18 @@ VmMigrationLogging::AsyncUpdateGroup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::UpdateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
+        return child_->UpdateGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -654,6 +916,18 @@ VmMigrationLogging::AsyncDeleteGroup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationLogging::DeleteGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
+        return child_->DeleteGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncAddGroupMigration(
     google::cloud::CompletionQueue& cq,
@@ -671,6 +945,18 @@ VmMigrationLogging::AsyncAddGroupMigration(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::AddGroupMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::AddGroupMigrationRequest const&
+                 request) {
+        return child_->AddGroupMigration(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -691,6 +977,20 @@ VmMigrationLogging::AsyncRemoveGroupMigration(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::RemoveGroupMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
+                 request) {
+        return child_->RemoveGroupMigration(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
@@ -738,6 +1038,19 @@ VmMigrationLogging::AsyncCreateTargetProject(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::CreateTargetProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
+                 request) {
+        return child_->CreateTargetProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncUpdateTargetProject(
     google::cloud::CompletionQueue& cq,
@@ -757,6 +1070,19 @@ VmMigrationLogging::AsyncUpdateTargetProject(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::UpdateTargetProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
+                 request) {
+        return child_->UpdateTargetProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteTargetProject(
     google::cloud::CompletionQueue& cq,
@@ -774,6 +1100,19 @@ VmMigrationLogging::AsyncDeleteTargetProject(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::DeleteTargetProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
+                 request) {
+        return child_->DeleteTargetProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>

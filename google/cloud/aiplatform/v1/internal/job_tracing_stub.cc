@@ -82,6 +82,17 @@ JobServiceTracingStub::AsyncDeleteCustomJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> JobServiceTracingStub::DeleteCustomJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.JobService",
+                                     "DeleteCustomJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCustomJob(context, options, request));
+}
+
 Status JobServiceTracingStub::CancelCustomJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
@@ -144,6 +155,19 @@ JobServiceTracingStub::AsyncDeleteDataLabelingJob(
   auto f = child_->AsyncDeleteDataLabelingJob(cq, context, std::move(options),
                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceTracingStub::DeleteDataLabelingJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.JobService",
+                                     "DeleteDataLabelingJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteDataLabelingJob(context, options, request));
 }
 
 Status JobServiceTracingStub::CancelDataLabelingJob(
@@ -216,6 +240,20 @@ JobServiceTracingStub::AsyncDeleteHyperparameterTuningJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceTracingStub::DeleteHyperparameterTuningJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.JobService",
+                                     "DeleteHyperparameterTuningJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteHyperparameterTuningJob(context, options, request));
+}
+
 Status JobServiceTracingStub::CancelHyperparameterTuningJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
@@ -277,6 +315,17 @@ JobServiceTracingStub::AsyncDeleteNasJob(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteNasJob(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> JobServiceTracingStub::DeleteNasJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.JobService",
+                                     "DeleteNasJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteNasJob(context, options, request));
 }
 
 Status JobServiceTracingStub::CancelNasJob(
@@ -371,6 +420,20 @@ JobServiceTracingStub::AsyncDeleteBatchPredictionJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceTracingStub::DeleteBatchPredictionJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.JobService",
+                                     "DeleteBatchPredictionJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteBatchPredictionJob(context, options, request));
+}
+
 Status JobServiceTracingStub::CancelBatchPredictionJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
@@ -460,6 +523,20 @@ JobServiceTracingStub::AsyncUpdateModelDeploymentMonitoringJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceTracingStub::UpdateModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::
+        UpdateModelDeploymentMonitoringJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.JobService",
+                                     "UpdateModelDeploymentMonitoringJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateModelDeploymentMonitoringJob(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 JobServiceTracingStub::AsyncDeleteModelDeploymentMonitoringJob(
     google::cloud::CompletionQueue& cq,
@@ -474,6 +551,20 @@ JobServiceTracingStub::AsyncDeleteModelDeploymentMonitoringJob(
   auto f = child_->AsyncDeleteModelDeploymentMonitoringJob(
       cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceTracingStub::DeleteModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::
+        DeleteModelDeploymentMonitoringJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.JobService",
+                                     "DeleteModelDeploymentMonitoringJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteModelDeploymentMonitoringJob(context, options, request));
 }
 
 Status JobServiceTracingStub::PauseModelDeploymentMonitoringJob(

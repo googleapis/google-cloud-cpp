@@ -64,6 +64,19 @@ DefaultContactCenterInsightsStub::AsyncUploadConversation(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::UploadConversation(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UploadConversation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 DefaultContactCenterInsightsStub::UpdateConversation(
     grpc::ClientContext& context, Options const&,
@@ -136,6 +149,19 @@ DefaultContactCenterInsightsStub::AsyncCreateAnalysis(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::CreateAnalysis(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAnalysis(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 DefaultContactCenterInsightsStub::GetAnalysis(
     grpc::ClientContext& context, Options const&,
@@ -194,6 +220,20 @@ DefaultContactCenterInsightsStub::AsyncBulkAnalyzeConversations(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::BulkAnalyzeConversations(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BulkAnalyzeConversations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncBulkDeleteConversations(
     google::cloud::CompletionQueue& cq,
@@ -212,6 +252,20 @@ DefaultContactCenterInsightsStub::AsyncBulkDeleteConversations(
         return grpc_stub_->AsyncBulkDeleteConversations(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::BulkDeleteConversations(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BulkDeleteConversations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -234,6 +288,19 @@ DefaultContactCenterInsightsStub::AsyncIngestConversations(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::IngestConversations(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->IngestConversations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
@@ -254,6 +321,19 @@ DefaultContactCenterInsightsStub::AsyncExportInsightsData(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::ExportInsightsData(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportInsightsData(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncCreateIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -272,6 +352,19 @@ DefaultContactCenterInsightsStub::AsyncCreateIssueModel(
         return grpc_stub_->AsyncCreateIssueModel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::CreateIssueModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateIssueModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -333,6 +426,19 @@ DefaultContactCenterInsightsStub::AsyncDeleteIssueModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::DeleteIssueModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteIssueModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncDeployIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -353,6 +459,19 @@ DefaultContactCenterInsightsStub::AsyncDeployIssueModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::DeployIssueModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeployIssueModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncUndeployIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -371,6 +490,19 @@ DefaultContactCenterInsightsStub::AsyncUndeployIssueModel(
         return grpc_stub_->AsyncUndeployIssueModel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::UndeployIssueModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeployIssueModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>

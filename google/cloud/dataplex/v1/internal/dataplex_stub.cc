@@ -49,6 +49,17 @@ DefaultDataplexServiceStub::AsyncCreateLake(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::CreateLake(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateLake(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateLake(
     google::cloud::CompletionQueue& cq,
@@ -67,6 +78,17 @@ DefaultDataplexServiceStub::AsyncUpdateLake(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::UpdateLake(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateLake(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteLake(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +105,17 @@ DefaultDataplexServiceStub::AsyncDeleteLake(
         return grpc_stub_->AsyncDeleteLake(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::DeleteLake(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteLake(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListLakesResponse>
@@ -138,6 +171,17 @@ DefaultDataplexServiceStub::AsyncCreateZone(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::CreateZone(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateZone(
     google::cloud::CompletionQueue& cq,
@@ -156,6 +200,17 @@ DefaultDataplexServiceStub::AsyncUpdateZone(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::UpdateZone(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteZone(
     google::cloud::CompletionQueue& cq,
@@ -172,6 +227,17 @@ DefaultDataplexServiceStub::AsyncDeleteZone(
         return grpc_stub_->AsyncDeleteZone(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::DeleteZone(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListZonesResponse>
@@ -227,6 +293,18 @@ DefaultDataplexServiceStub::AsyncCreateAsset(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataplexServiceStub::CreateAsset(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateAsset(
     google::cloud::CompletionQueue& cq,
@@ -245,6 +323,18 @@ DefaultDataplexServiceStub::AsyncUpdateAsset(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataplexServiceStub::UpdateAsset(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
@@ -261,6 +351,18 @@ DefaultDataplexServiceStub::AsyncDeleteAsset(
         return grpc_stub_->AsyncDeleteAsset(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataplexServiceStub::DeleteAsset(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAssetsResponse>
@@ -317,6 +419,17 @@ DefaultDataplexServiceStub::AsyncCreateTask(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::CreateTask(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTask(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateTask(
     google::cloud::CompletionQueue& cq,
@@ -335,6 +448,17 @@ DefaultDataplexServiceStub::AsyncUpdateTask(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::UpdateTask(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTask(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteTask(
     google::cloud::CompletionQueue& cq,
@@ -351,6 +475,17 @@ DefaultDataplexServiceStub::AsyncDeleteTask(
         return grpc_stub_->AsyncDeleteTask(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::DeleteTask(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTask(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListTasksResponse>
@@ -441,6 +576,18 @@ DefaultDataplexServiceStub::AsyncCreateEnvironment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataplexServiceStub::CreateEnvironment(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -460,6 +607,18 @@ DefaultDataplexServiceStub::AsyncUpdateEnvironment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataplexServiceStub::UpdateEnvironment(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -477,6 +636,18 @@ DefaultDataplexServiceStub::AsyncDeleteEnvironment(
         return grpc_stub_->AsyncDeleteEnvironment(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataplexServiceStub::DeleteEnvironment(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>

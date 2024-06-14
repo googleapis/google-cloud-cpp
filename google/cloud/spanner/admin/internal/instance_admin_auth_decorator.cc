@@ -72,6 +72,16 @@ InstanceAdminAuth::AsyncCreateInstanceConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminAuth::CreateInstanceConfig(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstanceConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminAuth::AsyncUpdateInstanceConfig(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +101,16 @@ InstanceAdminAuth::AsyncUpdateInstanceConfig(
         return child->AsyncUpdateInstanceConfig(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminAuth::UpdateInstanceConfig(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstanceConfig(context, options, request);
 }
 
 Status InstanceAdminAuth::DeleteInstanceConfig(
@@ -162,6 +182,15 @@ InstanceAdminAuth::AsyncCreateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> InstanceAdminAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminAuth::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -181,6 +210,15 @@ InstanceAdminAuth::AsyncUpdateInstance(
         return child->AsyncUpdateInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstance(context, options, request);
 }
 
 Status InstanceAdminAuth::DeleteInstance(
@@ -248,6 +286,16 @@ InstanceAdminAuth::AsyncCreateInstancePartition(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminAuth::CreateInstancePartition(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstancePartition(context, options, request);
+}
+
 Status InstanceAdminAuth::DeleteInstancePartition(
     grpc::ClientContext& context, Options const& options,
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
@@ -276,6 +324,16 @@ InstanceAdminAuth::AsyncUpdateInstancePartition(
         return child->AsyncUpdateInstancePartition(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminAuth::UpdateInstancePartition(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstancePartition(context, options, request);
 }
 
 StatusOr<google::spanner::admin::instance::v1::

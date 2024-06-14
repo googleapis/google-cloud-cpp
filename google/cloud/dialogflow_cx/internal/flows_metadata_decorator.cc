@@ -95,6 +95,14 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncTrainFlow(
                                 request);
 }
 
+StatusOr<google::longrunning::Operation> FlowsMetadata::TrainFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->TrainFlow(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsMetadata::ValidateFlow(
     grpc::ClientContext& context, Options const& options,
@@ -125,6 +133,14 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncImportFlow(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> FlowsMetadata::ImportFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportFlow(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -134,6 +150,14 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncExportFlow(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncExportFlow(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> FlowsMetadata::ExportFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportFlow(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

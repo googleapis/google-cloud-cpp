@@ -44,6 +44,17 @@ TagHoldsTracingStub::AsyncCreateTagHold(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsTracingStub::CreateTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagHolds",
+                                     "CreateTagHold");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateTagHold(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsTracingStub::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
@@ -56,6 +67,17 @@ TagHoldsTracingStub::AsyncDeleteTagHold(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteTagHold(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> TagHoldsTracingStub::DeleteTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagHolds",
+                                     "DeleteTagHold");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTagHold(context, options, request));
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>

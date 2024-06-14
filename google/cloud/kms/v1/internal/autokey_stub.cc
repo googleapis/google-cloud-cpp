@@ -49,6 +49,17 @@ DefaultAutokeyStub::AsyncCreateKeyHandle(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAutokeyStub::CreateKeyHandle(
+    grpc::ClientContext& context, Options,
+    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateKeyHandle(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::kms::v1::KeyHandle> DefaultAutokeyStub::GetKeyHandle(
     grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::GetKeyHandleRequest const& request) {

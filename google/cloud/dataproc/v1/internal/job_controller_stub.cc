@@ -60,6 +60,18 @@ DefaultJobControllerStub::AsyncSubmitJobAsOperation(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultJobControllerStub::SubmitJobAsOperation(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SubmitJobAsOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dataproc::v1::Job> DefaultJobControllerStub::GetJob(
     grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::GetJobRequest const& request) {

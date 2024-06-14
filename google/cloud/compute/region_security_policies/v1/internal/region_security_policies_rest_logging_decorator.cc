@@ -55,6 +55,20 @@ RegionSecurityPoliciesRestLogging::AsyncAddRule(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesRestLogging::AddRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        AddRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_security_policies::v1::
+                 AddRuleRequest const& request) {
+        return child_->AddRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesRestLogging::AsyncDeleteSecurityPolicy(
     CompletionQueue& cq,
@@ -73,6 +87,20 @@ RegionSecurityPoliciesRestLogging::AsyncDeleteSecurityPolicy(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesRestLogging::DeleteSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        DeleteSecurityPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_security_policies::v1::
+                 DeleteSecurityPolicyRequest const& request) {
+        return child_->DeleteSecurityPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -123,6 +151,20 @@ RegionSecurityPoliciesRestLogging::AsyncInsertSecurityPolicy(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesRestLogging::InsertSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        InsertSecurityPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_security_policies::v1::
+                 InsertSecurityPolicyRequest const& request) {
+        return child_->InsertSecurityPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
 RegionSecurityPoliciesRestLogging::ListRegionSecurityPolicies(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -158,6 +200,20 @@ RegionSecurityPoliciesRestLogging::AsyncPatchSecurityPolicy(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesRestLogging::PatchSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchSecurityPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_security_policies::v1::
+                 PatchSecurityPolicyRequest const& request) {
+        return child_->PatchSecurityPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesRestLogging::AsyncPatchRule(
     CompletionQueue& cq,
@@ -178,6 +234,20 @@ RegionSecurityPoliciesRestLogging::AsyncPatchRule(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesRestLogging::PatchRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_security_policies::v1::
+                 PatchRuleRequest const& request) {
+        return child_->PatchRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesRestLogging::AsyncRemoveRule(
     CompletionQueue& cq,
@@ -196,6 +266,20 @@ RegionSecurityPoliciesRestLogging::AsyncRemoveRule(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesRestLogging::RemoveRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        RemoveRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_security_policies::v1::
+                 RemoveRuleRequest const& request) {
+        return child_->RemoveRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -52,6 +52,15 @@ NetworkFirewallPoliciesRestMetadata::AsyncAddAssociation(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestMetadata::AddAssociation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddAssociationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AddAssociation(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestMetadata::AsyncAddRule(
     CompletionQueue& cq,
@@ -62,6 +71,15 @@ NetworkFirewallPoliciesRestMetadata::AsyncAddRule(
   SetMetadata(*rest_context, *options);
   return child_->AsyncAddRule(cq, std::move(rest_context), std::move(options),
                               request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestMetadata::AddRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddRuleRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AddRule(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -76,6 +94,15 @@ NetworkFirewallPoliciesRestMetadata::AsyncCloneRules(
                                  std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestMetadata::CloneRules(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        CloneRulesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->CloneRules(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestMetadata::AsyncDeleteFirewallPolicy(
     CompletionQueue& cq,
@@ -86,6 +113,15 @@ NetworkFirewallPoliciesRestMetadata::AsyncDeleteFirewallPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeleteFirewallPolicy(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestMetadata::DeleteFirewallPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        DeleteFirewallPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteFirewallPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -136,6 +172,15 @@ NetworkFirewallPoliciesRestMetadata::AsyncInsertFirewallPolicy(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestMetadata::InsertFirewallPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        InsertFirewallPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertFirewallPolicy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
 NetworkFirewallPoliciesRestMetadata::ListNetworkFirewallPolicies(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -157,6 +202,15 @@ NetworkFirewallPoliciesRestMetadata::AsyncPatchFirewallPolicy(
                                           std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestMetadata::PatchFirewallPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchFirewallPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchFirewallPolicy(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestMetadata::AsyncPatchRule(
     CompletionQueue& cq,
@@ -167,6 +221,15 @@ NetworkFirewallPoliciesRestMetadata::AsyncPatchRule(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchRule(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestMetadata::PatchRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchRuleRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchRule(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -181,6 +244,15 @@ NetworkFirewallPoliciesRestMetadata::AsyncRemoveAssociation(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestMetadata::RemoveAssociation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemoveAssociationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->RemoveAssociation(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestMetadata::AsyncRemoveRule(
     CompletionQueue& cq,
@@ -191,6 +263,15 @@ NetworkFirewallPoliciesRestMetadata::AsyncRemoveRule(
   SetMetadata(*rest_context, *options);
   return child_->AsyncRemoveRule(cq, std::move(rest_context),
                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestMetadata::RemoveRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemoveRuleRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->RemoveRule(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

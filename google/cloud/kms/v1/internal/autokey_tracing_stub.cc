@@ -45,6 +45,17 @@ AutokeyTracingStub::AsyncCreateKeyHandle(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> AutokeyTracingStub::CreateKeyHandle(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "CreateKeyHandle");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateKeyHandle(context, options, request));
+}
+
 StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyTracingStub::GetKeyHandle(
     grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetKeyHandleRequest const& request) {

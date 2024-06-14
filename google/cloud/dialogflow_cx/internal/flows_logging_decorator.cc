@@ -111,6 +111,18 @@ future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncTrainFlow(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> FlowsLogging::TrainFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+        return child_->TrainFlow(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsLogging::ValidateFlow(
     grpc::ClientContext& context, Options const& options,
@@ -156,6 +168,18 @@ future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncImportFlow(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> FlowsLogging::ImportFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+        return child_->ImportFlow(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -172,6 +196,18 @@ future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncExportFlow(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> FlowsLogging::ExportFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+        return child_->ExportFlow(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -46,6 +46,11 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateCdnKey(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request)
+      override;
+
   StatusOr<google::cloud::video::stitcher::v1::ListCdnKeysResponse> ListCdnKeys(
       grpc::ClientContext& context, Options const& options,
       google::cloud::video::stitcher::v1::ListCdnKeysRequest const& request)
@@ -63,10 +68,20 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteCdnKey(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCdnKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateCdnKey(
+      grpc::ClientContext& context, Options options,
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request)
       override;
 
@@ -123,6 +138,11 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSlate(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::stitcher::v1::CreateSlateRequest const& request)
+      override;
+
   StatusOr<google::cloud::video::stitcher::v1::ListSlatesResponse> ListSlates(
       grpc::ClientContext& context, Options const& options,
       google::cloud::video::stitcher::v1::ListSlatesRequest const& request)
@@ -140,10 +160,20 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateSlate(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::stitcher::v1::UpdateSlateRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSlate(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::DeleteSlateRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteSlate(
+      grpc::ClientContext& context, Options options,
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request)
       override;
 
@@ -161,6 +191,11 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateLiveConfig(
+      grpc::ClientContext& context, Options options,
       google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
           request) override;
 
@@ -182,6 +217,11 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteLiveConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateLiveConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -189,10 +229,20 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateLiveConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateVodConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateVodConfig(
+      grpc::ClientContext& context, Options options,
       google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request)
       override;
 
@@ -214,10 +264,20 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteVodConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateVodConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateVodConfig(
+      grpc::ClientContext& context, Options options,
       google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request)
       override;
 

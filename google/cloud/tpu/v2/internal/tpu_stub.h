@@ -52,10 +52,18 @@ class TpuStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::CreateNodeRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateNode(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::CreateNodeRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteNode(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::DeleteNodeRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteNode(
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v2::DeleteNodeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStopNode(
@@ -64,16 +72,28 @@ class TpuStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::StopNodeRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> StopNode(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::StopNodeRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStartNode(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::StartNodeRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> StartNode(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::StartNodeRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateNode(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::UpdateNodeRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateNode(
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v2::UpdateNodeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
@@ -140,10 +160,18 @@ class DefaultTpuStub : public TpuStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::CreateNodeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateNode(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::CreateNodeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNode(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::DeleteNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNode(
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v2::DeleteNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopNode(
@@ -152,16 +180,28 @@ class DefaultTpuStub : public TpuStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::StopNodeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> StopNode(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::StopNodeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStartNode(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v2::StartNodeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> StartNode(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::StartNodeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateNode(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::UpdateNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateNode(
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v2::UpdateNodeRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>

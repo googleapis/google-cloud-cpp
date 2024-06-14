@@ -56,6 +56,16 @@ RapidMigrationAssessmentMetadata::AsyncCreateCollector(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentMetadata::CreateCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCollector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentMetadata::AsyncCreateAnnotation(
     google::cloud::CompletionQueue& cq,
@@ -67,6 +77,16 @@ RapidMigrationAssessmentMetadata::AsyncCreateAnnotation(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAnnotation(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentMetadata::CreateAnnotation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAnnotation(context, options, request);
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
@@ -113,6 +133,17 @@ RapidMigrationAssessmentMetadata::AsyncUpdateCollector(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentMetadata::UpdateCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("collector.name=",
+                           internal::UrlEncode(request.collector().name())));
+  return child_->UpdateCollector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentMetadata::AsyncDeleteCollector(
     google::cloud::CompletionQueue& cq,
@@ -124,6 +155,16 @@ RapidMigrationAssessmentMetadata::AsyncDeleteCollector(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCollector(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentMetadata::DeleteCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCollector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -139,6 +180,16 @@ RapidMigrationAssessmentMetadata::AsyncResumeCollector(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentMetadata::ResumeCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ResumeCollector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentMetadata::AsyncRegisterCollector(
     google::cloud::CompletionQueue& cq,
@@ -152,6 +203,16 @@ RapidMigrationAssessmentMetadata::AsyncRegisterCollector(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentMetadata::RegisterCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RegisterCollector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentMetadata::AsyncPauseCollector(
     google::cloud::CompletionQueue& cq,
@@ -163,6 +224,16 @@ RapidMigrationAssessmentMetadata::AsyncPauseCollector(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncPauseCollector(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentMetadata::PauseCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->PauseCollector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

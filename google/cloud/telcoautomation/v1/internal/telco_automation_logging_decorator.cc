@@ -81,6 +81,20 @@ TelcoAutomationLogging::AsyncCreateOrchestrationCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationLogging::CreateOrchestrationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::
+                 CreateOrchestrationClusterRequest const& request) {
+        return child_->CreateOrchestrationCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationLogging::AsyncDeleteOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
@@ -99,6 +113,20 @@ TelcoAutomationLogging::AsyncDeleteOrchestrationCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationLogging::DeleteOrchestrationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::
+                 DeleteOrchestrationClusterRequest const& request) {
+        return child_->DeleteOrchestrationCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
@@ -146,6 +174,18 @@ TelcoAutomationLogging::AsyncCreateEdgeSlm(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TelcoAutomationLogging::CreateEdgeSlm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&
+                 request) {
+        return child_->CreateEdgeSlm(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationLogging::AsyncDeleteEdgeSlm(
     google::cloud::CompletionQueue& cq,
@@ -163,6 +203,18 @@ TelcoAutomationLogging::AsyncDeleteEdgeSlm(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TelcoAutomationLogging::DeleteEdgeSlm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
+                 request) {
+        return child_->DeleteEdgeSlm(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>

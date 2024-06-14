@@ -48,6 +48,10 @@ class ScheduleServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteSchedule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetScheduleRequest const& request) = 0;
@@ -101,6 +105,11 @@ class DefaultScheduleServiceStub : public ScheduleServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteSchedule(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
       override;
 

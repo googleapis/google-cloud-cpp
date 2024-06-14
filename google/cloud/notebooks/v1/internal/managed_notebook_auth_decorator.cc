@@ -69,6 +69,15 @@ ManagedNotebookServiceAuth::AsyncCreateRuntime(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::CreateRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRuntime(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceAuth::AsyncUpdateRuntime(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +96,15 @@ ManagedNotebookServiceAuth::AsyncUpdateRuntime(
         return child->AsyncUpdateRuntime(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::UpdateRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRuntime(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,6 +127,15 @@ ManagedNotebookServiceAuth::AsyncDeleteRuntime(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::DeleteRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRuntime(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceAuth::AsyncStartRuntime(
     google::cloud::CompletionQueue& cq,
@@ -127,6 +154,15 @@ ManagedNotebookServiceAuth::AsyncStartRuntime(
         return child->AsyncStartRuntime(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::StartRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartRuntime(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -149,6 +185,15 @@ ManagedNotebookServiceAuth::AsyncStopRuntime(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::StopRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopRuntime(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceAuth::AsyncSwitchRuntime(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +212,15 @@ ManagedNotebookServiceAuth::AsyncSwitchRuntime(
         return child->AsyncSwitchRuntime(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::SwitchRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SwitchRuntime(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -189,6 +243,15 @@ ManagedNotebookServiceAuth::AsyncResetRuntime(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::ResetRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResetRuntime(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceAuth::AsyncUpgradeRuntime(
     google::cloud::CompletionQueue& cq,
@@ -209,6 +272,15 @@ ManagedNotebookServiceAuth::AsyncUpgradeRuntime(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::UpgradeRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpgradeRuntime(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceAuth::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
@@ -227,6 +299,15 @@ ManagedNotebookServiceAuth::AsyncReportRuntimeEvent(
         return child->AsyncReportRuntimeEvent(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::ReportRuntimeEvent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReportRuntimeEvent(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
@@ -257,6 +338,15 @@ ManagedNotebookServiceAuth::AsyncDiagnoseRuntime(
         return child->AsyncDiagnoseRuntime(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceAuth::DiagnoseRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DiagnoseRuntime(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

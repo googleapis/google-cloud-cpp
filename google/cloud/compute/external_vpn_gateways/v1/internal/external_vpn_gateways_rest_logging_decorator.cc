@@ -55,6 +55,20 @@ ExternalVpnGatewaysRestLogging::AsyncDeleteExternalVpnGateway(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ExternalVpnGatewaysRestLogging::DeleteExternalVpnGateway(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::external_vpn_gateways::v1::
+        DeleteExternalVpnGatewayRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::external_vpn_gateways::v1::
+                 DeleteExternalVpnGatewayRequest const& request) {
+        return child_->DeleteExternalVpnGateway(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
 ExternalVpnGatewaysRestLogging::GetExternalVpnGateway(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -89,6 +103,20 @@ ExternalVpnGatewaysRestLogging::AsyncInsertExternalVpnGateway(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ExternalVpnGatewaysRestLogging::InsertExternalVpnGateway(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::external_vpn_gateways::v1::
+        InsertExternalVpnGatewayRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::external_vpn_gateways::v1::
+                 InsertExternalVpnGatewayRequest const& request) {
+        return child_->InsertExternalVpnGateway(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGatewayList>
 ExternalVpnGatewaysRestLogging::ListExternalVpnGateways(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -121,6 +149,20 @@ ExternalVpnGatewaysRestLogging::AsyncSetLabels(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ExternalVpnGatewaysRestLogging::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::external_vpn_gateways::v1::
+        SetLabelsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::external_vpn_gateways::v1::
+                 SetLabelsRequest const& request) {
+        return child_->SetLabels(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

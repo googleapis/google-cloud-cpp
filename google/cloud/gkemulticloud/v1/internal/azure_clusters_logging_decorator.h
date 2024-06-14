@@ -46,6 +46,11 @@ class AzureClustersLogging : public AzureClustersStub {
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAzureClient(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request)
+      override;
+
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
       grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request)
@@ -64,6 +69,11 @@ class AzureClustersLogging : public AzureClustersStub {
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteAzureClient(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAzureCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -71,10 +81,20 @@ class AzureClustersLogging : public AzureClustersStub {
       google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateAzureCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAzureCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAzureCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
           request) override;
 
@@ -93,6 +113,11 @@ class AzureClustersLogging : public AzureClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAzureCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
           request) override;
 
@@ -116,10 +141,20 @@ class AzureClustersLogging : public AzureClustersStub {
       google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateAzureNodePool(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAzureNodePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
           request) override;
 
@@ -138,6 +173,11 @@ class AzureClustersLogging : public AzureClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
           request) override;
 

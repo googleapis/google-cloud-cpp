@@ -72,6 +72,14 @@ ManagedKafkaMetadata::AsyncCreateCluster(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> ManagedKafkaMetadata::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +93,15 @@ ManagedKafkaMetadata::AsyncUpdateCluster(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> ManagedKafkaMetadata::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("cluster.name=",
+                           internal::UrlEncode(request.cluster().name())));
+  return child_->UpdateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +112,14 @@ ManagedKafkaMetadata::AsyncDeleteCluster(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCluster(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> ManagedKafkaMetadata::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCluster(context, options, request);
 }
 
 StatusOr<google::cloud::managedkafka::v1::ListTopicsResponse>

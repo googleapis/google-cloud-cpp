@@ -51,6 +51,14 @@ ServicesAuth::AsyncCreateService(
       });
 }
 
+StatusOr<google::longrunning::Operation> ServicesAuth::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CreateServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateService(context, options, request);
+}
+
 StatusOr<google::cloud::run::v2::Service> ServicesAuth::GetService(
     grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetServiceRequest const& request) {
@@ -88,6 +96,14 @@ ServicesAuth::AsyncUpdateService(
       });
 }
 
+StatusOr<google::longrunning::Operation> ServicesAuth::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::UpdateServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServicesAuth::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +122,14 @@ ServicesAuth::AsyncDeleteService(
         return child->AsyncDeleteService(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ServicesAuth::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ServicesAuth::GetIamPolicy(

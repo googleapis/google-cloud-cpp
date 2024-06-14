@@ -59,6 +59,15 @@ SubnetworksRestMetadata::AsyncDeleteSubnetwork(
                                        std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestMetadata::DeleteSubnetwork(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteSubnetwork(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestMetadata::AsyncExpandIpCidrRange(
     CompletionQueue& cq,
@@ -69,6 +78,15 @@ SubnetworksRestMetadata::AsyncExpandIpCidrRange(
   SetMetadata(*rest_context, *options);
   return child_->AsyncExpandIpCidrRange(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestMetadata::ExpandIpCidrRange(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ExpandIpCidrRange(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
@@ -101,6 +119,15 @@ SubnetworksRestMetadata::AsyncInsertSubnetwork(
                                        std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestMetadata::InsertSubnetwork(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertSubnetwork(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkList>
 SubnetworksRestMetadata::ListSubnetworks(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -131,6 +158,15 @@ SubnetworksRestMetadata::AsyncPatchSubnetwork(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestMetadata::PatchSubnetwork(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchSubnetwork(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SubnetworksRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -150,6 +186,15 @@ SubnetworksRestMetadata::AsyncSetPrivateIpGoogleAccess(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetPrivateIpGoogleAccess(cq, std::move(rest_context),
                                                std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SubnetworksRestMetadata::SetPrivateIpGoogleAccess(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetPrivateIpGoogleAccess(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

@@ -75,6 +75,16 @@ ReachabilityServiceMetadata::AsyncCreateConnectivityTest(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceMetadata::CreateConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConnectivityTest(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceMetadata::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +97,17 @@ ReachabilityServiceMetadata::AsyncUpdateConnectivityTest(
                            internal::UrlEncode(request.resource().name())));
   return child_->AsyncUpdateConnectivityTest(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceMetadata::UpdateConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("resource.name=",
+                           internal::UrlEncode(request.resource().name())));
+  return child_->UpdateConnectivityTest(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -102,6 +123,16 @@ ReachabilityServiceMetadata::AsyncRerunConnectivityTest(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceMetadata::RerunConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RerunConnectivityTest(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceMetadata::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
@@ -113,6 +144,16 @@ ReachabilityServiceMetadata::AsyncDeleteConnectivityTest(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConnectivityTest(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceMetadata::DeleteConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConnectivityTest(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

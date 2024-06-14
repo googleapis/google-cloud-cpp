@@ -69,6 +69,20 @@ NodeTemplatesRestLogging::AsyncDeleteNodeTemplate(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeTemplatesRestLogging::DeleteNodeTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        DeleteNodeTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::node_templates::v1::
+                 DeleteNodeTemplateRequest const& request) {
+        return child_->DeleteNodeTemplate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
 NodeTemplatesRestLogging::GetNodeTemplate(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -115,6 +129,20 @@ NodeTemplatesRestLogging::AsyncInsertNodeTemplate(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeTemplatesRestLogging::InsertNodeTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        InsertNodeTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::node_templates::v1::
+                 InsertNodeTemplateRequest const& request) {
+        return child_->InsertNodeTemplate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateList>

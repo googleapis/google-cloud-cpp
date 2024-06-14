@@ -44,6 +44,10 @@ class ModelServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::retail::v2::CreateModelRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::CreateModelRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::retail::v2::Model> GetModel(
       grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetModelRequest const& request) = 0;
@@ -74,6 +78,10 @@ class ModelServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::retail::v2::TuneModelRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> TuneModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::TuneModelRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -100,6 +108,10 @@ class DefaultModelServiceStub : public ModelServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::CreateModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateModel(
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> GetModel(
@@ -130,6 +142,10 @@ class DefaultModelServiceStub : public ModelServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::TuneModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> TuneModel(
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

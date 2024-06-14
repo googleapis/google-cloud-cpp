@@ -69,6 +69,14 @@ ServiceManagerAuth::AsyncCreateService(
       });
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerAuth::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::CreateServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerAuth::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +97,14 @@ ServiceManagerAuth::AsyncDeleteService(
       });
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerAuth::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerAuth::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +123,14 @@ ServiceManagerAuth::AsyncUndeleteService(
         return child->AsyncUndeleteService(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ServiceManagerAuth::UndeleteService(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeleteService(context, options, request);
 }
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
@@ -158,6 +182,15 @@ ServiceManagerAuth::AsyncSubmitConfigSource(
       });
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerAuth::SubmitConfigSource(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SubmitConfigSource(context, options, request);
+}
+
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 ServiceManagerAuth::ListServiceRollouts(
     grpc::ClientContext& context, Options const& options,
@@ -197,6 +230,16 @@ ServiceManagerAuth::AsyncCreateServiceRollout(
         return child->AsyncCreateServiceRollout(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceManagerAuth::CreateServiceRollout(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateServiceRollout(context, options, request);
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>

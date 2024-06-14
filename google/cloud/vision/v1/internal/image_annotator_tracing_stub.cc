@@ -70,6 +70,19 @@ ImageAnnotatorTracingStub::AsyncAsyncBatchAnnotateImages(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorTracingStub::AsyncBatchAnnotateImages(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
+                                     "AsyncBatchAnnotateImages");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->AsyncBatchAnnotateImages(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorTracingStub::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +96,19 @@ ImageAnnotatorTracingStub::AsyncAsyncBatchAnnotateFiles(
   auto f = child_->AsyncAsyncBatchAnnotateFiles(cq, context, std::move(options),
                                                 request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorTracingStub::AsyncBatchAnnotateFiles(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
+                                     "AsyncBatchAnnotateFiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->AsyncBatchAnnotateFiles(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

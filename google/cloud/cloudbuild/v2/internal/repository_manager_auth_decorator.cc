@@ -51,6 +51,15 @@ RepositoryManagerAuth::AsyncCreateConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerAuth::CreateConnection(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConnection(context, options, request);
+}
+
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 RepositoryManagerAuth::GetConnection(
     grpc::ClientContext& context, Options const& options,
@@ -89,6 +98,15 @@ RepositoryManagerAuth::AsyncUpdateConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerAuth::UpdateConnection(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerAuth::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +125,15 @@ RepositoryManagerAuth::AsyncDeleteConnection(
         return child->AsyncDeleteConnection(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerAuth::DeleteConnection(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConnection(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -129,6 +156,15 @@ RepositoryManagerAuth::AsyncCreateRepository(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerAuth::CreateRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRepository(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerAuth::AsyncBatchCreateRepositories(
     google::cloud::CompletionQueue& cq,
@@ -148,6 +184,16 @@ RepositoryManagerAuth::AsyncBatchCreateRepositories(
         return child->AsyncBatchCreateRepositories(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerAuth::BatchCreateRepositories(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCreateRepositories(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
@@ -186,6 +232,15 @@ RepositoryManagerAuth::AsyncDeleteRepository(
         return child->AsyncDeleteRepository(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerAuth::DeleteRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRepository(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>

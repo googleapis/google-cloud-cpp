@@ -50,6 +50,18 @@ DefaultVideoIntelligenceServiceStub::AsyncAnnotateVideo(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVideoIntelligenceServiceStub::AnnotateVideo(
+    grpc::ClientContext& context, Options,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AnnotateVideo(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoIntelligenceServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

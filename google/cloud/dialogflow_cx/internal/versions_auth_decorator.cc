@@ -68,6 +68,14 @@ VersionsAuth::AsyncCreateVersion(
       });
 }
 
+StatusOr<google::longrunning::Operation> VersionsAuth::CreateVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateVersion(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsAuth::UpdateVersion(
     grpc::ClientContext& context, Options const& options,
@@ -102,6 +110,14 @@ future<StatusOr<google::longrunning::Operation>> VersionsAuth::AsyncLoadVersion(
         return child->AsyncLoadVersion(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> VersionsAuth::LoadVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->LoadVersion(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>

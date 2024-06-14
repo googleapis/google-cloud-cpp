@@ -52,6 +52,15 @@ PublicAdvertisedPrefixesRestMetadata::AsyncAnnounce(
                                request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestMetadata::Announce(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        AnnounceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Announce(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestMetadata::AsyncDeletePublicAdvertisedPrefix(
     CompletionQueue& cq,
@@ -62,6 +71,15 @@ PublicAdvertisedPrefixesRestMetadata::AsyncDeletePublicAdvertisedPrefix(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeletePublicAdvertisedPrefix(cq, std::move(rest_context),
                                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestMetadata::DeletePublicAdvertisedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        DeletePublicAdvertisedPrefixRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeletePublicAdvertisedPrefix(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -85,6 +103,15 @@ PublicAdvertisedPrefixesRestMetadata::AsyncInsertPublicAdvertisedPrefix(
                                                    std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestMetadata::InsertPublicAdvertisedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        InsertPublicAdvertisedPrefixRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertPublicAdvertisedPrefix(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefixList>
 PublicAdvertisedPrefixesRestMetadata::ListPublicAdvertisedPrefixes(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -106,6 +133,15 @@ PublicAdvertisedPrefixesRestMetadata::AsyncPatchPublicAdvertisedPrefix(
                                                   std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestMetadata::PatchPublicAdvertisedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        PatchPublicAdvertisedPrefixRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchPublicAdvertisedPrefix(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestMetadata::AsyncWithdraw(
     CompletionQueue& cq,
@@ -116,6 +152,15 @@ PublicAdvertisedPrefixesRestMetadata::AsyncWithdraw(
   SetMetadata(*rest_context, *options);
   return child_->AsyncWithdraw(cq, std::move(rest_context), std::move(options),
                                request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicAdvertisedPrefixesRestMetadata::Withdraw(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_advertised_prefixes::v1::
+        WithdrawRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Withdraw(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

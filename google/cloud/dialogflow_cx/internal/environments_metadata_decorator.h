@@ -57,10 +57,20 @@ class EnvironmentsMetadata : public EnvironmentsStub {
       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateEnvironment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
           request) override;
 
@@ -82,6 +92,11 @@ class EnvironmentsMetadata : public EnvironmentsStub {
       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> RunContinuousTest(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+          request) override;
+
   StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
   ListContinuousTestResults(
       grpc::ClientContext& context, Options const& options,
@@ -92,6 +107,11 @@ class EnvironmentsMetadata : public EnvironmentsStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeployFlow(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request)
       override;
 

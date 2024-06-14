@@ -51,6 +51,14 @@ DataStoreServiceAuth::AsyncCreateDataStore(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataStoreServiceAuth::CreateDataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDataStore(context, options, request);
+}
+
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
 DataStoreServiceAuth::GetDataStore(
     grpc::ClientContext& context, Options const& options,
@@ -87,6 +95,14 @@ DataStoreServiceAuth::AsyncDeleteDataStore(
         return child->AsyncDeleteDataStore(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataStoreServiceAuth::DeleteDataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDataStore(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>

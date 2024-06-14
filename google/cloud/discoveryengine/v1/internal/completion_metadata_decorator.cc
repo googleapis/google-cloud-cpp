@@ -65,6 +65,16 @@ CompletionServiceMetadata::AsyncImportSuggestionDenyListEntries(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceMetadata::ImportSuggestionDenyListEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportSuggestionDenyListEntries(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceMetadata::AsyncPurgeSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,
@@ -76,6 +86,16 @@ CompletionServiceMetadata::AsyncPurgeSuggestionDenyListEntries(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeSuggestionDenyListEntries(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceMetadata::PurgeSuggestionDenyListEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeSuggestionDenyListEntries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

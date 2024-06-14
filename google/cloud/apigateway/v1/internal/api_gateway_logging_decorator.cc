@@ -77,6 +77,19 @@ ApiGatewayServiceLogging::AsyncCreateGateway(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceLogging::CreateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+        return child_->CreateGateway(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceLogging::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
@@ -96,6 +109,19 @@ ApiGatewayServiceLogging::AsyncUpdateGateway(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceLogging::UpdateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+        return child_->UpdateGateway(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceLogging::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
@@ -113,6 +139,19 @@ ApiGatewayServiceLogging::AsyncDeleteGateway(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceLogging::DeleteGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+        return child_->DeleteGateway(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
@@ -156,6 +195,17 @@ ApiGatewayServiceLogging::AsyncCreateApi(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceLogging::CreateApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::CreateApiRequest const& request) {
+        return child_->CreateApi(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceLogging::AsyncUpdateApi(
     google::cloud::CompletionQueue& cq,
@@ -174,6 +224,17 @@ ApiGatewayServiceLogging::AsyncUpdateApi(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceLogging::UpdateApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+        return child_->UpdateApi(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceLogging::AsyncDeleteApi(
     google::cloud::CompletionQueue& cq,
@@ -190,6 +251,17 @@ ApiGatewayServiceLogging::AsyncDeleteApi(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ApiGatewayServiceLogging::DeleteApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+        return child_->DeleteApi(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
@@ -237,6 +309,19 @@ ApiGatewayServiceLogging::AsyncCreateApiConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceLogging::CreateApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::CreateApiConfigRequest const&
+                 request) {
+        return child_->CreateApiConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceLogging::AsyncUpdateApiConfig(
     google::cloud::CompletionQueue& cq,
@@ -256,6 +341,19 @@ ApiGatewayServiceLogging::AsyncUpdateApiConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceLogging::UpdateApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::UpdateApiConfigRequest const&
+                 request) {
+        return child_->UpdateApiConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceLogging::AsyncDeleteApiConfig(
     google::cloud::CompletionQueue& cq,
@@ -273,6 +371,19 @@ ApiGatewayServiceLogging::AsyncDeleteApiConfig(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceLogging::DeleteApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::DeleteApiConfigRequest const&
+                 request) {
+        return child_->DeleteApiConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

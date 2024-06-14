@@ -72,6 +72,16 @@ DepServiceAuth::AsyncCreateLbTrafficExtension(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceAuth::CreateLbTrafficExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateLbTrafficExtension(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncUpdateLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +103,16 @@ DepServiceAuth::AsyncUpdateLbTrafficExtension(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceAuth::UpdateLbTrafficExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateLbTrafficExtension(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncDeleteLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +132,16 @@ DepServiceAuth::AsyncDeleteLbTrafficExtension(
         return child->AsyncDeleteLbTrafficExtension(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceAuth::DeleteLbTrafficExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteLbTrafficExtension(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse>
@@ -155,6 +185,15 @@ DepServiceAuth::AsyncCreateLbRouteExtension(
       });
 }
 
+StatusOr<google::longrunning::Operation> DepServiceAuth::CreateLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateLbRouteExtension(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncUpdateLbRouteExtension(
     google::cloud::CompletionQueue& cq,
@@ -176,6 +215,15 @@ DepServiceAuth::AsyncUpdateLbRouteExtension(
       });
 }
 
+StatusOr<google::longrunning::Operation> DepServiceAuth::UpdateLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateLbRouteExtension(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncDeleteLbRouteExtension(
     google::cloud::CompletionQueue& cq,
@@ -195,6 +243,15 @@ DepServiceAuth::AsyncDeleteLbRouteExtension(
         return child->AsyncDeleteLbRouteExtension(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DepServiceAuth::DeleteLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteLbRouteExtension(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

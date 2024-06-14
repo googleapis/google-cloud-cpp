@@ -80,6 +80,14 @@ CloudRedisMetadata::AsyncCreateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::CreateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +99,15 @@ CloudRedisMetadata::AsyncUpdateInstance(
                            internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisMetadata::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::UpdateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->UpdateInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -105,6 +122,14 @@ CloudRedisMetadata::AsyncUpgradeInstance(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisMetadata::UpgradeInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpgradeInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncImportInstance(
     google::cloud::CompletionQueue& cq,
@@ -115,6 +140,14 @@ CloudRedisMetadata::AsyncImportInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncImportInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisMetadata::ImportInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::ImportInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ImportInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -129,6 +162,14 @@ CloudRedisMetadata::AsyncExportInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisMetadata::ExportInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::ExportInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
@@ -139,6 +180,14 @@ CloudRedisMetadata::AsyncFailoverInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncFailoverInstance(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisMetadata::FailoverInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::FailoverInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FailoverInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -153,6 +202,14 @@ CloudRedisMetadata::AsyncDeleteInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisMetadata::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
@@ -163,6 +220,15 @@ CloudRedisMetadata::AsyncRescheduleMaintenance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRescheduleMaintenance(cq, std::move(context),
                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisMetadata::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RescheduleMaintenance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

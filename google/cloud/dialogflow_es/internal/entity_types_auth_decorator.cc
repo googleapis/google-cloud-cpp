@@ -96,6 +96,16 @@ EntityTypesAuth::AsyncBatchUpdateEntityTypes(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesAuth::BatchUpdateEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchUpdateEntityTypes(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncBatchDeleteEntityTypes(
     google::cloud::CompletionQueue& cq,
@@ -115,6 +125,16 @@ EntityTypesAuth::AsyncBatchDeleteEntityTypes(
         return child->AsyncBatchDeleteEntityTypes(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesAuth::BatchDeleteEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchDeleteEntityTypes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -137,6 +157,14 @@ EntityTypesAuth::AsyncBatchCreateEntities(
       });
 }
 
+StatusOr<google::longrunning::Operation> EntityTypesAuth::BatchCreateEntities(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCreateEntities(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncBatchUpdateEntities(
     google::cloud::CompletionQueue& cq,
@@ -157,6 +185,14 @@ EntityTypesAuth::AsyncBatchUpdateEntities(
       });
 }
 
+StatusOr<google::longrunning::Operation> EntityTypesAuth::BatchUpdateEntities(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchUpdateEntities(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncBatchDeleteEntities(
     google::cloud::CompletionQueue& cq,
@@ -175,6 +211,14 @@ EntityTypesAuth::AsyncBatchDeleteEntities(
         return child->AsyncBatchDeleteEntities(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EntityTypesAuth::BatchDeleteEntities(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchDeleteEntities(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

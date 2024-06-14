@@ -48,6 +48,20 @@ EnvironmentsTracingStub::AsyncCreateEnvironment(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingStub::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.Environments",
+      "CreateEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateEnvironment(context, options, request));
+}
+
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsTracingStub::GetEnvironment(
     grpc::ClientContext& context, Options const& options,
@@ -94,6 +108,20 @@ EnvironmentsTracingStub::AsyncUpdateEnvironment(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingStub::UpdateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.Environments",
+      "UpdateEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateEnvironment(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -109,6 +137,20 @@ EnvironmentsTracingStub::AsyncDeleteEnvironment(
   auto f =
       child_->AsyncDeleteEnvironment(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingStub::DeleteEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.Environments",
+      "DeleteEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteEnvironment(context, options, request));
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -343,6 +385,19 @@ EnvironmentsTracingStub::AsyncSaveSnapshot(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::SaveSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.Environments",
+      "SaveSnapshot");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SaveSnapshot(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncLoadSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -357,6 +412,19 @@ EnvironmentsTracingStub::AsyncLoadSnapshot(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncLoadSnapshot(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::LoadSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.Environments",
+      "LoadSnapshot");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->LoadSnapshot(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -374,6 +442,20 @@ EnvironmentsTracingStub::AsyncDatabaseFailover(
   auto f =
       child_->AsyncDatabaseFailover(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingStub::DatabaseFailover(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.Environments",
+      "DatabaseFailover");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DatabaseFailover(context, options, request));
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::

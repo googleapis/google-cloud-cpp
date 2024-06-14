@@ -55,6 +55,16 @@ ProjectServiceMetadata::AsyncProvisionProject(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ProjectServiceMetadata::ProvisionProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ProvisionProject(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

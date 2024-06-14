@@ -74,6 +74,17 @@ DefaultDocumentsStub::AsyncCreateDocument(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDocumentsStub::CreateDocument(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncImportDocuments(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +102,17 @@ DefaultDocumentsStub::AsyncImportDocuments(
         return grpc_stub_->AsyncImportDocuments(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDocumentsStub::ImportDocuments(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportDocuments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,6 +134,17 @@ DefaultDocumentsStub::AsyncDeleteDocument(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDocumentsStub::DeleteDocument(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncUpdateDocument(
     google::cloud::CompletionQueue& cq,
@@ -129,6 +162,17 @@ DefaultDocumentsStub::AsyncUpdateDocument(
         return grpc_stub_->AsyncUpdateDocument(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDocumentsStub::UpdateDocument(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -150,6 +194,17 @@ DefaultDocumentsStub::AsyncReloadDocument(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDocumentsStub::ReloadDocument(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ReloadDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentsStub::AsyncExportDocument(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +222,17 @@ DefaultDocumentsStub::AsyncExportDocument(
         return grpc_stub_->AsyncExportDocument(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDocumentsStub::ExportDocument(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

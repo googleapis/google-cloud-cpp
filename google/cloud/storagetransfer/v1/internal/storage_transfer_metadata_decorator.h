@@ -83,6 +83,11 @@ class StorageTransferServiceMetadata : public StorageTransferServiceStub {
       google::storagetransfer::v1::RunTransferJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RunTransferJob(
+      grpc::ClientContext& context, Options options,
+      google::storagetransfer::v1::RunTransferJobRequest const& request)
+      override;
+
   Status DeleteTransferJob(
       grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::DeleteTransferJobRequest const& request)

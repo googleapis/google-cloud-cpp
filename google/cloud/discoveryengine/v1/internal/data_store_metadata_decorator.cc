@@ -54,6 +54,15 @@ DataStoreServiceMetadata::AsyncCreateDataStore(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataStoreServiceMetadata::CreateDataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDataStore(context, options, request);
+}
+
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
 DataStoreServiceMetadata::GetDataStore(
     grpc::ClientContext& context, Options const& options,
@@ -82,6 +91,15 @@ DataStoreServiceMetadata::AsyncDeleteDataStore(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDataStore(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataStoreServiceMetadata::DeleteDataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDataStore(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>

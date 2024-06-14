@@ -59,6 +59,11 @@ class WorkstationsMetadata : public WorkstationsStub {
       google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateWorkstationCluster(
       google::cloud::CompletionQueue& cq,
@@ -67,11 +72,21 @@ class WorkstationsMetadata : public WorkstationsStub {
       google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteWorkstationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
           request) override;
 
@@ -101,6 +116,11 @@ class WorkstationsMetadata : public WorkstationsStub {
       google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkstationConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -108,10 +128,20 @@ class WorkstationsMetadata : public WorkstationsStub {
       google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkstationConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
+      grpc::ClientContext& context, Options options,
       google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
           request) override;
 
@@ -139,10 +169,20 @@ class WorkstationsMetadata : public WorkstationsStub {
       google::cloud::workstations::v1::CreateWorkstationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateWorkstation(
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateWorkstation(
+      grpc::ClientContext& context, Options options,
       google::cloud::workstations::v1::UpdateWorkstationRequest const& request)
       override;
 
@@ -153,6 +193,11 @@ class WorkstationsMetadata : public WorkstationsStub {
       google::cloud::workstations::v1::DeleteWorkstationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteWorkstation(
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStartWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -160,10 +205,20 @@ class WorkstationsMetadata : public WorkstationsStub {
       google::cloud::workstations::v1::StartWorkstationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> StartWorkstation(
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::StartWorkstationRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStopWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::StopWorkstationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StopWorkstation(
+      grpc::ClientContext& context, Options options,
       google::cloud::workstations::v1::StopWorkstationRequest const& request)
       override;
 

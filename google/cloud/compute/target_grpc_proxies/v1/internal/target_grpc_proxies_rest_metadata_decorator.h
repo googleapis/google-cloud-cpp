@@ -48,6 +48,12 @@ class TargetGrpcProxiesRestMetadata : public TargetGrpcProxiesRestStub {
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           DeleteTargetGrpcProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          DeleteTargetGrpcProxyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -59,6 +65,12 @@ class TargetGrpcProxiesRestMetadata : public TargetGrpcProxiesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          InsertTargetGrpcProxyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           InsertTargetGrpcProxyRequest const& request) override;
 
@@ -74,6 +86,12 @@ class TargetGrpcProxiesRestMetadata : public TargetGrpcProxiesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          PatchTargetGrpcProxyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           PatchTargetGrpcProxyRequest const& request) override;
 

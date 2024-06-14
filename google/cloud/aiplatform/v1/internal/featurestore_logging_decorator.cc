@@ -52,6 +52,19 @@ FeaturestoreServiceLogging::AsyncCreateFeaturestore(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::CreateFeaturestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateFeaturestoreRequest const&
+                 request) {
+        return child_->CreateFeaturestore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
 FeaturestoreServiceLogging::GetFeaturestore(
     grpc::ClientContext& context, Options const& options,
@@ -97,6 +110,19 @@ FeaturestoreServiceLogging::AsyncUpdateFeaturestore(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::UpdateFeaturestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const&
+                 request) {
+        return child_->UpdateFeaturestore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceLogging::AsyncDeleteFeaturestore(
     google::cloud::CompletionQueue& cq,
@@ -116,6 +142,19 @@ FeaturestoreServiceLogging::AsyncDeleteFeaturestore(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::DeleteFeaturestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const&
+                 request) {
+        return child_->DeleteFeaturestore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceLogging::AsyncCreateEntityType(
     google::cloud::CompletionQueue& cq,
@@ -133,6 +172,19 @@ FeaturestoreServiceLogging::AsyncCreateEntityType(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::CreateEntityType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateEntityTypeRequest const&
+                 request) {
+        return child_->CreateEntityType(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
@@ -193,6 +245,19 @@ FeaturestoreServiceLogging::AsyncDeleteEntityType(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::DeleteEntityType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteEntityTypeRequest const&
+                 request) {
+        return child_->DeleteEntityType(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceLogging::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
@@ -212,6 +277,19 @@ FeaturestoreServiceLogging::AsyncCreateFeature(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::CreateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+        return child_->CreateFeature(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceLogging::AsyncBatchCreateFeatures(
     google::cloud::CompletionQueue& cq,
@@ -229,6 +307,19 @@ FeaturestoreServiceLogging::AsyncBatchCreateFeatures(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::BatchCreateFeatures(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+                 request) {
+        return child_->BatchCreateFeatures(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
@@ -288,6 +379,19 @@ FeaturestoreServiceLogging::AsyncDeleteFeature(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::DeleteFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+        return child_->DeleteFeature(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceLogging::AsyncImportFeatureValues(
     google::cloud::CompletionQueue& cq,
@@ -305,6 +409,19 @@ FeaturestoreServiceLogging::AsyncImportFeatureValues(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::ImportFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ImportFeatureValuesRequest const&
+                 request) {
+        return child_->ImportFeatureValues(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -327,6 +444,20 @@ FeaturestoreServiceLogging::AsyncBatchReadFeatureValues(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::BatchReadFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+                 request) {
+        return child_->BatchReadFeatureValues(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceLogging::AsyncExportFeatureValues(
     google::cloud::CompletionQueue& cq,
@@ -346,6 +477,19 @@ FeaturestoreServiceLogging::AsyncExportFeatureValues(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::ExportFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ExportFeatureValuesRequest const&
+                 request) {
+        return child_->ExportFeatureValues(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceLogging::AsyncDeleteFeatureValues(
     google::cloud::CompletionQueue& cq,
@@ -363,6 +507,19 @@ FeaturestoreServiceLogging::AsyncDeleteFeatureValues(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceLogging::DeleteFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const&
+                 request) {
+        return child_->DeleteFeatureValues(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>

@@ -52,10 +52,18 @@ class IDSStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::ids::v1::CreateEndpointRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateEndpoint(
+      grpc::ClientContext& context, Options options,
+      google::cloud::ids::v1::CreateEndpointRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::ids::v1::DeleteEndpointRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      grpc::ClientContext& context, Options options,
       google::cloud::ids::v1::DeleteEndpointRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -93,10 +101,18 @@ class DefaultIDSStub : public IDSStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      grpc::ClientContext& context, Options options,
+      google::cloud::ids::v1::CreateEndpointRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      grpc::ClientContext& context, Options options,
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

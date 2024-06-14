@@ -51,6 +51,15 @@ FeaturestoreServiceAuth::AsyncCreateFeaturestore(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::CreateFeaturestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFeaturestore(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
 FeaturestoreServiceAuth::GetFeaturestore(
     grpc::ClientContext& context, Options const& options,
@@ -89,6 +98,15 @@ FeaturestoreServiceAuth::AsyncUpdateFeaturestore(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::UpdateFeaturestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFeaturestore(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncDeleteFeaturestore(
     google::cloud::CompletionQueue& cq,
@@ -109,6 +127,15 @@ FeaturestoreServiceAuth::AsyncDeleteFeaturestore(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::DeleteFeaturestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFeaturestore(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncCreateEntityType(
     google::cloud::CompletionQueue& cq,
@@ -127,6 +154,15 @@ FeaturestoreServiceAuth::AsyncCreateEntityType(
         return child->AsyncCreateEntityType(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::CreateEntityType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
@@ -176,6 +212,15 @@ FeaturestoreServiceAuth::AsyncDeleteEntityType(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::DeleteEntityType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEntityType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
@@ -196,6 +241,14 @@ FeaturestoreServiceAuth::AsyncCreateFeature(
       });
 }
 
+StatusOr<google::longrunning::Operation> FeaturestoreServiceAuth::CreateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFeature(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncBatchCreateFeatures(
     google::cloud::CompletionQueue& cq,
@@ -214,6 +267,15 @@ FeaturestoreServiceAuth::AsyncBatchCreateFeatures(
         return child->AsyncBatchCreateFeatures(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::BatchCreateFeatures(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCreateFeatures(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
@@ -263,6 +325,14 @@ FeaturestoreServiceAuth::AsyncDeleteFeature(
       });
 }
 
+StatusOr<google::longrunning::Operation> FeaturestoreServiceAuth::DeleteFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFeature(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncImportFeatureValues(
     google::cloud::CompletionQueue& cq,
@@ -281,6 +351,15 @@ FeaturestoreServiceAuth::AsyncImportFeatureValues(
         return child->AsyncImportFeatureValues(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::ImportFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportFeatureValues(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -304,6 +383,16 @@ FeaturestoreServiceAuth::AsyncBatchReadFeatureValues(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::BatchReadFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchReadFeatureValues(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncExportFeatureValues(
     google::cloud::CompletionQueue& cq,
@@ -324,6 +413,15 @@ FeaturestoreServiceAuth::AsyncExportFeatureValues(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::ExportFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportFeatureValues(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncDeleteFeatureValues(
     google::cloud::CompletionQueue& cq,
@@ -342,6 +440,15 @@ FeaturestoreServiceAuth::AsyncDeleteFeatureValues(
         return child->AsyncDeleteFeatureValues(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::DeleteFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFeatureValues(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>

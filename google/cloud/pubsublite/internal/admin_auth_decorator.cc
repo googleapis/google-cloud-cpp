@@ -155,6 +155,14 @@ AdminServiceAuth::AsyncSeekSubscription(
       });
 }
 
+StatusOr<google::longrunning::Operation> AdminServiceAuth::SeekSubscription(
+    grpc::ClientContext& context, Options options,
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SeekSubscription(context, options, request);
+}
+
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceAuth::CreateReservation(
     grpc::ClientContext& context, Options const& options,

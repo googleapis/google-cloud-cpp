@@ -72,6 +72,16 @@ ReachabilityServiceAuth::AsyncCreateConnectivityTest(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceAuth::CreateConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConnectivityTest(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceAuth::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +101,16 @@ ReachabilityServiceAuth::AsyncUpdateConnectivityTest(
         return child->AsyncUpdateConnectivityTest(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceAuth::UpdateConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateConnectivityTest(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -114,6 +134,16 @@ ReachabilityServiceAuth::AsyncRerunConnectivityTest(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceAuth::RerunConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RerunConnectivityTest(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceAuth::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
@@ -133,6 +163,16 @@ ReachabilityServiceAuth::AsyncDeleteConnectivityTest(
         return child->AsyncDeleteConnectivityTest(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceAuth::DeleteConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConnectivityTest(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -51,6 +51,14 @@ VpcAccessServiceAuth::AsyncCreateConnector(
       });
 }
 
+StatusOr<google::longrunning::Operation> VpcAccessServiceAuth::CreateConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConnector(context, options, request);
+}
+
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceAuth::GetConnector(
     grpc::ClientContext& context, Options const& options,
@@ -87,6 +95,14 @@ VpcAccessServiceAuth::AsyncDeleteConnector(
         return child->AsyncDeleteConnector(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> VpcAccessServiceAuth::DeleteConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConnector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

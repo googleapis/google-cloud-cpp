@@ -44,6 +44,10 @@ class ApiKeysStub {
       google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::CreateKeyRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateKey(
+      grpc::ClientContext& context, Options options,
+      google::api::apikeys::v2::CreateKeyRequest const& request) = 0;
+
   virtual StatusOr<google::api::apikeys::v2::ListKeysResponse> ListKeys(
       grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::ListKeysRequest const& request) = 0;
@@ -62,16 +66,28 @@ class ApiKeysStub {
       google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::UpdateKeyRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateKey(
+      grpc::ClientContext& context, Options options,
+      google::api::apikeys::v2::UpdateKeyRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::DeleteKeyRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteKey(
+      grpc::ClientContext& context, Options options,
+      google::api::apikeys::v2::DeleteKeyRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUndeleteKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::UndeleteKeyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UndeleteKey(
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) = 0;
 
   virtual StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
@@ -106,6 +122,10 @@ class DefaultApiKeysStub : public ApiKeysStub {
       google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateKey(
+      grpc::ClientContext& context, Options options,
+      google::api::apikeys::v2::CreateKeyRequest const& request) override;
+
   StatusOr<google::api::apikeys::v2::ListKeysResponse> ListKeys(
       grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::ListKeysRequest const& request) override;
@@ -124,16 +144,28 @@ class DefaultApiKeysStub : public ApiKeysStub {
       google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateKey(
+      grpc::ClientContext& context, Options options,
+      google::api::apikeys::v2::UpdateKeyRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteKey(
+      grpc::ClientContext& context, Options options,
+      google::api::apikeys::v2::DeleteKeyRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UndeleteKey(
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(

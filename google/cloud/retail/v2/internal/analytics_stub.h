@@ -46,6 +46,11 @@ class AnalyticsServiceStub {
       google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -73,6 +78,11 @@ class DefaultAnalyticsServiceStub : public AnalyticsServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
       override;
 

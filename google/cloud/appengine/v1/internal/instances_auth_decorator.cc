@@ -68,6 +68,14 @@ InstancesAuth::AsyncDeleteInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> InstancesAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstancesAuth::AsyncDebugInstance(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +94,14 @@ InstancesAuth::AsyncDebugInstance(
         return child->AsyncDebugInstance(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> InstancesAuth::DebugInstance(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DebugInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DebugInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -46,6 +46,12 @@ class RegionBackendServicesRestStub {
       google::cloud::cpp::compute::region_backend_services::v1::
           DeleteBackendServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteBackendService(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::region_backend_services::
+                           v1::DeleteBackendServiceRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::BackendService>
   GetBackendService(google::cloud::rest_internal::RestContext& rest_context,
                     Options const& options,
@@ -72,6 +78,12 @@ class RegionBackendServicesRestStub {
       google::cloud::cpp::compute::region_backend_services::v1::
           InsertBackendServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertBackendService(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::region_backend_services::
+                           v1::InsertBackendServiceRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
   ListRegionBackendServices(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -93,6 +105,12 @@ class RegionBackendServicesRestStub {
       google::cloud::cpp::compute::region_backend_services::v1::
           PatchBackendServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchBackendService(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
+                      google::cloud::cpp::compute::region_backend_services::v1::
+                          PatchBackendServiceRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -107,6 +125,12 @@ class RegionBackendServicesRestStub {
       google::cloud::cpp::compute::region_backend_services::v1::
           SetSecurityPolicyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSecurityPolicy(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::compute::region_backend_services::v1::
+                        SetSecurityPolicyRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
                      Options const& options,
@@ -120,6 +144,12 @@ class RegionBackendServicesRestStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_backend_services::v1::
           UpdateBackendServiceRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateBackendService(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::region_backend_services::
+                           v1::UpdateBackendServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
@@ -155,6 +185,12 @@ class DefaultRegionBackendServicesRestStub
       google::cloud::cpp::compute::region_backend_services::v1::
           DeleteBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          DeleteBackendServiceRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -181,6 +217,12 @@ class DefaultRegionBackendServicesRestStub
       google::cloud::cpp::compute::region_backend_services::v1::
           InsertBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          InsertBackendServiceRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
   ListRegionBackendServices(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -202,6 +244,12 @@ class DefaultRegionBackendServicesRestStub
       google::cloud::cpp::compute::region_backend_services::v1::
           PatchBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          PatchBackendServiceRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -216,6 +264,12 @@ class DefaultRegionBackendServicesRestStub
       google::cloud::cpp::compute::region_backend_services::v1::
           SetSecurityPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          SetSecurityPolicyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
                      Options const& options,
@@ -227,6 +281,12 @@ class DefaultRegionBackendServicesRestStub
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          UpdateBackendServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_backend_services::v1::
           UpdateBackendServiceRequest const& request) override;
 

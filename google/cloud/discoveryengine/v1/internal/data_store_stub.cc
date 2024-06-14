@@ -50,6 +50,18 @@ DefaultDataStoreServiceStub::AsyncCreateDataStore(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataStoreServiceStub::CreateDataStore(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDataStore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
 DefaultDataStoreServiceStub::GetDataStore(
     grpc::ClientContext& context, Options const&,
@@ -91,6 +103,18 @@ DefaultDataStoreServiceStub::AsyncDeleteDataStore(
         return grpc_stub_->AsyncDeleteDataStore(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataStoreServiceStub::DeleteDataStore(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataStore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>

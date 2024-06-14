@@ -57,6 +57,10 @@ class JobServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteCustomJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) = 0;
+
   virtual Status CancelCustomJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) = 0;
@@ -84,6 +88,11 @@ class JobServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDataLabelingJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
           request) = 0;
 
@@ -119,6 +128,12 @@ class JobServiceStub {
       google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteHyperparameterTuningJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+          request) = 0;
+
   virtual Status CancelHyperparameterTuningJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
@@ -141,6 +156,10 @@ class JobServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteNasJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) = 0;
 
   virtual Status CancelNasJob(
@@ -186,6 +205,11 @@ class JobServiceStub {
       google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteBatchPredictionJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+          request) = 0;
+
   virtual Status CancelBatchPredictionJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
@@ -226,11 +250,23 @@ class JobServiceStub {
       google::cloud::aiplatform::v1::
           UpdateModelDeploymentMonitoringJobRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateModelDeploymentMonitoringJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::
+          UpdateModelDeploymentMonitoringJobRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteModelDeploymentMonitoringJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::
+          DeleteModelDeploymentMonitoringJobRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteModelDeploymentMonitoringJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::
           DeleteModelDeploymentMonitoringJobRequest const& request) = 0;
 
@@ -288,6 +324,11 @@ class DefaultJobServiceStub : public JobServiceStub {
       google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteCustomJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request)
+      override;
+
   Status CancelCustomJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelCustomJobRequest const& request)
@@ -314,6 +355,11 @@ class DefaultJobServiceStub : public JobServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataLabelingJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
           request) override;
 
@@ -348,6 +394,11 @@ class DefaultJobServiceStub : public JobServiceStub {
       google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteHyperparameterTuningJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+          request) override;
+
   Status CancelHyperparameterTuningJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
@@ -371,6 +422,11 @@ class DefaultJobServiceStub : public JobServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteNasJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request)
       override;
 
@@ -415,6 +471,11 @@ class DefaultJobServiceStub : public JobServiceStub {
       google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteBatchPredictionJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+          request) override;
+
   Status CancelBatchPredictionJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
@@ -455,11 +516,21 @@ class DefaultJobServiceStub : public JobServiceStub {
       google::cloud::aiplatform::v1::
           UpdateModelDeploymentMonitoringJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateModelDeploymentMonitoringJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::
+          UpdateModelDeploymentMonitoringJobRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteModelDeploymentMonitoringJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::
+          DeleteModelDeploymentMonitoringJobRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteModelDeploymentMonitoringJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::
           DeleteModelDeploymentMonitoringJobRequest const& request) override;
 

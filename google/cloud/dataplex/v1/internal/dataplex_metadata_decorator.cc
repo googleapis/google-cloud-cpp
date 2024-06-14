@@ -54,6 +54,14 @@ DataplexServiceMetadata::AsyncCreateLake(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::CreateLake(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateLake(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateLake(
     google::cloud::CompletionQueue& cq,
@@ -67,6 +75,15 @@ DataplexServiceMetadata::AsyncUpdateLake(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::UpdateLake(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("lake.name=", internal::UrlEncode(request.lake().name())));
+  return child_->UpdateLake(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteLake(
     google::cloud::CompletionQueue& cq,
@@ -77,6 +94,14 @@ DataplexServiceMetadata::AsyncDeleteLake(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteLake(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::DeleteLake(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteLake(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListLakesResponse>
@@ -117,6 +142,14 @@ DataplexServiceMetadata::AsyncCreateZone(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::CreateZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateZone(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateZone(
     google::cloud::CompletionQueue& cq,
@@ -130,6 +163,15 @@ DataplexServiceMetadata::AsyncUpdateZone(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::UpdateZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("zone.name=", internal::UrlEncode(request.zone().name())));
+  return child_->UpdateZone(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteZone(
     google::cloud::CompletionQueue& cq,
@@ -140,6 +182,14 @@ DataplexServiceMetadata::AsyncDeleteZone(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteZone(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::DeleteZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteZone(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListZonesResponse>
@@ -180,6 +230,14 @@ DataplexServiceMetadata::AsyncCreateAsset(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::CreateAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAsset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateAsset(
     google::cloud::CompletionQueue& cq,
@@ -193,6 +251,15 @@ DataplexServiceMetadata::AsyncUpdateAsset(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::UpdateAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("asset.name=", internal::UrlEncode(request.asset().name())));
+  return child_->UpdateAsset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
@@ -203,6 +270,14 @@ DataplexServiceMetadata::AsyncDeleteAsset(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAsset(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::DeleteAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAsset(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAssetsResponse>
@@ -243,6 +318,14 @@ DataplexServiceMetadata::AsyncCreateTask(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::CreateTask(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTask(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateTask(
     google::cloud::CompletionQueue& cq,
@@ -256,6 +339,15 @@ DataplexServiceMetadata::AsyncUpdateTask(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::UpdateTask(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("task.name=", internal::UrlEncode(request.task().name())));
+  return child_->UpdateTask(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteTask(
     google::cloud::CompletionQueue& cq,
@@ -266,6 +358,14 @@ DataplexServiceMetadata::AsyncDeleteTask(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTask(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceMetadata::DeleteTask(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTask(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListTasksResponse>
@@ -331,6 +431,15 @@ DataplexServiceMetadata::AsyncCreateEnvironment(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceMetadata::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEnvironment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -344,6 +453,16 @@ DataplexServiceMetadata::AsyncUpdateEnvironment(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceMetadata::UpdateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("environment.name=",
+                           internal::UrlEncode(request.environment().name())));
+  return child_->UpdateEnvironment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -354,6 +473,15 @@ DataplexServiceMetadata::AsyncDeleteEnvironment(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEnvironment(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataplexServiceMetadata::DeleteEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>

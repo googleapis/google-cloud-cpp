@@ -80,6 +80,24 @@ DefaultDisksRestStub::AsyncAddResourcePolicies(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::AddResourcePolicies(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.disks_add_resource_policies_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", request.disk(), "/",
+                   "addResourcePolicies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
 DefaultDisksRestStub::AggregatedListDisks(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -140,6 +158,21 @@ DefaultDisksRestStub::AsyncBulkInsert(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::BulkInsert(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.bulk_insert_disk_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", "bulkInsert"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultDisksRestStub::AsyncCreateSnapshot(
     CompletionQueue& cq,
@@ -176,6 +209,24 @@ DefaultDisksRestStub::AsyncCreateSnapshot(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::CreateSnapshot(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.snapshot_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", request.disk(), "/",
+                   "createSnapshot"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("guest_flush", request.guest_flush() ? "1" : "0"),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultDisksRestStub::AsyncDeleteDisk(
     CompletionQueue& cq,
@@ -207,6 +258,21 @@ DefaultDisksRestStub::AsyncDeleteDisk(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::DeleteDisk(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", request.disk()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk> DefaultDisksRestStub::GetDisk(
@@ -272,6 +338,22 @@ DefaultDisksRestStub::AsyncInsertDisk(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::InsertDisk(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.disk_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("source_image", request.source_image())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::DiskList>
 DefaultDisksRestStub::ListDisks(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -328,6 +410,24 @@ DefaultDisksRestStub::AsyncRemoveResourcePolicies(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::RemoveResourcePolicies(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.disks_remove_resource_policies_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", request.disk(), "/",
+                   "removeResourcePolicies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultDisksRestStub::AsyncResize(
     CompletionQueue& cq,
@@ -360,6 +460,22 @@ DefaultDisksRestStub::AsyncResize(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::Resize(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.disks_resize_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", request.disk(), "/",
+                   "resize"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -412,6 +528,23 @@ DefaultDisksRestStub::AsyncSetLabels(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::SetLabels(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.zone_set_labels_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", request.resource(), "/",
+                   "setLabels"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultDisksRestStub::AsyncStartAsyncReplication(
     CompletionQueue& cq,
@@ -445,6 +578,24 @@ DefaultDisksRestStub::AsyncStartAsyncReplication(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::StartAsyncReplication(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::StartAsyncReplicationRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.disks_start_async_replication_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", request.disk(), "/",
+                   "startAsyncReplication"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -481,6 +632,23 @@ DefaultDisksRestStub::AsyncStopAsyncReplication(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::StopAsyncReplication(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", request.disk(), "/",
+                   "stopAsyncReplication"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultDisksRestStub::AsyncStopGroupAsyncReplication(
     CompletionQueue& cq,
@@ -514,6 +682,24 @@ DefaultDisksRestStub::AsyncStopGroupAsyncReplication(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::StopGroupAsyncReplication(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::
+        StopGroupAsyncReplicationRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.disks_stop_group_async_replication_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/",
+                   "stopGroupAsyncReplication"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -566,6 +752,23 @@ DefaultDisksRestStub::AsyncUpdateDisk(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultDisksRestStub::UpdateDisk(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.disk_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "disks", "/", request.disk()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("paths", request.paths()),
+           std::make_pair("request_id", request.request_id()),
+           std::make_pair("update_mask", request.update_mask())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

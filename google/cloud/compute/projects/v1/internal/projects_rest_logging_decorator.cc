@@ -54,6 +54,20 @@ ProjectsRestLogging::AsyncDisableXpnHost(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::DisableXpnHost(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::projects::v1::
+                 DisableXpnHostRequest const& request) {
+        return child_->DisableXpnHost(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncDisableXpnResource(
     CompletionQueue& cq,
@@ -72,6 +86,20 @@ ProjectsRestLogging::AsyncDisableXpnResource(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::DisableXpnResource(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::projects::v1::
+                 DisableXpnResourceRequest const& request) {
+        return child_->DisableXpnResource(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -95,6 +123,21 @@ ProjectsRestLogging::AsyncEnableXpnHost(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::EnableXpnHost(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+              request) {
+        return child_->EnableXpnHost(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncEnableXpnResource(
     CompletionQueue& cq,
@@ -113,6 +156,20 @@ ProjectsRestLogging::AsyncEnableXpnResource(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::EnableXpnResource(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::projects::v1::
+                 EnableXpnResourceRequest const& request) {
+        return child_->EnableXpnResource(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
@@ -191,6 +248,19 @@ ProjectsRestLogging::AsyncMoveDisk(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::MoveDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
+                 request) {
+        return child_->MoveDisk(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncMoveInstance(
     CompletionQueue& cq,
@@ -210,6 +280,21 @@ ProjectsRestLogging::AsyncMoveInstance(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::MoveInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+              request) {
+        return child_->MoveInstance(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -232,6 +317,20 @@ ProjectsRestLogging::AsyncSetCloudArmorTier(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::SetCloudArmorTier(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::projects::v1::
+                 SetCloudArmorTierRequest const& request) {
+        return child_->SetCloudArmorTier(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncSetCommonInstanceMetadata(
     CompletionQueue& cq,
@@ -250,6 +349,21 @@ ProjectsRestLogging::AsyncSetCommonInstanceMetadata(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::SetCommonInstanceMetadata(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::
+        SetCommonInstanceMetadataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::projects::v1::
+                 SetCommonInstanceMetadataRequest const& request) {
+        return child_->SetCommonInstanceMetadata(rest_context, options,
+                                                 request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -272,6 +386,20 @@ ProjectsRestLogging::AsyncSetDefaultNetworkTier(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::SetDefaultNetworkTier(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::
+        SetDefaultNetworkTierRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::projects::v1::
+                 SetDefaultNetworkTierRequest const& request) {
+        return child_->SetDefaultNetworkTier(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncSetUsageExportBucket(
     CompletionQueue& cq,
@@ -290,6 +418,20 @@ ProjectsRestLogging::AsyncSetUsageExportBucket(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestLogging::SetUsageExportBucket(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::
+        SetUsageExportBucketRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::projects::v1::
+                 SetUsageExportBucketRequest const& request) {
+        return child_->SetUsageExportBucket(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -115,6 +115,18 @@ IntentsLogging::AsyncImportIntents(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> IntentsLogging::ImportIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&
+                 request) {
+        return child_->ImportIntents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IntentsLogging::AsyncExportIntents(
     google::cloud::CompletionQueue& cq,
@@ -132,6 +144,18 @@ IntentsLogging::AsyncExportIntents(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> IntentsLogging::ExportIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
+                 request) {
+        return child_->ExportIntents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

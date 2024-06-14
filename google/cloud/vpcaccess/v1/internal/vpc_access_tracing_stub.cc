@@ -46,6 +46,18 @@ VpcAccessServiceTracingStub::AsyncCreateConnector(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceTracingStub::CreateConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vpcaccess.v1.VpcAccessService", "CreateConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateConnector(context, options, request));
+}
+
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceTracingStub::GetConnector(
     grpc::ClientContext& context, Options const& options,
@@ -83,6 +95,18 @@ VpcAccessServiceTracingStub::AsyncDeleteConnector(
   auto f =
       child_->AsyncDeleteConnector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceTracingStub::DeleteConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vpcaccess.v1.VpcAccessService", "DeleteConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteConnector(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -46,6 +46,19 @@ VideoIntelligenceServiceTracingStub::AsyncAnnotateVideo(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+VideoIntelligenceServiceTracingStub::AnnotateVideo(
+    grpc::ClientContext& context, Options options,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.videointelligence.v1.VideoIntelligenceService",
+      "AnnotateVideo");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->AnnotateVideo(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoIntelligenceServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

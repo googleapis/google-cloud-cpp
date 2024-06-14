@@ -70,6 +70,21 @@ InterconnectAttachmentsRestLogging::AsyncDeleteInterconnectAttachment(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsRestLogging::DeleteInterconnectAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        DeleteInterconnectAttachmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_attachments::v1::
+                 DeleteInterconnectAttachmentRequest const& request) {
+        return child_->DeleteInterconnectAttachment(rest_context, options,
+                                                    request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
 InterconnectAttachmentsRestLogging::GetInterconnectAttachment(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -103,6 +118,21 @@ InterconnectAttachmentsRestLogging::AsyncInsertInterconnectAttachment(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsRestLogging::InsertInterconnectAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        InsertInterconnectAttachmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_attachments::v1::
+                 InsertInterconnectAttachmentRequest const& request) {
+        return child_->InsertInterconnectAttachment(rest_context, options,
+                                                    request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentList>
@@ -140,6 +170,21 @@ InterconnectAttachmentsRestLogging::AsyncPatchInterconnectAttachment(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsRestLogging::PatchInterconnectAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        PatchInterconnectAttachmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_attachments::v1::
+                 PatchInterconnectAttachmentRequest const& request) {
+        return child_->PatchInterconnectAttachment(rest_context, options,
+                                                   request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsRestLogging::AsyncSetLabels(
     CompletionQueue& cq,
@@ -158,6 +203,20 @@ InterconnectAttachmentsRestLogging::AsyncSetLabels(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsRestLogging::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        SetLabelsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_attachments::v1::
+                 SetLabelsRequest const& request) {
+        return child_->SetLabels(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

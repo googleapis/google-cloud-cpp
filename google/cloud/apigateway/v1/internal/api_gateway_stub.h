@@ -53,16 +53,28 @@ class ApiGatewayServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apigateway::v1::CreateGatewayRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateGateway(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::CreateGatewayRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateGateway(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::UpdateGatewayRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apigateway::v1::DeleteGatewayRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteGateway(
+      grpc::ClientContext& context, Options options,
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::apigateway::v1::ListApisResponse> ListApis(
@@ -79,16 +91,28 @@ class ApiGatewayServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apigateway::v1::CreateApiRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateApi(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::CreateApiRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateApi(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apigateway::v1::UpdateApiRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateApi(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::UpdateApiRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteApi(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apigateway::v1::DeleteApiRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteApi(
+      grpc::ClientContext& context, Options options,
       google::cloud::apigateway::v1::DeleteApiRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
@@ -106,16 +130,28 @@ class ApiGatewayServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateApiConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::CreateApiConfigRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateApiConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateApiConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteApiConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteApiConfig(
+      grpc::ClientContext& context, Options options,
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -157,6 +193,11 @@ class DefaultApiGatewayServiceStub : public ApiGatewayServiceStub {
       google::cloud::apigateway::v1::CreateGatewayRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateGateway(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::CreateGatewayRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -164,10 +205,20 @@ class DefaultApiGatewayServiceStub : public ApiGatewayServiceStub {
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateGateway(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::UpdateGatewayRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apigateway::v1::DeleteGatewayRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteGateway(
+      grpc::ClientContext& context, Options options,
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request)
       override;
 
@@ -185,16 +236,28 @@ class DefaultApiGatewayServiceStub : public ApiGatewayServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apigateway::v1::CreateApiRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateApi(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::CreateApiRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateApi(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apigateway::v1::UpdateApiRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateApi(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::UpdateApiRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteApi(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apigateway::v1::DeleteApiRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteApi(
+      grpc::ClientContext& context, Options options,
       google::cloud::apigateway::v1::DeleteApiRequest const& request) override;
 
   StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
@@ -214,6 +277,11 @@ class DefaultApiGatewayServiceStub : public ApiGatewayServiceStub {
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateApiConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::CreateApiConfigRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateApiConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -221,10 +289,20 @@ class DefaultApiGatewayServiceStub : public ApiGatewayServiceStub {
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateApiConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteApiConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteApiConfig(
+      grpc::ClientContext& context, Options options,
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request)
       override;
 

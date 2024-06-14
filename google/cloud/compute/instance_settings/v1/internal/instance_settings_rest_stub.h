@@ -51,6 +51,12 @@ class InstanceSettingsRestStub {
       google::cloud::cpp::compute::instance_settings::v1::
           PatchInstanceSettingsRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInstanceSettings(google::cloud::rest_internal::RestContext& rest_context,
+                        Options const& options,
+                        google::cloud::cpp::compute::instance_settings::v1::
+                            PatchInstanceSettingsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -87,6 +93,12 @@ class DefaultInstanceSettingsRestStub : public InstanceSettingsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_settings::v1::
+          PatchInstanceSettingsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_settings::v1::
           PatchInstanceSettingsRequest const& request) override;
 

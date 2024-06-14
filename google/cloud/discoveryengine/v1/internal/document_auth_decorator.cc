@@ -95,6 +95,14 @@ DocumentServiceAuth::AsyncImportDocuments(
       });
 }
 
+StatusOr<google::longrunning::Operation> DocumentServiceAuth::ImportDocuments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportDocuments(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceAuth::AsyncPurgeDocuments(
     google::cloud::CompletionQueue& cq,
@@ -113,6 +121,14 @@ DocumentServiceAuth::AsyncPurgeDocuments(
         return child->AsyncPurgeDocuments(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DocumentServiceAuth::PurgeDocuments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PurgeDocuments(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -54,6 +54,14 @@ EngineServiceMetadata::AsyncCreateEngine(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> EngineServiceMetadata::CreateEngine(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEngine(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EngineServiceMetadata::AsyncDeleteEngine(
     google::cloud::CompletionQueue& cq,
@@ -64,6 +72,14 @@ EngineServiceMetadata::AsyncDeleteEngine(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEngine(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> EngineServiceMetadata::DeleteEngine(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEngine(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>

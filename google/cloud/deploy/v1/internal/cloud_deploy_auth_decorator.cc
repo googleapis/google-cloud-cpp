@@ -69,6 +69,15 @@ CloudDeployAuth::AsyncCreateDeliveryPipeline(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudDeployAuth::CreateDeliveryPipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDeliveryPipeline(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncUpdateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +98,15 @@ CloudDeployAuth::AsyncUpdateDeliveryPipeline(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudDeployAuth::UpdateDeliveryPipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDeliveryPipeline(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncDeleteDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +125,15 @@ CloudDeployAuth::AsyncDeleteDeliveryPipeline(
         return child->AsyncDeleteDeliveryPipeline(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployAuth::DeleteDeliveryPipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDeliveryPipeline(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::ListTargetsResponse>
@@ -155,6 +182,14 @@ CloudDeployAuth::AsyncCreateTarget(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudDeployAuth::CreateTarget(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateTargetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTarget(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncUpdateTarget(
     google::cloud::CompletionQueue& cq,
@@ -175,6 +210,14 @@ CloudDeployAuth::AsyncUpdateTarget(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudDeployAuth::UpdateTarget(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateTargetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTarget(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncDeleteTarget(
     google::cloud::CompletionQueue& cq,
@@ -193,6 +236,14 @@ CloudDeployAuth::AsyncDeleteTarget(
         return child->AsyncDeleteTarget(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployAuth::DeleteTarget(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteTargetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTarget(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
@@ -233,6 +284,15 @@ CloudDeployAuth::AsyncCreateCustomTargetType(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudDeployAuth::CreateCustomTargetType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCustomTargetType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncUpdateCustomTargetType(
     google::cloud::CompletionQueue& cq,
@@ -253,6 +313,15 @@ CloudDeployAuth::AsyncUpdateCustomTargetType(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudDeployAuth::UpdateCustomTargetType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCustomTargetType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncDeleteCustomTargetType(
     google::cloud::CompletionQueue& cq,
@@ -271,6 +340,15 @@ CloudDeployAuth::AsyncDeleteCustomTargetType(
         return child->AsyncDeleteCustomTargetType(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployAuth::DeleteCustomTargetType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCustomTargetType(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
@@ -308,6 +386,14 @@ CloudDeployAuth::AsyncCreateRelease(
         return child->AsyncCreateRelease(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployAuth::CreateRelease(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateReleaseRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRelease(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
@@ -383,6 +469,14 @@ CloudDeployAuth::AsyncCreateRollout(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudDeployAuth::CreateRollout(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateRolloutRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRollout(context, options, request);
+}
+
 StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
 CloudDeployAuth::IgnoreJob(
     grpc::ClientContext& context, Options const& options,
@@ -454,6 +548,14 @@ CloudDeployAuth::AsyncCreateAutomation(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudDeployAuth::CreateAutomation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateAutomationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAutomation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncUpdateAutomation(
     google::cloud::CompletionQueue& cq,
@@ -474,6 +576,14 @@ CloudDeployAuth::AsyncUpdateAutomation(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudDeployAuth::UpdateAutomation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAutomation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncDeleteAutomation(
     google::cloud::CompletionQueue& cq,
@@ -492,6 +602,14 @@ CloudDeployAuth::AsyncDeleteAutomation(
         return child->AsyncDeleteAutomation(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployAuth::DeleteAutomation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAutomation(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Automation> CloudDeployAuth::GetAutomation(

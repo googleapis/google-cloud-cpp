@@ -53,6 +53,10 @@ class RevisionsMetadata : public RevisionsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteRevision(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::DeleteRevisionRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

@@ -50,6 +50,15 @@ TargetPoolsRestMetadata::AsyncAddHealthCheck(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsRestMetadata::AddHealthCheck(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddHealthCheck(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncAddInstance(
     CompletionQueue& cq,
@@ -60,6 +69,15 @@ TargetPoolsRestMetadata::AsyncAddInstance(
   SetMetadata(*rest_context, *options);
   return child_->AsyncAddInstance(cq, std::move(rest_context),
                                   std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsRestMetadata::AddInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddInstance(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
@@ -81,6 +99,15 @@ TargetPoolsRestMetadata::AsyncDeleteTargetPool(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeleteTargetPool(cq, std::move(rest_context),
                                        std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsRestMetadata::DeleteTargetPool(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::
+        DeleteTargetPoolRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteTargetPool(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
@@ -113,6 +140,15 @@ TargetPoolsRestMetadata::AsyncInsertTargetPool(
                                        std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsRestMetadata::InsertTargetPool(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::
+        InsertTargetPoolRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertTargetPool(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolList>
 TargetPoolsRestMetadata::ListTargetPools(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -134,6 +170,15 @@ TargetPoolsRestMetadata::AsyncRemoveHealthCheck(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsRestMetadata::RemoveHealthCheck(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::
+        RemoveHealthCheckRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->RemoveHealthCheck(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncRemoveInstance(
     CompletionQueue& cq,
@@ -144,6 +189,15 @@ TargetPoolsRestMetadata::AsyncRemoveInstance(
   SetMetadata(*rest_context, *options);
   return child_->AsyncRemoveInstance(cq, std::move(rest_context),
                                      std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsRestMetadata::RemoveInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->RemoveInstance(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -158,6 +212,15 @@ TargetPoolsRestMetadata::AsyncSetBackup(
                                 request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsRestMetadata::SetBackup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetBackup(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncSetSecurityPolicy(
     CompletionQueue& cq,
@@ -168,6 +231,15 @@ TargetPoolsRestMetadata::AsyncSetSecurityPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsRestMetadata::SetSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::
+        SetSecurityPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetSecurityPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

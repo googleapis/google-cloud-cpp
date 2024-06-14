@@ -96,6 +96,15 @@ EntityTypesAuth::AsyncExportEntityTypes(
       });
 }
 
+StatusOr<google::longrunning::Operation> EntityTypesAuth::ExportEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportEntityTypes(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesAuth::AsyncImportEntityTypes(
     google::cloud::CompletionQueue& cq,
@@ -115,6 +124,15 @@ EntityTypesAuth::AsyncImportEntityTypes(
         return child->AsyncImportEntityTypes(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EntityTypesAuth::ImportEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportEntityTypes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

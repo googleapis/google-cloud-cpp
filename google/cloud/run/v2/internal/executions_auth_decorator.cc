@@ -68,6 +68,14 @@ ExecutionsAuth::AsyncDeleteExecution(
       });
 }
 
+StatusOr<google::longrunning::Operation> ExecutionsAuth::DeleteExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteExecution(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsAuth::AsyncCancelExecution(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +94,14 @@ ExecutionsAuth::AsyncCancelExecution(
         return child->AsyncCancelExecution(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ExecutionsAuth::CancelExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelExecution(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

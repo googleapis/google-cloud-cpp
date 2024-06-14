@@ -46,6 +46,18 @@ DataScanServiceTracingStub::AsyncCreateDataScan(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataScanServiceTracingStub::CreateDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataScanService",
+                                     "CreateDataScan");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateDataScan(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceTracingStub::AsyncUpdateDataScan(
     google::cloud::CompletionQueue& cq,
@@ -61,6 +73,18 @@ DataScanServiceTracingStub::AsyncUpdateDataScan(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataScanServiceTracingStub::UpdateDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataScanService",
+                                     "UpdateDataScan");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDataScan(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceTracingStub::AsyncDeleteDataScan(
     google::cloud::CompletionQueue& cq,
@@ -74,6 +98,18 @@ DataScanServiceTracingStub::AsyncDeleteDataScan(
   auto f =
       child_->AsyncDeleteDataScan(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataScanServiceTracingStub::DeleteDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataScanService",
+                                     "DeleteDataScan");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDataScan(context, options, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::DataScan>

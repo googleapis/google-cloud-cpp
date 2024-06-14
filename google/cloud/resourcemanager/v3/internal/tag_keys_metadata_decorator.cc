@@ -78,6 +78,13 @@ TagKeysMetadata::AsyncCreateTagKey(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> TagKeysMetadata::CreateTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+  SetMetadata(context, options);
+  return child_->CreateTagKey(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagKeysMetadata::AsyncUpdateTagKey(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +98,15 @@ TagKeysMetadata::AsyncUpdateTagKey(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> TagKeysMetadata::UpdateTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("tag_key.name=",
+                           internal::UrlEncode(request.tag_key().name())));
+  return child_->UpdateTagKey(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagKeysMetadata::AsyncDeleteTagKey(
     google::cloud::CompletionQueue& cq,
@@ -101,6 +117,14 @@ TagKeysMetadata::AsyncDeleteTagKey(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTagKey(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> TagKeysMetadata::DeleteTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTagKey(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysMetadata::GetIamPolicy(

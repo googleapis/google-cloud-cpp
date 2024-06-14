@@ -75,6 +75,16 @@ NetworkServicesMetadata::AsyncCreateEndpointPolicy(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateEndpointPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEndpointPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncUpdateEndpointPolicy(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +100,18 @@ NetworkServicesMetadata::AsyncUpdateEndpointPolicy(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::UpdateEndpointPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("endpoint_policy.name=",
+                   internal::UrlEncode(request.endpoint_policy().name())));
+  return child_->UpdateEndpointPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncDeleteEndpointPolicy(
     google::cloud::CompletionQueue& cq,
@@ -101,6 +123,16 @@ NetworkServicesMetadata::AsyncDeleteEndpointPolicy(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEndpointPolicy(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteEndpointPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEndpointPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
@@ -133,6 +165,14 @@ NetworkServicesMetadata::AsyncCreateGateway(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesMetadata::CreateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateGatewayRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
@@ -146,6 +186,15 @@ NetworkServicesMetadata::AsyncUpdateGateway(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesMetadata::UpdateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("gateway.name=",
+                           internal::UrlEncode(request.gateway().name())));
+  return child_->UpdateGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
@@ -156,6 +205,14 @@ NetworkServicesMetadata::AsyncDeleteGateway(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteGateway(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> NetworkServicesMetadata::DeleteGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteGateway(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse>
@@ -188,6 +245,15 @@ NetworkServicesMetadata::AsyncCreateGrpcRoute(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateGrpcRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateGrpcRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncUpdateGrpcRoute(
     google::cloud::CompletionQueue& cq,
@@ -201,6 +267,16 @@ NetworkServicesMetadata::AsyncUpdateGrpcRoute(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::UpdateGrpcRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("grpc_route.name=",
+                           internal::UrlEncode(request.grpc_route().name())));
+  return child_->UpdateGrpcRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncDeleteGrpcRoute(
     google::cloud::CompletionQueue& cq,
@@ -211,6 +287,15 @@ NetworkServicesMetadata::AsyncDeleteGrpcRoute(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteGrpcRoute(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteGrpcRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteGrpcRoute(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse>
@@ -243,6 +328,15 @@ NetworkServicesMetadata::AsyncCreateHttpRoute(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateHttpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateHttpRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncUpdateHttpRoute(
     google::cloud::CompletionQueue& cq,
@@ -256,6 +350,16 @@ NetworkServicesMetadata::AsyncUpdateHttpRoute(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::UpdateHttpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("http_route.name=",
+                           internal::UrlEncode(request.http_route().name())));
+  return child_->UpdateHttpRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncDeleteHttpRoute(
     google::cloud::CompletionQueue& cq,
@@ -266,6 +370,15 @@ NetworkServicesMetadata::AsyncDeleteHttpRoute(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteHttpRoute(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteHttpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteHttpRoute(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse>
@@ -298,6 +411,15 @@ NetworkServicesMetadata::AsyncCreateTcpRoute(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateTcpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTcpRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncUpdateTcpRoute(
     google::cloud::CompletionQueue& cq,
@@ -311,6 +433,16 @@ NetworkServicesMetadata::AsyncUpdateTcpRoute(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::UpdateTcpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("tcp_route.name=",
+                           internal::UrlEncode(request.tcp_route().name())));
+  return child_->UpdateTcpRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncDeleteTcpRoute(
     google::cloud::CompletionQueue& cq,
@@ -321,6 +453,15 @@ NetworkServicesMetadata::AsyncDeleteTcpRoute(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTcpRoute(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteTcpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTcpRoute(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse>
@@ -353,6 +494,15 @@ NetworkServicesMetadata::AsyncCreateTlsRoute(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateTlsRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTlsRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncUpdateTlsRoute(
     google::cloud::CompletionQueue& cq,
@@ -366,6 +516,16 @@ NetworkServicesMetadata::AsyncUpdateTlsRoute(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::UpdateTlsRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("tls_route.name=",
+                           internal::UrlEncode(request.tls_route().name())));
+  return child_->UpdateTlsRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncDeleteTlsRoute(
     google::cloud::CompletionQueue& cq,
@@ -376,6 +536,15 @@ NetworkServicesMetadata::AsyncDeleteTlsRoute(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTlsRoute(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteTlsRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTlsRoute(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse>
@@ -411,6 +580,16 @@ NetworkServicesMetadata::AsyncCreateServiceBinding(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateServiceBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateServiceBinding(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncDeleteServiceBinding(
     google::cloud::CompletionQueue& cq,
@@ -422,6 +601,16 @@ NetworkServicesMetadata::AsyncDeleteServiceBinding(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteServiceBinding(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteServiceBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteServiceBinding(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListMeshesResponse>
@@ -454,6 +643,14 @@ NetworkServicesMetadata::AsyncCreateMesh(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesMetadata::CreateMesh(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateMeshRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMesh(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncUpdateMesh(
     google::cloud::CompletionQueue& cq,
@@ -467,6 +664,15 @@ NetworkServicesMetadata::AsyncUpdateMesh(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesMetadata::UpdateMesh(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("mesh.name=", internal::UrlEncode(request.mesh().name())));
+  return child_->UpdateMesh(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesMetadata::AsyncDeleteMesh(
     google::cloud::CompletionQueue& cq,
@@ -477,6 +683,14 @@ NetworkServicesMetadata::AsyncDeleteMesh(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteMesh(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> NetworkServicesMetadata::DeleteMesh(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMesh(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

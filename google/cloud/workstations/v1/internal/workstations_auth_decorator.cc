@@ -72,6 +72,16 @@ WorkstationsAuth::AsyncCreateWorkstationCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsAuth::CreateWorkstationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateWorkstationCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncUpdateWorkstationCluster(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +103,16 @@ WorkstationsAuth::AsyncUpdateWorkstationCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsAuth::UpdateWorkstationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateWorkstationCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncDeleteWorkstationCluster(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +132,16 @@ WorkstationsAuth::AsyncDeleteWorkstationCluster(
         return child->AsyncDeleteWorkstationCluster(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsAuth::DeleteWorkstationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteWorkstationCluster(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -165,6 +195,16 @@ WorkstationsAuth::AsyncCreateWorkstationConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsAuth::CreateWorkstationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateWorkstationConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncUpdateWorkstationConfig(
     google::cloud::CompletionQueue& cq,
@@ -186,6 +226,16 @@ WorkstationsAuth::AsyncUpdateWorkstationConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsAuth::UpdateWorkstationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateWorkstationConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncDeleteWorkstationConfig(
     google::cloud::CompletionQueue& cq,
@@ -205,6 +255,16 @@ WorkstationsAuth::AsyncDeleteWorkstationConfig(
         return child->AsyncDeleteWorkstationConfig(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsAuth::DeleteWorkstationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteWorkstationConfig(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::Workstation>
@@ -255,6 +315,14 @@ WorkstationsAuth::AsyncCreateWorkstation(
       });
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsAuth::CreateWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateWorkstation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncUpdateWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -273,6 +341,14 @@ WorkstationsAuth::AsyncUpdateWorkstation(
         return child->AsyncUpdateWorkstation(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsAuth::UpdateWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateWorkstation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -295,6 +371,14 @@ WorkstationsAuth::AsyncDeleteWorkstation(
       });
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsAuth::DeleteWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteWorkstation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncStartWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -315,6 +399,14 @@ WorkstationsAuth::AsyncStartWorkstation(
       });
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsAuth::StartWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartWorkstation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncStopWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -333,6 +425,14 @@ WorkstationsAuth::AsyncStopWorkstation(
         return child->AsyncStopWorkstation(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsAuth::StopWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopWorkstation(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>

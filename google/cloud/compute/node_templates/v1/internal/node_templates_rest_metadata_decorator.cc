@@ -59,6 +59,15 @@ NodeTemplatesRestMetadata::AsyncDeleteNodeTemplate(
                                          std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeTemplatesRestMetadata::DeleteNodeTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        DeleteNodeTemplateRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteNodeTemplate(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
 NodeTemplatesRestMetadata::GetNodeTemplate(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -87,6 +96,15 @@ NodeTemplatesRestMetadata::AsyncInsertNodeTemplate(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertNodeTemplate(cq, std::move(rest_context),
                                          std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeTemplatesRestMetadata::InsertNodeTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        InsertNodeTemplateRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertNodeTemplate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateList>

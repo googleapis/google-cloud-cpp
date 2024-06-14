@@ -46,6 +46,18 @@ DataTaxonomyServiceTracingStub::AsyncCreateDataTaxonomy(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingStub::CreateDataTaxonomy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataplex.v1.DataTaxonomyService", "CreateDataTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateDataTaxonomy(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceTracingStub::AsyncUpdateDataTaxonomy(
     google::cloud::CompletionQueue& cq,
@@ -61,6 +73,18 @@ DataTaxonomyServiceTracingStub::AsyncUpdateDataTaxonomy(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingStub::UpdateDataTaxonomy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataplex.v1.DataTaxonomyService", "UpdateDataTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateDataTaxonomy(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceTracingStub::AsyncDeleteDataTaxonomy(
     google::cloud::CompletionQueue& cq,
@@ -74,6 +98,18 @@ DataTaxonomyServiceTracingStub::AsyncDeleteDataTaxonomy(
   auto f =
       child_->AsyncDeleteDataTaxonomy(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingStub::DeleteDataTaxonomy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataplex.v1.DataTaxonomyService", "DeleteDataTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteDataTaxonomy(context, options, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataTaxonomiesResponse>
@@ -117,6 +153,21 @@ DataTaxonomyServiceTracingStub::AsyncCreateDataAttributeBinding(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingStub::CreateDataAttributeBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataTaxonomyService",
+                             "CreateDataAttributeBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateDataAttributeBinding(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceTracingStub::AsyncUpdateDataAttributeBinding(
     google::cloud::CompletionQueue& cq,
@@ -134,6 +185,21 @@ DataTaxonomyServiceTracingStub::AsyncUpdateDataAttributeBinding(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingStub::UpdateDataAttributeBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataTaxonomyService",
+                             "UpdateDataAttributeBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateDataAttributeBinding(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceTracingStub::AsyncDeleteDataAttributeBinding(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +215,21 @@ DataTaxonomyServiceTracingStub::AsyncDeleteDataAttributeBinding(
   auto f = child_->AsyncDeleteDataAttributeBinding(cq, context,
                                                    std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingStub::DeleteDataAttributeBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataTaxonomyService",
+                             "DeleteDataAttributeBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteDataAttributeBinding(context, options, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributeBindingsResponse>
@@ -196,6 +277,18 @@ DataTaxonomyServiceTracingStub::AsyncCreateDataAttribute(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingStub::CreateDataAttribute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataplex.v1.DataTaxonomyService", "CreateDataAttribute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateDataAttribute(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceTracingStub::AsyncUpdateDataAttribute(
     google::cloud::CompletionQueue& cq,
@@ -211,6 +304,18 @@ DataTaxonomyServiceTracingStub::AsyncUpdateDataAttribute(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingStub::UpdateDataAttribute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataplex.v1.DataTaxonomyService", "UpdateDataAttribute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateDataAttribute(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceTracingStub::AsyncDeleteDataAttribute(
     google::cloud::CompletionQueue& cq,
@@ -224,6 +329,18 @@ DataTaxonomyServiceTracingStub::AsyncDeleteDataAttribute(
   auto f = child_->AsyncDeleteDataAttribute(cq, context, std::move(options),
                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingStub::DeleteDataAttribute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataplex.v1.DataTaxonomyService", "DeleteDataAttribute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteDataAttribute(context, options, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributesResponse>

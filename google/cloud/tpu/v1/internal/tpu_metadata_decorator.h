@@ -53,10 +53,18 @@ class TpuMetadata : public TpuStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v1::CreateNodeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateNode(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v1::CreateNodeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNode(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNode(
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReimageNode(
@@ -65,16 +73,28 @@ class TpuMetadata : public TpuStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> ReimageNode(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStopNode(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v1::StopNodeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> StopNode(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v1::StopNodeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStartNode(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v1::StartNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> StartNode(
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v1::StartNodeRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>

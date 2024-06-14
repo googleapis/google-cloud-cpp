@@ -105,6 +105,23 @@ DefaultStoragePoolsRestStub::AsyncDeleteStoragePool(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultStoragePoolsRestStub::DeleteStoragePool(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::storage_pools::v1::
+        DeleteStoragePoolRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "storagePools", "/",
+                   request.storage_pool()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
 DefaultStoragePoolsRestStub::GetStoragePool(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -169,6 +186,22 @@ DefaultStoragePoolsRestStub::AsyncInsertStoragePool(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultStoragePoolsRestStub::InsertStoragePool(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::storage_pools::v1::
+        InsertStoragePoolRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.storage_pool_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "storagePools"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolList>
@@ -281,6 +314,24 @@ DefaultStoragePoolsRestStub::AsyncUpdateStoragePool(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultStoragePoolsRestStub::UpdateStoragePool(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::storage_pools::v1::
+        UpdateStoragePoolRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.storage_pool_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "storagePools", "/",
+                   request.storage_pool()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("update_mask", request.update_mask())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

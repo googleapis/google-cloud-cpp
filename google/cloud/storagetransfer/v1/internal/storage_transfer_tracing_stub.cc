@@ -136,6 +136,18 @@ StorageTransferServiceTracingStub::AsyncRunTransferJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+StorageTransferServiceTracingStub::RunTransferJob(
+    grpc::ClientContext& context, Options options,
+    google::storagetransfer::v1::RunTransferJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.storagetransfer.v1.StorageTransferService", "RunTransferJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RunTransferJob(context, options, request));
+}
+
 Status StorageTransferServiceTracingStub::DeleteTransferJob(
     grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {

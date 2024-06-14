@@ -70,6 +70,17 @@ DefaultBatchServiceStub::AsyncDeleteJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultBatchServiceStub::DeleteJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::batch::v1::DeleteJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::batch::v1::ListJobsResponse>
 DefaultBatchServiceStub::ListJobs(
     grpc::ClientContext& context, Options const&,

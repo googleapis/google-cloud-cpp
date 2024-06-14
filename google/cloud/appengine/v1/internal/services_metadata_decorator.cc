@@ -71,6 +71,14 @@ ServicesMetadata::AsyncUpdateService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> ServicesMetadata::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -81,6 +89,14 @@ ServicesMetadata::AsyncDeleteService(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteService(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> ServicesMetadata::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteService(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

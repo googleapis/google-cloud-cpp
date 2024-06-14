@@ -56,6 +56,11 @@ class DomainsLogging : public DomainsStub {
       google::cloud::domains::v1::RegisterDomainRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RegisterDomain(
+      grpc::ClientContext& context, Options options,
+      google::cloud::domains::v1::RegisterDomainRequest const& request)
+      override;
+
   StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
   RetrieveTransferParameters(
       grpc::ClientContext& context, Options const& options,
@@ -66,6 +71,11 @@ class DomainsLogging : public DomainsStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::domains::v1::TransferDomainRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> TransferDomain(
+      grpc::ClientContext& context, Options options,
       google::cloud::domains::v1::TransferDomainRequest const& request)
       override;
 
@@ -86,6 +96,11 @@ class DomainsLogging : public DomainsStub {
       google::cloud::domains::v1::UpdateRegistrationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateRegistration(
+      grpc::ClientContext& context, Options options,
+      google::cloud::domains::v1::UpdateRegistrationRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncConfigureManagementSettings(
       google::cloud::CompletionQueue& cq,
@@ -94,10 +109,20 @@ class DomainsLogging : public DomainsStub {
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
+      grpc::ClientContext& context, Options options,
+      google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncConfigureDnsSettings(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
+      grpc::ClientContext& context, Options options,
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
       override;
 
@@ -109,6 +134,11 @@ class DomainsLogging : public DomainsStub {
       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ConfigureContactSettings(
+      grpc::ClientContext& context, Options options,
+      google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportRegistration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -116,10 +146,20 @@ class DomainsLogging : public DomainsStub {
       google::cloud::domains::v1::ExportRegistrationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ExportRegistration(
+      grpc::ClientContext& context, Options options,
+      google::cloud::domains::v1::ExportRegistrationRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRegistration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::domains::v1::DeleteRegistrationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteRegistration(
+      grpc::ClientContext& context, Options options,
       google::cloud::domains::v1::DeleteRegistrationRequest const& request)
       override;
 

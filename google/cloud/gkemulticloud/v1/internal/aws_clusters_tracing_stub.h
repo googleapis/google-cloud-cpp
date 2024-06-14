@@ -44,10 +44,20 @@ class AwsClustersTracingStub : public AwsClustersStub {
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAwsCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAwsCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAwsCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request)
       override;
 
@@ -66,6 +76,11 @@ class AwsClustersTracingStub : public AwsClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteAwsCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
       override;
 
@@ -89,10 +104,20 @@ class AwsClustersTracingStub : public AwsClustersStub {
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAwsNodePool(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAwsNodePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
       override;
 
@@ -101,6 +126,11 @@ class AwsClustersTracingStub : public AwsClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
           request) override;
 
@@ -119,6 +149,11 @@ class AwsClustersTracingStub : public AwsClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
       override;
 

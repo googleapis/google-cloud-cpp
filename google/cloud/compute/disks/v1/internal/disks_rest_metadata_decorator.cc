@@ -50,6 +50,15 @@ DisksRestMetadata::AsyncAddResourcePolicies(
                                           std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::AddResourcePolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddResourcePolicies(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
 DisksRestMetadata::AggregatedListDisks(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -70,6 +79,14 @@ DisksRestMetadata::AsyncBulkInsert(
                                  std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::BulkInsert(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->BulkInsert(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestMetadata::AsyncCreateSnapshot(
     CompletionQueue& cq,
@@ -82,6 +99,15 @@ DisksRestMetadata::AsyncCreateSnapshot(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::CreateSnapshot(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->CreateSnapshot(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestMetadata::AsyncDeleteDisk(
     CompletionQueue& cq,
@@ -91,6 +117,14 @@ DisksRestMetadata::AsyncDeleteDisk(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeleteDisk(cq, std::move(rest_context),
                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::DeleteDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteDisk(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk> DisksRestMetadata::GetDisk(
@@ -120,6 +154,14 @@ DisksRestMetadata::AsyncInsertDisk(
                                  std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::InsertDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertDisk(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::DiskList>
 DisksRestMetadata::ListDisks(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -140,6 +182,15 @@ DisksRestMetadata::AsyncRemoveResourcePolicies(
                                              std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::RemoveResourcePolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->RemoveResourcePolicies(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestMetadata::AsyncResize(
     CompletionQueue& cq,
@@ -149,6 +200,13 @@ DisksRestMetadata::AsyncResize(
   SetMetadata(*rest_context, *options);
   return child_->AsyncResize(cq, std::move(rest_context), std::move(options),
                              request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation> DisksRestMetadata::Resize(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Resize(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -171,6 +229,14 @@ DisksRestMetadata::AsyncSetLabels(
                                 request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestMetadata::AsyncStartAsyncReplication(
     CompletionQueue& cq,
@@ -181,6 +247,15 @@ DisksRestMetadata::AsyncStartAsyncReplication(
   SetMetadata(*rest_context, *options);
   return child_->AsyncStartAsyncReplication(cq, std::move(rest_context),
                                             std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::StartAsyncReplication(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::StartAsyncReplicationRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->StartAsyncReplication(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -195,6 +270,15 @@ DisksRestMetadata::AsyncStopAsyncReplication(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::StopAsyncReplication(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->StopAsyncReplication(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestMetadata::AsyncStopGroupAsyncReplication(
     CompletionQueue& cq,
@@ -205,6 +289,15 @@ DisksRestMetadata::AsyncStopGroupAsyncReplication(
   SetMetadata(*rest_context, *options);
   return child_->AsyncStopGroupAsyncReplication(cq, std::move(rest_context),
                                                 std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::StopGroupAsyncReplication(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::
+        StopGroupAsyncReplicationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->StopGroupAsyncReplication(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -225,6 +318,14 @@ DisksRestMetadata::AsyncUpdateDisk(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateDisk(cq, std::move(rest_context),
                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksRestMetadata::UpdateDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateDisk(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -53,6 +53,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncAbandonInstances(
                                        std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::AbandonInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        AbandonInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AbandonInstances(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestMetadata::AsyncApplyUpdatesToInstances(
     CompletionQueue& cq,
@@ -63,6 +72,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncApplyUpdatesToInstances(
   SetMetadata(*rest_context, *options);
   return child_->AsyncApplyUpdatesToInstances(cq, std::move(rest_context),
                                               std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::ApplyUpdatesToInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        ApplyUpdatesToInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ApplyUpdatesToInstances(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -77,6 +95,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncCreateInstances(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::CreateInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        CreateInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->CreateInstances(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestMetadata::AsyncDeleteInstanceGroupManager(
     CompletionQueue& cq,
@@ -87,6 +114,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncDeleteInstanceGroupManager(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeleteInstanceGroupManager(cq, std::move(rest_context),
                                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::DeleteInstanceGroupManager(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        DeleteInstanceGroupManagerRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteInstanceGroupManager(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -101,6 +137,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncDeleteInstances(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::DeleteInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        DeleteInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteInstances(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestMetadata::AsyncDeletePerInstanceConfigs(
     CompletionQueue& cq,
@@ -111,6 +156,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncDeletePerInstanceConfigs(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeletePerInstanceConfigs(cq, std::move(rest_context),
                                                std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::DeletePerInstanceConfigs(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        DeletePerInstanceConfigsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeletePerInstanceConfigs(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -132,6 +186,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncInsertInstanceGroupManager(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertInstanceGroupManager(cq, std::move(rest_context),
                                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::InsertInstanceGroupManager(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        InsertInstanceGroupManagerRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertInstanceGroupManager(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupManagerList>
@@ -186,6 +249,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncPatchInstanceGroupManager(
                                                 std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::PatchInstanceGroupManager(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        PatchInstanceGroupManagerRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchInstanceGroupManager(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestMetadata::AsyncPatchPerInstanceConfigs(
     CompletionQueue& cq,
@@ -196,6 +268,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncPatchPerInstanceConfigs(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchPerInstanceConfigs(cq, std::move(rest_context),
                                               std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::PatchPerInstanceConfigs(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        PatchPerInstanceConfigsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchPerInstanceConfigs(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -210,6 +291,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncRecreateInstances(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::RecreateInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        RecreateInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->RecreateInstances(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestMetadata::AsyncResize(
     CompletionQueue& cq,
@@ -220,6 +310,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncResize(
   SetMetadata(*rest_context, *options);
   return child_->AsyncResize(cq, std::move(rest_context), std::move(options),
                              request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::Resize(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        ResizeRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Resize(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -234,6 +333,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncSetInstanceTemplate(
                                           std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::SetInstanceTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        SetInstanceTemplateRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetInstanceTemplate(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestMetadata::AsyncSetTargetPools(
     CompletionQueue& cq,
@@ -246,6 +354,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncSetTargetPools(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::SetTargetPools(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        SetTargetPoolsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetTargetPools(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestMetadata::AsyncUpdatePerInstanceConfigs(
     CompletionQueue& cq,
@@ -256,6 +373,15 @@ RegionInstanceGroupManagersRestMetadata::AsyncUpdatePerInstanceConfigs(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdatePerInstanceConfigs(cq, std::move(rest_context),
                                                std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::UpdatePerInstanceConfigs(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        UpdatePerInstanceConfigsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdatePerInstanceConfigs(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

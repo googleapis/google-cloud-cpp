@@ -73,6 +73,18 @@ DefaultCloudMemcacheStub::AsyncCreateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudMemcacheStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudMemcacheStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +101,18 @@ DefaultCloudMemcacheStub::AsyncUpdateInstance(
         return grpc_stub_->AsyncUpdateInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudMemcacheStub::UpdateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,6 +134,18 @@ DefaultCloudMemcacheStub::AsyncUpdateParameters(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudMemcacheStub::UpdateParameters(
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateParameters(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudMemcacheStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +162,18 @@ DefaultCloudMemcacheStub::AsyncDeleteInstance(
         return grpc_stub_->AsyncDeleteInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudMemcacheStub::DeleteInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -146,6 +194,18 @@ DefaultCloudMemcacheStub::AsyncApplyParameters(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudMemcacheStub::ApplyParameters(
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ApplyParameters(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudMemcacheStub::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
@@ -163,6 +223,18 @@ DefaultCloudMemcacheStub::AsyncRescheduleMaintenance(
         return grpc_stub_->AsyncRescheduleMaintenance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudMemcacheStub::RescheduleMaintenance(
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RescheduleMaintenance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

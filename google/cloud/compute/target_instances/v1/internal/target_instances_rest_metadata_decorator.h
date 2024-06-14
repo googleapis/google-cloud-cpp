@@ -55,6 +55,12 @@ class TargetInstancesRestMetadata : public TargetInstancesRestStub {
       google::cloud::cpp::compute::target_instances::v1::
           DeleteTargetInstanceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_instances::v1::
+          DeleteTargetInstanceRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -69,6 +75,12 @@ class TargetInstancesRestMetadata : public TargetInstancesRestStub {
       google::cloud::cpp::compute::target_instances::v1::
           InsertTargetInstanceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_instances::v1::
+          InsertTargetInstanceRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
   ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
                       Options const& options,
@@ -80,6 +92,12 @@ class TargetInstancesRestMetadata : public TargetInstancesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_instances::v1::
+          SetSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_instances::v1::
           SetSecurityPolicyRequest const& request) override;
 

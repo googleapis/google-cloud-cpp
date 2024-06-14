@@ -66,6 +66,19 @@ TagBindingsLogging::AsyncCreateTagBinding(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TagBindingsLogging::CreateTagBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+                 request) {
+        return child_->CreateTagBinding(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagBindingsLogging::AsyncDeleteTagBinding(
     google::cloud::CompletionQueue& cq,
@@ -84,6 +97,19 @@ TagBindingsLogging::AsyncDeleteTagBinding(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TagBindingsLogging::DeleteTagBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+                 request) {
+        return child_->DeleteTagBinding(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>

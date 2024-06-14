@@ -55,6 +55,16 @@ AttachedClustersMetadata::AsyncCreateAttachedCluster(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersMetadata::CreateAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAttachedCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersMetadata::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -70,6 +80,18 @@ AttachedClustersMetadata::AsyncUpdateAttachedCluster(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersMetadata::UpdateAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("attached_cluster.name=",
+                   internal::UrlEncode(request.attached_cluster().name())));
+  return child_->UpdateAttachedCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersMetadata::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -81,6 +103,16 @@ AttachedClustersMetadata::AsyncImportAttachedCluster(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportAttachedCluster(cq, std::move(context),
                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersMetadata::ImportAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportAttachedCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -114,6 +146,16 @@ AttachedClustersMetadata::AsyncDeleteAttachedCluster(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAttachedCluster(cq, std::move(context),
                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersMetadata::DeleteAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAttachedCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

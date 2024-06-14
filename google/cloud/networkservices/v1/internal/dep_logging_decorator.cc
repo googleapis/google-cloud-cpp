@@ -81,6 +81,20 @@ DepServiceLogging::AsyncCreateLbTrafficExtension(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::CreateLbTrafficExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 CreateLbTrafficExtensionRequest const& request) {
+        return child_->CreateLbTrafficExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncUpdateLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
@@ -101,6 +115,20 @@ DepServiceLogging::AsyncUpdateLbTrafficExtension(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::UpdateLbTrafficExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 UpdateLbTrafficExtensionRequest const& request) {
+        return child_->UpdateLbTrafficExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncDeleteLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
@@ -119,6 +147,20 @@ DepServiceLogging::AsyncDeleteLbTrafficExtension(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::DeleteLbTrafficExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 DeleteLbTrafficExtensionRequest const& request) {
+        return child_->DeleteLbTrafficExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse>
@@ -170,6 +212,20 @@ DepServiceLogging::AsyncCreateLbRouteExtension(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::CreateLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 CreateLbRouteExtensionRequest const& request) {
+        return child_->CreateLbRouteExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncUpdateLbRouteExtension(
     google::cloud::CompletionQueue& cq,
@@ -190,6 +246,20 @@ DepServiceLogging::AsyncUpdateLbRouteExtension(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::UpdateLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 UpdateLbRouteExtensionRequest const& request) {
+        return child_->UpdateLbRouteExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncDeleteLbRouteExtension(
     google::cloud::CompletionQueue& cq,
@@ -208,6 +278,20 @@ DepServiceLogging::AsyncDeleteLbRouteExtension(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::DeleteLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 DeleteLbRouteExtensionRequest const& request) {
+        return child_->DeleteLbRouteExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

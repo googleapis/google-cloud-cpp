@@ -170,6 +170,33 @@ StorageControlMetadata::AsyncRenameFolder(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> StorageControlMetadata::RenameFolder(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::RenameFolderRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::RenameFolderRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::RenameFolderRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->RenameFolder(context, options, request);
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlMetadata::GetStorageLayout(
     grpc::ClientContext& context, Options const& options,

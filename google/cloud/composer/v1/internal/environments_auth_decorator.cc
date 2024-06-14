@@ -52,6 +52,15 @@ EnvironmentsAuth::AsyncCreateEnvironment(
       });
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateEnvironmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEnvironment(context, options, request);
+}
+
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsAuth::GetEnvironment(
     grpc::ClientContext& context, Options const& options,
@@ -94,6 +103,15 @@ EnvironmentsAuth::AsyncUpdateEnvironment(
       });
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::UpdateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateEnvironmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEnvironment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -113,6 +131,15 @@ EnvironmentsAuth::AsyncDeleteEnvironment(
         return child->AsyncDeleteEnvironment(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::DeleteEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteEnvironmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -286,6 +313,15 @@ EnvironmentsAuth::AsyncSaveSnapshot(
       });
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::SaveSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SaveSnapshot(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncLoadSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -307,6 +343,15 @@ EnvironmentsAuth::AsyncLoadSnapshot(
       });
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::LoadSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->LoadSnapshot(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncDatabaseFailover(
     google::cloud::CompletionQueue& cq,
@@ -326,6 +371,15 @@ EnvironmentsAuth::AsyncDatabaseFailover(
         return child->AsyncDatabaseFailover(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::DatabaseFailover(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DatabaseFailover(context, options, request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::

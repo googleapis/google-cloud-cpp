@@ -45,6 +45,12 @@ class RegionSslPoliciesRestStub {
       google::cloud::cpp::compute::region_ssl_policies::v1::
           DeleteSslPolicyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          DeleteSslPolicyRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -56,6 +62,12 @@ class RegionSslPoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          InsertSslPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_ssl_policies::v1::
           InsertSslPolicyRequest const& request) = 0;
 
@@ -77,6 +89,12 @@ class RegionSslPoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          PatchSslPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_ssl_policies::v1::
           PatchSslPolicyRequest const& request) = 0;
 
@@ -113,6 +131,12 @@ class DefaultRegionSslPoliciesRestStub : public RegionSslPoliciesRestStub {
       google::cloud::cpp::compute::region_ssl_policies::v1::
           DeleteSslPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          DeleteSslPolicyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -124,6 +148,12 @@ class DefaultRegionSslPoliciesRestStub : public RegionSslPoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          InsertSslPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_ssl_policies::v1::
           InsertSslPolicyRequest const& request) override;
 
@@ -147,6 +177,12 @@ class DefaultRegionSslPoliciesRestStub : public RegionSslPoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          PatchSslPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_ssl_policies::v1::
           PatchSslPolicyRequest const& request) override;
 

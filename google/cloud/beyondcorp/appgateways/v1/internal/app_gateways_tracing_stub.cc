@@ -76,6 +76,20 @@ AppGatewaysServiceTracingStub::AsyncCreateAppGateway(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceTracingStub::CreateAppGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appgateways.v1.AppGatewaysService",
+      "CreateAppGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateAppGateway(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceTracingStub::AsyncDeleteAppGateway(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +105,20 @@ AppGatewaysServiceTracingStub::AsyncDeleteAppGateway(
   auto f =
       child_->AsyncDeleteAppGateway(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceTracingStub::DeleteAppGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appgateways.v1.AppGatewaysService",
+      "DeleteAppGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAppGateway(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -105,6 +105,23 @@ DefaultNodeTemplatesRestStub::AsyncDeleteNodeTemplate(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeTemplatesRestStub::DeleteNodeTemplate(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        DeleteNodeTemplateRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "nodeTemplates", "/",
+                   request.node_template()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
 DefaultNodeTemplatesRestStub::GetNodeTemplate(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -171,6 +188,22 @@ DefaultNodeTemplatesRestStub::AsyncInsertNodeTemplate(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNodeTemplatesRestStub::InsertNodeTemplate(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        InsertNodeTemplateRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.node_template_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "nodeTemplates"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateList>

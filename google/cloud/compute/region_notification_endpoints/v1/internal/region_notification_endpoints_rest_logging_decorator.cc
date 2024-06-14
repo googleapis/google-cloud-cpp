@@ -55,6 +55,21 @@ RegionNotificationEndpointsRestLogging::AsyncDeleteNotificationEndpoint(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNotificationEndpointsRestLogging::DeleteNotificationEndpoint(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        DeleteNotificationEndpointRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_notification_endpoints::v1::
+                 DeleteNotificationEndpointRequest const& request) {
+        return child_->DeleteNotificationEndpoint(rest_context, options,
+                                                  request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
 RegionNotificationEndpointsRestLogging::GetNotificationEndpoint(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -87,6 +102,21 @@ RegionNotificationEndpointsRestLogging::AsyncInsertNotificationEndpoint(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNotificationEndpointsRestLogging::InsertNotificationEndpoint(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        InsertNotificationEndpointRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_notification_endpoints::v1::
+                 InsertNotificationEndpointRequest const& request) {
+        return child_->InsertNotificationEndpoint(rest_context, options,
+                                                  request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointList>

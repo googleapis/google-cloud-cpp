@@ -130,6 +130,33 @@ RevisionsMetadata::AsyncDeleteRevision(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> RevisionsMetadata::DeleteRevision(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::DeleteRevisionRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::DeleteRevisionRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->DeleteRevision(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RevisionsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

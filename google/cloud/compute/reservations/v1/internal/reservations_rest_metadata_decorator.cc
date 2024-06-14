@@ -59,6 +59,15 @@ ReservationsRestMetadata::AsyncDeleteReservation(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsRestMetadata::DeleteReservation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        DeleteReservationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteReservation(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
 ReservationsRestMetadata::GetReservation(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -89,6 +98,15 @@ ReservationsRestMetadata::AsyncInsertReservation(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsRestMetadata::InsertReservation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        InsertReservationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertReservation(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ReservationList>
 ReservationsRestMetadata::ListReservations(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -108,6 +126,15 @@ ReservationsRestMetadata::AsyncResize(
   SetMetadata(*rest_context, *options);
   return child_->AsyncResize(cq, std::move(rest_context), std::move(options),
                              request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsRestMetadata::Resize(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->Resize(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -138,6 +165,15 @@ ReservationsRestMetadata::AsyncUpdateReservation(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateReservation(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsRestMetadata::UpdateReservation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        UpdateReservationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateReservation(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

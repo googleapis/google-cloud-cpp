@@ -53,6 +53,19 @@ EnvironmentsLogging::AsyncCreateEnvironment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateEnvironmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::orchestration::airflow::service::v1::
+                 CreateEnvironmentRequest const& request) {
+        return child_->CreateEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsLogging::GetEnvironment(
     grpc::ClientContext& context, Options const& options,
@@ -102,6 +115,19 @@ EnvironmentsLogging::AsyncUpdateEnvironment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::UpdateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateEnvironmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::orchestration::airflow::service::v1::
+                 UpdateEnvironmentRequest const& request) {
+        return child_->UpdateEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsLogging::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +146,19 @@ EnvironmentsLogging::AsyncDeleteEnvironment(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::DeleteEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteEnvironmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::orchestration::airflow::service::v1::
+                 DeleteEnvironmentRequest const& request) {
+        return child_->DeleteEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -348,6 +387,19 @@ EnvironmentsLogging::AsyncSaveSnapshot(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::SaveSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::orchestration::airflow::service::v1::
+                 SaveSnapshotRequest const& request) {
+        return child_->SaveSnapshot(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsLogging::AsyncLoadSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -368,6 +420,19 @@ EnvironmentsLogging::AsyncLoadSnapshot(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::LoadSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::orchestration::airflow::service::v1::
+                 LoadSnapshotRequest const& request) {
+        return child_->LoadSnapshot(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsLogging::AsyncDatabaseFailover(
     google::cloud::CompletionQueue& cq,
@@ -386,6 +451,19 @@ EnvironmentsLogging::AsyncDatabaseFailover(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::DatabaseFailover(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::orchestration::airflow::service::v1::
+                 DatabaseFailoverRequest const& request) {
+        return child_->DatabaseFailover(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::

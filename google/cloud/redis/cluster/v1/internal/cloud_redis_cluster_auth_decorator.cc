@@ -69,6 +69,14 @@ CloudRedisClusterAuth::AsyncUpdateCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisClusterAuth::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterAuth::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +97,14 @@ CloudRedisClusterAuth::AsyncDeleteCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisClusterAuth::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterAuth::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +123,14 @@ CloudRedisClusterAuth::AsyncCreateCluster(
         return child->AsyncCreateCluster(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterAuth::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCluster(context, options, request);
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>

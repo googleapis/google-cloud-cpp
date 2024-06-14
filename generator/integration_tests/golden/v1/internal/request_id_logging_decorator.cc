@@ -67,6 +67,20 @@ RequestIdServiceLogging::AsyncRenameFoo(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+RequestIdServiceLogging::RenameFoo(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::requestid::v1::RenameFooRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::test::requestid::v1::RenameFooRequest const& request) {
+        return child_->RenameFoo(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::test::requestid::v1::ListFoosResponse>
 RequestIdServiceLogging::ListFoos(
     grpc::ClientContext& context,

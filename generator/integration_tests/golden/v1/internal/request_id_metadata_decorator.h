@@ -51,6 +51,11 @@ class RequestIdServiceMetadata : public RequestIdServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::requestid::v1::RenameFooRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> RenameFoo(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::requestid::v1::RenameFooRequest const& request) override;
+
   StatusOr<google::test::requestid::v1::ListFoosResponse> ListFoos(
       grpc::ClientContext& context,
       Options const& options,

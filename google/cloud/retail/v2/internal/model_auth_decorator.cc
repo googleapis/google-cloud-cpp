@@ -51,6 +51,14 @@ ModelServiceAuth::AsyncCreateModel(
       });
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceAuth::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateModel(context, options, request);
+}
+
 StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::GetModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetModelRequest const& request) {
@@ -118,6 +126,14 @@ ModelServiceAuth::AsyncTuneModel(
         return child->AsyncTuneModel(cq, *std::move(context),
                                      std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceAuth::TuneModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TuneModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

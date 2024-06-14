@@ -53,16 +53,28 @@ class EventarcStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::eventarc::v1::CreateTriggerRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateTrigger(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateTrigger(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::eventarc::v1::UpdateTriggerRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateTrigger(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteTrigger(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTrigger(
+      grpc::ClientContext& context, Options options,
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
@@ -80,16 +92,28 @@ class EventarcStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::eventarc::v1::CreateChannelRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::CreateChannelRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateChannel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::eventarc::v1::UpdateChannelRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteChannel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteChannel(
+      grpc::ClientContext& context, Options options,
       google::cloud::eventarc::v1::DeleteChannelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
@@ -121,11 +145,21 @@ class EventarcStub {
       google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateChannelConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteChannelConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteChannelConnection(
+      grpc::ClientContext& context, Options options,
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request) = 0;
 
@@ -178,6 +212,11 @@ class DefaultEventarcStub : public EventarcStub {
       google::cloud::eventarc::v1::CreateTriggerRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateTrigger(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTrigger(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -185,10 +224,20 @@ class DefaultEventarcStub : public EventarcStub {
       google::cloud::eventarc::v1::UpdateTriggerRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateTrigger(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTrigger(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTrigger(
+      grpc::ClientContext& context, Options options,
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request)
       override;
 
@@ -207,6 +256,11 @@ class DefaultEventarcStub : public EventarcStub {
       google::cloud::eventarc::v1::CreateChannelRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::CreateChannelRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateChannel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -214,10 +268,20 @@ class DefaultEventarcStub : public EventarcStub {
       google::cloud::eventarc::v1::UpdateChannelRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateChannel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteChannel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteChannel(
+      grpc::ClientContext& context, Options options,
       google::cloud::eventarc::v1::DeleteChannelRequest const& request)
       override;
 
@@ -248,10 +312,20 @@ class DefaultEventarcStub : public EventarcStub {
       google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateChannelConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteChannelConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteChannelConnection(
+      grpc::ClientContext& context, Options options,
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request) override;
 

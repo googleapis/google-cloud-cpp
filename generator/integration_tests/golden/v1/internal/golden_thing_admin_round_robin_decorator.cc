@@ -44,6 +44,14 @@ GoldenThingAdminRoundRobin::AsyncCreateDatabase(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRoundRobin::CreateDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  return Child()->CreateDatabase(context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::Database> GoldenThingAdminRoundRobin::GetDatabase(
     grpc::ClientContext& context,
     Options const& options,
@@ -59,6 +67,14 @@ GoldenThingAdminRoundRobin::AsyncUpdateDatabaseDdl(
     google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   return Child()->AsyncUpdateDatabaseDdl(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRoundRobin::UpdateDatabaseDdl(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  return Child()->UpdateDatabaseDdl(context, options, request);
 }
 
 Status GoldenThingAdminRoundRobin::DropDatabase(
@@ -106,6 +122,14 @@ GoldenThingAdminRoundRobin::AsyncCreateBackup(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRoundRobin::CreateBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateBackupRequest const& request) {
+  return Child()->CreateBackup(context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminRoundRobin::GetBackup(
     grpc::ClientContext& context,
     Options const& options,
@@ -144,6 +168,14 @@ GoldenThingAdminRoundRobin::AsyncRestoreDatabase(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRoundRobin::RestoreDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  return Child()->RestoreDatabase(context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> GoldenThingAdminRoundRobin::ListDatabaseOperations(
     grpc::ClientContext& context,
     Options const& options,
@@ -166,6 +198,14 @@ GoldenThingAdminRoundRobin::AsyncLongRunningWithoutRouting(
     google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   return Child()->AsyncLongRunningWithoutRouting(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRoundRobin::LongRunningWithoutRouting(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  return Child()->LongRunningWithoutRouting(context, options, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

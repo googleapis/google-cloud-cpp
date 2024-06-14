@@ -62,6 +62,15 @@ InterconnectAttachmentsRestMetadata::AsyncDeleteInterconnectAttachment(
                                                    std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsRestMetadata::DeleteInterconnectAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        DeleteInterconnectAttachmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteInterconnectAttachment(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
 InterconnectAttachmentsRestMetadata::GetInterconnectAttachment(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -81,6 +90,15 @@ InterconnectAttachmentsRestMetadata::AsyncInsertInterconnectAttachment(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertInterconnectAttachment(cq, std::move(rest_context),
                                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsRestMetadata::InsertInterconnectAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        InsertInterconnectAttachmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertInterconnectAttachment(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentList>
@@ -104,6 +122,15 @@ InterconnectAttachmentsRestMetadata::AsyncPatchInterconnectAttachment(
                                                   std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsRestMetadata::PatchInterconnectAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        PatchInterconnectAttachmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchInterconnectAttachment(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsRestMetadata::AsyncSetLabels(
     CompletionQueue& cq,
@@ -114,6 +141,15 @@ InterconnectAttachmentsRestMetadata::AsyncSetLabels(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        SetLabelsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

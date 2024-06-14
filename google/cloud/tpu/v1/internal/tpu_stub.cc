@@ -70,6 +70,17 @@ DefaultTpuStub::AsyncCreateNode(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultTpuStub::CreateNode(
+    grpc::ClientContext& context, Options,
+    google::cloud::tpu::v1::CreateNodeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateNode(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTpuStub::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +96,17 @@ DefaultTpuStub::AsyncDeleteNode(
         return grpc_stub_->AsyncDeleteNode(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultTpuStub::DeleteNode(
+    grpc::ClientContext& context, Options,
+    google::cloud::tpu::v1::DeleteNodeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteNode(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -104,6 +126,17 @@ DefaultTpuStub::AsyncReimageNode(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultTpuStub::ReimageNode(
+    grpc::ClientContext& context, Options,
+    google::cloud::tpu::v1::ReimageNodeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ReimageNode(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>> DefaultTpuStub::AsyncStopNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -120,6 +153,17 @@ future<StatusOr<google::longrunning::Operation>> DefaultTpuStub::AsyncStopNode(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultTpuStub::StopNode(
+    grpc::ClientContext& context, Options,
+    google::cloud::tpu::v1::StopNodeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopNode(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>> DefaultTpuStub::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -134,6 +178,17 @@ future<StatusOr<google::longrunning::Operation>> DefaultTpuStub::AsyncStartNode(
         return grpc_stub_->AsyncStartNode(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultTpuStub::StartNode(
+    grpc::ClientContext& context, Options,
+    google::cloud::tpu::v1::StartNodeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartNode(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>

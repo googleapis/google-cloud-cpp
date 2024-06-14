@@ -69,6 +69,17 @@ SchemaServiceTracingStub::AsyncCreateSchema(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceTracingStub::CreateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SchemaService", "CreateSchema");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateSchema(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceTracingStub::AsyncUpdateSchema(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +94,17 @@ SchemaServiceTracingStub::AsyncUpdateSchema(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceTracingStub::UpdateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SchemaService", "UpdateSchema");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSchema(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceTracingStub::AsyncDeleteSchema(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +117,17 @@ SchemaServiceTracingStub::AsyncDeleteSchema(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteSchema(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> SchemaServiceTracingStub::DeleteSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SchemaService", "DeleteSchema");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSchema(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

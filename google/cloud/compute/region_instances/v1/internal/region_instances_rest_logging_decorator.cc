@@ -54,6 +54,20 @@ RegionInstancesRestLogging::AsyncBulkInsert(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstancesRestLogging::BulkInsert(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_instances::v1::
+                 BulkInsertRequest const& request) {
+        return child_->BulkInsert(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstancesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

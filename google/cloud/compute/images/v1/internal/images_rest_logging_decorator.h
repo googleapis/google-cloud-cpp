@@ -49,10 +49,22 @@ class ImagesRestLogging : public ImagesRestStub {
       google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteImage(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeprecate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Deprecate(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
       override;
 
@@ -81,6 +93,12 @@ class ImagesRestLogging : public ImagesRestStub {
       google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertImage(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ImageList> ListImages(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -94,6 +112,12 @@ class ImagesRestLogging : public ImagesRestStub {
       google::cloud::cpp::compute::images::v1::PatchImageRequest const& request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchImage(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::images::v1::PatchImageRequest const& request)
+      override;
+
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -104,6 +128,12 @@ class ImagesRestLogging : public ImagesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request)
       override;
 

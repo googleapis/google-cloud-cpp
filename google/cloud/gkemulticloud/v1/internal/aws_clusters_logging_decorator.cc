@@ -52,6 +52,18 @@ AwsClustersLogging::AsyncCreateAwsCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AwsClustersLogging::CreateAwsCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
+                 request) {
+        return child_->CreateAwsCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersLogging::AsyncUpdateAwsCluster(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +81,18 @@ AwsClustersLogging::AsyncUpdateAwsCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersLogging::UpdateAwsCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
+                 request) {
+        return child_->UpdateAwsCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
@@ -114,6 +138,18 @@ AwsClustersLogging::AsyncDeleteAwsCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersLogging::DeleteAwsCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&
+                 request) {
+        return child_->DeleteAwsCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
@@ -164,6 +200,18 @@ AwsClustersLogging::AsyncCreateAwsNodePool(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AwsClustersLogging::CreateAwsNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
+                 request) {
+        return child_->CreateAwsNodePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersLogging::AsyncUpdateAwsNodePool(
     google::cloud::CompletionQueue& cq,
@@ -181,6 +229,18 @@ AwsClustersLogging::AsyncUpdateAwsNodePool(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersLogging::UpdateAwsNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
+                 request) {
+        return child_->UpdateAwsNodePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -201,6 +261,20 @@ AwsClustersLogging::AsyncRollbackAwsNodePoolUpdate(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+AwsClustersLogging::RollbackAwsNodePoolUpdate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::
+                 RollbackAwsNodePoolUpdateRequest const& request) {
+        return child_->RollbackAwsNodePoolUpdate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -246,6 +320,18 @@ AwsClustersLogging::AsyncDeleteAwsNodePool(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersLogging::DeleteAwsNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+                 request) {
+        return child_->DeleteAwsNodePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>

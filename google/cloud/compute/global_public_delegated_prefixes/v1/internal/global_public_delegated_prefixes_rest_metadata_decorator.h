@@ -50,6 +50,13 @@ class GlobalPublicDelegatedPrefixesRestMetadata
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
           DeletePublicDelegatedPrefixRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePublicDelegatedPrefix(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+          DeletePublicDelegatedPrefixRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   GetPublicDelegatedPrefix(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -65,6 +72,13 @@ class GlobalPublicDelegatedPrefixesRestMetadata
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
           InsertPublicDelegatedPrefixRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertPublicDelegatedPrefix(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+          InsertPublicDelegatedPrefixRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
   ListGlobalPublicDelegatedPrefixes(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -77,6 +91,13 @@ class GlobalPublicDelegatedPrefixesRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+          PatchPublicDelegatedPrefixRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPublicDelegatedPrefix(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request) override;
 

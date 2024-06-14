@@ -50,6 +50,12 @@ class RegionUrlMapsRestLogging : public RegionUrlMapsRestStub {
       google::cloud::cpp::compute::region_url_maps::v1::
           DeleteUrlMapRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          DeleteUrlMapRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -61,6 +67,12 @@ class RegionUrlMapsRestLogging : public RegionUrlMapsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          InsertUrlMapRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_url_maps::v1::
           InsertUrlMapRequest const& request) override;
 
@@ -77,11 +89,23 @@ class RegionUrlMapsRestLogging : public RegionUrlMapsRestStub {
       google::cloud::cpp::compute::region_url_maps::v1::
           PatchUrlMapRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          PatchUrlMapRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          UpdateUrlMapRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_url_maps::v1::
           UpdateUrlMapRequest const& request) override;
 

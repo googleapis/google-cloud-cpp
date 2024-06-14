@@ -57,6 +57,11 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
       google::identity::accesscontextmanager::v1::AccessPolicy const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAccessPolicy(
+      grpc::ClientContext& context, Options options,
+      google::identity::accesscontextmanager::v1::AccessPolicy const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAccessPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -64,10 +69,20 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
       google::identity::accesscontextmanager::v1::
           UpdateAccessPolicyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
+      grpc::ClientContext& context, Options options,
+      google::identity::accesscontextmanager::v1::
+          UpdateAccessPolicyRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAccessPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::
+          DeleteAccessPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
+      grpc::ClientContext& context, Options options,
       google::identity::accesscontextmanager::v1::
           DeleteAccessPolicyRequest const& request) override;
 
@@ -90,10 +105,20 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
       google::identity::accesscontextmanager::v1::
           CreateAccessLevelRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateAccessLevel(
+      grpc::ClientContext& context, Options options,
+      google::identity::accesscontextmanager::v1::
+          CreateAccessLevelRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAccessLevel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::
+          UpdateAccessLevelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAccessLevel(
+      grpc::ClientContext& context, Options options,
       google::identity::accesscontextmanager::v1::
           UpdateAccessLevelRequest const& request) override;
 
@@ -104,10 +129,20 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
       google::identity::accesscontextmanager::v1::
           DeleteAccessLevelRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteAccessLevel(
+      grpc::ClientContext& context, Options options,
+      google::identity::accesscontextmanager::v1::
+          DeleteAccessLevelRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncReplaceAccessLevels(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::
+          ReplaceAccessLevelsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ReplaceAccessLevels(
+      grpc::ClientContext& context, Options options,
       google::identity::accesscontextmanager::v1::
           ReplaceAccessLevelsRequest const& request) override;
 
@@ -130,6 +165,11 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
       google::identity::accesscontextmanager::v1::
           CreateServicePerimeterRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateServicePerimeter(
+      grpc::ClientContext& context, Options options,
+      google::identity::accesscontextmanager::v1::
+          CreateServicePerimeterRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateServicePerimeter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -137,10 +177,20 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
       google::identity::accesscontextmanager::v1::
           UpdateServicePerimeterRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
+      grpc::ClientContext& context, Options options,
+      google::identity::accesscontextmanager::v1::
+          UpdateServicePerimeterRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteServicePerimeter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::
+          DeleteServicePerimeterRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
+      grpc::ClientContext& context, Options options,
       google::identity::accesscontextmanager::v1::
           DeleteServicePerimeterRequest const& request) override;
 
@@ -152,10 +202,20 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
       google::identity::accesscontextmanager::v1::
           ReplaceServicePerimetersRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> ReplaceServicePerimeters(
+      grpc::ClientContext& context, Options options,
+      google::identity::accesscontextmanager::v1::
+          ReplaceServicePerimetersRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCommitServicePerimeters(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::
+          CommitServicePerimetersRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CommitServicePerimeters(
+      grpc::ClientContext& context, Options options,
       google::identity::accesscontextmanager::v1::
           CommitServicePerimetersRequest const& request) override;
 
@@ -180,6 +240,11 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
       google::identity::accesscontextmanager::v1::
           CreateGcpUserAccessBindingRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
+      grpc::ClientContext& context, Options options,
+      google::identity::accesscontextmanager::v1::
+          CreateGcpUserAccessBindingRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateGcpUserAccessBinding(
       google::cloud::CompletionQueue& cq,
@@ -188,11 +253,21 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
       google::identity::accesscontextmanager::v1::
           UpdateGcpUserAccessBindingRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
+      grpc::ClientContext& context, Options options,
+      google::identity::accesscontextmanager::v1::
+          UpdateGcpUserAccessBindingRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteGcpUserAccessBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::
+          DeleteGcpUserAccessBindingRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
+      grpc::ClientContext& context, Options options,
       google::identity::accesscontextmanager::v1::
           DeleteGcpUserAccessBindingRequest const& request) override;
 

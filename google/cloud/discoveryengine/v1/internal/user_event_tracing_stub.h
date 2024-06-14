@@ -55,6 +55,11 @@ class UserEventServiceTracingStub : public UserEventServiceStub {
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ImportUserEvents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

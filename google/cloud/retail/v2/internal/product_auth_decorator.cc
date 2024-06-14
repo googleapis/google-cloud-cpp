@@ -92,6 +92,14 @@ ProductServiceAuth::AsyncPurgeProducts(
       });
 }
 
+StatusOr<google::longrunning::Operation> ProductServiceAuth::PurgeProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PurgeProducts(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +118,14 @@ ProductServiceAuth::AsyncImportProducts(
         return child->AsyncImportProducts(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ProductServiceAuth::ImportProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportProductsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportProducts(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -132,6 +148,14 @@ ProductServiceAuth::AsyncSetInventory(
       });
 }
 
+StatusOr<google::longrunning::Operation> ProductServiceAuth::SetInventory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::SetInventoryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetInventory(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncAddFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
@@ -150,6 +174,15 @@ ProductServiceAuth::AsyncAddFulfillmentPlaces(
         return child->AsyncAddFulfillmentPlaces(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceAuth::AddFulfillmentPlaces(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddFulfillmentPlaces(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -172,6 +205,15 @@ ProductServiceAuth::AsyncRemoveFulfillmentPlaces(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceAuth::RemoveFulfillmentPlaces(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RemoveFulfillmentPlaces(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncAddLocalInventories(
     google::cloud::CompletionQueue& cq,
@@ -192,6 +234,15 @@ ProductServiceAuth::AsyncAddLocalInventories(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceAuth::AddLocalInventories(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddLocalInventories(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
@@ -210,6 +261,15 @@ ProductServiceAuth::AsyncRemoveLocalInventories(
         return child->AsyncRemoveLocalInventories(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceAuth::RemoveLocalInventories(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RemoveLocalInventories(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -69,6 +69,14 @@ ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateImages(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorMetadata::AsyncBatchAnnotateImages(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+  SetMetadata(context, options);
+  return child_->AsyncBatchAnnotateImages(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
@@ -78,6 +86,14 @@ ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateFiles(
   SetMetadata(*context, *options);
   return child_->AsyncAsyncBatchAnnotateFiles(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorMetadata::AsyncBatchAnnotateFiles(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+  SetMetadata(context, options);
+  return child_->AsyncBatchAnnotateFiles(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

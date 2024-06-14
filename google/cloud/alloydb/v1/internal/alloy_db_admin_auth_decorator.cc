@@ -68,6 +68,14 @@ AlloyDBAdminAuth::AsyncCreateCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +94,14 @@ AlloyDBAdminAuth::AsyncUpdateCluster(
         return child->AsyncUpdateCluster(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,6 +124,14 @@ AlloyDBAdminAuth::AsyncDeleteCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncPromoteCluster(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +150,14 @@ AlloyDBAdminAuth::AsyncPromoteCluster(
         return child->AsyncPromoteCluster(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::PromoteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PromoteCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -148,6 +180,14 @@ AlloyDBAdminAuth::AsyncRestoreCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::RestoreCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestoreCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncCreateSecondaryCluster(
     google::cloud::CompletionQueue& cq,
@@ -166,6 +206,15 @@ AlloyDBAdminAuth::AsyncCreateSecondaryCluster(
         return child->AsyncCreateSecondaryCluster(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminAuth::CreateSecondaryCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSecondaryCluster(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
@@ -205,6 +254,14 @@ AlloyDBAdminAuth::AsyncCreateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncCreateSecondaryInstance(
     google::cloud::CompletionQueue& cq,
@@ -223,6 +280,15 @@ AlloyDBAdminAuth::AsyncCreateSecondaryInstance(
         return child->AsyncCreateSecondaryInstance(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminAuth::CreateSecondaryInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSecondaryInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -245,6 +311,14 @@ AlloyDBAdminAuth::AsyncBatchCreateInstances(
       });
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::BatchCreateInstances(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCreateInstances(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -263,6 +337,14 @@ AlloyDBAdminAuth::AsyncUpdateInstance(
         return child->AsyncUpdateInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -285,6 +367,14 @@ AlloyDBAdminAuth::AsyncDeleteInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
@@ -303,6 +393,14 @@ AlloyDBAdminAuth::AsyncFailoverInstance(
         return child->AsyncFailoverInstance(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::FailoverInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FailoverInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -325,6 +423,14 @@ AlloyDBAdminAuth::AsyncInjectFault(
       });
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::InjectFault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->InjectFault(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
@@ -343,6 +449,14 @@ AlloyDBAdminAuth::AsyncRestartInstance(
         return child->AsyncRestartInstance(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::RestartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestartInstance(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
@@ -382,6 +496,14 @@ AlloyDBAdminAuth::AsyncCreateBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
@@ -402,6 +524,14 @@ AlloyDBAdminAuth::AsyncUpdateBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -420,6 +550,14 @@ AlloyDBAdminAuth::AsyncDeleteBackup(
         return child->AsyncDeleteBackup(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>

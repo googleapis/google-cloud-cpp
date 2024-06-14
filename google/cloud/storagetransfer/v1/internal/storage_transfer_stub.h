@@ -77,6 +77,10 @@ class StorageTransferServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::storagetransfer::v1::RunTransferJobRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> RunTransferJob(
+      grpc::ClientContext& context, Options options,
+      google::storagetransfer::v1::RunTransferJobRequest const& request) = 0;
+
   virtual Status DeleteTransferJob(
       grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::DeleteTransferJobRequest const& request) = 0;
@@ -165,6 +169,11 @@ class DefaultStorageTransferServiceStub : public StorageTransferServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::storagetransfer::v1::RunTransferJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RunTransferJob(
+      grpc::ClientContext& context, Options options,
       google::storagetransfer::v1::RunTransferJobRequest const& request)
       override;
 

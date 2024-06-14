@@ -48,6 +48,12 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
       google::cloud::cpp::compute::interconnects::v1::
           DeleteInterconnectRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnect(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::interconnects::v1::
+          DeleteInterconnectRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -75,6 +81,12 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
       google::cloud::cpp::compute::interconnects::v1::
           InsertInterconnectRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnect(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::interconnects::v1::
+          InsertInterconnectRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::InterconnectList> ListInterconnects(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -89,11 +101,23 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
       google::cloud::cpp::compute::interconnects::v1::
           PatchInterconnectRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnect(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::interconnects::v1::
+          PatchInterconnectRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
           request) override;
 

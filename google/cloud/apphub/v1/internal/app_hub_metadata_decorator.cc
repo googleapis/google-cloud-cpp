@@ -75,6 +75,16 @@ AppHubMetadata::AsyncCreateServiceProjectAttachment(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::CreateServiceProjectAttachment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateServiceProjectAttachment(context, options, request);
+}
+
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
 AppHubMetadata::GetServiceProjectAttachment(
     grpc::ClientContext& context, Options const& options,
@@ -96,6 +106,16 @@ AppHubMetadata::AsyncDeleteServiceProjectAttachment(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteServiceProjectAttachment(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::DeleteServiceProjectAttachment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteServiceProjectAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -156,6 +176,14 @@ AppHubMetadata::AsyncCreateService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> AppHubMetadata::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateService(context, options, request);
+}
+
 StatusOr<google::cloud::apphub::v1::Service> AppHubMetadata::GetService(
     grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetServiceRequest const& request) {
@@ -177,6 +205,15 @@ AppHubMetadata::AsyncUpdateService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> AppHubMetadata::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("service.name=",
+                           internal::UrlEncode(request.service().name())));
+  return child_->UpdateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppHubMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -187,6 +224,14 @@ AppHubMetadata::AsyncDeleteService(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteService(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> AppHubMetadata::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
@@ -237,6 +282,14 @@ AppHubMetadata::AsyncCreateWorkload(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> AppHubMetadata::CreateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateWorkload(context, options, request);
+}
+
 StatusOr<google::cloud::apphub::v1::Workload> AppHubMetadata::GetWorkload(
     grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetWorkloadRequest const& request) {
@@ -258,6 +311,15 @@ AppHubMetadata::AsyncUpdateWorkload(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> AppHubMetadata::UpdateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("workload.name=",
+                           internal::UrlEncode(request.workload().name())));
+  return child_->UpdateWorkload(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppHubMetadata::AsyncDeleteWorkload(
     google::cloud::CompletionQueue& cq,
@@ -268,6 +330,14 @@ AppHubMetadata::AsyncDeleteWorkload(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteWorkload(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> AppHubMetadata::DeleteWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteWorkload(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
@@ -291,6 +361,14 @@ AppHubMetadata::AsyncCreateApplication(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> AppHubMetadata::CreateApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateApplication(context, options, request);
+}
+
 StatusOr<google::cloud::apphub::v1::Application> AppHubMetadata::GetApplication(
     grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetApplicationRequest const& request) {
@@ -312,6 +390,15 @@ AppHubMetadata::AsyncUpdateApplication(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> AppHubMetadata::UpdateApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("application.name=",
+                           internal::UrlEncode(request.application().name())));
+  return child_->UpdateApplication(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppHubMetadata::AsyncDeleteApplication(
     google::cloud::CompletionQueue& cq,
@@ -322,6 +409,14 @@ AppHubMetadata::AsyncDeleteApplication(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteApplication(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> AppHubMetadata::DeleteApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteApplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

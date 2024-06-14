@@ -56,6 +56,11 @@ class DatastreamTracingStub : public DatastreamStub {
       google::cloud::datastream::v1::CreateConnectionProfileRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateConnectionProfile(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -63,10 +68,20 @@ class DatastreamTracingStub : public DatastreamStub {
       google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnectionProfile(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
+      grpc::ClientContext& context, Options options,
       google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
           request) override;
 
@@ -92,6 +107,11 @@ class DatastreamTracingStub : public DatastreamStub {
       google::cloud::datastream::v1::CreateStreamRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateStream(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datastream::v1::CreateStreamRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateStream(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -99,10 +119,20 @@ class DatastreamTracingStub : public DatastreamStub {
       google::cloud::datastream::v1::UpdateStreamRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateStream(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datastream::v1::UpdateStreamRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteStream(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::datastream::v1::DeleteStreamRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteStream(
+      grpc::ClientContext& context, Options options,
       google::cloud::datastream::v1::DeleteStreamRequest const& request)
       override;
 
@@ -144,6 +174,11 @@ class DatastreamTracingStub : public DatastreamStub {
       google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+          request) override;
+
   StatusOr<google::cloud::datastream::v1::PrivateConnection>
   GetPrivateConnection(
       grpc::ClientContext& context, Options const& options,
@@ -163,10 +198,20 @@ class DatastreamTracingStub : public DatastreamStub {
       google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::datastream::v1::CreateRouteRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateRoute(
+      grpc::ClientContext& context, Options options,
       google::cloud::datastream::v1::CreateRouteRequest const& request)
       override;
 
@@ -182,6 +227,11 @@ class DatastreamTracingStub : public DatastreamStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::datastream::v1::DeleteRouteRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteRoute(
+      grpc::ClientContext& context, Options options,
       google::cloud::datastream::v1::DeleteRouteRequest const& request)
       override;
 

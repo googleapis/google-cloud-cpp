@@ -100,6 +100,16 @@ EntityTypesMetadata::AsyncBatchUpdateEntityTypes(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesMetadata::BatchUpdateEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchUpdateEntityTypes(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesMetadata::AsyncBatchDeleteEntityTypes(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +121,16 @@ EntityTypesMetadata::AsyncBatchDeleteEntityTypes(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchDeleteEntityTypes(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesMetadata::BatchDeleteEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchDeleteEntityTypes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -125,6 +145,15 @@ EntityTypesMetadata::AsyncBatchCreateEntities(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesMetadata::BatchCreateEntities(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchCreateEntities(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesMetadata::AsyncBatchUpdateEntities(
     google::cloud::CompletionQueue& cq,
@@ -137,6 +166,15 @@ EntityTypesMetadata::AsyncBatchUpdateEntities(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesMetadata::BatchUpdateEntities(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchUpdateEntities(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesMetadata::AsyncBatchDeleteEntities(
     google::cloud::CompletionQueue& cq,
@@ -147,6 +185,15 @@ EntityTypesMetadata::AsyncBatchDeleteEntities(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchDeleteEntities(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesMetadata::BatchDeleteEntities(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchDeleteEntities(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

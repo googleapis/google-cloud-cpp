@@ -75,6 +75,19 @@ DefaultUserEventServiceStub::AsyncImportUserEvents(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultUserEventServiceStub::ImportUserEvents(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportUserEvents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultUserEventServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

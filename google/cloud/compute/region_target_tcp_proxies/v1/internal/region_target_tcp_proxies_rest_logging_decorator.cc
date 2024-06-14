@@ -55,6 +55,20 @@ RegionTargetTcpProxiesRestLogging::AsyncDeleteTargetTcpProxy(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetTcpProxiesRestLogging::DeleteTargetTcpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+        DeleteTargetTcpProxyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+                 DeleteTargetTcpProxyRequest const& request) {
+        return child_->DeleteTargetTcpProxy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
 RegionTargetTcpProxiesRestLogging::GetTargetTcpProxy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -87,6 +101,20 @@ RegionTargetTcpProxiesRestLogging::AsyncInsertTargetTcpProxy(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetTcpProxiesRestLogging::InsertTargetTcpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+        InsertTargetTcpProxyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+                 InsertTargetTcpProxyRequest const& request) {
+        return child_->InsertTargetTcpProxy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>

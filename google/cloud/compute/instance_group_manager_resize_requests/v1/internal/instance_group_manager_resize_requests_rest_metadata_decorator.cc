@@ -53,6 +53,15 @@ InstanceGroupManagerResizeRequestsRestMetadata::AsyncCancel(
                              request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagerResizeRequestsRestMetadata::Cancel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+        CancelRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Cancel(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsRestMetadata::
     AsyncDeleteInstanceGroupManagerResizeRequest(
@@ -64,6 +73,17 @@ InstanceGroupManagerResizeRequestsRestMetadata::
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeleteInstanceGroupManagerResizeRequest(
       cq, std::move(rest_context), std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagerResizeRequestsRestMetadata::
+    DeleteInstanceGroupManagerResizeRequest(
+        rest_internal::RestContext& rest_context, Options const& options,
+        google::cloud::cpp::compute::instance_group_manager_resize_requests::
+            v1::DeleteInstanceGroupManagerResizeRequestRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteInstanceGroupManagerResizeRequest(rest_context, options,
+                                                         request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>
@@ -88,6 +108,17 @@ InstanceGroupManagerResizeRequestsRestMetadata::
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertInstanceGroupManagerResizeRequest(
       cq, std::move(rest_context), std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagerResizeRequestsRestMetadata::
+    InsertInstanceGroupManagerResizeRequest(
+        rest_internal::RestContext& rest_context, Options const& options,
+        google::cloud::cpp::compute::instance_group_manager_resize_requests::
+            v1::InsertInstanceGroupManagerResizeRequestRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertInstanceGroupManagerResizeRequest(rest_context, options,
+                                                         request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::

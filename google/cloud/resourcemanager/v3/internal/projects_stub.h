@@ -60,10 +60,20 @@ class ProjectsStub {
       google::cloud::resourcemanager::v3::CreateProjectRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateProject(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateProjectRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateProject(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::UpdateProjectRequest const&
           request) = 0;
 
@@ -74,6 +84,11 @@ class ProjectsStub {
       google::cloud::resourcemanager::v3::MoveProjectRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> MoveProject(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::MoveProjectRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -81,10 +96,20 @@ class ProjectsStub {
       google::cloud::resourcemanager::v3::DeleteProjectRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteProject(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUndeleteProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UndeleteProject(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
           request) = 0;
 
@@ -147,10 +172,20 @@ class DefaultProjectsStub : public ProjectsStub {
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateProject(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateProject(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
       override;
 
@@ -161,6 +196,11 @@ class DefaultProjectsStub : public ProjectsStub {
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> MoveProject(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -168,10 +208,20 @@ class DefaultProjectsStub : public ProjectsStub {
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteProject(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UndeleteProject(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
       override;
 

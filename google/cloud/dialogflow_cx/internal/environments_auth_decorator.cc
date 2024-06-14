@@ -70,6 +70,15 @@ EnvironmentsAuth::AsyncCreateEnvironment(
       });
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEnvironment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +98,15 @@ EnvironmentsAuth::AsyncUpdateEnvironment(
         return child->AsyncUpdateEnvironment(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::UpdateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEnvironment(context, options, request);
 }
 
 Status EnvironmentsAuth::DeleteEnvironment(
@@ -131,6 +149,15 @@ EnvironmentsAuth::AsyncRunContinuousTest(
       });
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::RunContinuousTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunContinuousTest(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
 EnvironmentsAuth::ListContinuousTestResults(
     grpc::ClientContext& context, Options const& options,
@@ -159,6 +186,14 @@ EnvironmentsAuth::AsyncDeployFlow(
         return child->AsyncDeployFlow(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::DeployFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeployFlow(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

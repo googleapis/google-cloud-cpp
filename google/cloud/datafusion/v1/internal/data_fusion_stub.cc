@@ -87,6 +87,17 @@ DefaultDataFusionStub::AsyncCreateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDataFusionStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -104,6 +115,17 @@ DefaultDataFusionStub::AsyncDeleteInstance(
         return grpc_stub_->AsyncDeleteInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDataFusionStub::DeleteInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -125,6 +147,17 @@ DefaultDataFusionStub::AsyncUpdateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDataFusionStub::UpdateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
@@ -142,6 +175,17 @@ DefaultDataFusionStub::AsyncRestartInstance(
         return grpc_stub_->AsyncRestartInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDataFusionStub::RestartInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestartInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

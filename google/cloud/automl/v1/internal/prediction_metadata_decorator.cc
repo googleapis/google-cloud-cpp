@@ -63,6 +63,15 @@ PredictionServiceMetadata::AsyncBatchPredict(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+PredictionServiceMetadata::BatchPredict(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::BatchPredictRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->BatchPredict(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PredictionServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

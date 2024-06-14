@@ -46,11 +46,23 @@ class NetworkFirewallPoliciesRestStub {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddAssociationRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddAssociation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AddAssociationRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AddRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddRuleRequest const& request) = 0;
 
@@ -62,6 +74,12 @@ class NetworkFirewallPoliciesRestStub {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           CloneRulesRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> CloneRules(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          CloneRulesRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteFirewallPolicy(
       google::cloud::CompletionQueue& cq,
@@ -69,6 +87,12 @@ class NetworkFirewallPoliciesRestStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           DeleteFirewallPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteFirewallPolicy(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::network_firewall_policies::
+                           v1::DeleteFirewallPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
   GetFirewallPolicy(google::cloud::rest_internal::RestContext& rest_context,
@@ -102,6 +126,12 @@ class NetworkFirewallPoliciesRestStub {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           InsertFirewallPolicyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertFirewallPolicy(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::network_firewall_policies::
+                           v1::InsertFirewallPolicyRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
   ListNetworkFirewallPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -117,11 +147,23 @@ class NetworkFirewallPoliciesRestStub {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           PatchFirewallPolicyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchFirewallPolicy(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
+                      google::cloud::cpp::compute::network_firewall_policies::
+                          v1::PatchFirewallPolicyRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          PatchRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           PatchRuleRequest const& request) = 0;
 
@@ -133,11 +175,23 @@ class NetworkFirewallPoliciesRestStub {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           RemoveAssociationRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveAssociation(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::compute::network_firewall_policies::v1::
+                        RemoveAssociationRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncRemoveRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          RemoveRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           RemoveRuleRequest const& request) = 0;
 
@@ -187,10 +241,22 @@ class DefaultNetworkFirewallPoliciesRestStub
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddAssociationRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddAssociation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AddAssociationRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AddRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddRuleRequest const& request) override;
 
@@ -201,11 +267,23 @@ class DefaultNetworkFirewallPoliciesRestStub
       google::cloud::cpp::compute::network_firewall_policies::v1::
           CloneRulesRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> CloneRules(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          CloneRulesRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteFirewallPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          DeleteFirewallPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewallPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           DeleteFirewallPolicyRequest const& request) override;
 
@@ -241,6 +319,12 @@ class DefaultNetworkFirewallPoliciesRestStub
       google::cloud::cpp::compute::network_firewall_policies::v1::
           InsertFirewallPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewallPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          InsertFirewallPolicyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
   ListNetworkFirewallPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -256,10 +340,22 @@ class DefaultNetworkFirewallPoliciesRestStub
       google::cloud::cpp::compute::network_firewall_policies::v1::
           PatchFirewallPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewallPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          PatchFirewallPolicyRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          PatchRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           PatchRuleRequest const& request) override;
 
@@ -271,10 +367,22 @@ class DefaultNetworkFirewallPoliciesRestStub
       google::cloud::cpp::compute::network_firewall_policies::v1::
           RemoveAssociationRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveAssociation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          RemoveAssociationRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncRemoveRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          RemoveRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_firewall_policies::v1::
           RemoveRuleRequest const& request) override;
 

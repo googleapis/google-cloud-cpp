@@ -59,10 +59,20 @@ class PolicyBasedRoutingServiceTracingStub
       google::cloud::networkconnectivity::v1::
           CreatePolicyBasedRouteRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::
+          CreatePolicyBasedRouteRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePolicyBasedRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::
+          DeletePolicyBasedRouteRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkconnectivity::v1::
           DeletePolicyBasedRouteRequest const& request) override;
 

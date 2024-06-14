@@ -121,6 +121,17 @@ DefaultEdgeNetworkStub::AsyncCreateNetwork(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::CreateNetwork(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteNetwork(
     google::cloud::CompletionQueue& cq,
@@ -138,6 +149,17 @@ DefaultEdgeNetworkStub::AsyncDeleteNetwork(
         return grpc_stub_->AsyncDeleteNetwork(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::DeleteNetwork(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse>
@@ -182,6 +204,17 @@ DefaultEdgeNetworkStub::AsyncCreateSubnet(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::CreateSubnet(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSubnet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncUpdateSubnet(
     google::cloud::CompletionQueue& cq,
@@ -200,6 +233,17 @@ DefaultEdgeNetworkStub::AsyncUpdateSubnet(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::UpdateSubnet(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSubnet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteSubnet(
     google::cloud::CompletionQueue& cq,
@@ -216,6 +260,17 @@ DefaultEdgeNetworkStub::AsyncDeleteSubnet(
         return grpc_stub_->AsyncDeleteSubnet(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::DeleteSubnet(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSubnet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
@@ -304,6 +359,20 @@ DefaultEdgeNetworkStub::AsyncCreateInterconnectAttachment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::CreateInterconnectAttachment(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateInterconnectAttachment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteInterconnectAttachment(
     google::cloud::CompletionQueue& cq,
@@ -323,6 +392,20 @@ DefaultEdgeNetworkStub::AsyncDeleteInterconnectAttachment(
                                                              cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::DeleteInterconnectAttachment(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteInterconnectAttachment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse>
@@ -379,6 +462,17 @@ DefaultEdgeNetworkStub::AsyncCreateRouter(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::CreateRouter(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRouter(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncUpdateRouter(
     google::cloud::CompletionQueue& cq,
@@ -397,6 +491,17 @@ DefaultEdgeNetworkStub::AsyncUpdateRouter(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::UpdateRouter(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateRouter(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteRouter(
     google::cloud::CompletionQueue& cq,
@@ -413,6 +518,17 @@ DefaultEdgeNetworkStub::AsyncDeleteRouter(
         return grpc_stub_->AsyncDeleteRouter(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::DeleteRouter(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRouter(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

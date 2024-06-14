@@ -48,6 +48,12 @@ class RegionAutoscalersRestMetadata : public RegionAutoscalersRestStub {
       google::cloud::cpp::compute::region_autoscalers::v1::
           DeleteAutoscalerRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_autoscalers::v1::
+          DeleteAutoscalerRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -59,6 +65,12 @@ class RegionAutoscalersRestMetadata : public RegionAutoscalersRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_autoscalers::v1::
+          InsertAutoscalerRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_autoscalers::v1::
           InsertAutoscalerRequest const& request) override;
 
@@ -77,11 +89,23 @@ class RegionAutoscalersRestMetadata : public RegionAutoscalersRestStub {
       google::cloud::cpp::compute::region_autoscalers::v1::
           PatchAutoscalerRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_autoscalers::v1::
+          PatchAutoscalerRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_autoscalers::v1::
+          UpdateAutoscalerRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_autoscalers::v1::
           UpdateAutoscalerRequest const& request) override;
 

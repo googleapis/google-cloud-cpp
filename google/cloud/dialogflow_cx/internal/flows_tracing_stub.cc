@@ -100,6 +100,17 @@ FlowsTracingStub::AsyncTrainFlow(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> FlowsTracingStub::TrainFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows",
+                                     "TrainFlow");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->TrainFlow(context, options, request));
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsTracingStub::ValidateFlow(
     grpc::ClientContext& context, Options const& options,
@@ -140,6 +151,17 @@ FlowsTracingStub::AsyncImportFlow(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> FlowsTracingStub::ImportFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows",
+                                     "ImportFlow");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ImportFlow(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FlowsTracingStub::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
@@ -152,6 +174,17 @@ FlowsTracingStub::AsyncExportFlow(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncExportFlow(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> FlowsTracingStub::ExportFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows",
+                                     "ExportFlow");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportFlow(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -91,6 +91,18 @@ ProjectsLogging::AsyncCreateProject(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ProjectsLogging::CreateProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateProjectRequest const&
+                 request) {
+        return child_->CreateProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectsLogging::AsyncUpdateProject(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +120,18 @@ ProjectsLogging::AsyncUpdateProject(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ProjectsLogging::UpdateProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::UpdateProjectRequest const&
+                 request) {
+        return child_->UpdateProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -129,6 +153,18 @@ ProjectsLogging::AsyncMoveProject(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ProjectsLogging::MoveProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::MoveProjectRequest const&
+                 request) {
+        return child_->MoveProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectsLogging::AsyncDeleteProject(
     google::cloud::CompletionQueue& cq,
@@ -148,6 +184,18 @@ ProjectsLogging::AsyncDeleteProject(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ProjectsLogging::DeleteProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteProjectRequest const&
+                 request) {
+        return child_->DeleteProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectsLogging::AsyncUndeleteProject(
     google::cloud::CompletionQueue& cq,
@@ -165,6 +213,18 @@ ProjectsLogging::AsyncUndeleteProject(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ProjectsLogging::UndeleteProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
+                 request) {
+        return child_->UndeleteProject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsLogging::GetIamPolicy(

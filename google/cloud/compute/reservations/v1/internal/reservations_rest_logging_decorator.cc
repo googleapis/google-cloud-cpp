@@ -69,6 +69,20 @@ ReservationsRestLogging::AsyncDeleteReservation(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsRestLogging::DeleteReservation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        DeleteReservationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 DeleteReservationRequest const& request) {
+        return child_->DeleteReservation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
 ReservationsRestLogging::GetReservation(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -117,6 +131,20 @@ ReservationsRestLogging::AsyncInsertReservation(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsRestLogging::InsertReservation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        InsertReservationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 InsertReservationRequest const& request) {
+        return child_->InsertReservation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ReservationList>
 ReservationsRestLogging::ListReservations(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -149,6 +177,20 @@ ReservationsRestLogging::AsyncResize(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsRestLogging::Resize(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+                 request) {
+        return child_->Resize(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -197,6 +239,20 @@ ReservationsRestLogging::AsyncUpdateReservation(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsRestLogging::UpdateReservation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        UpdateReservationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 UpdateReservationRequest const& request) {
+        return child_->UpdateReservation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

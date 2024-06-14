@@ -59,6 +59,14 @@ GoldenThingAdminRestMetadata::AsyncCreateDatabase(
       cq, std::move(rest_context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestMetadata::CreateDatabase(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->CreateDatabase(rest_context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminRestMetadata::GetDatabase(
     rest_internal::RestContext& rest_context,
@@ -76,6 +84,14 @@ GoldenThingAdminRestMetadata::AsyncUpdateDatabaseDdl(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateDatabaseDdl(
       cq, std::move(rest_context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestMetadata::UpdateDatabaseDdl(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateDatabaseDdl(rest_context, options, request);
 }
 
 Status
@@ -166,6 +182,14 @@ GoldenThingAdminRestMetadata::AsyncCreateBackup(
       cq, std::move(rest_context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestMetadata::CreateBackup(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::test::admin::database::v1::CreateBackupRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->CreateBackup(rest_context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminRestMetadata::GetBackup(
     rest_internal::RestContext& rest_context,
@@ -207,6 +231,14 @@ GoldenThingAdminRestMetadata::AsyncRestoreDatabase(
   SetMetadata(*rest_context, *options);
   return child_->AsyncRestoreDatabase(
       cq, std::move(rest_context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestMetadata::RestoreDatabase(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->RestoreDatabase(rest_context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>

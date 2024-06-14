@@ -49,6 +49,18 @@ DefaultCatalogServiceStub::AsyncCreateEntryType(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::CreateEntryType(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEntryType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCatalogServiceStub::AsyncUpdateEntryType(
     google::cloud::CompletionQueue& cq,
@@ -67,6 +79,18 @@ DefaultCatalogServiceStub::AsyncUpdateEntryType(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::UpdateEntryType(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateEntryType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCatalogServiceStub::AsyncDeleteEntryType(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +107,18 @@ DefaultCatalogServiceStub::AsyncDeleteEntryType(
         return grpc_stub_->AsyncDeleteEntryType(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::DeleteEntryType(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEntryType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse>
@@ -128,6 +164,18 @@ DefaultCatalogServiceStub::AsyncCreateAspectType(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::CreateAspectType(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAspectType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCatalogServiceStub::AsyncUpdateAspectType(
     google::cloud::CompletionQueue& cq,
@@ -147,6 +195,18 @@ DefaultCatalogServiceStub::AsyncUpdateAspectType(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::UpdateAspectType(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAspectType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCatalogServiceStub::AsyncDeleteAspectType(
     google::cloud::CompletionQueue& cq,
@@ -164,6 +224,18 @@ DefaultCatalogServiceStub::AsyncDeleteAspectType(
         return grpc_stub_->AsyncDeleteAspectType(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::DeleteAspectType(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAspectType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse>
@@ -209,6 +281,18 @@ DefaultCatalogServiceStub::AsyncCreateEntryGroup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::CreateEntryGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEntryGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCatalogServiceStub::AsyncUpdateEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -228,6 +312,18 @@ DefaultCatalogServiceStub::AsyncUpdateEntryGroup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::UpdateEntryGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateEntryGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCatalogServiceStub::AsyncDeleteEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -245,6 +341,18 @@ DefaultCatalogServiceStub::AsyncDeleteEntryGroup(
         return grpc_stub_->AsyncDeleteEntryGroup(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::DeleteEntryGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEntryGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse>

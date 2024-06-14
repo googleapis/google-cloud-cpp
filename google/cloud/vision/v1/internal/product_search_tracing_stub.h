@@ -125,10 +125,19 @@ class ProductSearchTracingStub : public ProductSearchStub {
       google::cloud::vision::v1::ImportProductSetsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ImportProductSets(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vision::v1::ImportProductSetsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeProducts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::vision::v1::PurgeProductsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> PurgeProducts(
+      grpc::ClientContext& context, Options options,
       google::cloud::vision::v1::PurgeProductsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

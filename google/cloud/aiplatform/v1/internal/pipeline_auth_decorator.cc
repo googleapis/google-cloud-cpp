@@ -81,6 +81,16 @@ PipelineServiceAuth::AsyncDeleteTrainingPipeline(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+PipelineServiceAuth::DeleteTrainingPipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTrainingPipeline(context, options, request);
+}
+
 Status PipelineServiceAuth::CancelTrainingPipeline(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
@@ -137,6 +147,14 @@ PipelineServiceAuth::AsyncDeletePipelineJob(
       });
 }
 
+StatusOr<google::longrunning::Operation> PipelineServiceAuth::DeletePipelineJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePipelineJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceAuth::AsyncBatchDeletePipelineJobs(
     google::cloud::CompletionQueue& cq,
@@ -156,6 +174,16 @@ PipelineServiceAuth::AsyncBatchDeletePipelineJobs(
         return child->AsyncBatchDeletePipelineJobs(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+PipelineServiceAuth::BatchDeletePipelineJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchDeletePipelineJobs(context, options, request);
 }
 
 Status PipelineServiceAuth::CancelPipelineJob(
@@ -185,6 +213,16 @@ PipelineServiceAuth::AsyncBatchCancelPipelineJobs(
         return child->AsyncBatchCancelPipelineJobs(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+PipelineServiceAuth::BatchCancelPipelineJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCancelPipelineJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

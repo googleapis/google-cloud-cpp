@@ -82,6 +82,14 @@ DataFusionMetadata::AsyncCreateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> DataFusionMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataFusionMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +100,14 @@ DataFusionMetadata::AsyncDeleteInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> DataFusionMetadata::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -107,6 +123,15 @@ DataFusionMetadata::AsyncUpdateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> DataFusionMetadata::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->UpdateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataFusionMetadata::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
@@ -117,6 +142,14 @@ DataFusionMetadata::AsyncRestartInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRestartInstance(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> DataFusionMetadata::RestartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RestartInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

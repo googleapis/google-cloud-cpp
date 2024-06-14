@@ -51,6 +51,15 @@ BigtableInstanceAdminAuth::AsyncCreateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstance(context, options, request);
+}
+
 StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminAuth::GetInstance(
     grpc::ClientContext& context, Options const& options,
@@ -98,6 +107,15 @@ BigtableInstanceAdminAuth::AsyncPartialUpdateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::PartialUpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PartialUpdateInstance(context, options, request);
+}
+
 Status BigtableInstanceAdminAuth::DeleteInstance(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
@@ -124,6 +142,15 @@ BigtableInstanceAdminAuth::AsyncCreateCluster(
         return child->AsyncCreateCluster(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCluster(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
@@ -164,6 +191,15 @@ BigtableInstanceAdminAuth::AsyncUpdateCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::Cluster const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminAuth::AsyncPartialUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -182,6 +218,15 @@ BigtableInstanceAdminAuth::AsyncPartialUpdateCluster(
         return child->AsyncPartialUpdateCluster(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::PartialUpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PartialUpdateCluster(context, options, request);
 }
 
 Status BigtableInstanceAdminAuth::DeleteCluster(
@@ -237,6 +282,15 @@ BigtableInstanceAdminAuth::AsyncUpdateAppProfile(
         return child->AsyncUpdateAppProfile(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::UpdateAppProfile(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAppProfile(context, options, request);
 }
 
 Status BigtableInstanceAdminAuth::DeleteAppProfile(

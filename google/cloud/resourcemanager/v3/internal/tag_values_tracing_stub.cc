@@ -82,6 +82,17 @@ TagValuesTracingStub::AsyncCreateTagValue(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> TagValuesTracingStub::CreateTagValue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.resourcemanager.v3.TagValues", "CreateTagValue");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateTagValue(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagValuesTracingStub::AsyncUpdateTagValue(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +108,17 @@ TagValuesTracingStub::AsyncUpdateTagValue(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> TagValuesTracingStub::UpdateTagValue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.resourcemanager.v3.TagValues", "UpdateTagValue");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateTagValue(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagValuesTracingStub::AsyncDeleteTagValue(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +132,17 @@ TagValuesTracingStub::AsyncDeleteTagValue(
   auto f =
       child_->AsyncDeleteTagValue(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> TagValuesTracingStub::DeleteTagValue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.resourcemanager.v3.TagValues", "DeleteTagValue");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTagValue(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> TagValuesTracingStub::GetIamPolicy(

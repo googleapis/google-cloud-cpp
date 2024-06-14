@@ -59,6 +59,19 @@ TagBindingsTracingStub::AsyncCreateTagBinding(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+TagBindingsTracingStub::CreateTagBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.resourcemanager.v3.TagBindings", "CreateTagBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateTagBinding(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagBindingsTracingStub::AsyncDeleteTagBinding(
     google::cloud::CompletionQueue& cq,
@@ -73,6 +86,19 @@ TagBindingsTracingStub::AsyncDeleteTagBinding(
   auto f =
       child_->AsyncDeleteTagBinding(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+TagBindingsTracingStub::DeleteTagBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.resourcemanager.v3.TagBindings", "DeleteTagBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTagBinding(context, options, request));
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>

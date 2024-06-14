@@ -78,6 +78,19 @@ VmwareEngineLogging::AsyncCreatePrivateCloud(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreatePrivateCloud(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const&
+                 request) {
+        return child_->CreatePrivateCloud(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUpdatePrivateCloud(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +108,19 @@ VmwareEngineLogging::AsyncUpdatePrivateCloud(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdatePrivateCloud(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const&
+                 request) {
+        return child_->UpdatePrivateCloud(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -116,6 +142,19 @@ VmwareEngineLogging::AsyncDeletePrivateCloud(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::DeletePrivateCloud(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const&
+                 request) {
+        return child_->DeletePrivateCloud(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUndeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
@@ -134,6 +173,20 @@ VmwareEngineLogging::AsyncUndeletePrivateCloud(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UndeletePrivateCloud(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
+                 request) {
+        return child_->UndeletePrivateCloud(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListClustersResponse>
@@ -181,6 +234,18 @@ VmwareEngineLogging::AsyncCreateCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmwareEngineLogging::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreateClusterRequest const&
+                 request) {
+        return child_->CreateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -200,6 +265,18 @@ VmwareEngineLogging::AsyncUpdateCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VmwareEngineLogging::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateClusterRequest const&
+                 request) {
+        return child_->UpdateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -217,6 +294,18 @@ VmwareEngineLogging::AsyncDeleteCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmwareEngineLogging::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeleteClusterRequest const&
+                 request) {
+        return child_->DeleteCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodesResponse>
@@ -307,6 +396,21 @@ VmwareEngineLogging::AsyncCreateExternalAddress(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreateExternalAddress(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+              request) {
+        return child_->CreateExternalAddress(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUpdateExternalAddress(
     google::cloud::CompletionQueue& cq,
@@ -328,6 +432,21 @@ VmwareEngineLogging::AsyncUpdateExternalAddress(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdateExternalAddress(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+              request) {
+        return child_->UpdateExternalAddress(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncDeleteExternalAddress(
     google::cloud::CompletionQueue& cq,
@@ -347,6 +466,21 @@ VmwareEngineLogging::AsyncDeleteExternalAddress(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::DeleteExternalAddress(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+              request) {
+        return child_->DeleteExternalAddress(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse>
@@ -391,6 +525,18 @@ VmwareEngineLogging::AsyncUpdateSubnet(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmwareEngineLogging::UpdateSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+        return child_->UpdateSubnet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse>
@@ -443,6 +589,20 @@ VmwareEngineLogging::AsyncCreateExternalAccessRule(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreateExternalAccessRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 CreateExternalAccessRuleRequest const& request) {
+        return child_->CreateExternalAccessRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUpdateExternalAccessRule(
     google::cloud::CompletionQueue& cq,
@@ -463,6 +623,20 @@ VmwareEngineLogging::AsyncUpdateExternalAccessRule(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdateExternalAccessRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 UpdateExternalAccessRuleRequest const& request) {
+        return child_->UpdateExternalAccessRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncDeleteExternalAccessRule(
     google::cloud::CompletionQueue& cq,
@@ -481,6 +655,20 @@ VmwareEngineLogging::AsyncDeleteExternalAccessRule(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::DeleteExternalAccessRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 DeleteExternalAccessRuleRequest const& request) {
+        return child_->DeleteExternalAccessRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse>
@@ -529,6 +717,20 @@ VmwareEngineLogging::AsyncCreateLoggingServer(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreateLoggingServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+                 request) {
+        return child_->CreateLoggingServer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUpdateLoggingServer(
     google::cloud::CompletionQueue& cq,
@@ -549,6 +751,20 @@ VmwareEngineLogging::AsyncUpdateLoggingServer(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdateLoggingServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+                 request) {
+        return child_->UpdateLoggingServer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncDeleteLoggingServer(
     google::cloud::CompletionQueue& cq,
@@ -567,6 +783,20 @@ VmwareEngineLogging::AsyncDeleteLoggingServer(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::DeleteLoggingServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+                 request) {
+        return child_->DeleteLoggingServer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
@@ -643,6 +873,20 @@ VmwareEngineLogging::AsyncResetNsxCredentials(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::ResetNsxCredentials(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
+                 request) {
+        return child_->ResetNsxCredentials(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncResetVcenterCredentials(
     google::cloud::CompletionQueue& cq,
@@ -662,6 +906,21 @@ VmwareEngineLogging::AsyncResetVcenterCredentials(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::ResetVcenterCredentials(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
+              request) {
+        return child_->ResetVcenterCredentials(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
@@ -695,6 +954,20 @@ VmwareEngineLogging::AsyncUpdateDnsForwarding(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdateDnsForwarding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+                 request) {
+        return child_->UpdateDnsForwarding(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
@@ -744,6 +1017,20 @@ VmwareEngineLogging::AsyncCreateNetworkPeering(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreateNetworkPeering(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+                 request) {
+        return child_->CreateNetworkPeering(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncDeleteNetworkPeering(
     google::cloud::CompletionQueue& cq,
@@ -764,6 +1051,20 @@ VmwareEngineLogging::AsyncDeleteNetworkPeering(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::DeleteNetworkPeering(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+                 request) {
+        return child_->DeleteNetworkPeering(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUpdateNetworkPeering(
     google::cloud::CompletionQueue& cq,
@@ -782,6 +1083,20 @@ VmwareEngineLogging::AsyncUpdateNetworkPeering(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdateNetworkPeering(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+                 request) {
+        return child_->UpdateNetworkPeering(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse>
@@ -816,6 +1131,21 @@ VmwareEngineLogging::AsyncCreateHcxActivationKey(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreateHcxActivationKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
+              request) {
+        return child_->CreateHcxActivationKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse>
@@ -894,6 +1224,20 @@ VmwareEngineLogging::AsyncCreateNetworkPolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreateNetworkPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
+                 request) {
+        return child_->CreateNetworkPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUpdateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
@@ -914,6 +1258,20 @@ VmwareEngineLogging::AsyncUpdateNetworkPolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdateNetworkPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
+                 request) {
+        return child_->UpdateNetworkPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncDeleteNetworkPolicy(
     google::cloud::CompletionQueue& cq,
@@ -932,6 +1290,20 @@ VmwareEngineLogging::AsyncDeleteNetworkPolicy(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::DeleteNetworkPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
+                 request) {
+        return child_->DeleteNetworkPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse>
@@ -982,6 +1354,21 @@ VmwareEngineLogging::AsyncCreateManagementDnsZoneBinding(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreateManagementDnsZoneBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 CreateManagementDnsZoneBindingRequest const& request) {
+        return child_->CreateManagementDnsZoneBinding(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUpdateManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
@@ -1000,6 +1387,21 @@ VmwareEngineLogging::AsyncUpdateManagementDnsZoneBinding(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdateManagementDnsZoneBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 UpdateManagementDnsZoneBindingRequest const& request) {
+        return child_->UpdateManagementDnsZoneBinding(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -1022,6 +1424,21 @@ VmwareEngineLogging::AsyncDeleteManagementDnsZoneBinding(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::DeleteManagementDnsZoneBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 DeleteManagementDnsZoneBindingRequest const& request) {
+        return child_->DeleteManagementDnsZoneBinding(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncRepairManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
@@ -1040,6 +1457,21 @@ VmwareEngineLogging::AsyncRepairManagementDnsZoneBinding(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::RepairManagementDnsZoneBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 RepairManagementDnsZoneBindingRequest const& request) {
+        return child_->RepairManagementDnsZoneBinding(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -1062,6 +1494,20 @@ VmwareEngineLogging::AsyncCreateVmwareEngineNetwork(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreateVmwareEngineNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 CreateVmwareEngineNetworkRequest const& request) {
+        return child_->CreateVmwareEngineNetwork(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncUpdateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
@@ -1082,6 +1528,20 @@ VmwareEngineLogging::AsyncUpdateVmwareEngineNetwork(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdateVmwareEngineNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 UpdateVmwareEngineNetworkRequest const& request) {
+        return child_->UpdateVmwareEngineNetwork(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncDeleteVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
@@ -1100,6 +1560,20 @@ VmwareEngineLogging::AsyncDeleteVmwareEngineNetwork(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::DeleteVmwareEngineNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 DeleteVmwareEngineNetworkRequest const& request) {
+        return child_->DeleteVmwareEngineNetwork(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -1152,6 +1626,21 @@ VmwareEngineLogging::AsyncCreatePrivateConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::CreatePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+              request) {
+        return child_->CreatePrivateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
 VmwareEngineLogging::GetPrivateConnection(
     grpc::ClientContext& context, Options const& options,
@@ -1202,6 +1691,21 @@ VmwareEngineLogging::AsyncUpdatePrivateConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::UpdatePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+              request) {
+        return child_->UpdatePrivateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineLogging::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
@@ -1221,6 +1725,21 @@ VmwareEngineLogging::AsyncDeletePrivateConnection(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::DeletePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+              request) {
+        return child_->DeletePrivateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<
@@ -1260,6 +1779,21 @@ VmwareEngineLogging::AsyncGrantDnsBindPermission(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::GrantDnsBindPermission(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+              request) {
+        return child_->GrantDnsBindPermission(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
 VmwareEngineLogging::GetDnsBindPermission(
     grpc::ClientContext& context, Options const& options,
@@ -1293,6 +1827,21 @@ VmwareEngineLogging::AsyncRevokeDnsBindPermission(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineLogging::RevokeDnsBindPermission(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+              request) {
+        return child_->RevokeDnsBindPermission(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

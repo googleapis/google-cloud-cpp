@@ -71,6 +71,17 @@ DefaultServicesStub::AsyncUpdateService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultServicesStub::UpdateService(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::UpdateServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +97,17 @@ DefaultServicesStub::AsyncDeleteService(
         return grpc_stub_->AsyncDeleteService(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultServicesStub::DeleteService(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::DeleteServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

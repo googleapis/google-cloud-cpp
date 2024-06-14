@@ -51,6 +51,15 @@ RegionInstancesRestMetadata::AsyncBulkInsert(
                                  std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstancesRestMetadata::BulkInsert(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->BulkInsert(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstancesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

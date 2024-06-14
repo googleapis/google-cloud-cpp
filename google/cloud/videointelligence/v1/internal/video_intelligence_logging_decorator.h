@@ -46,6 +46,11 @@ class VideoIntelligenceServiceLogging : public VideoIntelligenceServiceStub {
       google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> AnnotateVideo(
+      grpc::ClientContext& context, Options options,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

@@ -119,6 +119,16 @@ CloudChannelServiceMetadata::AsyncProvisionCloudIdentity(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::ProvisionCloudIdentity(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("customer=", internal::UrlEncode(request.customer())));
+  return child_->ProvisionCloudIdentity(context, options, request);
+}
+
 StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
 CloudChannelServiceMetadata::ListEntitlements(
     grpc::ClientContext& context, Options const& options,
@@ -167,6 +177,15 @@ CloudChannelServiceMetadata::AsyncCreateEntitlement(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::CreateEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEntitlement(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncChangeParameters(
     google::cloud::CompletionQueue& cq,
@@ -177,6 +196,15 @@ CloudChannelServiceMetadata::AsyncChangeParameters(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncChangeParameters(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::ChangeParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeParametersRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ChangeParameters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -191,6 +219,15 @@ CloudChannelServiceMetadata::AsyncChangeRenewalSettings(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::ChangeRenewalSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ChangeRenewalSettings(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncChangeOffer(
     google::cloud::CompletionQueue& cq,
@@ -201,6 +238,15 @@ CloudChannelServiceMetadata::AsyncChangeOffer(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncChangeOffer(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::ChangeOffer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeOfferRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ChangeOffer(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -215,6 +261,15 @@ CloudChannelServiceMetadata::AsyncStartPaidService(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::StartPaidService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartPaidService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncSuspendEntitlement(
     google::cloud::CompletionQueue& cq,
@@ -225,6 +280,15 @@ CloudChannelServiceMetadata::AsyncSuspendEntitlement(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncSuspendEntitlement(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::SuspendEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SuspendEntitlement(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -239,6 +303,15 @@ CloudChannelServiceMetadata::AsyncCancelEntitlement(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::CancelEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelEntitlement(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncActivateEntitlement(
     google::cloud::CompletionQueue& cq,
@@ -249,6 +322,15 @@ CloudChannelServiceMetadata::AsyncActivateEntitlement(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncActivateEntitlement(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::ActivateEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ActivateEntitlement(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -263,6 +345,15 @@ CloudChannelServiceMetadata::AsyncTransferEntitlements(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::TransferEntitlements(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->TransferEntitlements(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncTransferEntitlementsToGoogle(
     google::cloud::CompletionQueue& cq,
@@ -274,6 +365,16 @@ CloudChannelServiceMetadata::AsyncTransferEntitlementsToGoogle(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncTransferEntitlementsToGoogle(cq, std::move(context),
                                                    std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceMetadata::TransferEntitlementsToGoogle(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->TransferEntitlementsToGoogle(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>

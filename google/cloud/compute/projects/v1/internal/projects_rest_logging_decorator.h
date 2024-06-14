@@ -50,11 +50,23 @@ class ProjectsRestLogging : public ProjectsRestStub {
       google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDisableXpnResource(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::
+          DisableXpnResourceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::projects::v1::
           DisableXpnResourceRequest const& request) override;
 
@@ -66,11 +78,23 @@ class ProjectsRestLogging : public ProjectsRestStub {
       google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncEnableXpnResource(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
           request) override;
 
@@ -106,11 +130,23 @@ class ProjectsRestLogging : public ProjectsRestStub {
       google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncMoveInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
           request) override;
 
@@ -122,11 +158,24 @@ class ProjectsRestLogging : public ProjectsRestStub {
       google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetCommonInstanceMetadata(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::
+          SetCommonInstanceMetadataRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetCommonInstanceMetadata(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::projects::v1::
           SetCommonInstanceMetadataRequest const& request) override;
 
@@ -138,11 +187,23 @@ class ProjectsRestLogging : public ProjectsRestStub {
       google::cloud::cpp::compute::projects::v1::
           SetDefaultNetworkTierRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::projects::v1::
+          SetDefaultNetworkTierRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetUsageExportBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::
+          SetUsageExportBucketRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::projects::v1::
           SetUsageExportBucketRequest const& request) override;
 

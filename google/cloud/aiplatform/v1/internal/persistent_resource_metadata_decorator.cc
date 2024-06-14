@@ -55,6 +55,16 @@ PersistentResourceServiceMetadata::AsyncCreatePersistentResource(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceMetadata::CreatePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreatePersistentResource(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
 PersistentResourceServiceMetadata::GetPersistentResource(
     grpc::ClientContext& context, Options const& options,
@@ -88,6 +98,16 @@ PersistentResourceServiceMetadata::AsyncDeletePersistentResource(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceMetadata::DeletePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeletePersistentResource(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PersistentResourceServiceMetadata::AsyncUpdatePersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +123,18 @@ PersistentResourceServiceMetadata::AsyncUpdatePersistentResource(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceMetadata::UpdatePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("persistent_resource.name=",
+                   internal::UrlEncode(request.persistent_resource().name())));
+  return child_->UpdatePersistentResource(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PersistentResourceServiceMetadata::AsyncRebootPersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +146,16 @@ PersistentResourceServiceMetadata::AsyncRebootPersistentResource(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRebootPersistentResource(cq, std::move(context),
                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceMetadata::RebootPersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RebootPersistentResource(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

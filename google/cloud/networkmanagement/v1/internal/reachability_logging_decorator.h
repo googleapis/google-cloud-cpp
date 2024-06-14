@@ -58,10 +58,20 @@ class ReachabilityServiceLogging : public ReachabilityServiceStub {
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConnectivityTest(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateConnectivityTest(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
           request) override;
 
@@ -72,10 +82,20 @@ class ReachabilityServiceLogging : public ReachabilityServiceStub {
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> RerunConnectivityTest(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnectivityTest(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request) override;
 

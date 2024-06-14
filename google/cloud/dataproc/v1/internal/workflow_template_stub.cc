@@ -78,6 +78,20 @@ DefaultWorkflowTemplateServiceStub::AsyncInstantiateWorkflowTemplate(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultWorkflowTemplateServiceStub::InstantiateWorkflowTemplate(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->InstantiateWorkflowTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowTemplateServiceStub::AsyncInstantiateInlineWorkflowTemplate(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +111,20 @@ DefaultWorkflowTemplateServiceStub::AsyncInstantiateInlineWorkflowTemplate(
                                                                   request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultWorkflowTemplateServiceStub::InstantiateInlineWorkflowTemplate(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->InstantiateInlineWorkflowTemplate(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

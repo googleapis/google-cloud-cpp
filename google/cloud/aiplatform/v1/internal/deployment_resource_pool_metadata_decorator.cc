@@ -55,6 +55,16 @@ DeploymentResourcePoolServiceMetadata::AsyncCreateDeploymentResourcePool(
                                                    std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceMetadata::CreateDeploymentResourcePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDeploymentResourcePool(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceMetadata::GetDeploymentResourcePool(
     grpc::ClientContext& context, Options const& options,
@@ -86,6 +96,16 @@ DeploymentResourcePoolServiceMetadata::AsyncDeleteDeploymentResourcePool(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDeploymentResourcePool(cq, std::move(context),
                                                    std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceMetadata::DeleteDeploymentResourcePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDeploymentResourcePool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

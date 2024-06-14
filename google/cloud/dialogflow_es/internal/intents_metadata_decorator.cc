@@ -96,6 +96,14 @@ IntentsMetadata::AsyncBatchUpdateIntents(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> IntentsMetadata::BatchUpdateIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchUpdateIntents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IntentsMetadata::AsyncBatchDeleteIntents(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +114,14 @@ IntentsMetadata::AsyncBatchDeleteIntents(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchDeleteIntents(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> IntentsMetadata::BatchDeleteIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchDeleteIntents(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

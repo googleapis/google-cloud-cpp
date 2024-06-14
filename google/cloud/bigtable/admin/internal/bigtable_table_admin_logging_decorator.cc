@@ -87,6 +87,17 @@ BigtableTableAdminLogging::AsyncUpdateTable(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> BigtableTableAdminLogging::UpdateTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::UpdateTableRequest const& request) {
+        return child_->UpdateTable(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 Status BigtableTableAdminLogging::DeleteTable(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
@@ -116,6 +127,18 @@ BigtableTableAdminLogging::AsyncUndeleteTable(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminLogging::UndeleteTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+        return child_->UndeleteTable(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncCreateAuthorizedView(
     google::cloud::CompletionQueue& cq,
@@ -133,6 +156,19 @@ BigtableTableAdminLogging::AsyncCreateAuthorizedView(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminLogging::CreateAuthorizedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::CreateAuthorizedViewRequest const&
+                 request) {
+        return child_->CreateAuthorizedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
@@ -178,6 +214,19 @@ BigtableTableAdminLogging::AsyncUpdateAuthorizedView(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminLogging::UpdateAuthorizedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::UpdateAuthorizedViewRequest const&
+                 request) {
+        return child_->UpdateAuthorizedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status BigtableTableAdminLogging::DeleteAuthorizedView(
@@ -261,6 +310,18 @@ BigtableTableAdminLogging::AsyncCreateBackup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminLogging::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::CreateBackupRequest const& request) {
+        return child_->CreateBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminLogging::GetBackup(
     grpc::ClientContext& context, Options const& options,
@@ -326,6 +387,18 @@ BigtableTableAdminLogging::AsyncRestoreTable(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminLogging::RestoreTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::RestoreTableRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::RestoreTableRequest const& request) {
+        return child_->RestoreTable(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -342,6 +415,17 @@ BigtableTableAdminLogging::AsyncCopyBackup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> BigtableTableAdminLogging::CopyBackup(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::CopyBackupRequest const& request) {
+        return child_->CopyBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminLogging::GetIamPolicy(

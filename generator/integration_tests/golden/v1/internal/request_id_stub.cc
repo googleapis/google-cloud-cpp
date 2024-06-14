@@ -61,6 +61,20 @@ DefaultRequestIdServiceStub::AsyncRenameFoo(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultRequestIdServiceStub::RenameFoo(
+      grpc::ClientContext& context,
+      Options,
+      google::test::requestid::v1::RenameFooRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->RenameFoo(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 StatusOr<google::test::requestid::v1::ListFoosResponse>
 DefaultRequestIdServiceStub::ListFoos(
   grpc::ClientContext& context, Options const&,

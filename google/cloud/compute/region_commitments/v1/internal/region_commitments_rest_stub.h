@@ -58,6 +58,12 @@ class RegionCommitmentsRestStub {
       google::cloud::cpp::compute::region_commitments::v1::
           InsertCommitmentRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
   ListRegionCommitments(google::cloud::rest_internal::RestContext& rest_context,
                         Options const& options,
@@ -69,6 +75,12 @@ class RegionCommitmentsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_commitments::v1::
           UpdateCommitmentRequest const& request) = 0;
 
@@ -118,6 +130,12 @@ class DefaultRegionCommitmentsRestStub : public RegionCommitmentsRestStub {
       google::cloud::cpp::compute::region_commitments::v1::
           InsertCommitmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
   ListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -130,6 +148,12 @@ class DefaultRegionCommitmentsRestStub : public RegionCommitmentsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_commitments::v1::
           UpdateCommitmentRequest const& request) override;
 

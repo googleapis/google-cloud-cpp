@@ -55,6 +55,12 @@ class ForwardingRulesRestMetadata : public ForwardingRulesRestStub {
       google::cloud::cpp::compute::forwarding_rules::v1::
           DeleteForwardingRuleRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          DeleteForwardingRuleRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRule(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -66,6 +72,12 @@ class ForwardingRulesRestMetadata : public ForwardingRulesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          InsertForwardingRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::forwarding_rules::v1::
           InsertForwardingRuleRequest const& request) override;
 
@@ -83,6 +95,12 @@ class ForwardingRulesRestMetadata : public ForwardingRulesRestStub {
       google::cloud::cpp::compute::forwarding_rules::v1::
           PatchForwardingRuleRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          PatchForwardingRuleRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
@@ -91,11 +109,23 @@ class ForwardingRulesRestMetadata : public ForwardingRulesRestStub {
       google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+          request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetTarget(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
           request) override;
 

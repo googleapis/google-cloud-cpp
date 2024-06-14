@@ -47,6 +47,11 @@ class ConversationDatasetsAuth : public ConversationDatasetsStub {
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConversationDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request) override;
+
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(
       grpc::ClientContext& context, Options const& options,
@@ -67,10 +72,20 @@ class ConversationDatasetsAuth : public ConversationDatasetsStub {
       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteConversationDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportConversationData(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ImportConversationData(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::ImportConversationDataRequest const&
           request) override;
 

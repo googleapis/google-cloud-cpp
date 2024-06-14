@@ -61,6 +61,11 @@ class StorageControlTracingStub : public StorageControlStub {
       google::storage::control::v2::RenameFolderRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RenameFolder(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::RenameFolderRequest const& request)
+      override;
+
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
       grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::GetStorageLayoutRequest const& request)

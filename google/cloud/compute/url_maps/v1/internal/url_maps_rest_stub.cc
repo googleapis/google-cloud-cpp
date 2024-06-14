@@ -104,6 +104,22 @@ DefaultUrlMapsRestStub::AsyncDeleteUrlMap(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultUrlMapsRestStub::DeleteUrlMap(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "urlMaps", "/", request.url_map()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 DefaultUrlMapsRestStub::GetUrlMap(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -151,6 +167,22 @@ DefaultUrlMapsRestStub::AsyncInsertUrlMap(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultUrlMapsRestStub::InsertUrlMap(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.url_map_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "urlMaps"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultUrlMapsRestStub::AsyncInvalidateCache(
     CompletionQueue& cq,
@@ -184,6 +216,23 @@ DefaultUrlMapsRestStub::AsyncInvalidateCache(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultUrlMapsRestStub::InvalidateCache(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.cache_invalidation_rule_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "urlMaps", "/", request.url_map(), "/", "invalidateCache"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
@@ -240,6 +289,22 @@ DefaultUrlMapsRestStub::AsyncPatchUrlMap(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultUrlMapsRestStub::PatchUrlMap(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
+        request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.url_map_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "urlMaps", "/", request.url_map()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultUrlMapsRestStub::AsyncUpdateUrlMap(
     CompletionQueue& cq,
@@ -271,6 +336,22 @@ DefaultUrlMapsRestStub::AsyncUpdateUrlMap(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultUrlMapsRestStub::UpdateUrlMap(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
+        request) {
+  return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.url_map_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "urlMaps", "/", request.url_map()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>

@@ -46,6 +46,10 @@ class BatchControllerMetadata : public BatchControllerStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateBatch(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
+
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetBatchRequest const& request) override;

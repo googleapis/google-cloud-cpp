@@ -92,6 +92,14 @@ VizierServiceAuth::AsyncSuggestTrials(
       });
 }
 
+StatusOr<google::longrunning::Operation> VizierServiceAuth::SuggestTrials(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SuggestTrials(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::CreateTrial(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
@@ -161,6 +169,16 @@ VizierServiceAuth::AsyncCheckTrialEarlyStoppingState(
         return child->AsyncCheckTrialEarlyStoppingState(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+VizierServiceAuth::CheckTrialEarlyStoppingState(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CheckTrialEarlyStoppingState(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::StopTrial(

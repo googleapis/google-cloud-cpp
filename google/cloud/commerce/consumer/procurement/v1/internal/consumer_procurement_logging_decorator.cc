@@ -54,6 +54,20 @@ ConsumerProcurementServiceLogging::AsyncPlaceOrder(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceLogging::PlaceOrder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::commerce::consumer::procurement::v1::
+                 PlaceOrderRequest const& request) {
+        return child_->PlaceOrder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 ConsumerProcurementServiceLogging::GetOrder(
     grpc::ClientContext& context, Options const& options,

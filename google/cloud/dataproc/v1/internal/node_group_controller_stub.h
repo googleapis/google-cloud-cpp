@@ -44,10 +44,18 @@ class NodeGroupControllerStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateNodeGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncResizeNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ResizeNodeGroup(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
@@ -84,10 +92,20 @@ class DefaultNodeGroupControllerStub : public NodeGroupControllerStub {
       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateNodeGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncResizeNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ResizeNodeGroup(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
       override;
 

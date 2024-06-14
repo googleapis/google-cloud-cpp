@@ -45,6 +45,18 @@ CloudChannelReportsServiceTracingStub::AsyncRunReportJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelReportsServiceTracingStub::RunReportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::RunReportJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelReportsService", "RunReportJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RunReportJob(context, options, request));
+}
+
 StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
 CloudChannelReportsServiceTracingStub::FetchReportResults(
     grpc::ClientContext& context, Options const& options,

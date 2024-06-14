@@ -73,6 +73,18 @@ DefaultCloudFilestoreManagerStub::AsyncCreateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFilestoreManagerStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +101,18 @@ DefaultCloudFilestoreManagerStub::AsyncUpdateInstance(
         return grpc_stub_->AsyncUpdateInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::UpdateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,6 +134,18 @@ DefaultCloudFilestoreManagerStub::AsyncRestoreInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::RestoreInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestoreInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFilestoreManagerStub::AsyncRevertInstance(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +164,18 @@ DefaultCloudFilestoreManagerStub::AsyncRevertInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::RevertInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RevertInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFilestoreManagerStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -144,6 +192,18 @@ DefaultCloudFilestoreManagerStub::AsyncDeleteInstance(
         return grpc_stub_->AsyncDeleteInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::DeleteInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
@@ -188,6 +248,18 @@ DefaultCloudFilestoreManagerStub::AsyncCreateSnapshot(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::CreateSnapshot(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFilestoreManagerStub::AsyncDeleteSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -206,6 +278,18 @@ DefaultCloudFilestoreManagerStub::AsyncDeleteSnapshot(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::DeleteSnapshot(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFilestoreManagerStub::AsyncUpdateSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -222,6 +306,18 @@ DefaultCloudFilestoreManagerStub::AsyncUpdateSnapshot(
         return grpc_stub_->AsyncUpdateSnapshot(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::UpdateSnapshot(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
@@ -266,6 +362,18 @@ DefaultCloudFilestoreManagerStub::AsyncCreateBackup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::CreateBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::CreateBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFilestoreManagerStub::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -284,6 +392,18 @@ DefaultCloudFilestoreManagerStub::AsyncDeleteBackup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::DeleteBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::DeleteBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFilestoreManagerStub::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
@@ -300,6 +420,18 @@ DefaultCloudFilestoreManagerStub::AsyncUpdateBackup(
         return grpc_stub_->AsyncUpdateBackup(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::UpdateBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::UpdateBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

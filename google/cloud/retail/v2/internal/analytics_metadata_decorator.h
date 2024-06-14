@@ -47,6 +47,11 @@ class AnalyticsServiceMetadata : public AnalyticsServiceStub {
       google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

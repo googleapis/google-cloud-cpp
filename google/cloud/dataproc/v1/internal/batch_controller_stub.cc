@@ -49,6 +49,18 @@ DefaultBatchControllerStub::AsyncCreateBatch(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBatchControllerStub::CreateBatch(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBatch(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dataproc::v1::Batch>
 DefaultBatchControllerStub::GetBatch(
     grpc::ClientContext& context, Options const&,

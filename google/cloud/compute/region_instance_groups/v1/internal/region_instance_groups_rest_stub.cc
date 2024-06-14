@@ -146,6 +146,24 @@ DefaultRegionInstanceGroupsRestStub::AsyncSetNamedPorts(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionInstanceGroupsRestStub::SetNamedPorts(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_instance_groups::v1::
+        SetNamedPortsRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.region_instance_groups_set_named_ports_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "instanceGroups", "/",
+                   request.instance_group(), "/", "setNamedPorts"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionInstanceGroupsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

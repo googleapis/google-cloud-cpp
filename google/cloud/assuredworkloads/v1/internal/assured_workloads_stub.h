@@ -45,6 +45,11 @@ class AssuredWorkloadsServiceStub {
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateWorkload(
+      grpc::ClientContext& context, Options options,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::assuredworkloads::v1::Workload>
   UpdateWorkload(
       grpc::ClientContext& context, Options const& options,
@@ -118,6 +123,11 @@ class DefaultAssuredWorkloadsServiceStub : public AssuredWorkloadsServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateWorkload(
+      grpc::ClientContext& context, Options options,
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
       override;
 

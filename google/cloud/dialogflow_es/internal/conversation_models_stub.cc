@@ -52,6 +52,20 @@ DefaultConversationModelsStub::AsyncCreateConversationModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultConversationModelsStub::CreateConversationModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateConversationModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 DefaultConversationModelsStub::GetConversationModel(
     grpc::ClientContext& context, Options const&,
@@ -99,6 +113,20 @@ DefaultConversationModelsStub::AsyncDeleteConversationModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultConversationModelsStub::DeleteConversationModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteConversationModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationModelsStub::AsyncDeployConversationModel(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +148,20 @@ DefaultConversationModelsStub::AsyncDeployConversationModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultConversationModelsStub::DeployConversationModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeployConversationModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationModelsStub::AsyncUndeployConversationModel(
     google::cloud::CompletionQueue& cq,
@@ -139,6 +181,20 @@ DefaultConversationModelsStub::AsyncUndeployConversationModel(
         return grpc_stub_->AsyncUndeployConversationModel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConversationModelsStub::UndeployConversationModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UndeployConversationModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -190,6 +246,20 @@ DefaultConversationModelsStub::AsyncCreateConversationModelEvaluation(
                                                                   request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConversationModelsStub::CreateConversationModelEvaluation(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::
+        CreateConversationModelEvaluationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateConversationModelEvaluation(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

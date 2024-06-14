@@ -55,6 +55,16 @@ OsConfigZonalServiceMetadata::AsyncCreateOSPolicyAssignment(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceMetadata::CreateOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateOSPolicyAssignment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceMetadata::AsyncUpdateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
@@ -68,6 +78,18 @@ OsConfigZonalServiceMetadata::AsyncUpdateOSPolicyAssignment(
                    internal::UrlEncode(request.os_policy_assignment().name())));
   return child_->AsyncUpdateOSPolicyAssignment(cq, std::move(context),
                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceMetadata::UpdateOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("os_policy_assignment.name=",
+                   internal::UrlEncode(request.os_policy_assignment().name())));
+  return child_->UpdateOSPolicyAssignment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -110,6 +132,16 @@ OsConfigZonalServiceMetadata::AsyncDeleteOSPolicyAssignment(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteOSPolicyAssignment(cq, std::move(context),
                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceMetadata::DeleteOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteOSPolicyAssignment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>

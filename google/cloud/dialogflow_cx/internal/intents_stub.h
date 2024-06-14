@@ -69,10 +69,20 @@ class IntentsStub {
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ImportIntents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncExportIntents(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ExportIntents(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
           request) = 0;
 
@@ -130,10 +140,20 @@ class DefaultIntentsStub : public IntentsStub {
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ImportIntents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportIntents(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportIntents(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request)
       override;
 

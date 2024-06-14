@@ -80,6 +80,21 @@ WorkflowTemplateServiceLogging::AsyncInstantiateWorkflowTemplate(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceLogging::InstantiateWorkflowTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+              request) {
+        return child_->InstantiateWorkflowTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceLogging::AsyncInstantiateInlineWorkflowTemplate(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +113,21 @@ WorkflowTemplateServiceLogging::AsyncInstantiateInlineWorkflowTemplate(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceLogging::InstantiateInlineWorkflowTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::
+                 InstantiateInlineWorkflowTemplateRequest const& request) {
+        return child_->InstantiateInlineWorkflowTemplate(context, options,
+                                                         request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

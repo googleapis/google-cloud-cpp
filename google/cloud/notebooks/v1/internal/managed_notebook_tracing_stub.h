@@ -54,10 +54,20 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateRuntime(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v1::CreateRuntimeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v1::UpdateRuntimeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateRuntime(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v1::UpdateRuntimeRequest const& request)
       override;
 
@@ -68,10 +78,20 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteRuntime(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v1::DeleteRuntimeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStartRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v1::StartRuntimeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StartRuntime(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v1::StartRuntimeRequest const& request)
       override;
 
@@ -81,10 +101,19 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::notebooks::v1::StopRuntimeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> StopRuntime(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v1::StopRuntimeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncSwitchRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v1::SwitchRuntimeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SwitchRuntime(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request)
       override;
 
@@ -95,6 +124,11 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ResetRuntime(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v1::ResetRuntimeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -102,10 +136,20 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
       google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpgradeRuntime(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncReportRuntimeEvent(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ReportRuntimeEvent(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
       override;
 
@@ -119,6 +163,11 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DiagnoseRuntime(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request)
       override;
 

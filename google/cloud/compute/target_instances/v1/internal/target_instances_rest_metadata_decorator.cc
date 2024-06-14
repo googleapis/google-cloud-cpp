@@ -60,6 +60,15 @@ TargetInstancesRestMetadata::AsyncDeleteTargetInstance(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetInstancesRestMetadata::DeleteTargetInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_instances::v1::
+        DeleteTargetInstanceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteTargetInstance(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
 TargetInstancesRestMetadata::GetTargetInstance(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -81,6 +90,15 @@ TargetInstancesRestMetadata::AsyncInsertTargetInstance(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetInstancesRestMetadata::InsertTargetInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_instances::v1::
+        InsertTargetInstanceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertTargetInstance(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
 TargetInstancesRestMetadata::ListTargetInstances(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -100,6 +118,15 @@ TargetInstancesRestMetadata::AsyncSetSecurityPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetInstancesRestMetadata::SetSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_instances::v1::
+        SetSecurityPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetSecurityPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

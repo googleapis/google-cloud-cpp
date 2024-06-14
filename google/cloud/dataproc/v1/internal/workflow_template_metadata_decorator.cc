@@ -73,6 +73,16 @@ WorkflowTemplateServiceMetadata::AsyncInstantiateWorkflowTemplate(
                                                   std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceMetadata::InstantiateWorkflowTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->InstantiateWorkflowTemplate(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceMetadata::AsyncInstantiateInlineWorkflowTemplate(
     google::cloud::CompletionQueue& cq,
@@ -84,6 +94,16 @@ WorkflowTemplateServiceMetadata::AsyncInstantiateInlineWorkflowTemplate(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncInstantiateInlineWorkflowTemplate(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceMetadata::InstantiateInlineWorkflowTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->InstantiateInlineWorkflowTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

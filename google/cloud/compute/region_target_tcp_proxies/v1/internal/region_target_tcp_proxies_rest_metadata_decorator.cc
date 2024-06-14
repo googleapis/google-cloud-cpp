@@ -52,6 +52,15 @@ RegionTargetTcpProxiesRestMetadata::AsyncDeleteTargetTcpProxy(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetTcpProxiesRestMetadata::DeleteTargetTcpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+        DeleteTargetTcpProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteTargetTcpProxy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
 RegionTargetTcpProxiesRestMetadata::GetTargetTcpProxy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -71,6 +80,15 @@ RegionTargetTcpProxiesRestMetadata::AsyncInsertTargetTcpProxy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertTargetTcpProxy(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetTcpProxiesRestMetadata::InsertTargetTcpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+        InsertTargetTcpProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertTargetTcpProxy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>

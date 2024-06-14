@@ -54,6 +54,13 @@ class NetworkEdgeSecurityServicesRestStub {
       google::cloud::cpp::compute::network_edge_security_services::v1::
           DeleteNetworkEdgeSecurityServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNetworkEdgeSecurityService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          DeleteNetworkEdgeSecurityServiceRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
   GetNetworkEdgeSecurityService(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -69,11 +76,25 @@ class NetworkEdgeSecurityServicesRestStub {
       google::cloud::cpp::compute::network_edge_security_services::v1::
           InsertNetworkEdgeSecurityServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNetworkEdgeSecurityService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          InsertNetworkEdgeSecurityServiceRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          PatchNetworkEdgeSecurityServiceRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchNetworkEdgeSecurityService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           PatchNetworkEdgeSecurityServiceRequest const& request) = 0;
 
@@ -120,6 +141,13 @@ class DefaultNetworkEdgeSecurityServicesRestStub
       google::cloud::cpp::compute::network_edge_security_services::v1::
           DeleteNetworkEdgeSecurityServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNetworkEdgeSecurityService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          DeleteNetworkEdgeSecurityServiceRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
   GetNetworkEdgeSecurityService(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -135,11 +163,25 @@ class DefaultNetworkEdgeSecurityServicesRestStub
       google::cloud::cpp::compute::network_edge_security_services::v1::
           InsertNetworkEdgeSecurityServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNetworkEdgeSecurityService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          InsertNetworkEdgeSecurityServiceRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          PatchNetworkEdgeSecurityServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchNetworkEdgeSecurityService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           PatchNetworkEdgeSecurityServiceRequest const& request) override;
 

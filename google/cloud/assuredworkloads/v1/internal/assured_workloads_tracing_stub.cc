@@ -47,6 +47,19 @@ AssuredWorkloadsServiceTracingStub::AsyncCreateWorkload(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AssuredWorkloadsServiceTracingStub::CreateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
+      "CreateWorkload");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateWorkload(context, options, request));
+}
+
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceTracingStub::UpdateWorkload(
     grpc::ClientContext& context, Options const& options,

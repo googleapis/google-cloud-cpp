@@ -76,6 +76,16 @@ AppConnectorsServiceMetadata::AsyncCreateAppConnector(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceMetadata::CreateAppConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAppConnector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceMetadata::AsyncUpdateAppConnector(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +101,18 @@ AppConnectorsServiceMetadata::AsyncUpdateAppConnector(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceMetadata::UpdateAppConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("app_connector.name=",
+                   internal::UrlEncode(request.app_connector().name())));
+  return child_->UpdateAppConnector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceMetadata::AsyncDeleteAppConnector(
     google::cloud::CompletionQueue& cq,
@@ -102,6 +124,16 @@ AppConnectorsServiceMetadata::AsyncDeleteAppConnector(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAppConnector(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceMetadata::DeleteAppConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAppConnector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -116,6 +148,17 @@ AppConnectorsServiceMetadata::AsyncReportStatus(
                            internal::UrlEncode(request.app_connector())));
   return child_->AsyncReportStatus(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceMetadata::ReportStatus(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("app_connector=",
+                           internal::UrlEncode(request.app_connector())));
+  return child_->ReportStatus(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

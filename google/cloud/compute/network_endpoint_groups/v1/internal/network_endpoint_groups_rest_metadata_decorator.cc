@@ -62,6 +62,15 @@ NetworkEndpointGroupsRestMetadata::AsyncAttachNetworkEndpoints(
                                              std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsRestMetadata::AttachNetworkEndpoints(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_endpoint_groups::v1::
+        AttachNetworkEndpointsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AttachNetworkEndpoints(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsRestMetadata::AsyncDeleteNetworkEndpointGroup(
     CompletionQueue& cq,
@@ -74,6 +83,15 @@ NetworkEndpointGroupsRestMetadata::AsyncDeleteNetworkEndpointGroup(
                                                  std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsRestMetadata::DeleteNetworkEndpointGroup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_endpoint_groups::v1::
+        DeleteNetworkEndpointGroupRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteNetworkEndpointGroup(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsRestMetadata::AsyncDetachNetworkEndpoints(
     CompletionQueue& cq,
@@ -84,6 +102,15 @@ NetworkEndpointGroupsRestMetadata::AsyncDetachNetworkEndpoints(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDetachNetworkEndpoints(cq, std::move(rest_context),
                                              std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsRestMetadata::DetachNetworkEndpoints(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_endpoint_groups::v1::
+        DetachNetworkEndpointsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DetachNetworkEndpoints(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -105,6 +132,15 @@ NetworkEndpointGroupsRestMetadata::AsyncInsertNetworkEndpointGroup(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertNetworkEndpointGroup(cq, std::move(rest_context),
                                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsRestMetadata::InsertNetworkEndpointGroup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_endpoint_groups::v1::
+        InsertNetworkEndpointGroupRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertNetworkEndpointGroup(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>

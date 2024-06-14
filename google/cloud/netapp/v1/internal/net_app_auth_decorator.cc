@@ -60,6 +60,14 @@ NetAppAuth::AsyncCreateStoragePool(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateStoragePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateStoragePool(context, options, request);
+}
+
 StatusOr<google::cloud::netapp::v1::StoragePool> NetAppAuth::GetStoragePool(
     grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
@@ -88,6 +96,14 @@ NetAppAuth::AsyncUpdateStoragePool(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateStoragePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateStoragePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncDeleteStoragePool(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +122,14 @@ NetAppAuth::AsyncDeleteStoragePool(
         return child->AsyncDeleteStoragePool(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteStoragePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteStoragePool(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
@@ -144,6 +168,14 @@ future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncCreateVolume(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateVolumeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateVolume(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncUpdateVolume(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -161,6 +193,14 @@ future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncUpdateVolume(
         return child->AsyncUpdateVolume(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateVolume(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncDeleteVolume(
@@ -182,6 +222,14 @@ future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncDeleteVolume(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteVolume(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncRevertVolume(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -199,6 +247,14 @@ future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncRevertVolume(
         return child->AsyncRevertVolume(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::RevertVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::RevertVolumeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RevertVolume(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
@@ -238,6 +294,14 @@ NetAppAuth::AsyncCreateSnapshot(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSnapshot(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncDeleteSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -258,6 +322,14 @@ NetAppAuth::AsyncDeleteSnapshot(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSnapshot(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncUpdateSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -276,6 +348,14 @@ NetAppAuth::AsyncUpdateSnapshot(
         return child->AsyncUpdateSnapshot(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSnapshot(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
@@ -316,6 +396,14 @@ NetAppAuth::AsyncCreateActiveDirectory(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateActiveDirectory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateActiveDirectory(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncUpdateActiveDirectory(
     google::cloud::CompletionQueue& cq,
@@ -336,6 +424,14 @@ NetAppAuth::AsyncUpdateActiveDirectory(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateActiveDirectory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateActiveDirectory(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncDeleteActiveDirectory(
     google::cloud::CompletionQueue& cq,
@@ -354,6 +450,14 @@ NetAppAuth::AsyncDeleteActiveDirectory(
         return child->AsyncDeleteActiveDirectory(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteActiveDirectory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteActiveDirectory(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
@@ -385,6 +489,14 @@ NetAppAuth::AsyncCreateKmsConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateKmsConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateKmsConfig(context, options, request);
+}
+
 StatusOr<google::cloud::netapp::v1::KmsConfig> NetAppAuth::GetKmsConfig(
     grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
@@ -413,6 +525,14 @@ NetAppAuth::AsyncUpdateKmsConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateKmsConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateKmsConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncEncryptVolumes(
     google::cloud::CompletionQueue& cq,
@@ -431,6 +551,14 @@ NetAppAuth::AsyncEncryptVolumes(
         return child->AsyncEncryptVolumes(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::EncryptVolumes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->EncryptVolumes(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
@@ -460,6 +588,14 @@ NetAppAuth::AsyncDeleteKmsConfig(
         return child->AsyncDeleteKmsConfig(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteKmsConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteKmsConfig(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
@@ -499,6 +635,14 @@ NetAppAuth::AsyncCreateReplication(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateReplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateReplication(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncDeleteReplication(
     google::cloud::CompletionQueue& cq,
@@ -517,6 +661,14 @@ NetAppAuth::AsyncDeleteReplication(
         return child->AsyncDeleteReplication(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteReplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -539,6 +691,14 @@ NetAppAuth::AsyncUpdateReplication(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateReplication(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncStopReplication(
     google::cloud::CompletionQueue& cq,
@@ -559,6 +719,14 @@ NetAppAuth::AsyncStopReplication(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::StopReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::StopReplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopReplication(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncResumeReplication(
     google::cloud::CompletionQueue& cq,
@@ -577,6 +745,14 @@ NetAppAuth::AsyncResumeReplication(
         return child->AsyncResumeReplication(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::ResumeReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResumeReplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -600,6 +776,16 @@ NetAppAuth::AsyncReverseReplicationDirection(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppAuth::ReverseReplicationDirection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReverseReplicationDirection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncCreateBackupVault(
     google::cloud::CompletionQueue& cq,
@@ -618,6 +804,14 @@ NetAppAuth::AsyncCreateBackupVault(
         return child->AsyncCreateBackupVault(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackupVault(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::BackupVault> NetAppAuth::GetBackupVault(
@@ -657,6 +851,14 @@ NetAppAuth::AsyncUpdateBackupVault(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBackupVault(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncDeleteBackupVault(
     google::cloud::CompletionQueue& cq,
@@ -677,6 +879,14 @@ NetAppAuth::AsyncDeleteBackupVault(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackupVault(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -694,6 +904,14 @@ future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncCreateBackup(
         return child->AsyncCreateBackup(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackup(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::Backup> NetAppAuth::GetBackup(
@@ -732,6 +950,14 @@ future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncDeleteBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -749,6 +975,14 @@ future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncUpdateBackup(
         return child->AsyncUpdateBackup(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -769,6 +1003,14 @@ NetAppAuth::AsyncCreateBackupPolicy(
         return child->AsyncCreateBackupPolicy(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateBackupPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackupPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy> NetAppAuth::GetBackupPolicy(
@@ -808,6 +1050,14 @@ NetAppAuth::AsyncUpdateBackupPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateBackupPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBackupPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppAuth::AsyncDeleteBackupPolicy(
     google::cloud::CompletionQueue& cq,
@@ -826,6 +1076,14 @@ NetAppAuth::AsyncDeleteBackupPolicy(
         return child->AsyncDeleteBackupPolicy(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteBackupPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackupPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncGetOperation(

@@ -51,6 +51,14 @@ AzureClustersAuth::AsyncCreateAzureClient(
       });
 }
 
+StatusOr<google::longrunning::Operation> AzureClustersAuth::CreateAzureClient(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAzureClient(context, options, request);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersAuth::GetAzureClient(
     grpc::ClientContext& context, Options const& options,
@@ -89,6 +97,14 @@ AzureClustersAuth::AsyncDeleteAzureClient(
       });
 }
 
+StatusOr<google::longrunning::Operation> AzureClustersAuth::DeleteAzureClient(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAzureClient(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncCreateAzureCluster(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +126,15 @@ AzureClustersAuth::AsyncCreateAzureCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> AzureClustersAuth::CreateAzureCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAzureCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncUpdateAzureCluster(
     google::cloud::CompletionQueue& cq,
@@ -129,6 +154,15 @@ AzureClustersAuth::AsyncUpdateAzureCluster(
         return child->AsyncUpdateAzureCluster(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AzureClustersAuth::UpdateAzureCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAzureCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
@@ -168,6 +202,15 @@ AzureClustersAuth::AsyncDeleteAzureCluster(
         return child->AsyncDeleteAzureCluster(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AzureClustersAuth::DeleteAzureCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAzureCluster(context, options, request);
 }
 
 StatusOr<
@@ -212,6 +255,15 @@ AzureClustersAuth::AsyncCreateAzureNodePool(
       });
 }
 
+StatusOr<google::longrunning::Operation> AzureClustersAuth::CreateAzureNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAzureNodePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersAuth::AsyncUpdateAzureNodePool(
     google::cloud::CompletionQueue& cq,
@@ -231,6 +283,15 @@ AzureClustersAuth::AsyncUpdateAzureNodePool(
         return child->AsyncUpdateAzureNodePool(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AzureClustersAuth::UpdateAzureNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAzureNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
@@ -271,6 +332,15 @@ AzureClustersAuth::AsyncDeleteAzureNodePool(
         return child->AsyncDeleteAzureNodePool(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AzureClustersAuth::DeleteAzureNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAzureNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>

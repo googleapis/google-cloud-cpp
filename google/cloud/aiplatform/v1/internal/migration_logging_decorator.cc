@@ -68,6 +68,20 @@ MigrationServiceLogging::AsyncBatchMigrateResources(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationServiceLogging::BatchMigrateResources(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+                 request) {
+        return child_->BatchMigrateResources(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

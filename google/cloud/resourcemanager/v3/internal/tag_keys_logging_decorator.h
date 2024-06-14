@@ -61,6 +61,11 @@ class TagKeysLogging : public TagKeysStub {
       google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateTagKey(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTagKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -68,10 +73,20 @@ class TagKeysLogging : public TagKeysStub {
       google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateTagKey(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTagKey(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request)
       override;
 

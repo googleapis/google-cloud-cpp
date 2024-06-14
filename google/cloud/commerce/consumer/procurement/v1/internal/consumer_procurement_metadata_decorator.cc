@@ -56,6 +56,16 @@ ConsumerProcurementServiceMetadata::AsyncPlaceOrder(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceMetadata::PlaceOrder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PlaceOrder(context, options, request);
+}
+
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 ConsumerProcurementServiceMetadata::GetOrder(
     grpc::ClientContext& context, Options const& options,

@@ -46,6 +46,11 @@ class DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateDataTaxonomy(
       google::cloud::CompletionQueue& cq,
@@ -54,11 +59,21 @@ class DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteDataTaxonomy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&
           request) = 0;
 
@@ -80,6 +95,11 @@ class DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateDataAttributeBinding(
       google::cloud::CompletionQueue& cq,
@@ -88,11 +108,21 @@ class DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteDataAttributeBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
           request) = 0;
 
@@ -117,6 +147,11 @@ class DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::CreateDataAttributeRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateDataAttribute(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateDataAttributeRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateDataAttribute(
       google::cloud::CompletionQueue& cq,
@@ -125,11 +160,21 @@ class DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateDataAttribute(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateDataAttributeRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteDataAttribute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteDataAttributeRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDataAttribute(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const&
           request) = 0;
 
@@ -173,6 +218,11 @@ class DefaultDataTaxonomyServiceStub : public DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDataTaxonomy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -180,10 +230,20 @@ class DefaultDataTaxonomyServiceStub : public DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataTaxonomy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request)
       override;
 
@@ -206,6 +266,11 @@ class DefaultDataTaxonomyServiceStub : public DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateDataAttributeBinding(
       google::cloud::CompletionQueue& cq,
@@ -214,11 +279,21 @@ class DefaultDataTaxonomyServiceStub : public DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteDataAttributeBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
           request) override;
 
@@ -241,6 +316,11 @@ class DefaultDataTaxonomyServiceStub : public DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::CreateDataAttributeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDataAttribute(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDataAttribute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -248,10 +328,20 @@ class DefaultDataTaxonomyServiceStub : public DataTaxonomyServiceStub {
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateDataAttribute(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataAttribute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataAttribute(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request)
       override;
 

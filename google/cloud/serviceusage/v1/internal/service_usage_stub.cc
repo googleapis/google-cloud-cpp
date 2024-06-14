@@ -49,6 +49,17 @@ DefaultServiceUsageStub::AsyncEnableService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultServiceUsageStub::EnableService(
+    grpc::ClientContext& context, Options,
+    google::api::serviceusage::v1::EnableServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->EnableService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceUsageStub::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
@@ -66,6 +77,18 @@ DefaultServiceUsageStub::AsyncDisableService(
         return grpc_stub_->AsyncDisableService(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultServiceUsageStub::DisableService(
+    grpc::ClientContext& context, Options,
+    google::api::serviceusage::v1::DisableServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DisableService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
@@ -109,6 +132,18 @@ DefaultServiceUsageStub::AsyncBatchEnableServices(
         return grpc_stub_->AsyncBatchEnableServices(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultServiceUsageStub::BatchEnableServices(
+    grpc::ClientContext& context, Options,
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchEnableServices(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>

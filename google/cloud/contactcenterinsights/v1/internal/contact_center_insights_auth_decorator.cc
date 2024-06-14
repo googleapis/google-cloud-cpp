@@ -62,6 +62,16 @@ ContactCenterInsightsAuth::AsyncUploadConversation(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::UploadConversation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UploadConversation(context, options, request);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsAuth::UpdateConversation(
     grpc::ClientContext& context, Options const& options,
@@ -122,6 +132,16 @@ ContactCenterInsightsAuth::AsyncCreateAnalysis(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::CreateAnalysis(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAnalysis(context, options, request);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsAuth::GetAnalysis(
     grpc::ClientContext& context, Options const& options,
@@ -172,6 +192,16 @@ ContactCenterInsightsAuth::AsyncBulkAnalyzeConversations(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::BulkAnalyzeConversations(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BulkAnalyzeConversations(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncBulkDeleteConversations(
     google::cloud::CompletionQueue& cq,
@@ -191,6 +221,16 @@ ContactCenterInsightsAuth::AsyncBulkDeleteConversations(
         return child->AsyncBulkDeleteConversations(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::BulkDeleteConversations(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BulkDeleteConversations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -214,6 +254,16 @@ ContactCenterInsightsAuth::AsyncIngestConversations(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::IngestConversations(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->IngestConversations(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
@@ -235,6 +285,16 @@ ContactCenterInsightsAuth::AsyncExportInsightsData(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::ExportInsightsData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportInsightsData(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncCreateIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -254,6 +314,16 @@ ContactCenterInsightsAuth::AsyncCreateIssueModel(
         return child->AsyncCreateIssueModel(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::CreateIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -307,6 +377,16 @@ ContactCenterInsightsAuth::AsyncDeleteIssueModel(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::DeleteIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteIssueModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncDeployIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -328,6 +408,16 @@ ContactCenterInsightsAuth::AsyncDeployIssueModel(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::DeployIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeployIssueModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncUndeployIssueModel(
     google::cloud::CompletionQueue& cq,
@@ -347,6 +437,16 @@ ContactCenterInsightsAuth::AsyncUndeployIssueModel(
         return child->AsyncUndeployIssueModel(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsAuth::UndeployIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeployIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>

@@ -45,10 +45,20 @@ class TagHoldsStub {
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateTagHold(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagHold(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTagHold(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&
           request) = 0;
 
@@ -87,10 +97,20 @@ class DefaultTagHoldsStub : public TagHoldsStub {
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateTagHold(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagHold(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTagHold(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
       override;
 

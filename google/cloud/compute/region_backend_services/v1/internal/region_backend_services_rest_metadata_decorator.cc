@@ -52,6 +52,15 @@ RegionBackendServicesRestMetadata::AsyncDeleteBackendService(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesRestMetadata::DeleteBackendService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        DeleteBackendServiceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteBackendService(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
 RegionBackendServicesRestMetadata::GetBackendService(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -91,6 +100,15 @@ RegionBackendServicesRestMetadata::AsyncInsertBackendService(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesRestMetadata::InsertBackendService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        InsertBackendServiceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertBackendService(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
 RegionBackendServicesRestMetadata::ListRegionBackendServices(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -121,6 +139,15 @@ RegionBackendServicesRestMetadata::AsyncPatchBackendService(
                                           std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesRestMetadata::PatchBackendService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        PatchBackendServiceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchBackendService(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 RegionBackendServicesRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -142,6 +169,15 @@ RegionBackendServicesRestMetadata::AsyncSetSecurityPolicy(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesRestMetadata::SetSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        SetSecurityPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetSecurityPolicy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 RegionBackendServicesRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -161,6 +197,15 @@ RegionBackendServicesRestMetadata::AsyncUpdateBackendService(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateBackendService(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesRestMetadata::UpdateBackendService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        UpdateBackendServiceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateBackendService(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

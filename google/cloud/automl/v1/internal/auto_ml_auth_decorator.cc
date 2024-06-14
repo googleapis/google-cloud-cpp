@@ -50,6 +50,14 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncCreateDataset(
       });
 }
 
+StatusOr<google::longrunning::Operation> AutoMlAuth::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::CreateDatasetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDataset(context, options, request);
+}
+
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlAuth::GetDataset(
     grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
@@ -94,6 +102,14 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncDeleteDataset(
       });
 }
 
+StatusOr<google::longrunning::Operation> AutoMlAuth::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDataset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncImportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -113,6 +129,14 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncImportData(
       });
 }
 
+StatusOr<google::longrunning::Operation> AutoMlAuth::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::ImportDataRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportData(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncExportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -130,6 +154,14 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncExportData(
         return child->AsyncExportData(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AutoMlAuth::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::ExportDataRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportData(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
@@ -158,6 +190,14 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncCreateModel(
         return child->AsyncCreateModel(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AutoMlAuth::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::CreateModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateModel(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlAuth::GetModel(
@@ -195,6 +235,14 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncDeleteModel(
       });
 }
 
+StatusOr<google::longrunning::Operation> AutoMlAuth::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::DeleteModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteModel(context, options, request);
+}
+
 StatusOr<google::cloud::automl::v1::Model> AutoMlAuth::UpdateModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
@@ -222,6 +270,14 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncDeployModel(
       });
 }
 
+StatusOr<google::longrunning::Operation> AutoMlAuth::DeployModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::DeployModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeployModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -241,6 +297,14 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncUndeployModel(
       });
 }
 
+StatusOr<google::longrunning::Operation> AutoMlAuth::UndeployModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::UndeployModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeployModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -258,6 +322,14 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncExportModel(
         return child->AsyncExportModel(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AutoMlAuth::ExportModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::ExportModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportModel(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>

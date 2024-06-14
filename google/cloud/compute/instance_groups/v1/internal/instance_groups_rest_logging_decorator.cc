@@ -54,6 +54,20 @@ InstanceGroupsRestLogging::AsyncAddInstances(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestLogging::AddInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_groups::v1::
+                 AddInstancesRequest const& request) {
+        return child_->AddInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
 InstanceGroupsRestLogging::AggregatedListInstanceGroups(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -89,6 +103,20 @@ InstanceGroupsRestLogging::AsyncDeleteInstanceGroup(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestLogging::DeleteInstanceGroup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        DeleteInstanceGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_groups::v1::
+                 DeleteInstanceGroupRequest const& request) {
+        return child_->DeleteInstanceGroup(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
 InstanceGroupsRestLogging::GetInstanceGroup(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -121,6 +149,20 @@ InstanceGroupsRestLogging::AsyncInsertInstanceGroup(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestLogging::InsertInstanceGroup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        InsertInstanceGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_groups::v1::
+                 InsertInstanceGroupRequest const& request) {
+        return child_->InsertInstanceGroup(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
@@ -171,6 +213,20 @@ InstanceGroupsRestLogging::AsyncRemoveInstances(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestLogging::RemoveInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        RemoveInstancesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_groups::v1::
+                 RemoveInstancesRequest const& request) {
+        return child_->RemoveInstances(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestLogging::AsyncSetNamedPorts(
     CompletionQueue& cq,
@@ -189,6 +245,20 @@ InstanceGroupsRestLogging::AsyncSetNamedPorts(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupsRestLogging::SetNamedPorts(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        SetNamedPortsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_groups::v1::
+                 SetNamedPortsRequest const& request) {
+        return child_->SetNamedPorts(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

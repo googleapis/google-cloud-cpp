@@ -52,6 +52,18 @@ DataScanServiceLogging::AsyncCreateDataScan(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataScanServiceLogging::CreateDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+        return child_->CreateDataScan(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceLogging::AsyncUpdateDataScan(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +83,18 @@ DataScanServiceLogging::AsyncUpdateDataScan(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataScanServiceLogging::UpdateDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+        return child_->UpdateDataScan(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceLogging::AsyncDeleteDataScan(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +112,18 @@ DataScanServiceLogging::AsyncDeleteDataScan(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataScanServiceLogging::DeleteDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+        return child_->DeleteDataScan(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::DataScan>

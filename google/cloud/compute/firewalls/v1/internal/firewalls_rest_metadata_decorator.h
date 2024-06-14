@@ -47,6 +47,12 @@ class FirewallsRestMetadata : public FirewallsRestStub {
       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewall(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewall(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -58,6 +64,12 @@ class FirewallsRestMetadata : public FirewallsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewall(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
           request) override;
 
@@ -75,11 +87,23 @@ class FirewallsRestMetadata : public FirewallsRestStub {
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewall(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+          request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewall(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request) override;
 

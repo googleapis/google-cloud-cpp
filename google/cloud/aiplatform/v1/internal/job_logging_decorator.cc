@@ -91,6 +91,18 @@ JobServiceLogging::AsyncDeleteCustomJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> JobServiceLogging::DeleteCustomJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteCustomJobRequest const&
+                 request) {
+        return child_->DeleteCustomJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 Status JobServiceLogging::CancelCustomJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
@@ -161,6 +173,20 @@ JobServiceLogging::AsyncDeleteDataLabelingJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceLogging::DeleteDataLabelingJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+                 request) {
+        return child_->DeleteDataLabelingJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status JobServiceLogging::CancelDataLabelingJob(
@@ -238,6 +264,20 @@ JobServiceLogging::AsyncDeleteHyperparameterTuningJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceLogging::DeleteHyperparameterTuningJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 DeleteHyperparameterTuningJobRequest const& request) {
+        return child_->DeleteHyperparameterTuningJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 Status JobServiceLogging::CancelHyperparameterTuningJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
@@ -303,6 +343,18 @@ JobServiceLogging::AsyncDeleteNasJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> JobServiceLogging::DeleteNasJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+        return child_->DeleteNasJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status JobServiceLogging::CancelNasJob(
@@ -408,6 +460,21 @@ JobServiceLogging::AsyncDeleteBatchPredictionJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceLogging::DeleteBatchPredictionJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+              request) {
+        return child_->DeleteBatchPredictionJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 Status JobServiceLogging::CancelBatchPredictionJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
@@ -505,6 +572,21 @@ JobServiceLogging::AsyncUpdateModelDeploymentMonitoringJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceLogging::UpdateModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::
+        UpdateModelDeploymentMonitoringJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 UpdateModelDeploymentMonitoringJobRequest const& request) {
+        return child_->UpdateModelDeploymentMonitoringJob(context, options,
+                                                          request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 JobServiceLogging::AsyncDeleteModelDeploymentMonitoringJob(
     google::cloud::CompletionQueue& cq,
@@ -523,6 +605,21 @@ JobServiceLogging::AsyncDeleteModelDeploymentMonitoringJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceLogging::DeleteModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::
+        DeleteModelDeploymentMonitoringJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 DeleteModelDeploymentMonitoringJobRequest const& request) {
+        return child_->DeleteModelDeploymentMonitoringJob(context, options,
+                                                          request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status JobServiceLogging::PauseModelDeploymentMonitoringJob(

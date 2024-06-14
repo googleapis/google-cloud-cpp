@@ -59,6 +59,15 @@ UrlMapsRestMetadata::AsyncDeleteUrlMap(
                                    std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestMetadata::DeleteUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteUrlMap(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 UrlMapsRestMetadata::GetUrlMap(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -80,6 +89,15 @@ UrlMapsRestMetadata::AsyncInsertUrlMap(
                                    std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestMetadata::InsertUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertUrlMap(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestMetadata::AsyncInvalidateCache(
     CompletionQueue& cq,
@@ -90,6 +108,15 @@ UrlMapsRestMetadata::AsyncInvalidateCache(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInvalidateCache(cq, std::move(rest_context),
                                       std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestMetadata::InvalidateCache(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InvalidateCache(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
@@ -113,6 +140,15 @@ UrlMapsRestMetadata::AsyncPatchUrlMap(
                                   std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestMetadata::PatchUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchUrlMap(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestMetadata::AsyncUpdateUrlMap(
     CompletionQueue& cq,
@@ -123,6 +159,15 @@ UrlMapsRestMetadata::AsyncUpdateUrlMap(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateUrlMap(cq, std::move(rest_context),
                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestMetadata::UpdateUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateUrlMap(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>

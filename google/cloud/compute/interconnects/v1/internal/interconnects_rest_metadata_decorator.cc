@@ -50,6 +50,15 @@ InterconnectsRestMetadata::AsyncDeleteInterconnect(
                                          std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsRestMetadata::DeleteInterconnect(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::
+        DeleteInterconnectRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteInterconnect(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
 InterconnectsRestMetadata::GetInterconnect(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -89,6 +98,15 @@ InterconnectsRestMetadata::AsyncInsertInterconnect(
                                          std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsRestMetadata::InsertInterconnect(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::
+        InsertInterconnectRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertInterconnect(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InterconnectList>
 InterconnectsRestMetadata::ListInterconnects(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -110,6 +128,15 @@ InterconnectsRestMetadata::AsyncPatchInterconnect(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsRestMetadata::PatchInterconnect(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::
+        PatchInterconnectRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchInterconnect(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestMetadata::AsyncSetLabels(
     CompletionQueue& cq,
@@ -120,6 +147,15 @@ InterconnectsRestMetadata::AsyncSetLabels(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectsRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

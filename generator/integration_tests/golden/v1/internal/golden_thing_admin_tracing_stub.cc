@@ -55,6 +55,18 @@ GoldenThingAdminTracingStub::AsyncCreateDatabase(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminTracingStub::CreateDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "CreateDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateDatabase(context, options, request));
+}
+
 StatusOr<google::test::admin::database::v1::Database> GoldenThingAdminTracingStub::GetDatabase(
     grpc::ClientContext& context,
     Options const& options,
@@ -77,6 +89,18 @@ GoldenThingAdminTracingStub::AsyncUpdateDatabaseDdl(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateDatabaseDdl(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminTracingStub::UpdateDatabaseDdl(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "UpdateDatabaseDdl");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDatabaseDdl(context, options, request));
 }
 
 Status GoldenThingAdminTracingStub::DropDatabase(
@@ -147,6 +171,18 @@ GoldenThingAdminTracingStub::AsyncCreateBackup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminTracingStub::CreateBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "CreateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateBackup(context, options, request));
+}
+
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminTracingStub::GetBackup(
     grpc::ClientContext& context,
     Options const& options,
@@ -204,6 +240,18 @@ GoldenThingAdminTracingStub::AsyncRestoreDatabase(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminTracingStub::RestoreDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "RestoreDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RestoreDatabase(context, options, request));
+}
+
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> GoldenThingAdminTracingStub::ListDatabaseOperations(
     grpc::ClientContext& context,
     Options const& options,
@@ -237,6 +285,18 @@ GoldenThingAdminTracingStub::AsyncLongRunningWithoutRouting(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncLongRunningWithoutRouting(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminTracingStub::LongRunningWithoutRouting(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "LongRunningWithoutRouting");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->LongRunningWithoutRouting(context, options, request));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

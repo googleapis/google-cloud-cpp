@@ -51,6 +51,17 @@ AssetServiceLogging::AsyncExportAssets(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AssetServiceLogging::ExportAssets(
+    grpc::ClientContext& context, Options options,
+    google::cloud::asset::v1::ExportAssetsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::asset::v1::ExportAssetsRequest const& request) {
+        return child_->ExportAssets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::asset::v1::ListAssetsResponse>
 AssetServiceLogging::ListAssets(
     grpc::ClientContext& context, Options const& options,
@@ -188,6 +199,20 @@ AssetServiceLogging::AsyncAnalyzeIamPolicyLongrunning(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+AssetServiceLogging::AnalyzeIamPolicyLongrunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+                 request) {
+        return child_->AnalyzeIamPolicyLongrunning(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>

@@ -77,6 +77,19 @@ DefaultInstanceAdminStub::AsyncCreateInstanceConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultInstanceAdminStub::CreateInstanceConfig(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstanceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncUpdateInstanceConfig(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +108,19 @@ DefaultInstanceAdminStub::AsyncUpdateInstanceConfig(
         return grpc_stub_->AsyncUpdateInstanceConfig(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultInstanceAdminStub::UpdateInstanceConfig(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstanceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultInstanceAdminStub::DeleteInstanceConfig(
@@ -183,6 +209,19 @@ DefaultInstanceAdminStub::AsyncCreateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultInstanceAdminStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -201,6 +240,19 @@ DefaultInstanceAdminStub::AsyncUpdateInstance(
         return grpc_stub_->AsyncUpdateInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultInstanceAdminStub::UpdateInstance(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultInstanceAdminStub::DeleteInstance(
@@ -282,6 +334,20 @@ DefaultInstanceAdminStub::AsyncCreateInstancePartition(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultInstanceAdminStub::CreateInstancePartition(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateInstancePartition(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultInstanceAdminStub::DeleteInstancePartition(
     grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
@@ -313,6 +379,20 @@ DefaultInstanceAdminStub::AsyncUpdateInstancePartition(
         return grpc_stub_->AsyncUpdateInstancePartition(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultInstanceAdminStub::UpdateInstancePartition(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateInstancePartition(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::spanner::admin::instance::v1::

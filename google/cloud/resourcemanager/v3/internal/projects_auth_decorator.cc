@@ -77,6 +77,14 @@ ProjectsAuth::AsyncCreateProject(
       });
 }
 
+StatusOr<google::longrunning::Operation> ProjectsAuth::CreateProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateProject(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectsAuth::AsyncUpdateProject(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +105,14 @@ ProjectsAuth::AsyncUpdateProject(
       });
 }
 
+StatusOr<google::longrunning::Operation> ProjectsAuth::UpdateProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateProject(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> ProjectsAuth::AsyncMoveProject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -114,6 +130,14 @@ future<StatusOr<google::longrunning::Operation>> ProjectsAuth::AsyncMoveProject(
         return child->AsyncMoveProject(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ProjectsAuth::MoveProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MoveProject(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -136,6 +160,14 @@ ProjectsAuth::AsyncDeleteProject(
       });
 }
 
+StatusOr<google::longrunning::Operation> ProjectsAuth::DeleteProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteProject(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectsAuth::AsyncUndeleteProject(
     google::cloud::CompletionQueue& cq,
@@ -154,6 +186,14 @@ ProjectsAuth::AsyncUndeleteProject(
         return child->AsyncUndeleteProject(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ProjectsAuth::UndeleteProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeleteProject(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsAuth::GetIamPolicy(

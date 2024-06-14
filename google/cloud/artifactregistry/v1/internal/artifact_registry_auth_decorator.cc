@@ -132,6 +132,16 @@ ArtifactRegistryAuth::AsyncImportAptArtifacts(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryAuth::ImportAptArtifacts(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportAptArtifacts(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryAuth::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -151,6 +161,16 @@ ArtifactRegistryAuth::AsyncImportYumArtifacts(
         return child->AsyncImportYumArtifacts(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryAuth::ImportYumArtifacts(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportYumArtifacts(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
@@ -194,6 +214,15 @@ ArtifactRegistryAuth::AsyncCreateRepository(
       });
 }
 
+StatusOr<google::longrunning::Operation> ArtifactRegistryAuth::CreateRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRepository(context, options, request);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryAuth::UpdateRepository(
     grpc::ClientContext& context, Options const& options,
@@ -223,6 +252,15 @@ ArtifactRegistryAuth::AsyncDeleteRepository(
         return child->AsyncDeleteRepository(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ArtifactRegistryAuth::DeleteRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRepository(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
@@ -265,6 +303,15 @@ ArtifactRegistryAuth::AsyncDeletePackage(
       });
 }
 
+StatusOr<google::longrunning::Operation> ArtifactRegistryAuth::DeletePackage(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePackage(context, options, request);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
 ArtifactRegistryAuth::ListVersions(
     grpc::ClientContext& context, Options const& options,
@@ -305,6 +352,15 @@ ArtifactRegistryAuth::AsyncDeleteVersion(
       });
 }
 
+StatusOr<google::longrunning::Operation> ArtifactRegistryAuth::DeleteVersion(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryAuth::AsyncBatchDeleteVersions(
     google::cloud::CompletionQueue& cq,
@@ -324,6 +380,16 @@ ArtifactRegistryAuth::AsyncBatchDeleteVersions(
         return child->AsyncBatchDeleteVersions(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryAuth::BatchDeleteVersions(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchDeleteVersions(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>

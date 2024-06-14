@@ -76,6 +76,19 @@ ManagedNotebookServiceLogging::AsyncCreateRuntime(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::CreateRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
+        return child_->CreateRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceLogging::AsyncUpdateRuntime(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +106,19 @@ ManagedNotebookServiceLogging::AsyncUpdateRuntime(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::UpdateRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+        return child_->UpdateRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -114,6 +140,19 @@ ManagedNotebookServiceLogging::AsyncDeleteRuntime(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::DeleteRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
+        return child_->DeleteRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceLogging::AsyncStartRuntime(
     google::cloud::CompletionQueue& cq,
@@ -132,6 +171,18 @@ ManagedNotebookServiceLogging::AsyncStartRuntime(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::StartRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
+        return child_->StartRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceLogging::AsyncStopRuntime(
     google::cloud::CompletionQueue& cq,
@@ -148,6 +199,18 @@ ManagedNotebookServiceLogging::AsyncStopRuntime(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::StopRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
+        return child_->StopRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -169,6 +232,19 @@ ManagedNotebookServiceLogging::AsyncSwitchRuntime(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::SwitchRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
+        return child_->SwitchRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceLogging::AsyncResetRuntime(
     google::cloud::CompletionQueue& cq,
@@ -185,6 +261,18 @@ ManagedNotebookServiceLogging::AsyncResetRuntime(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::ResetRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
+        return child_->ResetRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -206,6 +294,19 @@ ManagedNotebookServiceLogging::AsyncUpgradeRuntime(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::UpgradeRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+        return child_->UpgradeRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceLogging::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
@@ -223,6 +324,19 @@ ManagedNotebookServiceLogging::AsyncReportRuntimeEvent(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::ReportRuntimeEvent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::notebooks::v1::ReportRuntimeEventRequest const&
+                 request) {
+        return child_->ReportRuntimeEvent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
@@ -256,6 +370,19 @@ ManagedNotebookServiceLogging::AsyncDiagnoseRuntime(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceLogging::DiagnoseRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+        return child_->DiagnoseRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

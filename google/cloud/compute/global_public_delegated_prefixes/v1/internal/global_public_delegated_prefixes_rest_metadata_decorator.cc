@@ -53,6 +53,15 @@ GlobalPublicDelegatedPrefixesRestMetadata::AsyncDeletePublicDelegatedPrefix(
                                                   std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalPublicDelegatedPrefixesRestMetadata::DeletePublicDelegatedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        DeletePublicDelegatedPrefixRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeletePublicDelegatedPrefix(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
 GlobalPublicDelegatedPrefixesRestMetadata::GetPublicDelegatedPrefix(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -72,6 +81,15 @@ GlobalPublicDelegatedPrefixesRestMetadata::AsyncInsertPublicDelegatedPrefix(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertPublicDelegatedPrefix(cq, std::move(rest_context),
                                                   std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalPublicDelegatedPrefixesRestMetadata::InsertPublicDelegatedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        InsertPublicDelegatedPrefixRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertPublicDelegatedPrefix(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
@@ -94,6 +112,15 @@ GlobalPublicDelegatedPrefixesRestMetadata::AsyncPatchPublicDelegatedPrefix(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchPublicDelegatedPrefix(cq, std::move(rest_context),
                                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalPublicDelegatedPrefixesRestMetadata::PatchPublicDelegatedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        PatchPublicDelegatedPrefixRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchPublicDelegatedPrefix(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

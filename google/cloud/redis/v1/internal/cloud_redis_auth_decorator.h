@@ -58,10 +58,18 @@ class CloudRedisAuth : public CloudRedisStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::redis::v1::CreateInstanceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::v1::CreateInstanceRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeInstance(
@@ -70,16 +78,28 @@ class CloudRedisAuth : public CloudRedisStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpgradeInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::redis::v1::ImportInstanceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> ImportInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::v1::ImportInstanceRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::v1::ExportInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ExportInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::redis::v1::ExportInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncFailoverInstance(
@@ -89,16 +109,30 @@ class CloudRedisAuth : public CloudRedisStub {
       google::cloud::redis::v1::FailoverInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> FailoverInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::v1::FailoverInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      grpc::ClientContext& context, Options options,
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
       override;
 

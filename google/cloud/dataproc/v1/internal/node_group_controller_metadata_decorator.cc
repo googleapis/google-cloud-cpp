@@ -54,6 +54,15 @@ NodeGroupControllerMetadata::AsyncCreateNodeGroup(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerMetadata::CreateNodeGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateNodeGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerMetadata::AsyncResizeNodeGroup(
     google::cloud::CompletionQueue& cq,
@@ -64,6 +73,15 @@ NodeGroupControllerMetadata::AsyncResizeNodeGroup(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncResizeNodeGroup(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerMetadata::ResizeNodeGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ResizeNodeGroup(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
