@@ -67,9 +67,9 @@ struct RestPathVisitor {
   void operator()(std::string const& s) {
     path.emplace_back(
         [piece = s, api = api_version](
-            google::protobuf::MethodDescriptor const& method, bool is_async) {
+            google::protobuf::MethodDescriptor const&, bool is_async) {
           if (piece != api) return absl::StrFormat("\"%s\"", piece);
-          if (IsLongrunningOperation(method) || is_async) {
+          if (is_async) {
             return absl::StrFormat(
                 "rest_internal::DetermineApiVersion(\"%s\", *options)", api);
           }
