@@ -102,6 +102,8 @@ add_library(
     internal/rest_client.h
     internal/rest_context.cc
     internal/rest_context.h
+    internal/rest_lro_helpers.cc
+    internal/rest_lro_helpers.h
     internal/rest_opentelemetry.cc
     internal/rest_opentelemetry.h
     internal/rest_options.h
@@ -271,6 +273,7 @@ if (BUILD_TESTING)
         internal/populate_rest_options_test.cc
         internal/rest_carrier_test.cc
         internal/rest_context_test.cc
+        internal/rest_lro_helpers_test.cc
         internal/rest_opentelemetry_test.cc
         internal/rest_parse_json_error_test.cc
         internal/rest_request_test.cc
