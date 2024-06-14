@@ -80,6 +80,20 @@ TEST(ParseComputeOperationInfoTest, Zone) {
   EXPECT_THAT(info.operation, Eq("test-operation"));
 }
 
+TEST(ParseComputeOperationInfoTest, HandlesSelfLinkMissingValues) {
+  auto constexpr kMissingOperationValueSelfLink =
+      "https://www.googleapis.com/compute/v1"
+      "/projects/test-project"
+      "/zones/test-zone"
+      "/operations";
+
+  auto info = ParseComputeOperationInfo(kMissingOperationValueSelfLink);
+  EXPECT_THAT(info.project, Eq("test-project"));
+  EXPECT_THAT(info.region, IsEmpty());
+  EXPECT_THAT(info.zone, Eq("test-zone"));
+  EXPECT_THAT(info.operation, IsEmpty());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

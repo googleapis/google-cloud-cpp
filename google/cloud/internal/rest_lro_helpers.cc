@@ -20,18 +20,20 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// TODO(#14337): Check for errors and return StatusOr here once call sites
+// are capable of propagating errors.
 ComputeOperationInfo ParseComputeOperationInfo(std::string const& self_link) {
   ComputeOperationInfo info;
   std::vector<std::string> self_link_parts = absl::StrSplit(self_link, '/');
-  for (std::size_t i = 0; i != self_link_parts.size(); ++i) {
-    if (self_link_parts[i] == "projects") {
-      info.project = self_link_parts[++i];
-    } else if (self_link_parts[i] == "regions") {
-      info.region = self_link_parts[++i];
-    } else if (self_link_parts[i] == "zones") {
-      info.zone = self_link_parts[++i];
-    } else if (self_link_parts[i] == "operations") {
-      info.operation = self_link_parts[++i];
+  for (auto i = self_link_parts.begin(); i != self_link_parts.end(); ++i) {
+    if (*i == "projects" && std::next(i) != self_link_parts.end()) {
+      info.project = *(++i);
+    } else if (*i == "regions" && std::next(i) != self_link_parts.end()) {
+      info.region = *(++i);
+    } else if (*i == "zones" && std::next(i) != self_link_parts.end()) {
+      info.zone = *(++i);
+    } else if (*i == "operations" && std::next(i) != self_link_parts.end()) {
+      info.operation = *(++i);
     }
   }
   return info;
