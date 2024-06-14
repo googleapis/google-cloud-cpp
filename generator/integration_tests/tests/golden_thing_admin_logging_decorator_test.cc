@@ -93,7 +93,7 @@ TEST_F(LoggingDecoratorTest, ListDatabases) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorTest, CreateDatabase) {
+TEST_F(LoggingDecoratorTest, AsyncCreateDatabase) {
   EXPECT_CALL(*mock_, AsyncCreateDatabase).WillOnce(LongrunningTransientError);
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
@@ -109,7 +109,22 @@ TEST_F(LoggingDecoratorTest, CreateDatabase) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorTest, UpdateDatabaseDdl) {
+TEST_F(LoggingDecoratorTest, CreateDatabase) {
+  google::longrunning::Operation operation;
+  operation.set_name("my_operation");
+  EXPECT_CALL(*mock_, CreateDatabase).WillOnce(Return(operation));
+
+  GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.CreateDatabase(context, Options{}, {});
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("my_operation")));
+}
+
+TEST_F(LoggingDecoratorTest, AsyncUpdateDatabaseDdl) {
   EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
       .WillOnce(LongrunningTransientError);
 
@@ -124,6 +139,21 @@ TEST_F(LoggingDecoratorTest, UpdateDatabaseDdl) {
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateDatabaseDdl")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST_F(LoggingDecoratorTest, UpdateDatabaseDdl) {
+  google::longrunning::Operation operation;
+  operation.set_name("my_operation");
+  EXPECT_CALL(*mock_, UpdateDatabaseDdl).WillOnce(Return(operation));
+
+  GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.UpdateDatabaseDdl(context, Options{}, {});
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateDatabaseDdl")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("my_operation")));
 }
 
 TEST_F(LoggingDecoratorTest, DropDatabase) {
@@ -191,7 +221,7 @@ TEST_F(LoggingDecoratorTest, TestIamPermissions) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorTest, CreateBackup) {
+TEST_F(LoggingDecoratorTest, AsyncCreateBackup) {
   EXPECT_CALL(*mock_, AsyncCreateBackup).WillOnce(LongrunningTransientError);
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
@@ -205,6 +235,21 @@ TEST_F(LoggingDecoratorTest, CreateBackup) {
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateBackup")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST_F(LoggingDecoratorTest, CreateBackup) {
+  google::longrunning::Operation operation;
+  operation.set_name("my_operation");
+  EXPECT_CALL(*mock_, CreateBackup).WillOnce(Return(operation));
+
+  GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.CreateBackup(context, Options{}, {});
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateBackup")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("my_operation")));
 }
 
 TEST_F(LoggingDecoratorTest, GetBackup) {
@@ -259,7 +304,7 @@ TEST_F(LoggingDecoratorTest, ListBackups) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorTest, RestoreDatabase) {
+TEST_F(LoggingDecoratorTest, AsyncRestoreDatabase) {
   EXPECT_CALL(*mock_, AsyncRestoreDatabase).WillOnce(LongrunningTransientError);
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
@@ -273,6 +318,21 @@ TEST_F(LoggingDecoratorTest, RestoreDatabase) {
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("RestoreDatabase")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST_F(LoggingDecoratorTest, RestoreDatabase) {
+  google::longrunning::Operation operation;
+  operation.set_name("my_operation");
+  EXPECT_CALL(*mock_, RestoreDatabase).WillOnce(Return(operation));
+
+  GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.RestoreDatabase(context, Options{}, {});
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("RestoreDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("my_operation")));
 }
 
 TEST_F(LoggingDecoratorTest, ListDatabaseOperations) {

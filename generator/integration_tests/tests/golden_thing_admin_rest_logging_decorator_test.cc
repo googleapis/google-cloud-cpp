@@ -112,6 +112,23 @@ TEST(LoggingDecoratorRestTest, AsyncCreateDatabase) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
+TEST(LoggingDecoratorRestTest, CreateDatabase) {
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  testing_util::ScopedLog log;
+  google::longrunning::Operation operation;
+  operation.set_name("my_operation");
+  EXPECT_CALL(*mock, CreateDatabase).WillOnce(Return(operation));
+
+  GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
+  rest_internal::RestContext context;
+  auto status = stub.CreateDatabase(context, Options{}, {});
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("my_operation")));
+}
+
 TEST(LoggingDecoratorRestTest, AsyncUpdateDatabaseDdl) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   testing_util::ScopedLog log;
@@ -129,6 +146,23 @@ TEST(LoggingDecoratorRestTest, AsyncUpdateDatabaseDdl) {
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateDatabaseDdl")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST(LoggingDecoratorRestTest, UpdateDatabaseDdl) {
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  testing_util::ScopedLog log;
+  google::longrunning::Operation operation;
+  operation.set_name("my_operation");
+  EXPECT_CALL(*mock, UpdateDatabaseDdl).WillOnce(Return(operation));
+
+  GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
+  rest_internal::RestContext context;
+  auto status = stub.UpdateDatabaseDdl(context, Options{}, {});
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateDatabaseDdl")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("my_operation")));
 }
 
 TEST(LoggingDecoratorRestTest, DropDatabase) {
@@ -232,6 +266,23 @@ TEST(LoggingDecoratorRestTest, AsyncCreateBackup) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
+TEST(LoggingDecoratorRestTest, CreateBackup) {
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  testing_util::ScopedLog log;
+  google::longrunning::Operation operation;
+  operation.set_name("my_operation");
+  EXPECT_CALL(*mock, CreateBackup).WillOnce(Return(operation));
+
+  GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
+  rest_internal::RestContext context;
+  auto status = stub.CreateBackup(context, Options{}, {});
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateBackup")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("my_operation")));
+}
+
 TEST(LoggingDecoratorRestTest, GetBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   testing_util::ScopedLog log;
@@ -317,6 +368,23 @@ TEST(LoggingDecoratorRestTest, AsyncRestoreDatabase) {
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("RestoreDatabase")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST(LoggingDecoratorRestTest, RestoreDatabase) {
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  testing_util::ScopedLog log;
+  google::longrunning::Operation operation;
+  operation.set_name("my_operation");
+  EXPECT_CALL(*mock, RestoreDatabase).WillOnce(Return(operation));
+
+  GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
+  rest_internal::RestContext context;
+  auto status = stub.RestoreDatabase(context, Options{}, {});
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("RestoreDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("my_operation")));
 }
 
 TEST(LoggingDecoratorRestTest, ListDatabaseOperations) {

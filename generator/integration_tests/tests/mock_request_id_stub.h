@@ -40,6 +40,11 @@ class MockRequestIdServiceStub
                google::test::requestid::v1::RenameFooRequest const&),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RenameFoo,
+              (grpc::ClientContext & context, Options options,
+               google::test::requestid::v1::RenameFooRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::test::requestid::v1::ListFoosResponse>, ListFoos,
               (grpc::ClientContext&, Options const&,
                google::test::requestid::v1::ListFoosRequest const&),
