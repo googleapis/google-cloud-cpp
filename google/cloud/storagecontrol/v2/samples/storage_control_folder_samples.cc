@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/status.h"
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
-#include "google/cloud/storagecontrol/v2/testing/remove_stale_folders.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <chrono>
 #include <iostream>
+#include <regex>
 #include <string>
 #include <vector>
 
@@ -134,16 +137,29 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const dest_folder_id = prefix + std::string{"-"} +
                               google::cloud::internal::Sample(
                                   generator, 32, "abcdefghijklmnopqrstuvwxyz");
-
+  auto const create_time_limit =
+      std::chrono::system_clock::now() - std::chrono::hours(48);
   // This is the only example that cleans up stale folders. The examples run in
   // parallel (within a build and across the builds), having multiple examples
   // doing the same cleanup is probably more trouble than it is worth.
-  auto const create_time_limit =
-      std::chrono::system_clock::now() - std::chrono::hours(48);
-  std::cout << "\nRemoving stale folders for examples" << std::endl;
-  google::cloud::storagecontrol_v2::testing::RemoveStaleFolders(
-      client, bucket_name, prefix, create_time_limit);
-
+  [](google::cloud::storagecontrol_v2::StorageControlClient client,
+    std::string const& bucket_name, std::string const& prefix,
+    std::chrono::system_clock::time_point created_time_limit) -> google::cloud::Status {
+    std::cout << "\nRemoving stale folders for examples" << std::endl;
+    std::regex re(prefix + R"re(-[a-z]{32})re");
+    auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
+    for (auto folder : client.ListFolders(parent)) {
+      if (!folder) return std::move(folder).status();
+      if (!std::regex_match(folder->name(), re)) continue;
+      auto const create_time =
+          google::cloud::internal::ToChronoTimePoint(folder->create_time());
+      if (create_time > created_time_limit) continue;
+      (void)client.DeleteFolder(folder->name());
+    }
+    return {};
+  }
+  (std::move(client), bucket_name, prefix, create_time_limit);
+  
   std::cout << "\nRunning CreateFolder() example" << std::endl;
   CreateFolder(client, {bucket_name, folder_id});
 
