@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/status.h"
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
+#include "google/cloud/status.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <chrono>
 #include <iostream>
@@ -143,8 +143,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   // parallel (within a build and across the builds), having multiple examples
   // doing the same cleanup is probably more trouble than it is worth.
   [](google::cloud::storagecontrol_v2::StorageControlClient client,
-    std::string const& bucket_name, std::string const& prefix,
-    std::chrono::system_clock::time_point created_time_limit) -> google::cloud::Status {
+     std::string const& bucket_name, std::string const& prefix,
+     std::chrono::system_clock::time_point created_time_limit)
+      -> google::cloud::Status {
     std::cout << "\nRemoving stale folders for examples" << std::endl;
     std::regex re(prefix + R"re(-[a-z]{32})re");
     auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
@@ -157,9 +158,8 @@ void AutoRun(std::vector<std::string> const& argv) {
       (void)client.DeleteFolder(folder->name());
     }
     return {};
-  }
-  (std::move(client), bucket_name, prefix, create_time_limit);
-  
+  }(std::move(client), bucket_name, prefix, create_time_limit);
+
   std::cout << "\nRunning CreateFolder() example" << std::endl;
   CreateFolder(client, {bucket_name, folder_id});
 
