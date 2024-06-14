@@ -16,8 +16,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/example_driver.h"
-#include <chrono>
 #include <google/storage/control/v2/storage_control.pb.h>
+#include <chrono>
 #include <iostream>
 #include <regex>
 #include <string>
@@ -118,8 +118,8 @@ void RenameFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
   [](storagecontrol::StorageControlClient client,
      std::string const& bucket_name, std::string const& source_folder_id,
      std::string const& dest_folder_id) {
-    auto name = std::string{"projects/_/buckets/"} + bucket_name +
-                "/folders/" + source_folder_id;
+    auto name = std::string{"projects/_/buckets/"} + bucket_name + "/folders/" +
+                source_folder_id;
     // Start a rename operation and block until it completes. Real applications
     // may want to setup a callback, wait on a coroutine, or poll until it
     // completes.
@@ -183,9 +183,8 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   using google::cloud::testing_util::Example;
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  using ClientCommand =
-      std::function<void(storagecontrol::StorageControlClient,
-                         std::vector<std::string> argv)>;
+  using ClientCommand = std::function<void(storagecontrol::StorageControlClient,
+                                           std::vector<std::string> argv)>;
 
   auto make_entry = [](std::string name,
                        std::vector<std::string> const& arg_names,
