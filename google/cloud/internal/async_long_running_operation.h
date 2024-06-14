@@ -147,6 +147,27 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
       });
 }
 
+/**
+ * Asynchronously polls an already started long-running operation.
+ */
+template <typename ReturnType>
+future<StatusOr<ReturnType>> AsyncAwaitLongRunningOperation(
+    google::cloud::CompletionQueue cq, ImmutableOptions options,
+    google::longrunning::Operation const& operation,
+    AsyncPollLongRunningOperation poll, AsyncCancelLongRunningOperation cancel,
+    LongRunningOperationValueExtractor<ReturnType> value_extractor,
+    std::unique_ptr<PollingPolicy> polling_policy, char const* location) {
+  using ::google::longrunning::Operation;
+  auto loc = std::string{location};
+  return AsyncPollingLoop(std::move(cq), std::move(options),
+                          make_ready_future(StatusOr<Operation>(operation)),
+                          std::move(poll), std::move(cancel),
+                          std::move(polling_policy), std::move(location))
+      .then([value_extractor, loc](future<StatusOr<Operation>> g) {
+        return value_extractor(g.get(), loc);
+      });
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
