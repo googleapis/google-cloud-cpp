@@ -15,15 +15,32 @@
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
-#include "google/cloud/status.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <chrono>
+#include <google/storage/control/v2/storage_control.pb.h>
 #include <iostream>
 #include <regex>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace {
+
+void RemoveStaleFolders(
+    google::cloud::storagecontrol_v2::StorageControlClient client,
+    std::string const& bucket_name, std::string const& prefix,
+    std::chrono::system_clock::time_point created_time_limit) {
+  std::regex re(prefix + R"re(-[a-z]{32})re");
+  auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
+  for (auto folder : client.ListFolders(parent)) {
+    if (!folder) throw std::move(folder).status();
+    if (!std::regex_match(folder->name(), re)) continue;
+    auto const create_time =
+        google::cloud::internal::ToChronoTimePoint(folder->create_time());
+    if (create_time > created_time_limit) continue;
+    (void)client.DeleteFolder(folder->name());
+  }
+}
 
 void CreateFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
                   std::vector<std::string> const& argv) {
@@ -49,7 +66,7 @@ void DeleteFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
   [](storagecontrol::StorageControlClient client,
      std::string const& bucket_name, std::string const& folder_id) {
     auto const name = std::string{"projects/_/buckets/"} + bucket_name +
-                      std::string{"/folders/"} + folder_id;
+                      "/folders/" + folder_id;
     auto status = client.DeleteFolder(name);
     if (!status.ok()) throw std::move(status);
 
@@ -66,7 +83,7 @@ void GetFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
   [](storagecontrol::StorageControlClient client,
      std::string const& bucket_name, std::string const& folder_id) {
     auto const name = std::string{"projects/_/buckets/"} + bucket_name +
-                      std::string{"/folders/"} + folder_id;
+                      "/folders/" + folder_id;
     auto folder = client.GetFolder(name);
     if (!folder) throw std::move(folder).status();
 
@@ -94,23 +111,6 @@ void ListFolders(google::cloud::storagecontrol_v2::StorageControlClient client,
   (std::move(client), argv.at(0));
 }
 
-google::cloud::Status RemoveStaleFolders(
-    google::cloud::storagecontrol_v2::StorageControlClient client,
-    std::string const& bucket_name, std::string const& prefix,
-    std::chrono::system_clock::time_point created_time_limit) {
-  std::regex re(prefix + R"re(-[a-z]{32})re");
-  auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
-  for (auto folder : client.ListFolders(parent)) {
-    if (!folder) return std::move(folder).status();
-    if (!std::regex_match(folder->name(), re)) continue;
-    auto const create_time =
-        google::cloud::internal::ToChronoTimePoint(folder->create_time());
-    if (create_time > created_time_limit) continue;
-    (void)client.DeleteFolder(folder->name());
-  }
-  return {};
-}
-
 void RenameFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
                   std::vector<std::string> const& argv) {
   // [START storage_control_rename_folder]
@@ -119,7 +119,7 @@ void RenameFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
      std::string const& bucket_name, std::string const& source_folder_id,
      std::string const& dest_folder_id) {
     auto name = std::string{"projects/_/buckets/"} + bucket_name +
-                std::string{"/folders/"} + source_folder_id;
+                "/folders/" + source_folder_id;
     // Start a rename operation and block until it completes. Real applications
     // may want to setup a callback, wait on a coroutine, or poll until it
     // completes.
@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
   using google::cloud::testing_util::Example;
   namespace storagecontrol = google::cloud::storagecontrol_v2;
   using ClientCommand =
-      std::function<void(google::cloud::storagecontrol_v2::StorageControlClient,
+      std::function<void(storagecontrol::StorageControlClient,
                          std::vector<std::string> argv)>;
 
   auto make_entry = [](std::string name,
