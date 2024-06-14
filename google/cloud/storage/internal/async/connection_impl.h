@@ -58,6 +58,10 @@ class AsyncConnectionImpl
   future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) override;
 
+  future<StatusOr<
+      std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>>
+  Open(OpenParams p) override;
+
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
   ReadObject(ReadObjectParams p) override;
 

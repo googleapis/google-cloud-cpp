@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
 
+#include "google/cloud/storage/async/object_descriptor_connection.h"
 #include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/storage/async/write_payload.h"
 #include "google/cloud/storage/internal/object_requests.h"
@@ -74,6 +75,22 @@ class AsyncConnection {
   /// Insert a new object.
   virtual future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) = 0;
+
+  /**
+   * A thin wrapper around the `Open()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct OpenParams {
+    google::storage::v2::BidiReadObjectSpec read_spec;
+    Options options;
+  };
+
+  /// Open an object to perform multiple reads.
+  virtual future<StatusOr<
+      std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>>
+  Open(OpenParams p) = 0;
 
   /**
    * A thin wrapper around the `ReadObject()` parameters.
