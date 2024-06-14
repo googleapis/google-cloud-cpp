@@ -183,6 +183,16 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
       std::move(current), std::move(request), __func__);
 }
 
+future<
+    StatusOr<std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>>
+AsyncConnectionImpl::Open(OpenParams /*p*/) {
+  return make_ready_future(
+      StatusOr<
+          std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>(
+          internal::UnimplementedError(
+              "TODO(#20) - provide a real implementation", GCP_ERROR_INFO())));
+}
+
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
 AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   using ReturnType =

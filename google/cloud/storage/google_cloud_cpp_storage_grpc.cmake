@@ -75,6 +75,7 @@ add_library(
     async/connection.h
     async/idempotency_policy.cc
     async/idempotency_policy.h
+    async/object_descriptor_connection.h
     async/object_responses.cc
     async/object_responses.h
     async/options.h
