@@ -147,11 +147,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto client = storagecontrol::StorageControlClient(
       storagecontrol::MakeStorageControlConnection());
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto const prefix = "storage-control-samples";
-  auto const folder_id = prefix + std::string{"-"} +
+  auto const prefix = std::string{"storage-control-samples"};
+  auto const folder_id = prefix + "-" +
                          google::cloud::internal::Sample(
                              generator, 32, "abcdefghijklmnopqrstuvwxyz");
-  auto const dest_folder_id = prefix + std::string{"-"} +
+  auto const dest_folder_id = prefix + "-" +
                               google::cloud::internal::Sample(
                                   generator, 32, "abcdefghijklmnopqrstuvwxyz");
   auto const create_time_limit =
