@@ -46,6 +46,15 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
                              impl_->InsertObject(std::move(p)));
   }
 
+  future<StatusOr<
+      std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>>
+  Open(OpenParams p) override {
+    // TODO(#18) - decorate the ObjectDescriptor.
+    auto span = internal::MakeSpan("storage::AsyncConnection::Open");
+    internal::OTelScope scope(span);
+    return internal::EndSpan(std::move(span), impl_->Open(std::move(p)));
+  }
+
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
   ReadObject(ReadObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadObject");
