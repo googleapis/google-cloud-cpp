@@ -538,8 +538,8 @@ HashValues FinishHashes(UploadChunkRequest const& request) {
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {
   os << "UploadChunkRequest={upload_session_url=" << r.upload_session_url()
-     << ", range=<" << r.RangeHeader() << ">" << ", known_object_hashes={"
-     << Format(r.known_object_hashes()) << "}";
+     << ", range=<" << r.RangeHeader() << ">"
+     << ", known_object_hashes={" << Format(r.known_object_hashes()) << "}";
   r.DumpOptions(os, ", ");
   os << ", payload={";
   auto constexpr kMaxOutputBytes = 128;

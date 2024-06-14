@@ -137,12 +137,15 @@ int main(int argc, char* argv[]) {
                 << std::flush;
       config.PrintUsage();
     }
-    std::cout << "Exiting..." << "\n" << std::flush;
+    std::cout << "Exiting..."
+              << "\n"
+              << std::flush;
     return 0;
   }
   std::cout << "# Job Benchmark STARTED For CancelJob() API with test "
                "duration as ["
-            << config.test_duration.count() << "] seconds" << "\n"
+            << config.test_duration.count() << "] seconds"
+            << "\n"
             << std::flush;
 
   JobBenchmark benchmark(config);
@@ -192,7 +195,9 @@ int main(int argc, char* argv[]) {
 
   Benchmark::PrintThroughputResult(std::cout, "Throughput-Results",
                                    "CancelJob()", combined.cancel_job_results);
-  std::cout << "# Job Benchmark ENDED" << "\n" << std::flush;
+  std::cout << "# Job Benchmark ENDED"
+            << "\n"
+            << std::flush;
 
   return 0;
 }

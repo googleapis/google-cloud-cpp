@@ -421,7 +421,7 @@ TEST(ComputeEngineCredentialsTest, AccountEmail) {
 auto expected_universe_domain_request = []() {
   auto const expected_path = absl::StrCat(
       internal::GceMetadataScheme(), "://", internal::GceMetadataHostname(),
-      "/computeMetadata/v1/universe/universe-domain");
+      "/computeMetadata/v1/universe/universe_domain");
   return AllOf(
       Property(&RestRequest::path, expected_path),
       Property(&RestRequest::headers,

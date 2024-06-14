@@ -79,9 +79,10 @@ std::ostream& operator<<(std::ostream& os, Severity x) {
 }
 
 std::ostream& operator<<(std::ostream& os, LogRecord const& rhs) {
-  return os << Timestamp{rhs.timestamp} << " [" << rhs.severity << "]" << " <"
-            << rhs.thread_id << ">" << " " << rhs.message << " ("
-            << rhs.filename << ':' << rhs.lineno << ')';
+  return os << Timestamp{rhs.timestamp} << " [" << rhs.severity << "]"
+            << " <" << rhs.thread_id << ">"
+            << " " << rhs.message << " (" << rhs.filename << ':' << rhs.lineno
+            << ')';
 }
 
 LogSink::LogSink()

@@ -114,7 +114,8 @@ std::string const& destination() {
 auto HtmlHead(std::string const& pr, std::string const& sha) {
   std::ostringstream os;
   os << "<head><meta charset=\"utf-8\">\n";
-  os << "<title>" << "PR #" << pr << " google-cloud-cpp@" << sha.substr(0, 7)
+  os << "<title>"
+     << "PR #" << pr << " google-cloud-cpp@" << sha.substr(0, 7)
      << "</title>\n";
   os << "<style>\n";
   os << "tr:nth-child(even) {background: #FFF}\n";

@@ -31,8 +31,8 @@ std::string FormatOps(std::unordered_map<std::string, int> const& ops) {
 
 SessionShutdownManager::~SessionShutdownManager() {
   if (signaled_) return;
-  GCP_LOG(TRACE) << __func__ << "() - do signal" << ", shutdown=" << shutdown_
-                 << ", signaled=" << signaled_
+  GCP_LOG(TRACE) << __func__ << "() - do signal"
+                 << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
                  << ", outstanding_operations=" << outstanding_operations_
                  << ", result=" << result_ << ", ops=" << FormatOps(ops_);
   signaled_ = true;

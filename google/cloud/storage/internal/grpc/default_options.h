@@ -37,6 +37,9 @@ Options DefaultOptionsGrpc(Options = {},
 bool GrpcEnableMetricsIsSafe(int major, int minor, int patch);
 bool GrpcEnableMetricsIsSafe();
 
+bool GrpcEnableMetricsIsSafe(int major, int minor, int patch);
+bool GrpcEnableMetricsIsSafe();
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

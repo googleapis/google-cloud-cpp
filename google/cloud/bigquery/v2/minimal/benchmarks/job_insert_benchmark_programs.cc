@@ -166,12 +166,15 @@ int main(int argc, char* argv[]) {
           << std::flush;
       config.PrintUsage();
     }
-    std::cout << "Exiting..." << "\n" << std::flush;
+    std::cout << "Exiting..."
+              << "\n"
+              << std::flush;
     return 0;
   }
   std::cout << "# Job Benchmark STARTED For InsertJob() API with test "
                "duration as ["
-            << config.test_duration.count() << "] seconds" << "\n"
+            << config.test_duration.count() << "] seconds"
+            << "\n"
             << std::flush;
 
   JobBenchmark benchmark(config);
